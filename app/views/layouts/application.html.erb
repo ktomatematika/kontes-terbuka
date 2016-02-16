@@ -8,7 +8,23 @@
 </head>
 <body>
 KONTES TERBUKA OLIMPIADE MATEMATIKA <br>
+<% if current_user() %>
+Halo, <%= current_user() %><br>
+<% end %>
+<table>
+<tr>
+<td>
 <%= link_to "Home" , root_path %>
+</td>
+<td>
+<% if session[:user_id] %>
+<%= link_to "Logout", logout_path %>
+<% else %>
+<%= link_to "Login", login_path %>
+<% end %>
+</td>
+</tr>
+</table>
 <hr>
 <%= yield %>
 
