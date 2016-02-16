@@ -1,0 +1,30 @@
+<table style="width:100%">
+	<tr>
+		<td>Username</td>
+		<td>Email</td>
+		<td>Password</td>	
+		<td>Nama lengkap</td>
+		<td>Provinsi</td>
+		<td>Status</td>
+		<td>Sekolah/Institusi</td>
+		<td>Nomor HP</td>
+		<td>Poin</td>
+		<td>Edit</td>
+		<td>Hapus</td>
+	</tr>
+	<% @users.each do |user| %>
+	<tr>
+		<td><%= user.username %></td>
+		<td><%= user.email %></td>
+		<td><%= user.password %></td>	
+		<td><%= user.fullname %></td>
+		<td><%= user.province %></td>
+		<td><%= user.status %></td>
+		<td><%= user.school %></td>
+		<td><%= user.handphone %></td>
+		<td><%= user.point %></td>
+		<td><%= link_to "Edit", edit_user_path(user) %></td>
+		<td><%= link_to "Hapus", user_path(user), method: :delete, data: { confirm: 'Apakah Anda yakin?' } %></td>
+	</tr>
+	<% end %>
+</table>

@@ -1,0 +1,25 @@
+<h1> Edit </h1>
+
+<%= form_for :user, url: user_path(@user),method: :patch do |f| %>
+
+	Username: <br>
+	<%= f.text_field :username %><br>
+	Email: <br>
+	<%= f.text_field :email %><br>
+	Password: <br>
+	<%= f.password_field :password %><br>	
+	Ulang password: <br>
+	<%= f.password_field :passwordverify %><br>
+	Nama lengkap: <br>
+	<%= f.text_field :fullname %><br>
+	Provinsi: <br>
+	<%= f.text_field :province %><br>
+	Status: <br>
+	<%= f.text_field :status %><br>
+	Sekolah/Institusi: <br>
+	<%= f.text_field :school %><br>
+	Nomor HP: <br>
+	<%= f.text_field :handphone %><br>
+	<%= f.submit %>
+<% end %>
+<%= link_to "Back", users_path %>
