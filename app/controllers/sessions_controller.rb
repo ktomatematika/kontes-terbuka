@@ -4,6 +4,7 @@ class SessionsController < ApplicationController
 			redirect_to "/"
 		end
 	end
+	
 	def create
 		@user = User.authenticate(params.require(:session)[:username], params.require(:session)[:password])
 		if @user
