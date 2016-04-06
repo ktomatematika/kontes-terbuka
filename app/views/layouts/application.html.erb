@@ -22,6 +22,9 @@ Halo, <%= current_user() %><br>
 <% else %>
 <%= link_to "Login", login_path %>
 <% end %>
+<% if session[:user_id] %>
+<%= link_to "Contests", contests_path %>
+<% end %>
 </td>
 </tr>
 </table>

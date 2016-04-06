@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  type: 
+  number_of_short_question: 1
+  number_of_long_question: 1
+  start_time: 2016-04-04 17:04:58
+  end_time: 2016-04-04 17:04:58
+  created_on: 2016-04-04 17:04:58
+  last_updated_on: 2016-04-04 17:04:58
+
+two:
+  name: MyString
+  type: 
+  number_of_short_question: 1
+  number_of_long_question: 1
+  start_time: 2016-04-04 17:04:58
+  end_time: 2016-04-04 17:04:58
+  created_on: 2016-04-04 17:04:58
+  last_updated_on: 2016-04-04 17:04:58

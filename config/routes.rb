@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   resources :users
   resources :roles
+  resources :contests
   root "welcome#index"
   get '/register' => 'users#new'
 

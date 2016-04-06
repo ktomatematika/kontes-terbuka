@@ -1,0 +1,21 @@
+This all contest available
+
+<table style="width:100%">
+	<tr>
+		<td>Name</td>
+		<td>Isian</td>
+		<td>Esai</td>	
+		<td>Start</td>
+		<td>End</td>
+	</tr>
+	<% @contests.each do |contest| %>
+	<tr>
+		<td><%= link_to contest.name, contest_path(contest) %></td>
+		<td><%= contest.number_of_short_questions %></td>
+		<td><%= contest.number_of_long_questions %></td>	
+		<td><%= contest.start_time %></td>
+		<td><%= contest.end_time %></td>
+
+	</tr>
+	<% end %>
+</table>
