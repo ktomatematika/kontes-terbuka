@@ -47,4 +47,6 @@ end
 
 gem 'bcrypt', :require => 'bcrypt' 
 
+gem 'sprockets-rails', :require => 'sprockets/railtie'
+
 gem 'bootstrap-sass', '~> 3.3.6'
