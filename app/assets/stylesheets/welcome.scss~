@@ -7,14 +7,15 @@ html, body {
 }
 
 header.teaser { 
+  color: #bbbbbb;
   text-align: center;
-  // background: url(welcome-bg.jpg) center / cover;
-  background: #90c3d4;
+  background: url(welcome-bg.jpg) center / cover;
+  //background: #90c3d4;
   height: 100%;
 
   .container {
     padding: 50px 0; 
-    background: #cc1ad3;
+//    background: #cc1ad3;
     margin: 0 auto;
   }
 
@@ -34,6 +35,8 @@ header.teaser {
 }
 
 #features {
+
+  background: #c8ee1b;
 
   div div {
     text-align: center;
