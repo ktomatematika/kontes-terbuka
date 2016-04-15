@@ -1,34 +1,37 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-  <title>KontesTerbuka</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <title>Kontes Terbuka Olimpiade Matematika</title>
+  <%= stylesheet_link_tag    'application', media: 'all',
+    'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
-KONTES TERBUKA OLIMPIADE MATEMATIKA <br>
-<% if current_user() %>
-Halo, <%= current_user() %><br>
-<% end %>
-<table>
-<tr>
-<td>
-<%= link_to "Home" , root_path %>
-</td>
-<td>
 <% if session[:user_id] %>
-<%= link_to "Logout", logout_path %>
-<% else %>
-<%= link_to "Login", login_path %>
+	KONTES TERBUKA OLIMPIADE MATEMATIKA <br>
+	<% if current_user() %>
+		Halo, <%= current_user() %><br>
+	<% end %>
+	<table>
+	<tr>
+	<td>
+	<%= link_to "Home" , root_path %>
+	</td>
+	<td>
+	<% if session[:user_id] %>
+		<%= link_to "Logout", logout_path %>
+	<% else %>
+		<%= link_to "Login", login_path %>
+	<% end %>
+	<% if session[:user_id] %>
+		<%= link_to "Contests", contests_path %>
+	<% end %>
+	</td>
+	</tr>
+	</table>
+	<hr>
 <% end %>
-<% if session[:user_id] %>
-<%= link_to "Contests", contests_path %>
-<% end %>
-</td>
-</tr>
-</table>
-<hr>
 <%= yield %>
 
 </body>
