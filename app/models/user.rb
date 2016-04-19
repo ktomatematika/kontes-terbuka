@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
 	has_and_belongs_to_many :roles
-
+	has_many :long_submissions
 	attr_accessor :password
 
 	validates :username, presence: true, uniqueness: true

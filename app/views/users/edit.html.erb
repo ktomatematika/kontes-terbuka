@@ -2,6 +2,19 @@
 
 <%= form_for :user, url: user_path(@user),method: :patch do |f| %>
 
+	<% if @user.errors.any? %>
+    	<div id="error_explanation">
+    		<h2>
+			<%= pluralize(@user.errors.count, "error") %> prohibited this user from being registered:
+			</h2>
+			<ul>
+			<% @user.errors.full_messages.each do |msg| %>
+				<li><%= msg %></li>
+			<% end %>
+			</ul>
+    	</div>
+	<% end %>
+
 	Username: <br>
 	<%= f.text_field :username %><br>
 	Email: <br>
@@ -18,8 +31,6 @@
 	<%= f.text_field :status %><br>
 	Sekolah/Institusi: <br>
 	<%= f.text_field :school %><br>
-	Nomor HP: <br>
-	<%= f.text_field :handphone %><br>
 	<%= f.submit %>
 <% end %>
 <%= link_to "Back", users_path %>
