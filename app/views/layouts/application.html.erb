@@ -2,10 +2,13 @@
 <html lang="id">
 <head>
   <title>Kontes Terbuka Olimpiade Matematika</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <%= stylesheet_link_tag    'application', media: 'all',
     'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
+  <link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,600'
+  rel='stylesheet' type='text/css'>
 </head>
 <body>
 <% if session[:user_id] %>
