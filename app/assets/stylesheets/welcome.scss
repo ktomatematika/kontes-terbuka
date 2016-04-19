@@ -9,7 +9,7 @@ html, body {
 
 header.teaser { 
   text-align: center;
-  background: url(welcome-bg.jpg) center / cover;
+  background: image-url('welcome-bg.jpg') center / cover;
   min-height: 100%;
 
   .container {
