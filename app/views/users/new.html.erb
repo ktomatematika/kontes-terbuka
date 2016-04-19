@@ -1,36 +1,122 @@
-<h1> Daftar </h1>
+<a class="hidden-anchor" id="to-register"></a>
+<a class="hidden-anchor" id="to-login"></a>
+<div class="container form animate">
+  <div class="row">
+    <div class="col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-3"
+         id="register">
+      <header>
+        <div class="login-logo">
+          <%= link_to image_tag("logo.png", :alt => "Logo KTOM"),
+            root_path %>
+      </div>
+      <div class="login-text">
+        <div class="h1">Daftar</div>
+        <div class="wrong-form">Sudah punya akun? <a href="#to-login">
+            Masuk.</a></div>
+      </div>
+      <div class="clearfix"></div>
+      </header>
+      <%= form_for :user, url: users_path,
+        html: { :id => "register-form" } do |f| %>
+        <% if @user.errors.any? %>
+          <div id="error_explanation">
+            <h2>
+              <%= pluralize(@user.errors.count, "error") %> prohibited
+              this user from being registered:
+            </h2>
+            <ul>
+              <% @user.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
 
-<%= form_for :user, url: users_path do |f| %>
-	<% if @user.errors.any? %>
-    	<div id="error_explanation">
-    		<h2>
-			<%= pluralize(@user.errors.count, "error") %> prohibited this user from being registered:
-			</h2>
-			<ul>
-			<% @user.errors.full_messages.each do |msg| %>
-				<li><%= msg %></li>
-			<% end %>
-			</ul>
-    	</div>
-	<% end %>
+        <div class="form-group has-feedback"><%= f.text_field :username,
+          class: "form-control", placeholder: "Username" %><span
+          class="glyphicon form-control-feedback"
+          aria-hidden="true"></span></div>
+        <div class="form-group has-feedback"><%= f.email_field :email,
+          class: "form-control", placeholder: "Alamat email" %><span
+          class="glyphicon form-control-feedback"
+          aria-hidden="true"></span></div>
+        <div class="form-group has-feedback"><%= f.password_field :password,
+          class: "form-control", placeholder: "Password" %><span
+          class="glyphicon form-control-feedback"
+          aria-hidden="true"></span></div>
+        <div class="form-group has-feedback separator"><%=
+        f.password_field :password_confirmation, class: "form-control",
+          placeholder: "Ulang password" %><span class="glyphicon
+          form-control-feedback" aria-hidden="true"></span></div>
+        <div class="form-group has-feedback"><%= f.text_field :fullname,
+          class: "form-control", placeholder: "Nama Lengkap" %><span
+          class="glyphicon form-control-feedback"
+          aria-hidden="true"></span></div>
+        <div class="form-group has-feedback"><%= select_tag :"user[province]",
+          options_for_select(
+            [['Provinsi', 0], ['D.I. Aceh', 1], ['Sumatera Utara', 2],
+             ['Sumatera Barat', 3], ['Riau', 4], ['Kep. Riau', 5],
+             ['Jambi', 6], ['Bengkulu', 7], ['Bangka Belitung', 8],
+             ['Sumatera Selatan', 9], ['Lampung', 10], ['Banten', 11],
+             ['D.K.I. Jakarta', 12], ['Jawa Barat', 13], ['Jawa Tengah', 14],
+             ['D.I. Yogyakarta', 16], ['Bali', 17],
+             ['Nusa Tenggara Barat', 18], ['Nusa Tenggara Timur', 19],
+             ['Kalimantan Barat', 20], ['Kalimantan Tengah', 21],
+             ['Kalimantan Utara', 22], ['Kalimantan Timur', 23],
+             ['Kalimantan Selatan', 24], ['Sulawesi Barat', 25],
+             ['Sulawesi Selatan', 26], ['Gorontalo', 27],
+             ['Sulawesi Tengah', 28], ['Sulawesi Utara', 29],
+             ['Sulawesi Tenggara', 30], ['Maluku Utara', 31], ['Maluku', 32],
+             ['Papua Barat', 33], ['Papua', 34], ['Lainnya', 35]]),
+          class: "form-control" %><span class="glyphicon
+          form-control-feedback" aria-hidden="true"></span></div>
+        <div class="form-group has-feedback"><%= select_tag :"user[status]",
+          options_for_select(
+            [['Status', 0], ['Kelas 8', 1], ['Kelas 9', 2],
+             ['Kelas 10', 3], ['Kelas 11', 4], ['Kelas 12', 5],
+             ['Guru sekolah', 6], ['Dosen', 7], ['Guru/pengajar olimpiade', 8],
+             ['Umum', 9]]), class: "form-control" %><span
+             class="glyphicon form-control-feedback"
+             aria-hidden="true"></span></div>
+        <div class="form-group has-feedback"><%= f.text_field :school,
+          class: "form-control", placeholder: "Sekolah/institusi" %><span
+          class="glyphicon form-control-feedback" aria-hidden="true"></span>
+        </div>
+        <div class="form-group"><%= check_box_tag(:confirm) %>
+        <%= label_tag(:confirm, "Saya menyetujui syarat dan ketentuan " +
+                      "website ini.") %></div>
+        <footer>
+          <%= recaptcha_tags %>
+          <%= f.submit "Daftar", class: "btn-lg btn-default btn-register" %>
+        </footer>
+      <% end %>
+    </div>
+  </div>
+</div>
 
-	Username: <br>
-	<%= f.text_field :username %><br>
-	Email: <br>
-	<%= f.text_field :email %><br>
-	Password: <br>
-	<%= f.password_field :password %><br>	
-	Ulang password: <br>
-	<%= f.password_field :password_confirmation %><br>
-	Nama lengkap: <br>
-	<%= f.text_field :fullname %><br>
-	Provinsi: <br>
-	<%= f.text_field :province %><br>
-	Status: <br>
-	<%= f.text_field :status %><br>
-	Sekolah/Institusi: <br>
-	<%= f.text_field :school %><br>
-	Nomor HP: <br>
-	<%= f.text_field :handphone %><br>
-	<%= f.submit %>
-<% end %>
+<div class="container form animate">
+  <div class="row">
+    <div class="col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-3" id="login">
+      <header>
+        <div class="login-logo">
+          <%= link_to image_tag("logo.png", :alt => "Logo KTOM"),
+            root_path %>
+      </div>
+      <div class="login-text">
+        <div class="h1">Masuk</div>
+        <div class="wrong-form">Belum punya akun? <a href="#to-register">
+            Daftar.</a></div>
+      </div>
+      <div class="clearfix"></div>
+      </header>
+      <%= form_for :session, url: login_path,
+        html: { :id => "login-form" } do |s| %>
+        <div class="form-group"><%= s.text_field :username,
+          class: "form-control", placeholder: "Username/email" %></div>
+        <div class="form-group"><%= s.password_field :password,
+          class: "form-control", placeholder: "Password" %></div>
+        <%= s.submit "Masuk", class: "btn-lg btn-default btn-login" %>
+      <% end %>
+    </div>
+  </div>
+</div>

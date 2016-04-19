@@ -10,7 +10,6 @@ class User < ActiveRecord::Base
 	validates :province, presence: true
 	validates :status, presence: true
 	validates :school, presence: true
-	validates :handphone, presence: true
 
 	before_save :encrypt_password
 	after_save :clear_password

@@ -1,6 +1,7 @@
 <header class="teaser">
   <div class="welcome-logo">
-    <%= link_to image_tag("logo.png", :alt => "Logo KTOM"), root_path %>
+    <%= link_to image_tag("logo.png", :alt => "Logo KTOM"),
+      root_path %>
   </div>
   <div class="container">
     <h1>KTO Matematika</h1>
