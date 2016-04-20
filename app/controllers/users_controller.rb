@@ -3,6 +3,7 @@ class UsersController < ApplicationController
 
 	def new
 		@user = User.new
+		redirect_to "/test#to-register"
 	end
 
 	def create

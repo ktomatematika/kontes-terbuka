@@ -1,36 +1,21 @@
-<a class="hidden-anchor" id="to-register"></a>
-<a class="hidden-anchor" id="to-login"></a>
 <div class="container form">
   <div class="row">
-    <div class="col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-3"
-         id="register">
+    <div class="col-xs-10 col-sm-8 col-md-6" id="register">
       <header>
         <div class="login-logo">
           <%= link_to image_tag("logo.png", :alt => "Logo KTOM"),
             root_path %>
-      </div>
-      <div class="login-text">
-        <div class="h1">Daftar</div>
-        <div class="wrong-form">Sudah punya akun? <a href="#to-login">
-            Masuk.</a></div>
-      </div>
-      <div class="clearfix"></div>
+        </div>
+        <div class="login-text">
+          <div class="h1">Daftar</div>
+          <div class="wrong-form">Sudah punya akun? <a href="#to-login">
+              Masuk.</a></div>
+        </div>
+        <div class="clearfix"></div>
       </header>
       <%= form_for :user, url: users_path,
         html: { :id => "register-form" } do |f| %>
-        <% if @user.errors.any? %>
-          <div id="error_explanation">
-            <h2>
-              <%= pluralize(@user.errors.count, "error") %> prohibited
-              this user from being registered:
-            </h2>
-            <ul>
-              <% @user.errors.full_messages.each do |msg| %>
-                <li><%= msg %></li>
-              <% end %>
-            </ul>
-          </div>
-        <% end %>
+
 
         <div class="form-group has-feedback"><%= f.text_field :username,
           class: "form-control", placeholder: "Username" %><span
@@ -86,36 +71,9 @@
         <%= label_tag(:confirm, "Saya menyetujui syarat dan ketentuan " +
                       "website ini.") %></div>
         <footer>
-          <%= recaptcha_tags %>
+          <%= recaptcha_tags hl: 'id' %>
           <%= f.submit "Daftar", class: "btn-lg btn-default btn-register" %>
         </footer>
-      <% end %>
-    </div>
-  </div>
-</div>
-
-<div class="container form">
-  <div class="row">
-    <div class="col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-3" id="login">
-      <header>
-        <div class="login-logo">
-          <%= link_to image_tag("logo.png", :alt => "Logo KTOM"),
-            root_path %>
-      </div>
-      <div class="login-text">
-        <div class="h1">Masuk</div>
-        <div class="wrong-form">Belum punya akun? <a href="#to-register">
-            Daftar.</a></div>
-      </div>
-      <div class="clearfix"></div>
-      </header>
-      <%= form_for :session, url: login_path,
-        html: { :id => "login-form" } do |s| %>
-        <div class="form-group"><%= s.text_field :username,
-          class: "form-control", placeholder: "Username/email" %></div>
-        <div class="form-group"><%= s.password_field :password,
-          class: "form-control", placeholder: "Password" %></div>
-        <%= s.submit "Masuk", class: "btn-lg btn-default btn-login" %>
       <% end %>
     </div>
   </div>

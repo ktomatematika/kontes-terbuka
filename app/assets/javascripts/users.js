@@ -69,9 +69,9 @@ $().ready(function() {
 			"user[school]": {
 				required: true,
 			},
-			"confirm": {
-				required: true
-			}
+				"confirm": {
+					required: true
+				}
 		},
 		messages: {
 			"user[username]": {
@@ -111,4 +111,44 @@ $().ready(function() {
 			}
 		}
 	})
+
+	$("#login-form").validate({
+		rules: {
+			"session[username]": {
+				required: true,
+				minlength: 6,
+				maxlength: 20,
+				alphanum: true
+			},
+			"session[password]": {
+				required: true,
+				minlength: 6
+			}
+		},
+		messages: {
+			"session[username]": {
+				required: "Tolong masukkan username.",
+				minlength: "Username Anda harus minimal 6 karakter.",
+				maxlength: "Username Anda tidak boleh lebih dari 20 karakter.",
+				alphanum: "Anda hanya bisa menggunakan huruf dan angka saja."
+			},
+			"session[password]": {
+				required: "Tolong masukkan password.",
+				minlength: "Password Anda harus minimal 6 karakter."
+			}
+		}
+	});
+
+	// When a form fades out, disable its controls
+	$('a').click(function() {
+		var hash = window.location.hash;
+
+		if (hash === "#to-register") {
+			$('#login-form').find('input').prop('disabled', false);
+			$('#register-form').find('input').prop('disabled', true);
+		} else if (hash === "#to-login") {
+			$('#register-form').find('input').prop('disabled', false);
+			$('#login-form').find('input').prop('disabled', true);
+		}
+	});
 });

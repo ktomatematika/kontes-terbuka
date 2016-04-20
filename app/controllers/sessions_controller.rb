@@ -2,6 +2,8 @@ class SessionsController < ApplicationController
 	def new
 		if session[:user_id]
 			redirect_to "/"
+		else
+			redirect_to "/test#to-login"
 		end
 	end
 	

@@ -2,20 +2,6 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-/// Mixin to prefix a property
-/// @author Hugo Giraudel
-/// @param {String} $property - Property name
-/// @param {*} $value - Property value
-/// @param {List} $prefixes (()) - List of prefixes to print
-@mixin prefix($property, $value, $prefixes: ()) {
-  @each $prefix in $prefixes {
-    #{'-' + $prefix + '-' + $property}: $value;
-  }
- 
-  // Output standard non-prefixed declaration
-  #{$property}: $value;
-}
-
 #login {
   z-index: 1;
   opacity: 0;
@@ -38,15 +24,18 @@
   header {
     margin-bottom: 10px;
 
-    .login-logo {
-      float: left;
-    }
+    @media (min-width: 600px) {
 
-    .login-text {
-      float: right;
+      .login-logo {
+        float: left;
+      }
 
-      .h1 {
-        margin-top: 0;
+      .login-text {
+        float: right;
+
+        .h1 {
+          margin-top: 0;
+        }
       }
     }
   }
@@ -65,43 +54,22 @@
     }
   }
 
-  @include prefix(animation-duration, 0.5s, webkit moz ms o);
-  @include prefix(animation-timing-function, ease, webkit moz ms o);
-  @include prefix(animation-fill-mode, both, webkit moz ms o);
+  transition: all 0.5s ease;
+
+  .form-control[disabled] {
+    cursor: default;
+  }
+
 }
 
 #to-register:target ~ .form #register,
 #to-login:target ~ .form #login {
   z-index: 2;
-  @include prefix(animation-name, fadeInLeft, webkit moz ms o);
-  @include prefix(animation-delay, 0.1s, webkit moz ms o);
+  opacity: 1;
 }
 
 #to-register:target ~ .form #login,
 #to-login:target ~ .form #register {
-  @include prefix(animation-name, fadeOutLeft, webkit moz ms o);
-}
-
-@keyframes fadeInLeft {
-	0% {
-		opacity: 0;
-		transform: translateX(-20px);
-	}
-	
-	100% {
-		opacity: 1;
-		transform: translateX(0);
-	}
-}
-
-@keyframes fadeOutLeft {
-	0% {
-		opacity: 1;
-		transform: translateX(0);
-	}
-	
-	100% {
-		opacity: 0;
-		transform: translateX(-20px);
-	}
+  opacity: 0;
+  left: 5%;
 }

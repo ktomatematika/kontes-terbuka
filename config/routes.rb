@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   resources :roles
   resources :contests
   root "welcome#index"
+
+  get '/test' => 'welcome#user'
   get '/register' => 'users#new'
 
   get '/login' => 'sessions#new'
