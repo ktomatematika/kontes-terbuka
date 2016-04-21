@@ -23,7 +23,11 @@
           class: "form-control", placeholder: "Password" %><span
              class="glyphicon form-control-feedback"
              aria-hidden="true"></span></div>
-        <%= s.submit "Masuk", class: "btn-lg btn-default btn-login" %>
+        <footer>
+          <div class="form-group check-remember"><%= check_box_tag(:remember) %>
+          <%= label_tag(:remember, "Ingat saya") %></div>
+          <%= s.submit "Masuk", class: "btn-lg btn-default btn-login" %>
+        </footer>
       <% end %>
     </div>
   </div>

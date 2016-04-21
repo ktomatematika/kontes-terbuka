@@ -45,14 +45,31 @@
   }
 
   footer {
-    .btn-register {
-      float: right;
+
+    .g-recaptcha div div {
+      margin: 0 auto 10px auto;
     }
 
-    .g-recaptcha {
-      float: left;
+    @media(min-width: 600px) {
+      .btn-register, .btn-login {
+        float: right;
+      }
+
+      .check-remember {
+        margin: 10px 0 0 10px;
+        float: left;
+      }
+
+      .g-recaptcha {
+        float: left;
+
+        div div {
+          margin: 0;
+        }
+      }
     }
   }
+
 
   transition: all 0.5s ease;
 
