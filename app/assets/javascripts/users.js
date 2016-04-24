@@ -69,9 +69,9 @@ $().ready(function() {
 			"user[school]": {
 				required: true,
 			},
-				"confirm": {
-					required: true
-				}
+			"confirm": {
+				required: true
+			}
 		},
 		messages: {
 			"user[username]": {
@@ -140,7 +140,7 @@ $().ready(function() {
 	});
 
 	// When a form fades out, disable its controls
-	$('a').click(function() {
+	$('.wrong-form > a').click(function() {
 		var hash = window.location.hash;
 
 		if (hash === "#to-register") {
