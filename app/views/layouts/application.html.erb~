@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+<<<<<<< HEAD
   <head>
     <title>Kontes Terbuka Olimpiade Matematika</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,7 +10,6 @@
     <%= csrf_meta_tags %>
     <link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,600'
                           rel='stylesheet' type='text/css'>
-    <script src='https://www.google.com/recaptcha/api.js'></script>
   </head>
   <body>
     <% if session[:user_id] %>
@@ -39,4 +39,49 @@
     <% end %>
     <%= yield %>
   </body>
+=======
+<head>
+  <title>Kontes Terbuka Olimpiade Matematika</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <%= stylesheet_link_tag    'application', media: 'all',
+    'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+  <link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,600'
+  rel='stylesheet' type='text/css'>
+</head>
+<body>
+<% if session[:user_id] %>
+	KONTES TERBUKA OLIMPIADE MATEMATIKA <br>
+	<% if current_user() %>
+		Halo, <%= current_user() %><br>
+	<% end %>
+	<table>
+	<tr>
+	<td>
+	<%= link_to "Home" , root_path %>
+	</td>
+	<td>
+	<% if session[:user_id] %>
+		<%= link_to "Logout", logout_path %>
+	<% else %>
+		<%= link_to "Login", login_path %>
+	<% end %>
+	</td>
+	<td>
+	<% if session[:user_id] %>
+		<%= link_to "Contests", contests_path %>
+	<% end %>
+	</td>
+	<td>
+	<%= link_to "Admin", '/home/admin' %>
+	</td>
+	</tr>
+	</table>
+	<hr>
+<% end %>
+<%= yield %>
+
+</body>
+>>>>>>> fbf8085... create long submissions
 </html>
