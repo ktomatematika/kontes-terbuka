@@ -3,12 +3,13 @@ class UsersController < ApplicationController
 
 	def new
 		@user = User.new
+		redirect_to "/test#to-register"
 	end
-	
+
 	def create
 		@user = User.new(user_params)
 		@user.point = 0
-		if @user.save
+		if @user.save && verify_recaptcha(model: @user)
 			redirect_to @user
 		else
 			render 'new'
@@ -43,8 +44,9 @@ class UsersController < ApplicationController
 	end
 
 	private
-		def user_params
-			params.require(:user).permit(:username, :email, :password, :password_confirmation,
-				:fullname, :province, :status, :school)
-		end  
+	def user_params
+		params.require(:user).permit(:username, :email, :password,
+									 :password_confirmation, :fullname,
+									 :province, :status, :school)
+	end  
 end

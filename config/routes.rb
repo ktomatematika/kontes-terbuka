@@ -1,16 +1,15 @@
 Rails.application.routes.draw do
 
-  authenticated :user do
-    root to: 'home#index', as: :authenticated_root
-  end
-
-  root to: 'welcome#index'
 
   resources :users
   resources :roles
   resources :contests do
     resources :long_submissions
-  end
+  end\
+
+  root "welcome#index"
+
+  get '/test' => 'welcome#user'
   get '/register' => 'users#new'
 
   get '/login' => 'sessions#new'
