@@ -15,3 +15,53 @@
 		<td><%= @contest.end_time %></td>
 	</tr>
 </table>
+
+
+<section>
+Ini tempat soal!
+</section>
+<section>
+Daftar submisi bagian B mu di kontes ini
+
+<table style="width:100%">
+	<tr>
+		<td>Name: </td>
+		<td>Attachment: </td>
+		<td>Nomor soal esai:</td>
+	</tr>
+	<% @contest.long_submissions.each do |s| %>
+	<% if s.user_id == session[:user_id] %>
+		<tr>
+			<td><%= s.name %></td>
+			<td><%= link_to "Download Resume", s.attachment_url %></td>
+			<td><%= s.problem_id %></td>	
+		</tr>
+	<% end %>
+	<% end %>
+</table>
+
+</section>
+
+<section>
+Submit sesuatu
+<%= form_for([@contest, @contest.long_submissions.build]), html: { multipart: true } do |f| %>
+  <p>
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :attachment %><br>
+    <%= f.file_field :attachment %>
+  </p>
+  <p>
+    <%= f.hidden_field :user_id, value: session[:user_id] %>
+  </p>
+  <p>
+  	<%= f.label :problem_id %><br>
+  	<%= f.text_field :problem_id %>
+  </p>
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>
+</section>

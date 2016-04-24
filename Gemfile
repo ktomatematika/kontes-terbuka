@@ -63,3 +63,9 @@ end
 gem 'bcrypt', :require => 'bcrypt' 
 
 gem 'bootstrap-sass', '~> 3.3.6'
+
+gem 'devise'
+
+gem 'carrierwave', '~> 0.10.0'
+
+

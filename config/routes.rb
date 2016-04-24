@@ -1,7 +1,12 @@
 Rails.application.routes.draw do
+
+
   resources :users
   resources :roles
-  resources :contests
+  resources :contests do
+    resources :long_submissions
+  end\
+
   root "welcome#index"
 
   get '/test' => 'welcome#user'

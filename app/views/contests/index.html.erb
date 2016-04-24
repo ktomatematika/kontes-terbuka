@@ -7,6 +7,8 @@ This all contest available
 		<td>Esai</td>	
 		<td>Start</td>
 		<td>End</td>
+		<td>Edit</td>
+		<td>Hapus</td>
 	</tr>
 	<% @contests.each do |contest| %>
 	<tr>
@@ -15,7 +17,8 @@ This all contest available
 		<td><%= contest.number_of_long_questions %></td>	
 		<td><%= contest.start_time %></td>
 		<td><%= contest.end_time %></td>
-
+		<td><%= link_to "Edit", edit_contest_path(contest) %></td>
+		<td><%= link_to "Hapus", contest_path(contest), method: :delete, data: { confirm: 'Apakah Anda yakin?' } %></td>
 	</tr>
 	<% end %>
 </table>
