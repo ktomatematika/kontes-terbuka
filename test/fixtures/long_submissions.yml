@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  attachment: MyString
+  user_id: 1
+  contest_id: 1
+  problem_id: 1
+
+two:
+  name: MyString
+  attachment: MyString
+  user_id: 1
+  contest_id: 1
+  problem_id: 1

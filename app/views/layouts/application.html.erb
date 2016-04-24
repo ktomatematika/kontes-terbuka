@@ -27,9 +27,13 @@
 	<% else %>
 		<%= link_to "Login", login_path %>
 	<% end %>
+	</td>
+	<td>
 	<% if session[:user_id] %>
 		<%= link_to "Contests", contests_path %>
 	<% end %>
+	</td>
+	<td>
 	<%= link_to "Admin", '/home/admin' %>
 	</td>
 	</tr>

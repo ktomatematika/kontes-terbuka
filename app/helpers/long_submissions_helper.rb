@@ -1,0 +1,2 @@
+module LongSubmissionsHelper
+end

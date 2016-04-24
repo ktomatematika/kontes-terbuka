@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160404090458) do
+ActiveRecord::Schema.define(version: 20160419165653) do
 
   create_table "contests", force: :cascade do |t|
     t.string   "name"
@@ -25,6 +25,19 @@ ActiveRecord::Schema.define(version: 20160404090458) do
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
   end
+
+  create_table "long_submissions", force: :cascade do |t|
+    t.string   "name"
+    t.string   "attachment"
+    t.integer  "problem_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "user_id"
+    t.integer  "contest_id"
+  end
+
+  add_index "long_submissions", ["contest_id"], name: "index_long_submissions_on_contest_id"
+  add_index "long_submissions", ["user_id"], name: "index_long_submissions_on_user_id"
 
   create_table "roles", force: :cascade do |t|
     t.string   "name"
@@ -45,7 +58,6 @@ ActiveRecord::Schema.define(version: 20160404090458) do
     t.string   "province"
     t.string   "status"
     t.string   "school"
-    t.string   "handphone"
     t.integer  "point"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
