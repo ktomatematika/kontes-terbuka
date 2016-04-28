@@ -4,7 +4,6 @@
 
 html, body {
   height: 100%;
-  color: #222222;
 }
 
 header.teaser { 
@@ -41,7 +40,6 @@ section {
 }
 
 #features {
-  background: #c8ee1b;
 
   div div {
     text-align: center;
@@ -54,7 +52,8 @@ section {
 }
 
 #testimonies {
-  background: #ee99cc;
+
+  background: #ffffff;
 
   h1 {
     padding-bottom: 20px;
@@ -62,6 +61,7 @@ section {
 
   blockquote {
     margin: 5px 30px;
+    border-color: #ccc;
   }
 
   blockquote:first-child {
@@ -74,6 +74,5 @@ section {
 }
 
 #teaser {
-  background: #8bfac0;
   text-align: center;
 }

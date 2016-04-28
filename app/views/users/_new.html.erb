@@ -5,45 +5,72 @@
         <div class="login-logo">
           <%= link_to image_tag("logo.png", :alt => "Logo KTOM"),
             root_path %>
-        </div>
-        <div class="login-text">
-          <div class="h1">Daftar</div>
-          <div class="wrong-form">Sudah punya akun? <a href="#to-login">
-              Masuk.</a></div>
-        </div>
-        <div class="clearfix"></div>
+      </div>
+      <div class="login-text">
+        <div class="h1">Daftar</div>
+        <div class="wrong-form">Sudah punya akun? <a href="#to-login">
+            Masuk.</a></div>
+      </div>
+      <div class="clearfix"></div>
       </header>
       <%= form_for :user, url: users_path,
         html: { :id => "register-form" } do |f| %>
 
-        <div class="form-group has-feedback"><%= f.text_field :username,
-          class: "form-control", placeholder: "Username" %><span
-             class="glyphicon form-control-feedback"
-             aria-hidden="true"></span></div>
-        <div class="form-group has-feedback"><%= f.email_field :email,
-          class: "form-control", placeholder: "Alamat email" %><span
-             class="glyphicon form-control-feedback"
-             aria-hidden="true"></span></div>
-        <div class="form-group has-feedback"><%= f.password_field :password,
-          class: "form-control", placeholder: "Password" %><span
-             class="glyphicon form-control-feedback"
-             aria-hidden="true"></span></div>
-        <div class="form-group has-feedback separator"><%=
-        f.password_field :password_confirmation, class: "form-control",
-          placeholder: "Ulang password" %><span class="glyphicon
-          form-control-feedback" aria-hidden="true"></span></div>
-        <div class="form-group has-feedback"><%= f.text_field :fullname,
-          class: "form-control", placeholder: "Nama Lengkap" %><span
-             class="glyphicon form-control-feedback"
-             aria-hidden="true"></span></div>
-        <div class="form-group has-feedback"><%= select_tag :"user[province]",
-          options_for_select(
+        <div class="form-group has-feedback" aria-describedby="user-help">
+          <%= f.text_field :username, class: "form-control",
+            placeholder: "Username" %>
+          <span class="glyphicon form-control-feedback"
+                aria-hidden="true"></span>
+          <div id="user-help" class="help-block pre-help">Username Anda
+            harus terdiri atas huruf dan angka saja dan memiliki
+            6 - 20 karakter.</div>
+        </div>
+        <div class="form-group has-feedback"> 
+          <%= f.email_field :email, class: "form-control",
+            placeholder: "Alamat email" %>
+          <span class="glyphicon form-control-feedback"
+                aria-hidden="true"></span>
+        </div>
+        <div class="form-group has-feedback" aria-describedby="pass-help">
+          <%= f.password_field :password, class: "form-control",
+            placeholder: "Password" %>
+          <span class="glyphicon form-control-feedback"
+                aria-hidden="true"></span>
+          <div id="pass-help" class="help-block pre-help">Password Anda harus
+            berisi setidaknya 6 karakter.<br>
+            Contoh mudah membuat password yang kuat:
+            <ul>
+              <li>Pikirkan dua makanan kesukaan Anda, contohnya nasi goreng dan
+                rendang</li>
+              <li>Pikirkan dua warna kesukaan Anda, contohnya putih mawar dan
+                hijau tua</li>
+              <li>Pikirkan angka kesukaan Anda, contohnya 477</li>
+              <li>Gabungkan: NasiGorengPutihMawar&amp;RendangHijauTua477</li>
+            </ul>
+            Password ini lebih aman dan lebih mudah diingat daripada password
+            yang menggunakan banyak angka dan simbol namun lebih pendek!
+          </div>
+        </div>
+        <div class="form-group has-feedback"> 
+          <%= f.password_field :password_confirmation, class: "form-control",
+            placeholder: "Ulangi password" %>
+          <span class="glyphicon form-control-feedback"
+                aria-hidden="true"></span>
+        </div>
+        <div class="form-group has-feedback"> 
+          <%= f.text_field :fullname, class: "form-control",
+            placeholder: "Nama lengkap" %>
+          <span class="glyphicon form-control-feedback"
+                aria-hidden="true"></span>
+        </div>
+        <div class="form-group has-feedback">
+          <%= select_tag :"user[province]", options_for_select(
             [['Provinsi', 0], ['D.I. Aceh', 1], ['Sumatera Utara', 2],
              ['Sumatera Barat', 3], ['Riau', 4], ['Kep. Riau', 5],
              ['Jambi', 6], ['Bengkulu', 7], ['Bangka Belitung', 8],
              ['Sumatera Selatan', 9], ['Lampung', 10], ['Banten', 11],
              ['D.K.I. Jakarta', 12], ['Jawa Barat', 13], ['Jawa Tengah', 14],
-             ['D.I. Yogyakarta', 16], ['Bali', 17],
+             ['Jawa Timur', 15], ['D.I. Yogyakarta', 16], ['Bali', 17],
              ['Nusa Tenggara Barat', 18], ['Nusa Tenggara Timur', 19],
              ['Kalimantan Barat', 20], ['Kalimantan Tengah', 21],
              ['Kalimantan Utara', 22], ['Kalimantan Timur', 23],
@@ -52,19 +79,24 @@
              ['Sulawesi Tengah', 28], ['Sulawesi Utara', 29],
              ['Sulawesi Tenggara', 30], ['Maluku Utara', 31], ['Maluku', 32],
              ['Papua Barat', 33], ['Papua', 34], ['Lainnya', 35]]),
-          class: "form-control" %><span class="glyphicon
-          form-control-feedback" aria-hidden="true"></span></div>
-        <div class="form-group has-feedback"><%= select_tag :"user[status]",
-          options_for_select(
+          class: "form-control" %>
+        <span class="glyphicon form-control-feedback"
+              aria-hidden="true"></span>
+        </div>
+        <div class="form-group has-feedback">
+          <%= select_tag :"user[status]", options_for_select(
             [['Status', 0], ['Kelas 8', 1], ['Kelas 9', 2],
              ['Kelas 10', 3], ['Kelas 11', 4], ['Kelas 12', 5],
-             ['Guru sekolah', 6], ['Dosen', 7], ['Guru/pengajar olimpiade', 8],
-             ['Umum', 9]]), class: "form-control" %><span
-             class="glyphicon form-control-feedback"
-             aria-hidden="true"></span></div>
-        <div class="form-group has-feedback"><%= f.text_field :school,
-          class: "form-control", placeholder: "Sekolah/institusi" %><span
-             class="glyphicon form-control-feedback" aria-hidden="true"></span>
+             ['Guru sekolah', 6], ['Guru/dosen/pengajar olimpiade', 7],
+             ['Umum', 8]]), class: "form-control" %>
+           <span class="glyphicon form-control-feedback"
+                 aria-hidden="true"></span>
+        </div>
+        <div class="form-group has-feedback"> 
+          <%= f.text_field :school, class: "form-control",
+            placeholder: "Sekolah/institusi" %>
+          <span class="glyphicon form-control-feedback"
+                aria-hidden="true"></span>
         </div>
         <div class="form-group"><%= check_box_tag(:confirm) %>
         <%= label_tag(:confirm, "Saya menyetujui syarat dan ketentuan " +
