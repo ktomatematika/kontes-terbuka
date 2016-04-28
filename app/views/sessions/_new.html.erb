@@ -13,24 +13,24 @@
       </div>
       <div class="clearfix"></div>
       </header>
-      <%= form_for :session, url: login_path,
-        html: { :id => "login-form" } do |s| %>
-        <div class="form-group has-feedback"><%= s.text_field :username,
+      <%= form_tag login_path,
+        html: { :id => "login-form" } do  %>
+        <div class="form-group has-feedback"><%= text_field_tag :username, params[:email],
           class: "form-control", placeholder: "Username/Email" %><span
              class="glyphicon form-control-feedback"
              aria-hidden="true"></span></div>
-        <div class="form-group has-feedback"><%= s.password_field :password,
+        <div class="form-group has-feedback"><%= password_field_tag :password, params[:password],  
           class: "form-control", placeholder: "Password" %><span
              class="glyphicon form-control-feedback"
              aria-hidden="true"></span></div>
         <footer>
           <div class="checkbox">
             <label>
-              <%= check_box_tag(:remember) %>
+              <%= check_box_tag :remember_me, 1, params[:remember_me] %>
               Ingat saya
             </label>
           </div>
-          <%= s.submit "Masuk", class: "btn-lg btn-default btn-login" %>
+          <%= submit_tag "Masuk", class: "btn-lg btn-default btn-login" %>
         </footer>
       <% end %>
     </div>
