@@ -1,9 +1,11 @@
 class SessionsController < ApplicationController
+	skip_before_filter :require_login
+	
 	def new
 		if session[:user_id]
 			redirect_to "/"
 		else
-			redirect_to "/test#to-login"
+			redirect_to "/sign#to-login"
 		end
 	end
 	

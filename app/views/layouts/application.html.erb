@@ -11,6 +11,7 @@
                           rel='stylesheet' type='text/css'>
     <%= favicon_link_tag %>
   </head>
+<<<<<<< HEAD
   <% if session[:user_id] %>
     <body class="logged">
 
@@ -65,4 +66,30 @@
       <% end %>
       <%= yield %>
       </body>
+=======
+  <body>
+    <% if current_user %>
+      KONTES TERBUKA OLIMPIADE MATEMATIKA <br>
+      Halo, <%= current_user() %><br>
+      <table>
+        <tr>
+          <td>
+            <%= link_to "Home" , root_path %>
+          </td>
+          <td>
+            <%= link_to "Logout", logout_path %>
+          </td>
+          <td>
+            <%= link_to "Contests", contests_path %>
+          </td>
+          <td>
+            <%= link_to "Admin", '/home/admin' %>
+          </td>
+        </tr>
+      </table>
+      <hr>
+    <% end %>
+    <%= yield %>
+  </body>
+>>>>>>> eef45bc... t s
 </html>
