@@ -1,8 +1,8 @@
 class SessionsController < ApplicationController
 	skip_before_filter :require_login
-	
+
 	def new
-		if session[:user_id]
+		if current_user
 			redirect_to "/"
 		else
 			redirect_to "/sign#to-login"
@@ -10,10 +10,14 @@ class SessionsController < ApplicationController
 	end
 	
 	def create
-		@user = User.authenticate(params.require(:session)[:username], params.require(:session)[:password])
+		@user = User.authenticate(params[:username], params[:password])
 		if @user
 			flash[:notice] = "You've been logged in."
-			session[:user_id] = @user.id
+			if params[:remember_me]
+				cookies.permanent[:auth_token] = @user.auth_token
+			else
+				cookies[:auth_token] = @user.auth_token
+			end
 			redirect_to "/"
 		else
 			flash[:alert] = "There was a problem logging you in."
@@ -22,7 +26,7 @@ class SessionsController < ApplicationController
 	end
 
 	def destroy
-		session[:user_id] = nil
+		cookies.delete(:auth_token)
 		flash[:notice] = "You've been logged out successfully."
 		redirect_to "/"
 	end
