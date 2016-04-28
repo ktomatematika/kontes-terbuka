@@ -4,6 +4,6 @@ class LongSubmission < ActiveRecord::Base
 
 	mount_uploader :attachment
 
-	validates :name, presence: truee
+	validates :name, presence: true
 	validates :problem_id, presence: true
 end

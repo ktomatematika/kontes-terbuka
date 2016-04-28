@@ -11,25 +11,21 @@
                           rel='stylesheet' type='text/css'>
   </head>
   <body>
-    <% if session[:user_id] %>
+    <% if current_user %>
       KONTES TERBUKA OLIMPIADE MATEMATIKA <br>
-      <% if current_user() %>
-        Halo, <%= current_user() %><br>
-      <% end %>
+      Halo, <%= current_user() %><br>
       <table>
         <tr>
           <td>
             <%= link_to "Home" , root_path %>
           </td>
           <td>
-            <% if session[:user_id] %>
-              <%= link_to "Logout", logout_path %>
-            <% else %>
-              <%= link_to "Login", login_path %>
-            <% end %>
-            <% if session[:user_id] %>
-              <%= link_to "Contests", contests_path %>
-            <% end %>
+            <%= link_to "Logout", logout_path %>
+          </td>
+          <td>
+            <%= link_to "Contests", contests_path %>
+          </td>
+          <td>
             <%= link_to "Admin", '/home/admin' %>
           </td>
         </tr>

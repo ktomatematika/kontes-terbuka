@@ -5,11 +5,11 @@ Rails.application.routes.draw do
   resources :roles
   resources :contests do
     resources :long_submissions
-  end\
+  end
 
   root "welcome#index"
 
-  get '/test' => 'welcome#user'
+  get '/sign' => 'welcome#user'
   get '/register' => 'users#new'
 
   get '/login' => 'sessions#new'

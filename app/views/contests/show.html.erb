@@ -1,5 +1,3 @@
-# there will be a verification here so that students can only access this page on contest time
-
 <h1> KONTES </h1>
 <table style="width:100%">
 	<tr>
@@ -44,7 +42,7 @@ Daftar submisi bagian B mu di kontes ini
 
 <section>
 Submit sesuatu
-<%= form_for([@contest, @contest.long_submissions.build]), html: { multipart: true } do |f| %>
+<%= form_for([@contest, @contest.long_submissions.build]) do |f| %>
   <p>
     <%= f.label :name %><br>
     <%= f.text_field :name %>

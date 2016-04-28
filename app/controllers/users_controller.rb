@@ -1,9 +1,14 @@
 class UsersController < ApplicationController
+	skip_before_filter :require_login, :only => [:new]
 	http_basic_authenticate_with name: "admin", password: "admin", only: [:index, :destroy]
 
 	def new
-		@user = User.new
-		redirect_to "/test#to-register"
+		if session[:user_id]
+			redirect_to "/"
+		else
+			@user = User.new
+			redirect_to "/sign#to-register"
+		end
 	end
 
 	def create
