@@ -2,7 +2,7 @@
 //All this logic will automatically be available in application.js.
 //You can use CoffeeScript in this file: http://coffeescript.org/
 
-$().ready(function() {
+function ready() {
 
 	// Synergize with bootstrap by adding certain bootstrap classes.
 	$.validator.setDefaults({
@@ -69,9 +69,9 @@ $().ready(function() {
 			"user[school]": {
 				required: true,
 			},
-			"confirm": {
-				required: true
-			}
+				"confirm": {
+					required: true
+				}
 		},
 		messages: {
 			"user[username]": {
@@ -116,9 +116,6 @@ $().ready(function() {
 		rules: {
 			"session[username]": {
 				required: true,
-				minlength: 6,
-				maxlength: 20,
-				alphanum: true
 			},
 			"session[password]": {
 				required: true,
@@ -127,10 +124,7 @@ $().ready(function() {
 		},
 		messages: {
 			"session[username]": {
-				required: "Tolong masukkan username.",
-				minlength: "Username Anda harus minimal 6 karakter.",
-				maxlength: "Username Anda tidak boleh lebih dari 20 karakter.",
-				alphanum: "Anda hanya bisa menggunakan huruf dan angka saja."
+				required: "Tolong masukkan username/email Anda."
 			},
 			"session[password]": {
 				required: "Tolong masukkan password.",
@@ -151,4 +145,18 @@ $().ready(function() {
 			$('#login-form').find('input').prop('disabled', true);
 		}
 	});
-});
+
+	// Show help text when input is selected
+	$("#register .pre-help, #login .pre-help").addClass('hidden');
+	$('#register input, #login input').focus(function() {
+		if (!$(this).parent().hasClass('has-error')) {
+			$(this).nextAll(".pre-help").removeClass('hidden');
+		}
+	});
+	$('#register input, #login input').focusout(function() {
+		$(this).nextAll(".pre-help").addClass('hidden');
+	});
+}
+
+$(document).ready(ready);
+$(document).on('page:load', ready);

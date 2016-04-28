@@ -9,7 +9,6 @@
     <%= csrf_meta_tags %>
     <link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,600'
                           rel='stylesheet' type='text/css'>
-    <script src='https://www.google.com/recaptcha/api.js'></script>
   </head>
   <body>
     <% if session[:user_id] %>
