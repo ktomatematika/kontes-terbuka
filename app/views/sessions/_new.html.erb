@@ -24,8 +24,12 @@
              class="glyphicon form-control-feedback"
              aria-hidden="true"></span></div>
         <footer>
-          <div class="form-group check-remember"><%= check_box_tag(:remember) %>
-          <%= label_tag(:remember, "Ingat saya") %></div>
+          <div class="checkbox">
+            <label>
+              <%= check_box_tag(:remember) %>
+              Ingat saya
+            </label>
+          </div>
           <%= s.submit "Masuk", class: "btn-lg btn-default btn-login" %>
         </footer>
       <% end %>
