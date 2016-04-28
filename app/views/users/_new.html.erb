@@ -98,9 +98,12 @@
           <span class="glyphicon form-control-feedback"
                 aria-hidden="true"></span>
         </div>
-        <div class="form-group"><%= check_box_tag(:confirm) %>
-        <%= label_tag(:confirm, "Saya menyetujui syarat dan ketentuan " +
-                      "website ini.") %></div>
+        <div class="checkbox">
+          <label>
+            <%= check_box_tag(:confirm) %>
+            Saya menyetujui syarat dan ketentuan website ini.
+          </label>
+        </div>
         <footer>
           <%= recaptcha_tags hl: 'id' %>
           <%= f.submit "Daftar", class: "btn-lg btn-default btn-register" %>

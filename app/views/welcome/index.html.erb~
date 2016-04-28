@@ -95,7 +95,8 @@
   <div class="container">
     <h1>Jadi, tunggu apa lagi?</h1>
     <h2><%= link_to "Daftar", "/register", class: "btn btn-default btn-lg 
-            text-uppercase btn-daftar", role: "button" %> atau,
-            <%= link_to "masuk", login_path %></h2>
+              text-uppercase btn-daftar", role: "button" %> 
+            <%= link_to "Masuk", "/masuk", class: "btn btn-default btn-lg 
+              text-uppercase btn-daftar", role: "button" %> </h2>
   </div>
 </section>

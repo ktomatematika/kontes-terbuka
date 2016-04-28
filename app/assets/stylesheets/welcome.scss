@@ -17,13 +17,17 @@ header.teaser {
   }
 
   .welcome-logo {
-    padding: 10px;
+    padding: 20px 0 0 10px;
     text-align: left;
+
+    @media (max-width: 500px) {
+      text-align: center;
+    }
   }
 
   h1 {
-    font-size: 60px;
-    margin: 50px 0;
+    font-size: 50px;
+    margin: 5% 0;
   }
 
   h2 {
