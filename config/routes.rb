@@ -8,14 +8,6 @@ Rails.application.routes.draw do
 
   resources :users
   resources :roles
-<<<<<<< HEAD
-  root "welcome#index"
-
-  get '/test' => 'welcome#user'
-  resources :contests do
-    resources :long_submissions
-  end
-=======
   resources :contests do
     resources :long_submissions
   end
@@ -23,7 +15,6 @@ Rails.application.routes.draw do
   root "welcome#index"
 
   get '/sign' => 'welcome#user'
->>>>>>> eef45bc... t s
   get '/register' => 'users#new'
 
   get '/login' => 'sessions#new'
