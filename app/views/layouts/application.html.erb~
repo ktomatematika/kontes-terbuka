@@ -64,8 +64,8 @@
 
       <% end %>
       <%= yield %>
-      <footer class="other-links" role="navigation">
-        <ul class="inline-list">
+      <footer id="other-links" role="navigation">
+        <ul class="list-inline">
           <li><a href="#">FAQ</a></li>
           <li><a href="#">Peta</a></li>
           <li><a href="#">Tentang Kami</a></li>
