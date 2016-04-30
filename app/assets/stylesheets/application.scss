@@ -50,3 +50,26 @@ body.logged {
 
   }
 }
+
+footer.other-links {
+  background: #000;
+  text-align: center;
+  padding-bottom: 100px;
+  font-size: 18px;
+
+  a {
+    display: inline-block;
+    margin: 30px 10px 10px 10px;
+    color: #fff;
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: #999;
+  }
+
+  .copyright {
+    color: #fff;
+    display: inline-block;
+  }
+}

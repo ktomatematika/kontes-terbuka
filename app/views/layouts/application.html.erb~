@@ -62,7 +62,19 @@
     <% else %>
       <body>
 
-    <% end %>
-    <%= yield %>
-  </body>
+      <% end %>
+      <%= yield %>
+      <footer class="other-links" role="navigation">
+        <ul class="inline-list">
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">Peta</a></li>
+          <li><a href="#">Tentang Kami</a></li>
+          <li><a href="#">Syarat dan Ketentuan</a></li>
+          <li><a href="#">Kebijakan Privasi</a></li>
+        </ul>
+        <span class="copyright">
+          &copy; Kontes Terbuka Olimpiade Matematika 2016
+        </span>
+      </footer>
+      </body>
 </html>
