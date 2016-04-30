@@ -45,16 +45,12 @@ body.logged {
     }
   }
 
-  .container-fluid {
-    height: auto;
-
-  }
 }
 
-footer.other-links {
+footer#other-links {
   background: #000;
   text-align: center;
-  padding-bottom: 100px;
+  padding-bottom: 5%;
   font-size: 18px;
 
   a {
