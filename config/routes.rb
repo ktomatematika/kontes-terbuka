@@ -4,8 +4,6 @@ Rails.application.routes.draw do
     root to: 'home#index', as: :authenticated_root
   end
 
-  root to: 'welcome#index'
-
   resources :users
   resources :roles
   resources :contests do
