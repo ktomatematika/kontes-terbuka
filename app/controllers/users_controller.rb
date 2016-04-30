@@ -1,9 +1,14 @@
 class UsersController < ApplicationController
+	skip_before_filter :require_login, :only => [:new, :create]
 	http_basic_authenticate_with name: "admin", password: "admin", only: [:index, :destroy]
 
 	def new
-		@user = User.new
-		redirect_to "/test#to-register"
+		if current_user
+			redirect_to "/"
+		else
+			@user = User.new
+			redirect_to "/sign#to-register"
+		end
 	end
 
 	def create
@@ -12,7 +17,7 @@ class UsersController < ApplicationController
 		if @user.save && verify_recaptcha(model: @user)
 			redirect_to @user
 		else
-			render 'new'
+			render '_new'
 		end
 	end
 
@@ -47,6 +52,6 @@ class UsersController < ApplicationController
 	def user_params
 		params.require(:user).permit(:username, :email, :password,
 									 :password_confirmation, :fullname,
-									 :province, :status, :school)
+									 :province, :status, :school, :terms_of_service)
 	end  
 end
