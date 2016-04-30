@@ -1,3 +1,22 @@
 // Place all the styles related to the Home controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.home-article {
+  margin: 20px 0;
+  border: 1px solid #000;
+  border-radius: 15px;
+  padding: 0 20px 20px 20px;
+}
+
+#leaderboard {
+  padding-bottom: 0;
+}
+
+#img-buku-ktom {
+  margin: 10px auto; 
+}
+
+#promo-buku {
+  text-align: center;
+}

@@ -9,7 +9,7 @@
     <h2>Untuk bangsa, untuk negara.</h2>
     <h2><%= link_to "Daftar", "/register", class: "btn btn-default btn-lg 
               text-uppercase btn-daftar", role: "button" %> 
-            <%= link_to "Masuk", "/masuk", class: "btn btn-default btn-lg 
+            <%= link_to "Masuk", "/login", class: "btn btn-default btn-lg 
               text-uppercase btn-daftar", role: "button" %> </h2>
     <h4>Kontes berikutnya: KTO Matematika Januari 2017: Simulasi OSK (11
       - 14 Januari 2017)</h4>
@@ -96,7 +96,7 @@
     <h1>Jadi, tunggu apa lagi?</h1>
     <h2><%= link_to "Daftar", "/register", class: "btn btn-default btn-lg 
               text-uppercase btn-daftar", role: "button" %> 
-            <%= link_to "Masuk", "/masuk", class: "btn btn-default btn-lg 
+            <%= link_to "Masuk", "/login", class: "btn btn-default btn-lg 
               text-uppercase btn-daftar", role: "button" %> </h2>
   </div>
 </section>
