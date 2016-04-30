@@ -11,7 +11,6 @@
                           rel='stylesheet' type='text/css'>
     <%= favicon_link_tag %>
   </head>
-<<<<<<< HEAD
   <% if session[:user_id] %>
     <body class="logged">
 
@@ -65,30 +64,18 @@
 
       <% end %>
       <%= yield %>
+
+      <footer id="other-links" role="navigation">
+        <ul class="list-inline">
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">Peta</a></li>
+          <li><a href="#">Tentang Kami</a></li>
+          <li><a href="#">Syarat dan Ketentuan</a></li>
+          <li><a href="#">Kebijakan Privasi</a></li>
+        </ul>
+        <span class="copyright">
+          &copy; Kontes Terbuka Olimpiade Matematika 2016
+        </span>
+      </footer>
       </body>
-=======
-  <body>
-    <% if current_user %>
-      KONTES TERBUKA OLIMPIADE MATEMATIKA <br>
-      <table>
-        <tr>
-          <td>
-            <%= link_to "Home" , root_path %>
-          </td>
-          <td>
-            <%= link_to "Logout", logout_path %>
-          </td>
-          <td>
-            <%= link_to "Contests", contests_path %>
-          </td>
-          <td>
-            <%= link_to "Admin", '/home/admin' %>
-          </td>
-        </tr>
-      </table>
-      <hr>
-    <% end %>
-    <%= yield %>
-  </body>
->>>>>>> eef45bc... t s
 </html>
