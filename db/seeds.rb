@@ -1,3 +1,7 @@
+[:admin, :student, :corrector, :banned].each do |role|
+  Role.where({ name: role }, without_protection: true).first_or_create
+end
+
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
 #

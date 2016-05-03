@@ -1,7 +1,0 @@
-<%= @roles.each do |r| %>
-<p>
-Role name: <br>
-<%= r.name %> <br>
-<%= link_to "Hapus", role_path(r), method: :delete, data: { confirm: 'Apakah Anda yakin?' } %> <br>
-</p>
-<% end %>
