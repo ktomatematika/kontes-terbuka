@@ -11,7 +11,7 @@
                           rel='stylesheet' type='text/css'>
     <%= favicon_link_tag %>
   </head>
-  <% if @current_user %>
+  <% if @current_user.username %>
     <body class="logged">
 
       <nav class="navbar navbar-default navbar-fixed-top">
@@ -46,7 +46,7 @@
                    role="button"
                    aria-haspopup="true"
                    aria-expanded="false">
-                  <%= @current_user %><span class="caret"></span></a>
+                  <%= @current_user.username %><span class="caret"></span></a>
                 <ul class="dropdown-menu">
                   <li><a href="#">Profil</a></li>
                   <li><a href="#">Pasar</a></li>
