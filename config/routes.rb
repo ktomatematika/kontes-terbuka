@@ -4,6 +4,14 @@ Rails.application.routes.draw do
     root to: 'home#index', as: :authenticated_root
   end
 
+  resources :province do
+    resources :users
+  end
+
+  resources :status do
+    resources :users
+  end
+
   resources :users
   resources :roles
   resources :contests do

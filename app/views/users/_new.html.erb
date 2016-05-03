@@ -64,31 +64,14 @@
                 aria-hidden="true"></span>
         </div>
         <div class="form-group has-feedback">
-          <%= select_tag :"user[province]", options_for_select(
-            [['Provinsi', 0], ['D.I. Aceh', 1], ['Sumatera Utara', 2],
-             ['Sumatera Barat', 3], ['Riau', 4], ['Kep. Riau', 5],
-             ['Jambi', 6], ['Bengkulu', 7], ['Bangka Belitung', 8],
-             ['Sumatera Selatan', 9], ['Lampung', 10], ['Banten', 11],
-             ['D.K.I. Jakarta', 12], ['Jawa Barat', 13], ['Jawa Tengah', 14],
-             ['Jawa Timur', 15], ['D.I. Yogyakarta', 16], ['Bali', 17],
-             ['Nusa Tenggara Barat', 18], ['Nusa Tenggara Timur', 19],
-             ['Kalimantan Barat', 20], ['Kalimantan Tengah', 21],
-             ['Kalimantan Utara', 22], ['Kalimantan Timur', 23],
-             ['Kalimantan Selatan', 24], ['Sulawesi Barat', 25],
-             ['Sulawesi Selatan', 26], ['Gorontalo', 27],
-             ['Sulawesi Tengah', 28], ['Sulawesi Utara', 29],
-             ['Sulawesi Tenggara', 30], ['Maluku Utara', 31], ['Maluku', 32],
-             ['Papua Barat', 33], ['Papua', 34], ['Lainnya', 35]]),
-          class: "form-control" %>
+          <%= f.collection_select :province_id, Province.all(), 
+            :id, :name, :prompt => "Provinsi" %>
         <span class="glyphicon form-control-feedback"
               aria-hidden="true"></span>
         </div>
         <div class="form-group has-feedback">
-          <%= select_tag :"user[status]", options_for_select(
-            [['Status', 0], ['Kelas 8', 1], ['Kelas 9', 2],
-             ['Kelas 10', 3], ['Kelas 11', 4], ['Kelas 12', 5],
-             ['Guru sekolah', 6], ['Guru/dosen/pengajar olimpiade', 7],
-             ['Umum', 8]]), class: "form-control" %>
+          <%= f.collection_select :status_id, Status.all(), 
+            :id, :name, :prompt => "Status" %>
            <span class="glyphicon form-control-feedback"
                  aria-hidden="true"></span>
         </div>

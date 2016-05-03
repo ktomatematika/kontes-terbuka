@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160428202525) do
+ActiveRecord::Schema.define(version: 20160502231622) do
 
   create_table "contests", force: :cascade do |t|
     t.string   "name"
@@ -39,15 +39,27 @@ ActiveRecord::Schema.define(version: 20160428202525) do
   add_index "long_submissions", ["contest_id"], name: "index_long_submissions_on_contest_id"
   add_index "long_submissions", ["user_id"], name: "index_long_submissions_on_user_id"
 
-  create_table "roles", force: :cascade do |t|
+  create_table "provinces", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "roles_users", id: false, force: :cascade do |t|
-    t.integer "role_id"
-    t.integer "user_id"
+  create_table "roles", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "resource_id"
+    t.string   "resource_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "roles", ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id"
+  add_index "roles", ["name"], name: "index_roles_on_name"
+
+  create_table "statuses", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -55,14 +67,24 @@ ActiveRecord::Schema.define(version: 20160428202525) do
     t.string   "email"
     t.string   "hashed_password"
     t.string   "fullname"
-    t.string   "province"
-    t.string   "status"
     t.string   "school"
     t.integer  "point"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
     t.string   "salt"
     t.string   "auth_token"
+    t.integer  "province_id"
+    t.integer  "status_id"
   end
+
+  add_index "users", ["province_id"], name: "index_users_on_province_id"
+  add_index "users", ["status_id"], name: "index_users_on_status_id"
+
+  create_table "users_roles", id: false, force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "role_id"
+  end
+
+  add_index "users_roles", ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id"
 
 end

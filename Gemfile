@@ -68,3 +68,11 @@ gem 'devise'
 gem 'carrierwave', '~> 0.10.0'
 
 gem 'mini_magick'
+
+gem "rolify"
+
+gem 'cancancan', '~> 1.10'
+
+gem 'hirb'
+
+gem 'table_print', '~> 1.5', '>= 1.5.6'

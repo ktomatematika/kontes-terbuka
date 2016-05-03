@@ -14,6 +14,7 @@ class UsersController < ApplicationController
 	def create
 		@user = User.new(user_params)
 		@user.point = 0
+		@user.add_role :student
 		if @user.save && verify_recaptcha(model: @user)
 			redirect_to @user
 		else
@@ -52,6 +53,15 @@ class UsersController < ApplicationController
 	def user_params
 		params.require(:user).permit(:username, :email, :password,
 									 :password_confirmation, :fullname,
-									 :province, :status, :school, :terms_of_service)
+									 :province_id, :status_id, 
+									 :school, :terms_of_service)
 	end  
+
+	def province_name
+		@province_name = Province.find(@user.provinces_id).name
+	end
+
+	def status_name
+		@status_name = Status.find(@user.statuses_id).name
+	end
 end

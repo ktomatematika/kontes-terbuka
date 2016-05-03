@@ -1,6 +1,15 @@
 class User < ActiveRecord::Base
-	has_and_belongs_to_many :roles
+	resourcify
+ 	rolify
+	rolify :before_add => :before_add_method
+
+	def before_add_method(role)
+    # do something before it gets added
+	end
+	
 	has_many :long_submissions
+	belongs_to :province
+	belongs_to :status
 
 	attr_accessor :password
 
@@ -9,8 +18,6 @@ class User < ActiveRecord::Base
 		:format => { :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/ }
 	validates :password, presence: true, confirmation: true, length: { minimum: 6 }
 	validates :fullname, presence: true, :format => { :with => /\A[a-zA-Z][a-zA-Z ]+\Z/ }
-	validates :province, presence: true
-	validates :status, presence: true
 	validates :school, presence: true
 	validates :terms_of_service, acceptance: true
 

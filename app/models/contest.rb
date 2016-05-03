@@ -1,4 +1,5 @@
 class Contest < ActiveRecord::Base
+	resourcify
 	has_many :long_submissions
 	
 	validates :name, presence: true, uniqueness: true
