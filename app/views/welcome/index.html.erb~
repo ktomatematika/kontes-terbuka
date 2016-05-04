@@ -2,13 +2,13 @@
   <div class="welcome-logo">
     <%= image_tag("logo.png", :alt => "Logo KTOM") %>
   </div>
-  <div class="container">
+  <div class="container-fluid">
     <h1>KTO Matematika</h1>
     <h2>sebuah kontes matematika yang dipersembahkan oleh Tim Olimpiade
       Matematika Indonesia.</h2>
     <h2>Untuk bangsa, untuk negara.</h2>
     <h2><%= link_to "Daftar", "/register", class: "btn btn-default btn-lg 
-              text-uppercase btn-daftar", role: "button" %> 
+              text-uppercase btn-daftar red-color", role: "button" %> 
             <%= link_to "Masuk", "/login", class: "btn btn-default btn-lg 
               text-uppercase btn-daftar", role: "button" %> </h2>
     <h4>Kontes berikutnya: KTO Matematika Januari 2017: Simulasi OSK (11
@@ -17,31 +17,31 @@
 </header>
 
 <section class="main-section" id="features">
-  <div class="container">
+  <div class="container-fluid">
     <div class="row">
       <div class="col-md-2 col-xs-6">
         <h3>Gratis</h3>
-        <div class="glyphicon glyphicon-usd" aria-hidden="true"></div>
+        <div class="glyphicon green-color glyphicon green-color-usd" aria-hidden="true"></div>
         <p>Kontes ini selamanya gratis. Tidak dipungut biaya sama
         sekali!</p>
       </div>
       <div class="col-md-2 col-xs-6">
         <h3>Bulanan</h3>
-        <div class="glyphicon glyphicon-calendar" aria-hidden="true"></div>
+        <div class="glyphicon green-color glyphicon green-color-calendar" aria-hidden="true"></div>
         <p>Kontes ini diadakan setiap bulan. Latihan rutin adalah kunci
         kesuksesan!</p>
       </div>
       <div class="clearfix visible-xs-block"></div>
       <div class="col-md-2 col-xs-6">
         <h3>Terbuka</h3>
-        <div class="glyphicon glyphicon-user" aria-hidden="true"></div>
+        <div class="glyphicon green-color glyphicon green-color-user" aria-hidden="true"></div>
         <p>Walaupun soal-soalnya setingkat olimpiade SMA, siapa saja, dari
         bayi, murid SD, SMP, SMA, guru/dosen, sampai kakek-nenek, boleh
         ikut kontes ini!</p>
       </div>
       <div class="col-md-2 col-xs-6">
         <h3>Online</h3>
-        <div class="glyphicon glyphicon-globe" aria-hidden="true"></div>
+        <div class="glyphicon green-color glyphicon green-color-globe" aria-hidden="true"></div>
         <p>Kontes ini diadakan secara online. Soal dikirim lewat email dan
         peserta cukup mengetik, mengfoto, ataupun mengscan dan mengirim
         balik ke kami!</p>
@@ -49,7 +49,7 @@
       <div class="clearfix visible-xs-block"></div>
       <div class="col-md-2 col-xs-6">
         <h3>Berkualitas</h3>
-        <div class="glyphicon glyphicon-ok" aria-hidden="true"></div>
+        <div class="glyphicon green-color glyphicon green-color-ok" aria-hidden="true"></div>
         <p>Kontes ini diselenggarakan oleh ikatan alumni Tim Olimpiade
         Matematika Indonesia, dengan setidaknya 15 orang dari kami
         memenangkan medali emas OSN.</p>
@@ -65,7 +65,7 @@
   </div>
 </section>
 <section class="main-section" id="testimonies">
-  <div class="container">
+  <div class="container-fluid">
     <h1>Testimoni</h1>
     <blockquote>
       <p>Setelah mengikuti KTO Matematika, saya merasa saya mendapatkan
@@ -92,7 +92,7 @@
 </section>
 
 <section class="main-section" id="teaser">
-  <div class="container">
+  <div class="container-fluid">
     <h1>Jadi, tunggu apa lagi?</h1>
     <h2><%= link_to "Daftar", "/register", class: "btn btn-default btn-lg 
               text-uppercase btn-daftar", role: "button" %> 
