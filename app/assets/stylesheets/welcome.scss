@@ -40,27 +40,67 @@ header.teaser {
   h4 {
     margin: 30px 0;
   }
+}
 
-  .btn {
-    &.yellow-color {
-      background-color: $yellow-color;
+.has-shade.btn {
+
+  &.red-color {
+    background-color: lighten($red-color, 5);
+    border-color: darken($red-color, 10);
+
+    &:hover {
+      background-color: $red-color;
+      border-color: darken($red-color, 15);
     }
 
-    &.red-color {
-      background-color: lighten($red-color, 5);
-      border-color: $red-color;
-
-      &:hover {
-        background-color: $red-color;
-      }
+    &:active {
+      background-color: darken($red-color, 5);
+      border-color: darken($red-color, 20);
     }
+  }
 
-    &.blue-color {
+  &.blue-color {
+    background-color: lighten($blue-color, 5);
+    border-color: darken($blue-color, 10);
+
+    &:hover {
       background-color: $blue-color;
+      border-color: darken($blue-color, 15);
     }
 
-    &.green-color {
+    &:active {
+      background-color: darken($blue-color, 5);
+      border-color: darken($blue-color, 20);
+    }
+  }
+
+  &.green-color {
+    background-color: lighten($green-color, 5);
+    border-color: darken($green-color, 10);
+
+    &:hover {
       background-color: $green-color;
+      border-color: darken($green-color, 15);
+    }
+
+    &:active {
+      background-color: darken($green-color, 5);
+      border-color: darken($green-color, 20);
+    }
+  }
+
+  &.yellow-color {
+    background-color: lighten($yellow-color, 5);
+    border-color: darken($yellow-color, 10);
+
+    &:hover {
+      background-color: $yellow-color;
+      border-color: darken($yellow-color, 15);
+    }
+
+    &:active {
+      background-color: darken($yellow-color, 5);
+      border-color: darken($yellow-color, 20);
     }
   }
 }
@@ -79,19 +119,19 @@ header.teaser {
     font-size: 40px;
     padding: 10px 0;
 
-    &.yellow-color {
+    &.has-shade.yellow-color {
       color: $yellow-color;
     }
 
-    &.red-color {
+    &.has-shade.red-color {
       color: $red-color;
     }
 
-    &.blue-color {
+    &.has-shade.blue-color {
       color: $blue-color;
     }
 
-    &.green-color {
+    &.has-shade.green-color {
       color: $green-color;
     }
   }
@@ -109,19 +149,19 @@ header.teaser {
     margin: 5px 30px;
     border-color: #ccc;
 
-    &.yellow-color {
+    &.has-shade.yellow-color {
       border-color: lighten($yellow-color, 10);
     }
 
-    &.red-color {
+    &.has-shade.red-color {
       border-color: lighten($red-color, 10);
     }
 
-    &.blue-color {
+    &.has-shade.blue-color {
       border-color: lighten($blue-color, 10);
     }
 
-    &.green-color {
+    &.has-shade.green-color {
       border-color: lighten($green-color, 10);
     }
   }

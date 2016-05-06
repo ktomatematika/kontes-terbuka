@@ -38,6 +38,10 @@ body.logged {
     padding: 10px;
   }
 
+  .navbar-toggle {
+    margin: 15px 15px 15px 0;
+  }
+
   .navbar-nav li {
     font-size: 18px;
 
@@ -51,7 +55,7 @@ body.logged {
 footer#other-links {
   background: #000;
   text-align: center;
-  padding-bottom: 5%;
+  padding: 0 5% 5% 5%;
   font-size: 18px;
 
   a {
@@ -63,19 +67,19 @@ footer#other-links {
 
   a:hover {
     color: #999;
-    &.yellow-color {
+    &.has-shade.yellow-color {
       color: $yellow-color;
     }
 
-    &.red-color {
+    &.has-shade.red-color {
       color: $red-color;
     }
 
-    &.blue-color {
+    &.has-shade.blue-color {
       color: $blue-color;
     }
 
-    &.green-color {
+    &.has-shade.green-color {
       color: $green-color;
     }
   }
