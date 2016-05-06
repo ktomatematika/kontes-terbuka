@@ -4,7 +4,7 @@ class UsersController < ApplicationController
 
 	def new
 		if current_user
-			redirect_to "/"
+			redirect_to root_path
 		else
 			@user = User.new
 			redirect_to "/sign#to-register"
@@ -16,7 +16,8 @@ class UsersController < ApplicationController
 		@user.point = 0
 		@user.add_role :student
 		if @user.save && verify_recaptcha(model: @user)
-			redirect_to @user
+			cookies[:auth_token] = @user.auth_token
+			redirect_to root_path
 		else
 			render '_new'
 		end
