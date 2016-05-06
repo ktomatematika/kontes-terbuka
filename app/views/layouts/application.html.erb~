@@ -11,7 +11,7 @@
                           rel='stylesheet' type='text/css'>
     <%= favicon_link_tag %>
   </head>
-  <% if current_user %>
+  <% if @current_user %>
     <body class="logged">
 
       <nav class="navbar navbar-default navbar-fixed-top">
@@ -46,7 +46,7 @@
                    role="button"
                    aria-haspopup="true"
                    aria-expanded="false">
-                  <%= current_user() %><span class="caret"></span></a>
+                  <%= @current_user.username %><span class="caret"></span></a>
                 <ul class="dropdown-menu">
                   <li><a href="#">Profil</a></li>
                   <li><a href="#">Pasar</a></li>
@@ -65,20 +65,20 @@
       <% end %>
       <%= yield %>
 
-        <% if request.original_fullpath != "/sign" %>
-      <footer id="other-links" role="navigation">
+      <% if request.original_fullpath != "/sign" %>
+        <footer id="other-links" role="navigation">
 
-        <ul class="list-inline">
-          <li><a href="#">FAQ</a></li>
-          <li><a href="#">Peta</a></li>
-          <li><a href="#">Tentang Kami</a></li>
-          <li><a href="#">Syarat dan Ketentuan</a></li>
-          <li><a href="#">Kebijakan Privasi</a></li>
-        </ul>
-        <span class="copyright">
-          &copy; Kontes Terbuka Olimpiade Matematika 2016
-        </span>
-      </footer>
-    <% end %>
+          <ul class="list-inline">
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">Peta</a></li>
+            <li><a href="#">Tentang Kami</a></li>
+            <li><a href="#">Syarat dan Ketentuan</a></li>
+            <li><a href="#">Kebijakan Privasi</a></li>
+          </ul>
+          <span class="copyright">
+            &copy; Kontes Terbuka Olimpiade Matematika 2016
+          </span>
+        </footer>
+      <% end %>
       </body>
 </html>

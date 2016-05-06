@@ -17,6 +17,7 @@
 // "bootstrap-sprockets" must be imported before "bootstrap" and "bootstrap/variables"
 @import "bootstrap-sprockets";
 @import "bootstrap";
+@import "colors";
 
 html, body {
   font-family: 'Titillium Web', sans-serif;
@@ -62,6 +63,21 @@ footer#other-links {
 
   a:hover {
     color: #999;
+    &.yellow-color {
+      color: $yellow-color;
+    }
+
+    &.red-color {
+      color: $red-color;
+    }
+
+    &.blue-color {
+      color: $blue-color;
+    }
+
+    &.green-color {
+      color: $green-color;
+    }
   }
 
   .copyright {

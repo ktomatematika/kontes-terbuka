@@ -2,6 +2,8 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+@import "colors";
+
 html, body {
   height: 100%;
 }
@@ -10,8 +12,9 @@ header.teaser {
   text-align: center;
   background: image-url('welcome-bg.jpg') center / cover;
   min-height: 100%;
+  padding: 0 3%;
 
-  .container {
+  .container-fluid {
     padding: 3%; 
     margin: 0 auto;
   }
@@ -37,6 +40,29 @@ header.teaser {
   h4 {
     margin: 30px 0;
   }
+
+  .btn {
+    &.yellow-color {
+      background-color: $yellow-color;
+    }
+
+    &.red-color {
+      background-color: lighten($red-color, 5);
+      border-color: $red-color;
+
+      &:hover {
+        background-color: $red-color;
+      }
+    }
+
+    &.blue-color {
+      background-color: $blue-color;
+    }
+
+    &.green-color {
+      background-color: $green-color;
+    }
+  }
 }
 
 .main-section {
@@ -52,6 +78,22 @@ header.teaser {
   .glyphicon {
     font-size: 40px;
     padding: 10px 0;
+
+    &.yellow-color {
+      color: $yellow-color;
+    }
+
+    &.red-color {
+      color: $red-color;
+    }
+
+    &.blue-color {
+      color: $blue-color;
+    }
+
+    &.green-color {
+      color: $green-color;
+    }
   }
 }
 
@@ -66,6 +108,22 @@ header.teaser {
   blockquote {
     margin: 5px 30px;
     border-color: #ccc;
+
+    &.yellow-color {
+      border-color: lighten($yellow-color, 10);
+    }
+
+    &.red-color {
+      border-color: lighten($red-color, 10);
+    }
+
+    &.blue-color {
+      border-color: lighten($blue-color, 10);
+    }
+
+    &.green-color {
+      border-color: lighten($green-color, 10);
+    }
   }
 
   blockquote:first-child {
