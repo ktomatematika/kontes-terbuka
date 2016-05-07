@@ -37,24 +37,15 @@
             <ul class="nav navbar-nav navbar-right">
               <li><%= link_to "Admin", '/home/admin',
                 :class => "has-shade" %></li>
-              <li><%= link_to "Rumah" , root_path,
-                :class => "has-shade" %></li>
               <li><%= link_to "Kontes", contests_path,
                 :class => "has-shade" %></li>
-              <li class="dropdown">
-                <a href="#"
-                   class="dropdown-toggle"
-                   data-toggle="dropdown"
-                   role="button"
-                   aria-haspopup="true"
-                   aria-expanded="false">
-                  <%= @current_user.username %><span class="caret"></span></a>
-                <ul class="dropdown-menu">
-                  <li><a class="has-shade" href="#">Profil</a></li>
-                  <li><a class="has-shade" href="#">Pasar</a></li>
-                  <li><%= link_to "Keluar", logout_path %></li>
-                </ul>
-              </li>
+              <li><%= link_to "Rumah" , root_path,
+                :class => "has-shade" %></li>
+              <li><a href="#" class="has-shade">Pasar</a></li>
+              <li><a href="#" class="has-shade">
+                  <%= @current_user.username %></a></li>
+              <li><%= link_to "Keluar", logout_path,
+                :class => "has-shade" %></li>
             </ul>
           </div>
 
@@ -73,10 +64,16 @@
           <li><a href="#" class="has-shade">Tentang Kami</a></li>
           <li><a href="#" class="has-shade">Syarat dan Ketentuan</a></li>
           <li><a href="#" class="has-shade">Kebijakan Privasi</a></li>
+          <li><a href="#" class="has-shade">Kontak Kami</a></li>
         </ul>
-        <span class="copyright">
-          &copy; Kontes Terbuka Olimpiade Matematika 2016
-        </span>
+        <p class="footer-text">
+        &copy; Kontes Terbuka Olimpiade Matematika 2016
+        </p>
+        <p class="footer-text">
+        Bagian dari Trio TOMI:<br>
+        TOMI-Materi &mdash; Kontes Terbuka Olimpiade Matematika
+        &mdash; Olimpiade.org
+        </p>
       </footer>
     <% end %>
   </body>
