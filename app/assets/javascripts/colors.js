@@ -20,10 +20,7 @@ function choose_color() {
 	return color;
 }
 
-function ready() {
+$(document).ready(function() {
 	var shade = choose_color();	
 	$('.has-shade').addClass(shade);
-}
-
-$(document).ready(ready);
-$(document).on('page:load', ready);
+});
