@@ -4,7 +4,7 @@
 var js, fjs = d.getElementsByTagName(s)[0];
 if (d.getElementById(id)) return;
 js = d.createElement(s); js.id = id;
-js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6";
+js.src = "//connect.facebook.net/id_ID/sdk.js#xfbml=1&version=v2.6";
 fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
 
@@ -12,6 +12,7 @@ fjs.parentNode.insertBefore(js, fjs);
 <%= content_for (:body_attributes) do %>
   data-no-turbolink="true"
 <% end %>
+
 <div class="container-fluid">
   <div class="row">
     <section class="col-sm-7 col-sm-offset-1"> 
@@ -19,14 +20,14 @@ fjs.parentNode.insertBefore(js, fjs);
         <h2>Kontes Bulanan: Juli 2017</h2>
         <h3>17 Juli 2017 13:00 WIB - 19 Juli 2017 17:00 WIB</h3>
         <button type="button"
-                class="btn btn-default disabled" id="btn-daftar">
+                class="btn btn-default has-shade disabled" id="btn-daftar">
           99 hari 23 jam 59 menit 59 detik lagi
         </button>
       </article>
       <article class="home-article" id="leaderboard">
         <h3>Leaderboard Tahun Ini</h3>
         <div class="table-responsive">
-          <table class="table table-hover table-bordered">
+          <table class="table table-hover has-shade table-bordered">
             <thead>
               <tr>
                 <th>Rank</th>
@@ -136,7 +137,7 @@ fjs.parentNode.insertBefore(js, fjs);
       </article>
     </section>
     <aside class="col-sm-3">
-      <article class="fb-page"
+      <article class="fb-page hidden-sm"
                data-href="https://www.facebook.com/KTOMatematika/"
                data-tabs="timeline"
                data-adapt-container-width="true">
@@ -150,11 +151,11 @@ fjs.parentNode.insertBefore(js, fjs);
       </article>    
       <article class="home-article" id="promo-buku">
         <h3>Buku KTO Matematika 1</h3>
-        <%= image_tag("buku.png", :alt => "Buku KTOM 1",
-                      :class => "img-responsive", :id => "img-buku-ktom") %>
-                    <a href="http://bit.ly/ktom-buku-1">
+        <a href="http://bit.ly/ktom-buku-1">
+          <%= image_tag("buku.png", :alt => "Buku KTOM 1",
+                        :class => "img-responsive", :id => "img-buku-ktom") %>
                       Klik di sini untuk order!
-                    </a>
+        </a>
       </article>
     </aside>
   </div>

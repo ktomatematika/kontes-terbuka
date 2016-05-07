@@ -12,9 +12,8 @@
                           rel='stylesheet' type='text/css'>
     <%= favicon_link_tag %>
   </head>
-  <% if @current_user %>
-    <body class="logged">
-
+  <body <%= yield(:body_attributes) %>>
+    <% if @current_user %>
       <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container-fluid">
 
@@ -29,17 +28,19 @@
               </span>
             </button>
             <div class="navbar-brand" id="top-navbar-logo">
-              <%= image_tag("logo.png", :alt => "Logo KTOM",
-                            :height => "50px") %>
+              <%= link_to image_tag("logo.png", :alt => "Logo KTOM",
+                                    :height => "50px"), root_path %>
           </div>
           </div>
 
           <div class="collapse navbar-collapse" id="top-navbar"> 
             <ul class="nav navbar-nav navbar-right">
-              <li><%= link_to "Admin", '/home/admin' %></li>
-              <li><%= link_to "Rumah" , root_path %></li>
-
-              <li><%= link_to "Kontes", contests_path %></li>
+              <li><%= link_to "Admin", '/home/admin',
+                :class => "has-shade" %></li>
+              <li><%= link_to "Rumah" , root_path,
+                :class => "has-shade" %></li>
+              <li><%= link_to "Kontes", contests_path,
+                :class => "has-shade" %></li>
               <li class="dropdown">
                 <a href="#"
                    class="dropdown-toggle"
@@ -49,8 +50,8 @@
                    aria-expanded="false">
                   <%= @current_user.username %><span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                  <li><a href="#">Profil</a></li>
-                  <li><a href="#">Pasar</a></li>
+                  <li><a class="has-shade" href="#">Profil</a></li>
+                  <li><a class="has-shade" href="#">Pasar</a></li>
                   <li><%= link_to "Keluar", logout_path %></li>
                 </ul>
               </li>
@@ -60,26 +61,23 @@
         </div>
       </nav>
 
-    <% else %>
-      <body>
+    <% end %>
+    <%= yield %>
 
-      <% end %>
-      <%= yield %>
+    <% if request.original_fullpath != "/sign" %>
+      <footer id="other-links" role="navigation">
 
-      <% if request.original_fullpath != "/sign" %>
-        <footer id="other-links" role="navigation">
-
-          <ul class="list-inline">
-            <li><a href="#" class="has-shade">FAQ</a></li>
-            <li><a href="#" class="has-shade">Peta</a></li>
-            <li><a href="#" class="has-shade">Tentang Kami</a></li>
-            <li><a href="#" class="has-shade">Syarat dan Ketentuan</a></li>
-            <li><a href="#" class="has-shade">Kebijakan Privasi</a></li>
-          </ul>
-          <span class="copyright">
-            &copy; Kontes Terbuka Olimpiade Matematika 2016
-          </span>
-        </footer>
-      <% end %>
-      </body>
+        <ul class="list-inline">
+          <li><a href="#" class="has-shade">FAQ</a></li>
+          <li><a href="#" class="has-shade">Peta</a></li>
+          <li><a href="#" class="has-shade">Tentang Kami</a></li>
+          <li><a href="#" class="has-shade">Syarat dan Ketentuan</a></li>
+          <li><a href="#" class="has-shade">Kebijakan Privasi</a></li>
+        </ul>
+        <span class="copyright">
+          &copy; Kontes Terbuka Olimpiade Matematika 2016
+        </span>
+      </footer>
+    <% end %>
+  </body>
 </html>

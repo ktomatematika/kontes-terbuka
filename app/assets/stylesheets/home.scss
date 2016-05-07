@@ -2,6 +2,8 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+@import "colors";
+
 .home-article {
   margin: 20px 0;
   border: 1px solid #000;
@@ -23,4 +25,22 @@
 
 #promo-buku {
   text-align: center;
+}
+
+table.has-shade {
+  &.red-color tbody tr:hover {
+    background: lighten($red-color, 20);
+  }
+
+  &.blue-color tbody tr:hover {
+    background: lighten($blue-color, 20);
+  }
+
+  &.green-color tbody tr:hover {
+    background: lighten($green-color, 20);
+  }
+
+  &.yellow-color tbody tr:hover {
+    background: lighten($yellow-color, 20);
+  }
 }
