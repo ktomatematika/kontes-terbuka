@@ -25,10 +25,10 @@
 	<%= f.password_field :password_confirmation %><br>
 	Nama lengkap: <br>
 	<%= f.text_field :fullname %><br>
-	Provinsi: <br>
-	<%= f.text_field :province %><br>
-	Status: <br>
-	<%= f.text_field :status %><br>
+	<%= f.collection_select :province_id, Province.all(), 
+		:id, :name, { prompt: "Provinsi" } %> <br>
+	<%= f.collection_select :status_id, Status.all(), 
+		:id, :name, { prompt: "Status" } %> <br>
 	Sekolah/Institusi: <br>
 	<%= f.text_field :school %><br>
 	<%= f.submit %>
