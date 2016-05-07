@@ -53,7 +53,7 @@ body.not-logged {
 
 }
 
-.has-shade.btn {
+.has-shade.btn, .has-shade.btn-lg {
 
   &.red-color {
     background-color: lighten($red-color, 5);
