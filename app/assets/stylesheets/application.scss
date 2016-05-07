@@ -19,17 +19,18 @@
 @import "bootstrap";
 @import "colors";
 
-html, body {
+body {
   font-family: 'Titillium Web', sans-serif;
   background: #f3f3ee;
+  padding-top: 90px;
 }
 
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   font-weight: 600;
 }
 
-body.logged {
-  padding-top: 90px;
+body.not-logged {
+  padding-top: 0;
 }
 
 .navbar-fixed-top {

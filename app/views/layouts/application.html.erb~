@@ -70,11 +70,11 @@
         <footer id="other-links" role="navigation">
 
           <ul class="list-inline">
-            <li><a href="#">FAQ</a></li>
-            <li><a href="#">Peta</a></li>
-            <li><a href="#">Tentang Kami</a></li>
-            <li><a href="#">Syarat dan Ketentuan</a></li>
-            <li><a href="#">Kebijakan Privasi</a></li>
+            <li><a href="#" class="has-shade">FAQ</a></li>
+            <li><a href="#" class="has-shade">Peta</a></li>
+            <li><a href="#" class="has-shade">Tentang Kami</a></li>
+            <li><a href="#" class="has-shade">Syarat dan Ketentuan</a></li>
+            <li><a href="#" class="has-shade">Kebijakan Privasi</a></li>
           </ul>
           <span class="copyright">
             &copy; Kontes Terbuka Olimpiade Matematika 2016

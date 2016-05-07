@@ -8,9 +8,9 @@
       Matematika Indonesia.</h2>
     <h2>Untuk bangsa, untuk negara.</h2>
     <h2><%= link_to "Daftar", "/register", class: "btn btn-default btn-lg 
-              text-uppercase btn-daftar", role: "button" %> 
+              text-uppercase btn-daftar has-shade", role: "button" %> 
             <%= link_to "Masuk", "/login", class: "btn btn-default btn-lg 
-              text-uppercase btn-daftar", role: "button" %></h2>
+              text-uppercase btn-daftar has-shade", role: "button" %></h2>
     <h4>Kontes berikutnya: KTO Matematika Januari 2017: Simulasi OSK (11
       - 14 Januari 2017)</h4>
   </div>
@@ -21,27 +21,30 @@
     <div class="row">
       <div class="col-md-2 col-xs-6">
         <h3>Gratis</h3>
-        <div class="glyphicon glyphicon-usd" aria-hidden="true"></div>
+        <div class="glyphicon has-shade glyphicon-usd" aria-hidden="true"></div>
         <p>Kontes ini selamanya gratis. Tidak dipungut biaya sama
         sekali!</p>
       </div>
       <div class="col-md-2 col-xs-6">
         <h3>Bulanan</h3>
-        <div class="glyphicon glyphicon-calendar" aria-hidden="true"></div>
+        <div class="glyphicon has-shade glyphicon-calendar"
+        aria-hidden="true"></div>
         <p>Kontes ini diadakan setiap bulan. Latihan rutin adalah kunci
         kesuksesan!</p>
       </div>
       <div class="clearfix visible-xs-block"></div>
       <div class="col-md-2 col-xs-6">
         <h3>Terbuka</h3>
-        <div class="glyphicon glyphicon-user" aria-hidden="true"></div>
+        <div class="glyphicon has-shade glyphicon-user"
+        aria-hidden="true"></div>
         <p>Walaupun soal-soalnya setingkat olimpiade SMA, siapa saja, dari
         bayi, murid SD, SMP, SMA, guru/dosen, sampai kakek-nenek, boleh
         ikut kontes ini!</p>
       </div>
       <div class="col-md-2 col-xs-6">
         <h3>Online</h3>
-        <div class="glyphicon glyphicon-globe" aria-hidden="true"></div>
+        <div class="glyphicon has-shade glyphicon-globe"
+        aria-hidden="true"></div>
         <p>Kontes ini diadakan secara online. Soal dikirim lewat email dan
         peserta cukup mengetik, mengfoto, ataupun mengscan dan mengirim
         balik ke kami!</p>
@@ -49,14 +52,16 @@
       <div class="clearfix visible-xs-block"></div>
       <div class="col-md-2 col-xs-6">
         <h3>Berkualitas</h3>
-        <div class="glyphicon glyphicon-ok" aria-hidden="true"></div>
+        <div class="glyphicon has-shade glyphicon-ok"
+        aria-hidden="true"></div>
         <p>Kontes ini diselenggarakan oleh ikatan alumni Tim Olimpiade
         Matematika Indonesia, dengan setidaknya 15 orang dari kami
         memenangkan medali emas OSN.</p>
       </div>
       <div class="col-md-2 col-xs-6">
         <h3>Membenahi</h3>
-        <div class="glyphicon glyphicon-send" aria-hidden="true"></div>
+        <div class="glyphicon has-shade glyphicon-send"
+        aria-hidden="true"></div>
         <p>Peserta akan diberikan umpan balik mengenai solusi esainya oleh
         tim kami yang sangat berpengalaman, agar penulisan solusi bisa
         lebih baik lagi.</p>
@@ -67,19 +72,19 @@
 <section class="main-section" id="testimonies">
   <div class="container-fluid">
     <h1>Testimoni</h1>
-    <blockquote>
+    <blockquote class="has-shade">
       <p>Setelah mengikuti KTO Matematika, saya merasa saya mendapatkan
       banyak pengetahuan baru dan juga cara-cara baru dalam mengerjakan
       soal. Saya juga merasa lebih berpengalaman dalam mengerjakan soal
       olimpiade.</p>
       <footer>Fadlan Fade Idham, Sulawesi Selatan, kelas 10</footer>
     </blockquote>
-    <blockquote class="blockquote-reverse">
+    <blockquote class="has-shade blockquote-reverse">
       <p>Setelah saya mengikuti KTO Matematika, saya sangat merasakan
       manfaatnya dalam kemampuan problem solving dan penulisan solusi.</p>
       <footer>Muhammad Taufiq Badruzzuhad, Jawa Tengah, kelas 12</footer>
     </blockquote>
-    <blockquote>
+    <blockquote class="has-shade">
       <p>Setelah mengikuti kompetisi KTOM, saya jadi lebih mampu
       menuliskan solusi untuk uraian. Penjelasannya juga jadi lebih
       sistematis. Selain itu, secara tidak langsung menurut saya cara
@@ -95,8 +100,8 @@
   <div class="container-fluid">
     <h1>Jadi, tunggu apa lagi?</h1>
     <h2><%= link_to "Daftar", "/register", class: "btn btn-default btn-lg 
-              text-uppercase btn-daftar", role: "button" %> 
+              text-uppercase btn-daftar has-shade", role: "button" %> 
             <%= link_to "Masuk", "/login", class: "btn btn-default btn-lg 
-              text-uppercase btn-daftar", role: "button" %> </h2>
+              text-uppercase btn-daftar has-shade", role: "button" %></h2>
   </div>
 </section>
