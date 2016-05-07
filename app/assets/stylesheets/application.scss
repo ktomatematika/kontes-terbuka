@@ -19,17 +19,18 @@
 @import "bootstrap";
 @import "colors";
 
-html, body {
+body {
   font-family: 'Titillium Web', sans-serif;
   background: #f3f3ee;
+  padding-top: 90px;
 }
 
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   font-weight: 600;
 }
 
-body.logged {
-  padding-top: 90px;
+body.not-logged {
+  padding-top: 0;
 }
 
 .navbar-fixed-top {
@@ -52,10 +53,73 @@ body.logged {
 
 }
 
+.has-shade.btn {
+
+  &.red-color {
+    background-color: lighten($red-color, 5);
+    border-color: darken($red-color, 10);
+
+    &:hover:not(.disabled) {
+      background-color: $red-color;
+      border-color: darken($red-color, 15);
+    }
+
+    &:active:not(.disabled)  {
+      background-color: darken($red-color, 5);
+      border-color: darken($red-color, 20);
+    }
+  }
+
+  &.blue-color {
+    background-color: lighten($blue-color, 5);
+    border-color: darken($blue-color, 10);
+
+    &:hover:not(.disabled) {
+      background-color: $blue-color;
+      border-color: darken($blue-color, 15);
+    }
+
+    &:active:not(.disabled) {
+      background-color: darken($blue-color, 5);
+      border-color: darken($blue-color, 20);
+    }
+  }
+
+  &.green-color {
+    background-color: lighten($green-color, 5);
+    border-color: darken($green-color, 10);
+
+    &:hover:not(.disabled) {
+      background-color: $green-color;
+      border-color: darken($green-color, 15);
+    }
+
+    &:active:not(.disabled) {
+      background-color: darken($green-color, 5);
+      border-color: darken($green-color, 20);
+    }
+  }
+
+  &.yellow-color {
+    background-color: lighten($yellow-color, 5);
+    border-color: darken($yellow-color, 10);
+
+    &:hover:not(.disabled) {
+      background-color: $yellow-color;
+      border-color: darken($yellow-color, 15);
+    }
+
+    &:active:not(.disabled) {
+      background-color: darken($yellow-color, 5);
+      border-color: darken($yellow-color, 20);
+    }
+  }
+}
+
 footer#other-links {
   background: #000;
   text-align: center;
-  padding: 0 5% 5% 5%;
+  padding: 0 5% 3% 5%;
   font-size: 18px;
 
   a {
@@ -63,10 +127,20 @@ footer#other-links {
     margin: 30px 10px 10px 10px;
     color: #fff;
     text-decoration: none;
+
+    &:hover {
+      color: #999;
+    }
   }
 
+  .copyright {
+    color: #fff;
+    display: inline-block;
+  }
+}
+
+footer#other-links, ul.navbar-nav {
   a:hover {
-    color: #999;
     &.has-shade.yellow-color {
       color: $yellow-color;
     }
@@ -82,10 +156,5 @@ footer#other-links {
     &.has-shade.green-color {
       color: $green-color;
     }
-  }
-
-  .copyright {
-    color: #fff;
-    display: inline-block;
   }
 }

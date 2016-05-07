@@ -2,7 +2,7 @@
 //All this logic will automatically be available in application.js.
 //You can use CoffeeScript in this file: http://coffeescript.org/
 
-function ready() {
+$(document).ready(function() {
 
 	// Synergize with bootstrap by adding certain bootstrap classes.
 	$.validator.setDefaults({
@@ -156,7 +156,4 @@ function ready() {
 	$('#register input, #login input').focusout(function() {
 		$(this).nextAll(".pre-help").addClass('hidden');
 	});
-}
-
-$(document).ready(ready);
-$(document).on('page:load', ready);
+});
