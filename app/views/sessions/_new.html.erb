@@ -15,14 +15,18 @@
       </header>
       <%= form_tag login_path,
         html: { :id => "login-form" } do  %>
-        <div class="form-group has-feedback"><%= text_field_tag :username, params[:email],
-          class: "form-control", placeholder: "Username/Email" %><span
-             class="glyphicon form-control-feedback"
-             aria-hidden="true"></span></div>
-        <div class="form-group has-feedback"><%= password_field_tag :password, params[:password],  
-          class: "form-control", placeholder: "Password" %><span
-             class="glyphicon form-control-feedback"
-             aria-hidden="true"></span></div>
+        <div class="form-group has-feedback">
+          <%= text_field_tag :username, params[:email], class: "form-control",
+            placeholder: "Username/Email" %>
+          <span class="glyphicon form-control-feedback" aria-hidden="true">
+          </span>
+        </div>
+        <div class="form-group has-feedback">
+          <%= password_field_tag :password, params[:password],
+            class: "form-control", placeholder: "Password" %>
+          <span class="glyphicon form-control-feedback" aria-hidden="true">
+          </span>
+        </div>
         <footer>
           <div class="checkbox">
             <label>
@@ -30,10 +34,10 @@
               Ingat saya
             </label>
           </div>
-          <%= submit_tag "Masuk", class: "btn-lg btn-default
+          <%= submit_tag "Masuk", class: "btn btn-lg btn-default
           btn-login has-shade" %>
-        </footer>
-      <% end %>
+      </footer>
+    <% end %>
     </div>
   </div>
 </div>
