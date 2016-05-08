@@ -86,6 +86,8 @@ ActiveRecord::Schema.define(version: 20160507220530) do
     t.string   "email"
     t.string   "hashed_password"
     t.string   "fullname"
+    t.string   "province"
+    t.string   "status"
     t.string   "school"
     t.integer  "point"
     t.datetime "created_at",      null: false
