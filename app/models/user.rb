@@ -7,6 +7,9 @@ class User < ActiveRecord::Base
     # do something before it gets added
 	end
 	
+	has_many :short_submissions
+	has_many :short_problems, through: :short_submissions
+	has_many :contests, through: :short_problems
 	has_many :long_submissions
 	belongs_to :province
 	belongs_to :status

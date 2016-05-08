@@ -1,5 +1,5 @@
 class ContestsController < ApplicationController
-	http_basic_authenticate_with name: "admin", password: "admin", only: [:new, :edit, :destroy]
+	http_basic_authenticate_with name: "admin", password: "admin", only: [:new, :edit, :destroy, :admin]
 
 	def new
 		@contest = Contest.new
@@ -16,6 +16,7 @@ class ContestsController < ApplicationController
 
 	def show
 		@contest = Contest.find(params[:id])
+		@short_problems = @contest.short_problems.all
 		if Time.current() < @contest.start_time
 			flash.now[:alert] = "Yang sabar ya, nak. Belum waktunya."
 			redirect_to contests_path
@@ -43,6 +44,12 @@ class ContestsController < ApplicationController
 		@contest = Contest.find(params[:id])
 		@contest.destroy
 		redirect_to contests_path
+	end
+
+# this is for contest manager to manage everything
+	def admin
+		@contest = Contest.find(params[:id])
+		@short_problems = @contest.short_problems.order(:problem_no).all
 	end
 
 	private

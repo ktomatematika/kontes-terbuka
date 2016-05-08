@@ -12,8 +12,11 @@ html, body {
 
 header.teaser { 
   text-align: center;
-  background: $bg-overlay,
-  image-url('welcome-bg.jpg') right -150px top 40% / auto 150% #fff;
+  background: $bg-overlay, image-url('welcome-bg.jpg');
+  background-position: right -150px top 40%;
+  background-size: auto 150%;
+  background-color: #fff;
+
   min-height: 100%;
   padding: 0 3%;
 

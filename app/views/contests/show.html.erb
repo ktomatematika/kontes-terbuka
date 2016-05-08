@@ -1,4 +1,4 @@
-<h1> KONTES </h1>
+<h1> KONTES </h1> <%= link_to "MANAGE?", contest_admin_path(:id => @contest.id) %>
 <table style="width:100%">
 	<tr>
 		<td>Name:</td>
@@ -17,6 +17,38 @@
 
 <section>
 Ini tempat soal!
+</section>
+<section>
+Isian
+<%= form_for :answer, url: '/short_problems/submit/' do |f| %>
+	<table style="width:100%">
+		<tr>
+			<td>No</td>
+			<td>Statement</td>
+			<td>Jawabanmu</td>
+			<td>Submit </td>
+		</tr>
+		<% @short_problems.each do |short_problem| %>
+			<tr>
+				<td><%= short_problem.problem_no %></td>
+				<td><%= short_problem.statement %></td>
+				<td>
+					<% if ShortSubmission.where(
+						short_problem_id: short_problem.id, user_id: current_user.id).blank? %>
+					<%= "Kamu belum menjawab" %>
+					<% else %>
+					<% @short_submission = ShortSubmission.where(short_problem_id: short_problem.id, 
+						user_id: current_user.id) %>
+					<%= @short_submission[0].answer %>
+					<% end %>
+				</td>
+				<td><%= f.text_field short_problem.id %></td>
+			</tr>
+		<% end %>
+		<%= hidden_field_tag 'contest_id', @contest.id  %>
+	</table>
+	<%= f.submit "Jawab" %>
+<% end %>
 </section>
 <section>
 Daftar submisi bagian B mu di kontes ini
