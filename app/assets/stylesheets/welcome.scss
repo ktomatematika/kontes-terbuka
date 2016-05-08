@@ -3,6 +3,8 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 @import "colors";
+$bg-overlay: linear-gradient(rgba(255, 255, 255, 0.1), 
+rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.1));
 
 html, body {
   height: 100%;
@@ -10,7 +12,8 @@ html, body {
 
 header.teaser { 
   text-align: center;
-  background: image-url('welcome-bg.jpg') center / cover;
+  background: $bg-overlay,
+  image-url('welcome-bg.jpg') right -150px top 40% / auto 150% #fff;
   min-height: 100%;
   padding: 0 3%;
 
