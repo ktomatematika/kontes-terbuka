@@ -50,10 +50,9 @@ body.not-logged {
       line-height: 40px;
     }
   }
-
 }
 
-.has-shade.btn, .has-shade.btn-lg {
+.btn.has-shade {
 
   &.red-color {
     background-color: lighten($red-color, 5);
@@ -116,21 +115,25 @@ body.not-logged {
   }
 }
 
-footer#other-links {
+footer.app-footer {
   background: #000;
   text-align: center;
   padding: 0 5% 3% 5%;
   font-size: 18px;
   margin-top: 20px;
 
-  a {
-    display: inline-block;
-    margin: 30px 10px 10px 10px;
-    color: #fff;
-    text-decoration: none;
+  .list-inline {
+    padding-top: 30px;
 
-    &:hover {
-      color: #999;
+    a {
+      display: inline-block;
+      margin: 0 10px 10px 10px;
+      color: #fff;
+      text-decoration: none;
+
+      &:hover {
+        color: #999;
+      }
     }
   }
 
@@ -139,7 +142,7 @@ footer#other-links {
   }
 }
 
-footer#other-links, ul.navbar-nav {
+footer.app-footer, ul.navbar-nav {
   a:hover {
     &.has-shade.yellow-color {
       color: $yellow-color;
