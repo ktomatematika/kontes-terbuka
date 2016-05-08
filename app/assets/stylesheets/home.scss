@@ -5,28 +5,54 @@
 @import "colors";
 
 .home-article {
-  margin: 20px 0;
   border: 1px solid #000;
   border-radius: 15px;
-  padding: 0 20px 20px 20px;
+  padding: 20px;
 }
 
-#leaderboard {
-  padding-bottom: 0;
+.home-article {
+  margin-top: 20px; 
+
+  h1, h2, h3 {
+    margin-top: 0;
+  }
+}
+
+#home-container {
+  margin: 0 10%;
+}
+
+#home-section-container {
+
+}
+
+#btn-daftar {
+  white-space: normal !important;
+  word-wrap: break-word;
+}
+
+#prev-contests {
+  @media(max-width: 767px) {
+    margin-bottom: 20px;
+  }
+}
+
+#prev-contests, #promo-buku {
+  text-align: center;
 }
 
 #img-buku-ktom {
-  margin: 10px auto; 
-}
-
-#promo-buku {
-  text-align: center;
+  margin-bottom: 10px;
 }
 
 #fb-box {
   border: 0;
   text-align: center;
-  padding: 0 0 20px 0;
+  padding: 0;
+}
+
+#leaderboard > .table-responsive, #leaderboard-table {
+  margin: 0;
 }
 
 table.has-shade {

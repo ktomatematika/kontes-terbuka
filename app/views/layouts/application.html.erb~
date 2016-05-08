@@ -37,9 +37,9 @@
             <ul class="nav navbar-nav navbar-right">
               <li><%= link_to "Admin", '/home/admin',
                 :class => "has-shade" %></li>
-              <li><%= link_to "Kontes", contests_path,
-                :class => "has-shade" %></li>
               <li><%= link_to "Rumah" , root_path,
+                :class => "has-shade" %></li>
+              <li><%= link_to "Kontes", contests_path,
                 :class => "has-shade" %></li>
               <li><a href="#" class="has-shade">Pasar</a></li>
               <li><a href="#" class="has-shade">
