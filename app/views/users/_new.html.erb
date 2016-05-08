@@ -66,14 +66,14 @@
         <div class="form-group has-feedback">
           <%= f.collection_select :province_id, Province.all(), 
             :id, :name, { prompt: "Provinsi" }, { class: "form-control" } %> 
-        <span class="glyphicon form-control-feedback"
-              aria-hidden="true"></span>
+          <span class="glyphicon form-control-feedback"
+                aria-hidden="true"></span>
         </div>
         <div class="form-group has-feedback">
           <%= f.collection_select :status_id, Status.all(), 
             :id, :name, { prompt: "Status" }, { class: "form-control" } %>
-           <span class="glyphicon form-control-feedback"
-                 aria-hidden="true"></span>
+          <span class="glyphicon form-control-feedback"
+                aria-hidden="true"></span>
         </div>
         <div class="form-group has-feedback"> 
           <%= f.text_field :school, class: "form-control",
@@ -89,9 +89,10 @@
         </div>
         <footer>
           <%= recaptcha_tags hl: 'id' %>
-          <%= f.submit "Daftar", class: "btn-lg btn-default btn-register" %>
-        </footer>
-      <% end %>
+          <%= f.submit "Daftar", class: "btn btn-lg btn-default
+          btn-register has-shade" %>
+      </footer>
+    <% end %>
     </div>
   </div>
 </div>
