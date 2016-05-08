@@ -1,6 +1,6 @@
 <h1> Edit </h1>
 
-<%= form_for :user, url: user_path(@user),method: :patch do |f| %>
+<%= form_for :user, url: user_path(@user), method: :patch do |f| %>
 
 	<% if @user.errors.any? %>
     	<div id="error_explanation">

@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   resources :users
   resources :roles
   resources :contests do
+    resources :short_problems
     resources :long_submissions
   end
 
@@ -29,6 +30,9 @@ Rails.application.routes.draw do
 
   get '/home/admin' => 'home#admin'
   get '/home/index' => 'home#index'
+
+  get '/contests/:id/admin' => 'contests#admin', as: :contest_admin
+  post '/short_problems/submit' => 'short_problems#submit'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
