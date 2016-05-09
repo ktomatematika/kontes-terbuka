@@ -1,24 +1,18 @@
-This all contest available
+<div class="container-fluid" id="all-contests-container">
+  <header>
+    <h1>Kontes-kontes</h1>
+    <h4>Catatan: tanggal kontes-kontes berikutnya masih bisa berubah kapanpun.
+    </h4>
+  </header>
+  <% @contests.each do |contest| %>
+    <article class="contest">
+      <h2><%= contest.name %></h2>
+      <p><%= contest.start_time %> sampai <%= contest.end_time %></p>
+      <p>Rincian: <%= contest.number_of_short_questions %> soal isian dan
+      <%= contest.number_of_long_questions %> soal uraian</p>
+    </article>
+  <% end %>
+  </table>
+</div>
 
-<table style="width:100%">
-	<tr>
-		<td>Name</td>
-		<td>Isian</td>
-		<td>Esai</td>	
-		<td>Start</td>
-		<td>End</td>
-		<td>Edit</td>
-		<td>Hapus</td>
-	</tr>
-	<% @contests.each do |contest| %>
-	<tr>
-		<td><%= link_to contest.name, contest_path(contest) %></td>
-		<td><%= contest.number_of_short_questions %></td>
-		<td><%= contest.number_of_long_questions %></td>	
-		<td><%= contest.start_time %></td>
-		<td><%= contest.end_time %></td>
-		<td><%= link_to "Edit", edit_contest_path(contest) %></td>
-		<td><%= link_to "Hapus", contest_path(contest), method: :delete, data: { confirm: 'Apakah Anda yakin?' } %></td>
-	</tr>
-	<% end %>
-</table>
+

@@ -1,3 +1,5 @@
+<%= content_for (:page_attributes) do %>data-no-turbolink="true"<% end %>
+
 <!-- Facebook plugin -->
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
@@ -9,10 +11,6 @@ fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
 
 <!-- Rest of document -->
-<%= content_for (:body_attributes) do %>
-  data-no-turbolink="true"
-<% end %>
-
 <div class="container-fluid" id="home-container">
 
   <header class="hidden-xs" id="greeting">
@@ -31,22 +29,22 @@ fjs.parentNode.insertBefore(js, fjs);
   <section class="row home-section" id="home-section-container">
     <div class="col-sm-6 col-md-4"> 
       <article class="home-article" id="prev-contests">
-        <h3>Kontes-kontes Sebelumnya</h3>
+        <h2>Kontes-kontes Sebelumnya</h2>
         <a href="http://olimpiade.org/discussions/main-topic/13/">Soal-soal
           kontes sebelumnya bisa didapat dari link ini.</a>
-        <h4><a href="#">Kontes Bulanan: Juni 2017</a></h4>
-        <h4><a href="#">Simulasi OSN: Mei 2017</a></h4>
-        <h4><a href="#">Kontes Bulanan: April 2017</a></h4>
-        <h4><a href="#">Simulasi OSP: Maret 2017</a></h4>
-        <h4><a href="#">Kontes Bulanan: Februari 2017</a></h4>
-        <h4><a href="#">Simulasi OSK: Januari 2017</a></h4>
-        <h5><a href="#">Kontes-kontes sebelumnya</a></h5>
+        <h3><a href="#">Kontes Bulanan: Juni 2017</a></h3>
+        <h3><a href="#">Simulasi OSN: Mei 2017</a></h3>
+        <h3><a href="#">Kontes Bulanan: April 2017</a></h3>
+        <h3><a href="#">Simulasi OSP: Maret 2017</a></h3>
+        <h3><a href="#">Kontes Bulanan: Februari 2017</a></h3>
+        <h3><a href="#">Simulasi OSK: Januari 2017</a></h3>
+        <h4><a href="#">Kontes-kontes sebelumnya</a></h4>
       </article>
     </div>
 
     <div class="col-sm-6 col-md-4">
       <article class="home-article" id="promo-buku">
-        <h3>Buku KTO Matematika 1</h3>
+        <h2>Buku KTO Matematika 1</h2>
         <a href="http://bit.ly/ktom-buku-1">
           <%= image_tag("buku.png", :alt => "Buku KTOM 1",
                         :class => "img-responsive center-block",
@@ -76,7 +74,7 @@ fjs.parentNode.insertBefore(js, fjs);
   </section>
 
   <section class="home-section home-article" id="leaderboard">
-    <h3>Leaderboard Tahun Ini</h3>
+    <h2>Leaderboard Tahun Ini</h2>
     <div class="table-responsive">
       <table class="table table-hover has-shade table-bordered"
         id="leaderboard-table">
