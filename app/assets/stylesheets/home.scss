@@ -27,9 +27,28 @@
   word-wrap: break-word;
 }
 
-#prev-contests {
-  @media(max-width: 767px) {
-    margin-bottom: 20px;
+#home-section-container {
+  @media(min-width: 768px) {
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    overflow: hidden;
+
+    & > div {
+      flex: 1;
+    }
+  }
+
+  & > div {
+
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    overflow: hidden;
+
+    & > article {
+      flex: 1;
+    }
   }
 }
 
