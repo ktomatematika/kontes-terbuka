@@ -29,8 +29,16 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   font-weight: 600;
 }
 
-body.not-logged {
+[no-nav] {
   padding-top: 0;
+
+  & > .navbar-fixed-top {
+    display: none;
+  }
+}
+
+[no-footer] > .app-footer {
+  display: none;
 }
 
 .navbar-fixed-top {
