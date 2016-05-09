@@ -4,15 +4,20 @@
     <h4>Catatan: tanggal kontes-kontes berikutnya masih bisa berubah kapanpun.
     </h4>
   </header>
-  <% @contests.each do |contest| %>
-    <article class="contest">
-      <h2><%= contest.name %></h2>
-      <p><%= contest.start_time %> sampai <%= contest.end_time %></p>
-      <p>Rincian: <%= contest.number_of_short_questions %> soal isian dan
-      <%= contest.number_of_long_questions %> soal uraian</p>
+
+  <section id="contests-container">
+    <article class="row" id="calendar-nav">
+      <div class="col-xs-4"> 
+        <a href="#" id="prev-year">Tahun sebelumnya</a>
+      </div>
+      <div class="col-xs-4">
+        <span id="this-year"></span>
+      </div>
+      <div class="col-xs-4">
+        <a href="#" id="next-year">Tahun selanjutnya</a>
+      </div>
     </article>
-  <% end %>
-  </table>
+
+    <article id="calendar"></article>
+  </section>
 </div>
-
-

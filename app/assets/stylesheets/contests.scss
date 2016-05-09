@@ -2,13 +2,23 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.contest {
-  border: 1px solid #000;
-  border-radius: 15px;
-  padding: 20px;
-  margin-top: 10px;
+#calendar-nav {
+  :nth-child(1) {
+    text-align: left;
+  }
 
-  > h2, > p {
-    margin-top: 10px;
+  :nth-child(2) {
+    text-align: center;
+  }
+
+  :nth-child(3) {
+    text-align: right;
+  }
+}
+
+.month-calendar {
+  font-size: 14px;
+  caption, th, td {
+    text-align: center;
   }
 }
