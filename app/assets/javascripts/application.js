@@ -15,5 +15,6 @@
 //= require jquery_ujs
 //= require validate
 //= require_tree .
+//= require ./colors.js
 //= require bootstrap-sprockets
 //= require turbolinks

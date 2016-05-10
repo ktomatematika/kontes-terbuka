@@ -4,23 +4,23 @@
 
 function choose_color() {
 	var num = Date.now() % 4;
-	var color = "";
 
 	if (num === 0) {
-		color = "red";
+		return "red";
 	} else if (num === 1) {
-		color = "blue";
+		return "blue";
 	} else if (num === 2) {
-		color = "green";
+		return "green";
 	} else if (num === 3) {
-		color = "yellow";
+		return "yellow";
 	}
+}
 
-	color += "-color";
-	return color;
+function load_colors() {
+	var shade = choose_color();
+	$('.has-shade').attr("data-shade", shade);
 }
 
 $(document).ready(function() {
-	var shade = choose_color();	
-	$('.has-shade').addClass(shade);
+	load_colors();
 });
