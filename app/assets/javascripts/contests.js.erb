@@ -1,0 +1,194 @@
+// Place all the behaviors and hooks related to the matching controller here.
+// All this logic will automatically be available in application.js.
+// You can use CoffeeScript in this file: http://coffeescript.org/
+
+var months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli',
+    'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+var days = ['M', 'S', 'S', 'R', 'K', 'J', 'S'];
+
+/* compare_day: compares a day to another.
+   Returns positive if current date is after compared date,
+   negative if current date is before compared date,
+   zero if they are the same.
+   Example:
+   var a = new Date(2015, 3, 2);
+   var b = new Date(2015, 3, 3);
+   a.compare_day(b) returns an integer < 0.
+ */
+
+Date.prototype.compare_day = function(other) {
+  var year_diff = this.getFullYear() - other.getFullYear();
+  var month_diff = this.getMonth() - other.getMonth();
+  var date_diff = this.getDate() - other.getDate();
+
+  return (year_diff != 0) ? year_diff : (month_diff != 0) ? month_diff :
+    date_diff;
+}
+
+$(document).ready(function() {
+  var now = new Date();
+  var current_year = now.getFullYear();
+  var current_month = now.getMonth();
+  var current_date = now.getDate();
+  var displayed_year = current_year;
+  var displayed_month = current_month;
+
+  var contests = $('#contest-data').data('contests');
+  console.log(contests);
+  // Make start_time and end_time become Javascript Date objects
+  for (var i = 0; i < contests.length; i++) {
+    var contest = contests[i];
+    contest.start_time = new Date(contest.start_time);
+    contest.end_time = new Date(contest.end_time);
+  }
+
+  // Indexed by zero!
+  function create_month_calendar(year, month) {
+    function create_cell(date) {
+      var cell_class = [];
+
+      if (date !== '') {
+
+        var date_obj = new Date(year, month, date);
+
+        if (now.compare_day(date_obj) === 0) {
+          cell_class.push("today");
+        }
+
+        for (var i = 0; i < contests.length; i++) {
+          if (date_obj.compare_day(contests[i].start_time) >= 0 &&
+              date_obj.compare_day(contests[i].end_time) <= 0) {
+            cell_class.push("success");
+            break;
+          }
+        }
+      }
+
+      var txt = '<td';
+      var last = ('>' + date + '</td>');
+      if (cell_class.length !== 0) {
+        txt += ' class=';
+        for (var i = 0; i < cell_class.length; i++) {
+          txt += cell_class[i];
+          if (i !== cell_class.length - 1) {
+            txt += ' ';
+          }
+        }
+      }
+      return (txt + last);
+    }
+
+    var first_day = new Date(year, month, 1).getDay();
+    var last_date = new Date(year, month + 1, 0).getDate();
+    var date = 1;
+    var text = '<table class="table table-bordered ' +
+      'table-condensed month-calendar">\n';
+
+    text += '<thead>\n<tr>\n';
+    for (var i = 0; i < days.length; i++) {
+      text += ('<th>' + days[i] + '</th>\n');
+    }
+    text += '</tr>\n</thead>\n<tbody>\n<tr>\n';
+
+    for (var i = 0; i < first_day; i++) {
+      text += create_cell('');
+    }
+    for (var i = first_day; i < 7; i++) {
+      text += create_cell(date);
+      date++;
+    }
+    text += '</tr>\n';
+
+    while (date <= last_date) {
+      text += '<tr>\n';
+      for (var i = 0; i < 7; i++) {
+        if (date > last_date) {
+          text += create_cell('');
+        } else {
+          text += create_cell(date);
+          date++;
+        }
+      }
+      text += '</tr>\n';
+    }
+    text += '</tbody>\n</table>';
+    return text;
+  }
+
+  function update_year_calendar(year) {
+
+    $('#calendar').empty();
+    $('#this-time').text(year);
+    $('#prev-time').text('Tahun Sebelumnya');
+    $('#next-time').text('Tahun Selanjutnya');
+
+    for (var month = 0; month < months.length; month++) {
+      if (month % 3 == 0) {
+        $('#calendar').append('<div class="row"></div>');
+      }
+
+      var append_text = '<div class="col-md-4">\n';
+      append_text += create_month_calendar(year, month);
+      append_text += '</div>';
+      $('#calendar .row:last-child').append(append_text);
+      $("#calendar table.month-calendar").last().prepend('<caption>' +
+          months[month] + '</caption>');
+    }
+  }
+
+  function update_month_calendar(year, month) {
+    $('#calendar').empty();
+    $('#this-time').text(months[month] + ' ' + year);
+    if (window_type() === "xs") {
+      $('#prev-time').text('<<');
+      $('#next-time').text('>>');
+    } else {
+      $('#prev-time').text('Bulan Sebelumnya');
+      $('#next-time').text('Bulan Selanjutnya');
+    }
+
+    $('#calendar').append(create_month_calendar(year, month));
+  }
+
+  function window_type() {
+    var width = $(window).width();
+    return (width >= 992) ? "md" : (width >= 768) ? "sm" : "xs";
+  }
+
+  function update_calendar() {
+    if (window_type() === "md") {
+      update_year_calendar(displayed_year);
+    } else {
+      update_month_calendar(displayed_year, displayed_month);
+    }
+  }
+
+  update_calendar();
+  $(window).resize(update_calendar);
+
+  $('#prev-time').click(function(e) {
+    if (window_type() === "md") {
+      displayed_year--;
+    } else if (displayed_month === 0) {
+      displayed_month += 11;
+      displayed_year--;
+    } else {
+      displayed_month--;
+    }
+    update_calendar();
+    e.preventDefault();
+  });
+
+  $('#next-time').click(function(e) {
+    if (window_type() === "md") {
+      displayed_year++;
+    } else if (displayed_month === 11) {
+      displayed_month -= 11;
+      displayed_year++;
+    } else {
+      displayed_month++;
+    }
+    update_calendar();
+    e.preventDefault();
+  });
+});
