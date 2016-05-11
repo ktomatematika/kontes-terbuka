@@ -13,7 +13,8 @@ function update_regularly() {
 		time += end.format_indo();
 		$('#next-contest-time').text(time);
 
-		if (end > current) {
+		if (start > current) {
+			$('home-btn-daftar').prop('disabled', true);
 			var text = current.indo_go_to(start);
 		} else {
 			$('#home-btn-daftar').prop('disabled', false);
@@ -25,6 +26,7 @@ function update_regularly() {
 	// contests/id time remaining, enable contest
 	var current_contest = $('#contest-data').data('current-contest');
 	if (current_contest !== null && current_contest !== undefined) {
+		var end_time = new Date(current_contest.end_time);
 		var contest_time_remaining = "(" + current.indo_go_to(end_time) + ")";
 		$('#contest-time-remaining').text(contest_time_remaining);
 	}

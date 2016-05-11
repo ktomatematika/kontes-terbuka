@@ -9,4 +9,13 @@ $(document).ready(function() {
 			end_time.format_indo();
 		$('#contest-time').text(contest_time_text);
 	}
+
+	renderMathInElement(document.body, {
+		delimiters: [
+		{ left: "$", right: "$", display: false },
+		{ left: "$$", right: "$$", display: true },
+		{ left: "\\[", right: "\\]", display: true },
+		{ left: "\\(", right: "\\)", display: false }
+		]
+	});
 });

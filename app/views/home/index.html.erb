@@ -21,9 +21,10 @@ fjs.parentNode.insertBefore(js, fjs);
   <section class="home-section home-article text-center" id="this-contest">
     <h2 id="next-contest-name"></h2>
     <h3 id="next-contest-time"></h3>
-    <a type="button"
+    <a href="/contests/<%= @next_contest.id %>"
+       type="button"
        id="home-btn-daftar"
-       class="btn btn-lg btn-default has-shade disabled update-regularly">
+       class="btn btn-lg btn-default has-shade update-regularly">
     </a>
   </section>
 
