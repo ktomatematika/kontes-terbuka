@@ -19,6 +19,12 @@ end
 		Status.find_or_create_by(name: status)
 end
 
+Contests.find_or_create_by(name: "Kontes Bulanan Mei 2016",
+						   number_of_short_submissions: 14,
+						   number_of_long_submissions: 4,
+						   start_time: DateTime.new(2016, 5, 12, 1, 1, 1),
+						   end_time: DateTime.new(2016, 5, 13, 2, 2, 2))
+
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
 #
