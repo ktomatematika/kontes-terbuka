@@ -3,7 +3,7 @@
 //You can use CoffeeScript in this file: http://coffeescript.org/
 
 function choose_color() {
-	var num = Date.now() % 4;
+	var num = now % 4;
 
 	if (num === 0) {
 		return "red";

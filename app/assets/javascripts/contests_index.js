@@ -1,55 +1,13 @@
-// Place all the behaviors and hooks related to the matching controller here.
-// All this logic will automatically be available in application.js.
-// You can use CoffeeScript in this file: http://coffeescript.org/
-
 var months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli',
     'Agustus', 'September', 'Oktober', 'November', 'Desember'];
 var short_days = ['M', 'S', 'S', 'R', 'K', 'J', 'S'];
 var long_days = ['Minggu', 'Senin', 'Selasa', 'Rabu',
     'Kamis', 'Jumat', 'Sabtu'];
 
-/* compare_day: compares a day to another.
- * Returns positive if current date is after compared date,
- * negative if current date is before compared date,
- * zero if they are the same.
- * Example:
- * var a = new Date(2015, 3, 2);
- * var b = new Date(2015, 3, 3);
- * a.compare_day(b) returns an integer < 0.
- */
-
-Date.prototype.compare_day = function(other) {
-  var year_diff = this.getFullYear() - other.getFullYear();
-  var month_diff = this.getMonth() - other.getMonth();
-  var date_diff = this.getDate() - other.getDate();
-
-  return (year_diff != 0) ? year_diff : (month_diff != 0) ? month_diff :
-    date_diff;
-}
-
-/* format_indo: format a date into Indonesian long form.
- * Example: "Senin, 13 Februari 2016 jam 08:00 WIB"
- */
-Date.prototype.format_indo = function() {
-  var day = long_days[this.getDay()];
-  var date = this.getDate();
-  var month = months[this.getMonth()];
-  var year = this.getFullYear();
-  var hour = this.getHours();
-  if (hour < 10) { hour = '0' + hour; }
-  var minute = this.getMinutes();
-  if (minute < 10) { minute = '0' + minute; }
-  var timezone = this.getTimezoneOffset() / -60;
-
-  return day + ", " + date + " " + month + " " + year + " jam " + hour + 
-    ":" + minute + " GMT+" + timezone;
-}
-
 $(document).ready(function() {
 
   if ($('body').attr('contests_page') != undefined) {
 
-    var now = new Date();
     var current_year = now.getFullYear();
     var current_month = now.getMonth();
     var current_date = now.getDate();

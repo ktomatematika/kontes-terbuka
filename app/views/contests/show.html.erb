@@ -1,97 +1,116 @@
-<h1> KONTES </h1> <%= link_to "MANAGE?", contest_admin_path(:id => @contest.id) %>
-<table style="width:100%">
-	<tr>
-		<td>Name:</td>
-		<td><%= @contest.name %></td>
-	</tr>
-	<tr>
-		<td>Waktu mulai:</td>
-		<td><%= @contest.start_time %></td>
-	</tr>
-	<tr>
-		<td>Waktu selesai:</td>
-		<td><%= @contest.end_time %></td>
-	</tr>
-</table>
+<%= content_tag 'div', '', id: 'contest-data',
+  data: { current_contest: @contest } %>
+<div class="container-fluid">
 
+  <div class="row">
+    <section class="col-sm-8">
+      <header id="contest-info">
+        <h1 id="contest-name"></h1> 
+        <h3 id="contest-time"></h3>
+        <h3 class="update-regularly" id="contest-time-remaining"></h3>
+        <button class="btn btn-default btn-lg has-shade">Download soal</button>
+      </header>
 
-<section>
-Ini tempat soal!
-</section>
-<section>
-Isian
-<%= form_for :answer, url: '/short_problems/submit/' do |f| %>
-	<table style="width:100%">
-		<tr>
-			<td>No</td>
-			<td>Statement</td>
-			<td>Jawabanmu</td>
-			<td>Submit </td>
-		</tr>
-		<% @short_problems.each do |short_problem| %>
-			<tr>
-				<td><%= short_problem.problem_no %></td>
-				<td><%= short_problem.statement %></td>
-				<td>
-					<% if ShortSubmission.where(
-						short_problem_id: short_problem.id, user_id: current_user.id).blank? %>
-					<%= "Kamu belum menjawab" %>
-					<% else %>
-					<% @short_submission = ShortSubmission.where(short_problem_id: short_problem.id, 
-						user_id: current_user.id) %>
-					<%= @short_submission[0].answer %>
-					<% end %>
-				</td>
-				<td><%= f.text_field short_problem.id %></td>
-			</tr>
-		<% end %>
-		<%= hidden_field_tag 'contest_id', @contest.id  %>
-	</table>
-	<%= f.submit "Jawab" %>
-<% end %>
-</section>
-<section>
-Daftar submisi bagian B mu di kontes ini
+      <article id="bagian-a">
+        <header>
+          <h2>Bagian A: Isian Singkat</h2>
+          <h4 class="text-justify">Jawaban setiap soal dipastikan berupa
+            bilangan bulat. Setiap soal bernilai 1 poin. Tidak ada
+            pengurangan untuk jawaban yang salah. Anda boleh terus mengisi
+            jawaban sebelum kontes berakhir; jawaban yang dikoreksi adalah
+            jawaban yang Anda kumpulkan terakhir. Kosongkan jawaban
+            yang tidak ingin Anda ganti.</h4>
+        </header>
+        <%= form_for :answer, url: '/short_problems/submit/' do |f| %>
+          <% @short_problems.each do |prob| %>
+            <p class="isian">
+            <label for="isian-<%= prob.problem_no %>" class="text-justify">
+              <%= prob.problem_no %>. <%= prob.statement %>
+            </label>
+            <% submission = ShortSubmission.where(
+              short_problem_id: prob.id, user_id: current_user.id)[0] %>
+            <% prev_answer = (submission == nil) ? "" : submission.answer %>
+            <%= f.text_field prob.id, class: "form-control", 
+              id: "isian-" + prob.problem_no.to_s,
+              placeholder: prev_answer.to_s %>
+          </p>
+        <% end %>
+        <%= hidden_field_tag 'contest_id', @contest.id  %>
+        <%= f.submit "Jawab", class: "btn btn-default has-shade" %>
+      <% end %>
+      </article>
 
-<table style="width:100%">
-	<tr>
-		<td>Name: </td>
-		<td>Attachment: </td>
-		<td>Nomor soal esai:</td>
-	</tr>
-	<% @contest.long_submissions.each do |s| %>
-	<% if s.user_id == session[:user_id] %>
-		<tr>
-			<td><%= s.name %></td>
-			<td><%= link_to "Download Resume", s.attachment_url %></td>
-			<td><%= s.problem_id %></td>	
-		</tr>
-	<% end %>
-	<% end %>
-</table>
+      <!--
+        <article id="bagian-b">
+        <h2>Bagian B: Uraian</h2>
+        <h4>Tulis/ketik jawaban beserta langkah pekerjaan Anda pada lembar jawaban
+        yang telah disediakan. Jika Anda menulis jawaban Anda, Anda boleh memfoto
+        ataupun mengscan jawaban. Setiap soal bernilai 7 poin.</h4>
 
-</section>
+        <table style="width:100%">
+        <tr>
+        <td>Name: </td>
+        <td>Attachment: </td>
+        <td>Nomor soal esai:</td>
+        </tr>
+        <% @contest.long_submissions.each do |s| %>
+          <% if s.user_id == session[:user_id] %>
+            <tr>
+            <td><%= s.name %></td>
+            <td><%= link_to "Download Resume", s.attachment_url %></td>
+            <td><%= s.problem_id %></td>	
+            </tr>
+          <% end %>
+        <% end %>
+        </table>
 
-<section>
-Submit sesuatu
-<%= form_for([@contest, @contest.long_submissions.build]) do |f| %>
-  <p>
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
-  </p>
-  <p>
-    <%= f.label :attachment %><br>
-    <%= f.file_field :attachment %>
-  </p>
-  <p>
-    <%= f.hidden_field :user_id, value: session[:user_id] %>
-  </p>
-  <p>
-  	<%= f.label :problem_id %><br>
-  	<%= f.text_field :problem_id %>
-  </p>
-  <p>
-    <%= f.submit %>
-  </p>
-<% end %>
-</section>
+        Submit sesuatu
+        <%= form_for([@contest, @contest.long_submissions.build]) do |f| %>
+          <p>
+          <%= f.label :name %><br>
+          <%= f.text_field :name %>
+          </p>
+          <p>
+          <%= f.label :attachment %><br>
+          <%= f.file_field :attachment %>
+          </p>
+          <p>
+          <%= f.hidden_field :user_id, value: session[:user_id] %>
+          </p>
+          <p>
+          <%= f.label :problem_id %><br>
+          <%= f.text_field :problem_id %>
+          </p>
+          <p>
+          <%= f.submit %>
+          </p>
+        <% end %>
+        </article>
+      -->
+    </section>
+    <aside class="col-sm-4"> 
+      <header>
+        <h3>Ringkasan Jawaban Anda</h3>
+      </header>
+      <article>
+        <header>
+          <h4>Bagian A</h4>
+        </header>
+        <% @short_problems.each do |prob| %>
+          <% submission = ShortSubmission.where(
+            short_problem_id: prob.id, user_id: current_user.id)[0] %>
+          <% prev_answer = (submission == nil) ? "belum terjawab" :
+            submission.answer %>
+          <div <%= (submission == nil) ? 'class=text-danger' : '' %>>
+            No. <%= prob.problem_no %>: <%= prev_answer %>
+        </div>
+      <% end %>
+      </article>
+      <article>
+        <header>
+          <h4>Bagian B</h4>
+        </header>
+    </aside>
+  </div>
+  <%= link_to "MANAGE?", contest_admin_path(:id => @contest.id) %>
+</div>

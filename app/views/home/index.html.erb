@@ -1,4 +1,5 @@
 <%= content_for (:page_attributes) do %>data-no-turbolink="true"<% end %>
+<%= content_tag 'div', '', id: 'contest-data', data: { next: @next_contest } %>
 
 <!-- Facebook plugin -->
 <div id="fb-root"></div>
@@ -18,12 +19,12 @@ fjs.parentNode.insertBefore(js, fjs);
   </header>
 
   <section class="home-section home-article text-center" id="this-contest">
-    <h2>Kontes Bulanan: Juli 2017</h2>
-    <h3>17 Juli 2017 13:00 WIB - 19 Juli 2017 17:00 WIB</h3>
-    <button type="button"
-            class="btn btn-lg btn-default has-shade disabled" id="btn-daftar">
-      99 hari 23 jam 59 menit 59 detik lagi
-    </button>
+    <h2 id="next-contest-name"></h2>
+    <h3 id="next-contest-time"></h3>
+    <a type="button"
+       id="home-btn-daftar"
+       class="btn btn-lg btn-default has-shade disabled update-regularly">
+    </a>
   </section>
 
   <section class="row home-section" id="home-section-container">
@@ -77,7 +78,7 @@ fjs.parentNode.insertBefore(js, fjs);
     <h2>Leaderboard Tahun Ini</h2>
     <div class="table-responsive">
       <table class="table table-hover has-shade table-bordered"
-        id="leaderboard-table">
+             id="leaderboard-table">
         <thead>
           <tr>
             <th>Rank</th>

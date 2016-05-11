@@ -14,7 +14,7 @@
 //= require jquery.turbolinks
 //= require jquery_ujs
 //= require validate
+//= require ./date_methods.js
 //= require_tree .
-//= require ./colors.js
 //= require bootstrap-sprockets
 //= require turbolinks

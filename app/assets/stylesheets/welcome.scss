@@ -62,19 +62,19 @@ header.teaser {
     font-size: 40px;
     padding: 10px 0;
 
-    &.has-shade.yellow-color {
+    &.has-shade[data-shade=yellow] {
       color: $yellow-color;
     }
 
-    &.has-shade.red-color {
+    &.has-shade[data-shade=red] {
       color: $red-color;
     }
 
-    &.has-shade.blue-color {
+    &.has-shade[data-shade=blue] {
       color: $blue-color;
     }
 
-    &.has-shade.green-color {
+    &.has-shade[data-shade=green] {
       color: $green-color;
     }
   }
@@ -92,19 +92,19 @@ header.teaser {
     margin: 5px 30px;
     border-color: #ccc;
 
-    &.has-shade.yellow-color {
+    &.has-shade[data-shade=yellow] {
       border-color: lighten($yellow-color, 10);
     }
 
-    &.has-shade.red-color {
+    &.has-shade[data-shade=red] {
       border-color: lighten($red-color, 10);
     }
 
-    &.has-shade.blue-color {
+    &.has-shade[data-shade=blue] {
       border-color: lighten($blue-color, 10);
     }
 
-    &.has-shade.green-color {
+    &.has-shade[data-shade=green] {
       border-color: lighten($green-color, 10);
     }
   }
