@@ -70,6 +70,22 @@ Date.prototype.indo_go_to = function(other) {
 	difference = Math.floor(difference / 24);
 	var days = difference;
 
-	return days + " hari " + hours + " jam " + minutes + " menit " + seconds +
-		" detik " + text;
+	var res = "";
+	if (days !== 0) {
+		res += days + " hari ";
+		res += hours + " jam ";
+		res += minutes + " menit ";
+		res += seconds + " detik ";
+	} else if (hours !== 0) {
+		res += hours + " jam ";
+		res += minutes + " menit ";
+		res += seconds + " detik ";
+	} else if (minutes !== 0) {
+		res += minutes + " menit ";
+		res += seconds + " detik ";
+	} else if (seconds !== 0) {
+		res += seconds + " detik ";
+	}
+	res += text;
+	return res;
 }
