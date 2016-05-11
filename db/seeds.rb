@@ -19,9 +19,9 @@ end
 		Status.find_or_create_by(name: status)
 end
 
-Contests.find_or_create_by(name: "Kontes Bulanan Mei 2016",
-						   number_of_short_submissions: 14,
-						   number_of_long_submissions: 4,
+Contest.find_or_create_by(name: "Kontes Bulanan Mei 2016",
+						   number_of_short_questions: 14,
+						   number_of_long_questions: 4,
 						   start_time: DateTime.new(2016, 5, 12, 1, 1, 1),
 						   end_time: DateTime.new(2016, 5, 13, 2, 2, 2))
 
