@@ -27,22 +27,29 @@
 }
 
 .month-calendar {
+  display: table;
   font-size: 14px;
-  caption, th, td {
+
+  .caption, .th, .td {
     text-align: center;
   }
 
-  caption {
+  .caption {
     padding-top: 0;
   }
 
   .today {
     font-weight: 600;
-    border: double #000 1px;
+    border: double #000 1px !important;
   }
 
   .has-contest {
     background: #fff;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
   }
 }
 

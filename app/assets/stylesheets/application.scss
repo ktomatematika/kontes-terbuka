@@ -179,3 +179,33 @@ footer.app-footer, ul.navbar-nav {
     }
   }
 }
+
+// Table classes
+div.table {
+  @extend table;
+  display: table;
+}
+.thead {
+  @extend thead;
+  display: table-header-group;
+}
+.tr {
+  @extend tr;
+  display: table-row;
+}
+.td {
+  @extend td;
+  display: table-cell;
+}
+.th {
+  @extend th;
+  display: table-cell;
+}
+.tbody {
+  @extend tbody;
+  display: table-row-group;
+}
+.caption {
+  @extend caption;
+  display: table-caption;
+}
