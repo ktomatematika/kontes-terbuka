@@ -21,13 +21,8 @@ fjs.parentNode.insertBefore(js, fjs);
   <section class="home-section home-article text-center" id="this-contest">
     <h2 id="next-contest-name"></h2>
     <h3 id="next-contest-time"></h3>
-    <% if @next_contest != nil %>
-      <a href="/contests/<%= @next_contest.id %>"
-         type="button"
-         id="home-btn-daftar"
-         class="btn btn-lg btn-default has-shade update-regularly">
-      </a>
-    <% end %>
+    <%= link_to "", @next_contest, type: "button", id: "home-btn-daftar",
+      class: "btn btn-lg btn-default has-shade update-regularly" %>
   </section>
 
   <section class="row home-section" id="home-section-container">
