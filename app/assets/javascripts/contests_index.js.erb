@@ -40,8 +40,9 @@ $(document).ready(function() {
             if (date_obj.compare_day(contest.start_time) >= 0 &&
                 date_obj.compare_day(contest.end_time) <= 0) {
               cell_class.push("has-contest");
+
               additions += 'data-toggle="popover" data-container="body" ';
-              additions += 'data-trigger="hover" data-placement="bottom"';
+              additions += 'data-trigger="hover" data-placement="top"';
               additions += 'data-html="true"';
               additions += ('title="' + contest.name + '" ');
 
@@ -50,6 +51,7 @@ $(document).ready(function() {
                 contest.number_of_short_questions + ' isian dan ' + 
                 contest.number_of_long_questions + ' uraian';
               additions += ('data-content="' + content + '"');
+
               break;
             }
           }

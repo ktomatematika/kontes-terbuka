@@ -10,12 +10,16 @@ $(document).ready(function() {
 		$('#contest-time').text(contest_time_text);
 	}
 
-	renderMathInElement(document.body, {
-		delimiters: [
-		{ left: "$", right: "$", display: false },
-		{ left: "$$", right: "$$", display: true },
-		{ left: "\\[", right: "\\]", display: true },
-		{ left: "\\(", right: "\\)", display: false }
-		]
-	});
+	var isian = $('.isian > label');
+	for (var i = 0; i < isian.length; i++) {
+		var prob = isian.get(i);
+		renderMathInElement(prob, {
+			delimiters: [
+			{ left: "$", right: "$", display: false },
+			{ left: "$$", right: "$$", display: true },
+			{ left: "\\[", right: "\\]", display: true },
+			{ left: "\\(", right: "\\)", display: false }
+			]
+		});
+	}
 });
