@@ -1,14 +1,14 @@
 #login .left-footer {
+  text-align: left;
   @media (min-width: 600px) {
     margin: 10px 0 0 10px;
     float: left; 
   }
   @media (max-width: 599px) {
     margin-bottom: 10px;
-
-    p {
-      margin: 0;
-    }
+  }
+  p {
+    margin: 0;
   }
 }
 
@@ -115,10 +115,6 @@
     }
   }
 
-  .form-control[disabled] {
-    cursor: default;
-  }
-
   .help-block {
     text-align: left;
     border: 1px solid #ccc;
@@ -131,4 +127,8 @@
       margin: 0;
     }
   }
+}
+
+#forgot-help {
+  margin: 10px 0;
 }

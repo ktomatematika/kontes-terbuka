@@ -1,6 +1,4 @@
-//Place all the behaviors and hooks related to the matching controller here.
-//All this logic will automatically be available in application.js.
-//You can use CoffeeScript in this file: http://coffeescript.org/
+var forgot = false;
 
 $(document).ready(function() {
 
@@ -9,6 +7,8 @@ $(document).ready(function() {
 	if (hash === "#login") {
 		$('#register').hide();
 	} else if (hash === "#register") {
+		$('#login').hide();
+	} else {
 		$('#login').hide();
 	}
 
@@ -153,14 +153,37 @@ $(document).ready(function() {
 	});
 
 	// jQuery fade in/out
-	$('.wrong-form > a').click(function(e) {
-		var right = $(this).data("right-form");
-		if (right === "login") {
+	$('.move-form').click(function(e) {
+		var right = $(this).attr("href");
+		if (right === "#login") {
+			restore_login();
 			$('#register').fadeOut();
 			$('#login').fadeIn();
-		} else if (right === "register") {
+		} else if (right === "#register") {
 			$('#login').fadeOut();
 			$('#register').fadeIn();
 		}
+		e.preventDefault();
+	});
+
+	// Forgot password
+	$('#forgot-link').click(function() {
+		if (forgot) {
+			restore_login();
+		} else {
+			$('#login-form #password').parent().remove();	
+			$('#remember-me').remove();
+			$('#forgot-link').text("Kembali");
+			$('#login-form').prepend('<p id="forgot-help">Masukkan username atau ' +
+					'email Anda. Kami akan mengirim Anda petunjuk ' +
+					'mengreset password.</p>');
+			$('#login-form input[type=submit]').text("Kirim");
+			forgot = true;
+		}
 	});
 });
+
+function restore_login() {
+
+	forgot = false;
+}

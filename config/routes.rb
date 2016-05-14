@@ -21,7 +21,7 @@ Rails.application.routes.draw do
 
 	root "welcome#index"
 
-	get '/sign' => 'welcome#user'
+	get '/sign' => 'welcome#sign'
 	get '/register' => 'users#new'
 
 	get '/login' => 'sessions#new'
