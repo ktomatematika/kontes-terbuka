@@ -8,8 +8,8 @@
       </div>
       <div class="login-text">
         <div class="h1">Masuk</div>
-        <div class="wrong-form">Belum punya akun? <a href="#to-register">
-            Daftar.</a></div>
+        <div class="wrong-form">Belum punya akun?
+          <a href="#register" data-right-form="register">Daftar.</a></div>
       </div>
       <div class="clearfix"></div>
       </header>
@@ -28,11 +28,12 @@
           </span>
         </div>
         <footer>
-          <div class="checkbox">
-            <label>
-              <%= check_box_tag :remember_me, 1, params[:remember_me] %>
-              Ingat saya
-            </label>
+          <div class="left-footer">
+            <p>
+            <%= check_box_tag :remember_me, 1, params[:remember_me] %>
+            <label>Ingat saya</label>
+            </p>
+            <a href="#">Lupa password Anda?</a>
           </div>
           <%= submit_tag "Masuk", class: "btn btn-lg btn-default
           btn-login has-shade" %>

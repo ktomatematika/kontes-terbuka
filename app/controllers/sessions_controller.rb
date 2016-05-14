@@ -5,7 +5,7 @@ class SessionsController < ApplicationController
 		if current_user
 			redirect_to "/"
 		else
-			redirect_to "/sign#to-login"
+			redirect_to "/sign#login"
 		end
 	end
 	

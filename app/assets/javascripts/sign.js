@@ -4,6 +4,14 @@
 
 $(document).ready(function() {
 
+	// Which form to show?
+	var hash = window.location.hash;
+	if (hash === "#login") {
+		$('#register').hide();
+	} else if (hash === "#register") {
+		$('#login').hide();
+	}
+
 	// Synergize with bootstrap by adding certain bootstrap classes.
 	$.validator.setDefaults({
 		errorElement: "span",
@@ -67,7 +75,7 @@ $(document).ready(function() {
 				min: 1
 			},
 			"user[school]": {
-				required: true,
+				required: true
 			},
 				"confirm": {
 					required: true
@@ -133,19 +141,6 @@ $(document).ready(function() {
 		}
 	});
 
-	// When a form fades out, disable its controls
-	$('.wrong-form > a').click(function() {
-		var hash = window.location.hash;
-
-		if (hash === "#to-register") {
-			$('#login-form').find('input').prop('disabled', false);
-			$('#register-form').find('input').prop('disabled', true);
-		} else if (hash === "#to-login") {
-			$('#register-form').find('input').prop('disabled', false);
-			$('#login-form').find('input').prop('disabled', true);
-		}
-	});
-
 	// Show help text when input is selected
 	$("#register .pre-help, #login .pre-help").addClass('hidden');
 	$('#register input, #login input').focus(function() {
@@ -155,5 +150,17 @@ $(document).ready(function() {
 	});
 	$('#register input, #login input').focusout(function() {
 		$(this).nextAll(".pre-help").addClass('hidden');
+	});
+
+	// jQuery fade in/out
+	$('.wrong-form > a').click(function(e) {
+		var right = $(this).data("right-form");
+		if (right === "login") {
+			$('#register').fadeOut();
+			$('#login').fadeIn();
+		} else if (right === "register") {
+			$('#login').fadeOut();
+			$('#register').fadeIn();
+		}
 	});
 });
