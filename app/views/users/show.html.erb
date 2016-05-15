@@ -1,29 +1,29 @@
-<h1> Akunmu </h1>
-<table style="width:100%">
-	<tr>
-		<td>Username:</td>
-		<td><%= @user.username %></td>
-	</tr>
-	<tr>
-		<td>Email:</td>
-		<td><%= @user.email %></td>
-	</tr>
-	<tr>
-		<td>Nama lengkap:</td>
-		<td><%= @user.fullname %></td>
-	</tr>
-	<tr>
-		<td>Provinsi:</td>
-		<td><%= @user.province.name %></td>
-	</tr>
-	<tr>
-		<td>Status:</td>
-		<td><%= @user.status.name %></td>
-	</tr>
-	<tr>
-		<td>Sekolah/Institusi:</td>
-		<td><%= @user.school %></td>
-	</tr>
-	<td>Poin:</td>
-	<td><%= @user.point %></td>
-</table>
+<div class="container-fluid">
+  <h1><%= @user.username %></h1>
+  <table style="width:100%">
+    <tr>
+      <td>Email:</td>
+      <td><%= @user.email %></td>
+    </tr>
+    <tr>
+      <td>Nama lengkap:</td>
+      <td><%= @user.fullname %></td>
+    </tr>
+    <tr>
+      <td>Provinsi:</td>
+      <td><%= @user.province.name %></td>
+    </tr>
+    <tr>
+      <td>Status:</td>
+      <td><%= @user.status.name %></td>
+    </tr>
+    <tr>
+      <td>Sekolah/Institusi:</td>
+      <td><%= @user.school %></td>
+    </tr>
+    <tr>
+      <td>Poin:</td>
+      <td><%= @user.point %></td>
+    </tr>
+  </table>
+</div>

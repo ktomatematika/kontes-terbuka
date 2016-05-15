@@ -21,6 +21,4 @@ function load_colors() {
 	$('.has-shade').attr("data-shade", shade);
 }
 
-$(document).ready(function() {
-	load_colors();
-});
+$(document).ready(load_colors);

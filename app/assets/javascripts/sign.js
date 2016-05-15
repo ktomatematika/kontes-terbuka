@@ -167,23 +167,30 @@ $(document).ready(function() {
 	});
 
 	// Forgot password
+	
+	var password_div = $('#login-form #password').parent();
+	var remember_checkbox = $('#remember-me');
 	$('#forgot-link').click(function() {
 		if (forgot) {
 			restore_login();
 		} else {
-			$('#login-form #password').parent().remove();	
-			$('#remember-me').remove();
+			password_div.remove();	
+			remember_checkbox.remove();
 			$('#forgot-link').text("Kembali");
-			$('#login-form').prepend('<p id="forgot-help">Masukkan username atau ' +
-					'email Anda. Kami akan mengirim Anda petunjuk ' +
+			$('#login-form').prepend('<p id="forgot-help">Masukkan username ' +
+					'atau email Anda. Kami akan mengirim Anda petunjuk ' +
 					'mengreset password.</p>');
-			$('#login-form input[type=submit]').text("Kirim");
+			$('#login-form input[type=submit]').prop("value", "Kirim");
 			forgot = true;
 		}
 	});
+
+	function restore_login() {
+		$('#login-form #username').parent().after(password_div);
+		$('#login-form .left-footer').prepend(remember_checkbox);
+		$('#forgot-link').text("Lupa password Anda?");
+		$('#login-form #forgot-help').remove();
+		$('#login-form input[type=submit]').prop("value", "Masuk");
+		forgot = false;
+	}
 });
-
-function restore_login() {
-
-	forgot = false;
-}
