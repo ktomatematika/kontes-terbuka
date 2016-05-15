@@ -1,8 +1,12 @@
 #login .left-footer {
   text-align: left;
   @media (min-width: 600px) {
-    margin: 10px 0 0 10px;
+    margin-left: 10px;
     float: left; 
+
+    .checkbox {
+      margin: 0;
+    }
   }
   @media (max-width: 599px) {
     margin-bottom: 10px;

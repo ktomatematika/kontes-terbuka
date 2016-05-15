@@ -28,10 +28,12 @@
         </div>
         <footer>
           <div class="left-footer">
-            <p id="remember-me">
-            <%= check_box_tag :remember_me, 1, params[:remember_me] %>
-            <label>Ingat saya</label>
-            </p>
+            <div class="checkbox" id="remember-me">
+            <label>
+              <%= check_box_tag :remember_me, 1, params[:remember_me] %>
+              Ingat saya
+            </label>
+            </div>
             <a href="#login" id="forgot-link">Lupa password Anda?</a>
           </div>
           <%= submit_tag "Masuk", class: "btn btn-lg btn-default
