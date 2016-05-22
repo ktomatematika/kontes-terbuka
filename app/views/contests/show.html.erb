@@ -8,9 +8,10 @@
         <h1 id="contest-name"></h1> 
         <h3 id="contest-time"></h3>
         <h3 class="update-regularly" id="contest-time-remaining"></h3>
-        <button class="btn btn-default btn-lg has-shade">Download soal</button>
+        <button class="btn btn-default btn-lg has-shade">
+          <%= link_to "Download soal", @contest.problem_pdf.url(:original, false) %>
+        </button>
       </header>
-
       <article id="bagian-a">
         <header>
           <h2>Bagian A: Isian Singkat</h2>
@@ -21,72 +22,45 @@
             jawaban yang Anda kumpulkan terakhir. Kosongkan jawaban
             yang tidak ingin Anda ganti.</h4>
         </header>
-        <%= form_for :answer, url: '/short_problems/submit/' do |f| %>
+        <%= form_for :short_answer, url: '/short_problems/submit/' do |f| %>
           <% @short_problems.each do |prob| %>
             <p class="isian">
-            <label for="isian-<%= prob.problem_no %>" class="text-justify">
-              <%= prob.problem_no %>. <%= prob.statement %>
-            </label>
-            <% submission = ShortSubmission.where(
-              short_problem_id: prob.id, user_id: current_user.id)[0] %>
-            <% prev_answer = (submission == nil) ? "" : submission.answer %>
-            <%= f.text_field prob.id, class: "form-control", 
-              id: "isian-" + prob.problem_no.to_s,
-              placeholder: prev_answer.to_s %>
-          </p>
+              <label for="isian-<%= prob.problem_no %>" class="text-justify">
+                <%= prob.problem_no %>. <%= prob.statement %>
+              </label>
+              <% submission = ShortSubmission.where(
+                short_problem_id: prob.id, user_id: current_user.id)[0] %>
+              <% prev_answer = (submission == nil) ? "" : submission.answer %>
+              <%= f.text_field prob.id, class: "form-control", 
+                id: "isian-" + prob.problem_no.to_s,
+                placeholder: prev_answer.to_s %>
+            </p>
+          <% end %>
+          <%= hidden_field_tag 'contest_id', @contest.id  %>
+          <%= f.submit "Jawab", class: "btn btn-default has-shade" %>
         <% end %>
-        <%= hidden_field_tag 'contest_id', @contest.id  %>
-        <%= f.submit "Jawab", class: "btn btn-default has-shade" %>
-      <% end %>
       </article>
-
-      <!--
-        <article id="bagian-b">
-        <h2>Bagian B: Uraian</h2>
-        <h4>Tulis/ketik jawaban beserta langkah pekerjaan Anda pada lembar jawaban
-        yang telah disediakan. Jika Anda menulis jawaban Anda, Anda boleh memfoto
-        ataupun mengscan jawaban. Setiap soal bernilai 7 poin.</h4>
-
-        <table style="width:100%">
-        <tr>
-        <td>Name: </td>
-        <td>Attachment: </td>
-        <td>Nomor soal esai:</td>
-        </tr>
-        <% @contest.long_submissions.each do |s| %>
-          <% if s.user_id == session[:user_id] %>
-            <tr>
-            <td><%= s.name %></td>
-            <td><%= link_to "Download Resume", s.attachment_url %></td>
-            <td><%= s.problem_id %></td>	
-            </tr>
+      <article id="bagian-b">
+        <header>
+          <h2>Bagian B: Uraian</h2>
+          <h4 class="text-justify">Bagian B</h4>
+        </header>
+        <% @long_problems.each do |prob|%>
+          <%= prob.statement %>
+          <%= nested_form_for prob, url: 'long_problems/submit' do |f| %>
+            <%= f.fields_for :long_submissions do |page_form| %>
+              <%= page_form.text_field :page %>
+              <%= page_form.file_field :submission %>
+              <%= page_form.link_to_remove do%>
+                <b class="glyphicon glyphicon-trash"></b>
+              <% end %>
+            <% end %>
+            <%= f.link_to_add 'Tambah halaman', :long_submissions %>
+            <%= hidden_field_tag 'contest_id', @contest.id  %>
+            <%= f.submit "Jawab", class: "btn btn-default has-shade" %>
           <% end %>
         <% end %>
-        </table>
-
-        Submit sesuatu
-        <%= form_for([@contest, @contest.long_submissions.build]) do |f| %>
-          <p>
-          <%= f.label :name %><br>
-          <%= f.text_field :name %>
-          </p>
-          <p>
-          <%= f.label :attachment %><br>
-          <%= f.file_field :attachment %>
-          </p>
-          <p>
-          <%= f.hidden_field :user_id, value: session[:user_id] %>
-          </p>
-          <p>
-          <%= f.label :problem_id %><br>
-          <%= f.text_field :problem_id %>
-          </p>
-          <p>
-          <%= f.submit %>
-          </p>
-        <% end %>
-        </article>
-      -->
+      </article>
     </section>
     <aside class="col-sm-4"> 
       <header>

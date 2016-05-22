@@ -26,7 +26,12 @@
 	<%= f.datetime_field :start_time %><br>
 	Tanggal selesai kontes: <br>
 	<%= f.datetime_field :end_time %><br>
+	Tanggal pengumuman: <br>
+	<%= f.datetime_field :result_time %><br>
+	Tanggal umpan balik: <br>
+	<%= f.datetime_field :feedback_time %><br>
   Contoh format: 23 May 2016 13:42:15<br>
   Jam selalu dalam UTC.<br>
+  <%= f.file_field :problem_pdf %>
 	<%= f.submit %>
 <% end %>

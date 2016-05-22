@@ -1,10 +1,10 @@
 class CreateLongSubmissions < ActiveRecord::Migration
   def change
     create_table :long_submissions do |t|
-      t.string :name
-      t.string :attachment
-      t.integer :problem_id
 
+      t.belongs_to :user
+      t.belongs_to :long_problem
+      t.integer :page
       t.timestamps null: false
     end
   end

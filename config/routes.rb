@@ -16,8 +16,19 @@ Rails.application.routes.draw do
 	resources :roles
 	resources :contests do
 		resources :short_problems
+		resources :long_problems
+	end
+
+	resources :short_problems do
+		resources :short_submissions
+	end
+
+	resources :long_problems do
 		resources :long_submissions
 	end
+
+	resources :short_submissions
+	resources :long_submissions
 
 	root "welcome#index"
 

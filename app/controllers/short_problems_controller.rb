@@ -52,6 +52,6 @@ class ShortProblemsController < ApplicationController
 		end
 
 		def submission_params
-			params.require(:answer)
+			params.require(:short_answer)
 		end
 end
