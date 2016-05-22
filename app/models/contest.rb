@@ -12,4 +12,9 @@ class Contest < ActiveRecord::Base
 	validates :number_of_long_questions, presence: true
 	validates :start_time, presence: true
 	validates :end_time, presence: true
+
+	def self.next_contest
+		after_now = Contest.where("end_time > ?", Time.now)
+		return after_now.order("end_time")[0]
+	end
 end

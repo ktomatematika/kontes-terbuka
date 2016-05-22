@@ -13,7 +13,6 @@ class UsersController < ApplicationController
 
 	def create
 		@user = User.new(user_params)
-		@user.point = 0
 		@user.add_role :student
 		if @user.save && verify_recaptcha(model: @user)
 			cookies[:auth_token] = @user.auth_token

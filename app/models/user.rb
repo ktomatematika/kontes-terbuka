@@ -26,6 +26,7 @@ class User < ActiveRecord::Base
 
 	before_create { generate_token(:auth_token) }
 
+	after_initialize :default_values
 	before_save :encrypt_password
 	after_save :clear_password
 
@@ -51,5 +52,9 @@ class User < ActiveRecord::Base
 		begin
 			self[column] = SecureRandom.urlsafe_base64
 		end while User.exists?(column => self[column])
+	end
+
+	def default_values
+		self.point = 0	
 	end
 end
