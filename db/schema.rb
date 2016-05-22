@@ -11,7 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160522180333) do
+ActiveRecord::Schema.define(version: 20160522180424) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "contests", force: :cascade do |t|
     t.string   "name"
@@ -20,24 +23,38 @@ ActiveRecord::Schema.define(version: 20160522180333) do
     t.integer  "number_of_long_questions"
     t.datetime "start_time"
     t.datetime "end_time"
-    t.datetime "created_on"
-    t.datetime "last_updated_on"
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
+    t.string   "problem_pdf_file_name"
+    t.string   "problem_pdf_content_type"
+    t.integer  "problem_pdf_file_size"
+    t.datetime "problem_pdf_updated_at"
+    t.text     "rule"
+    t.datetime "result_time"
+    t.datetime "feedback_time"
   end
 
-  create_table "long_submissions", force: :cascade do |t|
-    t.string   "name"
-    t.string   "attachment"
-    t.integer  "problem_id"
+  create_table "long_problems", force: :cascade do |t|
+    t.integer  "contest_id"
+    t.integer  "problem_no"
+    t.text     "statement"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer  "user_id"
-    t.integer  "contest_id"
   end
 
-  add_index "long_submissions", ["contest_id"], name: "index_long_submissions_on_contest_id"
-  add_index "long_submissions", ["user_id"], name: "index_long_submissions_on_user_id"
+  add_index "long_problems", ["contest_id"], name: "index_long_problems_on_contest_id", using: :btree
+
+  create_table "long_submissions", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "long_problem_id"
+    t.integer  "page"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.string   "submission_file_name"
+    t.string   "submission_content_type"
+    t.integer  "submission_file_size"
+    t.datetime "submission_updated_at"
+  end
 
   create_table "provinces", force: :cascade do |t|
     t.string   "name"
@@ -53,8 +70,8 @@ ActiveRecord::Schema.define(version: 20160522180333) do
     t.datetime "updated_at"
   end
 
-  add_index "roles", ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id"
-  add_index "roles", ["name"], name: "index_roles_on_name"
+  add_index "roles", ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id", using: :btree
+  add_index "roles", ["name"], name: "index_roles_on_name", using: :btree
 
   create_table "short_problems", force: :cascade do |t|
     t.integer  "contest_id"
@@ -65,12 +82,12 @@ ActiveRecord::Schema.define(version: 20160522180333) do
     t.datetime "updated_at", null: false
   end
 
-  add_index "short_problems", ["contest_id"], name: "index_short_problems_on_contest_id"
+  add_index "short_problems", ["contest_id"], name: "index_short_problems_on_contest_id", using: :btree
 
   create_table "short_submissions", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "short_problem_id"
-    t.integer  "answer"
+    t.string   "answer"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
   end
@@ -86,8 +103,6 @@ ActiveRecord::Schema.define(version: 20160522180333) do
     t.string   "email"
     t.string   "hashed_password"
     t.string   "fullname"
-    t.string   "province"
-    t.string   "status"
     t.string   "school"
     t.integer  "point"
     t.datetime "created_at",      null: false
@@ -96,17 +111,18 @@ ActiveRecord::Schema.define(version: 20160522180333) do
     t.string   "auth_token"
     t.integer  "province_id"
     t.integer  "status_id"
+    t.integer  "color"
   end
 
-  add_index "users", ["province_id"], name: "index_users_on_province_id"
-  add_index "users", ["status_id"], name: "index_users_on_status_id"
+  add_index "users", ["province_id"], name: "index_users_on_province_id", using: :btree
+  add_index "users", ["status_id"], name: "index_users_on_status_id", using: :btree
 
   create_table "users_roles", id: false, force: :cascade do |t|
     t.integer "user_id"
     t.integer "role_id"
   end
 
-  add_index "users_roles", ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id"
+  add_index "users_roles", ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id", using: :btree
 
   create_table "version_associations", force: :cascade do |t|
     t.integer "version_id"
@@ -131,4 +147,6 @@ ActiveRecord::Schema.define(version: 20160522180333) do
   add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   add_index "versions", ["transaction_id"], name: "index_versions_on_transaction_id"
 
+  add_foreign_key "users", "provinces"
+  add_foreign_key "users", "statuses"
 end

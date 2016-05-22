@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class LongSubmissionTest < ActiveSupport::TestCase
+class LongProblemTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end
