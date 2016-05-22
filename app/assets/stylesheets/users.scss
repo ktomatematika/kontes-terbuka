@@ -1,3 +1,33 @@
-// Place all the styles related to the users controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+#profile {
+  margin-bottom: 20px;
+
+  img {
+    border: 2px solid #000;
+  }
+
+  p {
+    margin: 5px 0;
+  }
+}
+
+#transactions {
+  margin-top: -10px;
+}
+
+#profile, #transactions {
+  h2 {
+    margin-top: 10px;
+  }
+
+  nav {
+    text-align: center;
+
+    > #prev-history {
+      margin-right: 10px;
+    }
+
+    > #next-history {
+      margin-left: 10px;
+    }
+  }
+}

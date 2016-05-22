@@ -47,6 +47,7 @@ function update_regularly() {
 		} else if (now <= end_time) {
 			// Contest has not ended
 
+			$(".row > section").addClass("col-sm-8");
 			$('#bagian-a').show();
 			$('#bagian-b').show();
 			$('#ringkasan').show();
@@ -71,6 +72,12 @@ function update_regularly() {
 		} else if (now < results) {
 			// Results has not been released
 			
+			$('.row > section').removeClass('col-sm-8');
+			$('#bagian-a').hide();
+			$('#bagian-b').hide();
+			$('#ringkasan').hide();
+			$('#download').hide();
+			
 			subtitle = "Kontes sudah selesai. Hasil kontes akan keluar " +
 				"paling lambat " + results.format_indo() + ".";
 			time_remaining = "(" + current.indo_go_to(results) + ")";
@@ -78,8 +85,16 @@ function update_regularly() {
 		} else if (now < feedback) {
 			// Can still submit feedback to contest
 
+			$('#indiv-result').show();
+			$('#feedback').show();
+			$('#all-result').show();
+
 		} else {
 			// Cannot submit feedback anymore
+
+			$('#indiv-result').show();
+			$('#feedback').show();
+			$('#all-result').show();
 
 		}
 
