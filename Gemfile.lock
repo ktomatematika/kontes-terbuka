@@ -129,19 +129,16 @@ GEM
     nokogiri (1.6.7.2)
       mini_portile2 (~> 2.0.0.rc2)
     orm_adapter (0.5.0)
-<<<<<<< HEAD
     paper_trail (5.1.0)
       activerecord (>= 3.0, < 6.0)
       activesupport (>= 3.0, < 6.0)
       request_store (~> 1.1)
-=======
     paperclip (4.3.6)
       activemodel (>= 3.2.0)
       activesupport (>= 3.2.0)
       cocaine (~> 0.5.5)
       mime-types
       mimemagic (= 0.3.0)
->>>>>>> c56f01ac1b562b1990bb8a7eaa29c5b15cde5610
     pg (0.18.4)
     rack (1.6.4)
     rack-pjax (0.8.0)
@@ -261,12 +258,9 @@ DEPENDENCIES
   jquery-turbolinks
   katex-rails
   mini_magick
-<<<<<<< HEAD
   paper_trail
-=======
   nested_form
   paperclip (~> 4.3.6)
->>>>>>> c56f01ac1b562b1990bb8a7eaa29c5b15cde5610
   pg
   rails (= 4.2.5.1)
   rails_12factor
