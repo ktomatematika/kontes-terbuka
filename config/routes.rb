@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
+	mount RailsAdmin::Engine => '/penguasa', as: 'rails_admin'
 	authenticated :user do
 		root to: 'home#index', as: :authenticated_root
 	end
@@ -29,7 +29,6 @@ Rails.application.routes.draw do
 	post '/login' => 'sessions#create'
 	get '/logout' => 'sessions#destroy', as: :logout
 
-	get '/home/admin' => 'home#admin'
 	get '/home/index' => 'home#index'
 	get '/home/faq' => 'home#faq'
 	get '/home/sitemap' => 'home#sitemap'
@@ -38,7 +37,6 @@ Rails.application.routes.draw do
 	get '/home/privacy' => 'home#privacy'
 	get '/home/contact' => 'home#contact'
 
-	get '/contests/:id/admin' => 'contests#admin', as: :contest_admin
 	post '/short_problems/submit' => 'short_problems#submit'
 	# The priority is based upon order of creation: first created -> highest priority.
 	# See how all your routes lay out with "rake routes".

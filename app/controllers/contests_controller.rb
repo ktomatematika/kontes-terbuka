@@ -42,12 +42,6 @@ class ContestsController < ApplicationController
 		redirect_to contests_path
 	end
 
-# this is for contest manager to manage everything
-	def admin
-		@contest = Contest.find(params[:id])
-		@short_problems = @contest.short_problems.order(:problem_no).all
-	end
-
 	private
 		def contest_params
 			params.require(:contest).permit(:name, :number_of_short_questions, :number_of_long_questions, :start_time, :end_time)
