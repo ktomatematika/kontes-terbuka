@@ -93,7 +93,7 @@ function update_regularly() {
 			// Cannot submit feedback anymore
 
 			$('#indiv-result').show();
-			$('#feedback').show();
+			$('#feedback').hide();
 			$('#all-result').show();
 
 		}
@@ -103,4 +103,5 @@ function update_regularly() {
 	}
 }
 
+$(document).ready(update_regularly);
 setInterval(update_regularly, 1000);

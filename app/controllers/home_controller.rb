@@ -5,4 +5,22 @@ class HomeController < ApplicationController
 
 	def admin
 	end
+
+	def faq
+	end
+
+	def sitemap
+	end
+
+	def about
+	end
+
+	def terms
+	end
+
+	def privacy
+	end
+
+	def contact
+	end
 end

@@ -32,15 +32,13 @@ fjs.parentNode.insertBefore(js, fjs);
     <div class="col-sm-6 col-md-4"> 
       <article class="home-article" id="prev-contests">
         <h2>Kontes-kontes Sebelumnya</h2>
-        <a href="http://olimpiade.org/discussions/main-topic/13/">Soal-soal
-          kontes sebelumnya bisa didapat dari link ini.</a>
-        <h3><a href="#">Kontes Bulanan: Juni 2017</a></h3>
-        <h3><a href="#">Simulasi OSN: Mei 2017</a></h3>
-        <h3><a href="#">Kontes Bulanan: April 2017</a></h3>
-        <h3><a href="#">Simulasi OSP: Maret 2017</a></h3>
-        <h3><a href="#">Kontes Bulanan: Februari 2017</a></h3>
-        <h3><a href="#">Simulasi OSK: Januari 2017</a></h3>
-        <h4><a href="#">Kontes-kontes sebelumnya</a></h4>
+        <a href="http://olimpiade.org/discussions/main-topic/13/"
+           target="_blank">Soal-soal kontes sebelumnya bisa didapat dari 
+           link ini.</a>
+        <% Contest.prev_contests.each do |c| %>
+          <h3><%= link_to c.name, c %></h3>
+        <% end %>
+        <h4><%= link_to "Daftar kontes", contests_path %></h4>
       </article>
     </div>
 
