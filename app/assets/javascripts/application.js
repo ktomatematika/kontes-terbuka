@@ -15,7 +15,7 @@
 //= require jquery_ujs
 //= require validate
 //= require katex/katex
-//= require ./auto-render.min.js
+//= require katex_render.min.js
 //= require ./date_methods.js
 //= require_tree .
 //= require bootstrap-sprockets
