@@ -6,9 +6,10 @@
     <section class="col-sm-8">
       <header id="contest-info">
         <h1 id="contest-name"></h1> 
-        <h3 id="contest-time"></h3>
-        <h3 class="update-regularly" id="contest-time-remaining"></h3>
-        <button class="btn btn-default btn-lg has-shade">Download soal</button>
+        <h3 id="subtitle"></h3>
+        <h3 class="update-regularly" id="time-remaining"></h3>
+        <button class="btn btn-default btn-lg has-shade"
+                id="download">Download soal</button>
       </header>
 
       <article id="bagian-a">
@@ -88,7 +89,7 @@
         </article>
       -->
     </section>
-    <aside class="col-sm-4"> 
+    <aside class="col-sm-4" id="ringkasan">
       <header>
         <h3>Ringkasan Jawaban Anda</h3>
       </header>
@@ -112,5 +113,4 @@
         </header>
     </aside>
   </div>
-  <%= link_to "MANAGE?", contest_admin_path(:id => @contest.id) %>
 </div>

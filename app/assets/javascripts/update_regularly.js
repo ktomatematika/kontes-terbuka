@@ -27,8 +27,64 @@ function update_regularly() {
 	// contests/id time remaining, enable contest
 	var current_contest = $('#contest-data').data('current-contest');
 	if (current_contest !== null && current_contest !== undefined) {
-		var contest_time_remaining = "(" + current.indo_go_to(end_time) + ")";
-		$('#contest-time-remaining').text(contest_time_remaining);
+		$('#contest-name').text(current_contest.name);
+
+		var start_time = new Date(current_contest.start_time);
+		var end_time = new Date(current_contest.end_time);
+		// Change these
+		var results = new Date(2016, 5, 10, 13, 4, 15);
+		var feedback = new Date(2016, 5, 10, 13, 4, 15);
+
+		var subtitle;
+		var time_remaining;
+
+		if (now < start_time) {
+			// Contest has not started
+			subtitle = "Kontes dimulai " + start_time.format_indo() +
+				". Mohon menunggu!";
+			time_remaining = "(" + current.indo_go_to(start_time) + ")";
+
+		} else if (now <= end_time) {
+			// Contest has not ended
+
+			$('#bagian-a').show();
+			$('#bagian-b').show();
+			$('#ringkasan').show();
+			$('#download').show();
+
+			var isian = $('.isian > label');
+			for (var i = 0; i < isian.length; i++) {
+				var prob = isian.get(i);
+				renderMathInElement(prob, {
+					delimiters: [
+					{ left: "$", right: "$", display: false },
+					{ left: "$$", right: "$$", display: true },
+					{ left: "\\[", right: "\\]", display: true },
+					{ left: "\\(", right: "\\)", display: false }
+					]
+				});
+			}
+
+			subtitle = "Batas pengumpulan: " + end_time.format_indo();
+			time_remaining = "(" + current.indo_go_to(end_time) + ")";
+
+		} else if (now < results) {
+			// Results has not been released
+			
+			subtitle = "Kontes sudah selesai. Hasil kontes akan keluar " +
+				"paling lambat " + results.format_indo() + ".";
+			time_remaining = "(" + current.indo_go_to(results) + ")";
+
+		} else if (now < feedback) {
+			// Can still submit feedback to contest
+
+		} else {
+			// Cannot submit feedback anymore
+
+		}
+
+		$('#subtitle').text(subtitle);
+		$('#time-remaining').text(time_remaining);
 	}
 }
 
