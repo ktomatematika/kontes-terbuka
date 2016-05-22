@@ -1,29 +1,39 @@
 <div class="container-fluid">
-  <h1><%= @user.username %></h1>
-  <table style="width:100%">
-    <tr>
-      <td>Email:</td>
-      <td><%= @user.email %></td>
-    </tr>
-    <tr>
-      <td>Nama lengkap:</td>
-      <td><%= @user.fullname %></td>
-    </tr>
-    <tr>
-      <td>Provinsi:</td>
-      <td><%= @user.province.name %></td>
-    </tr>
-    <tr>
-      <td>Status:</td>
-      <td><%= @user.status.name %></td>
-    </tr>
-    <tr>
-      <td>Sekolah/Institusi:</td>
-      <td><%= @user.school %></td>
-    </tr>
-    <tr>
-      <td>Poin:</td>
-      <td><%= @user.point %></td>
-    </tr>
-  </table>
+  <h1>abcdabcdabcdabcdabcd</h1>
+  <div class="row">
+    <div class="col-sm-4" id="profile">
+      <%= image_tag("emblem.png", :alt => "Profil #{@user.username}", :height => "200px") %>
+      <p>Nama lengkap: <%= @user.fullname %></p>
+      <p>Email: <%= @user.email %></p>
+      <p>Provinsi: <%= @user.province.name %> </p>
+      <p>Status: <%= @user.status.name %></p>
+      <p>Sekolah/Institusi: <%= @user.school %></p>
+      <%= link_to "Edit Profil", edit_user_path,
+        :class => "btn btn-default has-shade", :type => "button" %>
+      <p>Poin: 21/81</p>
+      <a class="btn btn-default has-shade" type="button" id="profile-to-market">
+        Pasar
+      </a>
+    </div>
+    <div class="col-sm-8" id="transactions">
+      <h2>Riwayat Kontes</h2>
+      <div class="table-responsive">
+        <table class="table table-hover has-shade table-bordered" id="contest-history"> <thead> <tr> <th>Kontes</th> <th>Peringkat</th> <th>Banyak Peserta</th> <th>Penghargaan</th> <th>Total Skor</th> </tr> </thead> <tbody> <tr> <td>Kontes Mei 2016</td> <td>17</td> <td>30</td> <td>Perunggu</td> <td>7/42</td> </tr> <tr> <td>Kontes April 2016</td> <td>21</td> <td>40</td> <td>Perak</td> <td>23/42</td> </tr> <tr> <td>Kontes Mei 2016</td> <td>17</td> <td>30</td> <td>Perunggu</td> <td>7/42</td> </tr> <tr> <td>Kontes April 2016</td> <td>21</td> <td>40</td> <td>Perak</td> <td>23/42</td> </tr> </tbody> </table>
+      </div>
+      <nav>
+        <a href="#" id="prev-history">&lt;&lt;</a>
+        <span id="this-page">1</span>
+        <a href="#" id="next-history">&gt;&gt;</a>
+      </nav>
+      <h2>Riwayat Transaksi Poin</h2>
+      <div class="table-responsive">
+        <table class="table table-hover has-shade table-bordered" id="point-history"> <thead> <tr> <th>Waktu</th> <th>Poin</th> <th>Keterangan</th> </tr> </thead> <tbody> <tr> <td>12345</td> <td>+17</td> <td>Menang Kontes</td> </tr> <tr> <td>12345</td> <td>+17</td> <td>Menang Kontes</td> </tr> <tr> <td>12345</td> <td>+17</td> <td>Menang Kontes</td> </tr> <tr> <td>12345</td> <td>-70</td> <td>Beli Kaos Olimpiade.org</td> </tbody> </table>
+      </div>
+      <nav>
+        <a href="#" id="prev-history">&lt;&lt;</a>
+        <span id="this-page">1</span>
+        <a href="#" id="next-history">&gt;&gt;</a>
+      </nav>
+    </div>
+  </div>
 </div>

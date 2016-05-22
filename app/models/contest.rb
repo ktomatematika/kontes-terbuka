@@ -23,4 +23,13 @@ class Contest < ActiveRecord::Base
 	accepts_nested_attributes_for :long_problems
 	accepts_nested_attributes_for :long_submissions
 
+	def self.next_contest
+		after_now = Contest.where("end_time > ?", Time.now)
+		return after_now.order("end_time")[0]
+	end
+
+	def self.prev_contests
+		prev_contests = Contest.where("end_time < ?", Time.now)
+		return prev_contests.limit(5).order("end_time desc")
+	end
 end

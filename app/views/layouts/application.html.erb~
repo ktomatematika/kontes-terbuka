@@ -34,16 +34,13 @@
 
         <div class="collapse navbar-collapse" id="top-navbar"> 
           <ul class="nav navbar-nav navbar-right">
-            <li><%= link_to "Admin", '/home/admin',
-              :class => "has-shade" %></li>
             <li><%= link_to "Rumah" , root_path,
               :class => "has-shade" %></li>
             <li><%= link_to "Kontes", contests_path,
               :class => "has-shade" %></li>
             <li><a href="#" class="has-shade">Pasar</a></li>
-            <li><%= link_to "Profil", { controller: "users", action: "edit",
-                                        id: @current_user },
-                                        :class => "has-shade" %></li>
+            <li><%= link_to "Profil", @current_user,
+              :class => "has-shade" %></li>
             <li><%= link_to "Keluar", logout_path,
               :class => "has-shade" %></li>
           </ul>
@@ -58,12 +55,12 @@
 
       <div id="other-links" role="navigation">
         <ul class="list-inline">
-          <li><a href="#" class="has-shade">FAQ</a></li>
-          <li><a href="#" class="has-shade">Peta</a></li>
-          <li><a href="#" class="has-shade">Tentang Kami</a></li>
-          <li><a href="#" class="has-shade">Syarat dan Ketentuan</a></li>
-          <li><a href="#" class="has-shade">Kebijakan Privasi</a></li>
-          <li><a href="#" class="has-shade">Kontak Kami</a></li>
+          <li><%= link_to 'FAQ', '/home/faq', class: "has-shade" %></li>
+          <li><%= link_to 'Peta', '/home/faq', class: "has-shade" %></li>
+          <li><%= link_to 'Tentang Kami', '/home/faq', class: "has-shade" %></li>
+          <li><%= link_to 'Syarat dan Ketentuan', '/home/faq', class: "has-shade" %></li>
+          <li><%= link_to 'Kebijakan Privasi', '/home/faq', class: "has-shade" %></li>
+          <li><%= link_to 'Kontak Kami', '/home/faq', class: "has-shade" %></li>
         </ul>
       </div>
       <p class="footer-text">

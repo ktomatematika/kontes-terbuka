@@ -1,5 +1,7 @@
 <%= content_for (:page_attributes) do %>data-no-turbolink="true"<% end %>
-<%= content_tag 'div', '', id: 'contest-data', data: { next: @next_contest } %>
+<%= content_tag 'div', '', id: 'contest-data', data: {
+  next: Contest.next_contest, 
+  url: url_for(Contest.next_contest) } %>
 
 <!-- Facebook plugin -->
 <div id="fb-root"></div>
@@ -21,23 +23,22 @@ fjs.parentNode.insertBefore(js, fjs);
   <section class="home-section home-article text-center" id="this-contest">
     <h2 id="next-contest-name"></h2>
     <h3 id="next-contest-time"></h3>
-    <%= link_to "", @next_contest, type: "button", id: "home-btn-daftar",
-      class: "btn btn-lg btn-default has-shade update-regularly" %>
+    <a class="btn btn-lg btn-default has-shade update-regularly"
+       type="button" id="home-btn-daftar" disabled>
+    </a>
   </section>
 
   <section class="row home-section" id="home-section-container">
     <div class="col-sm-6 col-md-4"> 
       <article class="home-article" id="prev-contests">
         <h2>Kontes-kontes Sebelumnya</h2>
-        <a href="http://olimpiade.org/discussions/main-topic/13/">Soal-soal
-          kontes sebelumnya bisa didapat dari link ini.</a>
-        <h3><a href="#">Kontes Bulanan: Juni 2017</a></h3>
-        <h3><a href="#">Simulasi OSN: Mei 2017</a></h3>
-        <h3><a href="#">Kontes Bulanan: April 2017</a></h3>
-        <h3><a href="#">Simulasi OSP: Maret 2017</a></h3>
-        <h3><a href="#">Kontes Bulanan: Februari 2017</a></h3>
-        <h3><a href="#">Simulasi OSK: Januari 2017</a></h3>
-        <h4><a href="#">Kontes-kontes sebelumnya</a></h4>
+        <a href="http://olimpiade.org/discussions/main-topic/13/"
+           target="_blank">Soal-soal kontes sebelumnya bisa didapat dari 
+           link ini.</a>
+        <% Contest.prev_contests.each do |c| %>
+          <h3><%= link_to c.name, c %></h3>
+        <% end %>
+        <h4><%= link_to "Daftar kontes", contests_path %></h4>
       </article>
     </div>
 
@@ -75,101 +76,7 @@ fjs.parentNode.insertBefore(js, fjs);
   <section class="home-section home-article" id="leaderboard">
     <h2>Leaderboard Tahun Ini</h2>
     <div class="table-responsive">
-      <table class="table table-hover has-shade table-bordered"
-             id="leaderboard-table">
-        <thead>
-          <tr>
-            <th>Rank</th>
-            <th>Username</th>
-            <th>Emas</th>
-            <th>Perak</th>
-            <th>Perunggu</th>
-            <th>Poin</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td>abcdabcdabcdabcdabcd</td>
-            <td>3</td>
-            <td>3</td>
-            <td>3</td>
-            <td>3</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>abcdabcdabcdabcdabcd</td>
-            <td>3</td>
-            <td>3</td>
-            <td>3</td>
-            <td>3</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>abcdabcdabcdabcdabcd</td>
-            <td>3</td>
-            <td>3</td>
-            <td>3</td>
-            <td>3</td>
-          </tr>
-          <tr>
-            <td>4</td>
-            <td>abcdabcdabcdabcdabcd</td>
-            <td>3</td>
-            <td>3</td>
-            <td>3</td>
-            <td>3</td>
-          </tr>
-          <tr>
-            <td>5</td>
-            <td>abcdabcdabcdabcdabcd</td>
-            <td>3</td>
-            <td>3</td>
-            <td>3</td>
-            <td>3</td>
-          </tr>
-          <tr>
-            <td>6</td>
-            <td>abcdabcdabcdabcdabcd</td>
-            <td>3</td>
-            <td>3</td>
-            <td>3</td>
-            <td>3</td>
-          </tr>
-          <tr>
-            <td>7</td>
-            <td>abcdabcdabcdabcdabcd</td>
-            <td>3</td>
-            <td>3</td>
-            <td>3</td>
-            <td>3</td>
-          </tr>
-          <tr>
-            <td>8</td>
-            <td>abcdabcdabcdabcdabcd</td>
-            <td>3</td>
-            <td>3</td>
-            <td>3</td>
-            <td>3</td>
-          </tr>
-          <tr>
-            <td>9</td>
-            <td>abcdabcdabcdabcdabcd</td>
-            <td>3</td>
-            <td>3</td>
-            <td>3</td>
-            <td>3</td>
-          </tr>
-          <tr>
-            <td>10</td>
-            <td>abcdabcdabcdabcdabcd</td>
-            <td>3</td>
-            <td>3</td>
-            <td>3</td>
-            <td>3</td>
-          </tr>
-        </tbody>
-      </table>
+      <table class="table table-hover has-shade table-bordered" id="leaderboard-table"> <thead> <tr> <th>Peringkat</th> <th>Username</th> <th>Emas</th> <th>Perak</th> <th>Perunggu</th> <th>Poin</th> </tr> </thead> <tbody> <tr> <td>1</td> <td>abcdabcdabcdabcdabcd</td> <td>3</td> <td>3</td> <td>3</td> <td>3</td> </tr> <tr> <td>2</td> <td>abcdabcdabcdabcdabcd</td> <td>3</td> <td>3</td> <td>3</td> <td>3</td> </tr> <tr> <td>3</td> <td>abcdabcdabcdabcdabcd</td> <td>3</td> <td>3</td> <td>3</td> <td>3</td> </tr> <tr> <td>4</td> <td>abcdabcdabcdabcdabcd</td> <td>3</td> <td>3</td> <td>3</td> <td>3</td> </tr> <tr> <td>5</td> <td>abcdabcdabcdabcdabcd</td> <td>3</td> <td>3</td> <td>3</td> <td>3</td> </tr> <tr> <td>6</td> <td>abcdabcdabcdabcdabcd</td> <td>3</td> <td>3</td> <td>3</td> <td>3</td> </tr> <tr> <td>7</td> <td>abcdabcdabcdabcdabcd</td> <td>3</td> <td>3</td> <td>3</td> <td>3</td> </tr> <tr> <td>8</td> <td>abcdabcdabcdabcdabcd</td> <td>3</td> <td>3</td> <td>3</td> <td>3</td> </tr> <tr> <td>9</td> <td>abcdabcdabcdabcdabcd</td> <td>3</td> <td>3</td> <td>3</td> <td>3</td> </tr> <tr> <td>10</td> <td>abcdabcdabcdabcdabcd</td> <td>3</td> <td>3</td> <td>3</td> <td>3</td> </tr> </tbody> </table>
     </div>
   </section>
 </div>
