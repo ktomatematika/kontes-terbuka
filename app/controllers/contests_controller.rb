@@ -16,7 +16,7 @@ class ContestsController < ApplicationController
 
 	def show
 		@contest = Contest.find(params[:id])
-		@short_problems = @contest.short_problems.all
+		@short_problems = @contest.short_problems.order("problem_no").all
 		if Time.current() < @contest.start_time
 			flash.now[:alert] = "Yang sabar ya, nak. Belum waktunya."
 			redirect_to contests_path

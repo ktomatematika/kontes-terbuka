@@ -102,9 +102,9 @@
           <% prev_answer = (submission == nil) ? "belum terjawab" :
             submission.answer %>
           <div <%= (submission == nil) ? 'class=text-danger' : '' %>>
-            No. <%= prob.problem_no %>: <%= prev_answer %>
-        </div>
-      <% end %>
+            <%= "No. #{prob.problem_no}: #{prev_answer}" %>
+          </div>
+        <% end %>
       </article>
       <article>
         <header>
