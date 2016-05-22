@@ -14,10 +14,11 @@ function update_regularly() {
 		$('#next-contest-time').text(time);
 
 		if (start > current) {
-			$('home-btn-daftar').prop('disabled', true);
+			$('home-btn-daftar').attr('disabled', true);
 			var text = current.indo_go_to(start);
 		} else {
-			$('#home-btn-daftar').prop('disabled', false);
+			$('#home-btn-daftar').removeAttr('disabled', false);
+			$('#home-btn-daftar').prop('href', $('#contest-data').data('url'));
 			var text = "Kontes sudah dimulai!";
 		}
 		$('#home-btn-daftar').text(text);
@@ -26,7 +27,6 @@ function update_regularly() {
 	// contests/id time remaining, enable contest
 	var current_contest = $('#contest-data').data('current-contest');
 	if (current_contest !== null && current_contest !== undefined) {
-		var end_time = new Date(current_contest.end_time);
 		var contest_time_remaining = "(" + current.indo_go_to(end_time) + ")";
 		$('#contest-time-remaining').text(contest_time_remaining);
 	}

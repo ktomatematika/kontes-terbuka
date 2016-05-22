@@ -1,5 +1,7 @@
 <%= content_for (:page_attributes) do %>data-no-turbolink="true"<% end %>
-<%= content_tag 'div', '', id: 'contest-data', data: { next: Contest.next_contest } %>
+<%= content_tag 'div', '', id: 'contest-data', data: {
+  next: Contest.next_contest, 
+  url: url_for(Contest.next_contest) } %>
 
 <!-- Facebook plugin -->
 <div id="fb-root"></div>
@@ -21,8 +23,9 @@ fjs.parentNode.insertBefore(js, fjs);
   <section class="home-section home-article text-center" id="this-contest">
     <h2 id="next-contest-name"></h2>
     <h3 id="next-contest-time"></h3>
-    <%= link_to "", Contest.next_contest, type: "button", id: "home-btn-daftar",
-      class: "btn btn-lg btn-default has-shade update-regularly" %>
+    <a class="btn btn-lg btn-default has-shade update-regularly"
+       type="button" id="home-btn-daftar" disabled>
+    </a>
   </section>
 
   <section class="row home-section" id="home-section-container">
