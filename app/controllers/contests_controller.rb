@@ -1,6 +1,11 @@
 class ContestsController < ApplicationController
 	http_basic_authenticate_with name: "admin", password: "admin", only: [:new, :edit, :destroy, :admin]
 
+	def admin
+		@contest = Contest.find(params[:id])
+		@short_problems = @contest.short_problems.order(:problem_no).all
+	end
+
 	def new
 		@contest = Contest.new
 	end
