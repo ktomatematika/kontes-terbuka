@@ -1,5 +1,7 @@
 <%= content_tag 'div', '', id: 'contest-data',
   data: { current_contest: @contest } %>
+<% now = Time.current() %>
+<% contest_time = (now >= @contest.start_time && now < @contest.end_time) %>
 <div class="container-fluid">
 
   <div class="row">
@@ -8,59 +10,65 @@
         <h1 id="contest-name"></h1> 
         <h3 id="subtitle"></h3>
         <h3 class="update-regularly" id="time-remaining"></h3>
-        <button class="btn btn-default btn-lg has-shade"
-                id="download">Download soal</button>
+        <% if contest_time %>
+          <button class="btn btn-default btn-lg has-shade"
+                  id="download">Download soal</button>
+        <% end %>
       </header>
-      <article id="bagian-a">
-        <header>
-          <h2>Bagian A: Isian Singkat</h2>
-          <h4 class="text-justify">Jawaban setiap soal dipastikan berupa
-            bilangan bulat. Setiap soal bernilai 1 poin. Tidak ada
-            pengurangan untuk jawaban yang salah. Anda boleh terus mengisi
-            jawaban sebelum kontes berakhir; jawaban yang dikoreksi adalah
-            jawaban yang Anda kumpulkan terakhir. Kosongkan jawaban
-            yang tidak ingin Anda ganti.</h4>
-        </header>
-        <%= form_for :short_answer, url: '/short_problems/submit/' do |f| %>
-          <% @short_problems.each do |prob| %>
-            <p class="isian">
-            <label for="isian-<%= prob.problem_no %>" class="text-justify">
-              <%= prob.problem_no %>. <%= prob.statement %>
-            </label>
-            <% submission = ShortSubmission.where(
-              short_problem_id: prob.id, user_id: current_user.id)[0] %>
-            <% prev_answer = (submission == nil) ? "" : submission.answer %>
-            <%= f.text_field prob.id, class: "form-control", 
-              id: "isian-" + prob.problem_no.to_s,
-              placeholder: prev_answer.to_s,
-              autocomplete: off %>
-          </p>
-        <% end %>
-        <%= hidden_field_tag 'contest_id', @contest.id  %>
-        <%= f.submit "Jawab", class: "btn btn-default has-shade" %>
-      <% end %>
-      </article>
-      <article id="bagian-b">
-        <header>
-          <h2>Bagian B: Uraian</h2>
-          <h4 class="text-justify">Bagian B</h4>
-        </header>
-        <% @long_problems.each do |prob|%>
-          <%= prob.statement %>
-          <%= nested_form_for prob, url: 'long_problems/submit' do |f| %>
-            <%= f.fields_for :long_submissions do |page_form| %>
-              <%= page_form.text_field :page %>
-              <%= page_form.file_field :submission %>
-              <%= page_form.link_to_remove do%>
-                <b class="glyphicon glyphicon-trash"></b>
-              <% end %>
-            <% end %>
-            <%= f.link_to_add 'Tambah halaman', :long_submissions %>
-            <%= hidden_field_tag 'contest_id', @contest.id  %>
-            <%= f.submit "Jawab", class: "btn btn-default has-shade" %>
+      <% if contest_time %>
+        <article id="bagian-a">
+          <header>
+            <h2>Bagian A: Isian Singkat</h2>
+            <h4 class="text-justify">Jawaban setiap soal dipastikan berupa
+              bilangan bulat. Setiap soal bernilai 1 poin. Tidak ada
+              pengurangan untuk jawaban yang salah. Anda boleh terus mengisi
+              jawaban sebelum kontes berakhir; jawaban yang dikoreksi adalah
+              jawaban yang Anda kumpulkan terakhir. Kosongkan jawaban
+              yang tidak ingin Anda ganti.</h4>
+          </header>
+          <%= form_for :short_answer, url: '/short_problems/submit/' do |f| %>
+            <% @short_problems.each do |prob| %>
+              <p class="isian">
+              <label for="isian-<%= prob.problem_no %>" class="text-justify">
+                <%= prob.problem_no %>. <%= prob.statement %>
+              </label>
+              <% submission = ShortSubmission.where(
+                short_problem_id: prob.id, user_id: current_user.id)[0] %>
+              <% prev_answer = (submission == nil) ? "" : submission.answer %>
+              <%= f.text_field prob.id, class: "form-control", 
+                id: "isian-" + prob.problem_no.to_s,
+                placeholder: prev_answer.to_s,
+                autocomplete: 'off' %>
+            </p>
           <% end %>
+          <%= hidden_field_tag 'contest_id', @contest.id  %>
+          <%= f.submit "Jawab", class: "btn btn-default has-shade" %>
         <% end %>
+        </article>
+        <article id="bagian-b">
+          <header>
+            <h2>Bagian B: Uraian</h2>
+            <h4 class="text-justify">Instruksi Bagian B</h4>
+          </header>
+          <% @long_problems.each do |prob|%>
+            <%= prob.statement %>
+            <%= nested_form_for prob, url: 'long_problems/submit' do |f| %>
+              <%= f.fields_for :long_submissions do |page_form| %>
+                <%= page_form.text_field :page %>
+                <%= page_form.file_field :submission %>
+                <%= page_form.link_to_remove do%>
+                  <b class="glyphicon glyphicon-trash"></b>
+                <% end %>
+              <% end %>
+              <%= f.link_to_add 'Tambah halaman', :long_submissions %>
+              <%= hidden_field_tag 'contest_id', @contest.id  %>
+              <%= f.submit "Jawab", class: "btn btn-default has-shade" %>
+            <% end %>
+          <% end %>
+        </article>
+      <% end %>
 
+      <% if now >= @contest.result_time %>
         <article id="indiv-result">
           <h2>Hasil dan Umpan Balik</h2>
           <h3>Bagian A: 10/14 poin</h3>
@@ -114,11 +122,13 @@
           <p>Jika Anda masih ada masalah silakan buka o.o</p>
         </article>
 
-        <article id="feedback">
-          <p>Sekarang giliran Anda kasih kesan pesan ke kami!</p>
-          <a href="#" class="btn btn-lg btn-default has-shade">
-            Isi Feedback</a>
-        </article>
+        <% if now <= @contest.feedback_time %>
+          <article id="feedback">
+            <p>Sekarang giliran Anda kasih kesan pesan ke kami!</p>
+            <a href="#" class="btn btn-lg btn-default has-shade">
+              Isi Feedback</a>
+          </article>
+        <% end %>
 
         <article id="all-result">
           <h2>Leaderboard</h2>
@@ -126,30 +136,34 @@
             <table class="table table-hover table-bordered"> <thead> <tr> <th>Peringkat</th> <th>Username</th> <th>Bagian A</th> <th>Bagian B no. 1</th> <th>Bagian B no. 2</th> <th>Bagian B no. 3</th> <th>Bagian B no. 4</th> <th>Total</th> <th>Penghargaan</th> </tr> </thead> <tbody> <tr> <td>1</td> <td>asdf</td> <td>2</td> <td>3</td> <td>7</td> <td>7</td> <td>0</td> <td>19</td> <td>Emas</td> </tr> <tr> <td>2</td> <td>asdf</td> <td>2</td> <td>3</td> <td>7</td> <td>7</td> <td>0</td> <td>19</td> <td>Emas</td> </tr> <tr> <td>3</td> <td>asdf</td> <td>2</td> <td>3</td> <td>7</td> <td>7</td> <td>0</td> <td>19</td> <td>Emas</td> </tr> <tr> <td>4</td> <td>asdf</td> <td>2</td> <td>3</td> <td>7</td> <td>7</td> <td>0</td> <td>19</td> <td>Emas</td> </tr> <tr> <td>5</td> <td>asdf</td> <td>2</td> <td>3</td> <td>7</td> <td>7</td> <td>0</td> <td>19</td> <td>Emas</td> </tr> </tbody> </table>
           </div>
         </article>
+      <% end %>
     </section>
 
-    <aside class="col-sm-4" id="ringkasan">
-      <header>
-        <h3>Ringkasan Jawaban Anda</h3>
-      </header>
-      <article>
+    <% if contest_time %>
+      <aside class="col-sm-4" id="ringkasan">
         <header>
-          <h4>Bagian A</h4>
+          <h3>Ringkasan Jawaban Anda</h3>
         </header>
-        <% @short_problems.each do |prob| %>
-          <% submission = ShortSubmission.where(
-            short_problem_id: prob.id, user_id: current_user.id)[0] %>
-          <% prev_answer = (submission == nil) ? "belum terjawab" :
-            submission.answer %>
-          <div <%= (submission == nil) ? 'class=text-danger' : '' %>>
-            <%= "No. #{prob.problem_no}: #{prev_answer}" %>
-          </div>
-        <% end %>
-      </article>
-      <article>
-        <header>
-          <h4>Bagian B</h4>
-        </header>
-    </aside>
+        <article>
+          <header>
+            <h4>Bagian A</h4>
+          </header>
+          <% @short_problems.each do |prob| %>
+            <% submission = ShortSubmission.where(
+              short_problem_id: prob.id, user_id: current_user.id)[0] %>
+            <% prev_answer = (submission == nil) ? "belum terjawab" :
+              submission.answer %>
+            <div <%= (submission == nil) ? 'class=text-danger' : '' %>>
+              <%= "No. #{prob.problem_no}: #{prev_answer}" %>
+            </div>
+          <% end %>
+        </article>
+        <article>
+          <header>
+            <h4>Bagian B</h4>
+          </header>
+        </article>
+      </aside>
+    <% end %>
   </div>
 </div>
