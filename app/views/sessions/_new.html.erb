@@ -16,7 +16,7 @@
       <%= form_tag login_path, id: "login-form" do %>
         <div class="form-group has-feedback">
           <%= text_field_tag :username, params[:email], class: "form-control",
-            placeholder: "Username/Email" %>
+            placeholder: "Username/Email", autofocus: true %>
           <span class="glyphicon form-control-feedback" aria-hidden="true">
           </span>
         </div>
