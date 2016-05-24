@@ -24,20 +24,21 @@
         <%= form_for :short_answer, url: '/short_problems/submit/' do |f| %>
           <% @short_problems.each do |prob| %>
             <p class="isian">
-              <label for="isian-<%= prob.problem_no %>" class="text-justify">
-                <%= prob.problem_no %>. <%= prob.statement %>
-              </label>
-              <% submission = ShortSubmission.where(
-                short_problem_id: prob.id, user_id: current_user.id)[0] %>
-              <% prev_answer = (submission == nil) ? "" : submission.answer %>
-              <%= f.text_field prob.id, class: "form-control", 
-                id: "isian-" + prob.problem_no.to_s,
-                placeholder: prev_answer.to_s %>
-            </p>
-          <% end %>
-          <%= hidden_field_tag 'contest_id', @contest.id  %>
-          <%= f.submit "Jawab", class: "btn btn-default has-shade" %>
+            <label for="isian-<%= prob.problem_no %>" class="text-justify">
+              <%= prob.problem_no %>. <%= prob.statement %>
+            </label>
+            <% submission = ShortSubmission.where(
+              short_problem_id: prob.id, user_id: current_user.id)[0] %>
+            <% prev_answer = (submission == nil) ? "" : submission.answer %>
+            <%= f.text_field prob.id, class: "form-control", 
+              id: "isian-" + prob.problem_no.to_s,
+              placeholder: prev_answer.to_s,
+              autocomplete: off %>
+          </p>
         <% end %>
+        <%= hidden_field_tag 'contest_id', @contest.id  %>
+        <%= f.submit "Jawab", class: "btn btn-default has-shade" %>
+      <% end %>
       </article>
       <article id="bagian-b">
         <header>
@@ -60,71 +61,71 @@
           <% end %>
         <% end %>
 
-      <article id="indiv-result">
-        <h2>Hasil dan Umpan Balik</h2>
-        <h3>Bagian A: 10/14 poin</h3>
-        <h3>Bagian B</h3>
-        <h4>No. 1: 6/7 poin</h4>
-        <div class="row">
-          <div class="col-sm-6">
-            <h5>Soal</h5>
-            Soalsoalsoal qjirjerjidjriojerjiorjo
+        <article id="indiv-result">
+          <h2>Hasil dan Umpan Balik</h2>
+          <h3>Bagian A: 10/14 poin</h3>
+          <h3>Bagian B</h3>
+          <h4>No. 1: 6/7 poin</h4>
+          <div class="row">
+            <div class="col-sm-6">
+              <h5>Soal</h5>
+              Soalsoalsoal qjirjerjidjriojerjiorjo
+            </div>
+            <div class="col-sm-6">
+              <h5>Umpan Balik</h5>
+              Umpanbalik umpanbalik qwurijzcjvkozokfjsdakjleroe
+            </div>
           </div>
-          <div class="col-sm-6">
-            <h5>Umpan Balik</h5>
-            Umpanbalik umpanbalik qwurijzcjvkozokfjsdakjleroe
+          <h4>No. 2: 0/7 poin</h4>
+          <div class="row">
+            <div class="col-sm-6">
+              <h5>Soal</h5>
+              Soalsoalsoal qjirjerjidjriojerjiorjo
+            </div>
+            <div class="col-sm-6">
+              <h5>Umpan Balik</h5>
+              Umpanbalik umpanbalik qwurijzcjvkozokfjsdakjleroe
+            </div>
           </div>
-        </div>
-        <h4>No. 2: 0/7 poin</h4>
-        <div class="row">
-          <div class="col-sm-6">
-            <h5>Soal</h5>
-            Soalsoalsoal qjirjerjidjriojerjiorjo
+          <h4>No. 3: 6/7 poin</h4>
+          <div class="row">
+            <div class="col-sm-6">
+              <h5>Soal</h5>
+              Soalsoalsoal qjirjerjidjriojerjiorjo
+            </div>
+            <div class="col-sm-6">
+              <h5>Umpan Balik</h5>
+              Umpanbalik umpanbalik qwurijzcjvkozokfjsdakjleroe
+            </div>
           </div>
-          <div class="col-sm-6">
-            <h5>Umpan Balik</h5>
-            Umpanbalik umpanbalik qwurijzcjvkozokfjsdakjleroe
+          <h4>No. 4: 7/7 poin</h4>
+          <div class="row">
+            <div class="col-sm-6">
+              <h5>Soal</h5>
+              Soalsoalsoal qjirjerjidjriojerjiorjo
+            </div>
+            <div class="col-sm-6">
+              <h5>Umpan Balik</h5>
+              Umpanbalik umpanbalik qwurijzcjvkozokfjsdakjleroe
+            </div>
           </div>
-        </div>
-        <h4>No. 3: 6/7 poin</h4>
-        <div class="row">
-          <div class="col-sm-6">
-            <h5>Soal</h5>
-            Soalsoalsoal qjirjerjidjriojerjiorjo
-          </div>
-          <div class="col-sm-6">
-            <h5>Umpan Balik</h5>
-            Umpanbalik umpanbalik qwurijzcjvkozokfjsdakjleroe
-          </div>
-        </div>
-        <h4>No. 4: 7/7 poin</h4>
-        <div class="row">
-          <div class="col-sm-6">
-            <h5>Soal</h5>
-            Soalsoalsoal qjirjerjidjriojerjiorjo
-          </div>
-          <div class="col-sm-6">
-            <h5>Umpan Balik</h5>
-            Umpanbalik umpanbalik qwurijzcjvkozokfjsdakjleroe
-          </div>
-        </div>
-        <h3>Total: 30/42 poin</h3>
-        <h3>Anda mendapatkan penghargaan perunggu!</h3>
-        <p>Jika Anda masih ada masalah silakan buka o.o</p>
-      </article>
+          <h3>Total: 30/42 poin</h3>
+          <h3>Anda mendapatkan penghargaan perunggu!</h3>
+          <p>Jika Anda masih ada masalah silakan buka o.o</p>
+        </article>
 
-      <article id="feedback">
-        <p>Sekarang giliran Anda kasih kesan pesan ke kami!</p>
-        <a href="#" class="btn btn-lg btn-default has-shade">
-          Isi Feedback</a>
-      </article>
+        <article id="feedback">
+          <p>Sekarang giliran Anda kasih kesan pesan ke kami!</p>
+          <a href="#" class="btn btn-lg btn-default has-shade">
+            Isi Feedback</a>
+        </article>
 
-      <article id="all-result">
-        <h2>Leaderboard</h2>
-        <div class="table-responsive">
-          <table class="table table-hover table-bordered"> <thead> <tr> <th>Peringkat</th> <th>Username</th> <th>Bagian A</th> <th>Bagian B no. 1</th> <th>Bagian B no. 2</th> <th>Bagian B no. 3</th> <th>Bagian B no. 4</th> <th>Total</th> <th>Penghargaan</th> </tr> </thead> <tbody> <tr> <td>1</td> <td>asdf</td> <td>2</td> <td>3</td> <td>7</td> <td>7</td> <td>0</td> <td>19</td> <td>Emas</td> </tr> <tr> <td>2</td> <td>asdf</td> <td>2</td> <td>3</td> <td>7</td> <td>7</td> <td>0</td> <td>19</td> <td>Emas</td> </tr> <tr> <td>3</td> <td>asdf</td> <td>2</td> <td>3</td> <td>7</td> <td>7</td> <td>0</td> <td>19</td> <td>Emas</td> </tr> <tr> <td>4</td> <td>asdf</td> <td>2</td> <td>3</td> <td>7</td> <td>7</td> <td>0</td> <td>19</td> <td>Emas</td> </tr> <tr> <td>5</td> <td>asdf</td> <td>2</td> <td>3</td> <td>7</td> <td>7</td> <td>0</td> <td>19</td> <td>Emas</td> </tr> </tbody> </table>
-        </div>
-      </article>
+        <article id="all-result">
+          <h2>Leaderboard</h2>
+          <div class="table-responsive">
+            <table class="table table-hover table-bordered"> <thead> <tr> <th>Peringkat</th> <th>Username</th> <th>Bagian A</th> <th>Bagian B no. 1</th> <th>Bagian B no. 2</th> <th>Bagian B no. 3</th> <th>Bagian B no. 4</th> <th>Total</th> <th>Penghargaan</th> </tr> </thead> <tbody> <tr> <td>1</td> <td>asdf</td> <td>2</td> <td>3</td> <td>7</td> <td>7</td> <td>0</td> <td>19</td> <td>Emas</td> </tr> <tr> <td>2</td> <td>asdf</td> <td>2</td> <td>3</td> <td>7</td> <td>7</td> <td>0</td> <td>19</td> <td>Emas</td> </tr> <tr> <td>3</td> <td>asdf</td> <td>2</td> <td>3</td> <td>7</td> <td>7</td> <td>0</td> <td>19</td> <td>Emas</td> </tr> <tr> <td>4</td> <td>asdf</td> <td>2</td> <td>3</td> <td>7</td> <td>7</td> <td>0</td> <td>19</td> <td>Emas</td> </tr> <tr> <td>5</td> <td>asdf</td> <td>2</td> <td>3</td> <td>7</td> <td>7</td> <td>0</td> <td>19</td> <td>Emas</td> </tr> </tbody> </table>
+          </div>
+        </article>
     </section>
 
     <aside class="col-sm-4" id="ringkasan">
