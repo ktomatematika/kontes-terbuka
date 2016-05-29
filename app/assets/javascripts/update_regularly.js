@@ -2,7 +2,7 @@ function update_regularly() {
 	var current = new Date();
 
 	// home/index contest details
-	var next_contest = $('#contest-data').data('next');
+	var next_contest = $('#home-contest-data').data('next');
 	if (next_contest !== null && next_contest !== undefined) {
 		var start = new Date(next_contest.start_time);
 		var end = new Date(next_contest.end_time);
