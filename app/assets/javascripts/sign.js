@@ -19,14 +19,18 @@ $(document).ready(function() {
 		highlight: function(element, errorClass, validClass) {
 			$(element).closest('.form-group').addClass('has-error');
 			$(element).closest('.form-group').removeClass('has-success');
-			$(element).nextAll('.glyphicon').removeClass('glyphicon-ok');
-			$(element).nextAll('.glyphicon').addClass('glyphicon-remove');
+			if ($(element).prop('type') !== 'password') {
+				$(element).nextAll('.glyphicon').removeClass('glyphicon-ok');
+				$(element).nextAll('.glyphicon').addClass('glyphicon-remove');
+			}
 		},
 		unhighlight: function(element, errorClass, validClass) {
 			$(element).closest('.form-group').addClass('has-success');
 			$(element).closest('.form-group').removeClass('has-error');
-			$(element).nextAll('.glyphicon').removeClass('glyphicon-remove');
-			$(element).nextAll('.glyphicon').addClass('glyphicon-ok');
+			if ($(element).prop('type') !== 'password') {
+				$(element).nextAll('.glyphicon').removeClass('glyphicon-remove');
+				$(element).nextAll('.glyphicon').addClass('glyphicon-ok');
+			}
 		},
 		errorPlacement: function(error, element) {
 			if (element.parent('.input-group').length) {
@@ -51,35 +55,36 @@ $(document).ready(function() {
 				required: true,
 				minlength: 6,
 				maxlength: 20,
-				alphanum: true
+				alphanum: true,
 			},
 			"user[email]": {
 				required: true,
-				email: true
+				email: true,
 			},
 			"user[password]": {
 				required: true,
-				minlength: 6
+				minlength: 6,
 			},
 			"user[password_confirmation]": {
 				required: true,
 				minlength: 6,
-				equalTo: "#user_password" },
+				equalTo: "#user_password",
+			},
 			"user[fullname]": {
 				required: true,
 			},
 			"user[province]": {
-				min: 1
+				min: 1,
 			},
 			"user[status]": {
-				min: 1
+				min: 1,
 			},
 			"user[school]": {
-				required: true
+				required: true,
 			},
-				"confirm": {
-					required: true
-				}
+			"confirm": {
+				required: true,
+			},
 		},
 		messages: {
 			"user[username]": {
@@ -167,7 +172,7 @@ $(document).ready(function() {
 	});
 
 	// Forgot password
-	
+
 	var password_div = $('#login-form #password').parent();
 	var remember_checkbox = $('#remember-me');
 	$('#forgot-link').click(function() {
@@ -193,4 +198,18 @@ $(document).ready(function() {
 		$('#login-form input[type=submit]').prop("value", "Masuk");
 		forgot = false;
 	}
+
+	// Peek functionality of password boxes
+	var peek_buttons = $('.form-control-feedback.glyphicon-eye-open');	
+	peek_buttons.mousedown(function(e) {
+		$(e.target).parent().children('input').prop('type', 'input');
+	});
+
+	peek_buttons.mouseup(function(e) {
+		$(e.target).parent().children('input').prop('type', 'password');
+	});
+
+	peek_buttons.mouseleave(function(e) {
+		$(e.target).parent().children('input').prop('type', 'password');
+	});
 });

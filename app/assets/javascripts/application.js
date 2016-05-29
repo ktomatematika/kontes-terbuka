@@ -16,8 +16,16 @@
 //= require validate
 //= require katex/katex
 //= require katex_render.min.js
+//= require flowtype.js
 //= require ./date_methods.js
 //= require_tree .
 //= require bootstrap-sprockets
 //= require turbolinks
 //= require jquery_nested_form
+
+$(document).ready(function() {
+	$('body').flowtype({
+		minFont: 12,
+		maxFont: 16,
+	});
+});

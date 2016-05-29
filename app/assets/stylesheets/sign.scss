@@ -1,7 +1,3 @@
-.form > .row {
-  margin: auto 0;
-}
-
 #login .left-footer {
   text-align: left;
   @media (min-width: 600px) {
@@ -20,12 +16,26 @@
   }
 }
 
+#register-container {
+  margin-top: 2%;
+}
+
+.form-control-feedback.glyphicon-eye-open {
+  color: #333;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
 #register, #login {
   background: #fff;
   padding: 25px;
   border: 1px solid;
   border-radius: 10px;
   text-align: center;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
 
   header {
     margin-bottom: 10px;

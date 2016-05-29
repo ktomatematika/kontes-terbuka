@@ -1,10 +1,10 @@
-<div class="container form">
+<div class="container-fluid" id="login-container">
   <div class="row">
     <div class="col-xs-10 col-sm-8 col-md-6" id="login">
       <header>
         <div class="login-logo">
-          <%= link_to image_tag("logo.png", :alt => "Logo KTOM"),
-            root_path %>
+          <%= link_to image_tag("logo.png", :alt => "Logo KTOM",
+                                :height => "70px"), root_path %>
       </div>
       <div class="login-text">
         <div class="h1">Masuk</div>
@@ -23,16 +23,17 @@
         <div class="form-group has-feedback">
           <%= password_field_tag :password, params[:password],
             class: "form-control", placeholder: "Password" %>
-          <span class="glyphicon form-control-feedback" aria-hidden="true">
+          <span class="glyphicon form-control-feedback glyphicon-eye-open"
+                aria-hidden="true"></span>
           </span>
         </div>
         <footer>
           <div class="left-footer">
             <div class="checkbox" id="remember-me">
-            <label>
-              <%= check_box_tag :remember_me, 1, params[:remember_me] %>
-              Ingat saya
-            </label>
+              <label>
+                <%= check_box_tag :remember_me, 1, params[:remember_me] %>
+                Ingat saya
+              </label>
             </div>
             <a href="#login" id="forgot-link">Lupa password Anda?</a>
           </div>
