@@ -8,8 +8,8 @@
     <%= javascript_include_tag 'application',
       'data-turbolinks-track' => true %>
     <%= csrf_meta_tags %>
-    <link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,600'
-                          rel='stylesheet' type='text/css'>
+    <script src="https://use.typekit.net/ieu7ith.js"></script>
+    <script>try{Typekit.load({ async: true });}catch(e){}</script>
     <%= favicon_link_tag %>
   </head>
   <body <%= yield(:page_attributes) %>>
@@ -56,11 +56,11 @@
       <div id="other-links" role="navigation">
         <ul class="list-inline">
           <li><%= link_to 'FAQ', '/home/faq', class: "has-shade" %></li>
-          <li><%= link_to 'Peta', '/home/faq', class: "has-shade" %></li>
-          <li><%= link_to 'Tentang Kami', '/home/faq', class: "has-shade" %></li>
-          <li><%= link_to 'Syarat dan Ketentuan', '/home/faq', class: "has-shade" %></li>
-          <li><%= link_to 'Kebijakan Privasi', '/home/faq', class: "has-shade" %></li>
-          <li><%= link_to 'Kontak Kami', '/home/faq', class: "has-shade" %></li>
+          <li><%= link_to 'Peta', '/home/sitemap', class: "has-shade" %></li>
+          <li><%= link_to 'Tentang Kami', '/home/about', class: "has-shade" %></li>
+          <li><%= link_to 'Syarat dan Ketentuan', '/home/terms', class: "has-shade" %></li>
+          <li><%= link_to 'Kebijakan Privasi', '/home/privacy', class: "has-shade" %></li>
+          <li><%= link_to 'Kontak Kami', '/home/contact', class: "has-shade" %></li>
         </ul>
       </div>
       <p class="footer-text">

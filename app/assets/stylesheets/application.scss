@@ -1,15 +1,4 @@
 /*
- * This is a manifest file that'll be compiled into application.css, which will include all the files
- * listed below.
- *
- * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
- * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
- *
- * You're free to add application-wide styles to this file and they'll appear at the bottom of the
- * compiled file so the styles you add here take precedence over styles defined in any styles
- * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
- * file per style scope.
- *
  *= require_self
  *= require_tree .
  *= require katex/katex
@@ -35,6 +24,34 @@ body {
 
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   font-weight: 600;
+
+  &, p {
+    line-height: 1.45;
+  }
+}
+
+h1, .h1 {
+  font-size: 2.5em;
+}
+
+h2, .h2 {
+  font-size: 2.1em;
+}
+
+h3, .h3 {
+  font-size: 1.7em;
+}
+
+h4, .h4 {
+  font-size: 1.5em;
+}
+
+h5, .h5 {
+  font-size: 1.2em;
+}
+
+h6, .h6 {
+  font-size: 1em;
 }
 
 [no-nav] {

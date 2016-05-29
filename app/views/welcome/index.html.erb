@@ -1,4 +1,6 @@
 <%= content_for :page_attributes do %>no-nav<% end %>
+<%= content_tag 'div', '', id: 'welcome-contest-data', data: {
+  next: Contest.next_contest, } %>
 
 <header class="teaser">
   <div class="welcome-logo">
@@ -13,8 +15,7 @@
               text-uppercase has-shade", role: "button" %> 
             <%= link_to "Masuk", "/login", class: "btn btn-default btn-lg 
               text-uppercase has-shade", role: "button" %></h2>
-    <h4>Kontes berikutnya: KTO Matematika Januari 2017: Simulasi OSK (11
-      - 14 Januari 2017)</h4>
+    <h4 id="welcome-next-contest">Kontes berikutnya: (11 - 14 Januari 2017)</h4>
   </div>
 </header>
 
@@ -34,7 +35,7 @@
         <p>Kontes ini diadakan setiap bulan. Latihan rutin adalah kunci
         kesuksesan!</p>
       </div>
-      <div class="clearfix visible-xs-block"></div>
+      <div class="clearfix hidden-md hidden-lg"></div>
       <div class="col-md-2 col-xs-6">
         <h3>Terbuka</h3>
         <div class="glyphicon has-shade glyphicon-user"
@@ -51,7 +52,7 @@
         peserta cukup mengetik, mengfoto, ataupun mengscan dan mengirim
         balik ke kami!</p>
       </div>
-      <div class="clearfix visible-xs-block"></div>
+      <div class="clearfix hidden-md hidden-lg"></div>
       <div class="col-md-2 col-xs-6">
         <h3>Berkualitas</h3>
         <div class="glyphicon has-shade glyphicon-ok"
