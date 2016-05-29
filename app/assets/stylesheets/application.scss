@@ -89,12 +89,12 @@ h6, .h6 {
     background-color: lighten($red-color, 5);
     border-color: darken($red-color, 10);
 
-    &:hover:not(.disabled) {
+    &:hover:not([disabled]) {
       background-color: $red-color;
       border-color: darken($red-color, 15);
     }
 
-    &:active:not(.disabled)  {
+    &:active:not([disabled])  {
       background-color: darken($red-color, 5);
       border-color: darken($red-color, 20);
     }
@@ -104,12 +104,12 @@ h6, .h6 {
     background-color: lighten($blue-color, 5);
     border-color: darken($blue-color, 10);
 
-    &:hover:not(.disabled) {
+    &:hover:not([disabled]) {
       background-color: $blue-color;
       border-color: darken($blue-color, 15);
     }
 
-    &:active:not(.disabled) {
+    &:active:not([disabled]) {
       background-color: darken($blue-color, 5);
       border-color: darken($blue-color, 20);
     }
@@ -119,12 +119,12 @@ h6, .h6 {
     background-color: lighten($green-color, 5);
     border-color: darken($green-color, 10);
 
-    &:hover:not(.disabled) {
+    &:hover:not([disabled]) {
       background-color: $green-color;
       border-color: darken($green-color, 15);
     }
 
-    &:active:not(.disabled) {
+    &:active:not([disabled]) {
       background-color: darken($green-color, 5);
       border-color: darken($green-color, 20);
     }

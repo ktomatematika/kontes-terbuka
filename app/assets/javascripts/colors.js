@@ -3,15 +3,22 @@
 //You can use CoffeeScript in this file: http://coffeescript.org/
 
 function choose_color() {
-	var num = now % 4;
+	var color = $('#warna').data('data');
+	var possible = ["red", "green", "blue", "yellow"];
 
-	if (num === 0) {
+	if (color === "Kosong") {
+		return "";
+	} else if (color === "Sistem") {
+		return possible[now.getMonth() % 4];
+	} else if (color === "Acak") {
+		return possible[now % 4];
+	} else if (color === "Merah") {
 		return "red";
-	} else if (num === 1) {
-		return "blue";
-	} else if (num === 2) {
+	} else if (color === "Hijau") {
 		return "green";
-	} else if (num === 3) {
+	} else if (color === "Biru") {
+		return "blue";
+	} else if (color === "Kuning") {
 		return "yellow";
 	}
 }

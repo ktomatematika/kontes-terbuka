@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
 	belongs_to :province
 	belongs_to :status
 
-	enum color: ['None', 'Red', 'Green', 'Blue', 'Yellow']
+	enum color: ['Sistem', 'Acak', 'Kosong', 'Merah', 'Hijau', 'Biru', 'Kuning']
 
 	attr_accessor :password
 

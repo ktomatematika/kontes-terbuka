@@ -6,6 +6,9 @@ class HomeController < ApplicationController
 	def faq
 	end
 
+	def book
+	end
+
 	def sitemap
 	end
 

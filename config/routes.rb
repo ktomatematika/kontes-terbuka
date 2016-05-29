@@ -42,6 +42,7 @@ Rails.application.routes.draw do
 
 	get '/home/index' => 'home#index'
 	get '/home/faq' => 'home#faq'
+	get '/home/book' => 'home#book'
 	get '/home/sitemap' => 'home#sitemap'
 	get '/home/about' => 'home#about'
 	get '/home/terms' => 'home#terms'
