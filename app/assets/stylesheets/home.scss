@@ -21,7 +21,7 @@
 }
 
 #home-middle-container {
-  @media(min-width: 768px) {
+  @media(min-width: 992px) {
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
@@ -32,17 +32,9 @@
     }
   }
 
-  > div {
-
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    overflow: hidden;
-
-    > article {
-      flex: 1;
-      text-align: center;
-    }
+  > div > article {
+    height: calc(100% - 40px);
+    text-align: center;
   }
 }
 

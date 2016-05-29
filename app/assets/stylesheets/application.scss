@@ -212,6 +212,7 @@ div.table {
 }
 .th {
   @extend th;
+  font-weight: bold;
   display: table-cell;
 }
 .tbody {

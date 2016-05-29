@@ -8,8 +8,8 @@
     <%= javascript_include_tag 'application',
       'data-turbolinks-track' => true %>
     <%= csrf_meta_tags %>
-    <script src="https://use.typekit.net/ieu7ith.js"></script>
-    <script>try{Typekit.load({ async: true });}catch(e){}</script>
+    <link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,600'
+                          rel='stylesheet' type='text/css'>
     <%= favicon_link_tag %>
   </head>
   <body <%= yield(:page_attributes) %>>
