@@ -53,6 +53,8 @@ Rails.application.routes.draw do
 
 	post '/short_problems/submit' => 'short_problems#submit'
 	post '/long_problems/submit' => 'long_problems#submit'
+
+	get '/magic' => 'home#send_magic_email', as: :magic
 	# The priority is based upon order of creation: first created -> highest priority.
 	# See how all your routes lay out with "rake routes".
 
