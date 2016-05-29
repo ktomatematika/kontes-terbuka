@@ -35,7 +35,7 @@ header.teaser {
   }
 
   h1 {
-    font-size: 50px;
+    font-size: 8vmin;
     margin: 5% 0;
   }
 
@@ -56,6 +56,7 @@ header.teaser {
 
   div div {
     text-align: center;
+    display: block;
   }
 
   .glyphicon {
@@ -120,5 +121,5 @@ header.teaser {
 
 #teaser {
   text-align: center;
-  padding-bottom: 0;
+  padding-bottom: 1%;
 }

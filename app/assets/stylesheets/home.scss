@@ -4,6 +4,7 @@
   border: 1px solid #000;
   border-radius: 15px;
   padding: 20px;
+  background: #fff;
 }
 
 .home-article {
@@ -19,33 +20,30 @@
   word-wrap: break-word;
 }
 
-#home-section-container {
+#home-middle-container {
   @media(min-width: 768px) {
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
     overflow: hidden;
 
-    & > div {
+    > div {
       flex: 1;
     }
   }
 
-  & > div {
+  > div {
 
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
     overflow: hidden;
 
-    & > article {
+    > article {
       flex: 1;
+      text-align: center;
     }
   }
-}
-
-#prev-contests, #promo-buku {
-  text-align: center;
 }
 
 #img-buku-ktom {

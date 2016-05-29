@@ -28,7 +28,7 @@ fjs.parentNode.insertBefore(js, fjs);
     </a>
   </section>
 
-  <section class="row home-section" id="home-section-container">
+  <section class="row home-section" id="home-middle-container">
     <div class="col-sm-6 col-md-4"> 
       <article class="home-article" id="prev-contests">
         <h2>Kontes-kontes Sebelumnya</h2>
@@ -43,6 +43,18 @@ fjs.parentNode.insertBefore(js, fjs);
     </div>
 
     <div class="col-sm-6 col-md-4">
+      <article class="home-article" id="iklan-lomba">
+        <h2>Kontes Tersponsori</h2>
+        <h3>KSM: Kompetisi Sains Madrasah</h3>
+        <a href="http://bit.ly/ktom-buku-1">
+          <%= image_tag("buku.png", :alt => "Buku KTOM 1",
+                        :class => "img-responsive center-block",
+                        :id => "img-buku-ktom") %>
+        </a>
+      </article>
+    </div>
+
+    <div class="col-sm-6 col-md-4">
       <article class="home-article" id="promo-buku">
         <h2>Buku KTO Matematika 1</h2>
         <a href="http://bit.ly/ktom-buku-1">
@@ -53,11 +65,22 @@ fjs.parentNode.insertBefore(js, fjs);
         </a>
       </article>
     </div>
+  </section>
+
+  <section class="row home-section" id="home-bottom-container">
+    <div class="col-md-8">
+      <article class="home-article" id="leaderboard">
+        <h2>Leaderboard Tahun Ini</h2>
+        <div class="table-responsive">
+          <table class="table table-hover has-shade table-bordered" id="leaderboard-table"> <thead> <tr> <th>Peringkat</th> <th>Username</th> <th>Emas</th> <th>Perak</th> <th>Perunggu</th> <th>Poin</th> </tr> </thead> <tbody> <tr> <td>1</td> <td>abcdabcdabcdabcdabcd</td> <td>3</td> <td>3</td> <td>3</td> <td>3</td> </tr> <tr> <td>2</td> <td>abcdabcdabcdabcdabcd</td> <td>3</td> <td>3</td> <td>3</td> <td>3</td> </tr> <tr> <td>3</td> <td>abcdabcdabcdabcdabcd</td> <td>3</td> <td>3</td> <td>3</td> <td>3</td> </tr> <tr> <td>4</td> <td>abcdabcdabcdabcdabcd</td> <td>3</td> <td>3</td> <td>3</td> <td>3</td> </tr> <tr> <td>5</td> <td>abcdabcdabcdabcdabcd</td> <td>3</td> <td>3</td> <td>3</td> <td>3</td> </tr> <tr> <td>6</td> <td>abcdabcdabcdabcdabcd</td> <td>3</td> <td>3</td> <td>3</td> <td>3</td> </tr> <tr> <td>7</td> <td>abcdabcdabcdabcdabcd</td> <td>3</td> <td>3</td> <td>3</td> <td>3</td> </tr> <tr> <td>8</td> <td>abcdabcdabcdabcdabcd</td> <td>3</td> <td>3</td> <td>3</td> <td>3</td> </tr> <tr> <td>9</td> <td>abcdabcdabcdabcdabcd</td> <td>3</td> <td>3</td> <td>3</td> <td>3</td> </tr> <tr> <td>10</td> <td>abcdabcdabcdabcdabcd</td> <td>3</td> <td>3</td> <td>3</td> <td>3</td> </tr> </tbody> </table>
+        </div>
+      </article>
+    </div>
 
     <div class="col-md-4 hidden-sm hidden-xs">
       <article class="home-article" id="fb-box">
         <div class="fb-page"
-             data-height="425px"
+             data-height="500px"
              data-href="https://www.facebook.com/KTOMatematika/"
              data-tabs="timeline"
              data-adapt-container-width="true">
@@ -70,13 +93,6 @@ fjs.parentNode.insertBefore(js, fjs);
           </div>
         </div>
       </article>    
-    </div>
-  </section>
-
-  <section class="home-section home-article" id="leaderboard">
-    <h2>Leaderboard Tahun Ini</h2>
-    <div class="table-responsive">
-      <table class="table table-hover has-shade table-bordered" id="leaderboard-table"> <thead> <tr> <th>Peringkat</th> <th>Username</th> <th>Emas</th> <th>Perak</th> <th>Perunggu</th> <th>Poin</th> </tr> </thead> <tbody> <tr> <td>1</td> <td>abcdabcdabcdabcdabcd</td> <td>3</td> <td>3</td> <td>3</td> <td>3</td> </tr> <tr> <td>2</td> <td>abcdabcdabcdabcdabcd</td> <td>3</td> <td>3</td> <td>3</td> <td>3</td> </tr> <tr> <td>3</td> <td>abcdabcdabcdabcdabcd</td> <td>3</td> <td>3</td> <td>3</td> <td>3</td> </tr> <tr> <td>4</td> <td>abcdabcdabcdabcdabcd</td> <td>3</td> <td>3</td> <td>3</td> <td>3</td> </tr> <tr> <td>5</td> <td>abcdabcdabcdabcdabcd</td> <td>3</td> <td>3</td> <td>3</td> <td>3</td> </tr> <tr> <td>6</td> <td>abcdabcdabcdabcdabcd</td> <td>3</td> <td>3</td> <td>3</td> <td>3</td> </tr> <tr> <td>7</td> <td>abcdabcdabcdabcdabcd</td> <td>3</td> <td>3</td> <td>3</td> <td>3</td> </tr> <tr> <td>8</td> <td>abcdabcdabcdabcdabcd</td> <td>3</td> <td>3</td> <td>3</td> <td>3</td> </tr> <tr> <td>9</td> <td>abcdabcdabcdabcdabcd</td> <td>3</td> <td>3</td> <td>3</td> <td>3</td> </tr> <tr> <td>10</td> <td>abcdabcdabcdabcdabcd</td> <td>3</td> <td>3</td> <td>3</td> <td>3</td> </tr> </tbody> </table>
     </div>
   </section>
 </div>

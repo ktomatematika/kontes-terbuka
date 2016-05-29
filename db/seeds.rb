@@ -19,16 +19,10 @@ end
 		Status.find_or_create_by(name: status)
 end
 
-Contest.find_or_create_by(name: "Kontes Bulanan Mei 2016",
+Contest.find_or_create_by(name: "Kontes Terakhir",
 						   number_of_short_questions: 14,
 						   number_of_long_questions: 4,
-						   start_time: DateTime.new(2016, 5, 12, 1, 1, 1),
-						   end_time: DateTime.new(2016, 5, 13, 2, 2, 2))
-
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
+						   start_time: DateTime.new(2999, 7, 10, 1, 1, 1),
+						   end_time: DateTime.new(2999, 7, 10, 1, 1, 1),
+						   result_time: DateTime.new(2999, 7, 10, 1, 1, 1),
+						   feedback_time: DateTime.new(2999, 7, 10, 1, 1, 1))
