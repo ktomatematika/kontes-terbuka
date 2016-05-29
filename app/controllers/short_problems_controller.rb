@@ -36,10 +36,11 @@ class ShortProblemsController < ApplicationController
 				if ShortSubmission.where(short_problem_id: problem_id, user_id: current_user.id).blank?
 					@short_problem = ShortProblem.find(problem_id)
 					@short_submission = @short_problem.short_submissions.create(
-						:user_id => current_user.id, :answer => submission_params[problem_id])
+						user_id: current_user.id, answer: submission_params[problem_id])
 				else
-					@short_submission = ShortSubmission.where(short_problem_id: problem_id, user_id: current_user.id)
-					@short_submission[0].update(:answer => submission_params[problem_id])
+					@short_submission = ShortSubmission.where(short_problem_id: problem_id, user_id: current_user.id).first
+					@short_submission.update(answer: submission_params[problem_id])
+					@short_submission.save
 				end
 			end
 		}

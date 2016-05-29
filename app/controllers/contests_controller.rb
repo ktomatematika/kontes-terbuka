@@ -47,10 +47,16 @@ class ContestsController < ApplicationController
 		redirect_to contests_path
 	end
 
+	def admin
+		@contest = Contest.find(params[:id])
+		@short_problems = @contest.short_problems.order(:problem_no).all
+		@long_problems = @contest.long_problems.order(:problem_no).all
+	end
+
 	private
 		def contest_params
 			params.require(:contest).permit(:name, :number_of_short_questions, 
 																			:number_of_long_questions, :start_time, 
-																			:end_time, :problem_pdf)
+																			:end_time, :problem_pdf, :result_time, :feedback_time)
 		end  
 end

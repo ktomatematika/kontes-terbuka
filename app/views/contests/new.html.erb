@@ -2,7 +2,7 @@
 
 <h1> Buat kontes </h1>
 
-<%= form_for :contest, url: contests_path do |f| %>
+<%= form_for :contest, url: contests_path, html: { multipart: true } do |f| %>
 	<% if @contest.errors.any? %>
     	<div id="error_explanation">
     		<h2>

@@ -8,8 +8,9 @@
         <h1 id="contest-name"></h1> 
         <h3 id="subtitle"></h3>
         <h3 class="update-regularly" id="time-remaining"></h3>
-        <button class="btn btn-default btn-lg has-shade"
-                id="download">Download soal</button>
+        <button class="btn btn-default btn-lg has-shade" id="download">
+          <%= link_to "Download soal", @contest.problem_pdf.url(:original, false) %>
+        </button>
       </header>
       <article id="bagian-a">
         <header>
@@ -44,9 +45,13 @@
           <h2>Bagian B: Uraian</h2>
           <h4 class="text-justify">Bagian B</h4>
         </header>
+
+
+
         <% @long_problems.each do |prob|%>
           <%= prob.statement %>
-          <%= nested_form_for prob, url: 'long_problems/submit' do |f| %>
+          <%= nested_form_for prob, url: '/long_problems/submit', html: { multipart: true }, 
+                   method: :post do |f| %>
             <%= f.fields_for :long_submissions do |page_form| %>
               <%= page_form.text_field :page %>
               <%= page_form.file_field :submission %>
@@ -55,10 +60,15 @@
               <% end %>
             <% end %>
             <%= f.link_to_add 'Tambah halaman', :long_submissions %>
-            <%= hidden_field_tag 'contest_id', @contest.id  %>
+            <%= f.hidden_field :problem_id, value: prob.id %>       
+            <%= f.hidden_field :contest_id, value: @contest.id  %>
             <%= f.submit "Jawab", class: "btn btn-default has-shade" %>
           <% end %>
         <% end %>
+
+
+
+      </article>
 
       <article id="indiv-result">
         <h2>Hasil dan Umpan Balik</h2>

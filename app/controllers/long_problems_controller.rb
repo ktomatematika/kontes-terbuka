@@ -30,7 +30,27 @@ class LongProblemsController < ApplicationController
 	end
 
 	def submit
-		## TODO : build submit
+		contest_id = submission_params['contest_id']
+		problem_id = submission_params['problem_id']
+		if submission_params.has_key?(:long_submissions_attributes)
+			concern_params = submission_params[:long_submissions_attributes]
+			concern_params.each_key { |s|
+				unless concern_params[s][:submission].blank?
+					long_submission_temp = LongSubmission.where(long_problem_id: problem_id, user_id: current_user.id)
+					page_number = concern_params[s]['page']
+					if long_submission_temp.where(page: page_number).blank?
+						@long_problem = LongProblem.find(problem_id)
+						@long_submission = @long_problem.long_submissions.create(user_id: current_user.id, 
+							submission: concern_params[s][:submission], page: page_number)
+					else
+						@long_submission = long_submission_temp.where(page: page_number).first
+						@long_submission.update(submission: concern_params[s][:submission])
+						@long_submission.save
+					end
+				end
+			} 
+		end
+		redirect_to Contest.find(contest_id)
 	end
 
 	private
@@ -40,6 +60,6 @@ class LongProblemsController < ApplicationController
 
 
 		def submission_params
-			params.require(:long_answer).permit(long_submissions_attributes: [:page, :submission])
+			params[:long_problem]
 		end
 end
