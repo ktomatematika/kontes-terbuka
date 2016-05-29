@@ -19,6 +19,10 @@ end
  Status.find_or_create_by(name: status)
 end
 
+['Sistem', 'Acak', 'Kosong', 'Merah', 'Hijau', 'Biru', 'Kuning'].each do |color|
+	Color.find_or_create_by(name: color)
+end
+
 Contest.find_or_create_by(name: "KTO Matematika Juli 2016",
 					   number_of_short_questions: 14,
 					   number_of_long_questions: 4,

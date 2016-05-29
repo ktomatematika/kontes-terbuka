@@ -15,8 +15,7 @@ class User < ActiveRecord::Base
 	has_many :contests, through: :long_problems
 	belongs_to :province
 	belongs_to :status
-
-	enum color: ['Sistem', 'Acak', 'Kosong', 'Merah', 'Hijau', 'Biru', 'Kuning']
+	belongs_to :color
 
 	attr_accessor :password
 

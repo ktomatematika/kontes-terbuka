@@ -11,10 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160529071200) do
+ActiveRecord::Schema.define(version: 20160529152106) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "colors", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "contests", force: :cascade do |t|
     t.string   "name"
@@ -112,8 +118,10 @@ ActiveRecord::Schema.define(version: 20160529071200) do
     t.integer  "province_id"
     t.integer  "status_id"
     t.integer  "color"
+    t.integer  "color_id"
   end
 
+  add_index "users", ["color_id"], name: "index_users_on_color_id", using: :btree
   add_index "users", ["province_id"], name: "index_users_on_province_id", using: :btree
   add_index "users", ["status_id"], name: "index_users_on_status_id", using: :btree
 
@@ -147,6 +155,7 @@ ActiveRecord::Schema.define(version: 20160529071200) do
   add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
   add_index "versions", ["transaction_id"], name: "index_versions_on_transaction_id", using: :btree
 
+  add_foreign_key "users", "colors"
   add_foreign_key "users", "provinces"
   add_foreign_key "users", "statuses"
 end
