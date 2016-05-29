@@ -40,6 +40,8 @@ Rails.application.routes.draw do
 	post '/login' => 'sessions#create'
 	get '/logout' => 'sessions#destroy', as: :logout
 
+	get '/contests/:id/admin' => 'contests#admin', as: :contest_admin
+
 	get '/home/index' => 'home#index'
 	get '/home/faq' => 'home#faq'
 	get '/home/sitemap' => 'home#sitemap'
@@ -49,6 +51,7 @@ Rails.application.routes.draw do
 	get '/home/contact' => 'home#contact'
 
 	post '/short_problems/submit' => 'short_problems#submit'
+	post '/long_problems/submit' => 'long_problems#submit'
 	# The priority is based upon order of creation: first created -> highest priority.
 	# See how all your routes lay out with "rake routes".
 
