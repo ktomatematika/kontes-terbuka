@@ -57,6 +57,7 @@
       <div id="other-links" role="navigation">
         <ul class="list-inline">
           <li><%= link_to 'FAQ', '/home/faq', class: "has-shade" %></li>
+          <li><%= link_to 'Buku', '/home/book', class: "has-shade" %></li>
           <li><%= link_to 'Peta', '/home/sitemap', class: "has-shade" %></li>
           <li><%= link_to 'Tentang Kami', '/home/about',
             class: "has-shade" %></li>

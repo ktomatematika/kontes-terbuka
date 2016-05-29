@@ -19,13 +19,29 @@ end
  Status.find_or_create_by(name: status)
 end
 
+Contest.find_or_create_by(name: "KTO Matematika Juli 2016",
+					   number_of_short_questions: 14,
+					   number_of_long_questions: 4,
+					   start_time: DateTime.new(2016, 7, 22, 12, 0, 0, '+7'),
+					   end_time: DateTime.new(2016, 7, 24, 17, 0, 0, '+7'),
+					   result_time: DateTime.new(2016, 7, 31, 0, 0, 0, '+7'),
+					   feedback_time: DateTime.new(2016, 7, 6, 0, 0, 0, '+7'))
+
+Contest.find_or_create_by(name: "KTO Matematika Juni 2016",
+					   number_of_short_questions: 14,
+					   number_of_long_questions: 4,
+					   start_time: DateTime.new(2016, 6, 24, 12, 0, 0, '+7'),
+					   end_time: DateTime.new(2016, 6, 26, 17, 0, 0, '+7'),
+					   result_time: DateTime.new(2016, 7, 3, 0, 0, 0, '+7'),
+					   feedback_time: DateTime.new(2016, 7, 9, 0, 0, 0, '+7'))
+
 Contest.find_or_create_by(name: "KTO Matematika Mei'16: Simulasi OSN",
 					   number_of_short_questions: 0,
 					   number_of_long_questions: 8,
 					   start_time: DateTime.new(2016, 5, 6, 12, 0, 0, '+7'),
 					   end_time: DateTime.new(2016, 5, 9, 17, 0, 0, '+7'),
-					   result_time: DateTime.new(2016, 5, 15, 0, 0, 0),
-					   feedback_time: DateTime.new(2016, 5, 29, 0, 0, 0))
+					   result_time: DateTime.new(2016, 5, 15, 0, 0, 0, '+7'),
+					   feedback_time: DateTime.new(2016, 5, 29, 0, 0, 0, '+7'))
 
 Contest.find_or_create_by(name: "KTO Matematika April 2016",
 					   number_of_short_questions: 14,
@@ -58,6 +74,14 @@ Contest.find_or_create_by(name: "KTO Matematika Jan'16: Simulasi OSK",
 					   end_time: DateTime.new(2016, 1, 25, 0, 0, 0, '+7'),
 					   result_time: DateTime.new(2016, 1, 29, 21, 0, 0, '+7'),
 					   feedback_time: DateTime.new(2016, 1, 30, 0, 0, 0, '+7'))
+
+Contest.find_or_create_by(name: "KTO Matematika Desember 2015",
+					   number_of_short_questions: 14,
+					   number_of_long_questions: 4,
+					   start_time: DateTime.new(2015, 12, 19, 23, 55, 0, '+7'),
+					   end_time: DateTime.new(2015, 12, 23, 0, 0, 0, '+7'),
+					   result_time: DateTime.new(2015, 12, 27, 21, 0, 0, '+7'),
+					   feedback_time: DateTime.new(2015, 12, 28, 0, 0, 0, '+7'))
 
 Contest.find_or_create_by(name: "KTO Matematika November 2015",
 					   number_of_short_questions: 14,

@@ -1,4 +1,7 @@
 <%= content_for :page_attributes do %>no-nav<% end %>
+<%= content_tag 'div', '', id: 'welcome-contest-data', data: {
+  next: Contest.next_contest, } %>
+
 <header class="teaser">
   <div class="welcome-logo">
     <%= image_tag("logo.png", :alt => "Logo KTOM") %>
@@ -12,9 +15,7 @@
               text-uppercase has-shade", role: "button" %> 
             <%= link_to "Masuk", "/login", class: "btn btn-default btn-lg 
               text-uppercase has-shade", role: "button" %></h2>
-    <h4 id="welcome-next-contest">Kontes berikutnya:
-      <%= Contest.next_contest.name %> (<%= Contest.next_contest.start_time %>
-      &mdash;<%= Contest.next_contest.end_time %>)</h4>
+    <h4 id="welcome-next-contest">Kontes berikutnya: (11 - 14 Januari 2017)</h4>
   </div>
 </header>
 

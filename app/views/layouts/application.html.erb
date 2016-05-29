@@ -14,7 +14,7 @@
   </head>
   <body <%= yield(:page_attributes) %>>
     <%= content_tag 'div', '', id: 'warna',
-      data: { data: @current_user.color } %>
+      data: { data: @current_user.nil? ? '' : @current_user.color } %>
     <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container-fluid">
 
