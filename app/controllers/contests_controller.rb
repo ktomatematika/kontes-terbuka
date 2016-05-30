@@ -1,6 +1,11 @@
 class ContestsController < ApplicationController
 	http_basic_authenticate_with name: "admin", password: "admin", only: [:new, :edit, :destroy, :admin]
 
+	def admin
+		@contest = Contest.find(params[:id])
+		@short_problems = @contest.short_problems.order(:problem_no).all
+	end
+
 	def new
 		@contest = Contest.new
 	end
@@ -18,10 +23,6 @@ class ContestsController < ApplicationController
 		@contest = Contest.find(params[:id])
 		@short_problems = @contest.short_problems.order("problem_no").all
 		@long_problems = @contest.long_problems.order("problem_no").all		
-		if Time.current() < @contest.start_time
-			flash.now[:alert] = "Yang sabar ya, nak. Belum waktunya."
-			redirect_to contests_path
-		end
 	end
 
 	def index
@@ -35,7 +36,7 @@ class ContestsController < ApplicationController
 	def update
 		@contest = Contest.find(params[:id])
 		if @contest.update(contest_params)
-			redirect_to contests_path
+			redirect_to contest_url(@contest)
 		else
 			render 'edit'
 		end
@@ -55,8 +56,6 @@ class ContestsController < ApplicationController
 
 	private
 		def contest_params
-			params.require(:contest).permit(:name, :number_of_short_questions, 
-																			:number_of_long_questions, :start_time, 
-																			:end_time, :problem_pdf, :result_time, :feedback_time)
+			params.require(:contest).permit(:name, :number_of_short_questions, :number_of_long_questions, :start_time, :end_time, :result_time, :feedback_time, :problem_pdf)
 		end  
 end
