@@ -1,7 +1,7 @@
 <%= content_for (:page_attributes) do %>data-no-turbolink="true"<% end %>
 <%= content_tag 'div', '', id: 'home-contest-data', data: {
-  next: Contest.next_contest, 
-  url: url_for(Contest.next_contest) } %>
+  next: Contest.next_important_contest, 
+  url: url_for(Contest.next_important_contest) } %>
 
 <!-- Facebook plugin -->
 <div id="fb-root"></div>

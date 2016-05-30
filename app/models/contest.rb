@@ -30,6 +30,14 @@ class Contest < ActiveRecord::Base
 		return after_now.order("end_time")[0]
 	end
 
+	def self.next_important_contest
+		next_result = Contest.where('result_time > ?', Time.now)
+		.order('result_time')[0]
+		next_end = Contest.where('end_time > ?', Time.now)
+		.order('end_time')[0]
+		return (next_result.result_time < next_end.end_time) ? next_result : next_end;
+	end
+
 	def self.prev_contests
 		prev_contests = Contest.where("end_time < ?", Time.now)
 		return prev_contests.limit(5).order("end_time desc")

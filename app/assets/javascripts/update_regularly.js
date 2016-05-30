@@ -2,25 +2,38 @@ function update_regularly() {
 	var current = new Date();
 
 	// home/index contest details
-	var next_contest = $('#home-contest-data').data('next');
-	if (next_contest !== null && next_contest !== undefined) {
-		var start = new Date(next_contest.start_time);
-		var end = new Date(next_contest.end_time);
+	var next_important_contest = $('#home-contest-data').data('next');
+	if (next_important_contest !== null &&
+			next_important_contest !== undefined) {
+		var end = new Date(next_important_contest.end_time);
+		$('#next-contest-name').text(next_important_contest.name);
 
-		$('#next-contest-name').text(next_contest.name);
-		var time = start.format_indo();
-		time += ' \u2013 ';
-		time += end.format_indo();
-		$('#next-contest-time').text(time);
-
-		if (start > current) {
-			$('home-btn-daftar').attr('disabled', true);
-			var text = current.indo_go_to(start);
+		if (current > end) {
+			// Show time to results
+			var results = new Date(next_important_contest.result_time);
+			$('#next-contest-time').text('Hasil diumumkan paling telat ' +
+					results.format_indo());
+			var text = current.indo_go_to(results);
 		} else {
-			$('#home-btn-daftar').removeAttr('disabled', false);
-			$('#home-btn-daftar').prop('href', $('#contest-data').data('url'));
-			var text = "Kontes sudah dimulai!";
+			// Show time to next contest start
+			var start = new Date(next_important_contest.start_time);
+			var time = start.format_indo();
+			time += ' \u2013 ';
+			time += end.format_indo();
+			$('#next-contest-time').text(time);
+
+			if (start > current) {
+				$('home-btn-daftar').attr('disabled', true);
+				var text = current.indo_go_to(start);
+			} else {
+				$('#home-btn-daftar').removeAttr('disabled', false);
+				$('#home-btn-daftar').prop('href',
+						$('#contest-data').data('url'));
+				var text = "Kontes sudah dimulai!";
+			}
 		}
+
+
 		$('#home-btn-daftar').text(text);
 	}
 
@@ -50,10 +63,6 @@ function update_regularly() {
 		} else if (current <= end_time) {
 			// Contest has not ended
 			$(".row > section").addClass("col-sm-8");
-			$('#bagian-a').show();
-			$('#bagian-b').show();
-			$('#ringkasan').show();
-			$('#download').show();
 
 			var isian = $('.isian > label');
 			for (var i = 0; i < isian.length; i++) {
@@ -78,7 +87,7 @@ function update_regularly() {
 		} else if (current < results) {
 			// Results has not been released
 			$('.row > section').removeClass('col-sm-8');
-			
+
 			subtitle = "Kontes sudah selesai. Hasil kontes akan keluar " +
 				"paling lambat " + results.format_indo() + ". Mohon bersabar!";
 			time_remaining = "(" + current.indo_go_to(results) + ")";
@@ -87,18 +96,13 @@ function update_regularly() {
 			if (position !== 2) {
 				window.location.reload();
 			}
-		} else if (current < feedback) {
-			// Can still submit feedback to contest
-			// Has the state changed?
-			if (position !== 3) {
-				window.location.reload();
-			}
 		} else {
-			// Cannot submit feedback anymore
-			// Has the state changed?
-			if (position !== 4) {
-				window.location.reload();
-			}
+			// Results should be released manually.
+
+			subtitle = "Dikarenakan berbagai halangan, hasil kontes belum " +
+				"keluar. Mohon maaf atas ketidaknyamannya dan mohon " +
+				"bersabar :(";
+			time_remaining = "";
 		}
 
 		$('#subtitle').text(subtitle);
