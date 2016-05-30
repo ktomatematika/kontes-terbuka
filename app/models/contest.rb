@@ -14,6 +14,8 @@ class Contest < ActiveRecord::Base
 	validates :number_of_long_questions, presence: true
 	validates :start_time, presence: true
 	validates :end_time, presence: true
+	validates :result_time, presence: true
+	validates :feedback_time, presence: true
 
 	has_attached_file :problem_pdf,
 										url: '/problems/:id/:basename.:extension',

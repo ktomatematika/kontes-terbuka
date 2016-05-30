@@ -16,3 +16,7 @@
 !/log/.keep
 /tmp
 *~
+
+# Ignore public
+/public/submissions
+/public/problems

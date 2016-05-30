@@ -12,15 +12,23 @@ class UsersController < ApplicationController
 	end
 
 	def create
-		@user = User.new(user_params)
-		@user.add_role :student
-		if @user.save && verify_recaptcha(model: @user)
+		User.transaction do
+			@user = User.new(user_params)
+			@user.add_role :student
+			@user.color_id = Color.find_by(name: 'Sistem').id
+			@user.save
+			verify_recaptcha(model: @user)
 			cookies[:auth_token] = @user.auth_token
 			redirect_to root_path
-		else
-			render '_new'
 		end
-	end
+
+	rescue ActiveRecord::ActiveRecordError
+    respond_to do |format|
+      format.html do
+        render '_new'
+      end
+    end
+  end
 
 	def show
 		@user = User.find(params[:id])
@@ -53,7 +61,7 @@ class UsersController < ApplicationController
 	def user_params
 		params.require(:user).permit(:username, :email, :password,
 									 :password_confirmation, :fullname,
-									 :province_id, :status_id, 
+									 :province_id, :status_id, :color_id, 
 									 :school, :terms_of_service)
 	end  
 

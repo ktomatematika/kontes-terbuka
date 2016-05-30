@@ -3,21 +3,21 @@ Ini admin page kyaaa
 <section>
 Isian
 <table style="width=100%">
-  <tr>
-    <td>No</td>
-    <td>Statement</td>
-    <td>Edit</td>
-    <td>Delete</td>
-  </tr>
-  <% @short_problems.each do |short_problem| %>
-    <tr>
-      <td><%= short_problem.problem_no %></td>
-      <td><%= short_problem.statement %></td>
-      <td><%= link_to "Edit", [:edit, @contest, short_problem] %></td>
-      <td><%= link_to "Hapus", [@contest, short_problem], 
-        method: :delete, data: { confirm: 'Apakah Anda yakin?' } %></td>
-    </tr>
-  <% end %>
+	<tr>
+		<td>No</td>
+		<td>Statement</td>
+		<td>Edit</td>
+		<td>Delete</td>
+	</tr>
+	<% @short_problems.each do |short_problem| %>
+		<tr>
+			<td><%= short_problem.problem_no %></td>
+			<td><%= short_problem.statement %></td>
+			<td><%= link_to "Edit", [:edit, @contest, short_problem] %></td>
+			<td><%= link_to "Hapus", [@contest, short_problem], 
+				method: :delete, data: { confirm: 'Apakah Anda yakin?' } %></td>
+		</tr>
+	<% end %>
 </table>
 </section>
 <section>
