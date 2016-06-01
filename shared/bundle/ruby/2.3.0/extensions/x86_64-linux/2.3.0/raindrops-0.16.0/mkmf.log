@@ -1,0 +1,234 @@
+have_func: checking for mmap() in sys/mman.h... -------------------- yes
+
+"gcc -o conftest -I/home/ktom/.rvm/rubies/ruby-2.3.0/include/ruby-2.3.0/x86_64-linux -I/home/ktom/.rvm/rubies/ruby-2.3.0/include/ruby-2.3.0/ruby/backward -I/home/ktom/.rvm/rubies/ruby-2.3.0/include/ruby-2.3.0 -I.     -O3 -fno-fast-math -ggdb3 -Wall -Wextra -Wno-unused-parameter -Wno-parentheses -Wno-long-long -Wno-missing-field-initializers -Wunused-variable -Wpointer-arith -Wwrite-strings -Wdeclaration-after-statement -Wimplicit-function-declaration -Wdeprecated-declarations -Wno-packed-bitfield-compat  -fPIC conftest.c  -L. -L/home/ktom/.rvm/rubies/ruby-2.3.0/lib -Wl,-R/home/ktom/.rvm/rubies/ruby-2.3.0/lib -L. -fstack-protector -rdynamic -Wl,-export-dynamic     -Wl,-rpath,'/../lib' -Wl,-R'/../lib' -lruby  -lpthread -lgmp -ldl -lcrypt -lm   -lc"
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: int main(int argc, char **argv)
+4: {
+5:   return 0;
+6: }
+/* end */
+
+"gcc -o conftest -I/home/ktom/.rvm/rubies/ruby-2.3.0/include/ruby-2.3.0/x86_64-linux -I/home/ktom/.rvm/rubies/ruby-2.3.0/include/ruby-2.3.0/ruby/backward -I/home/ktom/.rvm/rubies/ruby-2.3.0/include/ruby-2.3.0 -I.     -O3 -fno-fast-math -ggdb3 -Wall -Wextra -Wno-unused-parameter -Wno-parentheses -Wno-long-long -Wno-missing-field-initializers -Wunused-variable -Wpointer-arith -Wwrite-strings -Wdeclaration-after-statement -Wimplicit-function-declaration -Wdeprecated-declarations -Wno-packed-bitfield-compat  -fPIC conftest.c  -L. -L/home/ktom/.rvm/rubies/ruby-2.3.0/lib -Wl,-R/home/ktom/.rvm/rubies/ruby-2.3.0/lib -L. -fstack-protector -rdynamic -Wl,-export-dynamic     -Wl,-rpath,'/../lib' -Wl,-R'/../lib' -lruby  -lpthread -lgmp -ldl -lcrypt -lm   -lc"
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: #include <sys/mman.h>
+ 4: 
+ 5: /*top*/
+ 6: extern int t(void);
+ 7: int main(int argc, char **argv)
+ 8: {
+ 9:   if (argc > 1000000) {
+10:     printf("%p", &t);
+11:   }
+12: 
+13:   return 0;
+14: }
+15: int t(void) { void ((*volatile p)()); p = (void ((*)()))mmap; return !p; }
+/* end */
+
+--------------------
+
+have_func: checking for munmap() in sys/mman.h... -------------------- yes
+
+"gcc -o conftest -I/home/ktom/.rvm/rubies/ruby-2.3.0/include/ruby-2.3.0/x86_64-linux -I/home/ktom/.rvm/rubies/ruby-2.3.0/include/ruby-2.3.0/ruby/backward -I/home/ktom/.rvm/rubies/ruby-2.3.0/include/ruby-2.3.0 -I.     -O3 -fno-fast-math -ggdb3 -Wall -Wextra -Wno-unused-parameter -Wno-parentheses -Wno-long-long -Wno-missing-field-initializers -Wunused-variable -Wpointer-arith -Wwrite-strings -Wdeclaration-after-statement -Wimplicit-function-declaration -Wdeprecated-declarations -Wno-packed-bitfield-compat  -fPIC conftest.c  -L. -L/home/ktom/.rvm/rubies/ruby-2.3.0/lib -Wl,-R/home/ktom/.rvm/rubies/ruby-2.3.0/lib -L. -fstack-protector -rdynamic -Wl,-export-dynamic     -Wl,-rpath,'/../lib' -Wl,-R'/../lib' -lruby  -lpthread -lgmp -ldl -lcrypt -lm   -lc"
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: #include <sys/mman.h>
+ 4: 
+ 5: /*top*/
+ 6: extern int t(void);
+ 7: int main(int argc, char **argv)
+ 8: {
+ 9:   if (argc > 1000000) {
+10:     printf("%p", &t);
+11:   }
+12: 
+13:   return 0;
+14: }
+15: int t(void) { void ((*volatile p)()); p = (void ((*)()))munmap; return !p; }
+/* end */
+
+--------------------
+
+have_func: checking for mremap() in sys/mman.h... -------------------- yes
+
+"gcc -o conftest -I/home/ktom/.rvm/rubies/ruby-2.3.0/include/ruby-2.3.0/x86_64-linux -I/home/ktom/.rvm/rubies/ruby-2.3.0/include/ruby-2.3.0/ruby/backward -I/home/ktom/.rvm/rubies/ruby-2.3.0/include/ruby-2.3.0 -I.    -D_GNU_SOURCE   -O3 -fno-fast-math -ggdb3 -Wall -Wextra -Wno-unused-parameter -Wno-parentheses -Wno-long-long -Wno-missing-field-initializers -Wunused-variable -Wpointer-arith -Wwrite-strings -Wdeclaration-after-statement -Wimplicit-function-declaration -Wdeprecated-declarations -Wno-packed-bitfield-compat  -fPIC conftest.c  -L. -L/home/ktom/.rvm/rubies/ruby-2.3.0/lib -Wl,-R/home/ktom/.rvm/rubies/ruby-2.3.0/lib -L. -fstack-protector -rdynamic -Wl,-export-dynamic     -Wl,-rpath,'/../lib' -Wl,-R'/../lib' -lruby  -lpthread -lgmp -ldl -lcrypt -lm   -lc"
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: #include <sys/mman.h>
+ 4: 
+ 5: /*top*/
+ 6: extern int t(void);
+ 7: int main(int argc, char **argv)
+ 8: {
+ 9:   if (argc > 1000000) {
+10:     printf("%p", &t);
+11:   }
+12: 
+13:   return 0;
+14: }
+15: int t(void) { void ((*volatile p)()); p = (void ((*)()))mremap; return !p; }
+/* end */
+
+--------------------
+
+have_header: checking for linux/tcp.h... -------------------- yes
+
+"gcc -E -I/home/ktom/.rvm/rubies/ruby-2.3.0/include/ruby-2.3.0/x86_64-linux -I/home/ktom/.rvm/rubies/ruby-2.3.0/include/ruby-2.3.0/ruby/backward -I/home/ktom/.rvm/rubies/ruby-2.3.0/include/ruby-2.3.0 -I.    -D_GNU_SOURCE   -O3 -fno-fast-math -ggdb3 -Wall -Wextra -Wno-unused-parameter -Wno-parentheses -Wno-long-long -Wno-missing-field-initializers -Wunused-variable -Wpointer-arith -Wwrite-strings -Wdeclaration-after-statement -Wimplicit-function-declaration -Wdeprecated-declarations -Wno-packed-bitfield-compat  -fPIC  conftest.c -o conftest.i"
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: #include <linux/tcp.h>
+/* end */
+
+--------------------
+
+have_func: checking for getpagesize() in unistd.h... -------------------- yes
+
+"gcc -o conftest -I/home/ktom/.rvm/rubies/ruby-2.3.0/include/ruby-2.3.0/x86_64-linux -I/home/ktom/.rvm/rubies/ruby-2.3.0/include/ruby-2.3.0/ruby/backward -I/home/ktom/.rvm/rubies/ruby-2.3.0/include/ruby-2.3.0 -I.    -D_GNU_SOURCE  -D_BSD_SOURCE   -O3 -fno-fast-math -ggdb3 -Wall -Wextra -Wno-unused-parameter -Wno-parentheses -Wno-long-long -Wno-missing-field-initializers -Wunused-variable -Wpointer-arith -Wwrite-strings -Wdeclaration-after-statement -Wimplicit-function-declaration -Wdeprecated-declarations -Wno-packed-bitfield-compat  -fPIC conftest.c  -L. -L/home/ktom/.rvm/rubies/ruby-2.3.0/lib -Wl,-R/home/ktom/.rvm/rubies/ruby-2.3.0/lib -L. -fstack-protector -rdynamic -Wl,-export-dynamic     -Wl,-rpath,'/../lib' -Wl,-R'/../lib' -lruby  -lpthread -lgmp -ldl -lcrypt -lm   -lc"
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: #include <unistd.h>
+ 4: 
+ 5: /*top*/
+ 6: extern int t(void);
+ 7: int main(int argc, char **argv)
+ 8: {
+ 9:   if (argc > 1000000) {
+10:     printf("%p", &t);
+11:   }
+12: 
+13:   return 0;
+14: }
+15: int t(void) { void ((*volatile p)()); p = (void ((*)()))getpagesize; return !p; }
+/* end */
+
+--------------------
+
+have_func: checking for rb_thread_blocking_region()... -------------------- no
+
+"gcc -o conftest -I/home/ktom/.rvm/rubies/ruby-2.3.0/include/ruby-2.3.0/x86_64-linux -I/home/ktom/.rvm/rubies/ruby-2.3.0/include/ruby-2.3.0/ruby/backward -I/home/ktom/.rvm/rubies/ruby-2.3.0/include/ruby-2.3.0 -I.    -D_GNU_SOURCE  -D_BSD_SOURCE   -O3 -fno-fast-math -ggdb3 -Wall -Wextra -Wno-unused-parameter -Wno-parentheses -Wno-long-long -Wno-missing-field-initializers -Wunused-variable -Wpointer-arith -Wwrite-strings -Wdeclaration-after-statement -Wimplicit-function-declaration -Wdeprecated-declarations -Wno-packed-bitfield-compat  -fPIC conftest.c  -L. -L/home/ktom/.rvm/rubies/ruby-2.3.0/lib -Wl,-R/home/ktom/.rvm/rubies/ruby-2.3.0/lib -L. -fstack-protector -rdynamic -Wl,-export-dynamic     -Wl,-rpath,'/../lib' -Wl,-R'/../lib' -lruby  -lpthread -lgmp -ldl -lcrypt -lm   -lc"
+conftest.c: In function ‘t’:
+conftest.c:13:57: error: ‘rb_thread_blocking_region’ undeclared (first use in this function)
+ int t(void) { void ((*volatile p)()); p = (void ((*)()))rb_thread_blocking_region; return !p; }
+                                                         ^
+conftest.c:13:57: note: each undeclared identifier is reported only once for each function it appears in
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: /*top*/
+ 4: extern int t(void);
+ 5: int main(int argc, char **argv)
+ 6: {
+ 7:   if (argc > 1000000) {
+ 8:     printf("%p", &t);
+ 9:   }
+10: 
+11:   return 0;
+12: }
+13: int t(void) { void ((*volatile p)()); p = (void ((*)()))rb_thread_blocking_region; return !p; }
+/* end */
+
+"gcc -o conftest -I/home/ktom/.rvm/rubies/ruby-2.3.0/include/ruby-2.3.0/x86_64-linux -I/home/ktom/.rvm/rubies/ruby-2.3.0/include/ruby-2.3.0/ruby/backward -I/home/ktom/.rvm/rubies/ruby-2.3.0/include/ruby-2.3.0 -I.    -D_GNU_SOURCE  -D_BSD_SOURCE   -O3 -fno-fast-math -ggdb3 -Wall -Wextra -Wno-unused-parameter -Wno-parentheses -Wno-long-long -Wno-missing-field-initializers -Wunused-variable -Wpointer-arith -Wwrite-strings -Wdeclaration-after-statement -Wimplicit-function-declaration -Wdeprecated-declarations -Wno-packed-bitfield-compat  -fPIC conftest.c  -L. -L/home/ktom/.rvm/rubies/ruby-2.3.0/lib -Wl,-R/home/ktom/.rvm/rubies/ruby-2.3.0/lib -L. -fstack-protector -rdynamic -Wl,-export-dynamic     -Wl,-rpath,'/../lib' -Wl,-R'/../lib' -lruby  -lpthread -lgmp -ldl -lcrypt -lm   -lc"
+/tmp/cce7Sadp.o: In function `t':
+/home/ktom/kontes-terbuka/shared/bundle/ruby/2.3.0/gems/raindrops-0.16.0/ext/raindrops/conftest.c:14: undefined reference to `rb_thread_blocking_region'
+collect2: error: ld returned 1 exit status
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: /*top*/
+ 4: extern int t(void);
+ 5: int main(int argc, char **argv)
+ 6: {
+ 7:   if (argc > 1000000) {
+ 8:     printf("%p", &t);
+ 9:   }
+10: 
+11:   return 0;
+12: }
+13: extern void rb_thread_blocking_region();
+14: int t(void) { rb_thread_blocking_region(); return 0; }
+/* end */
+
+--------------------
+
+have_func: checking for rb_thread_io_blocking_region()... -------------------- yes
+
+"gcc -o conftest -I/home/ktom/.rvm/rubies/ruby-2.3.0/include/ruby-2.3.0/x86_64-linux -I/home/ktom/.rvm/rubies/ruby-2.3.0/include/ruby-2.3.0/ruby/backward -I/home/ktom/.rvm/rubies/ruby-2.3.0/include/ruby-2.3.0 -I.    -D_GNU_SOURCE  -D_BSD_SOURCE   -O3 -fno-fast-math -ggdb3 -Wall -Wextra -Wno-unused-parameter -Wno-parentheses -Wno-long-long -Wno-missing-field-initializers -Wunused-variable -Wpointer-arith -Wwrite-strings -Wdeclaration-after-statement -Wimplicit-function-declaration -Wdeprecated-declarations -Wno-packed-bitfield-compat  -fPIC conftest.c  -L. -L/home/ktom/.rvm/rubies/ruby-2.3.0/lib -Wl,-R/home/ktom/.rvm/rubies/ruby-2.3.0/lib -L. -fstack-protector -rdynamic -Wl,-export-dynamic     -Wl,-rpath,'/../lib' -Wl,-R'/../lib' -lruby  -lpthread -lgmp -ldl -lcrypt -lm   -lc"
+conftest.c: In function ‘t’:
+conftest.c:13:57: error: ‘rb_thread_io_blocking_region’ undeclared (first use in this function)
+ int t(void) { void ((*volatile p)()); p = (void ((*)()))rb_thread_io_blocking_region; return !p; }
+                                                         ^
+conftest.c:13:57: note: each undeclared identifier is reported only once for each function it appears in
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: /*top*/
+ 4: extern int t(void);
+ 5: int main(int argc, char **argv)
+ 6: {
+ 7:   if (argc > 1000000) {
+ 8:     printf("%p", &t);
+ 9:   }
+10: 
+11:   return 0;
+12: }
+13: int t(void) { void ((*volatile p)()); p = (void ((*)()))rb_thread_io_blocking_region; return !p; }
+/* end */
+
+"gcc -o conftest -I/home/ktom/.rvm/rubies/ruby-2.3.0/include/ruby-2.3.0/x86_64-linux -I/home/ktom/.rvm/rubies/ruby-2.3.0/include/ruby-2.3.0/ruby/backward -I/home/ktom/.rvm/rubies/ruby-2.3.0/include/ruby-2.3.0 -I.    -D_GNU_SOURCE  -D_BSD_SOURCE   -O3 -fno-fast-math -ggdb3 -Wall -Wextra -Wno-unused-parameter -Wno-parentheses -Wno-long-long -Wno-missing-field-initializers -Wunused-variable -Wpointer-arith -Wwrite-strings -Wdeclaration-after-statement -Wimplicit-function-declaration -Wdeprecated-declarations -Wno-packed-bitfield-compat  -fPIC conftest.c  -L. -L/home/ktom/.rvm/rubies/ruby-2.3.0/lib -Wl,-R/home/ktom/.rvm/rubies/ruby-2.3.0/lib -L. -fstack-protector -rdynamic -Wl,-export-dynamic     -Wl,-rpath,'/../lib' -Wl,-R'/../lib' -lruby  -lpthread -lgmp -ldl -lcrypt -lm   -lc"
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: /*top*/
+ 4: extern int t(void);
+ 5: int main(int argc, char **argv)
+ 6: {
+ 7:   if (argc > 1000000) {
+ 8:     printf("%p", &t);
+ 9:   }
+10: 
+11:   return 0;
+12: }
+13: extern void rb_thread_io_blocking_region();
+14: int t(void) { rb_thread_io_blocking_region(); return 0; }
+/* end */
+
+--------------------
+
+checking for GCC 4+ atomic builtins... -------------------- yes
+
+"gcc -o conftest -I/home/ktom/.rvm/rubies/ruby-2.3.0/include/ruby-2.3.0/x86_64-linux -I/home/ktom/.rvm/rubies/ruby-2.3.0/include/ruby-2.3.0/ruby/backward -I/home/ktom/.rvm/rubies/ruby-2.3.0/include/ruby-2.3.0 -I.    -D_GNU_SOURCE  -D_BSD_SOURCE   -O3 -fno-fast-math -ggdb3 -Wall -Wextra -Wno-unused-parameter -Wno-parentheses -Wno-long-long -Wno-missing-field-initializers -Wunused-variable -Wpointer-arith -Wwrite-strings -Wdeclaration-after-statement -Wimplicit-function-declaration -Wdeprecated-declarations -Wno-packed-bitfield-compat  -fPIC conftest.c  -L. -L/home/ktom/.rvm/rubies/ruby-2.3.0/lib -Wl,-R/home/ktom/.rvm/rubies/ruby-2.3.0/lib -L. -fstack-protector -rdynamic -Wl,-export-dynamic     -Wl,-rpath,'/../lib' -Wl,-R'/../lib' -lruby  -lpthread -lgmp -ldl -lcrypt -lm   -lc"
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: int main(int argc, char * const argv[]) {
+ 4:         unsigned long i = 0;
+ 5:         __sync_lock_test_and_set(&i, 0);
+ 6:         __sync_lock_test_and_set(&i, 1);
+ 7:         __sync_bool_compare_and_swap(&i, 0, 1);
+ 8:         __sync_add_and_fetch(&i, argc);
+ 9:         __sync_sub_and_fetch(&i, argc);
+10:         return 0;
+11: }
+/* end */
+
+--------------------
+

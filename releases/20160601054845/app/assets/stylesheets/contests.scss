@@ -1,0 +1,90 @@
+@import "colors";
+
+#calendar-nav {
+  display: flex;
+
+  div {
+    flex: 1;
+
+    &:nth-child(1) {
+      text-align: left;
+    }
+
+    &:nth-child(2) {
+      text-align: center;
+    }
+
+    &:nth-child(3) {
+      text-align: right;
+    }
+  }
+  
+  margin-bottom: 10px;
+}
+
+.month-calendar {
+  display: table;
+  font-size: 14px;
+
+  .caption, .th, .td {
+    text-align: center;
+  }
+
+  .caption {
+    padding-top: 0;
+  }
+
+  .today {
+    font-weight: 600;
+    border: double #000 1px !important;
+  }
+
+  .has-contest {
+    background: #fff;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+}
+
+.month-calendar.has-shade {
+  
+  &[data-shade=red] .has-contest {
+    background: lighten($red-color, 20);
+  }
+
+  &[data-shade=blue] .has-contest {
+    background: lighten($blue-color, 20);
+  }
+
+  &[data-shade=green] .has-contest {
+    background: lighten($green-color, 20);
+  }
+
+  &[data-shade=yellow] .has-contest {
+    background: lighten($yellow-color, 20);
+  }
+}
+
+#all-contests-container ~ .popover {
+  font-family: 'Titillium Web', sans-serif;
+
+  .popover-title {
+     background: #f3f3ee; 
+  }
+
+  .popover-content {
+    background: #fff;
+  }
+}
+
+.isian {
+  margin-bottom: 15px;
+}
+
+#bagian-a label {
+  font-weight: normal;
+  display: block;
+}

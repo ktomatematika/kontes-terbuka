@@ -1,0 +1,47 @@
+current directory: /home/ktom/kontes-terbuka/shared/bundle/ruby/2.3.0/gems/therubyracer-0.12.2/ext/v8
+/home/ktom/.rvm/rubies/ruby-2.3.0/bin/ruby -r ./siteconf20160601-27106-1ccd0jo.rb extconf.rb
+checking for main() in -lpthread... yes
+creating Makefile
+
+To see why this extension failed to compile, please check the mkmf.log which can be found here:
+
+  /home/ktom/kontes-terbuka/shared/bundle/ruby/2.3.0/extensions/x86_64-linux/2.3.0/therubyracer-0.12.2/mkmf.log
+
+current directory: /home/ktom/kontes-terbuka/shared/bundle/ruby/2.3.0/gems/therubyracer-0.12.2/ext/v8
+make "DESTDIR=" clean
+
+current directory: /home/ktom/kontes-terbuka/shared/bundle/ruby/2.3.0/gems/therubyracer-0.12.2/ext/v8
+make "DESTDIR="
+compiling signature.cc
+compiling accessor.cc
+compiling heap.cc
+compiling constraints.cc
+compiling init.cc
+compiling object.cc
+compiling constants.cc
+compiling trycatch.cc
+compiling stack.cc
+compiling locker.cc
+compiling primitive.cc
+compiling value.cc
+compiling template.cc
+compiling rr.cc
+compiling backref.cc
+compiling string.cc
+compiling gc.cc
+compiling handles.cc
+compiling script.cc
+compiling v8.cc
+compiling external.cc
+compiling invocation.cc
+compiling exception.cc
+compiling function.cc
+compiling date.cc
+compiling array.cc
+compiling message.cc
+compiling context.cc
+linking shared-object v8/init.so
+
+current directory: /home/ktom/kontes-terbuka/shared/bundle/ruby/2.3.0/gems/therubyracer-0.12.2/ext/v8
+make "DESTDIR=" install
+/usr/bin/install -m 0755 init.so ./.gem.20160601-27106-1j9u0rz/v8

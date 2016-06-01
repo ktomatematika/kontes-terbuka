@@ -1,0 +1,121 @@
+// Place all the styles related to the welcome controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+@import "colors";
+$bg-overlay: linear-gradient(rgba(255, 255, 255, 0.1), 
+rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.1));
+
+html, body {
+  height: 100%;
+}
+
+header.teaser { 
+  text-align: center;
+  background: $bg-overlay, image-url('welcome-bg.jpg');
+  background-position: right center;
+  background-size: auto 140%;
+  background-color: #fff;
+
+  min-height: 100%;
+  padding: 0 3%;
+
+  .container-fluid {
+    padding: 3%; 
+    margin: 0 auto;
+  }
+
+  .welcome-logo {
+    padding: 20px 0 0 10px;
+    text-align: left;
+
+    @media (max-width: 500px) {
+      text-align: center;
+    }
+  }
+
+  h1 {
+    font-size: 4em;
+    margin: 5% 0;
+  }
+
+  #welcome-next-contest {
+    margin: 30px 0;
+  }
+}
+
+.main-section {
+  padding: 3%;
+}
+
+#features {
+
+  div div {
+    text-align: center;
+    display: block;
+  }
+
+  .glyphicon {
+    font-size: 40px;
+    padding: 10px 0;
+
+    &.has-shade[data-shade=yellow] {
+      color: $yellow-color;
+    }
+
+    &.has-shade[data-shade=red] {
+      color: $red-color;
+    }
+
+    &.has-shade[data-shade=blue] {
+      color: $blue-color;
+    }
+
+    &.has-shade[data-shade=green] {
+      color: $green-color;
+    }
+  }
+}
+
+#testimonies {
+
+  background: #ffffff;
+
+  h1 {
+    padding-bottom: 20px;
+  }
+
+  blockquote {
+    margin: 5px 30px;
+    border-color: #ccc;
+
+    &.has-shade[data-shade=yellow] {
+      border-color: lighten($yellow-color, 10);
+    }
+
+    &.has-shade[data-shade=red] {
+      border-color: lighten($red-color, 10);
+    }
+
+    &.has-shade[data-shade=blue] {
+      border-color: lighten($blue-color, 10);
+    }
+
+    &.has-shade[data-shade=green] {
+      border-color: lighten($green-color, 10);
+    }
+  }
+
+  blockquote:first-child {
+    margin-top: 0;
+  }
+
+  blockquote:last-child {
+    margin-bottom: 0;
+  }
+}
+
+#teaser {
+  text-align: center;
+  padding-bottom: 1%;
+}

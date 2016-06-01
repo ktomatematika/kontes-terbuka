@@ -1,0 +1,14 @@
+# Remove these configuration records
+# one by one as the offenses are removed from the code base.
+
+Metrics/AbcSize:
+  Max: 30 # Goal: 15
+
+Metrics/CyclomaticComplexity:
+  Max: 13 # Goal: 6
+
+Metrics/ModuleLength:
+  Max: 313
+
+Metrics/PerceivedComplexity:
+  Max: 16 # Goal: 7

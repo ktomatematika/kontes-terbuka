@@ -1,0 +1,221 @@
+/*
+ *= require_self
+ *= require_tree .
+ *= require katex/katex
+ */
+
+// "bootstrap-sprockets" must be imported before "bootstrap" and "bootstrap/variables"
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import "colors";
+
+body {
+  font-family: 'Titillium Web', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  background: #f3f3ee;
+  padding-top: 90px;
+  font-size: 16px;
+
+  & > .container-fluid {
+    @media(min-width: 768px) {
+      margin: 0 5%;
+    }
+  }
+}
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+  font-weight: 600;
+
+  &, p {
+    line-height: 1.45;
+  }
+}
+
+h1, .h1 {
+  font-size: 2.5em;
+}
+
+h2, .h2 {
+  font-size: 2.0em;
+}
+
+h3, .h3 {
+  font-size: 1.5em;
+}
+
+h4, .h4 {
+  font-size: 1.3em;
+}
+
+h5, .h5 {
+  font-size: 1em;
+}
+
+[no-nav] {
+  padding-top: 0;
+
+  & > .navbar-fixed-top {
+    display: none;
+  }
+}
+
+[no-footer] > .app-footer {
+  display: none;
+}
+
+.navbar-fixed-top {
+
+  font-size: 18px;
+
+  .navbar-brand {
+    padding: 10px;
+  }
+
+  .navbar-toggle {
+    margin: 15px 15px 15px 0;
+  }
+
+  .navbar-nav li a {
+    line-height: 40px;
+  }
+}
+
+.btn.has-shade {
+
+  &[data-shade=red] {
+    background-color: lighten($red-color, 5);
+    border-color: darken($red-color, 10);
+
+    &:hover:not([disabled]) {
+      background-color: $red-color;
+      border-color: darken($red-color, 15);
+    }
+
+    &:active:not([disabled])  {
+      background-color: darken($red-color, 5);
+      border-color: darken($red-color, 20);
+    }
+  }
+
+  &[data-shade=blue] {
+    background-color: lighten($blue-color, 5);
+    border-color: darken($blue-color, 10);
+
+    &:hover:not([disabled]) {
+      background-color: $blue-color;
+      border-color: darken($blue-color, 15);
+    }
+
+    &:active:not([disabled]) {
+      background-color: darken($blue-color, 5);
+      border-color: darken($blue-color, 20);
+    }
+  }
+
+  &[data-shade=green] {
+    background-color: lighten($green-color, 5);
+    border-color: darken($green-color, 10);
+
+    &:hover:not([disabled]) {
+      background-color: $green-color;
+      border-color: darken($green-color, 15);
+    }
+
+    &:active:not([disabled]) {
+      background-color: darken($green-color, 5);
+      border-color: darken($green-color, 20);
+    }
+  }
+
+  &[data-shade=yellow] {
+    background-color: lighten($yellow-color, 5);
+    border-color: darken($yellow-color, 10);
+
+    &:hover:not(.disabled) {
+      background-color: $yellow-color;
+      border-color: darken($yellow-color, 15);
+    }
+
+    &:active:not(.disabled) {
+      background-color: darken($yellow-color, 5);
+      border-color: darken($yellow-color, 20);
+    }
+  }
+}
+
+footer.app-footer {
+  font-size: 18px;
+  background: #000;
+  text-align: center;
+  padding: 0 5% 3% 5%;
+  margin-top: 20px;
+
+  .list-inline {
+    padding-top: 30px;
+
+    a {
+      display: inline-block;
+      margin: 0 10px 10px 10px;
+      color: #fff;
+      text-decoration: none;
+
+      &:hover {
+        color: #999;
+      }
+    }
+  }
+
+  .footer-text {
+    color: #fff;
+  }
+}
+
+footer.app-footer, ul.navbar-nav {
+  a:hover {
+    &.has-shade[data-shade=yellow] {
+      color: $yellow-color;
+    }
+
+    &.has-shade[data-shade=red] {
+      color: $red-color;
+    }
+
+    &.has-shade[data-shade=blue] {
+      color: $blue-color;
+    }
+
+    &.has-shade[data-shade=green] {
+      color: $green-color;
+    }
+  }
+}
+
+// Table classes
+div.table {
+  @extend table;
+  display: table;
+}
+.thead {
+  @extend thead;
+  display: table-header-group;
+}
+.tr {
+  @extend tr;
+  display: table-row;
+}
+.td {
+  @extend td;
+  display: table-cell;
+}
+.th {
+  @extend th;
+  font-weight: bold;
+  display: table-cell;
+}
+.tbody {
+  @extend tbody;
+  display: table-row-group;
+}
+.caption {
+  @extend caption;
+  display: table-caption;
+}
