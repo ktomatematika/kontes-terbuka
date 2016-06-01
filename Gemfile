@@ -66,9 +66,3 @@ gem 'paperclip', '~> 4.3.6'
 gem "nested_form"
 gem 'rails_admin'
 gem 'paper_trail'
-
-# Capistrano stuff
-gem 'capistrano'
-gem 'capistrano-bundler', '~> 1.1.2'
-gem 'capistrano-rails', '~> 1.1.1'
-gem 'capistrano-rvm', github: "capistrano/rvm"
