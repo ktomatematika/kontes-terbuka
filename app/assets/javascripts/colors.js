@@ -6,6 +6,9 @@ function choose_color() {
 	var color = $('#warna').data('data');
 	var possible = ["red", "green", "blue", "yellow"];
 
+	// Default value
+	if (color === "") { color = "Sistem"; }
+
 	if (color === "Kosong") {
 		return "";
 	} else if (color === "Sistem") {

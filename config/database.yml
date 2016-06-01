@@ -1,13 +1,12 @@
-# SQLite version 3.x
-#   gem install sqlite3
-#
-#   Ensure the SQLite 3 gem is defined in your Gemfile
-#   gem 'sqlite3'
-#
 default: &default
   adapter: postgresql
+  encoding: unicode
+  # For details on connection pooling, see rails configuration guide
+  # http://guides.rubyonrails.org/configuring.html#database-pooling
   pool: 5
-  timeout: 5000
+  host: localhost
+  username: rails
+  password: <%= ENV['APP_DATABASE_PASSWORD'] %>
 
 development:
   <<: *default
@@ -20,10 +19,10 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: kontes_terbuka.test
+  database: kontes_terbuka_test
 
 production:
   <<: *default
   database: kontes_terbuka_production
-  username: rails
+  username: ktom
   password: <%= ENV['APP_DATABASE_PASSWORD'] %>

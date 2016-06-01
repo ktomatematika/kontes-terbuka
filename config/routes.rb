@@ -59,5 +59,4 @@ Rails.application.routes.draw do
 	# See how all your routes lay out with "rake routes".
 
 	get '/home/admin/' => 'home#admin'
-	get '/contests/:id/admin' => 'contests#admin', as: :contest_admin
 end
