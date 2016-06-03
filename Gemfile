@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 ruby '2.3.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.5.1'
+gem 'rails', '4.2.6'
 
 # Postgres
 gem 'pg'
@@ -27,6 +27,7 @@ end
 group :production do
 	gem 'rails_12factor'
 	gem 'unicorn'
+	gem 'unicorn-worker-killer'
 end
 
 group :assets do
