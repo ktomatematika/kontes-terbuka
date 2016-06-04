@@ -6,7 +6,7 @@ set :repo_url, 'git@github.com:donjar/kontes-terbuka.git'
 set :branch, 'production'
 
 # Default deploy_to directory is /var/www/my_app_name
-set :deploy_to, '/home/ktom/www/kontes-terbuka'
+set :deploy_to, '/home/ktom/kontes-terbuka'
 
 # Default value for :scm is :git
 # set :scm, :git
