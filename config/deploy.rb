@@ -40,6 +40,8 @@ set :linked_dirs, fetch(:linked_dirs, []).push('bin', 'log', 'tmp/pids',
 
 set :ssh_options, { :forward_agent => true, :port => 1729 }
 default_run_options[:pty] = true
+set :use_sudo, false
+set :rails_env, "production"
 
 namespace :deploy do
 
