@@ -9,7 +9,7 @@ set :branch, 'production'
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
 # Default deploy_to directory is /var/www/my_app_name
-set :deploy_to, '/home/ktom/kontes-terbuka'
+set :deploy_to, '/home/ktom/www/kontes-terbuka'
 
 # Default value for :scm is :git
 # set :scm, :git
@@ -37,6 +37,9 @@ set :linked_dirs, fetch(:linked_dirs, []).push('bin', 'log', 'tmp/pids',
 
 # Default value for keep_releases is 5
 # set :keep_releases, 5
+
+set :ssh_options, { :forward_agent => true, :port => 1729 }
+default_run_options[:pty] = true
 
 namespace :deploy do
 

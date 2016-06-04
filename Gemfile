@@ -15,6 +15,12 @@ group :development do
 
 	# Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
 	gem 'spring'
+
+	# Cap stuff
+	gem 'capistrano'
+	gem 'capistrano-bundler'
+	gem 'capistrano-rails'
+	gem 'capistrano-rvm', github: "capistrano/rvm"
 end
 
 group :development, :test do
@@ -51,12 +57,6 @@ gem 'jquery-turbolinks'
 gem 'jbuilder'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', group: :doc
-
-# Cap stuff
-gem 'capistrano'
-gem 'capistrano-bundler'
-gem 'capistrano-rails'
-gem 'capistrano-rvm', github: "capistrano/rvm"
 
 gem 'bcrypt', :require => 'bcrypt' 
 gem 'bootstrap-sass'
