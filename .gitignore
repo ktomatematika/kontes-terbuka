@@ -20,6 +20,3 @@
 # Ignore public
 /public/submissions
 /public/problems
-
-# Don't check database password --> in environment variable
-/config/deploy/production.rb
