@@ -146,6 +146,7 @@ GEM
     mime-types-data (3.2016.0521)
     mimemagic (0.3.0)
     mini_magick (4.5.1)
+    mini_portile2 (2.0.0)
     minitest (5.9.0)
     multi_json (1.12.1)
     nested_form (0.3.2)
@@ -153,6 +154,7 @@ GEM
       net-ssh (>= 2.6.5)
     net-ssh (3.1.1)
     nokogiri (1.6.7.2)
+      mini_portile2 (~> 2.0.0.rc2)
     orm_adapter (0.5.0)
     paper_trail (5.1.1)
       activerecord (>= 3.0, < 6.0)
@@ -254,7 +256,7 @@ GEM
       ref
     thor (0.19.1)
     thread_safe (0.3.5)
-    tilt (2.0.4)
+    tilt (2.0.5)
     turbolinks (2.5.3)
       coffee-rails
     tzinfo (1.2.2)
