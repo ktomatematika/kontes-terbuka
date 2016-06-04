@@ -6,8 +6,6 @@
 set :stage, :production
 server 'ktom.tomi.or.id', user: 'ktom', roles: %w{app db web}
 
-
-
 # role-based syntax
 # ==================
 
