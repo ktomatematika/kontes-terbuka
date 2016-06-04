@@ -14,7 +14,7 @@
   </head>
   <body <%= yield(:page_attributes) %>>
     <%= content_tag 'div', '', id: 'warna',
-      data: { data: @current_user.color } %>
+      data: { data: @current_user.nil? ? '' : @current_user.color } %>
     <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container-fluid">
 
@@ -36,6 +36,8 @@
 
         <div class="collapse navbar-collapse" id="top-navbar"> 
           <ul class="nav navbar-nav navbar-right">
+            <li><%= link_to "Magic" , magic_path,
+              :class => "has-shade" %></li>
             <li><%= link_to "Rumah" , root_path,
               :class => "has-shade" %></li>
             <li><%= link_to "Kontes", contests_path,
@@ -58,13 +60,9 @@
         <ul class="list-inline">
           <li><%= link_to 'FAQ', '/home/faq', class: "has-shade" %></li>
           <li><%= link_to 'Buku', '/home/book', class: "has-shade" %></li>
-          <li><%= link_to 'Peta', '/home/sitemap', class: "has-shade" %></li>
           <li><%= link_to 'Tentang Kami', '/home/about',
             class: "has-shade" %></li>
-          <li><%= link_to 'Syarat dan Ketentuan', '/home/terms',
-            class: "has-shade" %></li>
-          <li><%= link_to 'Kebijakan Privasi', '/home/privacy',
-            class: "has-shade" %></li>
+          <li><%= link_to 'Peta', '/home/sitemap', class: "has-shade" %></li>
           <li><%= link_to 'Kontak Kami', '/home/contact',
             class: "has-shade" %></li>
         </ul>
