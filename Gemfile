@@ -4,14 +4,14 @@ source 'https://rubygems.org'
 ruby '2.3.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.5.1'
+gem 'rails', '4.2.6'
 
 # Postgres
 gem 'pg'
 
 group :development do
 	# Access an IRB console on exception pages or by using <%= console %> in views
-	gem 'web-console', '~> 2.0'
+	gem 'web-console'
 
 	# Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
 	gem 'spring'
@@ -27,6 +27,7 @@ end
 group :production do
 	gem 'rails_12factor'
 	gem 'unicorn'
+	gem 'unicorn-worker-killer'
 end
 
 group :assets do
@@ -34,9 +35,9 @@ group :assets do
 end
 
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 5.0'
+gem 'sass-rails'
 # Use Uglifier as compressor for JavaScript assets
-gem 'uglifier', '>= 1.3.0'
+gem 'uglifier'
 # Use CoffeeScript for .coffee assets and views
 # gem 'coffee-rails', '~> 4.1.0'
 
@@ -48,21 +49,27 @@ gem 'jquery-rails'
 gem 'turbolinks'
 gem 'jquery-turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.0'
+gem 'jbuilder'
 # bundle exec rake doc:rails generates the API under doc/api.
-gem 'sdoc', '~> 0.4.0', group: :doc
+gem 'sdoc', group: :doc
+
+# Cap stuff
+gem 'capistrano'
+gem 'capistrano-bundler'
+gem 'capistrano-rails'
+gem 'capistrano-rvm', github: "capistrano/rvm"
 
 gem 'bcrypt', :require => 'bcrypt' 
-gem 'bootstrap-sass', '~> 3.3.6'
+gem 'bootstrap-sass'
 gem 'devise'
-gem 'carrierwave', '~> 0.10.0'
+gem 'carrierwave'
 gem 'mini_magick'
 gem "rolify"
-gem 'cancancan', '~> 1.10'
+gem 'cancancan'
 gem 'hirb'
-gem 'table_print', '~> 1.5', '>= 1.5.6'
+gem 'table_print'
 gem 'katex-rails'
-gem 'paperclip', '~> 4.3.6'
+gem 'paperclip'
 gem "nested_form"
 gem 'rails_admin'
 gem 'paper_trail'
