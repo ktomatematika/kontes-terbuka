@@ -146,15 +146,16 @@ GEM
     mime-types-data (3.2016.0521)
     mimemagic (0.3.0)
     mini_magick (4.5.1)
-    mini_portile2 (2.0.0)
+    mini_portile2 (2.1.0)
     minitest (5.9.0)
     multi_json (1.12.1)
     nested_form (0.3.2)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-ssh (3.1.1)
-    nokogiri (1.6.7.2)
-      mini_portile2 (~> 2.0.0.rc2)
+    nokogiri (1.6.8)
+      mini_portile2 (~> 2.1.0)
+      pkg-config (~> 1.1.7)
     orm_adapter (0.5.0)
     paper_trail (5.1.1)
       activerecord (>= 3.0, < 6.0)
@@ -167,6 +168,7 @@ GEM
       mime-types
       mimemagic (= 0.3.0)
     pg (0.18.4)
+    pkg-config (1.1.7)
     rack (1.6.4)
     rack-pjax (0.8.0)
       nokogiri (~> 1.5)
@@ -271,7 +273,7 @@ GEM
       unicorn (>= 4, < 6)
     warden (1.2.6)
       rack (>= 1.0)
-    web-console (3.1.1)
+    web-console (3.2.0)
       activemodel (>= 4.2)
       debug_inspector
       railties (>= 4.2)
@@ -289,7 +291,6 @@ DEPENDENCIES
   capistrano-rails
   capistrano-rvm!
   carrierwave
-  coffee-rails
   devise
   dotenv-rails
   hirb
