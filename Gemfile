@@ -21,7 +21,6 @@ group :development do
 	gem 'capistrano-bundler'
 	gem 'capistrano-rails'
 	gem 'capistrano-rvm', github: "capistrano/rvm"
-	gem 'capistrano-unicorn-nginx'
 end
 
 group :development, :test do
