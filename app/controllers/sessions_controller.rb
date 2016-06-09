@@ -3,9 +3,9 @@ class SessionsController < ApplicationController
 
 	def new
 		if current_user
-			redirect_to "/"
+			redirect_to root_path
 		else
-			redirect_to "/sign#login"
+			redirect_to sign_path, :anchor => 'login'
 		end
 	end
 	
@@ -18,7 +18,7 @@ class SessionsController < ApplicationController
 			else
 				cookies[:auth_token] = @user.auth_token
 			end
-			redirect_to "/"
+			redirect_to root_path
 		else
 			flash[:alert] = "There was a problem logging you in."
 			redirect_to login_path
@@ -28,6 +28,6 @@ class SessionsController < ApplicationController
 	def destroy
 		cookies.delete(:auth_token)
 		flash[:notice] = "You've been logged out successfully."
-		redirect_to "/"
+		redirect_to root_path
 	end
 end

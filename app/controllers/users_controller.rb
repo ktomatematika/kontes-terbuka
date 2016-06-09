@@ -7,7 +7,7 @@ class UsersController < ApplicationController
 			redirect_to root_path
 		else
 			@user = User.new
-			redirect_to "/sign#register"
+			redirect_to sign_path, :anchor => 'register'
 		end
 	end
 
