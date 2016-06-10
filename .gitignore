@@ -20,3 +20,5 @@
 # Ignore public
 /public/submissions
 /public/problems
+
+/config/database.yml
