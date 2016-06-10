@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-	skip_before_filter :require_login, :only => [:new, :create]
+	skip_before_filter :require_login, :only => [:new, :create, :check]
 	http_basic_authenticate_with name: "admin", password: "admin", only: [:index, :destroy]
 
 	def new
@@ -23,12 +23,12 @@ class UsersController < ApplicationController
 		end
 
 	rescue ActiveRecord::ActiveRecordError
-    respond_to do |format|
-      format.html do
-        render '_new'
-      end
-    end
-  end
+		respond_to do |format|
+			format.html do
+				render '_new'
+			end
+		end
+	end
 
 	def show
 		@user = User.find(params[:id])
@@ -55,6 +55,22 @@ class UsersController < ApplicationController
 		@user = User.find(params[:id])
 		@user.destroy
 		redirect_to users_path
+	end
+
+	def check
+		users = User.all
+		unless params[:username].nil?
+			users = users.where(username: params[:username])
+		end
+		unless params[:email].nil?
+			users = users.where(email: params[:email])
+		end
+
+		if users.present?
+			render :text => 'exists'
+		else
+			render :text => 'none'
+		end
 	end
 
 	private

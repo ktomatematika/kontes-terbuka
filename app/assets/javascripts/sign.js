@@ -172,7 +172,6 @@ $(document).ready(function() {
 	});
 
 	// Forgot password
-
 	var password_div = $('#login-form #password').parent();
 	var remember_checkbox = $('#remember-me');
 	$('#forgot-link').click(function() {
@@ -211,5 +210,30 @@ $(document).ready(function() {
 
 	peek_buttons.mouseleave(function(e) {
 		$(e.target).parent().children('input').prop('type', 'password');
+	});
+
+	// Check if user exists or not just as user enters username/email
+	// in registration form
+
+	var check_with_delay = (function() {
+		var last = new Date();
+		return function(delay_ms, post_data) {
+			last = new Date();
+			window.setTimeout(function() {
+				if (new Date() - last >= delay_ms) {
+					$.post('/check', post_data, function(data) {
+						if (data === 'exists') {
+
+						} else if (data === 'none') {
+
+						}
+					});
+				}
+			}, delay_ms);
+		};
+	})();
+
+	$('#user_username').keyup(function() {
+		check_with_delay(1000, {username: $('#user_username').val()});
 	});
 });

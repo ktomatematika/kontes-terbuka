@@ -56,6 +56,8 @@ Rails.application.routes.draw do
 
 		get '/magic' => 'home#send_magic_email', as: :magic
 
-		get '/home/admin/' => 'home#admin'
+		get '/home/admin' => 'home#admin'
+
+		post '/check' => 'users#check'
 	end
 end
