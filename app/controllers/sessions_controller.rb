@@ -5,7 +5,7 @@ class SessionsController < ApplicationController
 		if current_user
 			redirect_to root_path
 		else
-			redirect_to sign_path, :anchor => 'login'
+			redirect_to sign_path(:anchor => 'login')
 		end
 	end
 	

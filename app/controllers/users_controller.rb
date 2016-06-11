@@ -7,7 +7,7 @@ class UsersController < ApplicationController
 			redirect_to root_path
 		else
 			@user = User.new
-			redirect_to sign_path, :anchor => 'register'
+			redirect_to sign_path(:anchor => 'register')
 		end
 	end
 
@@ -67,9 +67,9 @@ class UsersController < ApplicationController
 		end
 
 		if users.present?
-			render :text => 'exists'
+			render :text => false
 		else
-			render :text => 'none'
+			render :text => true
 		end
 	end
 

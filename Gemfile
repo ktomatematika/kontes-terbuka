@@ -74,3 +74,4 @@ gem 'paperclip'
 gem "nested_form"
 gem 'rails_admin'
 gem 'paper_trail'
+gem 'rack-protection'
