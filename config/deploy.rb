@@ -45,7 +45,10 @@ namespace :deploy do
 	desc 'Restart application'
 	task :restart do
 		on roles(:app) do
-			execute "#{deploy_to}/restart.sh"
+			upload! StringIO.new(File.read('lib/capistrano/restart.sh')),
+				"#{deploy_to}/restart.sh"
+			execute :chmod, "664 #{deploy_to}/restart.sh"
+			execute "sudo #{deploy_to}/restart.sh"
 		end
 	end
 
