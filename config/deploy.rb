@@ -36,9 +36,19 @@ set :linked_dirs, fetch(:linked_dirs, []).push('bin', 'log', 'tmp/pids',
 # set :keep_releases, 5
 
 set :ssh_options, { :forward_agent => true, :port => 1729 }
-set :use_sudo, false
 set :rails_env, "production"
 
+Rake::Task['nginx:reload'].clear_actions
+Rake::Task['unicorn:restart'].clear_actions
+
 namespace :deploy do
+	desc 'Restart application'
+	task :restart do
+		on roles(:app) do
+			execute "#{deploy_to}/restart.sh"
+		end
+	end
+
+	after :publishing, 'deploy:restart'
 	after :finishing, 'deploy:cleanup'
 end
