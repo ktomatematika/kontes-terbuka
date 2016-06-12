@@ -1,0 +1,7 @@
+KONFIRMASI DULU, JENG.
+<%= form_for @user_contest, url: submit_participate_contests_path do |f| %>
+  <%= f.hidden_field :user_id, value: current_user.id %>
+  <%= f.hidden_field :contest_id, value: @contest.id %>
+  <%= f.check_box :confirm_participation %>
+  <%= f.button :submit, value: 'Partisipasi' %>
+<% end %>

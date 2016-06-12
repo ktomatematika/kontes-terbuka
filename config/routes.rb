@@ -18,6 +18,8 @@ Rails.application.routes.draw do
 		resources :users
 		resources :roles
 		resources :contests do
+			get 'participate' => 'contests#participate', on: :member, as: :participate
+			post 'submit_participate' => 'contests#submit_participate', on: :collection, as: :submit_participate
 			resources :short_problems
 			resources :long_problems
 		end
@@ -32,7 +34,7 @@ Rails.application.routes.draw do
 
 		resources :short_submissions
 		resources :long_submissions
-
+		resources :user_contests
 		root "welcome#index"
 
 		get '/sign' => 'welcome#sign'
