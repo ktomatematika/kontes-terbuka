@@ -16,16 +16,17 @@ class UsersController < ApplicationController
 			@user = User.new(user_params)
 			@user.add_role :student
 			@user.color_id = Color.find_by(name: 'Sistem').id
-			@user.save
-			verify_recaptcha(model: @user)
-			cookies[:auth_token] = @user.auth_token
-			redirect_to root_path
+			if verify_recaptcha(model: @user) && @user.save
+				cookies[:auth_token] = @user.auth_token
+				redirect_to root_path
+			else
+				redirect_to register_path
+			end
 		end
-
 	rescue ActiveRecord::ActiveRecordError
 		respond_to do |format|
 			format.html do
-				render '_new'
+				redirect_to register_path
 			end
 		end
 	end

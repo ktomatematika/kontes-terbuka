@@ -48,8 +48,11 @@ Rails.application.routes.draw do
 		get '/home/index' => 'home#index'
 		get '/faq' => 'home#faq'
 		get '/book' => 'home#book'
-		get '/sitemap' => 'home#sitemap'
+		get '/donate' => 'home#donate'
 		get '/about' => 'home#about'
+		get '/sitemap' => 'home#sitemap'
+		get '/privacy' => 'home#privacy'
+		get '/terms' => 'home#terms'
 		get '/contact' => 'home#contact'
 
 		post '/short_problems/submit' => 'short_problems#submit'
@@ -60,5 +63,5 @@ Rails.application.routes.draw do
 		get '/home/admin' => 'home#admin'
 	end
 
-		post '/check' => 'users#check_unique'
+	post '/check' => 'users#check_unique'
 end

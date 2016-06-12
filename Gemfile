@@ -54,6 +54,9 @@ group :development do
 	gem 'capistrano-bundler'
 	gem 'capistrano-rails'
 	gem 'capistrano-rvm', github: "capistrano/rvm"
+
+	# ?
+	gem 'table_flipper'
 end
 
 group :development, :test do

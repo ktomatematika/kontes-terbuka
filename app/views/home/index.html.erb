@@ -50,9 +50,9 @@ fjs.parentNode.insertBefore(js, fjs);
       <article class="home-article" id="prev-contests">
         <h2>Kontes-kontes Sebelumnya</h2>
         <% Contest.prev_contests.each do |c| %>
-          <h3><%= link_to c.name, c %></h3>
+          <h5><%= link_to c.name, c %></h5>
         <% end %>
-        <h4><%= link_to "Daftar kontes", contests_path %></h4>
+        <p><%= link_to "Daftar kontes", contests_path %></p>
       </article>
     </div>
 

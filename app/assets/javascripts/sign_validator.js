@@ -28,11 +28,7 @@ $(document).ready(function() {
 			if (element.parent('.input-group').length) {
 				error.insertAfter(element.parent());
 			} else {
-				if (element.prop('type') === 'checkbox') {
-					error.insertAfter(element.next());
-				} else {
-					error.insertAfter(element);
-				}
+				error.insertAfter(element);
 			}
 		}
 	});
@@ -94,16 +90,16 @@ $(document).ready(function() {
 			"user[fullname]": {
 				required: true,
 			},
-			"user[province]": {
-				min: 1,
+			"user[province_id]": {
+				required: true,
 			},
-			"user[status]": {
-				min: 1,
+			"user[status_id]": {
+				required: true,
 			},
 			"user[school]": {
 				required: true,
 			},
-			"confirm": {
+			"user[terms_of_service]": {
 				required: true,
 			},
 		},
@@ -132,16 +128,16 @@ $(document).ready(function() {
 			"user[fullname]": {
 				required: "Tolong masukkan nama lengkap Anda.",
 			},
-			"user[province]": {
-				min: "Tolong masukkan provinsi Anda.",
+			"user[province_id]": {
+				required: "Tolong masukkan provinsi Anda.",
 			},
-			"user[status]": {
-				min: "Tolong masukkan status Anda.",
+			"user[status_id]": {
+				required: "Tolong masukkan status Anda.",
 			},
 			"user[school]": {
 				required: "Tolong masukkan nama sekolah/institusi Anda.",
 			},
-			"confirm": {
+			"user[terms_of_service]": {
 				required: "Anda harus menyetujui syarat dan ketentuan " +
 					"website ini.",
 			}

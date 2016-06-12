@@ -7,7 +7,7 @@ function choose_color() {
 	var possible = ["red", "green", "blue", "yellow"];
 
 	// Default value
-	if (color === "") { color = "Sistem"; }
+	if (color === undefined) { color = "Sistem"; }
 
 	if (color === "Kosong") {
 		return "";
@@ -26,7 +26,9 @@ function choose_color() {
 	}
 }
 
-$(document).ready(function() {
+function load_colors() {
 	var shade = choose_color();
 	$('.has-shade').attr("data-shade", shade);
-});
+}
+
+$(document).ready(load_colors);
