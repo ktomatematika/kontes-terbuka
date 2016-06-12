@@ -59,5 +59,5 @@ Rails.application.routes.draw do
 		get '/home/admin' => 'home#admin'
 	end
 
-		post '/check' => 'users#check'
+		post '/check' => 'users#check_unique'
 end

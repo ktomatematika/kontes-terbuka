@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-	// Synergize with bootstrap by adding certain bootstrap classes.
+	// Synergize with bootstrap by adding certain bootstrap classes to tags.
 	$.validator.setDefaults({
 		errorElement: "span",
 		errorClass: "help-block",
@@ -8,16 +8,20 @@ $(document).ready(function() {
 			$(element).closest('.form-group').addClass('has-error');
 			$(element).closest('.form-group').removeClass('has-success');
 			if ($(element).prop('type') !== 'password') {
-				$(element).nextAll('.glyphicon').removeClass('glyphicon-ok');
-				$(element).nextAll('.glyphicon').addClass('glyphicon-remove');
+				$(element).nextAll('.glyphicon')
+					      .removeClass('glyphicon-ok')
+					      .addClass('glyphicon-remove')
+						  .empty();
 			}
 		},
 		unhighlight: function(element, errorClass, validClass) {
 			$(element).closest('.form-group').addClass('has-success');
 			$(element).closest('.form-group').removeClass('has-error');
 			if ($(element).prop('type') !== 'password') {
-				$(element).nextAll('.glyphicon').removeClass('glyphicon-remove');
-				$(element).nextAll('.glyphicon').addClass('glyphicon-ok');
+				$(element).nextAll('.glyphicon')
+					      .addClass('glyphicon-ok')
+					      .removeClass('glyphicon-remove')
+						  .empty();
 			}
 		},
 		errorPlacement: function(error, element) {
@@ -33,22 +37,50 @@ $(document).ready(function() {
 		}
 	});
 
+	// Adds a method to check whether a field is alphanumeric.
 	$.validator.addMethod('alphanum', function(value, elem, params) {
 		return this.optional(elem) || /^[a-zA-Z0-9]+$/.test(value);
 	});
 
 	$("#register-form").validate({
-		onfocusout: false, onkeyup: false, onclick: false,
+		// We don't register key up here; there will be a keyup listener
+		// where it will call a throttled version of validation. Basically
+		// it will only validate after 1000 ms of keyups, as to not send
+		// too much AJAX requests.
+		onkeyup: false,
 		rules: {
 			"user[username]": {
 				required: true,
 				minlength: 6,
 				maxlength: 20,
 				alphanum: true,
+				// Sends post data to /check/. This is routed to
+				// users#check_unique in the controller. This will return
+				// JSON 'true' when username/email has not been taken and
+				// JSON 'false' otherwise.
+				remote: {
+					url: '/check/',
+					type: 'post',
+					data: {
+						username: function() {
+							return $('#user_username').val();
+						},
+					},
+				},
 			},
 			"user[email]": {
 				required: true,
 				email: true,
+				// Same as above; sends post data.
+				remote: {
+					url: '/check/',
+					type: 'post',
+					data: {
+						email: function() {
+							return $('#user_email').val();
+						},
+					},
+				},
 			},
 			"user[password]": {
 				required: true,
@@ -80,36 +112,38 @@ $(document).ready(function() {
 				required: "Tolong masukkan username.",
 				minlength: "Username Anda harus minimal 6 karakter.",
 				maxlength: "Username Anda tidak boleh lebih dari 20 karakter.",
-				alphanum: "Anda hanya bisa menggunakan huruf dan angka saja."
+				alphanum: "Anda hanya bisa menggunakan huruf dan angka saja.",
+				remote: 'Username tersebut sudah terpakai.',
 			},
 			"user[email]": {
 				required: "Tolong masukkan email.",
-				email: "Tolong masukan email yang valid."
+				email: "Tolong masukan email yang valid.",
+				remote: 'Username dengan email tersebut sudah ada.',
 			},
 			"user[password]": {
 				required: "Tolong masukkan password.",
-				minlength: "Password Anda harus minimal 6 karakter."
+				minlength: "Password Anda harus minimal 6 karakter.",
 			},
 			"user[password_confirmation]": {
 				required: "Tolong masukkan ulang password.",
 				minlength: "Password Anda harus minimal 6 karakter.",
-				equalTo: "Password Anda tidak sama dengan password sebelumnya."
+				equalTo: "Password Anda tidak sama dengan password sebelumnya.",
 			},
 			"user[fullname]": {
 				required: "Tolong masukkan nama lengkap Anda.",
 			},
 			"user[province]": {
-				min: "Tolong masukkan provinsi Anda."
+				min: "Tolong masukkan provinsi Anda.",
 			},
 			"user[status]": {
-				min: "Tolong masukkan status Anda."
+				min: "Tolong masukkan status Anda.",
 			},
 			"user[school]": {
-				required: "Tolong masukkan nama sekolah/institusi Anda." 
+				required: "Tolong masukkan nama sekolah/institusi Anda.",
 			},
 			"confirm": {
 				required: "Anda harus menyetujui syarat dan ketentuan " +
-					"website ini."
+					"website ini.",
 			}
 		}
 	})
@@ -135,79 +169,35 @@ $(document).ready(function() {
 		}
 	});
 
-	// Check if user exists or not as user enters username/email
-	// in registration form
-	var throttle = (function() {
-		var last = new Date();
-		return function(delay_ms, callback) {
-			last = new Date();
-			window.setTimeout(function() {
-				if (new Date() - last >= delay_ms) {
-					callback();
-				}
-			}, delay_ms);
-		}
-		return function(delay_ms, post_data, start, on_non_exists, on_exists) {
-			last = new Date();
-			window.setTimeout(function() {
-				if (new Date() - last >= delay_ms) {
-					$.post('/check', post_data, function(data) {
-						if (data === "true") {
-							on_non_exists();
-						} else {
-							on_exists();
-						}
-					});
-				}
-			}, delay_ms);
-
-		};
-	})();
-
-	var validator = $('#register-form').validate();
-	$('#user_username').keyup(function() {
-		$('#user_username-error').hide();
-		throttle(1000, function() {
-			var input = $('#user_username');
-			$.post('/check', {username: input.val()},  function(data) {
-				$('#user-help').hide();	
-				if (data === "true") {
-					input.valid();
-				} else {
-					validator.showErrors({
-						'user[username]': 'Username tersebut tidak tersedia.',
-					});
-				}
-			});
-		});
-	});
-
-	$('#user_email').keyup(function() {
-		$('#user_email-error').hide();
-		throttle(1000, function() {
-			var input = $('#user_email');
-			$.post('/check', {email: input.val()}, function(data) {
-				if (data === "true") {
-					input.valid();
-				} else {
-					validator.showErrors({
-						'user[email]':
-							'Akun dengan email tersebut sudah terpakai.'
-					});
-				}
-			});
-		});
-	});
-
+	var last = new Date();
 	$('input').keyup(function(e) {
-		throttle(1000, function() {
+		var input = e.keyCode;
+		
+		// This checks if the key entered is backspace, characters, or delete.
+		if (input === 8 || (input >= 32 && input <= 127)) {
 			var t = e.target;
-			if (t.id === 'user_password') {
-				$('#pass-help').hide();
+
+			// Remove bootstrap classes to show that we are performing
+			// validation. In fact though we are just waiting for user input
+			// to finish
+			$(t).parent().removeClass('has-success').removeClass('has-error');
+
+			var g = $(t).nextAll('.glyphicon');
+			g.removeClass('glyphicon-ok').removeClass('glyphicon-remove');
+			if (g.is(':empty') && $(t).prop('type') !== 'password') {
+				g.append('<div class="loading"></div>');
 			}
-			if (t.id !== 'user_username' && t.id !== 'user_email') {
-				$(t).valid();
-			}
-		});
+
+			$(t).nextAll('.help-block').hide();
+
+			// Validate after 1000 milisecond.
+			var validate_time = 1000
+			last = new Date();
+			window.setTimeout(function() {
+				if (new Date() - last >= validate_time) {
+					$(t).valid();
+				}
+			}, validate_time);
+		}
 	});
 });

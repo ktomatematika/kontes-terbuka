@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-	skip_before_filter :require_login, :only => [:new, :create, :check]
+	skip_before_filter :require_login, :only => [:new, :create, :check_unique]
 	http_basic_authenticate_with name: "admin", password: "admin", only: [:index, :destroy]
 
 	def new
@@ -57,7 +57,7 @@ class UsersController < ApplicationController
 		redirect_to users_path
 	end
 
-	def check
+	def check_unique
 		users = User.all
 		unless params[:username].nil?
 			users = users.where(username: params[:username])
@@ -67,9 +67,9 @@ class UsersController < ApplicationController
 		end
 
 		if users.present?
-			render :text => false
+			render :json => false
 		else
-			render :text => true
+			render :json => true
 		end
 	end
 
