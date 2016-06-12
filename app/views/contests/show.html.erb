@@ -22,10 +22,10 @@
             <h2>Bagian A: Isian Singkat</h2>
             <h4 class="text-justify">Jawaban setiap soal dipastikan berupa
               bilangan bulat. Setiap soal bernilai 1 poin. Tidak ada
-              pengurangan untuk jawaban yang salah. Anda boleh terus mengisi
-              jawaban sebelum kontes berakhir; jawaban yang dikoreksi adalah
-              jawaban yang Anda kumpulkan terakhir. Kosongkan jawaban
-              yang tidak ingin Anda ganti.</h4>
+              pengurangan untuk jawaban yang salah ataupun kosong. Anda boleh
+              terus mengisi jawaban sebelum kontes berakhir; jawaban yang
+              dikoreksi adalah jawaban yang Anda kumpulkan terakhir. Kosongkan
+              jawaban yang tidak ingin Anda ganti.</h4>
           </header>
           <%= form_for :short_answer, url: '/short_problems/submit/' do |f| %>
             <% @short_problems.each do |prob| %>
@@ -49,7 +49,10 @@
         <article id="bagian-b">
           <header>
             <h2>Bagian B: Uraian</h2>
-            <h4 class="text-justify">Bagian B</h4>
+            <h4 class="text-justify">Setiap soal bernilai 7 poin. Tidak ada
+              pengurangan untuk jawaban yang salah ataupun kosong. Solusi boleh
+              Anda ketik, scan, ataupun foto. Unggah solusi Anda dengan form di
+              bawah ini.</h4>
           </header>
 
           <% @long_problems.each do |prob|%>

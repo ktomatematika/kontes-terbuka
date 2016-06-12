@@ -43,6 +43,7 @@ Rails.application.routes.draw do
 		get '/logout' => 'sessions#destroy', as: :logout
 
 		get '/contests/:id/admin' => 'contests#admin', as: :contest_admin
+		get '/contests/:id/rules' => 'contests#rules'
 
 		get '/home/index' => 'home#index'
 		get '/faq' => 'home#faq'

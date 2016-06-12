@@ -28,11 +28,10 @@ function update_regularly() {
 			} else {
 				$('#home-btn-daftar').removeAttr('disabled', false);
 				$('#home-btn-daftar').prop('href',
-						$('#contest-data').data('url'));
+						$('#home-contest-data').data('url'));
 				var text = "Kontes sudah dimulai!";
 			}
 		}
-
 
 		$('#home-btn-daftar').text(text);
 	}

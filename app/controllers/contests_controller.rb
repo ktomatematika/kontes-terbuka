@@ -6,6 +6,9 @@ class ContestsController < ApplicationController
 		@short_problems = @contest.short_problems.order(:problem_no).all
 	end
 
+	def rules
+	end
+
 	def new
 		@contest = Contest.new
 	end
