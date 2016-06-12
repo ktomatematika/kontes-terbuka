@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-	skip_before_filter :require_login, :only => [:new, :create, :check]
+	skip_before_filter :require_login, :only => [:new, :create, :check_unique]
 	http_basic_authenticate_with name: "admin", password: "admin", only: [:index, :destroy]
 
 	def new
@@ -16,16 +16,17 @@ class UsersController < ApplicationController
 			@user = User.new(user_params)
 			@user.add_role :student
 			@user.color_id = Color.find_by(name: 'Sistem').id
-			@user.save
-			verify_recaptcha(model: @user)
-			cookies[:auth_token] = @user.auth_token
-			redirect_to root_path
+			if verify_recaptcha(model: @user) && @user.save
+				cookies[:auth_token] = @user.auth_token
+				redirect_to root_path
+			else
+				redirect_to register_path
+			end
 		end
-
 	rescue ActiveRecord::ActiveRecordError
 		respond_to do |format|
 			format.html do
-				render '_new'
+				redirect_to register_path
 			end
 		end
 	end
@@ -65,7 +66,7 @@ class UsersController < ApplicationController
 		redirect_to users_path
 	end
 
-	def check
+	def check_unique
 		users = User.all
 		unless params[:username].nil?
 			users = users.where(username: params[:username])
@@ -75,9 +76,9 @@ class UsersController < ApplicationController
 		end
 
 		if users.present?
-			render :text => false
+			render :json => false
 		else
-			render :text => true
+			render :json => true
 		end
 	end
 

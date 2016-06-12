@@ -18,7 +18,7 @@
 
         <div class="form-group has-feedback" aria-describedby="user-help">
           <%= f.text_field :username, class: "form-control",
-            placeholder: "Username", autocomplete: "off" %>
+            placeholder: "Username" %>
           <span class="glyphicon form-control-feedback"
                 aria-hidden="true"></span>
           <div id="user-help" class="help-block pre-help">Username Anda
@@ -27,7 +27,7 @@
         </div>
         <div class="form-group has-feedback"> 
           <%= f.email_field :email, class: "form-control",
-            placeholder: "Alamat email", autocomplete: "off" %>
+            placeholder: "Alamat email" %>
           <span class="glyphicon form-control-feedback"
                 aria-hidden="true"></span>
         </div>
@@ -83,7 +83,7 @@
         </div>
         <div class="checkbox">
           <label>
-            <%= f.check_box :terms_of_service%>
+            <%= f.check_box :terms_of_service %>
             Saya menyetujui syarat dan ketentuan website ini.
           </label>
         </div>

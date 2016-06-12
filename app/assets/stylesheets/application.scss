@@ -13,7 +13,7 @@ body {
   font-family: 'Titillium Web', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   background: #f3f3ee;
   padding-top: 90px;
-  font-size: 16px;
+  font-size: 18px;
 
   & > .container-fluid {
     @media(min-width: 768px) {
@@ -63,8 +63,6 @@ h5, .h5 {
 }
 
 .navbar-fixed-top {
-
-  font-size: 18px;
 
   .navbar-brand {
     padding: 10px;
@@ -143,14 +141,13 @@ h5, .h5 {
 }
 
 footer.app-footer {
-  font-size: 18px;
   background: #000;
   text-align: center;
   padding: 0 5% 3% 5%;
   margin-top: 20px;
 
   .list-inline {
-    padding-top: 30px;
+    padding-top: 2em;
 
     a {
       display: inline-block;
@@ -218,4 +215,19 @@ div.table {
 .caption {
   @extend caption;
   display: table-caption;
+}
+
+// Change bootstrap's font size to em, because duh
+blockquote {
+  font-size: 1em;
+
+  footer {
+    font-size: 0.8em;
+  }
+}
+.btn {
+  font-size: 1em;
+}
+.btn-lg {
+  font-size: 1.2em;
 }

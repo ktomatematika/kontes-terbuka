@@ -3,11 +3,11 @@
 //You can use CoffeeScript in this file: http://coffeescript.org/
 
 function choose_color() {
-	var color = $('#warna').data('data');
+	var color = $('#warna').data('data').name;
 	var possible = ["red", "green", "blue", "yellow"];
 
 	// Default value
-	if (color === "") { color = "Sistem"; }
+	if (color === undefined) { color = "Sistem"; }
 
 	if (color === "Kosong") {
 		return "";

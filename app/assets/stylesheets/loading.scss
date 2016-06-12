@@ -1,0 +1,45 @@
+$prefixes: '-webkit-' '-ms-' '-o-' '';
+
+@mixin rotate() {
+  @each $p in $prefixes {
+    0% {
+      #{$p}transform: rotate(0);
+    }
+
+    100% {
+      #{$p}transform: rotate(360deg);
+    }
+  }
+}
+
+.glyphicon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loading {
+  width: 20px;
+  height: 20px;
+
+  @each $p in $prefixes {
+    #{$p}animation: circle infinite .75s linear;
+  }
+
+  border: 3px solid #000;
+  border-top-color: transparent;
+  border-radius: 100%;
+}
+
+@-webkit-keyframes circle {
+  @include rotate();
+}
+@-ms-keyframes circle {
+  @include rotate();
+}
+@-o-keyframes circle {
+  @include rotate();
+}
+@keyframes circle {
+  @include rotate();
+}

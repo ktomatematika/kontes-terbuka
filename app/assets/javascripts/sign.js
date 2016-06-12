@@ -2,7 +2,7 @@ var forgot = false;
 
 $(document).ready(function() {
 
-	// Which form to show?
+	// Use the hash to determine which form to show. Defaults to register.
 	var hash = window.location.hash;
 	if (hash === "#login") {
 		$('#register').hide();
@@ -23,7 +23,7 @@ $(document).ready(function() {
 		$(this).nextAll(".pre-help").addClass('hidden');
 	});
 
-	// jQuery fade in/out
+	// Fade in/out on switching forms.
 	$('.move-form').click(function(e) {
 		var right = $(this).attr("href");
 		if (right === "#login") {
@@ -64,7 +64,7 @@ $(document).ready(function() {
 		forgot = false;
 	}
 
-	// Peek functionality of password boxes
+	// Adds peek functionality of password inputs
 	var peek_buttons = $('.form-control-feedback.glyphicon-eye-open');	
 	peek_buttons.mousedown(function(e) {
 		$(e.target).parent().children('input').prop('type', 'input');
