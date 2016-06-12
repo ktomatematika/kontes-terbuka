@@ -44,10 +44,18 @@ class UsersController < ApplicationController
 
 	def update
 		@user = User.find(params[:id])
-		if @user.update(user_params)
-			redirect_to users_path
-		else
-			render 'edit'
+		User.transaction do
+			@user.update_attributes(user_params)
+		end
+
+		flash[:success] = 'Informasi berhasil diperbarui.'
+		redirect_to user_path
+
+	rescue ActiveRecord::ActiveRecordError
+		respond_to do |format|
+			format.html do
+				render 'edit'
+			end
 		end
 	end
 

@@ -3,11 +3,12 @@ class Contest < ActiveRecord::Base
 
 	has_many :short_problems
 	has_many :short_submissions, through: :short_problems
-	has_many :users, through: :short_submissions
+	has_many :users, through: :user_contests
 
 	has_many :long_problems
 	has_many :long_submissions, through: :long_problems
-	has_many :users, through: :long_submissions
+	has_many :users, through: :user_contests
+	has_many :user_contests
 
 	validates :name, presence: true, uniqueness: true
 	validates :number_of_short_questions, presence: true

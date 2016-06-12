@@ -9,10 +9,13 @@ class User < ActiveRecord::Base
 	
 	has_many :short_submissions
 	has_many :short_problems, through: :short_submissions
-	has_many :contests, through: :short_problems
+	has_many :contests, through: :user_contests
+
 	has_many :long_submissions
 	has_many :short_problems, through: :long_submissions
-	has_many :contests, through: :long_problems
+	has_many :contests, through: :user_contests
+	has_many :user_contests
+
 	belongs_to :province
 	belongs_to :status
 	belongs_to :color
