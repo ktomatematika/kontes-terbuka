@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160612082425) do
+ActiveRecord::Schema.define(version: 20160613170017) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,44 +38,6 @@ ActiveRecord::Schema.define(version: 20160612082425) do
     t.text     "rule"
     t.datetime "result_time"
     t.datetime "feedback_time"
-  end
-
-  create_table "how_to_content_translations", force: :cascade do |t|
-    t.integer  "how_to_content_id"
-    t.string   "locale"
-    t.string   "title"
-    t.text     "description"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "how_to_contents", force: :cascade do |t|
-    t.integer  "section_id"
-    t.integer  "position",   default: 0
-    t.boolean  "active",     default: true
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "how_to_section_translations", force: :cascade do |t|
-    t.integer  "how_to_section_id"
-    t.string   "locale"
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "how_to_sections", force: :cascade do |t|
-    t.integer  "parent_id"
-    t.boolean  "active",             default: true
-    t.integer  "sub_sections_count", default: 0
-    t.integer  "contents_count",     default: 0
-    t.integer  "position",           default: 0
-    t.integer  "lft"
-    t.integer  "rgt"
-    t.integer  "depth"
-    t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   create_table "long_problems", force: :cascade do |t|
@@ -145,9 +107,8 @@ ActiveRecord::Schema.define(version: 20160612082425) do
   create_table "user_contests", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "contest_id"
-    t.boolean  "confirm_participation"
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   add_index "user_contests", ["contest_id"], name: "index_user_contests_on_contest_id", using: :btree

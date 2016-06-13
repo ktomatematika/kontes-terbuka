@@ -18,8 +18,8 @@ Rails.application.routes.draw do
 		resources :users
 		resources :roles
 		resources :contests do
-			get 'participate' => 'contests#participate', on: :member, as: :participate
-			post 'submit_participate' => 'contests#submit_participate', on: :collection, as: :submit_participate
+			get 'show_rules' => 'contests#show_rules', on: :member, as: :show_rules
+			post 'accept_rules' => 'contests#accept_rules', on: :collection, as: :accept_rules
 			resources :short_problems
 			resources :long_problems
 		end

@@ -4,5 +4,4 @@ class UserContest < ActiveRecord::Base
 
   validates :user, presence: true
   validates :contest, presence: true
-  validates_acceptance_of :confirm_participation, accept: true, meesage: 'SETUJU DULU, JENG.'
 end

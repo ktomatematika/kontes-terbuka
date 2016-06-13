@@ -26,7 +26,7 @@ class ContestsController < ApplicationController
 	def show
 		@contest = Contest.find(params[:id])
 		if UserContest.where(user: current_user, contest: @contest).empty?
-			redirect_to participate_contest_path(params[:id])
+			redirect_to show_rules_contest_path(params[:id])
 		end
 		@short_problems = @contest.short_problems.order("problem_no").all
 		@long_problems = @contest.long_problems.order("problem_no").all		
@@ -61,19 +61,18 @@ class ContestsController < ApplicationController
 		@long_problems = @contest.long_problems.order(:problem_no).all
 	end
 
-	def participate
+	def show_rules
 		@contest = Contest.find(params[:id])
 		@user_contest = UserContest.new
 	end
 
-	def submit_participate
+	def accept_rules
 		UserContest.transaction do
 			@user_contest = UserContest.new(participate_params)
 			@user_contest.save!
 		end
 
 		@contest = @user_contest.contest
-		flash[:success] = 'Sekarang Anda telah berpartisipasi!'
 		redirect_to @contest
 
 	rescue ActiveRecord::ActiveRecordError
@@ -81,7 +80,7 @@ class ContestsController < ApplicationController
 			format.html do
 				@contest = Contest.find(participate_params[:contest_id])
 				@user_contest = UserContest.new
-				render 'participate'
+				render 'rules'
 			end
 		end
 	end
