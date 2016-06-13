@@ -11,7 +11,7 @@ gem 'pg'
 
 ### END BASICS
 
-### ASSETS
+### VIEWS, ASSETS, FRONTEND STUFF
 
 # Use SCSS for stylesheets
 gem 'sass-rails'
@@ -30,13 +30,15 @@ gem 'katex-rails'
 gem 'therubyracer', :platforms => :ruby
 # Adds attachments, in the form of long submissions
 gem 'paperclip'
+# Adds nested forms
+gem 'nested_form'
+# Markdown parser
+gem 'redcarpet'
 
 ### END ASSETS
 
 ### UTILITIES
 
-# Adds nested forms
-gem "nested_form"
 # Adds quick, simple, dirty admin page
 gem 'rails_admin'
 # Logging
@@ -48,12 +50,6 @@ group :development do
 
 	# Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
 	gem 'spring'
-
-	# Use capistrano and its extensions.
-	gem 'capistrano'
-	gem 'capistrano-bundler'
-	gem 'capistrano-rails'
-	gem 'capistrano-rvm', github: "capistrano/rvm"
 
 	# ?
 	gem 'table_flipper'
@@ -71,11 +67,11 @@ end
 # Authentication gem.
 gem 'devise'
 # Authorization gem. Adds roles.
-gem "rolify"
+gem 'rolify'
 # Another authorization gem; adds privileges.
 gem 'cancancan'
 # A recaptcha helper gem.
-gem 'recaptcha', require: "recaptcha/rails"
+gem 'recaptcha', require: 'recaptcha/rails'
 # Adds various security stuff. You need protection!
 gem 'rack-protection'
 # Adds hashes for passwords.
@@ -95,6 +91,14 @@ group :production do
 	# This gem kills unicorn workers after certain time to prevent memory
 	# leakage.
 	gem 'unicorn-worker-killer'
+end
+
+group :development do
+	# Use capistrano and its extensions.
+	gem 'capistrano'
+	gem 'capistrano-bundler'
+	gem 'capistrano-rails'
+	gem 'capistrano-rvm', github: 'capistrano/rvm'
 end
 
 ### END PRODUCTION STUFF

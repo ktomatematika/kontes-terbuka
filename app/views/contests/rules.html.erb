@@ -1,21 +1,13 @@
 <div class="container-fluid">
   <h1>Petunjuk Kontes</h1>
-  <h3>Anda perlu menyetujui petunjuk kontes ini terlebih dahulu.</h3>
 
-  <ol>
-    <li>Kontes diadakan selama empat hari, yakni pada tanggal 25 sampai 27 September 2015.</li>
-    <li>Jawaban soal Kontes Terbuka Olimpiade Matematika Agustus 2015 dikirim paling lambat 27 September 2015 pukul 00:05 WIB.</li>
-    <li>Solusi yang terlambat dikirim ataupun tidak terbaca tidak akan dinilai. Kami sangat memohon kerja sama Anda dalam memperhatikan peraturan ini.</li>
-    <li>Tulis nomor soal dan halaman soal saja pada lembar jawaban Anda. Anda tidak diperkenankan untuk menulis nama, username, ataupun apapun yang bisa membuat para juri mengidentifikasi Anda.</li>
-    <li>Setiap lembar hanya dapat digunakan untuk menuliskan solusi untuk satu soal. Dengan kata lain, Anda boleh menggunakan dua atau lebih halaman untuk satu soal; namun, Anda tidak boleh menuliskan 2 (dua) atau lebih soal di satu halaman. Untuk mendapatkan pemahaman yang lebih jelas, perhatikan gambar di bawah ini:</li>
-    <%= image_tag("1hal1soal.png", :class => "img-responsive", :alt => "Aturan 1 halaman 1 soal") %>
-    <li>Solusi bagian B disimpan dengan format gambar, Microsoft Word, atau PDF. Anda hanya bisa mengupload file-file doc, docx, pdf, jpg, jpeg, png, dan zip.</li>
-    <li>Soal diunggah di forum olimpiade.org paling cepat pada tanggal 28 September 2015 pukul 06:00 WIB untuk diskusi.</li>
-    <li>Hasil kontes akan diunggah paling lambat pada tanggal 3 Oktober 2015 pukul 23:59 WIB.</li>
-    <li>Kami tidak menerima pertanyaan mengenai deskripsi soal. Jika ada soal yang kurang jelas, Anda dipersilakan untuk menuliskan dengan sejelas-jelasnya asumsi Anda pada lembar jawaban. Juri akan menentukan secara sepihak apakah asumsi yang Anda ambil diterima atau tidak.</li>
-    <li>Anda tidak diperbolehkan untuk mendiskusikan soal-soal kontes ini dengan siapapun selama kontes sedang berlangsung. Anda juga tidak diperbolehkan untuk menggunakan kalkulator dan alat elektronik lainnya; namun, kami tentunya tidak bisa menjaga terpatuhinya peraturan ini. Kami hanya bisa mengingatkan bahwa kontes ini dirancang agar Anda bisa berlatih menyelesaikan permasalahan matematika. Jadi, jelas tidak ada faedahnya bila Anda memenangkan kontes ini tetapi tidak berlatih apa pun.</li>
-    <li>Pelanggaran terhadap petunjuk teknis ini dapat menyebabkan diskualifikasi pada kontes ini atau bahkan pada kontes-kontes berikutnya.</li>
-  </ol>
+  <% text = ERB.new(@contest.rule).result(binding) %>
+  <% renderer = Redcarpet::Render::HTML.new() %>
+  <% markdown = Redcarpet::Markdown.new(renderer) %>
+  <%= markdown.render(text).html_safe %>
 
-  <%= link_to "Saya setuju", contest_path, class:"btn btn-default has-shade" %>
+  <div class="btn-center-container">
+    <%= link_to "Saya sudah membaca dan menyetujui",
+      contest_path, class: "btn btn-default has-shade", id: 'rules-agree-btn' %>
+</div>
 </div>
