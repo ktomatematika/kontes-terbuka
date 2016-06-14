@@ -15,7 +15,6 @@ class UsersController < ApplicationController
 		User.transaction do
 			@user = User.new(user_params)
 			@user.add_role :student
-			@user.color_id = Color.find_by(name: 'Sistem').id
 			if verify_recaptcha(model: @user) && @user.save
 				cookies[:auth_token] = @user.auth_token
 				redirect_to root_path

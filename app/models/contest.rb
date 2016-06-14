@@ -10,13 +10,7 @@ class Contest < ActiveRecord::Base
 	has_many :users, through: :user_contests
 	has_many :user_contests
 
-	validates :name, presence: true, uniqueness: true
-	validates :number_of_short_questions, presence: true
-	validates :number_of_long_questions, presence: true
-	validates :start_time, presence: true
-	validates :end_time, presence: true
-	validates :result_time, presence: true
-	validates :feedback_time, presence: true
+	enforce_migration_validations
 
 	has_attached_file :problem_pdf, url: '/problems/:id/:basename.:extension',
 		path: ':rails_root/public/problems/:id/:basename.:extension'

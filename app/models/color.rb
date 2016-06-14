@@ -1,5 +1,5 @@
 class Color < ActiveRecord::Base
-  has_many :user
+	has_many :user
 
-  validates :name, presence: true
+	enforce_migration_validations
 end

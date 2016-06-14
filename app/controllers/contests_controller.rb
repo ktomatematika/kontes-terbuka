@@ -25,7 +25,9 @@ class ContestsController < ApplicationController
 
 	def show
 		@contest = Contest.find(params[:id])
-		if UserContest.where(user: current_user, contest: @contest).empty?
+		now = DateTime.now
+		if UserContest.where(user: current_user, contest: @contest).empty? and
+			@contest.start_time <= now and now <= @contest.end_time
 			redirect_to show_rules_contest_path(params[:id])
 		end
 		@short_problems = @contest.short_problems.order("problem_no").all
@@ -94,6 +96,6 @@ class ContestsController < ApplicationController
 		end
 
 		def participate_params
-			params.require(:user_contest).permit(:user_id, :contest_id, :confirm_participation)
+			params.require(:user_contest).permit(:user_id, :contest_id)
 		end
 end

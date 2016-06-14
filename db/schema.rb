@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160613170017) do
+ActiveRecord::Schema.define(version: 20160614073120) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,20 +22,21 @@ ActiveRecord::Schema.define(version: 20160613170017) do
     t.datetime "updated_at", null: false
   end
 
+  add_index "colors", ["name"], name: "idx_mv_colors_name_uniq", unique: true, using: :btree
+
   create_table "contests", force: :cascade do |t|
     t.string   "name"
-    t.string   "type"
     t.integer  "number_of_short_questions"
     t.integer  "number_of_long_questions"
     t.datetime "start_time"
     t.datetime "end_time"
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
     t.string   "problem_pdf_file_name"
     t.string   "problem_pdf_content_type"
     t.integer  "problem_pdf_file_size"
     t.datetime "problem_pdf_updated_at"
-    t.text     "rule"
+    t.text     "rule",                      default: "", null: false
     t.datetime "result_time"
     t.datetime "feedback_time"
   end
@@ -67,6 +68,8 @@ ActiveRecord::Schema.define(version: 20160613170017) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  add_index "provinces", ["name"], name: "idx_mv_provinces_name_uniq", unique: true, using: :btree
 
   create_table "roles", force: :cascade do |t|
     t.string   "name"
@@ -120,20 +123,21 @@ ActiveRecord::Schema.define(version: 20160613170017) do
     t.string   "hashed_password"
     t.string   "fullname"
     t.string   "school"
-    t.integer  "point"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.integer  "point",           default: 0
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
     t.string   "salt"
     t.string   "auth_token"
     t.integer  "province_id"
     t.integer  "status_id"
-    t.integer  "color"
-    t.integer  "color_id"
+    t.integer  "color_id",        default: 1
   end
 
   add_index "users", ["color_id"], name: "index_users_on_color_id", using: :btree
+  add_index "users", ["email"], name: "idx_mv_users_email_uniq", unique: true, using: :btree
   add_index "users", ["province_id"], name: "index_users_on_province_id", using: :btree
   add_index "users", ["status_id"], name: "index_users_on_status_id", using: :btree
+  add_index "users", ["username"], name: "idx_mv_users_username_uniq", unique: true, using: :btree
 
   create_table "users_roles", id: false, force: :cascade do |t|
     t.integer "user_id"
@@ -170,4 +174,24 @@ ActiveRecord::Schema.define(version: 20160613170017) do
   add_foreign_key "users", "colors"
   add_foreign_key "users", "provinces"
   add_foreign_key "users", "statuses"
+  validates("colors", "name", uniqueness: true)
+  validates("colors", "name", presence: true)
+  validates("contests", "name", presence: true)
+  validates("provinces", "name", presence: true)
+  validates("provinces", "name", uniqueness: true)
+  validates("short_problems", "answer", presence: true)
+  validates("short_submissions", "answer", presence: true)
+  validates("users", "username", presence: true)
+  validates("users", "username", uniqueness: true)
+  validates("users", "username", length: { in: 6..20 })
+  validates("users", "username", format: { with: /\A[A-Za-z0-9]+\Z/ })
+  validates("users", "email", presence: true)
+  validates("users", "email", uniqueness: true)
+  validates("users", "email", format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/ })
+  validates("users", "hashed_password", presence: true)
+  validates("users", "fullname", presence: true)
+  validates("users", "school", presence: true)
+  validates("users", "salt", presence: true)
+  validates("users", "auth_token", presence: true)
+
 end

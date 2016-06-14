@@ -1,7 +1,6 @@
 class UserContest < ActiveRecord::Base
-  belongs_to :user
-  belongs_to :contest
+	belongs_to :user
+	belongs_to :contest
 
-  validates :user, presence: true
-  validates :contest, presence: true
+	enforce_migration_validations
 end
