@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
 	resourcify
- 	rolify
+	rolify
 
 	has_many :short_submissions
 	has_many :short_problems, through: :short_submissions
@@ -19,9 +19,11 @@ class User < ActiveRecord::Base
 
 	enforce_migration_validations
 
-	before_create { generate_token(:auth_token) }
+	before_validation do
+		encrypt_password
+		generate_token(:auth_token)
+	end
 
-	before_save :encrypt_password
 	after_save :clear_password
 
 	def encrypt_password

@@ -1,12 +1,16 @@
 <%= content_tag 'div', '', id: 'rules-contest-data', data: {
-contest: @contest,
+  contest: @contest,
+  halsoal: image_tag('1hal1soal.png', alt: 'Penjelasan 1 soal di 1 halaman',
+                   class: 'img-responsive').gsub('"', "'")
 } %>
 <div class="container-fluid">
   <h1>Petunjuk Kontes</h1>
 
-  <% renderer = Redcarpet::Render::HTML.new(escape_html: true) %>
-  <% markdown = Redcarpet::Markdown.new(renderer) %>
-  <%= markdown.render(@contest.rule).html_safe %>
+  <div id="rules-text">
+    <% renderer = Redcarpet::Render::HTML.new(escape_html: true) %>
+    <% markdown = Redcarpet::Markdown.new(renderer) %>
+    <%= markdown.render(@contest.rule).html_safe %>
+  </div>
 
   <%= form_for @user_contest, url: accept_rules_contests_path do |f| %>
     <%= f.hidden_field :user_id, value: current_user.id %>
@@ -14,6 +18,6 @@ contest: @contest,
     <div class="btn-center-container">
       <%= f.button "Saya sudah membaca dan menyetujui",
         class: "btn btn-default has-shade", id: 'rules-agree-btn' %>
-    </div>
-  <% end %>
+  </div>
+<% end %>
 </div>

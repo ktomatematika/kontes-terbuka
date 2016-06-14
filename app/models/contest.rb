@@ -11,6 +11,9 @@ class Contest < ActiveRecord::Base
 	has_many :user_contests
 
 	enforce_migration_validations
+	before_create do
+		self.rule = File.open('app/assets/default_rules.txt', 'r').read
+	end
 
 	has_attached_file :problem_pdf, url: '/problems/:id/:basename.:extension',
 		path: ':rails_root/public/problems/:id/:basename.:extension'
