@@ -14,8 +14,10 @@ Keuntungannya, development environmentnya akan stabil di mesin manapun.
 Vagrant menggunakan VirtualBox untuk menjalankan virtual machinenya.
 
 Install beberapa plugin Vagrant:
-    vagrant plugin install vagrant-vbguest
-    vagrant plugin install vagrant-librarian-chef-nochef
+```bash
+vagrant plugin install vagrant-vbguest
+vagrant plugin install vagrant-librarian-chef-nochef
+```
 
 Nyalakan Vagrant: `vagrant up`  
 Ini bisa memakan waktu 20 - 30 menit, karena vagrant perlu mensetup segalanya
@@ -40,9 +42,11 @@ Setup database: `bin/rake db:setup`
 Moment of truth: `bin/rails s` dan buka localhost:3000 di browser.
 
 Rapikan sistem: (optional, ga penting, kadang bisa rusak malah)
-    apt-get autoremove
-	apt upgrade
-	apt dist-upgrade
+```bash
+apt-get autoremove
+apt upgrade
+apt dist-upgrade
+```
 
 ## Kontribusi
 Ayok difork! Lihat issuesnya tuh sebanyak pasir di pantai.
