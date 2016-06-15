@@ -13,7 +13,7 @@ sudo -u postgres psql -c "ALTER USER postgres PASSWORD 'password';"
 # Installs rvm, Ruby, Bundler and runs bundle install, which installs a lot.
 su vagrant <<'EOF'
 gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
-curl -sSL https://get.rvm.io | bash -s --quiet-curl stable
+curl -sSL https://get.rvm.io | bash -s stable
 source ~/.rvm/scripts/rvm
 rvm install 2.3.1
 rvm use 2.3.1 --default
