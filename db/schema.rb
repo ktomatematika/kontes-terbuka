@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160614073120) do
+ActiveRecord::Schema.define(version: 20160618143907) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -123,14 +123,18 @@ ActiveRecord::Schema.define(version: 20160614073120) do
     t.string   "hashed_password"
     t.string   "fullname"
     t.string   "school"
-    t.integer  "point",           default: 0
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.integer  "point",                        default: 0
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
     t.string   "salt"
     t.string   "auth_token"
     t.integer  "province_id"
     t.integer  "status_id"
-    t.integer  "color_id",        default: 1
+    t.integer  "color_id",                     default: 1
+    t.string   "profile_picture_file_name"
+    t.string   "profile_picture_content_type"
+    t.integer  "profile_picture_file_size"
+    t.datetime "profile_picture_updated_at"
   end
 
   add_index "users", ["color_id"], name: "index_users_on_color_id", using: :btree
