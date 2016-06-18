@@ -27,7 +27,6 @@ class User < ActiveRecord::Base
 	attr_accessor :password
 
 	validates :password, presence: true, confirmation: true
-	validates :
 	validates :terms_of_service, acceptance: true
 
 	enforce_migration_validations
