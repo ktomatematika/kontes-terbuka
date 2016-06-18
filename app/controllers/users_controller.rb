@@ -45,7 +45,7 @@ class UsersController < ApplicationController
 	def update
 		@user = User.find(params[:id])
 		User.transaction do
-			@user.update_attributes(user_params)
+			@user.update_attributes(user_edit_params)
 		end
 
 		flash[:success] = 'Informasi berhasil diperbarui.'
@@ -86,7 +86,13 @@ class UsersController < ApplicationController
 		params.require(:user).permit(:username, :email, :password,
 									 :password_confirmation, :fullname,
 									 :province_id, :status_id, :color_id, 
-									 :school, :terms_of_service)
+									 :school, :terms_of_service, :profile_picture)
+	end
+
+	def user_edit_params
+		params.require(:user).permit(:username, :email, 
+									:fullname, :province_id, :status_id, :color_id, 
+									:school, :terms_of_service, :profile_picture)
 	end  
 
 	def province_name
