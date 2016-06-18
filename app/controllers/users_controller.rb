@@ -43,9 +43,10 @@ class UsersController < ApplicationController
 	end
 
 	def update
-		@user = User.find(params[:id])
 		User.transaction do
-			@user.update_attributes(user_edit_params)
+			@user = User.find(params[:id])
+			@user.update(user_edit_params)
+			@user.save!
 		end
 
 		flash[:success] = 'Informasi berhasil diperbarui.'
@@ -54,6 +55,7 @@ class UsersController < ApplicationController
 	rescue ActiveRecord::ActiveRecordError
 		respond_to do |format|
 			format.html do
+				puts @user.errors.full_messages
 				render 'edit'
 			end
 		end
@@ -90,7 +92,7 @@ class UsersController < ApplicationController
 	end
 
 	def user_edit_params
-		params.require(:user).permit(:username, :email, 
+		params.require(:user).permit(:username, :email,
 									:fullname, :province_id, :status_id, :color_id, 
 									:school, :terms_of_service, :profile_picture)
 	end  

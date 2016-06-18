@@ -1,8 +1,8 @@
 <div class="container-fluid">
-  <h1>abcdabcdabcdabcdabcd</h1>
+  <h1><%= current_user.username %></h1>
   <div class="row">
     <div class="col-sm-4" id="profile">
-      <%= image_tag("emblem.png", :alt => "Profil #{@user.username}", :height => "200px") %>
+      <%= image_tag("/profile_pictures/#{@user.id}/#{@user.profile_picture.instance.profile_picture_file_name}", :alt => "Profil #{@user.username}", :height => "200px") %>
       <p>Nama lengkap: <%= @user.fullname %></p>
       <p>Email: <%= @user.email %></p>
       <p>Provinsi: <%= @user.province.name %> </p>
