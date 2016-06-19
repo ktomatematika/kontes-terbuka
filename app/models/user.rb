@@ -15,11 +15,23 @@ class User < ActiveRecord::Base
 	belongs_to :status
 	belongs_to :color
 
+	has_attached_file :profile_picture,
+										url: '/profile_pictures/:id/:basename.:extension',
+                    path: ':rails_root/public/profile_pictures/:id/:basename.:extension'
+	validates_attachment_content_type :profile_picture, content_type: /image/
+
+ Paperclip.interpolates :id do |attachment, _style|
+   attachment.instance.id
+ end
+
 	attr_accessor :password
+
+	validates :password, presence: true, confirmation: true, on: :create
+	validates :terms_of_service, acceptance: true
 
 	enforce_migration_validations
 
-	before_validation do
+	before_validation(on: :create) do
 		encrypt_password
 		generate_token(:auth_token)
 	end

@@ -7,13 +7,9 @@ class LongSubmission < ActiveRecord::Base
                    path: ':rails_root/public/submissions/Kontes:contest_id/No:problem_no/Peserta:user_id/Kontes:contest_id_No:problem_no_Peserta:user_id_Hal:page.:extension'
 	validates_attachment_content_type :submission, content_type: ['application/pdf']
 
-	def contest_id
-		long_problem.contest_id
-	end
+	delegate :contest_id, to: :long_problem
 
-	def problem_no
-		long_problem.problem_no
-	end
+	delegate :problem_no, to: :long_problem
 
 	Paperclip.interpolates :contest_id do |attachment, _style|
     attachment.instance.long_problem.contest_id

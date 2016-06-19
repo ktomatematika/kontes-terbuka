@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-	skip_before_filter :require_login, only: [:new, :create, :check_unique]
+	skip_before_action :require_login, only: [:new, :create, :check_unique]
 	http_basic_authenticate_with name: 'admin', password: 'admin', only: [:index, :destroy]
 
 	def new
@@ -43,9 +43,10 @@ class UsersController < ApplicationController
 	end
 
 	def update
-		@user = User.find(params[:id])
 		User.transaction do
-			@user.update_attributes(user_params)
+			@user = User.find(params[:id])
+			@user.update(user_edit_params)
+			@user.save!
 		end
 
 		flash[:success] = 'Informasi berhasil diperbarui.'
@@ -54,6 +55,7 @@ class UsersController < ApplicationController
 	rescue ActiveRecord::ActiveRecordError
 		respond_to do |format|
 			format.html do
+				puts @user.errors.full_messages
 				render 'edit'
 			end
 		end
@@ -81,9 +83,15 @@ class UsersController < ApplicationController
 
 	def user_params
 		params.require(:user).permit(:username, :email, :password,
-									                      :password_confirmation, :fullname,
-									                      :province_id, :status_id, :color_id,
-									                      :school, :terms_of_service)
+									 :password_confirmation, :fullname,
+									 :province_id, :status_id, :color_id,
+									 :school, :terms_of_service, :profile_picture)
+	end
+
+	def user_edit_params
+		params.require(:user).permit(:username, :email,
+									:fullname, :province_id, :status_id, :color_id,
+									:school, :terms_of_service, :profile_picture)
 	end
 
 	def province_name

@@ -6,6 +6,16 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
+AllCops:
+  Include:
+    - '**/Rakefile'
+    - '**/config.ru'
+  Exclude:
+    - 'db/**/*'
+    - 'config/**/*'
+    - 'script/**/*'
+    - !ruby/regexp /old_and_unused\.rb$/
+
 Style/Documentation:
   Enabled: false
 
@@ -20,3 +30,6 @@ Style/AlignHash:
 
 Style/AlignParameters:
   Enabled: false
+
+Rails:
+  Enabled: true
