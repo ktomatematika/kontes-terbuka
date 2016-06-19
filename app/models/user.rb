@@ -1,14 +1,15 @@
 class User < ActiveRecord::Base
 	resourcify
 	rolify
+	has_paper_trail
 
 	has_many :short_submissions
 	has_many :short_problems, through: :short_submissions
 	has_many :contests, through: :user_contests
 
 	has_many :long_submissions
-	has_many :short_problems, through: :long_submissions
-	has_many :contests, through: :user_contests
+	has_many :long_problems, through: :long_submissions
+
 	has_many :user_contests
 
 	belongs_to :province

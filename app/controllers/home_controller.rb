@@ -28,10 +28,6 @@ class HomeController < ApplicationController
 		end
 	end
 
-	def sitemap
-		@current_user = current_user
-	end
-
 	def privacy
 		@current_user = current_user
 	end

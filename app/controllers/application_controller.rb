@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
 	# Prevent CSRF attacks by raising an exception.
 	# For APIs, you may want to use :null_session instead.
 	include CanCan::ControllerAdditions
+	before_filter :set_paper_trail_whodunnit
 	before_action :require_login
 
 	protect_from_forgery with: :exception

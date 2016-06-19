@@ -3,23 +3,15 @@ $(document).ready(function() {
 		var panitia = data_panitia[i];
 
 		var title_string = '<h3>' + panitia.name + '</h3>';
-
-		var list_string = '<ul>';
-		for (var j = 0; j < panitia.list.length; j++) {
-			list_string += '<li>';
-			list_string += panitia.list[j];
-			list_string += '</li>';
-		}
-		list_string += '</ul>';
-
-		var image_string = 'asdf';
+		var text_string = '<p>' + panitia.text + '</p>';
+		var image_string = $('#about-us-pics').data(panitia.photo);
 
 		$('#daftar-panitia').append(
 				'<div class="row">'
 				+ '<div class="col-sm-8">'
-				+ title_string + list_string + '</div>'
+				+ title_string + text_string + '</div>'
 				+ '<div class="col-sm-4">'
-				+ $('#about-us-pics').data(panitia.photo)
+				+ image_string
 				+ '</div></div>');
 	}
 });
