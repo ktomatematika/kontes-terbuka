@@ -27,7 +27,7 @@ dari awal, termasuk database, Ruby, dan Rails. Bersabarlah. :3
 Setelah itu, masuk ke Vagrant: `vagrant ssh`
 
 Buang peer authentication untuk Postgres:
-- Edit file pg_hba.conf: `sudo vi /etc/postgres/9.5/main/pg_hba.conf`
+- Edit file pg_hba.conf: `sudo vi /etc/postgresql/9.5/main/pg_hba.conf`
   - 9.5 di sini bisa berubah, tergantung versi postgres. Disesuaikan saja.
   - vi bisa diganti dengan text editor favorit Anda. Penggunaan vi sederhana:
   gunakan arrow keys untuk bergerak, i untuk insert, Esc untuk keluar dari
@@ -36,7 +36,7 @@ Buang peer authentication untuk Postgres:
   `local all postgres md5`.
 - `sudo service postgresql restart`
 
-Masuk ke tempat development: `cd \vagrant`
+Masuk ke tempat development: `cd /vagrant`
 
 Setup database: `bin/rake db:setup`
 

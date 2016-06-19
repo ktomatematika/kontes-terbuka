@@ -22,3 +22,5 @@ cd /vagrant
 bundle install
 rvm rvmrc warning ignore allGemfiles
 EOF
+
+cp /vagrant/config/database.yml.default /vagrant/config/database.yml

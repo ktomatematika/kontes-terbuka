@@ -4,7 +4,7 @@
 # You can define all roles on a single server, or split them:
 
 set :stage, :production
-server '188.166.177.64', user: 'ktom', roles: %w{app db web}
+server '188.166.177.64', user: 'ktom', roles: %w(app db web)
 set :nginx_server_name, 'ktom.tomi.or.id'
 set :nginx_use_ssl, true
 set :nginx_ssl_cert_local_path, '/home/donjar/archive/ktom.tomi.or.id/cert1.pem'
@@ -22,8 +22,6 @@ set :nginx_ssl_cert_key_local_path, '/home/donjar/archive/ktom.tomi.or.id/privke
 # role :web, %w{user1@primary.com user2@additional.com}, other_property: :other_value
 # role :db,  %w{deploy@example.com}
 
-
-
 # Configuration
 # =============
 # You can set any configuration variable like in config/deploy.rb
@@ -31,8 +29,6 @@ set :nginx_ssl_cert_key_local_path, '/home/donjar/archive/ktom.tomi.or.id/privke
 # For available Capistrano configuration variables see the documentation page.
 # http://capistranorb.com/documentation/getting-started/configuration/
 # Feel free to add new variables to customise your setup.
-
-
 
 # Custom SSH Options
 # ==================

@@ -40,7 +40,7 @@ Rails.application.configure do
   # config.action_view.raise_on_missing_translations = true
 
   # Paperclip
-  Paperclip.options[:command_path] = "/usr/local/bin/"
+  Paperclip.options[:command_path] = '/usr/local/bin/'
 
   config.action_mailer.delivery_method = :smtp
 
@@ -52,6 +52,6 @@ Rails.application.configure do
     password: 'churley7744han',
     authentication: 'plain',
     enable_starttls_auto: true,
-	domain: 'tomi.or.id',
+	   domain: 'tomi.or.id'
   }
 end

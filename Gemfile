@@ -27,7 +27,7 @@ gem 'bootstrap-sass'
 # Add katex, the LaTeX preprocessor by Khan Academy.
 gem 'katex-rails'
 # Javascript interpreter as a dependency for LESS, which is needed for katex
-gem 'therubyracer', :platforms => :ruby
+gem 'therubyracer', platforms: :ruby
 # Adds attachments, in the form of long submissions
 gem 'paperclip'
 # Adds nested forms
@@ -77,7 +77,7 @@ gem 'recaptcha', require: 'recaptcha/rails'
 # Adds various security stuff. You need protection!
 gem 'rack-protection'
 # Adds hashes for passwords.
-gem 'bcrypt', :require => 'bcrypt' 
+gem 'bcrypt', require: 'bcrypt'
 
 ### END SECURITY
 

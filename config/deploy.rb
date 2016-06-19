@@ -22,12 +22,12 @@ set :deploy_to, '/home/ktom/kontes-terbuka'
 
 # Default value for :linked_files is []
 set :linked_files, fetch(:linked_files, []).push('config/database.yml',
-												 'config/secrets.yml')
+												                                     'config/secrets.yml')
 
 # Default value for linked_dirs is []
 set :linked_dirs, fetch(:linked_dirs, []).push('bin', 'log', 'tmp/pids',
-											   'tmp/cache', 'tmp/sockets',
-											   'vendor/bundle', 'public/system')
+											                                    'tmp/cache', 'tmp/sockets',
+											                                    'vendor/bundle', 'public/system')
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
@@ -35,15 +35,15 @@ set :linked_dirs, fetch(:linked_dirs, []).push('bin', 'log', 'tmp/pids',
 # Default value for keep_releases is 5
 # set :keep_releases, 5
 
-set :ssh_options, { :forward_agent => true, :port => 1729 }
-set :rails_env, "production"
+set :ssh_options, forward_agent: true, port: 1729
+set :rails_env, 'production'
 
 namespace :deploy do
 	desc 'Restart application'
 	task :restart do
 		on roles(:app) do
 			upload! StringIO.new(File.read('config/deploy/restart.sh')),
-				"#{deploy_to}/restart.sh"
+				       "#{deploy_to}/restart.sh"
 			execute :chmod, "u+x #{deploy_to}/restart.sh"
 			execute "sudo #{deploy_to}/restart.sh"
 		end

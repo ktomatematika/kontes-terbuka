@@ -20,9 +20,9 @@ class User < ActiveRecord::Base
                     path: ':rails_root/public/profile_pictures/:id/:basename.:extension'
 	validates_attachment_content_type :profile_picture, content_type: /image/
 
-  Paperclip.interpolates :id do |attachment, style|
-    attachment.instance.id
-  end
+ Paperclip.interpolates :id do |attachment, _style|
+   attachment.instance.id
+ end
 
   validates :timezone, presence: true, inclusion: { in: %w(WIB WITA WIT),
     message: "Zona waktu %{value} tidak tersedia" }
@@ -53,8 +53,6 @@ class User < ActiveRecord::Base
 		user = User.where(username: username).first
 		if user && user.hashed_password == BCrypt::Engine.hash_secret(password, user.salt)
 			user
-		else
-			nil
 		end
 	end
 
