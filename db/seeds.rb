@@ -2,16 +2,19 @@
 	Role.where({ name: role }, without_protection: true).first_or_create
 end
 
-["D.I. Aceh", "Sumatera Utara", "Sumatera Barat", "Riau", "Kepulauan Riau", 
- "Jambi", "Bengkulu", "Bangka Belitung", "Sumatera Selatan", "Lampung", 
- "Banten", "D.K.I. Jakarta", "Jawa Barat", "Jawa Tengah", "Jawa Timur", 
- "D.I. Yogyakarta", "Bali", "Nusa Tenggara Barat", "Nusa Tenggara Timur", 
- "Kalimantan Barat", "Kalimantan Tengah", "Kalimantan Utara",
- "Kalimantan Timur", "Kalimantan Selatan", "Sulawesi Barat",
- "Sulawesi Selatan", "Gorontalo", "Sulawesi Tengah", "Sulawesi Utara",
- "Sulawesi Tenggara", "Maluku Utara", "Maluku", "Papua Barat",
- "Papua", "Lainnya"].each do |province|
-	 Province.find_or_create_by(name: province)
+[["WIB", ["D.I. Aceh", "Sumatera Utara", "Sumatera Barat", "Riau", "Kepulauan Riau", 
+	"Jambi", "Bengkulu", "Bangka Belitung", "Sumatera Selatan", "Lampung", 
+	"Banten", "D.K.I. Jakarta", "Jawa Barat", "Jawa Tengah", "Jawa Timur", 
+	"D.I. Yogyakarta", "Kalimantan Barat", "Kalimantan Tengah"]], 
+	["WITA", ["Kalimantan Utara", "Kalimantan Timur", "Kalimantan Selatan", 
+		"Bali", "Nusa Tenggara Barat", "Nusa Tenggara Timur", "Sulawesi Barat",
+	"Sulawesi Selatan", "Gorontalo", "Sulawesi Tengah", "Sulawesi Utara",
+	"Sulawesi Tenggara"]], 
+	["WIT", ["Maluku Utara", "Maluku", "Papua Barat", "Papua"]], 
+	["WIB", ["Lainnya"]]].each do |timezone, provinces|
+ 		provinces.each do |province|
+	 		Province.find_or_create_by(name: province, timezone: timezone)
+	 	end
  end
 
  ["Kelas 6", "Kelas 7", "Kelas 8", "Kelas 9", "Kelas 10", "Kelas 11", "Kelas 12",
