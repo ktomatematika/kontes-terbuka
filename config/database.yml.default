@@ -23,4 +23,4 @@ production:
   <<: *default
   database: kontes_terbuka_production
   username: ktom
-  password: ?
+  password: asdfasdfasdf

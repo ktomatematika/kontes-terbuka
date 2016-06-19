@@ -5,8 +5,8 @@ class CreateVersions < ActiveRecord::Migration
   # - `MysqlAdapter` - Used by gems: `mysql`, `activerecord-jdbcmysql-adapter`.
   # - `Mysql2Adapter` - Used by `mysql2` gem.
   MYSQL_ADAPTERS = [
-    "ActiveRecord::ConnectionAdapters::MysqlAdapter",
-    "ActiveRecord::ConnectionAdapters::Mysql2Adapter"
+    'ActiveRecord::ConnectionAdapters::MysqlAdapter',
+    'ActiveRecord::ConnectionAdapters::Mysql2Adapter'
   ].freeze
 
   # The largest text column available in all supported RDBMS is
@@ -60,7 +60,7 @@ class CreateVersions < ActiveRecord::Migration
   #
   def versions_table_options
     if MYSQL_ADAPTERS.include?(connection.class.name)
-      { options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci" }
+      { options: 'ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci' }
     else
       {}
     end

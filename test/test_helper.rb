@@ -10,8 +10,6 @@ class ActiveSupport::TestCase
 
 	# Add more helper methods to be used by all tests here...
 	setup do
-		User.all do |u|
-			u.destroy
-		end
+		User.all(&:destroy)
 	end
 end

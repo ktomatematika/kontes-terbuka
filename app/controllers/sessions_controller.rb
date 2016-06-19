@@ -5,10 +5,10 @@ class SessionsController < ApplicationController
 		if current_user
 			redirect_to root_path
 		else
-			redirect_to sign_path(:anchor => 'login')
+			redirect_to sign_path(anchor: 'login')
 		end
 	end
-	
+
 	def create
 		@user = User.authenticate(params[:username], params[:password])
 		if @user
@@ -20,7 +20,7 @@ class SessionsController < ApplicationController
 			end
 			redirect_to root_path
 		else
-			flash[:alert] = "There was a problem logging you in."
+			flash[:alert] = 'There was a problem logging you in.'
 			redirect_to login_path
 		end
 	end

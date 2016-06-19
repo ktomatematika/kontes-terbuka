@@ -9,8 +9,8 @@ module Rails
 	class Server
 		if Rails.env == 'development'
 			new_defaults = Module.new do
-				def default_options        
-					super.merge( Host: '0.0.0.0' )
+				def default_options
+					super.merge(Host: '0.0.0.0')
 				end
 			end
 		end

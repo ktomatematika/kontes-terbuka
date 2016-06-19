@@ -1,13 +1,13 @@
 class UsersController < ApplicationController
-	skip_before_filter :require_login, :only => [:new, :create, :check_unique]
-	http_basic_authenticate_with name: "admin", password: "admin", only: [:index, :destroy]
+	skip_before_filter :require_login, only: [:new, :create, :check_unique]
+	http_basic_authenticate_with name: 'admin', password: 'admin', only: [:index, :destroy]
 
 	def new
 		if current_user
 			redirect_to root_path
 		else
 			@user = User.new
-			redirect_to sign_path(:anchor => 'register')
+			redirect_to sign_path(anchor: 'register')
 		end
 	end
 
@@ -67,27 +67,24 @@ class UsersController < ApplicationController
 
 	def check_unique
 		users = User.all
-		unless params[:username].nil?
-			users = users.where(username: params[:username])
-		end
-		unless params[:email].nil?
-			users = users.where(email: params[:email])
-		end
+		users = users.where(username: params[:username]) unless params[:username].nil?
+		users = users.where(email: params[:email]) unless params[:email].nil?
 
 		if users.present?
-			render :json => false
+			render json: false
 		else
-			render :json => true
+			render json: true
 		end
 	end
 
-	private
+	 private
+
 	def user_params
 		params.require(:user).permit(:username, :email, :password,
-									 :password_confirmation, :fullname,
-									 :province_id, :status_id, :color_id, 
-									 :school, :terms_of_service)
-	end  
+									                      :password_confirmation, :fullname,
+									                      :province_id, :status_id, :color_id,
+									                      :school, :terms_of_service)
+	end
 
 	def province_name
 		@province_name = Province.find(@user.provinces_id).name

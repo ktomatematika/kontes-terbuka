@@ -35,8 +35,6 @@ class User < ActiveRecord::Base
 		user = User.where(username: username).first
 		if user && user.hashed_password == BCrypt::Engine.hash_secret(password, user.salt)
 			user
-		else
-			nil
 		end
 	end
 

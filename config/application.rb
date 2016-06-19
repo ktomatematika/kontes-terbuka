@@ -25,5 +25,7 @@ module KontesTerbuka
 		config.active_record.raise_in_transactional_callbacks = true
 
 		config.middleware.use Rack::Protection
+
+		config.web_console.whitelisted_ips = '10.0.2.2'
 	end
 end

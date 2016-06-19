@@ -1,5 +1,5 @@
 class ContestsController < ApplicationController
-	http_basic_authenticate_with name: "admin", password: "admin", only: [:new, :edit, :destroy, :admin]
+	http_basic_authenticate_with name: 'admin', password: 'admin', only: [:new, :edit, :destroy, :admin]
 
 	def admin
 		@contest = Contest.find(params[:id])
@@ -26,12 +26,12 @@ class ContestsController < ApplicationController
 	def show
 		@contest = Contest.find(params[:id])
 		now = DateTime.now
-		if UserContest.where(user: current_user, contest: @contest).empty? and
-			@contest.start_time <= now and now <= @contest.end_time
+		if UserContest.where(user: current_user, contest: @contest).empty? &&
+			  @contest.start_time <= now && now <= @contest.end_time
 			redirect_to show_rules_contest_path(params[:id])
 		end
-		@short_problems = @contest.short_problems.order("problem_no").all
-		@long_problems = @contest.long_problems.order("problem_no").all		
+		@short_problems = @contest.short_problems.order('problem_no').all
+		@long_problems = @contest.long_problems.order('problem_no').all
 	end
 
 	def index
@@ -87,15 +87,16 @@ class ContestsController < ApplicationController
 		end
 	end
 
-	private
-		def contest_params
+	 private
+
+	def contest_params
 			params.require(:contest).permit(:name, :number_of_short_questions,
-											:number_of_long_questions, :start_time,
-											:end_time, :result_time,
-											:feedback_time, :problem_pdf)
+											                        :number_of_long_questions, :start_time,
+											                        :end_time, :result_time,
+											                        :feedback_time, :problem_pdf)
 		end
 
-		def participate_params
+	def participate_params
 			params.require(:user_contest).permit(:user_id, :contest_id)
 		end
 end

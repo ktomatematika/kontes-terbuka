@@ -1,7 +1,7 @@
 class RolesController < ApplicationController
 	def new
 	end
-		
+
 	def create
 		@role = Role.new(role_params)
 		@role.save
@@ -17,10 +17,10 @@ class RolesController < ApplicationController
 		@role.destroy
 		redirect_to roles_path
 	end
-	
-	private
-		def role_params
+
+	 private
+
+	def role_params
 			params.require(:role).permit(:name)
 		end
-
 end

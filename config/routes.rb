@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-
 	mount RailsAdmin::Engine => '/penguasa', as: 'rails_admin'
 
 	authenticated :user do
@@ -34,7 +33,7 @@ Rails.application.routes.draw do
 	resources :short_submissions
 	resources :long_submissions
 	resources :user_contests
-	root "welcome#index"
+	root 'welcome#index'
 
 	get '/sign' => 'welcome#sign'
 	get '/register' => 'users#new'
