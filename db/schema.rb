@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160618143907) do
+ActiveRecord::Schema.define(version: 20160619083243) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -67,6 +67,7 @@ ActiveRecord::Schema.define(version: 20160618143907) do
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "timezone"
   end
 
   add_index "provinces", ["name"], name: "idx_mv_provinces_name_uniq", unique: true, using: :btree
@@ -135,6 +136,7 @@ ActiveRecord::Schema.define(version: 20160618143907) do
     t.string   "profile_picture_content_type"
     t.integer  "profile_picture_file_size"
     t.datetime "profile_picture_updated_at"
+    t.text     "timezone"
   end
 
   add_index "users", ["color_id"], name: "index_users_on_color_id", using: :btree
