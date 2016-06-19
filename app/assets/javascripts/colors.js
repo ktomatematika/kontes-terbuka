@@ -3,7 +3,7 @@
 //You can use CoffeeScript in this file: http://coffeescript.org/
 
 function choose_color() {
-	var color = $('#warna').data('data').name;
+	var color = $('#essential-data').data('color').name;
 	var possible = ["red", "green", "blue", "yellow"];
 
 	// Default value

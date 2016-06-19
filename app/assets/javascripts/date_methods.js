@@ -23,6 +23,28 @@ Date.prototype.compare_day = function(other) {
  * Example: "Senin, 13 Februari 2016 jam 08:00 WIB"
  */
 Date.prototype.format_indo = function() {
+	
+	// Get timezone data from the essential-data content tag in
+	// application.html.erb.
+	var timezone = $('#essential-data').data('timezone')
+	var parsed_timezone = this.getTimezoneOffset() / -60;
+
+	// Diff is the difference from the user's timezone vs the parsed_timezone.
+	// We need to correct for difference.
+	var diff;
+	if (timezone === "WIB") {
+		diff = 7 - parsed_timezone;
+	} else if (timezone === "WITA") {
+		diff = 8 - parsed_timezone;
+	} else if (timezone === "WIT") {
+		diff = 9 - parsed_timezone;
+	} else {
+		timezone = 'GMT+' + parsed_timezone;
+		diff = 0;
+	}
+
+	this.setHours(this.getHours() + diff);
+
 	var day = long_days[this.getDay()];
 	var date = this.getDate();
 	var month = months[this.getMonth()];
@@ -31,10 +53,9 @@ Date.prototype.format_indo = function() {
 	if (hour < 10) { hour = '0' + hour; }
 	var minute = this.getMinutes();
 	if (minute < 10) { minute = '0' + minute; }
-	var timezone = this.getTimezoneOffset() / -60;
 
 	return day + ", " + date + " " + month + " " + year + " jam " + hour + 
-		":" + minute + " GMT+" + timezone;
+		":" + minute + " " + timezone;
 }
 
 /* indo_go_to: format (this - other) into Indo date.
