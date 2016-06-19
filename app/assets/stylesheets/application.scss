@@ -58,6 +58,16 @@ h5, .h5 {
   }
 }
 
+[nav-logo-only] {
+  #top-navbar, button {
+    display: none !important;
+  }
+
+  nav > .container-fluid {
+    height: 70px;
+  }
+}
+
 [no-footer] > .app-footer {
   display: none;
 }

@@ -1,5 +1,6 @@
 class Contest < ActiveRecord::Base
 	resourcify
+	has_paper_trail
 
 	has_many :short_problems
 	has_many :short_submissions, through: :short_problems

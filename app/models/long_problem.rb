@@ -1,4 +1,5 @@
 class LongProblem < ActiveRecord::Base
+	has_paper_trail
 	belongs_to :contest
 	has_many :long_submissions, -> { order(page: :asc) }
 	has_many :users, through: :long_submissions

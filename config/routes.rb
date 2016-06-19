@@ -50,7 +50,6 @@ Rails.application.routes.draw do
 	get '/book' => 'home#book'
 	get '/donate' => 'home#donate'
 	get '/about' => 'home#about'
-	get '/sitemap' => 'home#sitemap'
 	get '/privacy' => 'home#privacy'
 	get '/terms' => 'home#terms'
 	get '/contact' => 'home#contact'
