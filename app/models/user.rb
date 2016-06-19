@@ -24,6 +24,8 @@ class User < ActiveRecord::Base
     attachment.instance.id
   end
 
+  validates :timezone, presence: true, inclusion: { in: %w(WIB WITA WIT),
+    message: "Zona waktu %{value} tidak tersedia" }
 	attr_accessor :password
 
 	validates :password, presence: true, confirmation: true, on: :create
@@ -37,6 +39,10 @@ class User < ActiveRecord::Base
 	end
 
 	after_save :clear_password
+
+	def self.time_zone_set
+		['WIB', 'WITA', 'WIT']
+	end
 
 	def encrypt_password
 		self.salt = BCrypt::Engine.generate_salt

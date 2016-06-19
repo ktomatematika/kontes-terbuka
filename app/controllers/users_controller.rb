@@ -15,6 +15,7 @@ class UsersController < ApplicationController
 		User.transaction do
 			@user = User.new(user_params)
 			@user.add_role :student
+			@user.timezone = Province.find(user_params[:province_id]).timezone
 			if verify_recaptcha(model: @user) && @user.save
 				cookies[:auth_token] = @user.auth_token
 				redirect_to root_path
@@ -92,7 +93,7 @@ class UsersController < ApplicationController
 	end
 
 	def user_edit_params
-		params.require(:user).permit(:username, :email,
+		params.require(:user).permit(:username, :email, :timezone, 
 									:fullname, :province_id, :status_id, :color_id, 
 									:school, :terms_of_service, :profile_picture)
 	end  

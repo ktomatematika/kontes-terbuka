@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
 	# Prevent CSRF attacks by raising an exception.
 	# For APIs, you may want to use :null_session instead.
 	include CanCan::ControllerAdditions
-	before_filter :require_login
+	before_filter :require_login, :set_timezone
 
 	protect_from_forgery with: :exception
 	def current_user
@@ -26,4 +26,26 @@ class ApplicationController < ActionController::Base
 
 	def contact
 	end
+
+	WIB = TZInfo::Timezone.get('Asia/Jakarta')
+	WITA = TZInfo::Timezone.get('Asia/Makassar')
+	WIT = TZInfo::Timezone.get('Asia/Jayapura')
+
+	def set_timezone 
+		if current_user.timezone = "WIB"
+			Time.zone = WIB
+		else
+			if current_user.timezone = "WITA"
+				Time.zone = WITA
+			else
+				if current_user.timezone = "WIT"
+					Time.zone = WIT
+				else
+					Time.zone = 'Singapore'
+				end
+			end
+		end
+		puts Time.zone
+		puts Time.zone.now
+	end  
 end
