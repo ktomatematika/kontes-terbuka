@@ -14,4 +14,4 @@ var data_panitia = [{
 	name: 'Ricky The Ising',
 	text: 'Ricky merupakan salah satu anggota tim soal KTO Matematika. Selain menekuni passionnya di matematika yang membuatnya bisa meraih medali emas di OSN 2015, Ricky juga suka bermain Dota 2 hingga MMRnya bisa mencapai 7000. Dia sekarang menjadi mahasiswa baru jurusan matematika di UGM. Dia dari Sulawesi Selatan, keren kan',
 	photo: 'ricky.jpg'
-}]
+}];

@@ -29,7 +29,7 @@ function update_regularly() {
 				$('#home-btn-daftar').removeAttr('disabled', false);
 				$('#home-btn-daftar').prop('href',
 						$('#home-contest-data').data('url'));
-				var text = "Kontes sudah dimulai!";
+				var text = 'Kontes sudah dimulai!';
 			}
 		}
 
@@ -51,9 +51,9 @@ function update_regularly() {
 
 		if (current < start_time) {
 			// Contest has not started
-			subtitle = "Kontes dimulai " + start_time.format_indo() +
-				". Mohon bersabar!";
-			time_remaining = "(" + current.indo_go_to(start_time) + ")";
+			subtitle = 'Kontes dimulai ' + start_time.format_indo() +
+				'. Mohon bersabar!';
+			time_remaining = '(' + current.indo_go_to(start_time) + ')';
 
 			// Has the state changed?
 			if (position !== 0) {
@@ -61,23 +61,23 @@ function update_regularly() {
 			}
 		} else if (current <= end_time) {
 			// Contest has not ended
-			$(".row > section").addClass("col-sm-8");
+			$('.row > section').addClass('col-sm-8');
 
 			var isian = $('.isian > label');
 			for (var i = 0; i < isian.length; i++) {
 				var prob = isian.get(i);
 				renderMathInElement(prob, {
 					delimiters: [
-					{ left: "$", right: "$", display: false },
-					{ left: "$$", right: "$$", display: true },
-					{ left: "\\[", right: "\\]", display: true },
-					{ left: "\\(", right: "\\)", display: false }
+					{ left: '$', right: '$', display: false },
+					{ left: '$$', right: '$$', display: true },
+					{ left: '\\[', right: '\\]', display: true },
+					{ left: '\\(', right: '\\)', display: false }
 					]
 				});
 			}
 
-			subtitle = "Batas pengumpulan: " + end_time.format_indo();
-			time_remaining = "(" + current.indo_go_to(end_time) + ")";
+			subtitle = 'Batas pengumpulan: ' + end_time.format_indo();
+			time_remaining = '(' + current.indo_go_to(end_time) + ')';
 
 			// Has the state changed?
 			if (position !== 1) {
@@ -87,9 +87,9 @@ function update_regularly() {
 			// Results has not been released
 			$('.row > section').removeClass('col-sm-8');
 
-			subtitle = "Kontes sudah selesai. Hasil kontes akan keluar " +
-				"paling lambat " + results.format_indo() + ". Mohon bersabar!";
-			time_remaining = "(" + current.indo_go_to(results) + ")";
+			subtitle = 'Kontes sudah selesai. Hasil kontes akan keluar ' +
+				'paling lambat ' + results.format_indo() + '. Mohon bersabar!';
+			time_remaining = '(' + current.indo_go_to(results) + ')';
 
 			// Has the state changed?
 			if (position !== 2) {
@@ -98,10 +98,10 @@ function update_regularly() {
 		} else {
 			// Results should be released manually.
 
-			subtitle = "Dikarenakan berbagai halangan, hasil kontes belum " +
-				"keluar. Mohon maaf atas ketidaknyamannya dan mohon " +
-				"bersabar :(";
-			time_remaining = "";
+			subtitle = 'Dikarenakan berbagai halangan, hasil kontes belum ' +
+				'keluar. Mohon maaf atas ketidaknyamannya dan mohon ' +
+				'bersabar :(';
+			time_remaining = '';
 		}
 
 		$('#subtitle').text(subtitle);

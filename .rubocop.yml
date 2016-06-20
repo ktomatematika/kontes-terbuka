@@ -11,8 +11,7 @@ AllCops:
     - '**/Rakefile'
     - '**/config.ru'
   Exclude:
-    - 'db/**/*'
-    - 'config/**/*'
+    - 'db/schema.rb'
     - 'script/**/*'
     - !ruby/regexp /old_and_unused\.rb$/
     - 'log/**/*'
@@ -20,21 +19,6 @@ AllCops:
     - '**/Gemfile'
 
 Style/Documentation:
-  Enabled: false
-
-Style/IndentationWidth:
-  Width: 1
-
-Style/Tab:
-  Enabled: false
-
-Style/AlignHash:
-  Enabled: false
-
-Style/AlignArray:
-  Enabled: false
-
-Style/AlignParameters:
   Enabled: false
 
 Rails:

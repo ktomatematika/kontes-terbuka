@@ -52,6 +52,6 @@ Rails.application.configure do
     password: 'churley7744han',
     authentication: 'plain',
     enable_starttls_auto: true,
-	   domain: 'tomi.or.id'
+    domain: 'tomi.or.id'
   }
 end
