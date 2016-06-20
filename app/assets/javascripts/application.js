@@ -23,9 +23,9 @@
 //= require turbolinks
 //= require jquery_nested_form
 
-$(document).ready(function() {
+$(document).ready(function () {
 	$('body').flowtype({
 		minFont: 12,
-		maxFont: 20
+		maxFont: 20,
 	});
 });

@@ -1,7 +1,8 @@
-this.GoogleAnalytics = (function() {
+/* eslint-disable */
+this.GoogleAnalytics = (function () {
 	function GoogleAnalytics() {}
 
-	GoogleAnalytics.load = function() {
+	GoogleAnalytics.load = function () {
 		var firstScript, ga;
 		window._gaq = [];
 		window._gaq.push(['_setAccount', GoogleAnalytics.analyticsId()]);
@@ -12,7 +13,7 @@ this.GoogleAnalytics = (function() {
 		firstScript = document.getElementsByTagName('script')[0];
 		firstScript.parentNode.insertBefore(ga, firstScript);
 		if (typeof Turbolinks !== 'undefined' && Turbolinks.supported) {
-			return document.addEventListener('page:change', (function() {
+			return document.addEventListener('page:change', (function () {
 				return GoogleAnalytics.trackPageview();
 			}), true);
 		} else {
@@ -20,7 +21,7 @@ this.GoogleAnalytics = (function() {
 		}
 	};
 
-	GoogleAnalytics.trackPageview = function(url) {
+	GoogleAnalytics.trackPageview = function (url) {
 		if (!GoogleAnalytics.isLocalRequest()) {
 			if (url) {
 				window._gaq.push(['_trackPageview', url]);
@@ -31,20 +32,19 @@ this.GoogleAnalytics = (function() {
 		}
 	};
 
-	GoogleAnalytics.isLocalRequest = function() {
+	GoogleAnalytics.isLocalRequest = function () {
 		return GoogleAnalytics.documentDomainIncludes('local');
 	};
 
-	GoogleAnalytics.documentDomainIncludes = function(str) {
+	GoogleAnalytics.documentDomainIncludes = function (str) {
 		return document.domain.indexOf(str) !== -1;
 	};
 
-	GoogleAnalytics.analyticsId = function() {
+	GoogleAnalytics.analyticsId = function () {
 		return 'UA-78763689-1';
 	};
 
 	return GoogleAnalytics;
-
 })();
 
 GoogleAnalytics.load();

@@ -1,4 +1,10 @@
+/* exported now short_days */
 var now = new Date();
+var months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli',
+	'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+var short_days = ['M', 'S', 'S', 'R', 'K', 'J', 'S'];
+var long_days = ['Minggu', 'Senin', 'Selasa', 'Rabu',
+	'Kamis', 'Jumat', 'Sabtu'];
 
 /* compare_day: compares a day to another.
  * Returns positive if current date is after compared date,
@@ -10,7 +16,7 @@ var now = new Date();
  * a.compare_day(b) returns an integer < 0.
  */
 
-Date.prototype.compare_day = function(other) {
+Date.prototype.compare_day = function (other) {
 	var year_diff = this.getFullYear() - other.getFullYear();
 	var month_diff = this.getMonth() - other.getMonth();
 	var date_diff = this.getDate() - other.getDate();
@@ -22,9 +28,8 @@ Date.prototype.compare_day = function(other) {
 /* format_indo: format a date into Indonesian long form.
  * Example: "Senin, 13 Februari 2016 jam 08:00 WIB"
  */
-Date.prototype.format_indo = function() {
-	
-	// Get timezone data from the essential-data content tag in
+Date.prototype.format_indo = function () {
+// Get timezone data from the essential-data content tag in
 	// application.html.erb.
 	var timezone = $('#essential-data').data('timezone');
 	var parsed_timezone = this.getTimezoneOffset() / -60;
@@ -54,7 +59,7 @@ Date.prototype.format_indo = function() {
 	var minute = this.getMinutes();
 	if (minute < 10) { minute = '0' + minute; }
 
-	return day + ', ' + date + ' ' + month + ' ' + year + ' jam ' + hour + 
+	return day + ', ' + date + ' ' + month + ' ' + year + ' jam ' + hour +
 		':' + minute + ' ' + timezone;
 };
 
@@ -64,7 +69,7 @@ Date.prototype.format_indo = function() {
  * or "7 hari 13 jam 0 menit 12 detik yang lalu" --> other < this
  */
 
-Date.prototype.indo_go_to = function(other) {
+Date.prototype.indo_go_to = function (other) {
 	var difference = this - other;
 	var text = '';
 	if (difference <= 0) {

@@ -1,8 +1,7 @@
 var forgot = false;
 
-$(document).ready(function() {
-
-	// Use the hash to determine which form to show. Defaults to register.
+$(document).ready(function () {
+// Use the hash to determine which form to show. Defaults to register.
 	var hash = window.location.hash;
 	if (hash === '#login') {
 		$('#register').hide();
@@ -14,17 +13,17 @@ $(document).ready(function() {
 
 	// Show help text when input is selected
 	$('#register .pre-help, #login .pre-help').addClass('hidden');
-	$('#register input, #login input').focus(function() {
+	$('#register input, #login input').focus(function () {
 		if (!$(this).parent().hasClass('has-error')) {
 			$(this).nextAll('.pre-help').removeClass('hidden');
 		}
 	});
-	$('#register input, #login input').focusout(function() {
+	$('#register input, #login input').focusout(function () {
 		$(this).nextAll('.pre-help').addClass('hidden');
 	});
 
 	// Fade in/out on switching forms.
-	$('.move-form').click(function(e) {
+	$('.move-form').click(function (e) {
 		var right = $(this).attr('href');
 		if (right === '#login') {
 			restore_login();
@@ -40,11 +39,11 @@ $(document).ready(function() {
 	// Forgot password
 	var password_div = $('#login-form #password').parent();
 	var remember_checkbox = $('#remember-me');
-	$('#forgot-link').click(function() {
+	$('#forgot-link').click(function () {
 		if (forgot) {
 			restore_login();
 		} else {
-			password_div.remove();	
+			password_div.remove();
 			remember_checkbox.remove();
 			$('#forgot-link').text('Kembali');
 			$('#login-form').prepend('<p id="forgot-help">Masukkan username ' +
@@ -65,16 +64,16 @@ $(document).ready(function() {
 	}
 
 	// Adds peek functionality of password inputs
-	var peek_buttons = $('.form-control-feedback.glyphicon-eye-open');	
-	peek_buttons.mousedown(function(e) {
+	var peek_buttons = $('.form-control-feedback.glyphicon-eye-open');
+	peek_buttons.mousedown(function (e) {
 		$(e.target).parent().children('input').prop('type', 'input');
 	});
 
-	peek_buttons.mouseup(function(e) {
+	peek_buttons.mouseup(function (e) {
 		$(e.target).parent().children('input').prop('type', 'password');
 	});
 
-	peek_buttons.mouseleave(function(e) {
+	peek_buttons.mouseleave(function (e) {
 		$(e.target).parent().children('input').prop('type', 'password');
 	});
 });

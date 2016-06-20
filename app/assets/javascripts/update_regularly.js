@@ -7,13 +7,14 @@ function update_regularly() {
 			next_important_contest !== undefined) {
 		var end = new Date(next_important_contest.end_time);
 		$('#next-contest-name').text(next_important_contest.name);
+		var button_text;
 
 		if (current > end) {
 			// Show time to results
 			var results = new Date(next_important_contest.result_time);
 			$('#next-contest-time').text('Hasil diumumkan paling telat ' +
 					results.format_indo());
-			var text = current.indo_go_to(results);
+			button_text = current.indo_go_to(results);
 		} else {
 			// Show time to next contest start
 			var start = new Date(next_important_contest.start_time);
@@ -24,16 +25,16 @@ function update_regularly() {
 
 			if (start > current) {
 				$('home-btn-daftar').attr('disabled', true);
-				var text = current.indo_go_to(start);
+				button_text = current.indo_go_to(start);
 			} else {
 				$('#home-btn-daftar').removeAttr('disabled', false);
 				$('#home-btn-daftar').prop('href',
 						$('#home-contest-data').data('url'));
-				var text = 'Kontes sudah dimulai!';
+				button_text = 'Kontes sudah dimulai!';
 			}
 		}
 
-		$('#home-btn-daftar').text(text);
+		$('#home-btn-daftar').text(button_text);
 	}
 
 	// contests/id time remaining, enable contest
@@ -41,25 +42,18 @@ function update_regularly() {
 	if (current_contest !== null && current_contest !== undefined) {
 		$('#contest-name').text(current_contest.name);
 
-		var start_time = new Date(current_contest.start_time);
-		var end_time = new Date(current_contest.end_time);
-		var results = new Date(current_contest.result_time);
-		var feedback = new Date(current_contest.feedback_time);
+		var current_start_time = new Date(current_contest.start_time);
+		var current_end_time = new Date(current_contest.end_time);
 
 		var subtitle;
 		var time_remaining;
 
-		if (current < start_time) {
+		if (current < current_start_time) {
 			// Contest has not started
-			subtitle = 'Kontes dimulai ' + start_time.format_indo() +
+			subtitle = 'Kontes dimulai ' + current_start_time.format_indo() +
 				'. Mohon bersabar!';
-			time_remaining = '(' + current.indo_go_to(start_time) + ')';
-
-			// Has the state changed?
-			if (position !== 0) {
-				window.location.reload();
-			}
-		} else if (current <= end_time) {
+			time_remaining = '(' + current.indo_go_to(current_start_time) + ')';
+		} else if (current < current_end_time) {
 			// Contest has not ended
 			$('.row > section').addClass('col-sm-8');
 
@@ -71,18 +65,13 @@ function update_regularly() {
 					{ left: '$', right: '$', display: false },
 					{ left: '$$', right: '$$', display: true },
 					{ left: '\\[', right: '\\]', display: true },
-					{ left: '\\(', right: '\\)', display: false }
-					]
+					{ left: '\\(', right: '\\)', display: false },
+					],
 				});
 			}
 
-			subtitle = 'Batas pengumpulan: ' + end_time.format_indo();
-			time_remaining = '(' + current.indo_go_to(end_time) + ')';
-
-			// Has the state changed?
-			if (position !== 1) {
-				window.location.reload();
-			}
+			subtitle = 'Batas pengumpulan: ' + current_end_time.format_indo();
+			time_remaining = '(' + current.indo_go_to(current_end_time) + ')';
 		} else if (current < results) {
 			// Results has not been released
 			$('.row > section').removeClass('col-sm-8');
@@ -90,11 +79,6 @@ function update_regularly() {
 			subtitle = 'Kontes sudah selesai. Hasil kontes akan keluar ' +
 				'paling lambat ' + results.format_indo() + '. Mohon bersabar!';
 			time_remaining = '(' + current.indo_go_to(results) + ')';
-
-			// Has the state changed?
-			if (position !== 2) {
-				window.location.reload();
-			}
 		} else {
 			// Results should be released manually.
 

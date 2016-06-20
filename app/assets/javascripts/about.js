@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
 	for (var i = 0; i < data_panitia.length; i++) {
 		var panitia = data_panitia[i];
 

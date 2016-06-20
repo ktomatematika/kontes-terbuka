@@ -1,10 +1,9 @@
-$(document).ready(function() {
-
-	// Synergize with bootstrap by adding certain bootstrap classes to tags.
+$(document).ready(function () {
+// Synergize with bootstrap by adding certain bootstrap classes to tags.
 	$.validator.setDefaults({
 		errorElement: 'span',
 		errorClass: 'help-block',
-		highlight: function(element) {
+		highlight(element) {
 			$(element).closest('.form-group').addClass('has-error');
 			$(element).closest('.form-group').removeClass('has-success');
 			if ($(element).prop('type') !== 'password') {
@@ -14,7 +13,7 @@ $(document).ready(function() {
 					.empty();
 			}
 		},
-		unhighlight: function(element) {
+		unhighlight(element) {
 			$(element).closest('.form-group').addClass('has-success');
 			$(element).closest('.form-group').removeClass('has-error');
 			if ($(element).prop('type') !== 'password') {
@@ -24,17 +23,17 @@ $(document).ready(function() {
 					.empty();
 			}
 		},
-		errorPlacement: function(error, element) {
+		errorPlacement(error, element) {
 			if (element.parent('.input-group').length) {
 				error.insertAfter(element.parent());
 			} else {
 				error.insertAfter(element);
 			}
-		}
+		},
 	});
 
 	// Adds a method to check whether a field is alphanumeric.
-	$.validator.addMethod('alphanum', function(value, elem) {
+	$.validator.addMethod('alphanum', function (value, elem) {
 		return this.optional(elem) || /^[a-zA-Z0-9]+$/.test(value);
 	});
 
@@ -58,11 +57,11 @@ $(document).ready(function() {
 					url: '/check/',
 					type: 'post',
 					data: {
-						username: function() {
+						username() {
 							return $('#user_username').val();
-						}
-					}
-				}
+						},
+					},
+				},
 			},
 			'user[email]': {
 				required: true,
@@ -72,36 +71,36 @@ $(document).ready(function() {
 					url: '/check/',
 					type: 'post',
 					data: {
-						email: function() {
+						email() {
 							return $('#user_email').val();
-						}
-					}
-				}
+						},
+					},
+				},
 			},
 			'user[password]': {
 				required: true,
-				minlength: 6
+				minlength: 6,
 			},
 			'user[password_confirmation]': {
 				required: true,
 				minlength: 6,
-				equalTo: '#user_password'
+				equalTo: '#user_password',
 			},
 			'user[fullname]': {
-				required: true
+				required: true,
 			},
 			'user[province_id]': {
-				required: true
+				required: true,
 			},
 			'user[status_id]': {
-				required: true
+				required: true,
 			},
 			'user[school]': {
-				required: true
+				required: true,
 			},
 			'user[terms_of_service]': {
-				required: true
-			}
+				required: true,
+			},
 		},
 		messages: {
 			'user[username]': {
@@ -109,64 +108,64 @@ $(document).ready(function() {
 				minlength: 'Username Anda harus minimal 6 karakter.',
 				maxlength: 'Username Anda tidak boleh lebih dari 20 karakter.',
 				alphanum: 'Anda hanya bisa menggunakan huruf dan angka saja.',
-				remote: 'Username tersebut sudah terpakai.'
+				remote: 'Username tersebut sudah terpakai.',
 			},
 			'user[email]': {
 				required: 'Tolong masukkan email.',
 				email: 'Tolong masukan email yang valid.',
-				remote: 'Username dengan email tersebut sudah ada.'
+				remote: 'Username dengan email tersebut sudah ada.',
 			},
 			'user[password]': {
 				required: 'Tolong masukkan password.',
-				minlength: 'Password Anda harus minimal 6 karakter.'
+				minlength: 'Password Anda harus minimal 6 karakter.',
 			},
 			'user[password_confirmation]': {
 				required: 'Tolong masukkan ulang password.',
 				minlength: 'Password Anda harus minimal 6 karakter.',
-				equalTo: 'Password Anda tidak sama dengan password sebelumnya.'
+				equalTo: 'Password Anda tidak sama dengan password sebelumnya.',
 			},
 			'user[fullname]': {
-				required: 'Tolong masukkan nama lengkap Anda.'
+				required: 'Tolong masukkan nama lengkap Anda.',
 			},
 			'user[province_id]': {
-				required: 'Tolong masukkan provinsi Anda.'
+				required: 'Tolong masukkan provinsi Anda.',
 			},
 			'user[status_id]': {
-				required: 'Tolong masukkan status Anda.'
+				required: 'Tolong masukkan status Anda.',
 			},
 			'user[school]': {
-				required: 'Tolong masukkan nama sekolah/institusi Anda.'
+				required: 'Tolong masukkan nama sekolah/institusi Anda.',
 			},
 			'user[terms_of_service]': {
 				required: 'Anda harus menyetujui syarat dan ketentuan ' +
-					'website ini.'
-			}
-		}
+					'website ini.',
+			},
+		},
 	});
 
 	$('#login-form').validate({
 		rules: {
 			'session[username]': {
-				required: true
+				required: true,
 			},
 			'session[password]': {
 				required: true,
-				minlength: 6
-			}
+				minlength: 6,
+			},
 		},
 		messages: {
 			'session[username]': {
-				required: 'Tolong masukkan username/email Anda.'
+				required: 'Tolong masukkan username/email Anda.',
 			},
 			'session[password]': {
 				required: 'Tolong masukkan password.',
-				minlength: 'Password Anda harus minimal 6 karakter.'
-			}
-		}
+				minlength: 'Password Anda harus minimal 6 karakter.',
+			},
+		},
 	});
 
 	var last = new Date();
-	$('input').keyup(function(e) {
+	$('input').keyup(function (e) {
 		var input = e.keyCode;
 
 		// This checks if the key entered is backspace, characters, or delete.
@@ -189,7 +188,7 @@ $(document).ready(function() {
 			// Validate after 1000 milisecond.
 			var validate_time = 1000;
 			last = new Date();
-			window.setTimeout(function() {
+			window.setTimeout(function () {
 				if (new Date() - last >= validate_time) {
 					$(t).valid();
 				}
