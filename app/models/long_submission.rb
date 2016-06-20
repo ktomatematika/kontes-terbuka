@@ -13,18 +13,18 @@ class LongSubmission < ActiveRecord::Base
 	delegate :problem_no, to: :long_problem
 
 	Paperclip.interpolates :contest_id do |attachment, _style|
-    attachment.instance.long_problem.contest_id
+  attachment.instance.long_problem.contest_id
  end
 
 	Paperclip.interpolates :problem_no do |attachment, _style|
-    attachment.instance.long_problem.problem_no
+  attachment.instance.long_problem.problem_no
  end
 
 	Paperclip.interpolates :user_id do |attachment, _style|
-    attachment.instance.user_id
+  attachment.instance.user_id
  end
 
 	Paperclip.interpolates :page do |attachment, _style|
-    attachment.instance.page
+  attachment.instance.page
  end
 end

@@ -56,7 +56,6 @@ class UsersController < ApplicationController
 	rescue ActiveRecord::ActiveRecordError
 		respond_to do |format|
 			format.html do
-				puts @user.errors.full_messages
 				render 'edit'
 			end
 		end
@@ -80,7 +79,7 @@ class UsersController < ApplicationController
 		end
 	end
 
-	 private
+	private
 
 	def user_params
 		params.require(:user).permit(:username, :email, :password,
@@ -90,10 +89,9 @@ class UsersController < ApplicationController
 	end
 
 	def user_edit_params
-
-		params.require(:user).permit(:username, :email, :timezone, 
-									:fullname, :province_id, :status_id, :color_id, 
-									:school, :terms_of_service, :profile_picture)
+		params.require(:user).permit(:username, :email, :timezone,
+									 :fullname, :province_id, :status_id, :color_id,
+									 :school, :terms_of_service, :profile_picture)
 	end
 
 	def province_name

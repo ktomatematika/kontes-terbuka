@@ -8,6 +8,7 @@ wget --quiet -O - http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc | sudo ap
 apt-get update
 apt-get install --yes --force-yes postgresql-common
 apt-get install --yes --force-yes postgresql-9.5 libpq-dev
+sudo -u postgres psql -c "create role vagrant with createdb login password 'password';"
 
 # Installs rvm, Ruby, Bundler and runs bundle install, which installs a lot.
 su vagrant <<'EOF'

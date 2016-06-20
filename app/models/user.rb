@@ -22,11 +22,11 @@ class User < ActiveRecord::Base
 	validates_attachment_content_type :profile_picture, content_type: /image/
 
  Paperclip.interpolates :id do |attachment, _style|
-   attachment.instance.id
+  attachment.instance.id
  end
 
-  validates :timezone, presence: true, inclusion: { in: %w(WIB WITA WIT),
-    message: "Zona waktu %{value} tidak tersedia" }
+ validates :timezone, presence: true, inclusion: { in: %w(WIB WITA WIT),
+   message: 'Zona waktu %{value} tidak tersedia' }
 	attr_accessor :password
 
 	validates :password, presence: true, confirmation: true, on: :create
@@ -42,7 +42,7 @@ class User < ActiveRecord::Base
 	after_save :clear_password
 
 	def self.time_zone_set
-		['WIB', 'WITA', 'WIT']
+		%w(WIB WITA WIT)
 	end
 
 	def encrypt_password

@@ -1,7 +1,9 @@
 class LongProblemsController < ApplicationController
 	def create
 		@contest = Contest.find(params[:contest_id])
-		unless @contest.long_problems.find_by_problem_no(long_problem_params[:problem_no])
+		unless @contest.long_problems.find_by_problem_no(
+			long_problem_params[:problem_no]
+		)
 			@long_problem = @contest.long_problems.create(long_problem_params)
 		end
 		redirect_to contest_admin_path(id: @contest.id)
@@ -36,12 +38,17 @@ class LongProblemsController < ApplicationController
 			concern_params = submission_params[:long_submissions_attributes]
 			concern_params.each_key do |s|
 				next if concern_params[s][:submission].blank?
-				long_submission_temp = LongSubmission.where(long_problem_id: problem_id, user_id: current_user.id)
+				long_submission_temp = LongSubmission.where(
+					long_problem_id: problem_id, user_id: current_user.id
+				)
 				page_number = concern_params[s]['page']
 				if long_submission_temp.where(page: page_number).blank?
 					@long_problem = LongProblem.find(problem_id)
-					@long_submission = @long_problem.long_submissions.create(user_id: current_user.id,
-						                                                        submission: concern_params[s][:submission], page: page_number)
+					@long_submission = @long_problem.long_submissions.create(
+						user_id: current_user.id,
+						submission: concern_params[s][:submission],
+						page: page_number
+					)
 				else
 					@long_submission = long_submission_temp.where(page: page_number).first
 					@long_submission.update(submission: concern_params[s][:submission])
@@ -52,13 +59,13 @@ class LongProblemsController < ApplicationController
 		redirect_to Contest.find(contest_id)
 	end
 
-	 private
+	private
 
 	def long_problem_params
-			params.require(:long_problem).permit(:problem_no, :statement, :answer)
-		end
+		params.require(:long_problem).permit(:problem_no, :statement, :answer)
+	end
 
 	def submission_params
-			params[:long_problem]
-		end
+		params[:long_problem]
+	end
 end

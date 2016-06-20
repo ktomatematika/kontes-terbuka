@@ -17,7 +17,8 @@ Rails.application.routes.draw do
 	resources :roles
 	resources :contests do
 		get 'show_rules' => 'contests#show_rules', on: :member, as: :show_rules
-		post 'accept_rules' => 'contests#accept_rules', on: :collection, as: :accept_rules
+		post 'accept_rules' => 'contests#accept_rules', on: :collection,
+			as: :accept_rules
 		resources :short_problems
 		resources :long_problems
 	end
@@ -42,7 +43,6 @@ Rails.application.routes.draw do
 	post '/login' => 'sessions#create'
 	get '/logout' => 'sessions#destroy', as: :logout
 
-	get '/contests/:id/admin' => 'contests#admin', as: :contest_admin
 	get '/contests/:id/rules' => 'contests#rules'
 
 	get '/home/index' => 'home#index'
@@ -58,8 +58,6 @@ Rails.application.routes.draw do
 	post '/long_problems/submit' => 'long_problems#submit'
 
 	get '/magic' => 'home#send_magic_email', as: :magic
-
-	get '/home/admin' => 'home#admin'
 
 	post '/check' => 'users#check_unique'
 end

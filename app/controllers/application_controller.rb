@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
 	# For APIs, you may want to use :null_session instead.
 	include CanCan::ControllerAdditions
 
-	before_filter :set_paper_trail_whodunnit
+	before_action :set_paper_trail_whodunnit
 	before_action :require_login, :set_timezone
 
 	protect_from_forgery with: :exception
@@ -31,20 +31,20 @@ class ApplicationController < ActionController::Base
 	WITA = TZInfo::Timezone.get('Asia/Makassar')
 	WIT = TZInfo::Timezone.get('Asia/Jayapura')
 
-	def set_timezone 
+	def set_timezone
 		puts current_user.timezone
-		if current_user.timezone == "WIB"
-			Time.zone = WIB
-		else
-			if current_user.timezone == "WITA"
-				Time.zone = WITA
-			else
-				if current_user.timezone == "WIT"
-					Time.zone = WIT
-				else
-					Time.zone = 'Singapore'
-				end
-			end
-		end
-	end  
+		Time.zone = if current_user.timezone == 'WIB'
+			            WIB
+		            else
+			            Time.zone = if current_user.timezone == 'WITA'
+            				            WITA
+            			            else
+            				            Time.zone = if current_user.timezone == 'WIT'
+                        					            WIT
+                        				            else
+                        					            'Singapore'
+                        				            end
+            			            end
+		            end
+	end
 end
