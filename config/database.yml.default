@@ -5,8 +5,8 @@ default: &default
   # http://guides.rubyonrails.org/configuring.html#database-pooling
   pool: 5
   host: localhost
-  username: postgres
-  password: password
+  username: vagrant
+  password:
 
 development:
   <<: *default
@@ -22,5 +22,5 @@ test:
 production:
   <<: *default
   database: kontes_terbuka_production
-  username: ktom
-  password: asdfasdfasdf
+  username: 
+  password:
