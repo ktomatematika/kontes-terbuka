@@ -7,14 +7,14 @@ function choose_color() {
 	var possible = ['red', 'green', 'blue', 'yellow'];
 
 	// Default value
-	if (color === undefined) { color = 'Sistem'; }
+	if (typeof color === 'undefined') { color = 'Sistem'; }
 
 	if (color === 'Kosong') {
 		return '';
 	} else if (color === 'Sistem') {
-		return possible[now.getMonth() % 4];
+		return possible[now.getMonth() % possible.length];
 	} else if (color === 'Acak') {
-		return possible[now % 4];
+		return possible[now % possible.length];
 	} else if (color === 'Merah') {
 		return 'red';
 	} else if (color === 'Hijau') {

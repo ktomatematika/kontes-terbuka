@@ -1,6 +1,6 @@
 $(document).ready(function () {
 	var current_contest = $('#rules-contest-data').data('contest');
-	if (current_contest !== null && current_contest !== undefined) {
+	if (typeof current_contest !== 'undefined') {
 		var name = current_contest.name;
 		var start_time = new Date(current_contest.start_time).format_indo();
 		var end_time = new Date(current_contest.end_time).format_indo();

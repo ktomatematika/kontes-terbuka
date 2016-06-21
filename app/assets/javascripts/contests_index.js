@@ -30,14 +30,14 @@ $(document).ready(function () {
 						additions += 'data-trigger="hover" ';
 						additions += 'data-placement="top" ';
 						additions += 'data-html="true" ';
-						additions += ('title="' + contest.name + '" ');
+						additions += 'title="' + contest.name + '" ';
 
 						var content = 'Dari ' + contest.start_time.format_indo()
 							+ ' sampai ' + contest.end_time.format_indo()
 							+ '<br>Format: '
 							+ contest.number_of_short_questions + ' isian dan '
 							+ contest.number_of_long_questions + ' uraian';
-						additions += ('data-content="' + content + '"');
+						additions += 'data-content="' + content + '"';
 
 						break;
 					}
@@ -86,7 +86,7 @@ $(document).ready(function () {
 
 		text += '<div class="thead"><div class="tr">';
 		for (i = 0; i < short_days.length; i++) {
-			text += ('<div class="th">' + short_days[i] + '</div>');
+			text += '<div class="th">' + short_days[i] + '</div>';
 		}
 		text += '</div></div><div class="tbody"><div class="tr">';
 
