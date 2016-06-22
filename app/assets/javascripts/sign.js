@@ -22,23 +22,18 @@ $(document).ready(function () {
 		$(this).nextAll('.pre-help').addClass('hidden');
 	});
 
-	// Fade in/out on switching forms.
-	$('.move-form').click(function (e) {
-		var right = $(this).attr('href');
-		if (right === '#login') {
-			restore_login();
-			$('#register').fadeOut();
-			$('#login').fadeIn();
-		} else if (right === '#register') {
-			$('#login').fadeOut();
-			$('#register').fadeIn();
-		}
-		e.preventDefault();
-	});
-
 	// Forgot password
 	var password_div = $('#login-form #password').parent();
 	var remember_checkbox = $('#remember-me');
+	function restore_login() {
+		$('#login-form #username').parent().after(password_div);
+		$('#login-form .left-footer').prepend(remember_checkbox);
+		$('#forgot-link').text('Lupa password Anda?');
+		$('#login-form #forgot-help').remove();
+		$('#login-form input[type=submit]').prop('value', 'Masuk');
+		forgot = false;
+	}
+
 	$('#forgot-link').click(function () {
 		if (forgot) {
 			restore_login();
@@ -54,14 +49,19 @@ $(document).ready(function () {
 		}
 	});
 
-	function restore_login() {
-		$('#login-form #username').parent().after(password_div);
-		$('#login-form .left-footer').prepend(remember_checkbox);
-		$('#forgot-link').text('Lupa password Anda?');
-		$('#login-form #forgot-help').remove();
-		$('#login-form input[type=submit]').prop('value', 'Masuk');
-		forgot = false;
-	}
+	// Fade in/out on switching forms.
+	$('.move-form').click(function (e) {
+		var right = $(this).attr('href');
+		if (right === '#login') {
+			restore_login();
+			$('#register').fadeOut();
+			$('#login').fadeIn();
+		} else if (right === '#register') {
+			$('#login').fadeOut();
+			$('#register').fadeIn();
+		}
+		e.preventDefault();
+	});
 
 	// Adds peek functionality of password inputs
 	var peek_buttons = $('.form-control-feedback.glyphicon-eye-open');

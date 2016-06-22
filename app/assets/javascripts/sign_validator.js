@@ -3,7 +3,7 @@ $(document).ready(function () {
 	$.validator.setDefaults({
 		errorElement: 'span',
 		errorClass: 'help-block',
-		highlight(element) {
+		highlight: function(element) {
 			$(element).closest('.form-group').addClass('has-error');
 			$(element).closest('.form-group').removeClass('has-success');
 			if ($(element).prop('type') !== 'password') {
@@ -13,7 +13,7 @@ $(document).ready(function () {
 					.empty();
 			}
 		},
-		unhighlight(element) {
+		unhighlight: function(element) {
 			$(element).closest('.form-group').addClass('has-success');
 			$(element).closest('.form-group').removeClass('has-error');
 			if ($(element).prop('type') !== 'password') {
@@ -23,7 +23,7 @@ $(document).ready(function () {
 					.empty();
 			}
 		},
-		errorPlacement(error, element) {
+		errorPlacement: function(error, element) {
 			if (element.parent('.input-group').length) {
 				error.insertAfter(element.parent());
 			} else {
@@ -57,7 +57,7 @@ $(document).ready(function () {
 					url: '/check/',
 					type: 'post',
 					data: {
-						username() {
+						username: function() {
 							return $('#user_username').val();
 						},
 					},
@@ -71,7 +71,7 @@ $(document).ready(function () {
 					url: '/check/',
 					type: 'post',
 					data: {
-						email() {
+						email: function() {
 							return $('#user_email').val();
 						},
 					},
@@ -169,6 +169,7 @@ $(document).ready(function () {
 		var input = e.keyCode;
 
 		// This checks if the key entered is backspace, characters, or delete.
+		// eslint-disable-next-line
 		if (input === 8 || (input >= 32 && input <= 127)) {
 			var t = e.target;
 

@@ -17,10 +17,9 @@ module.exports = {
 		'no-undefined': 'error',
 		'no-undef-init': 'error',
 		'no-use-before-define': 'error',
-		'no-shadow': 'error',
+		'no-shadow': ['error', { 'allow': ['i'] }],
 		'no-label-var': 'warn',
 		'array-callback-return': 'warn',
-		'block-scoped-var': 'warn',
 		'curly': ['error', 'all'],
 		'dot-location': ['error', 'property'],
 		'dot-notation': 'warn',
@@ -41,7 +40,7 @@ module.exports = {
 		'no-labels': 'error',
 		'no-lone-blocks': 'warn',
 		'no-loop-func': 'warn',
-		'no-magic-numbers': 'error',
+		'no-magic-numbers': ['error', {'ignore': [-1, 0, 1]}],
 		'no-multi-str': 'warn',
 		'no-native-reassign': 'error',
 		'no-new': 'warn',
@@ -72,6 +71,9 @@ module.exports = {
 		'choose_color': false,
 		'load_colors': false,
 		'renderMathInElement': false,
-		'data_panitia': false
+		'data_panitia': false,
+		'MONTHS_IN_A_YEAR': false,
+		'DAYS_IN_A_WEEK': false,
+		'MONTH_CALENDAR_IN_A_ROW': false,
 	}
 };

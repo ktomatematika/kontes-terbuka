@@ -1,10 +1,14 @@
-/* exported now short_days */
+/* exported now short_days MONTHS_IN_A_YEAR DAYS_IN_A_WEEK */
+
 var now = new Date();
 var months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli',
 	'Agustus', 'September', 'Oktober', 'November', 'Desember'];
 var short_days = ['M', 'S', 'S', 'R', 'K', 'J', 'S'];
 var long_days = ['Minggu', 'Senin', 'Selasa', 'Rabu',
 	'Kamis', 'Jumat', 'Sabtu'];
+
+var MONTHS_IN_A_YEAR = 12;
+var DAYS_IN_A_WEEK = 7;
 
 /* compare_day: compares a day to another.
  * Returns positive if current date is after compared date,
@@ -21,10 +25,11 @@ Date.prototype.compare_day = function (other) {
 	var month_diff = this.getMonth() - other.getMonth();
 	var date_diff = this.getDate() - other.getDate();
 
-	return (year_diff != 0) ? year_diff : (month_diff != 0) ? month_diff :
+	return year_diff !== 0 ? year_diff : month_diff !== 0 ? month_diff :
 		date_diff;
 };
 
+/* eslint-disable no-magic-numbers */
 /* format_indo: format a date into Indonesian long form.
  * Example: "Senin, 13 Februari 2016 jam 08:00 WIB"
  */
@@ -115,3 +120,4 @@ Date.prototype.indo_go_to = function (other) {
 	res += text;
 	return res;
 };
+/* eslint-enable no-magic-numbers */

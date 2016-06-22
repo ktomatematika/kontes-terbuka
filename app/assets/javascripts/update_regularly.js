@@ -1,10 +1,12 @@
+var REFRESH_TIME = 1000;
+
 function update_regularly() {
+
 	var current = new Date();
 
 	// home/index contest details
 	var next_important_contest = $('#home-contest-data').data('next');
-	if (next_important_contest !== null &&
-			next_important_contest !== undefined) {
+	if (typeof next_important_contest !== 'undefined') {
 		var end = new Date(next_important_contest.end_time);
 		$('#next-contest-name').text(next_important_contest.name);
 		var button_text;
@@ -39,11 +41,12 @@ function update_regularly() {
 
 	// contests/id time remaining, enable contest
 	var current_contest = $('#contest-data').data('current-contest');
-	if (current_contest !== null && current_contest !== undefined) {
+	if (typeof current_contest !== 'undefined') {
 		$('#contest-name').text(current_contest.name);
 
 		var current_start_time = new Date(current_contest.start_time);
 		var current_end_time = new Date(current_contest.end_time);
+		var current_result_time = new Date(current_contest.result_time);
 
 		var subtitle;
 		var time_remaining;
@@ -72,13 +75,15 @@ function update_regularly() {
 
 			subtitle = 'Batas pengumpulan: ' + current_end_time.format_indo();
 			time_remaining = '(' + current.indo_go_to(current_end_time) + ')';
-		} else if (current < results) {
+		} else if (current < current_result_time) {
 			// Results has not been released
 			$('.row > section').removeClass('col-sm-8');
 
 			subtitle = 'Kontes sudah selesai. Hasil kontes akan keluar ' +
-				'paling lambat ' + results.format_indo() + '. Mohon bersabar!';
-			time_remaining = '(' + current.indo_go_to(results) + ')';
+				'paling lambat ' + current_result_time.format_indo() +
+				'. Mohon bersabar!';
+			time_remaining = '(' + current.indo_go_to(current_result_time) +
+				')';
 		} else {
 			// Results should be released manually.
 
@@ -94,4 +99,4 @@ function update_regularly() {
 }
 
 $(document).ready(update_regularly);
-setInterval(update_regularly, 1000);
+setInterval(update_regularly, REFRESH_TIME);
