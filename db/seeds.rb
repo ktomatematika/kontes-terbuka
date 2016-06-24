@@ -146,4 +146,5 @@ User.create(username: 'donjar',
             fullname: 'Tanu Tanu',
             school: 'Loren',
             province_id: 3,
-            status_id: 4)
+            status_id: 4,
+            timezone: 'WIB')

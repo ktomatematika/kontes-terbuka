@@ -33,11 +33,11 @@ class ApplicationController < ActionController::Base
 
   def set_timezone
     Time.zone = if current_user.nil?
-                  'WIB'
-                elsif %w(WIB WITA WIT).include? current_user.timezone
+                  WIB
+                elsif [WIB, WITA, WIT].include? current_user.timezone
                   current_user.timezone
                 else
-                  'WIB'
+                  WIB
                 end
   end
 end
