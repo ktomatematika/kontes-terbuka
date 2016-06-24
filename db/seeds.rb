@@ -2,14 +2,15 @@
   Role.where({ name: role }, without_protection: true).first_or_create
 end
 
-[['WIB', ['D.I. Aceh', 'Sumatera Utara', 'Sumatera Barat', 'Riau', 'Kepulauan Riau',
-          'Jambi', 'Bengkulu', 'Bangka Belitung', 'Sumatera Selatan', 'Lampung',
-          'Banten', 'D.K.I. Jakarta', 'Jawa Barat', 'Jawa Tengah', 'Jawa Timur',
-          'D.I. Yogyakarta', 'Kalimantan Barat', 'Kalimantan Tengah']],
+[['WIB', ['D.I. Aceh', 'Sumatera Utara', 'Sumatera Barat', 'Riau',
+          'Kepulauan Riau', 'Jambi', 'Bengkulu', 'Bangka Belitung',
+          'Sumatera Selatan', 'Lampung', 'Banten', 'D.K.I. Jakarta',
+          'Jawa Barat', 'Jawa Tengah', 'Jawa Timur', 'D.I. Yogyakarta',
+          'Kalimantan Barat', 'Kalimantan Tengah']],
  ['WITA', ['Kalimantan Utara', 'Kalimantan Timur', 'Kalimantan Selatan',
-           'Bali', 'Nusa Tenggara Barat', 'Nusa Tenggara Timur', 'Sulawesi Barat',
-           'Sulawesi Selatan', 'Gorontalo', 'Sulawesi Tengah', 'Sulawesi Utara',
-           'Sulawesi Tenggara']],
+           'Bali', 'Nusa Tenggara Barat', 'Nusa Tenggara Timur',
+           'Sulawesi Barat', 'Sulawesi Selatan', 'Gorontalo',
+           'Sulawesi Tengah', 'Sulawesi Utara', 'Sulawesi Tenggara']],
  ['WIT', ['Maluku Utara', 'Maluku', 'Papua Barat', 'Papua']],
  ['WIB', ['Lainnya']]].each do |timezone, provinces|
   provinces.each do |province|
@@ -26,6 +27,7 @@ end
   Color.find_or_create_by(name: color)
 end
 
+# rubocop:disable LineLength
 Contest.find_or_create_by(name: 'KTO Matematika Juni 2015',
                           number_of_short_questions: 14,
                           number_of_long_questions: 4,

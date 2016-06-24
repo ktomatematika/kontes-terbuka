@@ -147,7 +147,7 @@ ActiveRecord::Schema.define(version: 20160619113128) do
     t.string   "profile_picture_content_type"
     t.integer  "profile_picture_file_size"
     t.datetime "profile_picture_updated_at"
-    t.text     "timezone"
+    t.string   "timezone"
   end
 
   add_index "users", ["color_id"], name: "index_users_on_color_id", using: :btree

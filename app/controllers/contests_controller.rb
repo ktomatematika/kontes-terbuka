@@ -18,13 +18,21 @@ class ContestsController < ApplicationController
 
   def show
     @contest = Contest.find(params[:id])
-    now = Time.zone.now
     if UserContest.where(user: current_user, contest: @contest).empty? &&
-       @contest.start_time <= now && now <= @contest.end_time
+       currently_in_contest(@contest)
       redirect_to show_rules_contest_path(params[:id])
     end
+    set_problems
+  end
+
+  def set_problems
     @short_problems = @contest.short_problems.order('problem_no').all
     @long_problems = @contest.long_problems.order('problem_no').all
+  end
+
+  def currently_in_contest(contest)
+    now = Time.zone.now
+    contest.start_time <= now && now <= contest.end_time
   end
 
   def index

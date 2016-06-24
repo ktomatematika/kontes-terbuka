@@ -43,7 +43,8 @@ class ShortProblemsController < ApplicationController
         )
       else
         @short_submission = ShortSubmission.where(short_problem_id: problem_id,
-                                                  user_id: current_user.id).first
+                                                  user_id: current_user.id)
+                                           .first
         @short_submission.update(answer: submission_params[problem_id])
         @short_submission.save
       end

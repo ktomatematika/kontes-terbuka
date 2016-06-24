@@ -4,9 +4,13 @@ class LongSubmission < ActiveRecord::Base
   belongs_to :long_problem
 
   has_attached_file :submission,
-                    url: '/submissions/:contest_id/:problem_no/:user_id/:contest_id_:problem_no_:user_id_:page.:extension',
-                    path: ':rails_root/public/submissions/Kontes:contest_id/No:problem_no/Peserta:user_id/Kontes:contest_id_No:problem_no_Peserta:user_id_Hal:page.:extension'
-  validates_attachment_content_type :submission, content_type: ['application/pdf']
+                    url: '/submissions/:contest_id/:problem_no/:user_id/' \
+                    ':contest_id_:problem_no_:user_id_:page.:extension',
+                    path: ':rails_root/public/submissions/kontes:contest_id/' \
+                    'no:problem_no/peserta:user_id/kontes:contest_id_' \
+                    'no:problem_no_peserta:user_id_hal:page.:extension'
+  validates_attachment_content_type :submission,
+                                    content_type: ['application/pdf']
 
   delegate :contest_id, to: :long_problem
 

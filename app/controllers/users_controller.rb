@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   skip_before_action :require_login, only: [:new, :create, :check_unique]
-  http_basic_authenticate_with name: 'admin', password: 'admin', only: [:index, :destroy]
+  http_basic_authenticate_with name: 'admin', password: 'admin',
+                               only: [:index, :destroy]
 
   def new
     if current_user
@@ -69,14 +70,12 @@ class UsersController < ApplicationController
 
   def check_unique
     users = User.all
-    users = users.where(username: params[:username]) unless params[:username].nil?
+    unless params[:username].nil?
+      users = users.where(username: params[:username])
+    end
     users = users.where(email: params[:email]) unless params[:email].nil?
 
-    if users.present?
-      render json: false
-    else
-      render json: true
-    end
+    render json: users.present? ? false : true
   end
 
   private

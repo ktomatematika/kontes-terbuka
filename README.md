@@ -10,7 +10,7 @@ Install Vagrant dan VirtualBox:
 - https://www.vagrantup.com/downloads.html
 - https://www.virtualbox.org/wiki/Downloads
 
-Vagrant adalah sebuah virtual machine yang digunakan untuk menjalankan kode.
+Vagrant adalah sebuah virtual machine yang digunakan untuk menjalankan app.
 Keuntungannya, development environmentnya akan stabil di mesin manapun.  
 Vagrant menggunakan VirtualBox untuk menjalankan virtual machinenya.
 

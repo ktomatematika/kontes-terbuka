@@ -18,15 +18,19 @@ class User < ActiveRecord::Base
 
   has_attached_file :profile_picture,
                     url: '/profile_pictures/:id/:basename.:extension',
-                    path: ':rails_root/public/profile_pictures/:id/:basename.:extension'
+                    path: ':rails_root/public/profile_pictures/ \
+                    :id/:basename.:extension'
   validates_attachment_content_type :profile_picture, content_type: /image/
 
   Paperclip.interpolates :id do |attachment, _style|
     attachment.instance.id
   end
 
-  validates :timezone, presence: true, inclusion: { in: %w(WIB WITA WIT),
-                                                    message: 'Zona waktu %{value} tidak tersedia' }
+  validates :timezone, presence: true,
+                       inclusion: {
+                         in: %w(WIB WITA WIT),
+                         message: 'Zona waktu %{value} tidak tersedia'
+                       }
   attr_accessor :password
 
   validates :password, presence: true, confirmation: true, on: :create
@@ -51,10 +55,9 @@ class User < ActiveRecord::Base
   end
 
   def self.authenticate(username, password)
-    user = User.where(username: username).first
-    if user && user.hashed_password == BCrypt::Engine.hash_secret(password, user.salt)
-      user
-    end
+    user = User.find_by(username: username)
+    hash = BCrypt::Engine.hash_secret(password, user.salt)
+    user if user && user.hashed_password == hash
   end
 
   def clear_password
@@ -62,8 +65,9 @@ class User < ActiveRecord::Base
   end
 
   def generate_token(column)
-    begin
+    loop do
       self[column] = SecureRandom.urlsafe_base64
-    end while User.exists?(column => self[column])
+      break unless User.exists?(column => self[column])
+    end
   end
 end

@@ -32,10 +32,15 @@ class EnforceValidationsInDatabaseLevel < ActiveRecord::Migration
     validates :user_contests, :user_id, null: false
     validates :user_contests, :contest_id, null: false
 
-    validates :users, :username, presence: true, uniqueness: true,
-                                 length: { in: 6..20 }, format: { with: /\A[A-Za-z0-9]+\Z/ }
-    validates :users, :email, presence: true, uniqueness: true,
-                              format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/ }
+    validates :users, :username,
+              presence: true,
+              uniqueness: true,
+              length: { in: 6..20 },
+              format: { with: /\A[A-Za-z0-9]+\Z/ }
+    validates :users, :email,
+              presence: true,
+              uniqueness: true,
+              format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/ }
     validates :users, :hashed_password, presence: true
     validates :users, :fullname, presence: true
     validates :users, :school, presence: true

@@ -8,7 +8,8 @@ server '188.166.177.64', user: 'ktom', roles: %w(app db web)
 set :nginx_server_name, 'ktom.tomi.or.id'
 set :nginx_use_ssl, true
 set :nginx_ssl_cert_local_path, '/home/donjar/archive/ktom.tomi.or.id/cert1.pem'
-set :nginx_ssl_cert_key_local_path, '/home/donjar/archive/ktom.tomi.or.id/privkey1.pem'
+set :nginx_ssl_cert_key_local_path,
+    '/home/donjar/archive/ktom.tomi.or.id/privkey1.pem'
 
 # role-based syntax
 # ==================
@@ -19,7 +20,8 @@ set :nginx_ssl_cert_key_local_path, '/home/donjar/archive/ktom.tomi.or.id/privke
 # Don't use `:all`, it's a meta role.
 
 # role :app, %w{deploy@example.com}, my_property: :my_value
-# role :web, %w{user1@primary.com user2@additional.com}, other_property: :other_value
+# role :web, %w{user1@primary.com user2@additional.com},
+# other_property: :other_value
 # role :db,  %w{deploy@example.com}
 
 # Configuration
