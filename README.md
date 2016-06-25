@@ -21,8 +21,9 @@ vagrant plugin install vagrant-librarian-chef-nochef
 ```
 
 Nyalakan Vagrant: `vagrant up`  
-Ini bisa memakan waktu 30 - 45 menit, karena vagrant perlu mensetup segalanya
-dari awal, termasuk database, Ruby, dan Rails. Bersabarlah. :3
+Ini bisa memakan waktu 1 jam, karena vagrant perlu mensetup segalanya
+dari awal, termasuk download Ubuntu (!), setup database, Ruby, dan Rails.
+Bersabarlah. :3
 
 Setelah itu, masuk ke Vagrant: `vagrant ssh`
 

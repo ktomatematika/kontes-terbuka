@@ -1,7 +1,3 @@
-[:admin, :student, :corrector, :banned].each do |role|
-  Role.where({ name: role }, without_protection: true).first_or_create
-end
-
 [['WIB', ['D.I. Aceh', 'Sumatera Utara', 'Sumatera Barat', 'Riau',
           'Kepulauan Riau', 'Jambi', 'Bengkulu', 'Bangka Belitung',
           'Sumatera Selatan', 'Lampung', 'Banten', 'D.K.I. Jakarta',
@@ -140,11 +136,60 @@ Contest.find_or_create_by(name: 'KTO Matematika Juli 2016',
                           result_time: DateTime.new(2016, 7, 31, 0, 0, 0, '+7'),
                           feedback_time: DateTime.new(2016, 7, 6, 0, 0, 0, '+7'))
 
-User.create(username: 'donjar',
-            email: 'donjar@gmail.com',
-            password: 'donjar',
-            fullname: 'Tanu Tanu',
-            school: 'Loren',
-            province_id: 3,
-            status_id: 4,
-            timezone: 'WIB')
+admin = User.new(username: 'adminadmin',
+                 email: 'admin@gmail.com',
+                 password: 'adminadmin',
+                 fullname: 'Sharon Lynn',
+                 school: 'INTEGRATED',
+                 province_id: 18,
+                 status_id: 2,
+                 timezone: 'WITA')
+admin.save
+admin.add_role 'admin'
+
+mod = User.create(username: 'moderator',
+                  email: 'momod@gmail.com',
+                  password: 'moderator',
+                  fullname: 'Tanu Tanu',
+                  school: 'Loren',
+                  province_id: 3,
+                  status_id: 4,
+                  timezone: 'WIB')
+mod.save
+mod.add_role 'moderator'
+
+donjar = User.create(username: 'donjar',
+                     email: 'donjar@gmail.com',
+                     password: 'donjar',
+                     fullname: 'Tanu Tanu',
+                     school: 'Loren',
+                     province_id: 3,
+                     status_id: 4,
+                     timezone: 'WIB')
+donjar.save
+
+satria = User.create(username: 'satria',
+                     email: 'satria@gmail.com',
+                     password: 'satria',
+                     fullname: 'Tanu Tanu',
+                     school: 'Loren',
+                     province_id: 3,
+                     status_id: 4,
+                     timezone: 'WIB')
+satria.save
+satria.add_role 'marking_manager'
+
+pentium = User.create(username: 'pentium',
+                      email: 'penti@gmail.com',
+                      password: 'pentium',
+                      fullname: 'Tanu Tanu',
+                      school: 'Loren',
+                      province_id: 3,
+                      status_id: 4,
+                      timezone: 'WIB')
+pentium.save
+
+# l = LongProblem.find_by(contest_id: 13, problem_no: 1)
+# LongSubmission.find_by(l).each do |ls|
+#   pentium.add_role 'marker', ls
+# end

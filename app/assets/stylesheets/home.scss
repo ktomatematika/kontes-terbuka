@@ -52,8 +52,8 @@
   margin: 0;
 }
 
-@each $color in $colors {
-  #leaderboard-table.has-shade[data-shade="#{$color}"] tbody tr:hover {
+@each $name, $color in $colors {
+  #leaderboard-table.has-shade[data-shade="#{$name}"] tbody tr:hover {
     background: ligthen($color, 20);
   }
 }

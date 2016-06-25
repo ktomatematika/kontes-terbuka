@@ -1,9 +1,7 @@
 Rails.application.routes.draw do
   mount RailsAdmin::Engine => '/penguasa', as: 'rails_admin'
 
-  authenticated :user do
-    root to: 'home#index', as: :authenticated_root
-  end
+  root to: 'home#index', as: :authenticated_root unless @current_user.nil?
 
   resources :province do
     resources :users

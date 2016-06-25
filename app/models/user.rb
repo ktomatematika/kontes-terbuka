@@ -1,5 +1,4 @@
 class User < ActiveRecord::Base
-  resourcify
   rolify
   has_paper_trail
 
@@ -56,8 +55,10 @@ class User < ActiveRecord::Base
 
   def self.authenticate(username, password)
     user = User.find_by(username: username)
-    hash = BCrypt::Engine.hash_secret(password, user.salt)
-    user if user && user.hashed_password == hash
+    if user
+      hash = BCrypt::Engine.hash_secret(password, user.salt)
+      user if user.hashed_password == hash
+    end
   end
 
   def clear_password

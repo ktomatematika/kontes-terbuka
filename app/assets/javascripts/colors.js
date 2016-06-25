@@ -4,7 +4,7 @@
 
 function choose_color() {
 	var color = $('#essential-data').data('color').name;
-	var possible = ['red-color', 'green-color', 'blue-color', 'yellow-color'];
+	var possible = ['red', 'blue', 'green', 'yellow'];
 
 	// Default value
 	if (typeof color === 'undefined') { color = 'Sistem'; }
@@ -16,13 +16,13 @@ function choose_color() {
 	} else if (color === 'Acak') {
 		return possible[now % possible.length];
 	} else if (color === 'Merah') {
-		return 'red-color';
+		return 'red';
 	} else if (color === 'Hijau') {
-		return 'green-color';
+		return 'green';
 	} else if (color === 'Biru') {
-		return 'blue-color';
+		return 'blue';
 	} else if (color === 'Kuning') {
-		return 'yellow-color';
+		return 'yellow';
 	}
 }
 

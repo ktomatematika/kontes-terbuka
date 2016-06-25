@@ -2,7 +2,7 @@
   <h1 id="contest-name"></h1>
   <h3 id="subtitle"></h3>
   <h3 class="update-regularly" id="time-remaining"></h3>
-  <% if contest_time %>
+  <% if currently_in_contest %>
     <button class="btn btn-default btn-lg has-shade" id="download">
       <%= link_to "Download soal", @contest.problem_pdf.url(:original, false) %>
     </button>

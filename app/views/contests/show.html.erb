@@ -1,21 +1,19 @@
 <%= content_tag 'div', '', id: 'contest-data',
   data: { current_contest: @contest } %>
-<% now = Time.current() %>
-<% contest_time = (now >= @contest.start_time && now < @contest.end_time) %>
 
 <div class="container-fluid">
 
   <div class="row">
     <section>
 
-      <%= render 'header', contest_time: contest_time %>
+      <%= render 'header' %>
 
-      <% if contest_time %>
+      <% if currently_in_contest %>
         <%= render 'short_problems' %>
         <%= render 'long_problems' %>
       <% end %>
 
-      <% if now >= @contest.result_time %>
+      <% if Time.zone.now >= @contest.result_time %>
         <% uc = UserContest.find_by(user: @current_user, contest: @contest) %>
 
         <% unless uc.nil? %>
@@ -39,7 +37,7 @@
       <% end %>
     </section>
 
-    <% if contest_time %>
+    <% if currently_in_contest %>
       <%= render 'contest_aside_info' %>
     <% end %>
   </div>

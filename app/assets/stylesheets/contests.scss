@@ -49,8 +49,8 @@
   }
 }
 
-@each $color in $colors {
-  .month-calendar.has-shade[data-shade="#{$color}"] .has-contest {
+@each $name, $color in $colors {
+  .month-calendar.has-shade[data-shade="#{$name}"] .has-contest {
     background: lighten($color, 20);
   }
 }

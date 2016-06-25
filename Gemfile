@@ -66,8 +66,6 @@ end
 
 ### SECURITY
 
-# Authentication gem.
-gem 'devise'
 # Authorization gem. Adds roles.
 gem 'rolify'
 # Another authorization gem; adds privileges.

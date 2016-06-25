@@ -87,8 +87,8 @@ h5, .h5 {
   }
 }
 
-@each $color in $colors {
-  .btn.has-shade[data-shade="#{$color}"] {
+@each $name, $color in $colors {
+  .btn.has-shade[data-shade="#{$name}"] {
     background-color: lighten($color, 5);
     border-color: darken($color, 10);
 
@@ -130,10 +130,10 @@ footer.app-footer {
   }
 }
 
-@each $color in $colors {
+@each $name, $color in $colors {
   footer.app-footer, ul.navbar-nav {
     a:hover {
-      &.has-shade[data-shade="#{$color}"] {
+      &.has-shade[data-shade="#{$name}"] {
         color: $color
       }
     }

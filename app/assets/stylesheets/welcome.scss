@@ -53,8 +53,8 @@ header.teaser {
     font-size: 2em;
     padding: 10px 0;
 
-    @each $color in $colors {
-      &.has-shade[data-shade="#{$color}"] {
+    @each $name, $color in $colors {
+      &.has-shade[data-shade="#{$name}"] {
         color: $color;
       }
     }
@@ -72,9 +72,9 @@ header.teaser {
     margin: 5px 30px;
     border-color: #ccc;
 
-    @each $color in $colors {
-      &.has-shade[data-shade="#{$color}"] {
-        border-color: ligthen($color, 10);
+    @each $name, $color in $colors {
+      &.has-shade[data-shade="#{$name}"] {
+        border-color: lighten($color, 10);
       }
     }
   }
