@@ -18,7 +18,7 @@
       text-align: right;
     }
   }
-  
+
   margin-bottom: 10px;
 }
 
@@ -49,22 +49,9 @@
   }
 }
 
-.month-calendar.has-shade {
-  
-  &[data-shade=red] .has-contest {
-    background: lighten($red-color, 20);
-  }
-
-  &[data-shade=blue] .has-contest {
-    background: lighten($blue-color, 20);
-  }
-
-  &[data-shade=green] .has-contest {
-    background: lighten($green-color, 20);
-  }
-
-  &[data-shade=yellow] .has-contest {
-    background: lighten($yellow-color, 20);
+@each $color in $colors {
+  .month-calendar.has-shade[data-shade="#{$color}"] .has-contest {
+    background: lighten($color, 20);
   }
 }
 
@@ -72,7 +59,7 @@
   font-family: 'Titillium Web', sans-serif;
 
   .popover-title {
-     background: #f3f3ee; 
+     background: #f3f3ee;
   }
 
   .popover-content {

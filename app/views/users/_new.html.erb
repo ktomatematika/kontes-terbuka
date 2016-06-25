@@ -25,7 +25,7 @@
             harus terdiri atas huruf dan angka saja dan memiliki
             6 - 20 karakter.</div>
         </div>
-        <div class="form-group has-feedback"> 
+        <div class="form-group has-feedback">
           <%= f.email_field :email, class: "form-control",
             placeholder: "Alamat email" %>
           <span class="glyphicon form-control-feedback"
@@ -51,31 +51,31 @@
             yang menggunakan banyak angka dan simbol namun lebih pendek!
           </div>
         </div>
-        <div class="form-group has-feedback"> 
+        <div class="form-group has-feedback">
           <%= f.password_field :password_confirmation, class: "form-control",
             placeholder: "Ulangi password" %>
           <span class="glyphicon form-control-feedback glyphicon-eye-open"
                 aria-hidden="true"></span>
         </div>
-        <div class="form-group has-feedback"> 
+        <div class="form-group has-feedback">
           <%= f.text_field :fullname, class: "form-control",
             placeholder: "Nama lengkap" %>
           <span class="glyphicon form-control-feedback"
                 aria-hidden="true"></span>
         </div>
         <div class="form-group has-feedback">
-          <%= f.collection_select :province_id, Province.all(), 
-            :id, :name, { prompt: "Provinsi" }, { class: "form-control" } %> 
+          <%= f.collection_select :province_id, Province.all(),
+            :id, :name, { prompt: "Provinsi" }, { class: "form-control" } %>
           <span class="glyphicon form-control-feedback"
                 aria-hidden="true"></span>
         </div>
         <div class="form-group has-feedback">
-          <%= f.collection_select :status_id, Status.all(), 
+          <%= f.collection_select :status_id, Status.all(),
             :id, :name, { prompt: "Status" }, { class: "form-control" } %>
           <span class="glyphicon form-control-feedback"
                 aria-hidden="true"></span>
         </div>
-        <div class="form-group has-feedback"> 
+        <div class="form-group has-feedback">
           <%= f.text_field :school, class: "form-control",
             placeholder: "Sekolah/institusi" %>
           <span class="glyphicon form-control-feedback"

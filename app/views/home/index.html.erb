@@ -1,6 +1,6 @@
 <%= content_for (:page_attributes) do %>data-no-turbolink="true"<% end %>
 <%= content_tag 'div', '', id: 'home-contest-data', data: {
-  next: Contest.next_important_contest, 
+  next: Contest.next_important_contest,
   url: url_for(Contest.next_important_contest) } %>
 
 <!-- Facebook plugin -->
@@ -46,7 +46,7 @@ fjs.parentNode.insertBefore(js, fjs);
     </article>
     </div>
 
-    <div class="col-md-4 col-md-pull-4"> 
+    <div class="col-md-4 col-md-pull-4">
       <article class="home-article" id="prev-contests">
         <h2>Kontes-kontes Sebelumnya</h2>
         <% Contest.prev_contests.each do |c| %>
@@ -94,7 +94,7 @@ fjs.parentNode.insertBefore(js, fjs);
             </blockquote>
           </div>
         </div>
-      </article>    
+      </article>
     </div>
   </section>
 </div>

@@ -3,14 +3,14 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 @import "colors";
-$bg-overlay: linear-gradient(rgba(255, 255, 255, 0.1), 
+$bg-overlay: linear-gradient(rgba(255, 255, 255, 0.1),
 rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.1));
 
 html, body {
   height: 100%;
 }
 
-header.teaser { 
+header.teaser {
   text-align: center;
   background: $bg-overlay, image-url('welcome-bg.jpg');
   background-position: right center;
@@ -53,20 +53,10 @@ header.teaser {
     font-size: 2em;
     padding: 10px 0;
 
-    &.has-shade[data-shade=yellow] {
-      color: $yellow-color;
-    }
-
-    &.has-shade[data-shade=red] {
-      color: $red-color;
-    }
-
-    &.has-shade[data-shade=blue] {
-      color: $blue-color;
-    }
-
-    &.has-shade[data-shade=green] {
-      color: $green-color;
+    @each $color in $colors {
+      &.has-shade[data-shade="#{$color}"] {
+        color: $color;
+      }
     }
   }
 }
@@ -82,20 +72,10 @@ header.teaser {
     margin: 5px 30px;
     border-color: #ccc;
 
-    &.has-shade[data-shade=yellow] {
-      border-color: lighten($yellow-color, 10);
-    }
-
-    &.has-shade[data-shade=red] {
-      border-color: lighten($red-color, 10);
-    }
-
-    &.has-shade[data-shade=blue] {
-      border-color: lighten($blue-color, 10);
-    }
-
-    &.has-shade[data-shade=green] {
-      border-color: lighten($green-color, 10);
+    @each $color in $colors {
+      &.has-shade[data-shade="#{$color}"] {
+        border-color: ligthen($color, 10);
+      }
     }
   }
 

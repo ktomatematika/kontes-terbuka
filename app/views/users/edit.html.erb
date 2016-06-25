@@ -23,16 +23,16 @@
         <p>
         <label for="user_province">Provinsi:</label>
         <%= f.collection_select :province_id, Province.all(), :id, :name,
-          { prompt: "Provinsi" }, class: "form-control" %> 
+          { prompt: "Provinsi" }, class: "form-control" %>
         </p>
         <p>
         <label for="user_status">Status:</label>
         <%= f.collection_select :status_id, Status.all(), :id, :name,
-          { prompt: "Status" }, class: "form-control" %> 
+          { prompt: "Status" }, class: "form-control" %>
         </p>
         <label for="user_color">Warna:</label>
         <%= f.collection_select :color_id, Color.all(), :id, :name,
-          { prompt: "Color" }, class: "form-control" %> 
+          { prompt: "Color" }, class: "form-control" %>
         </p>
         <p>
         <label for="user_school">Sekolah/Institusi:</label>

@@ -1,0 +1,29 @@
+<article id="bagian-a">
+  <header>
+    <h2>Bagian A: Isian Singkat</h2>
+    <h4 class="text-justify">Jawaban setiap soal dipastikan berupa
+      bilangan bulat. Setiap soal bernilai 1 poin. Tidak ada
+      pengurangan untuk jawaban yang salah ataupun kosong. Anda boleh
+      terus mengisi jawaban sebelum kontes berakhir; jawaban yang
+      dikoreksi adalah jawaban yang Anda isi terakhir. Kosongkan
+      jawaban yang tidak ingin Anda ganti.</h4>
+  </header>
+  <%= form_for :short_answer, url: '/short_problems/submit/' do |f| %>
+    <% @short_problems.each do |prob| %>
+      <p class="isian">
+      <label for="isian-<%= prob.problem_no %>" class="text-justify">
+        <%= prob.problem_no %>. <%= markdown_render(prob.statement).html_safe %>
+      </label>
+      <% submission = ShortSubmission.where(
+        short_problem_id: prob.id, user_id: current_user.id)[0] %>
+      <% prev_answer = (submission == nil) ? "" : submission.answer %>
+      <%= f.text_field prob.id, class: "form-control",
+        id: "isian-" + prob.problem_no.to_s,
+        placeholder: prev_answer.to_s,
+        autocomplete: 'off' %>
+    </p>
+  <% end %>
+  <%= hidden_field_tag 'contest_id', @contest.id  %>
+  <%= f.submit "Jawab", class: "btn btn-default has-shade" %>
+<% end %>
+</article>
