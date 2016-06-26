@@ -39,8 +39,6 @@ gem 'redcarpet'
 
 ### UTILITIES
 
-# Adds quick, simple, dirty admin page
-gem 'rails_admin'
 # Logging
 gem 'paper_trail'
 # Migration Validators: to maintin referential integrity in database and models

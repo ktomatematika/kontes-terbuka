@@ -1,8 +1,4 @@
 Rails.application.routes.draw do
-  mount RailsAdmin::Engine => '/penguasa', as: 'rails_admin'
-
-  root to: 'home#index', as: :authenticated_root unless @current_user.nil?
-
   resources :province do
     resources :users
   end
@@ -40,6 +36,7 @@ Rails.application.routes.draw do
   get '/login' => 'sessions#new'
   post '/login' => 'sessions#create'
   get '/logout' => 'sessions#destroy', as: :logout
+  delete '/logout' => 'sessions#destroy'
 
   get '/contests/:id/rules' => 'contests#rules'
 

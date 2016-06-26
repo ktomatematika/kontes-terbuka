@@ -1,3 +1,4 @@
+# Province, Status, Color model objects are fixed
 [['WIB', ['D.I. Aceh', 'Sumatera Utara', 'Sumatera Barat', 'Riau',
           'Kepulauan Riau', 'Jambi', 'Bengkulu', 'Bangka Belitung',
           'Sumatera Selatan', 'Lampung', 'Banten', 'D.K.I. Jakarta',
@@ -23,6 +24,7 @@ end
   Color.find_or_create_by(name: color)
 end
 
+# Previous contests.
 # rubocop:disable LineLength
 Contest.find_or_create_by(name: 'KTO Matematika Juni 2015',
                           number_of_short_questions: 14,
@@ -136,15 +138,26 @@ Contest.find_or_create_by(name: 'KTO Matematika Juli 2016',
                           result_time: DateTime.new(2016, 7, 31, 0, 0, 0, '+7'),
                           feedback_time: DateTime.new(2016, 7, 6, 0, 0, 0, '+7'))
 
-admin = User.new(username: 'adminadmin',
-                 email: 'admin@gmail.com',
-                 password: 'adminadmin',
-                 fullname: 'Sharon Lynn',
-                 school: 'INTEGRATED',
-                 province_id: 18,
-                 status_id: 2,
-                 timezone: 'WITA')
-admin.save
+# Test Zone
+
+contest = Contest.find_or_create_by(name: 'Kontes Forever',
+                                    number_of_short_questions: 14,
+                                    number_of_long_questions: 4,
+                                    start_time: DateTime.new(2016, 7, 22, 12, 0, 0, '+7'),
+                                    end_time: DateTime.new(2020, 7, 24, 17, 0, 0, '+7'),
+                                    result_time: DateTime.new(2020, 7, 31, 0, 0, 0, '+7'),
+                                    feedback_time: DateTime.new(2020, 7, 6, 0, 0, 0, '+7'))
+
+# rubocop:enable LineLength
+
+admin = User.create(username: 'adminadmin',
+                    email: 'admin@gmail.com',
+                    password: 'adminadmin',
+                    fullname: 'Sharon Lynn',
+                    school: 'INTEGRATED',
+                    province_id: 18,
+                    status_id: 2,
+                    timezone: 'WITA')
 admin.add_role 'admin'
 
 mod = User.create(username: 'moderator',
@@ -155,7 +168,6 @@ mod = User.create(username: 'moderator',
                   province_id: 3,
                   status_id: 4,
                   timezone: 'WIB')
-mod.save
 mod.add_role 'moderator'
 
 donjar = User.create(username: 'donjar',
@@ -176,7 +188,6 @@ satria = User.create(username: 'satria',
                      province_id: 3,
                      status_id: 4,
                      timezone: 'WIB')
-satria.save
 satria.add_role 'marking_manager'
 
 pentium = User.create(username: 'pentium',
@@ -189,7 +200,12 @@ pentium = User.create(username: 'pentium',
                       timezone: 'WIB')
 pentium.save
 
-# l = LongProblem.find_by(contest_id: 13, problem_no: 1)
-# LongSubmission.find_by(l).each do |ls|
-#   pentium.add_role 'marker', ls
-# end
+# Buat submisi untuk Kontes Forever
+UserContest.create(user: donjar, contest: contest)
+soal1 = LongProblem.create(contest: contest, problem_no: 1,
+                           statement: 'Berapa sih nilai 3 + 5?')
+soal2 = LongProblem.create(contest: contest, problem_no: 2,
+                           statement: 'Berapa sih nilai 7 + 8?')
+LongSubmission.create(user: donjar, long_problem: soal1, page: 1)
+LongSubmission.create(user: donjar, long_problem: soal2, page: 1)
+pentium.add_role 'marker', soal1
