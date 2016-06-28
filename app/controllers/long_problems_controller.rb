@@ -59,6 +59,20 @@ class LongProblemsController < ApplicationController
     redirect_to Contest.find(contest_id)
   end
 
+  def mark
+    @contest = Contest.find(params[:id])
+    @long_problem = LongProblem.find_by(contest: @contest,
+                                        problem_no: params[:problem_no])
+    @long_submissions = LongSubmission.where(long_problem: @long_problem)
+  end
+
+  def mark_solo
+    mark
+  end
+  def mark_final
+    mark
+  end
+
   private
 
   def long_problem_params

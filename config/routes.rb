@@ -1,44 +1,23 @@
 Rails.application.routes.draw do
-  resources :province do
-    resources :users
-  end
-
-  resources :status do
-    resources :users
-  end
+  root 'welcome#index'
 
   resources :users
   resources :roles
   resources :contests do
-    get 'show_rules' => 'contests#show_rules', on: :member, as: :show_rules
-    post 'accept_rules' => 'contests#accept_rules', on: :collection,
-         as: :accept_rules
+    get 'show_rules' => 'contests#show_rules', on: :member
+    get 'mark_solo/:problem_no' => 'long_problems#mark_solo', on: :member
+    get 'mark_final/:problem_no' => 'long_problems#mark_final', on: :member
+    post 'accept_rules' => 'contests#accept_rules', on: :collection
     resources :short_problems
     resources :long_problems
   end
 
-  resources :short_problems do
-    resources :short_submissions
-  end
-
-  resources :long_problems do
-    resources :long_submissions
-  end
-
-  resources :short_submissions
-  resources :long_submissions
-  resources :user_contests
-  root 'welcome#index'
-
   get '/sign' => 'welcome#sign'
   get '/register' => 'users#new'
-
   get '/login' => 'sessions#new'
   post '/login' => 'sessions#create'
-  get '/logout' => 'sessions#destroy', as: :logout
+  get '/logout' => 'sessions#destroy'
   delete '/logout' => 'sessions#destroy'
-
-  get '/contests/:id/rules' => 'contests#rules'
 
   get '/home/index' => 'home#index'
   get '/faq' => 'home#faq'
