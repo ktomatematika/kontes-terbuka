@@ -55,6 +55,7 @@ class ContestsController < ApplicationController
 
   def show_rules
     @contest = Contest.find(params[:id])
+    redirect_to @contest unless view_context.currently_in_contest
     @user_contest = UserContest.new
   end
 
@@ -66,7 +67,6 @@ class ContestsController < ApplicationController
 
     @contest = @user_contest.contest
     redirect_to @contest
-
   rescue ActiveRecord::ActiveRecordError
     respond_to do |format|
       format.html do
@@ -75,6 +75,10 @@ class ContestsController < ApplicationController
         render 'rules'
       end
     end
+  end
+
+  def mark
+    @contest = Contest.find(params[:id])
   end
 
   private

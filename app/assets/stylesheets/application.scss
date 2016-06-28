@@ -53,7 +53,7 @@ h5, .h5 {
 [no-nav] {
   padding-top: 0;
 
-  & > .navbar-fixed-top {
+  > .navbar-fixed-top {
     display: none;
   }
 }
@@ -73,7 +73,6 @@ h5, .h5 {
 }
 
 .navbar-fixed-top {
-
   .navbar-brand {
     padding: 10px;
   }
@@ -104,7 +103,7 @@ h5, .h5 {
   }
 }
 
-footer.app-footer {
+.app-footer {
   background: #000;
   text-align: center;
   padding: 0 5% 3% 5%;
@@ -131,7 +130,7 @@ footer.app-footer {
 }
 
 @each $name, $color in $colors {
-  footer.app-footer, ul.navbar-nav {
+  .app-footer, .navbar-nav {
     a:hover {
       &.has-shade[data-shade="#{$name}"] {
         color: $color
