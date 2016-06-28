@@ -1,4 +1,9 @@
 module ContestsHelper
+  def get_problems
+    @short_problems = @contest.short_problems.order('problem_no').all
+    @long_problems = @contest.long_problems.order('problem_no').all
+  end
+
   def markdown_render(text, cut_p_tags)
     renderer = Redcarpet::Render::HTML.new(escape_html: true)
     markdown = Redcarpet::Markdown.new(renderer)

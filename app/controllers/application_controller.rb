@@ -24,9 +24,6 @@ class ApplicationController < ActionController::Base
     redirect_to login_path unless current_user
   end
 
-  def contact
-  end
-
   WIB = TZInfo::Timezone.get('Asia/Jakarta')
   WITA = TZInfo::Timezone.get('Asia/Makassar')
   WIT = TZInfo::Timezone.get('Asia/Jayapura')

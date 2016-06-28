@@ -1,6 +1,12 @@
 class ContestsController < ApplicationController
-  def rules
-    @contest = Contest.find(params[:id])
+  def grab_problems
+    @short_problems = @contest.short_problems.order('problem_no').all
+    @long_problems = @contest.long_problems.order('problem_no').all
+  end
+
+  def admin
+    @contest = Contest.find(params[:contest_id])
+    grab_problems
   end
 
   def new
@@ -22,12 +28,7 @@ class ContestsController < ApplicationController
        view_context.currently_in_contest
       redirect_to show_rules_contest_path(params[:id])
     end
-    set_problems
-  end
-
-  def set_problems
-    @short_problems = @contest.short_problems.order('problem_no').all
-    @long_problems = @contest.long_problems.order('problem_no').all
+    grab_problems
   end
 
   def index
@@ -54,7 +55,7 @@ class ContestsController < ApplicationController
   end
 
   def show_rules
-    @contest = Contest.find(params[:id])
+    @contest = Contest.find(params[:contest_id])
     redirect_to @contest unless view_context.currently_in_contest
     @user_contest = UserContest.new
   end
@@ -78,7 +79,7 @@ class ContestsController < ApplicationController
   end
 
   private
-  
+
   def contest_params
     params.require(:contest).permit(:name, :number_of_short_questions,
                                     :number_of_long_questions, :start_time,

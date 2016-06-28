@@ -41,6 +41,10 @@
 
       <div class="collapse navbar-collapse" id="top-navbar">
         <ul class="nav navbar-nav navbar-right">
+          <% if @current_user and @current_user.has_any_role? :admin, :marking_manager, :marker %>
+            <li><%= link_to "Admin" , magic_path,
+              :class => "has-shade" %></li>
+          <% end %>
           <li><%= link_to "Magic" , magic_path,
             :class => "has-shade" %></li>
           <li><%= link_to "Rumah" , root_path,

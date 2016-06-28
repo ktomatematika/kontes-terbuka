@@ -2,12 +2,13 @@ Rails.application.routes.draw do
   root 'welcome#index'
 
   resources :users
-  resources :roles
   resources :contests do
-    get 'show_rules' => 'contests#show_rules', on: :member
+    get 'admin' => 'contests#admin'
+    get 'show_rules' => 'contests#show_rules'
+    post 'accept_rules' => 'contests#accept_rules', on: :collection
+
     get 'mark_solo/:problem_no' => 'long_problems#mark_solo', on: :member
     get 'mark_final/:problem_no' => 'long_problems#mark_final', on: :member
-    post 'accept_rules' => 'contests#accept_rules', on: :collection
     resources :short_problems
     resources :long_problems
   end

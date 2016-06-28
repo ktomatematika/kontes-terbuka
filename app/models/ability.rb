@@ -2,20 +2,8 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
-    admin_roles = %w(admin moderator)
-
-    admin_roles.each do |role|
-      if user.has_role? role, :any
-        can :access, :rails_admin
-        can :dashboard
-      end
-    end
 
     can :manage, :all if user.has_role? :admin
-    if user.has_role? :moderator
-      can :manage, [Contest, LongProblem, LongSubmission, ShortProblem,
-                    ShortSubmission, User, UserContest]
-    end
     # The first argument to `can` is the action you are giving the user
     # permission to do.
     # If you pass :manage it will apply to every action. Other common actions
