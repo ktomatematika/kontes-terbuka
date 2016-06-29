@@ -28,6 +28,7 @@ Rails.application.routes.draw do
   get '/privacy' => 'home#privacy'
   get '/terms' => 'home#terms'
   get '/contact' => 'home#contact'
+  get '/admin' => 'home#admin'
 
   post '/short_problems/submit' => 'short_problems#submit'
   post '/long_problems/submit' => 'long_problems#submit'

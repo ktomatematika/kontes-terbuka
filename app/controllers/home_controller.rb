@@ -5,6 +5,12 @@ class HomeController < ApplicationController
   def index
   end
 
+  def admin
+    if current_user.has_any_role? ADMIN_ROLES
+      raise CanCan::AccessDenied.new()
+    end
+  end
+
   def faq
     @current_user = current_user
   end

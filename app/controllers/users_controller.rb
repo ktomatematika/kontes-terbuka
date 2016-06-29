@@ -1,8 +1,4 @@
 class UsersController < ApplicationController
-  skip_before_action :require_login, only: [:new, :create, :check_unique]
-  http_basic_authenticate_with name: 'admin', password: 'admin',
-                               only: [:index, :destroy]
-
   def new
     if current_user
       redirect_to root_path
