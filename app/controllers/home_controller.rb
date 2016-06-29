@@ -6,7 +6,8 @@ class HomeController < ApplicationController
   end
 
   def admin
-    if current_user.has_any_role? ADMIN_ROLES
+    admin_roles = ActiveRecord::Base::Role::ADMIN_ROLES.map {|r| {name: r.to_sym, resource: :any }}
+    unless current_user.has_any_role?(*admin_roles)
       raise CanCan::AccessDenied.new()
     end
   end

@@ -185,3 +185,9 @@ blockquote {
 .btn-lg {
   font-size: 1.2em;
 }
+
+@each $name, $color in $colors {
+  table.has-shade[data-shade="#{$name}"] tbody tr:hover {
+    background: lighten($color, 20);
+  }
+}

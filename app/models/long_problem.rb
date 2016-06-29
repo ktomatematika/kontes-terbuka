@@ -6,4 +6,8 @@ class LongProblem < ActiveRecord::Base
   has_many :users, through: :long_submissions
 
   accepts_nested_attributes_for :long_submissions
+
+  def to_s
+    contest.to_s + ' no. ' + problem_no.to_s
+  end
 end

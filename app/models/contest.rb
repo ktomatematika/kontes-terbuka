@@ -43,4 +43,8 @@ class Contest < ActiveRecord::Base
     prev_contests = Contest.where('end_time < ?', Time.zone.now)
     prev_contests.limit(5).order('end_time desc')
   end
+
+  def to_s
+    name
+  end
 end

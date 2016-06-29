@@ -3,7 +3,11 @@ class Ability
 
   def initialize(user)
 
-    can :manage, :all if user.has_role? :admin
+    unless user.nil?
+      can [:show, :index, :show_rules, :accept_rules], Contest
+      can :manage, User, id: user.id
+      can :manage, :all if user.has_role? :admin
+    end
     # The first argument to `can` is the action you are giving the user
     # permission to do.
     # If you pass :manage it will apply to every action. Other common actions

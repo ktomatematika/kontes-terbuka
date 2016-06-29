@@ -1,1 +1,10 @@
-<%= link_to "New contest", new_contest_path %><br>
+<div class="container-fluid">
+  <h1>Halaman Admin</h1>
+  <%= link_to "Kontes Baru", new_contest_path if @current_user.has_role? :admin %>
+  <h2>Koreksian</h2>
+  <% @current_user.roles.each do |role| %>
+    <% if role.resource_type == 'LongProblem' %>
+      <%= link_to role.resource, mark_solo_path(role.resource.id) %>
+    <% end %>
+  <% end %>
+</div>

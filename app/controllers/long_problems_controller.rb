@@ -60,9 +60,8 @@ class LongProblemsController < ApplicationController
   end
 
   def mark
-    @contest = Contest.find(params[:id])
-    @long_problem = LongProblem.find_by(contest: @contest,
-                                        problem_no: params[:problem_no])
+    @long_problem = LongProblem.find(params[:id])
+    @contest = @long_problem.contest
     @long_submissions = LongSubmission.where(long_problem: @long_problem)
   end
 

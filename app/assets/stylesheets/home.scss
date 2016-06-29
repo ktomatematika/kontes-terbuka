@@ -51,9 +51,3 @@
 #leaderboard > .table-responsive, #leaderboard-table {
   margin: 0;
 }
-
-@each $name, $color in $colors {
-  #leaderboard-table.has-shade[data-shade="#{$name}"] tbody tr:hover {
-    background: ligthen($color, 20);
-  }
-}
