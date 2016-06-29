@@ -6,6 +6,8 @@ class Ability
     unless user.nil?
       can [:show, :index, :show_rules, :accept_rules], Contest
       can :manage, User, id: user.id
+      can :show, User
+      cannot :index, User
       can :manage, :all if user.has_role? :admin
     end
     # The first argument to `can` is the action you are giving the user

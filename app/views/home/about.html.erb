@@ -1,7 +1,7 @@
-<% if @current_user.nil? %>
+<% if current_user.nil? %>
   <% content_for :page_attributes do %>nav-logo-only<% end %>
 <% end %>
-<div class="container-fluid">
+<div class="container">
   <h1>Tentang Kami</h1>
   <p>Kontes Terbuka Olimpiade Matematika adalah sebuah inisiatif yang dilaksanakan Tim Olimpiade Matematika Indonesia, perkumpulan pemenang olimpiade matematika nasional (OSN) dan internasional (IMO). Kontes bulanan ini diadakan secara online dan gratis bagi semua orang. Selain itu, kontes ini berisi soal-soal berkualitas yang sangat cocok untuk persiapan OSN tingkat kabupaten, provinsi, maupun nasional.</p>
   <h2>Tim Kami</h2>

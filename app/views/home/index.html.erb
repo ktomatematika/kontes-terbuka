@@ -14,10 +14,10 @@ fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
 
 <!-- Rest of document -->
-<div class="container-fluid" id="home-container">
+<div class="container" id="home-container">
 
   <header id="greeting">
-    <h1>Halo, <%= @current_user.username %></h1>
+    <h1>Halo, <%= current_user.username %></h1>
   </header>
 
   <section class="home-section home-article text-center" id="this-contest">
@@ -33,12 +33,12 @@ fjs.parentNode.insertBefore(js, fjs);
       <article class="home-article" id="info-kontes">
         <h2>Baru di kontes ini?</h2>
         <p><%= link_to 'FAQ', faq_path %> kami berisi banyak informasi
-        mengenai kontes ini.</p>
+        mengenai kontes-kontes kami.</p>
         <p>Soal-soal kontes sebelumnya bisa diperoleh dari
         <a href="http://olimpiade.org/discussions/main-topic/13/"
            target="_blank">link ini.</a></p>
-        <p>Anda juga bisa <a href="http://bit.ly/ktom-buku-1">membeli buku
-           kami</a> yang berisi kumpulan soal, solusi, maupun tips dan trik
+        <p>Anda juga bisa <%= link_to 'membeli buku kami', book_path %>
+           yang berisi kumpulan soal, solusi, maupun tips dan trik
          olimpiade matematika!</p>
          <%= image_tag("buku/buku1.png", :alt => "Buku KTOM 1",
                        :class => "img-responsive center-block",
@@ -64,7 +64,8 @@ fjs.parentNode.insertBefore(js, fjs);
           <%= image_tag("sponsor.jpg", :alt => "Komat UNPAR",
                         :class => "img-responsive center-block",
                         :id => "img-promo-kontes") %>
-      </a>
+        </a>
+        <p>Teksteksteksteks</p>
       </article>
     </div>
   </section>
