@@ -25,8 +25,6 @@ Ini bisa memakan waktu 1 jam, karena vagrant perlu mensetup segalanya
 dari awal, termasuk download Ubuntu (!), setup database, Ruby, dan Rails.
 Bersabarlah. :3
 
-Sambil menunggu, copy config/database.yml.default ke config/database.yml.
-
 Setelah itu, masuk ke Vagrant: `vagrant ssh`
 
 Masuk ke tempat development: `cd /vagrant`

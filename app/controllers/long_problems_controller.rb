@@ -1,4 +1,6 @@
 class LongProblemsController < ApplicationController
+  load_and_authorize_resource
+
   def create
     @contest = Contest.find(params[:contest_id])
     unless @contest.long_problems.find_by_problem_no(

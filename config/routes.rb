@@ -37,4 +37,6 @@ Rails.application.routes.draw do
   get '/magic', to: 'home#send_magic_email', as: :magic
 
   post '/check', to: 'users#check_unique'
+
+  get '/assign/:id', to: 'roles#assign_markers'
 end

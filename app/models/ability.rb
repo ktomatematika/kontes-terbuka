@@ -2,12 +2,16 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
-
     unless user.nil?
       can [:show, :index, :show_rules, :accept_rules], Contest
       can :manage, User, id: user.id
       can :show, User
       cannot :index, User
+      can :submit, LongProblem
+
+      can [:mark_solo, :mark_final], LongProblem,
+          id: LongProblem.with_role(:marker, user).pluck(:id)
+
       can :manage, :all if user.has_role? :admin
     end
     # The first argument to `can` is the action you are giving the user

@@ -21,16 +21,11 @@
 }
 
 .about-us-description {
-  padding: 25px;
-  display: none; // only display when clicked
-  text-align: left !important;
+  background-color: #fff;
+  padding-top: 15px;
 }
 
 .active-about-us {
-  width: 100%;
-  overflow: auto;
-
-  > .about-us-description {
-    display: block;    
-  }
+  background-color: #fff;
+  transition: background-color 0.5s ease;
 }

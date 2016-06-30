@@ -27,7 +27,7 @@ class ContestsController < ApplicationController
   def show
     @contest = Contest.find(params[:id])
     if UserContest.where(user: current_user, contest: @contest).empty? &&
-       view_context.currently_in_contest
+       currently_in_contest
       redirect_to show_rules_contest_path(params[:id])
     end
     grab_problems
@@ -58,7 +58,7 @@ class ContestsController < ApplicationController
 
   def show_rules
     @contest = Contest.find(params[:contest_id])
-    redirect_to @contest unless view_context.currently_in_contest
+    redirect_to @contest unless currently_in_contest
     @user_contest = UserContest.new
   end
 

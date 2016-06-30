@@ -19,6 +19,7 @@ rvm install 2.3.1
 rvm use 2.3.1 --default
 gem install bundler
 cd /vagrant
+cp config/database.yml.default config/database.yml
 bundle install
 rvm rvmrc warning ignore allGemfiles
 cp /vagrant/config/database.yml.default /vagrant/config/database.yml
