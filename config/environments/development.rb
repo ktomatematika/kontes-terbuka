@@ -55,4 +55,6 @@ Rails.application.configure do
     enable_starttls_auto: true,
     domain: 'tomi.or.id'
   }
+
+  config.web_console.whitelisted_ips = '10.0.2.2'
 end

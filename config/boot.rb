@@ -13,8 +13,8 @@ module Rails
           super.merge(Host: '0.0.0.0')
         end
       end
-    end
 
-    prepend new_defaults
+      prepend new_defaults
+    end
   end
 end

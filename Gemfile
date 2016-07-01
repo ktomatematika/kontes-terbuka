@@ -34,6 +34,11 @@ gem 'paperclip'
 gem 'nested_form'
 # Markdown parser
 gem 'redcarpet'
+# Somehow need this for production???
+group :production do
+  gem 'carrierwave'
+  gem 'mini_magick'
+end
 
 ### END ASSETS
 
