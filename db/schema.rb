@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160702101103) do
+ActiveRecord::Schema.define(version: 20160702102335) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,12 @@ ActiveRecord::Schema.define(version: 20160702101103) do
     t.string   "photo_content_type"
     t.integer  "photo_file_size"
     t.datetime "photo_updated_at"
+  end
+
+  create_table "awards", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "colors", force: :cascade do |t|
@@ -149,6 +155,13 @@ ActiveRecord::Schema.define(version: 20160702101103) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "user_awards", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "award_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "user_contests", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "contest_id"
@@ -217,6 +230,8 @@ ActiveRecord::Schema.define(version: 20160702101103) do
   add_index "versions", ["transaction_id"], name: "index_versions_on_transaction_id", using: :btree
 
   add_foreign_key "feedback_answers", "feedback_questions"
+  add_foreign_key "user_awards", "awards"
+  add_foreign_key "user_awards", "users"
   add_foreign_key "user_contests", "contests"
   add_foreign_key "user_contests", "users"
   add_foreign_key "users", "colors"
