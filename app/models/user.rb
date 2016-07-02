@@ -15,6 +15,9 @@ class User < ActiveRecord::Base
   belongs_to :status
   belongs_to :color
 
+  has_many :user_awards
+  has_many :awards, through: :user_awards
+
   has_attached_file :profile_picture,
                     url: '/profile_pictures/:id/:basename.:extension',
                     path: ':rails_root/public/profile_pictures/ \
