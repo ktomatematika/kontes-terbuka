@@ -11,6 +11,8 @@ Rails.application.routes.draw do
     resources :long_problems
   end
 
+  resources :market_items
+
   get '/mark_solo/:id', to: 'long_problems#mark_solo', as: :mark_solo
   get '/mark_final/:id', to: 'long_problems#mark_final', as: :mark_final
 
