@@ -1,0 +1,27 @@
+<article id="bagian-b">
+  <header>
+    <h2>Bagian B: Uraian</h2>
+    <h4 class="text-justify">Setiap soal bernilai 7 poin. Tidak ada
+      pengurangan untuk jawaban yang salah ataupun kosong. Solusi boleh
+      Anda ketik, scan, ataupun foto. Unggah solusi Anda dengan form di
+      bawah ini.</h4>
+  </header>
+
+  <% @long_problems.each do |prob|%>
+    <%= prob.statement %>
+    <%= nested_form_for prob, url: '/long_problems/submit',
+      html: { multipart: true },
+      method: :post do |f| %>
+      <%= f.fields_for :long_submissions do |page_form| %>
+        <%= page_form.text_field :page %>
+        <%= page_form.file_field :submission %>
+        <%= page_form.link_to_remove do %>
+          <b class="glyphicon glyphicon-trash"></b>
+        <% end %>
+        <%= f.link_to_add 'Tambah halaman', :long_submissions %>
+        <%= hidden_field_tag 'contest_id', @contest.id  %>
+        <%= f.submit "Jawab", class: "btn btn-default has-shade" %>
+      <% end %>
+    <% end %>
+  <% end %>
+</article>

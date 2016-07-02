@@ -1,7 +1,7 @@
-<% if @current_user.nil? %>
+<% if current_user.nil? %>
   <% content_for :page_attributes do %>nav-logo-only<% end %>
 <% end %>
-<div class="container-fluid">
+<div class="container">
   <h1>Buku Kontes Terbuka Olimpiade Matematika</h1>
   <p>Mau belajar olimpiade matematika tapi ga tau mau mulai dari mana? Ayok punyai buku Kontes Terbuka Olimpiade Matematika!</p>
   <p>Buku KTO Matematika ini berisi kumpulan soal dan solusi KTO Matematika bulan-bulan sebelumnya. Beberapa fitur yang menarik:</p>
@@ -17,7 +17,7 @@
                      :class => "img-responsive center-block",
                      :id => "img-buku-ktom") %>
        Buku KTO Matematika 1<br>
-       Soal dan Solusi Juni - Desember 2015 
+       Soal dan Solusi Juni - Desember 2015
     </a>
   </div>
   Anda juga bisa SMS ke Satria Stanza Pramayoga di +6281335482377 untuk memesan buku kami.

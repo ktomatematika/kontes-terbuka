@@ -1,0 +1,13 @@
+<header id="contest-info">
+  <h1 id="contest-name"></h1>
+  <h3 id="subtitle"></h3>
+  <h3 class="update-regularly" id="time-remaining"></h3>
+  <% if currently_in_contest %>
+    <button class="btn btn-default btn-lg has-shade" id="download">
+      <%= link_to "Download soal", @contest.problem_pdf.url(:original, false) %>
+    </button>
+  <% end %>
+  <% if @current_user.has_role? 'admin' %>
+    <%= link_to "Administrasi", contest_admin_path(contest_id: @contest) %>
+  <% end %>
+</header>

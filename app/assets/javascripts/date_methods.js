@@ -1,4 +1,14 @@
+/* exported now short_days MONTHS_IN_A_YEAR DAYS_IN_A_WEEK */
+
 var now = new Date();
+var months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli',
+	'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+var short_days = ['M', 'S', 'S', 'R', 'K', 'J', 'S'];
+var long_days = ['Minggu', 'Senin', 'Selasa', 'Rabu',
+	'Kamis', 'Jumat', 'Sabtu'];
+
+var MONTHS_IN_A_YEAR = 12;
+var DAYS_IN_A_WEEK = 7;
 
 /* compare_day: compares a day to another.
  * Returns positive if current date is after compared date,
@@ -10,33 +20,33 @@ var now = new Date();
  * a.compare_day(b) returns an integer < 0.
  */
 
-Date.prototype.compare_day = function(other) {
+Date.prototype.compare_day = function (other) {
 	var year_diff = this.getFullYear() - other.getFullYear();
 	var month_diff = this.getMonth() - other.getMonth();
 	var date_diff = this.getDate() - other.getDate();
 
-	return (year_diff != 0) ? year_diff : (month_diff != 0) ? month_diff :
+	return year_diff !== 0 ? year_diff : month_diff !== 0 ? month_diff :
 		date_diff;
-}
+};
 
+/* eslint-disable no-magic-numbers */
 /* format_indo: format a date into Indonesian long form.
  * Example: "Senin, 13 Februari 2016 jam 08:00 WIB"
  */
-Date.prototype.format_indo = function() {
-	
-	// Get timezone data from the essential-data content tag in
+Date.prototype.format_indo = function () {
+// Get timezone data from the essential-data content tag in
 	// application.html.erb.
-	var timezone = $('#essential-data').data('timezone')
+	var timezone = $('#essential-data').data('timezone');
 	var parsed_timezone = this.getTimezoneOffset() / -60;
 
 	// Diff is the difference from the user's timezone vs the parsed_timezone.
 	// We need to correct for difference.
 	var diff;
-	if (timezone === "WIB") {
+	if (timezone === 'WIB') {
 		diff = 7 - parsed_timezone;
-	} else if (timezone === "WITA") {
+	} else if (timezone === 'WITA') {
 		diff = 8 - parsed_timezone;
-	} else if (timezone === "WIT") {
+	} else if (timezone === 'WIT') {
 		diff = 9 - parsed_timezone;
 	} else {
 		timezone = 'GMT+' + parsed_timezone;
@@ -54,9 +64,9 @@ Date.prototype.format_indo = function() {
 	var minute = this.getMinutes();
 	if (minute < 10) { minute = '0' + minute; }
 
-	return day + ", " + date + " " + month + " " + year + " jam " + hour + 
-		":" + minute + " " + timezone;
-}
+	return day + ', ' + date + ' ' + month + ' ' + year + ' jam ' + hour +
+		':' + minute + ' ' + timezone;
+};
 
 /* indo_go_to: format (this - other) into Indo date.
  * This is the time it takes for this to reach other.
@@ -64,13 +74,13 @@ Date.prototype.format_indo = function() {
  * or "7 hari 13 jam 0 menit 12 detik yang lalu" --> other < this
  */
 
-Date.prototype.indo_go_to = function(other) {
+Date.prototype.indo_go_to = function (other) {
 	var difference = this - other;
-	var text = "";
+	var text = '';
 	if (difference <= 0) {
-		text = "lagi";
+		text = 'lagi';
 	} else {
-		text = "yang lalu";
+		text = 'yang lalu';
 	}
 
 	difference = Math.abs(difference);
@@ -91,22 +101,23 @@ Date.prototype.indo_go_to = function(other) {
 	difference = Math.floor(difference / 24);
 	var days = difference;
 
-	var res = "";
+	var res = '';
 	if (days !== 0) {
-		res += days + " hari ";
-		res += hours + " jam ";
-		res += minutes + " menit ";
-		res += seconds + " detik ";
+		res += days + ' hari ';
+		res += hours + ' jam ';
+		res += minutes + ' menit ';
+		res += seconds + ' detik ';
 	} else if (hours !== 0) {
-		res += hours + " jam ";
-		res += minutes + " menit ";
-		res += seconds + " detik ";
+		res += hours + ' jam ';
+		res += minutes + ' menit ';
+		res += seconds + ' detik ';
 	} else if (minutes !== 0) {
-		res += minutes + " menit ";
-		res += seconds + " detik ";
+		res += minutes + ' menit ';
+		res += seconds + ' detik ';
 	} else if (seconds !== 0) {
-		res += seconds + " detik ";
+		res += seconds + ' detik ';
 	}
 	res += text;
 	return res;
-}
+};
+/* eslint-enable no-magic-numbers */

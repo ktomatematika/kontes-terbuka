@@ -18,7 +18,7 @@
     <%= content_tag 'div', '', id: 'essential-data',
       data: {
       color: @current_user.nil? ? '' : @current_user.color,
-      timezone: Time.zone.now.zone 
+      timezone: Time.zone.now.zone
     } %>
   <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
@@ -39,19 +39,17 @@
       </div>
       </div>
 
-      <div class="collapse navbar-collapse" id="top-navbar"> 
+      <div class="collapse navbar-collapse" id="top-navbar">
         <ul class="nav navbar-nav navbar-right">
-          <li><%= link_to "Magic" , magic_path,
-            :class => "has-shade" %></li>
-          <li><%= link_to "Rumah" , root_path,
-            :class => "has-shade" %></li>
-          <li><%= link_to "Kontes", contests_path,
-            :class => "has-shade" %></li>
+          <% if @current_user and @current_user.has_any_role? :admin, { name: :marking_manager, resource: :any }, { name: :marker, resource: :any } %>
+            <li><%= link_to "Admin", admin_path, :class => "has-shade" %></li>
+          <% end %>
+          <li><%= link_to "Magic", magic_path, :class => "has-shade" %></li>
+          <li><%= link_to "Rumah", root_path, :class => "has-shade" %></li>
+          <li><%= link_to "Kontes", contests_path, :class => "has-shade" %></li>
           <li><a href="#" class="has-shade">Pasar</a></li>
-          <li><%= link_to "Profil", @current_user,
-            :class => "has-shade" %></li>
-          <li><%= link_to "Keluar", logout_path,
-            :class => "has-shade" %></li>
+          <li><%= link_to "Profil", @current_user, :class => "has-shade" %></li>
+          <li><%= link_to "Keluar", logout_path, :class => "has-shade" %></li>
         </ul>
       </div>
     </div>

@@ -8,3 +8,24 @@
     border-radius: 10px;
   }
 }
+
+#daftar-panitia {
+  img {
+    margin-top: 25px;
+    max-width: 150px;
+    max-height: 150px;
+    border-radius: 50%;
+  }
+
+  text-align: center;
+}
+
+.about-us-description {
+  background-color: #fff;
+  padding-top: 15px;
+}
+
+.active-about-us {
+  background-color: #fff;
+  transition: background-color 0.5s ease;
+}

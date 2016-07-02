@@ -8,7 +8,7 @@ wget --quiet -O - http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc | sudo ap
 apt-get update
 apt-get install --yes --force-yes postgresql-common
 apt-get install --yes --force-yes postgresql-9.5 libpq-dev
-sudo -u postgres psql -c "ALTER USER postgres PASSWORD 'password';"
+sudo -u postgres psql -c "create role vagrant with createdb login password 'password';"
 
 # Installs rvm, Ruby, Bundler and runs bundle install, which installs a lot.
 su vagrant <<'EOF'
@@ -19,8 +19,9 @@ rvm install 2.3.1
 rvm use 2.3.1 --default
 gem install bundler
 cd /vagrant
+cp config/database.yml.default config/database.yml
 bundle install
 rvm rvmrc warning ignore allGemfiles
-EOF
-
 cp /vagrant/config/database.yml.default /vagrant/config/database.yml
+bin/rake db:setup
+EOF

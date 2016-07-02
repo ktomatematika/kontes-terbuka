@@ -1,37 +1,38 @@
-# there will be a verification here so that only admin can make contest
+<div class="container">
+  <h1>Buat kontes</h1>
 
-<h1> Buat kontes </h1>
+  <%= form_for :contest, url: contests_path, html: { multipart: true } do |f| %>
+    <% if @contest.errors.any? %>
+      <div id="error_explanation">
+        <h2>
+          <%= pluralize(@contest.errors.count, "error") %> prohibited this user from being registered:
+        </h2>
+        <ul>
+          <% @contest.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
 
-<%= form_for :contest, url: contests_path, html: { multipart: true } do |f| %>
-	<% if @contest.errors.any? %>
-    	<div id="error_explanation">
-    		<h2>
-			<%= pluralize(@contest.errors.count, "error") %> prohibited this user from being registered:
-			</h2>
-			<ul>
-			<% @contest.errors.full_messages.each do |msg| %>
-				<li><%= msg %></li>
-			<% end %>
-			</ul>
-    	</div>
-	<% end %>
-
-	Nama kontes: <br>
-	<%= f.text_field :name %><br>
-	Banyak soal isian: <br>
-	<%= f.number_field :number_of_short_questions %><br>
-	Banyak soal esai: <br>
-	<%= f.number_field :number_of_long_questions %><br>
-	Tanggal mulai kontes: <br> 
-	<%= f.datetime_field :start_time %><br>
-	Tanggal selesai kontes: <br>
-	<%= f.datetime_field :end_time %><br>
-	Tanggal pengumuman: <br>
-	<%= f.datetime_field :result_time %><br>
-	Tanggal umpan balik: <br>
-	<%= f.datetime_field :feedback_time %><br>
-  Contoh format: 23 May 2016 13:42:15<br>
-  Jam selalu dalam UTC.<br>
-  <%= f.file_field :problem_pdf %>
-	<%= f.submit %>
-<% end %>
+    Nama kontes: <br>
+    <%= f.text_field :name %><br>
+    Banyak soal isian: <br>
+    <%= f.number_field :number_of_short_questions %><br>
+    Banyak soal esai: <br>
+    <%= f.number_field :number_of_long_questions %><br>
+    Tanggal mulai kontes: <br>
+    <%= f.datetime_field :start_time %><br>
+    Tanggal selesai kontes: <br>
+    <%= f.datetime_field :end_time %><br>
+    Tanggal pengumuman: <br>
+    <%= f.datetime_field :result_time %><br>
+    Tanggal umpan balik: <br>
+    <%= f.datetime_field :feedback_time %><br>
+    Contoh format: 23 May 2016 13:42:15<br>
+    Jam selalu dalam UTC.<br>
+    File:
+    <%= f.file_field :problem_pdf %>
+    <%= f.submit %>
+  <% end %>
+</div>

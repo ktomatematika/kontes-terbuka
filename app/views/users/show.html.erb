@@ -1,5 +1,5 @@
-<div class="container-fluid">
-  <h1><%= current_user.username %></h1>
+<div class="container">
+  <h1><%= @user.username %></h1>
   <div class="row">
     <div class="col-sm-4" id="profile">
       <%= image_tag("/profile_pictures/#{@user.id}/#{@user.profile_picture.instance.profile_picture_file_name}", :alt => "Profil #{@user.username}", :height => "200px") %>
@@ -8,8 +8,10 @@
       <p>Provinsi: <%= @user.province.name %> </p>
       <p>Status: <%= @user.status.name %></p>
       <p>Sekolah/Institusi: <%= @user.school %></p>
-      <%= link_to "Edit Profil", edit_user_path,
-        :class => "btn btn-default has-shade", :type => "button" %>
+      <% if can? :edit, @user %>
+        <%= link_to "Edit Profil", edit_user_path,
+          :class => "btn btn-default has-shade", :type => "button" %>
+      <% end %>
       <p>Poin: 21/81</p>
       <a class="btn btn-default has-shade" type="button" id="profile-to-market">
         Pasar

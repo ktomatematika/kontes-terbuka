@@ -1,65 +1,42 @@
 Rails.application.routes.draw do
-	mount RailsAdmin::Engine => '/penguasa', as: 'rails_admin'
+  root 'welcome#index'
 
-	authenticated :user do
-		root to: 'home#index', as: :authenticated_root
-	end
+  resources :users
+  resources :contests do
+    get 'admin', to: 'contests#admin'
+    get 'show_rules', to: 'contests#show_rules'
+    post 'accept_rules', to: 'contests#accept_rules', on: :collection
 
-	resources :province do
-		resources :users
-	end
+    resources :short_problems
+    resources :long_problems
+  end
 
-	resources :status do
-		resources :users
-	end
+  get '/mark_solo/:id', to: 'long_problems#mark_solo', as: :mark_solo
+  get '/mark_final/:id', to: 'long_problems#mark_final', as: :mark_final
 
-	resources :users
-	resources :roles
-	resources :contests do
-		get 'show_rules' => 'contests#show_rules', on: :member, as: :show_rules
-		post 'accept_rules' => 'contests#accept_rules', on: :collection, as: :accept_rules
-		resources :short_problems
-		resources :long_problems
-	end
+  get '/sign', to: 'welcome#sign'
+  get '/register', to: 'users#new'
+  get '/login', to: 'sessions#new'
+  post '/login', to: 'sessions#create'
+  get '/logout', to: 'sessions#destroy'
+  delete '/logout', to: 'sessions#destroy'
 
-	resources :short_problems do
-		resources :short_submissions
-	end
+  get '/home/index', to: 'home#index'
+  get '/faq', to: 'home#faq'
+  get '/book', to: 'home#book'
+  get '/donate', to: 'home#donate'
+  get '/about', to: 'home#about'
+  get '/privacy', to: 'home#privacy'
+  get '/terms', to: 'home#terms'
+  get '/contact', to: 'home#contact'
+  get '/admin', to: 'home#admin'
 
-	resources :long_problems do
-		resources :long_submissions
-	end
+  post '/short_problems/submit', to: 'short_problems#submit'
+  post '/long_problems/submit', to: 'long_problems#submit'
 
-	resources :short_submissions
-	resources :long_submissions
-	resources :user_contests
-	root 'welcome#index'
+  get '/magic', to: 'home#send_magic_email', as: :magic
 
-	get '/sign' => 'welcome#sign'
-	get '/register' => 'users#new'
+  post '/check', to: 'users#check_unique'
 
-	get '/login' => 'sessions#new'
-	post '/login' => 'sessions#create'
-	get '/logout' => 'sessions#destroy', as: :logout
-
-	get '/contests/:id/admin' => 'contests#admin', as: :contest_admin
-	get '/contests/:id/rules' => 'contests#rules'
-
-	get '/home/index' => 'home#index'
-	get '/faq' => 'home#faq'
-	get '/book' => 'home#book'
-	get '/donate' => 'home#donate'
-	get '/about' => 'home#about'
-	get '/privacy' => 'home#privacy'
-	get '/terms' => 'home#terms'
-	get '/contact' => 'home#contact'
-
-	post '/short_problems/submit' => 'short_problems#submit'
-	post '/long_problems/submit' => 'long_problems#submit'
-
-	get '/magic' => 'home#send_magic_email', as: :magic
-
-	get '/home/admin' => 'home#admin'
-
-	post '/check' => 'users#check_unique'
+  get '/assign/:id', to: 'roles#assign_markers'
 end

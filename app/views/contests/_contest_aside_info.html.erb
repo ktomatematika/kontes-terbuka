@@ -1,0 +1,24 @@
+<aside class="col-sm-4" id="ringkasan">
+  <header>
+    <h3>Ringkasan Jawaban Anda</h3>
+  </header>
+  <article>
+    <header>
+      <h4>Bagian A</h4>
+    </header>
+    <% @short_problems.each do |prob| %>
+      <% submission = ShortSubmission.where(
+        short_problem_id: prob.id, user_id: current_user.id)[0] %>
+      <% prev_answer = (submission == nil) ? "belum terjawab" :
+        submission.answer %>
+      <div <%= (submission == nil) ? 'class=text-danger' : '' %>>
+        <%= "No. #{prob.problem_no}: #{prev_answer}" %>
+      </div>
+    <% end %>
+  </article>
+  <article>
+    <header>
+      <h4>Bagian B</h4>
+    </header>
+  </article>
+</aside>

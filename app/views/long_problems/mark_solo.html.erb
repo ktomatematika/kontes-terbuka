@@ -1,0 +1,27 @@
+<div class="container">
+  <h1><%= @long_problem %></h1>
+  <a class="btn btn-default has-shade">Download semua submisi</a>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nilai</th>
+        <th>Tags</th>
+        <th>Teman sudah?</th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @long_submissions.each do |s| %>
+        <tr>
+          <td><%= s.id %></td>
+          <td><input></td>
+          <td><select></td>
+          <td>Sudah</td>
+          <td><a>Download</a></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

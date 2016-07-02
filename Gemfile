@@ -34,13 +34,16 @@ gem 'paperclip'
 gem 'nested_form'
 # Markdown parser
 gem 'redcarpet'
+# Somehow need this for production???
+group :production do
+  gem 'carrierwave'
+  gem 'mini_magick'
+end
 
 ### END ASSETS
 
 ### UTILITIES
 
-# Adds quick, simple, dirty admin page
-gem 'rails_admin'
 # Logging
 gem 'paper_trail'
 # Migration Validators: to maintin referential integrity in database and models
@@ -66,8 +69,6 @@ end
 
 ### SECURITY
 
-# Authentication gem.
-gem 'devise'
 # Authorization gem. Adds roles.
 gem 'rolify'
 # Another authorization gem; adds privileges.

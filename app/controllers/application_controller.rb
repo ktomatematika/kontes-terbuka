@@ -1,53 +1,40 @@
 require 'active_record'
 
 class ApplicationController < ActionController::Base
-	# Prevent CSRF attacks by raising an exception.
-	# For APIs, you may want to use :null_session instead.
-	include CanCan::ControllerAdditions
+  # Prevent CSRF attacks by raising an exception.
+  # For APIs, you may want to use :null_session instead.
+  include CanCan::ControllerAdditions
 
-	before_filter :set_paper_trail_whodunnit
-	before_action :require_login, :set_timezone
+  before_action :set_paper_trail_whodunnit
+  before_action :require_login, :set_timezone
 
-	protect_from_forgery with: :exception
-	def current_user
-		if cookies[:auth_token]
-			begin
-				@current_user ||= User.find_by_auth_token!(cookies[:auth_token])
-			rescue ActiveRecord::RecordNotFound
-				@current_user = nil
-			end
-		end
-	end
-	helper_method :current_user
+  protect_from_forgery with: :exception
+  def current_user
+    if cookies[:auth_token]
+      begin
+        @current_user ||= User.find_by_auth_token!(cookies[:auth_token])
+      rescue ActiveRecord::RecordNotFound
+        @current_user = nil
+      end
+    end
+  end
+  helper_method :current_user
 
-	def require_login
-		redirect_to login_path unless current_user
-	end
+  def require_login
+    redirect_to login_path unless current_user
+  end
 
-	def contact
-	end
+  WIB = TZInfo::Timezone.get('Asia/Jakarta')
+  WITA = TZInfo::Timezone.get('Asia/Makassar')
+  WIT = TZInfo::Timezone.get('Asia/Jayapura')
 
-	WIB = TZInfo::Timezone.get('Asia/Jakarta')
-	WITA = TZInfo::Timezone.get('Asia/Makassar')
-	WIT = TZInfo::Timezone.get('Asia/Jayapura')
-
-	def set_timezone 
-		unless current_user.nil?
-			if current_user.timezone == "WIB"
-				Time.zone = WIB
-			else
-				if current_user.timezone == "WITA"
-					Time.zone = WITA
-				else
-					if current_user.timezone == "WIT"
-						Time.zone = WIT
-					else
-						Time.zone = 'Singapore'
-					end
-				end
-			end
-		else
-			Time.zone = WIB
-		end
-	end  
+  def set_timezone
+    Time.zone = if current_user.nil?
+                  WIB
+                elsif [WIB, WITA, WIT].include? current_user.timezone
+                  current_user.timezone
+                else
+                  WIB
+                end
+  end
 end
