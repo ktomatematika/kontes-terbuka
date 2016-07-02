@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160619113128) do
+ActiveRecord::Schema.define(version: 20160702101103) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,6 +48,23 @@ ActiveRecord::Schema.define(version: 20160619113128) do
     t.text     "rule",                      default: "", null: false
     t.datetime "result_time"
     t.datetime "feedback_time"
+    t.integer  "gold_cutoff"
+    t.integer  "silver_cutoff"
+    t.integer  "bronze_cutoff"
+    t.boolean  "result_released"
+  end
+
+  create_table "feedback_answers", force: :cascade do |t|
+    t.integer  "feedback_question_id"
+    t.text     "answer"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
+  create_table "feedback_questions", force: :cascade do |t|
+    t.text     "question"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "long_problems", force: :cascade do |t|
@@ -72,6 +89,19 @@ ActiveRecord::Schema.define(version: 20160619113128) do
     t.datetime "submission_updated_at"
     t.integer  "score"
     t.text     "feedback"
+  end
+
+  create_table "market_items", force: :cascade do |t|
+    t.string   "name"
+    t.text     "description"
+    t.integer  "price"
+    t.integer  "current_quantity"
+    t.string   "picture_file_name"
+    t.string   "picture_content_type"
+    t.integer  "picture_file_size"
+    t.datetime "picture_updated_at"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
   end
 
   create_table "provinces", force: :cascade do |t|
@@ -147,7 +177,7 @@ ActiveRecord::Schema.define(version: 20160619113128) do
     t.string   "profile_picture_content_type"
     t.integer  "profile_picture_file_size"
     t.datetime "profile_picture_updated_at"
-    t.string   "timezone"
+    t.text     "timezone"
   end
 
   add_index "users", ["color_id"], name: "index_users_on_color_id", using: :btree
@@ -186,6 +216,7 @@ ActiveRecord::Schema.define(version: 20160619113128) do
   add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
   add_index "versions", ["transaction_id"], name: "index_versions_on_transaction_id", using: :btree
 
+  add_foreign_key "feedback_answers", "feedback_questions"
   add_foreign_key "user_contests", "contests"
   add_foreign_key "user_contests", "users"
   add_foreign_key "users", "colors"
