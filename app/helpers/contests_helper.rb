@@ -16,7 +16,7 @@ module ContestsHelper
         end_time: c.end_time,
         number_of_short_questions: c.number_of_short_questions,
         number_of_long_questions: c.number_of_long_questions,
-        path: contest_path(c),
+        path: contest_path(c)
       }
     end
     result

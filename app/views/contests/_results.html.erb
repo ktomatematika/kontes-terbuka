@@ -6,11 +6,11 @@
         <tr>
           <th>Peringkat</th>
           <th>Username</th>
-          <% if @short_problems > 0 %>
+          <% if @short_problems.length > 0 %>
             <th>Bagian A</th>
           <% end %>
-          <% @long_problems.times do |i| %>
-            <th>Bagian B no. <%= i + 1 %></th>
+          <% @long_problems.each do |lp| %>
+            <th>Bagian B no. <%= lp.problem_no %></th>
           <% end %>
           <th>Total</th>
           <th>Penghargaan</th>
@@ -22,13 +22,12 @@
           <tr>
             <td>1</td>
             <td><%= user.username %></td>
-            <% if @short_problems > 0 %>
+            <% if @short_problems.length > 0 %>
               <td><%= uc.short_marks %></td>
             <% end %>
-            <td>3</td>
-            <td>7</td>
-            <td>7</td>
-            <td>0</td>
+            <% @long_problems.each do |ls| %>
+              <td>7</td>
+            <% end %>
             <td>19</td>
             <td>Emas</td>
           </tr>
