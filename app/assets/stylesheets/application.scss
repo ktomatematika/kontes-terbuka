@@ -10,10 +10,10 @@
 @import "colors";
 
 body {
-  font-family: 'Titillium Web', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   background: #f3f3ee;
   padding-top: 90px;
   font-size: 18px;
+  font-weight: 100;
 
   & > .container-fluid {
     @media(min-width: 768px) {
@@ -23,7 +23,7 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
-  font-weight: 600;
+  font-weight: 300;
 
   &, p {
     line-height: 1.45;
