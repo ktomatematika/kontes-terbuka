@@ -1,0 +1,34 @@
+<h2>Edit</h2>
+
+<%= form_for :contest, url: contest_path(@contest), method: :patch do |f| %>
+  <% if @contest.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@contest.errors.count, "error") %> prohibited this user from being registered:
+      </h2>
+      <ul>
+        <% @contest.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <label for="contest_name">Nama kontes</label>
+  <%= f.text_field :name, class: 'form-control' %>
+  <label for="contest_number_of_short_questions">Banyak isian</label>
+  <%= f.number_field :number_of_short_questions, class: 'form-control' %>
+  <label for="contest_number_of_long_questions">Banyak esai</label>
+  <%= f.number_field :number_of_long_questions, class: 'form-control' %>
+  <label for="contest_start_time">Mulai kontes</label>
+  <%= f.datetime_field :start_time, class: 'form-control' %>
+  <label for="contest_end_time">Selesai kontes</label>
+  <%= f.datetime_field :end_time, class: 'form-control' %>
+  <label for="contest_result_time">Hasil kontes diumumkan</label>
+  <%= f.datetime_field :result_time, class: 'form-control' %>
+  <label for="contest_feedback_time">Terakhir kumpul feedback</label>
+  <%= f.datetime_field :feedback_time, class: 'form-control' %>
+  Contoh format tanggal: 23 May 2016 13:42:15. Jam selalu dalam UTC.
+  <%= f.file_field :problem_pdf, class: 'form-control' %>
+  <%= f.submit "Edit", class: 'btn btn-default has-shade' %>
+<% end %>

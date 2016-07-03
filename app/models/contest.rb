@@ -48,8 +48,8 @@ class Contest < ActiveRecord::Base
     name
   end
 
-  def currently_in_contest(contest = @contest)
+  def currently_in_contest?
     now = Time.zone.now
-    contest.start_time <= now && now <= contest.end_time
+    start_time <= now && now <= end_time
   end
 end

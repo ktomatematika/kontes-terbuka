@@ -1,7 +1,6 @@
 var REFRESH_TIME = 1000;
 
 function update_regularly() {
-
 	var current = new Date();
 
 	// home/index contest details
@@ -47,9 +46,10 @@ function update_regularly() {
 		var current_start_time = new Date(current_contest.start_time);
 		var current_end_time = new Date(current_contest.end_time);
 		var current_result_time = new Date(current_contest.result_time);
+		var current_feedback_time = new Date(current_contest.feedback_time);
 
-		var subtitle;
-		var time_remaining;
+		var subtitle = '';
+		var time_remaining = '';
 
 		if (current < current_start_time) {
 			// Contest has not started
@@ -75,6 +75,17 @@ function update_regularly() {
 
 			subtitle = 'Batas pengumpulan: ' + current_end_time.format_indo();
 			time_remaining = '(' + current.indo_go_to(current_end_time) + ')';
+		} else if (current_contest.result_released) {
+			$('.row > section').removeClass('col-sm-8');
+
+			if (current < current_feedback_time) {
+				subtitle = 'Hasil kontes sudah keluar! Jangan lupa untuk ' +
+					'memberikan feedback ke kami paling lambat ' +
+					current_feedback_time.format_indo() + ', untuk mendapatkan' +
+					' sertifikatnya!';
+				time_remaining = '(' + current.indo_go_to(current_feedback_time)
+					+ ')';
+			}
 		} else if (current < current_result_time) {
 			// Results has not been released
 			$('.row > section').removeClass('col-sm-8');
@@ -86,7 +97,6 @@ function update_regularly() {
 				')';
 		} else {
 			// Results should be released manually.
-
 			subtitle = 'Dikarenakan berbagai halangan, hasil kontes belum ' +
 				'keluar. Mohon maaf atas ketidaknyamannya dan mohon ' +
 				'bersabar :(';

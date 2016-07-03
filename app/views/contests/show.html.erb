@@ -7,9 +7,13 @@
 
       <%= render 'header' %>
 
-      <% if currently_in_contest %>
-        <%= render 'short_problems' %>
-        <%= render 'long_problems' %>
+      <% if @contest.currently_in_contest? %>
+        <% if @contest.number_of_short_questions != 0 %>
+          <%= render 'short_problems' %>
+        <% end %>
+        <% if @contest.number_of_long_questions != 0 %>
+          <%= render 'long_problems' %>
+        <% end %>
       <% end %>
 
       <% if Time.zone.now >= @contest.result_time %>
@@ -27,16 +31,13 @@
           <% end %>
         <% end %>
 
-        <article id="all-result">
-          <h2>Leaderboard</h2>
-          <div class="table-responsive">
-            <table class="table table-hover table-bordered"> <thead> <tr> <th>Peringkat</th> <th>Username</th> <th>Bagian A</th> <th>Bagian B no. 1</th> <th>Bagian B no. 2</th> <th>Bagian B no. 3</th> <th>Bagian B no. 4</th> <th>Total</th> <th>Penghargaan</th> </tr> </thead> <tbody> <tr> <td>1</td> <td>asdf</td> <td>2</td> <td>3</td> <td>7</td> <td>7</td> <td>0</td> <td>19</td> <td>Emas</td> </tr> <tr> <td>2</td> <td>asdf</td> <td>2</td> <td>3</td> <td>7</td> <td>7</td> <td>0</td> <td>19</td> <td>Emas</td> </tr> <tr> <td>3</td> <td>asdf</td> <td>2</td> <td>3</td> <td>7</td> <td>7</td> <td>0</td> <td>19</td> <td>Emas</td> </tr> <tr> <td>4</td> <td>asdf</td> <td>2</td> <td>3</td> <td>7</td> <td>7</td> <td>0</td> <td>19</td> <td>Emas</td> </tr> <tr> <td>5</td> <td>asdf</td> <td>2</td> <td>3</td> <td>7</td> <td>7</td> <td>0</td> <td>19</td> <td>Emas</td> </tr> </tbody> </table>
-          </div>
-        </article>
+        <% if @contest.result_released %>
+          <%= render 'results' %>
+        <% end %>
       <% end %>
     </section>
 
-    <% if currently_in_contest %>
+    <% if @contest.currently_in_contest? %>
       <%= render 'contest_aside_info' %>
     <% end %>
   </div>

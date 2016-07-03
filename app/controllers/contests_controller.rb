@@ -27,10 +27,15 @@ class ContestsController < ApplicationController
   def show
     @contest = Contest.find(params[:id])
     if UserContest.where(user: current_user, contest: @contest).empty? &&
-       currently_in_contest
+       @contest.currently_in_contest?
       redirect_to show_rules_contest_path(params[:id])
     end
     grab_problems
+    results
+  end
+
+  def results
+    @user_contests = UserContest.where(contest: @contest)
   end
 
   def index
@@ -86,7 +91,9 @@ class ContestsController < ApplicationController
     params.require(:contest).permit(:name, :number_of_short_questions,
                                     :number_of_long_questions, :start_time,
                                     :end_time, :result_time,
-                                    :feedback_time, :problem_pdf)
+                                    :feedback_time, :problem_pdf, :gold_cutoff,
+                                    :silver_cutoff, :bronze_cutoff,
+                                    :result_released)
   end
 
   def participate_params

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160702102335) do
+ActiveRecord::Schema.define(version: 20160703090048) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,19 +45,19 @@ ActiveRecord::Schema.define(version: 20160702102335) do
     t.integer  "number_of_long_questions"
     t.datetime "start_time"
     t.datetime "end_time"
-    t.datetime "created_at",                             null: false
-    t.datetime "updated_at",                             null: false
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
     t.string   "problem_pdf_file_name"
     t.string   "problem_pdf_content_type"
     t.integer  "problem_pdf_file_size"
     t.datetime "problem_pdf_updated_at"
-    t.text     "rule",                      default: "", null: false
+    t.text     "rule",                      default: "",    null: false
     t.datetime "result_time"
     t.datetime "feedback_time"
-    t.integer  "gold_cutoff"
-    t.integer  "silver_cutoff"
-    t.integer  "bronze_cutoff"
-    t.boolean  "result_released"
+    t.integer  "gold_cutoff",               default: 0
+    t.integer  "silver_cutoff",             default: 0
+    t.integer  "bronze_cutoff",             default: 0
+    t.boolean  "result_released",           default: false
   end
 
   create_table "feedback_answers", force: :cascade do |t|
@@ -190,7 +190,7 @@ ActiveRecord::Schema.define(version: 20160702102335) do
     t.string   "profile_picture_content_type"
     t.integer  "profile_picture_file_size"
     t.datetime "profile_picture_updated_at"
-    t.text     "timezone"
+    t.string   "timezone"
   end
 
   add_index "users", ["color_id"], name: "index_users_on_color_id", using: :btree
