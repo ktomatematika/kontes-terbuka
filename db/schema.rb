@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160703160846) do
+ActiveRecord::Schema.define(version: 20160703185043) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -56,6 +56,10 @@ ActiveRecord::Schema.define(version: 20160703160846) do
     t.integer  "silver_cutoff",            default: 0
     t.integer  "bronze_cutoff",            default: 0
     t.boolean  "result_released",          default: false
+    t.string   "problem_tex_file_name"
+    t.string   "problem_tex_content_type"
+    t.integer  "problem_tex_file_size"
+    t.datetime "problem_tex_updated_at"
   end
 
   create_table "feedback_answers", force: :cascade do |t|

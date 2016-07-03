@@ -23,6 +23,12 @@ class Contest < ActiveRecord::Base
   validates_attachment_content_type :problem_pdf,
                                     content_type: ['application/pdf']
 
+  has_attached_file :problem_tex,
+                    url: '/problem_files/:id/:basename.:extension',
+                    path: ':rails_root/public/problem_files/:id/:basename.:extension'
+  validates_attachment_content_type :problem_tex,
+                                    content_type: ['application/x-tex']
+
   accepts_nested_attributes_for :long_problems
   accepts_nested_attributes_for :long_submissions
 
