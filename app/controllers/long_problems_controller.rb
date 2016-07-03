@@ -70,6 +70,7 @@ class LongProblemsController < ApplicationController
   def mark_solo
     mark
   end
+
   def mark_final
     mark
   end

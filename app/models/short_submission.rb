@@ -4,6 +4,6 @@ class ShortSubmission < ActiveRecord::Base
   belongs_to :short_problem
 
   def is_correct?
-    answer == self.short_problem.answer 
+    answer == short_problem.answer
   end
 end

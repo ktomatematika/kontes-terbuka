@@ -80,7 +80,7 @@ function update_regularly() {
 
 			subtitle = 'Batas pengumpulan: ' + current_end_time.format_indo();
 			time_remaining = '(' + current.indo_go_to(current_end_time) + ')';
-		} else if (current_contest.result_released) {
+		} else if (current_contest.data('result-released')) {
 			$('.row > section').removeClass('col-sm-8');
 
 			if (current < current_feedback_time) {
