@@ -28,10 +28,12 @@ class ContestsController < ApplicationController
     @contest = Contest.find(params[:id])
     if UserContest.where(user: current_user, contest: @contest).empty? &&
        @contest.currently_in_contest?
+       puts "ILHAN"
       redirect_to contest_show_rules_path(params[:id])
     end
     grab_problems
     results
+    @long_submissions = LongSubmission.filter_user_contest(current_user.id, params[:id])
   end
 
   def results
@@ -70,6 +72,12 @@ class ContestsController < ApplicationController
     UserContest.transaction do
       @user_contest = UserContest.new(participate_params)
       @user_contest.save!
+      @user = @user_contest.user
+      @contest = @user_contest.contest
+      @contest.long_problems.each do |long_problem|
+        @long_submission = LongSubmission.new(user: @user, long_problem: long_problem)
+        @long_submission.save
+      end
     end
 
     @contest = @user_contest.contest

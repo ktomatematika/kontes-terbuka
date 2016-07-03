@@ -4,11 +4,11 @@ class SubmissionPage < ActiveRecord::Base
   validates :page_number, presence: true
 
   has_attached_file :submission,
-                    url: '/submissions/:contest_id/:problem_no/:user_id/' \
-                    ':contest_id_:problem_no_:user_id_:page_number.:extension',
+                    url: '/submissions/kontes:contest_id/no:problem_no/peserta:user_id/' \
+                    'kontes:contest_id_no:problem_no_peserta:user_id_hal:page_number.:extension',
                     path: ':rails_root/public/submissions/kontes:contest_id/' \
                     'no:problem_no/peserta:user_id/kontes:contest_id_' \
-                    'no:problem_no_peserta:user_id_hal:page.:extension'
+                    'no:problem_no_peserta:user_id_hal:page_number.:extension'
   validates_attachment_content_type :submission,
                                     content_type: ['application/pdf']
 

@@ -34,7 +34,10 @@ Rails.application.routes.draw do
   get '/admin', to: 'home#admin'
 
   post '/short_problems/submit', to: 'short_problems#submit'
-  post '/long_problems/submit', to: 'long_problems#submit'
+
+  resources :long_submissions do
+    post 'submit' => 'long_submissions#submit', on: :member
+  end
 
   get '/magic', to: 'home#send_magic_email', as: :magic
 
