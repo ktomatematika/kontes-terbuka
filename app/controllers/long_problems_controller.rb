@@ -34,31 +34,31 @@ class LongProblemsController < ApplicationController
   end
 
   def submit
-    contest_id = submission_params['contest_id']
-    problem_id = submission_params['problem_id']
-    if submission_params.key?(:long_submissions_attributes)
-      concern_params = submission_params[:long_submissions_attributes]
-      concern_params.each_key do |s|
-        next if concern_params[s][:submission].blank?
-        long_submission_temp = LongSubmission.where(
-          long_problem_id: problem_id, user_id: current_user.id
-        )
-        page_number = concern_params[s]['page']
-        if long_submission_temp.where(page: page_number).blank?
-          @long_problem = LongProblem.find(problem_id)
-          @long_submission = @long_problem.long_submissions.create(
-            user_id: current_user.id,
-            submission: concern_params[s][:submission],
-            page: page_number
-          )
-        else
-          @long_submission = long_submission_temp.where(page: page_number).first
-          @long_submission.update(submission: concern_params[s][:submission])
-          @long_submission.save
-        end
-      end
-    end
-    redirect_to Contest.find(contest_id)
+    # contest_id = submission_params['contest_id']
+    # problem_id = submission_params['problem_id']
+    # if submission_params.key?(:long_submissions_attributes)
+    #   concern_params = submission_params[:long_submissions_attributes]
+    #   concern_params.each_key do |s|
+    #     next if concern_params[s][:submission].blank?
+    #     long_submission_temp = LongSubmission.where(
+    #       long_problem_id: problem_id, user_id: current_user.id
+    #     )
+    #     page_number = concern_params[s]['page']
+    #     if long_submission_temp.where(page: page_number).blank?
+    #       @long_problem = LongProblem.find(problem_id)
+    #       @long_submission = @long_problem.long_submissions.create(
+    #         user_id: current_user.id,
+    #         submission: concern_params[s][:submission],
+    #         page: page_number
+    #       )
+    #     else
+    #       @long_submission = long_submission_temp.where(page: page_number).first
+    #       @long_submission.update(submission: concern_params[s][:submission])
+    #       @long_submission.save
+    #     end
+    #   end
+    # end
+    # redirect_to Contest.find(contest_id)
   end
 
   def mark

@@ -206,6 +206,6 @@ soal1 = LongProblem.create(contest: contest, problem_no: 1,
                            statement: 'Berapa sih nilai 3 + 5?')
 soal2 = LongProblem.create(contest: contest, problem_no: 2,
                            statement: 'Berapa sih nilai 7 + 8?')
-LongSubmission.create(user: donjar, long_problem: soal1, page: 1)
-LongSubmission.create(user: donjar, long_problem: soal2, page: 1)
+LongSubmission.create(user: donjar, long_problem: soal1)
+LongSubmission.create(user: donjar, long_problem: soal2)
 pentium.add_role 'marker', soal1
