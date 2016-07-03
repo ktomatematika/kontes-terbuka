@@ -17,7 +17,8 @@ class EnforceValidationsInDatabaseLevel < ActiveRecord::Migration
 
     validates :long_submissions, :user_id, null: false
     validates :long_submissions, :long_problem_id, null: false
-    validates :long_submissions, :page, null: false
+
+    validates :short_submissions, :long_submission_id, null: false
 
     validates :provinces, :name, presence: true, uniqueness: true
 
