@@ -86,13 +86,8 @@ ActiveRecord::Schema.define(version: 20160703090048) do
   create_table "long_submissions", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "long_problem_id"
-    t.integer  "page"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
-    t.string   "submission_file_name"
-    t.string   "submission_content_type"
-    t.integer  "submission_file_size"
-    t.datetime "submission_updated_at"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
     t.integer  "score"
     t.text     "feedback"
   end
@@ -153,6 +148,17 @@ ActiveRecord::Schema.define(version: 20160703090048) do
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "submission_pages", force: :cascade do |t|
+    t.integer  "page_number"
+    t.integer  "long_submission_id"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.string   "submission_file_name"
+    t.string   "submission_content_type"
+    t.integer  "submission_file_size"
+    t.datetime "submission_updated_at"
   end
 
   create_table "user_awards", force: :cascade do |t|
@@ -230,6 +236,7 @@ ActiveRecord::Schema.define(version: 20160703090048) do
   add_index "versions", ["transaction_id"], name: "index_versions_on_transaction_id", using: :btree
 
   add_foreign_key "feedback_answers", "feedback_questions"
+  add_foreign_key "submission_pages", "long_submissions"
   add_foreign_key "user_awards", "awards"
   add_foreign_key "user_awards", "users"
   add_foreign_key "user_contests", "contests"
