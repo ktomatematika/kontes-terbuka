@@ -2,18 +2,21 @@ class User < ActiveRecord::Base
   rolify
   has_paper_trail
 
-  has_many :short_submissions
-  has_many :short_problems, through: :short_submissions
-  has_many :contests, through: :user_contests
-
-  has_many :long_submissions
-  has_many :long_problems, through: :long_submissions
-
-  has_many :user_contests
+  # Associations
 
   belongs_to :province
   belongs_to :status
   belongs_to :color
+
+  has_many :user_contests
+  has_many :contests, through: :user_contests
+
+  has_many :short_submissions
+  has_many :short_problems, through: :short_submissions
+
+  has_many :long_submissions
+  has_many :long_problems, through: :long_submissions
+  has_many :submission_pages, through: :long_submissions
 
   has_many :user_awards
   has_many :awards, through: :user_awards
