@@ -18,10 +18,13 @@
       </thead>
       <tbody>
         <% @user_contests.each do |uc| %>
+          <% user = uc.user %>
           <tr>
             <td>1</td>
-            <td>asdf</td>
-            <td>2</td>
+            <td><%= user.username %></td>
+            <% if @contest.number_of_short_questions > 0 %>
+              <td><%= uc.short_marks %></td>
+            <% end %>
             <td>3</td>
             <td>7</td>
             <td>7</td>

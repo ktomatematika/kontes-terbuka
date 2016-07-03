@@ -3,22 +3,23 @@ var REFRESH_TIME = 1000;
 function update_regularly() {
 	var current = new Date();
 
-	// home/index contest details
-	var next_important_contest = $('#home-contest-data').data('next');
-	if (typeof next_important_contest !== 'undefined') {
-		var end = new Date(next_important_contest.end_time);
-		$('#next-contest-name').text(next_important_contest.name);
+	// home#index contest details
+	var next_important_contest = $('#home-contest-data');
+	if (next_important_contest.length !== 0) {
+		var end = erb_to_date(next_important_contest.data('end-time'));
+		$('#next-contest-name').text(next_important_contest.data('name'));
 		var button_text;
 
 		if (current > end) {
 			// Show time to results
-			var results = new Date(next_important_contest.result_time);
+			var results =
+				erb_to_date(next_important_contest.data('result_time'));
 			$('#next-contest-time').text('Hasil diumumkan paling telat ' +
 					results.format_indo());
 			button_text = current.indo_go_to(results);
 		} else {
 			// Show time to next contest start
-			var start = new Date(next_important_contest.start_time);
+			var start = erb_to_date(next_important_contest.data('start-time'));
 			var time = start.format_indo();
 			time += ' \u2013 ';
 			time += end.format_indo();
@@ -38,15 +39,19 @@ function update_regularly() {
 		$('#home-btn-daftar').text(button_text);
 	}
 
-	// contests/id time remaining, enable contest
-	var current_contest = $('#contest-data').data('current-contest');
-	if (typeof current_contest !== 'undefined') {
-		$('#contest-name').text(current_contest.name);
+	// contests#show time remaining, enable contest
+	var current_contest = $('#contest-data');
+	if ($('#contest-data').length !== 0) {
+		$('#contest-name').text(current_contest.data('name'));
 
-		var current_start_time = new Date(current_contest.start_time);
-		var current_end_time = new Date(current_contest.end_time);
-		var current_result_time = new Date(current_contest.result_time);
-		var current_feedback_time = new Date(current_contest.feedback_time);
+		var current_start_time = erb_to_date(
+				current_contest.data('start-time'));
+		var current_end_time = erb_to_date(
+				current_contest.data('end-time'));
+		var current_result_time = erb_to_date(
+				current_contest.data('result-time'));
+		var current_feedback_time = erb_to_date(
+				current_contest.data('feedback-time'));
 
 		var subtitle = '';
 		var time_remaining = '';

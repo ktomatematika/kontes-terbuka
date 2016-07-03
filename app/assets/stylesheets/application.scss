@@ -187,7 +187,7 @@ blockquote {
 }
 
 @each $name, $color in $colors {
-  table.has-shade[data-shade="#{$name}"] tbody tr:hover {
+  table.has-shade[data-shade="#{$name}"]:not(.month-calendar) tbody tr:hover {
     background: lighten($color, 20);
   }
 }

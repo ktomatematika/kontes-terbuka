@@ -1,6 +1,8 @@
 <% content_for :page_attributes do %>no-nav<% end %>
 <%= content_tag 'div', '', id: 'welcome-contest-data', data: {
-  next: Contest.next_contest, } %>
+  name: @next_contest.name,
+  start_time: @next_contest.start_time,
+  end_time: @next_contest.end_time, } %>
 
 <header class="teaser">
   <div class="welcome-logo">

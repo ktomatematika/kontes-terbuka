@@ -1,7 +1,11 @@
 <%= content_for (:page_attributes) do %>data-no-turbolink="true"<% end %>
+<%= puts @next_important_contest %>
 <%= content_tag 'div', '', id: 'home-contest-data', data: {
-  next: Contest.next_important_contest,
-  url: url_for(Contest.next_important_contest) } %>
+  name: @next_important_contest.name,
+  start_time: @next_important_contest.start_time,
+  end_time: @next_important_contest.end_time,
+  result_time: @next_important_contest.result_time,
+  url: url_for(@next_important_contest) } %>
 
 <!-- Facebook plugin -->
 <div id="fb-root"></div>

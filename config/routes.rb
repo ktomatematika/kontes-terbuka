@@ -23,7 +23,7 @@ Rails.application.routes.draw do
   get '/logout', to: 'sessions#destroy'
   delete '/logout', to: 'sessions#destroy'
 
-  get '/home/index', to: 'home#index'
+  get '/home', to: 'home#index'
   get '/faq', to: 'home#faq'
   get '/book', to: 'home#book'
   get '/donate', to: 'home#donate'

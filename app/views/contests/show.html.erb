@@ -1,5 +1,10 @@
-<%= content_tag 'div', '', id: 'contest-data',
-  data: { current_contest: @contest } %>
+<%= content_tag 'div', '', id: 'contest-data', data: {
+  name: @contest.name,
+  start_time: @contest.start_time,
+  end_time: @contest.end_time,
+  result_time: @contest.result_time,
+  feedback_time: @contest.feedback_time,
+} %>
 
 <div class="container">
   <div class="row">
@@ -16,7 +21,7 @@
         <% end %>
       <% end %>
 
-      <% if Time.zone.now >= @contest.result_time %>
+      <% if @contest.result_released %>
         <% uc = UserContest.find_by(user: @current_user, contest: @contest) %>
 
         <% unless uc.nil? %>

@@ -2,7 +2,9 @@ class HomeController < ApplicationController
   skip_before_action :require_login, only: [:faq, :book, :donate, :about,
                                             :sitemap, :privacy, :terms,
                                             :contact]
+
   def index
+    @next_important_contest = Contest.next_important_contest
   end
 
   def admin

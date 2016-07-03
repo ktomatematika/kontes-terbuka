@@ -1,24 +1,21 @@
 /* eslint-disable no-inner-declarations, no-redeclare */
+var MONTH_CALENDAR_IN_A_ROW = 3;
+var MONTH_CALENDAR_SIZE = MONTHS_IN_A_YEAR / MONTH_CALENDAR_IN_A_ROW;
 
 $(document).ready(function() {
-	var MONTH_CALENDAR_IN_A_ROW = 3;
-	var MONTH_CALENDAR_SIZE = MONTHS_IN_A_YEAR / MONTH_CALENDAR_IN_A_ROW;
+	var contests = $('#contests-data').data();
 
-	if (typeof $('body').attr('contests_page') !== 'undefined') {
+	if (typeof contests !== 'undefined') {
 		var current_year = now.getFullYear();
 		var current_month = now.getMonth();
 		var displayed_year = current_year;
 		var displayed_month = current_month;
 
-		var contests = $('#contest-data').data('contests');
-		var contest_paths = $('#contest-data').data('contest-paths');
-
 		// Convert start_time and end_time to Javascript Date objects
-		for (var i = 0; i < contests.length; i++) {
-			var a_contest = contests[i];
-			a_contest.start_time = new Date(a_contest.start_time);
-			a_contest.end_time = new Date(a_contest.end_time);
-		}
+		$.each(contests, function(id, contest) {
+			contest.start_time = new Date(contest.start_time);
+			contest.end_time = new Date(contest.end_time);
+		});
 
 		// month is indexed from zero!
 		function create_month_calendar(year, month) {
@@ -38,11 +35,15 @@ $(document).ready(function() {
 
 					// Give the class 'contest-cell' to cells with contests and
 					// give them popover info
-					for (var i = 0; i < contests.length; i++) {
-						var contest = contests[i];
-						if (date_obj.compare_day(contest.start_time) >= 0 &&
-								date_obj.compare_day(contest.end_time) <= 0) {
+
+					var cell_contest_id = 0;
+					$.each(contests, function(id, contest) {
+						if (cell_contest_id === 0 &&
+								(date_obj.compare_day(contest.start_time) >= 0
+								&& date_obj.compare_day(contest.end_time)
+								<= 0)) {
 							cell_class.push('contest-cell');
+							cell_contest_id = id;
 
 							additions += 'data-toggle="popover" ';
 							additions += 'data-container="body" ';
@@ -51,16 +52,16 @@ $(document).ready(function() {
 							additions += 'data-html="true" ';
 							additions += 'title="' + contest.name + '" ';
 
-							var content = 'Dari ' + contest.start_time.format_indo()
-								+ ' sampai ' + contest.end_time.format_indo()
+							var content = 'Dari ' +
+								contest.start_time.format_indo() + ' sampai '
+								+ contest.end_time.format_indo()
 								+ '<br>Format: '
-								+ contest.number_of_short_questions + ' isian dan '
+								+ contest.number_of_short_questions
+								+ ' isian dan '
 								+ contest.number_of_long_questions + ' uraian';
 							additions += 'data-content="' + content + '"';
-
-							break;
 						}
-					}
+					});
 
 					if (now.compare_day(date_obj) === 0) {
 						cell_class.push('today');
@@ -69,13 +70,15 @@ $(document).ready(function() {
 
 				// Should we add a tag? --> link to contest
 				if (cell_class.indexOf('contest-cell') !== -1) {
-					var link = contest_paths[i + 1];
+					var link = contests[cell_contest_id].path;
 					var today_pos = cell_class.indexOf('today');
 					if (today_pos !== -1) {
 						cell_class.splice(today_pos);
-						txt = '<a href=' + link + ' class="td today has-contest">' + txt;
+						txt = '<a href=' + link +
+							' class="td today has-contest">' + txt;
 					} else {
-						txt = '<a href=' + link + ' class="has-contest td">' + txt;
+						txt = '<a href=' + link +
+							' class="has-contest td">' + txt;
 					}
 
 					closing_tag += '</a>';

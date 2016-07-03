@@ -1,11 +1,12 @@
 $(document).ready(function () {
-	var next_contest = $('#welcome-contest-data').data('next');
-	if (typeof next_contest !== 'undefined') {
-		var start = new Date(next_contest.start_time);
-		var end = new Date(next_contest.end_time);
+	var next_contest = $('#welcome-contest-data');
+	if (next_contest.length !== 0) {
+		var start = erb_to_date(next_contest.data('start-time'));
+		var end = erb_to_date(next_contest.data('end-time'));
+		var name = next_contest.data('name');
 
 		$('#welcome-next-contest').text('Kontes berikutnya: '
-				+ next_contest.name + ' (' + start.format_indo() +
+				+ name + ' (' + start.format_indo() +
 					'\u2013' + end.format_indo() + ')');
 	}
 });

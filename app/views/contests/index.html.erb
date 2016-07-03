@@ -1,12 +1,4 @@
-<% contest_paths = Hash.new %>
-<% Contest.all.each do |c| %>
-  <% contest_paths[c.id] = contest_path(c) %>
-<% end %>
-<%= content_tag 'div', '', id: 'contest-data', data: {
-  contests: @contests,
-  contest_paths: contest_paths
-} %>
-<% content_for (:page_attributes) do %>contests_page<% end %>
+<%= content_tag 'div', '', id: 'contests-data', data: contests_info_hash %>
 <div class="container" id="all-contests-container">
   <header>
     <h1>Kontes-kontes</h1>

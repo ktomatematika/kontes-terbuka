@@ -31,11 +31,11 @@ class Contest < ActiveRecord::Base
   end
 
   def self.next_important_contest
-    next_result = Contest.where('result_time > ?', Time.zone.now)
-                         .order('result_time')[0]
+    next_feedback = Contest.where('feedback_time > ?', Time.zone.now)
+                           .order('feedback_time')[0]
     next_end = Contest.where('end_time > ?', Time.zone.now)
                       .order('end_time')[0]
-    return next_result if next_result.result_time < next_end.end_time
+    next_feedback if next_feedback.feedback_time < next_end.end_time
     next_end
   end
 
