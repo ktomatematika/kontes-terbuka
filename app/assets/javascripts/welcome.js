@@ -7,6 +7,6 @@ $(document).ready(function () {
 
 		$('#welcome-next-contest').text('Kontes berikutnya: '
 				+ name + ' (' + start.format_indo() +
-					'\u2013' + end.format_indo() + ')');
+				'\u2013' + end.format_indo() + ')');
 	}
 });

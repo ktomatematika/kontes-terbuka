@@ -87,9 +87,7 @@ class ContestsController < ApplicationController
   private
 
   def contest_params
-    params.require(:contest).permit(:name, :number_of_short_questions,
-                                    :number_of_long_questions, :start_time,
-                                    :end_time, :result_time,
+    params.require(:contest).permit(:name, :start_time, :end_time, :result_time,
                                     :feedback_time, :problem_pdf, :gold_cutoff,
                                     :silver_cutoff, :bronze_cutoff,
                                     :result_released)

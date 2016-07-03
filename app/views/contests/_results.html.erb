@@ -6,10 +6,10 @@
         <tr>
           <th>Peringkat</th>
           <th>Username</th>
-          <% if @contest.number_of_short_questions > 0 %>
+          <% if @short_problems > 0 %>
             <th>Bagian A</th>
           <% end %>
-          <% @contest.number_of_long_questions.times do |i| %>
+          <% @long_problems.times do |i| %>
             <th>Bagian B no. <%= i + 1 %></th>
           <% end %>
           <th>Total</th>
@@ -22,7 +22,7 @@
           <tr>
             <td>1</td>
             <td><%= user.username %></td>
-            <% if @contest.number_of_short_questions > 0 %>
+            <% if @short_problems > 0 %>
               <td><%= uc.short_marks %></td>
             <% end %>
             <td>3</td>

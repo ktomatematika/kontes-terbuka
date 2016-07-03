@@ -1,5 +1,9 @@
 <%= content_tag 'div', '', id: 'rules-contest-data', data: {
-  contest: @contest,
+  name: @contest.name,
+  start_time: @contest.start_time,
+  end_time: @contest.end_time,
+  result_time: @contest.result_time,
+  feedback_time: @contest.feedback_time,
   halsoal: image_tag('1hal1soal.png', alt: 'Penjelasan 1 soal di 1 halaman',
                    class: 'img-responsive').tr('"', "'")
 } %>

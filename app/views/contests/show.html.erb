@@ -13,10 +13,10 @@
       <%= render 'header' %>
 
       <% if @contest.currently_in_contest? %>
-        <% if @contest.number_of_short_questions != 0 %>
+        <% if @short_problems != 0 %>
           <%= render 'short_problems' %>
         <% end %>
-        <% if @contest.number_of_long_questions != 0 %>
+        <% if @long_problems != 0 %>
           <%= render 'long_problems' %>
         <% end %>
       <% end %>
