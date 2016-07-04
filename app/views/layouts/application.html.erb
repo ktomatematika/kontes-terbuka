@@ -44,7 +44,6 @@
           <% if @current_user and @current_user.has_any_role? :admin, { name: :marking_manager, resource: :any }, { name: :marker, resource: :any } %>
             <li><%= link_to "Admin", admin_path, :class => "has-shade" %></li>
           <% end %>
-          <li><%= link_to "Magic", magic_path, :class => "has-shade" %></li>
           <li><%= link_to "Rumah", root_path, :class => "has-shade" %></li>
           <li><%= link_to "Kontes", contests_path, :class => "has-shade" %></li>
           <li><a href="#" class="has-shade">Pasar</a></li>

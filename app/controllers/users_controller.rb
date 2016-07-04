@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
-  load_and_authorize_resource
+  load_and_authorize_resource except: [:new, :check_unique, :create]
+  skip_before_action :require_login, only: [:new, :check_unique, :create]
 
   def new
     if current_user
@@ -14,6 +15,10 @@ class UsersController < ApplicationController
     User.transaction do
       @user = User.new(user_params)
       @user.timezone = Province.find(user_params[:province_id]).timezone
+      if params[:osn] == 1
+        user.add_role :veteran  
+      end
+
       if verify_recaptcha(model: @user) && @user.save
         cookies[:auth_token] = @user.auth_token
         redirect_to root_path

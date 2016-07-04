@@ -11,9 +11,9 @@ class LongSubmissionsController < ApplicationController
 
   rescue ActiveRecord::ActiveRecordError
     respond_to do |format|
-      format.html { 
+      format.html do
         redirect_to :back
-      }
+      end
     end
   end
 

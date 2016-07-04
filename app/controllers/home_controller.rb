@@ -1,7 +1,5 @@
 class HomeController < ApplicationController
-  skip_before_action :require_login, only: [:faq, :book, :donate, :about,
-                                            :sitemap, :privacy, :terms,
-                                            :contact]
+  skip_before_action :require_login, except: [:index, :admin]
 
   def index
     @next_important_contest = Contest.next_important_contest

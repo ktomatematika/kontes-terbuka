@@ -28,7 +28,6 @@ class ContestsController < ApplicationController
     @contest = Contest.find(params[:id])
     if UserContest.where(user: current_user, contest: @contest).empty? &&
        @contest.currently_in_contest?
-       puts "ILHAN"
       redirect_to contest_show_rules_path(params[:id])
     end
     grab_problems
