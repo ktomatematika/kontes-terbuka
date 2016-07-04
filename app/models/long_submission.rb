@@ -22,13 +22,13 @@ class LongSubmission < ActiveRecord::Base
 
   # Validation method
   def uniqueness_of_page_number
-    pageNumberHash = {}
+    page_number_hash = {}
     submission_pages.each do |page|
-      if pageNumberHash[page.page_number]
+      if page_number_hash[page.page_number]
         errors.add(:"page.value", 'duplikat') if errors[:"page.value"].blank?
         page.errors.add(:page, 'halaman ini duplikat')
       end
-      pageNumberHash[page.page_number] = true
+      page_number_hash[page.page_number] = true
     end
   end
 end

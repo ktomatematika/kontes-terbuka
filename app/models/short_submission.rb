@@ -3,7 +3,7 @@ class ShortSubmission < ActiveRecord::Base
   belongs_to :user
   belongs_to :short_problem
 
-  def is_correct?
+  def correct?
     answer == short_problem.answer
   end
 end

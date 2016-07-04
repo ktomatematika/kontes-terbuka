@@ -7,7 +7,7 @@
       <%= link_to "Download soal", @contest.problem_pdf.url(:original, false) %>
     </button>
   <% end %>
-  <% if @current_user.has_role? 'admin' %>
+  <% if can? :admin, Contest %>
     <%= link_to "Administrasi", contest_admin_path(contest_id: @contest) %>
   <% end %>
 </header>

@@ -24,18 +24,34 @@ fjs.parentNode.insertBefore(js, fjs);
     <h1>Halo, <%= current_user.username %></h1>
   </header>
 
-  <section class="home-section home-article text-center" id="this-contest">
-    <h2 id="next-contest-name"></h2>
-    <h3 id="next-contest-time"></h3>
-    <a class="btn btn-lg btn-default has-shade update-regularly"
-       type="button" id="home-btn-daftar" disabled>
-    </a>
+  <section class="home-section text-center">
+    <div class="row">
+      <div class="col-md-8">
+        <article class="home-article" id="this-contest">
+          <h2 id="next-contest-name"></h2>
+          <h3 id="next-contest-time"></h3>
+          <a class="btn btn-lg btn-default has-shade update-regularly"
+             type="button" id="home-btn-daftar" disabled>
+          </a>
+        </article>
+      </div>
+      <div class="col-md-4">
+        <article class="home-article" id="line-box">
+          Kami memiliki official account di LINE! Kami menyajikan berbagai
+          konten menarik, seperti teorema-teorema yang berguna untuk olimpiade
+          maupun kuis-kuis seru! Add kami di @ktom :)
+          <a href="http://line.me/ti/p/%40ktom", target="_blank">
+            <img height="36" border="0" alt="Add Friend" src="http://biz.line.naver.jp/line_business/img/btn/addfriends_en.png">
+          </a>
+        </article>
+      </div>
+    </div>
   </section>
 
   <section class="row home-section" id="home-middle-container">
     <div class="col-md-4 col-md-push-4">
       <article class="home-article" id="info-kontes">
-        <h2>Baru di kontes ini?</h2>
+        <h2>Baru di kontes kami?</h2>
         <p><%= link_to 'FAQ', faq_path %> kami berisi banyak informasi
         mengenai kontes-kontes kami.</p>
         <p>Soal-soal kontes sebelumnya bisa diperoleh dari
@@ -53,7 +69,7 @@ fjs.parentNode.insertBefore(js, fjs);
     <div class="col-md-4 col-md-pull-4">
       <article class="home-article" id="prev-contests">
         <h2>Kontes-kontes Sebelumnya</h2>
-        <% Contest.prev_contests.each do |c| %>
+        <% @prev_contests.each do |c| %>
           <h5><%= link_to c.name, c %></h5>
         <% end %>
         <p><%= link_to "Daftar kontes", contests_path %></p>
@@ -63,14 +79,8 @@ fjs.parentNode.insertBefore(js, fjs);
     <div class="col-md-4">
       <article class="home-article" id="iklan-lomba">
         <h2>Kontes Tersponsori</h2>
-        <h3>Komat UNPAR</h3>
-        <a href="http://www.komatunpar.info">
-          <%= image_tag("sponsor.jpg", :alt => "Komat UNPAR",
-                        :class => "img-responsive center-block",
-                        :id => "img-promo-kontes") %>
-        </a>
-        <p>Teksteksteksteks</p>
       </article>
+
     </div>
   </section>
 

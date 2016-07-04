@@ -3,6 +3,8 @@ class HomeController < ApplicationController
 
   def index
     @next_important_contest = Contest.next_important_contest
+    @prev_contests = Contest.where('end_time < ?', Time.zone.now)
+                            .limit(8).order('end_time desc')
   end
 
   def admin

@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	var problems = $('.problem-statement');
+	var problems = $('.problem-statement, .admin-statement-preview');
 
 	$.each(problems, function(j, label) {
 		renderMathInElement(label, {

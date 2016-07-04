@@ -12,7 +12,7 @@ class UserContest < ActiveRecord::Base
     end
 
     short_submissions.reduce(0) do |score, submission|
-      score + (!submission.nil? && submission.is_correct? ? 1 : 0)
+      score + (!submission.nil? && submission.correct? ? 1 : 0)
     end
   end
 

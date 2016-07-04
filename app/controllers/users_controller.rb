@@ -15,9 +15,7 @@ class UsersController < ApplicationController
     User.transaction do
       @user = User.new(user_params)
       @user.timezone = Province.find(user_params[:province_id]).timezone
-      if params[:osn] == 1
-        user.add_role :veteran  
-      end
+      user.add_role :veteran if params[:osn] == 1
 
       if verify_recaptcha(model: @user) && @user.save
         cookies[:auth_token] = @user.auth_token

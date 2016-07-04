@@ -165,7 +165,8 @@ $(document).ready(function () {
 	});
 
 	var last = new Date();
-	$('input').keyup(function (e) {
+
+	$('#login input, #register input').keyup(function (e) {
 		var input = e.keyCode;
 
 		// This checks if the key entered is backspace, characters, or delete.

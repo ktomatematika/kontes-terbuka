@@ -1,0 +1,12 @@
+<section>
+  <h2>Finalisasi</h2>
+  <h3>Cutoff</h3>
+  <%= form_for @contest, html: { class: 'form-inline' } do |f| %>
+    <%= f.text_field :gold_cutoff, class: 'form-control', placeholder: 'Emas' %>
+    <%= f.text_field :silver_cutoff, class: 'form-control', placeholder: 'Perak' %>
+    <%= f.text_field :bronze_cutoff, class: 'form-control', placeholder: 'Perunggu' %>
+    <%= f.check_box :result_released, class: 'from-control' %>
+    Siap dikeluarkan hasilnya!
+    <%= f.submit "RELEASE", class: 'btn btn-default has-shade' %>
+  <% end %>
+</section>

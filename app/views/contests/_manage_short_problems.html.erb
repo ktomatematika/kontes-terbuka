@@ -1,0 +1,55 @@
+<section>
+  <h2>Isian</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>No</th>
+        <th>Statement</th>
+        <th>Jawaban</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @short_problems.each do |short_problem| %>
+        <tr>
+          <td><%= short_problem.problem_no %></td>
+          <td><%= short_problem.statement %></td>
+          <td><%= short_problem.answer %></td>
+          <td><%= link_to "Edit", [:edit, @contest, short_problem] %></td>
+          <td><%= link_to "Hapus", [@contest, short_problem],
+            method: :delete, data: { confirm: 'Apakah Anda yakin?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</section>
+<section>
+  <h3>Buat soal</h3>
+  <%= form_for([@contest, @contest.short_problems.build],
+               html: { :class => "form-horizontal" }) do |f| %>
+   <div class="form-group">
+     <%= f.label :problem_no, class: 'col-sm-2' %>
+     <div class="col-sm-4">
+       <%= f.text_field :problem_no, class: 'form-control' %>
+     </div>
+   </div>
+   <div class="form-group">
+     <%= f.label :statement, class: 'col-sm-2' %>
+     <div class="col-sm-4">
+       <%= f.text_area :statement, class: 'form-control' %>
+     </div>
+   </div>
+   <div class="form-group">
+     <%= f.label :answer, class: 'col-sm-2' %>
+     <div class="col-sm-4">
+       <%= f.text_field :answer, class: 'form-control' %>
+     </div>
+   </div>
+   <div class="form-group">
+     <div class="col-sm-offset-2 col-sm-4">
+       <%= f.submit "Buat soal", class: 'btn btn-default has-shade' %>
+     </div>
+   </div>
+ <% end %>
+</section>

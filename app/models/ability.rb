@@ -3,11 +3,17 @@ class Ability
 
   def initialize(user)
     unless user.nil?
-      can [:show, :index, :show_rules, :accept_rules], Contest
+      can [:show, :index, :show_rules, :accept_rules, :short_problems_submit],
+          Contest
       can :manage, User, id: user.id
       can :show, User
       cannot :index, User
       can :submit, LongProblem
+
+      if user.has_role? :marking_manager
+        can [:admin, :assign_markers, :save_markers], Contest
+        can :mark_final, LongProblem
+      end
 
       can [:mark_solo, :mark_final], LongProblem,
           id: LongProblem.with_role(:marker, user).pluck(:id)

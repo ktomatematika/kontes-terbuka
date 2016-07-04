@@ -6,8 +6,10 @@
       <tr>
         <th>ID</th>
         <th>Nilai</th>
-        <th>Tags</th>
-        <th>Teman sudah?</th>
+        <th>Catatan</th>
+        <% @markers.each do |m| %>
+          <th><%= m.username %></th>
+        <% end %>
         <th></th>
       </tr>
     </thead>
@@ -17,11 +19,15 @@
         <tr>
           <td><%= s.id %></td>
           <td><input></td>
-          <td><select></td>
-          <td>Sudah</td>
+          <td><input></td>
+          <% @markers.each do |m| %>
+            <td>Sudah</td>
+          <% end %>
           <td><a>Download</a></td>
         </tr>
       <% end %>
     </tbody>
   </table>
+
+  <a class="btn btn-default has-shade">Submit</a>
 </div>

@@ -65,6 +65,10 @@ class LongProblemsController < ApplicationController
     @long_problem = LongProblem.find(params[:id])
     @contest = @long_problem.contest
     @long_submissions = LongSubmission.where(long_problem: @long_problem)
+                                      .select do |ls|
+      !SubmissionPage.where(long_submission: ls).empty?
+    end
+    @markers = User.with_role :marker, @long_problem
   end
 
   def mark_solo

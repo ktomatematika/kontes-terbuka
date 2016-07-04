@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     post 'accept_rules', to: 'contests#accept_rules', on: :collection
 
     resources :short_problems
+    post 'short_problems_submit', to: 'contests#short_problems_submit'
     resources :long_problems
   end
 
@@ -31,9 +32,7 @@ Rails.application.routes.draw do
   get '/privacy', to: 'home#privacy'
   get '/terms', to: 'home#terms'
   get '/contact', to: 'home#contact'
-  get '/admin', to: 'home#admin'
-
-  post '/short_problems/submit', to: 'short_problems#submit'
+  get '/penguasa', to: 'home#admin', as: :admin
 
   resources :long_submissions do
     post 'submit' => 'long_submissions#submit', on: :member
@@ -43,5 +42,5 @@ Rails.application.routes.draw do
 
   post '/check', to: 'users#check_unique'
 
-  get '/assign/:id', to: 'roles#assign_markers'
+  get '/assign/:id', to: 'contests#assign_markers', as: :assign_markers
 end

@@ -1,0 +1,13 @@
+<h2>== ONLY ADMIN CAN SEE THIS ==</h2>
+<h3>Bagian A</h3>
+<% @short_problems.each do |sp| %>
+  <p class="admin-statement-preview">
+  <%= sp.problem_no %>. <%= markdown_render(sp.statement) %>
+  </p>
+<% end %>
+<h3>Bagian B</h3>
+<% @long_problems.each do |lp| %>
+  <p class="admin-statement-preview">
+  <%= lp.problem_no %>. <%= markdown_render(lp.statement) %>
+  </p>
+<% end %>

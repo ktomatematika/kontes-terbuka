@@ -13,12 +13,11 @@
 
       <%= render 'header' %>
 
-      <% if @contest.currently_in_contest? or
-           (Time.zone.now <= @contest.end_time &&
-            current_user.has_role?(:admin)) %>
-        <% if current_user.has_role? :admin and not @contest.currently_in_contest? %>
-          <h2>== ONLY ADMIN CAN SEE THIS ==</h2>
-        <% end %>
+      <% if current_user.has_role? :admin and Time.zone.now < @contest.start_time %>
+        <%= render 'admin_preview' %>
+      <% end %>
+
+      <% if @contest.currently_in_contest? %>
         <% if @short_problems.length != 0 %>
           <%= render 'short_problems' %>
         <% end %>

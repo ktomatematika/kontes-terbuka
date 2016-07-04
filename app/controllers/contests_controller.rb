@@ -67,29 +67,43 @@ class ContestsController < ApplicationController
 
   def accept_rules
     UserContest.transaction do
-      @user_contest = UserContest.new(participate_params)
-      @user_contest.save!
-      @user = @user_contest.user
-      @contest = @user_contest.contest
-      @contest.long_problems.each do |long_problem|
-        @long_submission = LongSubmission.new(user: @user, long_problem: long_problem)
-        @long_submission.save
+      user_contest = UserContest.create(participate_params)
+      contest = user_contest.contest
+      contest.long_problems.each do |long_problem|
+        LongSubmission.create(user: user_contest.user,
+                              long_problem: long_problem)
       end
     end
 
-    @contest = @user_contest.contest
-    redirect_to @contest
-  rescue ActiveRecord::ActiveRecordError
-    respond_to do |format|
-      format.html do
-        @contest = Contest.find(participate_params[:contest_id])
-        @user_contest = UserContest.new
-        render 'rules'
-      end
+    redirect_to contest
+  end
+
+  def short_problems_submit
+    contest_id = params['contest_id']
+    submission_params.each_key do |prob_id|
+      answer = submission_params[prob_id]
+      next if answer == ''
+
+      ShortSubmission.find_or_create_by(short_problem_id: prob_id,
+                                        user: current_user)
+                     .update(answer: answer)
     end
+    redirect_to Contest.find(contest_id)
+  end
+
+  def assign_markers
+    @contest = Contest.find(params[:id])
+    @long_problems = LongProblem.where(contest: @contest)
+  end
+
+  def save_markers
   end
 
   private
+
+  def submission_params
+    params.require(:short_answer)
+  end
 
   def contest_params
     params.require(:contest).permit(:name, :start_time, :end_time, :result_time,

@@ -38,6 +38,6 @@ module ContestsHelper
   end
 
   def show_long_mark(long_problem)
-    long_problem.score || '-' 
+    long_problem.score || '-'
   end
 end
