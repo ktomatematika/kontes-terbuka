@@ -113,7 +113,7 @@ Contest.find_or_create_by(name: 'KTO Matematika Juli 2016',
                           feedback_time: DateTime.new(2016, 7, 6, 0, 0, 0, '+7'))
 
 # Test Zone
-Contest.find_or_create_by(name: 'Kontes Percobaan'
+Contest.find_or_create_by(name: 'Kontes Percobaan',
                           start_time: DateTime.new(2016, 7, 6, 12, 0, 0, '+7'),
                           end_time: DateTime.new(2016, 7, 7, 17, 0, 0, '+7'),
                           result_time: DateTime.new(2016, 7, 9, 0, 0, 0, '+7'),

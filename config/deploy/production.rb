@@ -5,11 +5,6 @@
 
 set :stage, :production
 server '188.166.177.64', user: 'ktom', roles: %w(app db web)
-set :nginx_server_name, 'ktom.tomi.or.id'
-set :nginx_use_ssl, true
-set :nginx_ssl_cert_local_path, '/home/donjar/archive/ktom.tomi.or.id/cert1.pem'
-set :nginx_ssl_cert_key_local_path,
-    '/home/donjar/archive/ktom.tomi.or.id/privkey1.pem'
 
 # role-based syntax
 # ==================
