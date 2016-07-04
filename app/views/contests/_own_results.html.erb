@@ -1,36 +1,35 @@
 <article id="indiv-result">
   <h2>Hasil dan Umpan Balik</h2>
 
-  <% s_prob = ShortProblem.where(contest: @contest) %>
-  <% unless s_prob.empty? %>
-    <h3>Bagian A: 10/<%= s_prob.length %> poin</h3>
+  <% unless @short_problems.empty? %>
+    <h3>Bagian A: <%= @user_contest.short_marks %>/<%= @short_problems.length %> poin</h3>
   <% end %>
 
-  <% l_prob = LongProblem.where(contest: @contest) %>
-  <% unless l_prob.empty? %>
+  <% unless @long_problems.empty? %>
     <h3>Bagian B</h3>
-    <% l_prob.each do |prob| %>
-
-      <%= l_submission = LongSubmission.find_by(
-        long_problem: l_prob, user: @curent_user) %>
-      <h4>No. <%= prob.problem_no %>:
-        <%= l_submission.score %>/7 poin</h4>
+    <% @long_problems.each do |prob| %>
+      <% ls = LongSubmission.find_by(long_problem: prob, user: current_user) %>
+      
+      <h4>No. <%= prob.problem_no %>: <%= show_long_mark(ls) %>/7 poin</h4>
       <div class="row">
-
         <div class="col-sm-6">
           <h5>Soal</h5>
           <%= prob.statement %>
         </div>
-
         <div class="col-sm-6">
           <h5>Umpan Balik</h5>
-          <%= l_submission.feedback %>
+          <%= ls.feedback %>
         </div>
-
       </div>
     <% end %>
   <% end %>
-  <h3>Total: 30/42 poin</h3>
-  <h3>Anda mendapatkan penghargaan perunggu!</h3>
-  <p>Jika Anda masih ada masalah silakan buka o.o</p>
+  <h3>Total: <%= @user_contest.total_score %>/<%= @contest.max_score %> poin</h3>
+  <%= show_award %>
+  <p>Jika menurut Anda terdapat masalah dengan penilaian di kontes ini,
+    seperti ada berkas Anda yang tidak dinilai atau menurut Anda nilainya
+    kurang tepat, Anda bisa <%= link_to 'mengontak kami.', contact_path %></p>
+  <p>Jangan lupa bahwa Anda bisa mendiskusikan soal-soal dan jawaban kontes ini
+    di forum olimpiade.org. Ada beberapa veteran lomba yang akan membantu
+    menjawab pertanyaan-pertanyaan Anda. Jangan malu bertanya; inilah media
+    yang tepat untuk menambah wawasan olimpiade matematika Anda!</p>
 </article>

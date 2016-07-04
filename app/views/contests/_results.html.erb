@@ -25,11 +25,11 @@
             <% if @short_problems.length > 0 %>
               <td><%= uc.short_marks %></td>
             <% end %>
-            <% @long_problems.each do |ls| %>
-              <td>7</td>
+            <% @long_problems.each do |lp| %>
+              <td><%= show_long_mark(LongSubmission.find_by(user: user, long_problem: lp)) %></td>
             <% end %>
-            <td>19</td>
-            <td>Emas</td>
+            <td><%= uc.total_score %></td>
+            <td><%= uc.award.capitalize %></td>
           </tr>
         <% end %>
       </tbody>

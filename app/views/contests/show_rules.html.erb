@@ -11,7 +11,7 @@
   <h1>Petunjuk Kontes</h1>
 
   <div id="rules-text">
-    <%= markdown_render(@contest.rule).html_safe %>
+    <%= markdown_render(@contest.rule) %>
   </div>
 
   <%= form_for @user_contest, url: accept_rules_contests_path do |f| %>

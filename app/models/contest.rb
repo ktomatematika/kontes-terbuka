@@ -61,6 +61,12 @@ class Contest < ActiveRecord::Base
     start_time <= now && now <= end_time
   end
 
+  LONG_PROBLEM_MAX_MARK = 7
+  def max_score
+    ShortProblem.where(contest: self).length +
+      LONG_PROBLEM_MAX_MARK * LongProblem.where(contest: self).length
+  end
+
   SHORT_PROB_START_SEPARATOR = '%%% START Bagian A'.freeze
   SHORT_PROB_END_SEPARATOR = '%%% END Bagian A'.freeze
   LONG_PROB_START_SEPARATOR = '%%% START Bagian B'.freeze

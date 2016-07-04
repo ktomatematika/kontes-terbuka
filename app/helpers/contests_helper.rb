@@ -3,7 +3,7 @@ module ContestsHelper
     renderer = Redcarpet::Render::HTML.new(escape_html: true)
     markdown = Redcarpet::Markdown.new(renderer)
     rendered_text = markdown.render(text)
-    rendered_text.gsub('<p>', '').gsub('</p>', '')
+    rendered_text.gsub('<p>', '').gsub('</p>', '').html_safe
   end
 
   def contests_info_hash
@@ -28,5 +28,16 @@ module ContestsHelper
   def aside_display_answered(problem_no, answer)
     sanitized_answer = CGI.escapeHTML(answer)
     "<div>No. #{problem_no}: #{sanitized_answer}</div>".html_safe
+  end
+
+  def show_award
+    award = @user_contest.award
+    unless award.empty?
+      "<h3>Anda mendapatkan penghargaan #{award}!</h3>".html_safe
+    end
+  end
+
+  def show_long_mark(long_problem)
+    long_problem.score || '-' 
   end
 end

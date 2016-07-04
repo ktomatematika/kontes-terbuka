@@ -21,7 +21,6 @@ class LongSubmission < ActiveRecord::Base
   }
 
   # Validation method
-
   def uniqueness_of_page_number
     pageNumberHash = {}
     submission_pages.each do |page|

@@ -8,8 +8,34 @@ class UserContest < ActiveRecord::Base
   def short_marks
     short_problems = ShortProblem.where(contest: contest)
     short_submissions = short_problems.map do |sp|
-      ShortSubmission.where(user: user, short_problem: sp)
+      ShortSubmission.find_by(user: user, short_problem: sp)
     end
-    short_submissions.reduce(0) { |a, e| a + 1 if e.is_correct? }
+
+    short_submissions.reduce(0) do |score, submission|
+      score + (!submission.nil? && submission.is_correct? ? 1 : 0)
+    end
+  end
+
+  def long_marks
+    long_problems = LongProblem.where(contest: contest)
+    long_submissions = long_problems.map do |lp|
+      LongSubmission.find_by(user: user, long_problem: lp)
+    end
+
+    long_submissions.reduce(0) do |total, submission|
+      total + (submission.nil? || submission.score.nil? ? 0 : submission.score)
+    end
+  end
+
+  def total_score
+    short_marks + long_marks
+  end
+
+  def award
+    total = total_score
+    return 'emas' if total >= contest.gold_cutoff
+    return 'perak' if total >= contest.silver_cutoff
+    return 'perunggu' if total >= contest.bronze_cutoff
+    ''
   end
 end

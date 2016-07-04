@@ -31,7 +31,10 @@ class ContestsController < ApplicationController
       redirect_to contest_show_rules_path(params[:id])
     end
     grab_problems
+
+    @user_contest = UserContest.find_by(contest: @contest, user: current_user)
     @user_contests = UserContest.where(contest: @contest)
+                                .sort_by(&:total_score).reverse
   end
 
   def index

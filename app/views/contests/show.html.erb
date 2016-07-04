@@ -13,7 +13,9 @@
 
       <%= render 'header' %>
 
-      <% if @contest.currently_in_contest? or current_user.has_role? :admin %>
+      <% if @contest.currently_in_contest? or
+           (Time.zone.now <= @contest.end_time &&
+            current_user.has_role?(:admin)) %>
         <% if current_user.has_role? :admin and not @contest.currently_in_contest? %>
           <h2>== ONLY ADMIN CAN SEE THIS ==</h2>
         <% end %>
@@ -26,23 +28,15 @@
       <% end %>
 
       <% if @contest.result_released %>
-        <% uc = UserContest.find_by(user: @current_user, contest: @contest) %>
-
-        <% unless uc.nil? %>
+        <% unless @user_contest.nil? %>
           <%= render 'own_results' %>
 
-          <% if now <= @contest.feedback_time %>
-            <article id="feedback">
-              <p>Sekarang giliran Anda kasih kesan pesan ke kami!</p>
-              <a href="#" class="btn btn-lg btn-default has-shade">
-                Isi Feedback</a>
-            </article>
+          <% if Time.zone.now <= @contest.feedback_time %>
+            <%= render 'feedback' %>
           <% end %>
         <% end %>
 
-        <% if @contest.result_released %>
-          <%= render 'results' %>
-        <% end %>
+        <%= render 'results' %>
       <% end %>
     </section>
 
