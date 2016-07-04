@@ -31,11 +31,6 @@ class ContestsController < ApplicationController
       redirect_to contest_show_rules_path(params[:id])
     end
     grab_problems
-    results
-    @long_submissions = LongSubmission.filter_user_contest(current_user.id, params[:id])
-  end
-
-  def results
     @user_contests = UserContest.where(contest: @contest)
   end
 

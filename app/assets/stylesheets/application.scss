@@ -11,15 +11,9 @@
 
 body {
   background: #f3f3ee;
-  padding-top: 90px;
+  padding-top: calc(60px + 2%);
   font-size: 18px;
   font-weight: 100;
-
-  & > .container-fluid {
-    @media(min-width: 768px) {
-      margin: 0 5%;
-    }
-  }
 }
 
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
@@ -82,7 +76,7 @@ h5, .h5 {
   }
 
   .navbar-nav li a {
-    line-height: 40px;
+    line-height: 2em;
   }
 }
 
@@ -139,6 +133,9 @@ h5, .h5 {
   }
 }
 
+label {
+  font-weight: 300
+}
 
 // Table classes
 div.table {
@@ -184,6 +181,9 @@ blockquote {
 }
 .btn-lg {
   font-size: 1.2em;
+}
+input, select, textarea {
+  font-size: 1em !important;
 }
 
 @each $name, $color in $colors {

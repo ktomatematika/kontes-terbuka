@@ -13,7 +13,10 @@
 
       <%= render 'header' %>
 
-      <% if @contest.currently_in_contest? %>
+      <% if @contest.currently_in_contest? or current_user.has_role? :admin %>
+        <% if current_user.has_role? :admin and not @contest.currently_in_contest? %>
+          <h2>== ONLY ADMIN CAN SEE THIS ==</h2>
+        <% end %>
         <% if @short_problems.length != 0 %>
           <%= render 'short_problems' %>
         <% end %>

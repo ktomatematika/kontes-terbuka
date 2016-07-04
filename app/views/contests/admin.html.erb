@@ -10,6 +10,7 @@
         <tr>
           <th>No</th>
           <th>Statement</th>
+          <th>Jawaban</th>
           <th></th>
           <th></th>
         </tr>
@@ -19,6 +20,7 @@
           <tr>
             <td><%= short_problem.problem_no %></td>
             <td><%= short_problem.statement %></td>
+            <td><%= short_problem.answer %></td>
             <td><%= link_to "Edit", [:edit, @contest, short_problem] %></td>
             <td><%= link_to "Hapus", [@contest, short_problem],
               method: :delete, data: { confirm: 'Apakah Anda yakin?' } %></td>

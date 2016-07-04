@@ -10,20 +10,17 @@
   </header>
   <%= form_for :short_answer, url: '/short_problems/submit/' do |f| %>
     <% @short_problems.each do |prob| %>
-      <p class="isian">
-      <label for="isian-<%= prob.problem_no %>" class="text-justify">
-        <%= prob.problem_no %>. <%= markdown_render(prob.statement, true).html_safe %>
-      </label>
-      <% submission = ShortSubmission.where(
-        short_problem_id: prob.id, user_id: current_user.id)[0] %>
+      <div class="problem-statement text-justify">
+        <%= prob.problem_no %>. <%= markdown_render(prob.statement).html_safe %>
+      </div>
+      <% submission = ShortSubmission.find_by(
+        short_problem: prob, user: current_user) %>
       <% prev_answer = (submission == nil) ? "" : submission.answer %>
-      <%= f.text_field prob.id, class: "form-control",
-        id: "isian-" + prob.problem_no.to_s,
+      <%= f.text_field prob.id, class: "form-control answer-input",
         placeholder: prev_answer.to_s,
         autocomplete: 'off' %>
-    </p>
+    <% end %>
+    <%= hidden_field_tag 'contest_id', @contest.id  %>
+    <%= f.submit "Jawab", class: "btn btn-default has-shade" %>
   <% end %>
-  <%= hidden_field_tag 'contest_id', @contest.id  %>
-  <%= f.submit "Jawab", class: "btn btn-default has-shade" %>
-<% end %>
 </article>
