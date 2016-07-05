@@ -46,7 +46,7 @@
           <% end %>
           <li><%= link_to "Rumah", root_path, :class => "has-shade" %></li>
           <li><%= link_to "Kontes", contests_path, :class => "has-shade" %></li>
-          <li><a href="#" class="has-shade">Pasar</a></li>
+          <li><%= link_to "Pasar", market_items_path, :class => "has-shade" %></li>
           <li><%= link_to "Profil", @current_user, :class => "has-shade" %></li>
           <li><%= link_to "Keluar", logout_path, :class => "has-shade" %></li>
         </ul>

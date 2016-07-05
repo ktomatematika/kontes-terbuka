@@ -1,11 +1,13 @@
 <div class="container">
   <h1>Feedback untuk <%= @contest %></h1>
 
-  <%= form_for :feedback_answer, url: feedback_submit_path(contest: @contest)
-  do |f| %>
+  <%= link_to "Kembali", @contest, class: "btn btn-default has-shade" %>
+
+  <%= form_for :feedback_answer, url: contest_feedback_submit_path do |f| %>
     <% @feedback_questions.each do |q| %>
-      <%= q.question %>
-      <%= f.text_field q.id, class: "form-control" %>
+      <p class="feedback-label"><%= q.question %></p>
+      <%= f.text_area q.id, class: "form-control feedback-input", rows: 2,
+    placeholder: FeedbackAnswer.find_by(feedback_question: q).answer %>
     <% end %>
     <%= f.submit "Kirim", class: "btn btn-default has-shade" %>
   <% end %>

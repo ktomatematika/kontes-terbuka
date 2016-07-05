@@ -42,7 +42,7 @@ class UserContest < ActiveRecord::Base
   def rank
     result = 0
     current_total = contest.max_score + 1
-    contest.rank_participants.each_with_index do |idx, uc|
+    contest.rank_participants.each_with_index do |uc, idx|
       result = (idx + 1) unless uc.total_score == current_total
       return result if uc == self
     end

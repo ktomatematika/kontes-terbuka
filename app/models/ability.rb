@@ -1,6 +1,7 @@
 class Ability
   include CanCan::Ability
 
+  # rubocop:disable AbcSize, MethodLength
   def initialize(user)
     unless user.nil?
       can [:show, :index, :show_rules, :accept_rules, :short_problems_submit],

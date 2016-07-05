@@ -81,7 +81,7 @@ class UsersController < ApplicationController
       @user = User.find(params[:id])
       prms = user_change_password_params
       if User.authenticate(@user.username, prms[:old_password]) &&
-        prms[:new_password] == prms[:confirm_new_password]
+         prms[:new_password] == prms[:confirm_new_password]
         @user.update(password: encrypt_password(prms[:new_password]))
       end
     end

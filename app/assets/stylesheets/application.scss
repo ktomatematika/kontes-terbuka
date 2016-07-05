@@ -134,7 +134,11 @@ h5, .h5 {
 }
 
 label {
-  font-weight: 300
+  font-weight: 300;
+}
+
+textarea {
+  resize: vertical;
 }
 
 // Table classes

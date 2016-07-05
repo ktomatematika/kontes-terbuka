@@ -8,7 +8,8 @@
       dikoreksi adalah jawaban yang Anda isi terakhir. Kosongkan
       jawaban yang tidak ingin Anda ganti.</h4>
   </header>
-  <%= form_for :short_answer, url: contest_short_problems_submit_path(contest_id: params[:id]) do |f| %>
+  <%= form_for :short_answer, url: contest_create_short_submissions_path(
+    contest_id: params[:id]) do |f| %>
     <% @short_problems.each do |prob| %>
       <div class="problem-statement text-justify">
         <%= prob.problem_no %>. <%= markdown_render(prob.statement) %>

@@ -13,8 +13,7 @@
 <% elsif @user == current_user? %>
   <%= render 'mini_edit' %>
 <% end %>
-<p>Poin: <%= @user.poin %></p>
+<p>Poin: <%= @user.point %></p>
 <% if @user == current_user %>
-  <%= link_to "Pasar", market_items_index_path,
-    class: "btn btn-default has-shade" %>
+  <%= link_to "Pasar", market_items_path, class: "btn btn-default has-shade" %>
 <% end %>

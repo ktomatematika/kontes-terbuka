@@ -9,6 +9,7 @@ class ContestsController < ApplicationController
   def admin
     @contest = Contest.find(params[:contest_id])
     grab_problems
+    @feedback_questions = FeedbackQuestion.where(contest: @contest)
   end
 
   def new
@@ -64,6 +65,7 @@ class ContestsController < ApplicationController
   end
 
   def accept_rules
+    contest = nil
     UserContest.transaction do
       user_contest = UserContest.create(participate_params)
       contest = user_contest.contest
@@ -90,8 +92,8 @@ class ContestsController < ApplicationController
 
   def feedback_submit
     contest_id = params['contest_id']
-    submission_params.each_key do |q_id|
-      answer = submission_params[q_id]
+    feedback_params.each_key do |q_id|
+      answer = feedback_params[q_id]
       next if answer == ''
       FeedbackAnswer.find_or_create_by(feedback_question_id: q_id,
                                        user: current_user)
@@ -109,7 +111,7 @@ class ContestsController < ApplicationController
   end
 
   def give_feedback
-    @contest = Contest.find(params[:id])
+    @contest = Contest.find(params[:contest_id])
     @feedback_questions = FeedbackQuestion.where(contest: @contest)
   end
 
@@ -117,6 +119,10 @@ class ContestsController < ApplicationController
 
   def submission_params
     params.require(:short_answer)
+  end
+
+  def feedback_params
+    params.require(:feedback_answer)
   end
 
   def contest_params

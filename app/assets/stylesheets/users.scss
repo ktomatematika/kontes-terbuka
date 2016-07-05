@@ -10,11 +10,7 @@
   }
 }
 
-#transactions {
-  margin-top: -10px;
-}
-
-#profile, #transactions {
+#history, #transactions {
   h2 {
     margin-top: 10px;
   }
@@ -22,11 +18,11 @@
   nav {
     text-align: center;
 
-    > #prev-history {
+    > .prev-history {
       margin-right: 10px;
     }
 
-    > #next-history {
+    > .next-history {
       margin-left: 10px;
     }
   }

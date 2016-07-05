@@ -17,6 +17,10 @@
     <%= render 'manage_long_problems' %>
   <% end %>
 
+  <% if can? :manage, FeedbackQuestion %>
+    <%= render 'manage_feedback_questions' %>
+  <% end %>
+
   <% if can? :manage, Contest %>
     <%= render 'finalize' %>
   <% end %>

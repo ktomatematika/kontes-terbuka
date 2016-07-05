@@ -4,6 +4,6 @@
     pencapaian kami dan bisa menyajikan konten yang lebih berguna bagi Anda.
     Perhatikan bahwa Anda perlu mengisi survei ini untuk mendapatkan
     sertifikat.</p>
-  <%= link_to 'Isi Feedback', contest_give_feedback_path,
+  <%= link_to 'Isi Feedback', contest_feedback_path(contest_id: params[:id]),
     class: 'btn btn-default has-shade' %>
 </article>

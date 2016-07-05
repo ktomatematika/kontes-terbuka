@@ -21,6 +21,8 @@ class User < ActiveRecord::Base
   has_many :user_awards
   has_many :awards, through: :user_awards
 
+  has_many :feedback_answers
+
   has_attached_file :profile_picture,
                     url: '/profile_pictures/:id/:basename.:extension',
                     path: ':rails_root/public/profile_pictures/ \
