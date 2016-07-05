@@ -1,5 +1,4 @@
 class Contest < ActiveRecord::Base
-  resourcify
   has_paper_trail
 
   has_many :user_contests
@@ -11,6 +10,9 @@ class Contest < ActiveRecord::Base
   has_many :long_problems
   has_many :long_submissions, through: :long_problems
   has_many :submission_pages, through: :long_submissions
+
+  has_many :feedback_questions
+  has_many :feedback_answers, through: :feedback_questions
 
   enforce_migration_validations
   before_create do

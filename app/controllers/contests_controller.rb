@@ -78,7 +78,7 @@ class ContestsController < ApplicationController
     redirect_to contest
   end
 
-  def short_problems_submit
+  def create_short_submissions
     contest_id = params['contest_id']
     submission_params.each_key do |prob_id|
       answer = submission_params[prob_id]
@@ -91,12 +91,30 @@ class ContestsController < ApplicationController
     redirect_to Contest.find(contest_id)
   end
 
+  def feedback_submit
+    contest_id = params['contest_id']
+    submission_params.each_key do |q_id|
+      answer = submission_params[q_id]
+      next if answer == ''
+
+      FeedbackAnswer.find_or_create_by(feedback_question_id: q_id,
+                                       user: current_user)
+                    .update(answer: answer)
+    end
+    redirect_to Contest.find(contest_id)
+  end
+
   def assign_markers
     @contest = Contest.find(params[:id])
     @long_problems = LongProblem.where(contest: @contest)
   end
 
   def save_markers
+  end
+
+  def give_feedback
+    @contest = Contest.find(params[:id]) 
+    @feedback_questions = FeedbackQuestion.where(contest: @contest)
   end
 
   private

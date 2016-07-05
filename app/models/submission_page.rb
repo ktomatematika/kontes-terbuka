@@ -1,4 +1,5 @@
 class SubmissionPage < ActiveRecord::Base
+  has_paper_trail
   belongs_to :long_submission
   validates :long_submission, presence: true
   validates :page_number, presence: true

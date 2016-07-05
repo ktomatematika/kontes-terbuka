@@ -1,0 +1,12 @@
+<div class="container">
+  <h1>Feedback untuk <%= @contest %></h1>
+
+  <%= form_for :feedback_answer, url: feedback_submit_path(contest: @contest)
+  do |f| %>
+    <% @feedback_questions.each do |q| %>
+      <%= q.question %>
+      <%= f.text_field q.id, class: "form-control" %>
+    <% end %>
+    <%= f.submit "Kirim", class: "btn btn-default has-shade" %>
+  <% end %>
+</div>

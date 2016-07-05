@@ -6,10 +6,14 @@ Rails.application.routes.draw do
     get 'admin', to: 'contests#admin'
     get 'show_rules', to: 'contests#show_rules'
     post 'accept_rules', to: 'contests#accept_rules', on: :collection
+    get 'feedback', to: 'contests#give_feedback'
 
     resources :short_problems
-    post 'short_problems_submit', to: 'contests#short_problems_submit'
+    post 'create_short_submissions', to: 'contests#create_short_submissions'
     resources :long_problems
+
+    resources :feedback_questions
+    post 'feedback_submit', to: 'contests#feedback_submit'
   end
 
   resources :market_items

@@ -1,0 +1,9 @@
+<div class="container">
+  <h1>Pasar</h1>
+  <h2>Tukarkan poin yang telah Anda dapatkan dengan barang-barang menarik ini!</h2>
+  <% @market_items.each do |i| %>
+    <%= i.name %>
+    <%= i.description %>
+    <%= i.price %>
+  <% end %>
+</div>
