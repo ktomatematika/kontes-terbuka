@@ -1,5 +1,5 @@
 class ShortProblemsController < ApplicationController
-  load_and_authorize_resource except: :submit
+  load_and_authorize_resource
 
   def create
     @contest = Contest.find(params[:contest_id])
@@ -35,7 +35,7 @@ class ShortProblemsController < ApplicationController
 
   private
 
-  def submission_params
-    params.require(:short_answer)
+  def short_problem_params
+    params.require(:short_problem).permit([:problem_no, :statement, :answer])
   end
 end
