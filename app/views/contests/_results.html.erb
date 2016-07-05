@@ -1,7 +1,7 @@
 <article id="all-result">
   <h2>Leaderboard</h2>
   <div class="table-responsive">
-    <table class="table table-hover table-bordered">
+    <table class="table table-hover table-bordered has-shade">
       <thead>
         <tr>
           <th>Peringkat</th>
@@ -19,7 +19,7 @@
       <tbody>
         <% @user_contests.each do |uc| %>
           <% user = uc.user %>
-          <tr>
+          <tr class="clickable-row" data-link="<%= user_path user %>">
             <td><%= uc.rank %></td>
             <td><%= user.username %></td>
             <% if @short_problems.length > 0 %>
@@ -29,7 +29,7 @@
               <td><%= show_long_mark(LongSubmission.find_by(user: user, long_problem: lp)) %></td>
             <% end %>
             <td><%= uc.total_score %></td>
-            <td><%= uc.award.capitalize %></td>
+            <td><%= uc.award %></td>
           </tr>
         <% end %>
       </tbody>

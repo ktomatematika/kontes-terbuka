@@ -1,5 +1,4 @@
 <%= content_for (:page_attributes) do %>data-no-turbolink="true"<% end %>
-<%= puts @next_important_contest %>
 <%= content_tag 'div', '', id: 'home-contest-data', data: {
   name: @next_important_contest.name,
   start_time: @next_important_contest.start_time,

@@ -33,7 +33,7 @@ module ContestsHelper
   def show_award
     award = @user_contest.award
     unless award.empty?
-      "<h3>Anda mendapatkan penghargaan #{award}!</h3>".html_safe
+      "<h3>Anda mendapatkan penghargaan #{award.lowercase}!</h3>".html_safe
     end
   end
 

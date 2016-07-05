@@ -10,7 +10,7 @@
 <% if can? :edit, @user %>
   <%= link_to "Edit Profil", edit_user_path,
     class: "btn btn-default has-shade", type: "button" %>
-<% elsif @user == current_user? %>
+<% elsif @user == current_user %>
   <%= render 'mini_edit' %>
 <% end %>
 <p>Poin: <%= @user.point %></p>

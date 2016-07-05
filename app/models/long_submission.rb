@@ -2,6 +2,7 @@ class LongSubmission < ActiveRecord::Base
   has_paper_trail
   belongs_to :user
   belongs_to :long_problem
+  validates_uniqueness_of :user_id, scope: :long_problem_id
 
   has_many :submission_pages
   accepts_nested_attributes_for :submission_pages, allow_destroy: true, update_only: true

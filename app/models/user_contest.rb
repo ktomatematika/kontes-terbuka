@@ -2,6 +2,7 @@ class UserContest < ActiveRecord::Base
   has_paper_trail
   belongs_to :user
   belongs_to :contest
+  validates_uniqueness_of :user_id, scope: :contest_id
 
   enforce_migration_validations
 
@@ -33,9 +34,9 @@ class UserContest < ActiveRecord::Base
 
   def award
     total = total_score
-    return 'emas' if total >= contest.gold_cutoff
-    return 'perak' if total >= contest.silver_cutoff
-    return 'perunggu' if total >= contest.bronze_cutoff
+    return 'Emas' if total >= contest.gold_cutoff
+    return 'Perak' if total >= contest.silver_cutoff
+    return 'Perunggu' if total >= contest.bronze_cutoff
     ''
   end
 

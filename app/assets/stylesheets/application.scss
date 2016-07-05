@@ -141,6 +141,10 @@ textarea {
   resize: vertical;
 }
 
+.clickable-row {
+  cursor: pointer;
+}
+
 // Table classes
 div.table {
   @extend table;

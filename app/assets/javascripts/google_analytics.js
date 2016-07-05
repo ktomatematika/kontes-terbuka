@@ -9,6 +9,11 @@ this.GoogleAnalytics = (function () {
 		ga = document.createElement('script');
 		ga.type = 'text/javascript';
 		ga.async = true;
+		
+		uid = $('#essential-data').data('user_id');
+		if (uid !== null) {
+			ga['userId'] = uid;
+		}
 		ga.src = ('https:' === document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
 		firstScript = document.getElementsByTagName('script')[0];
 		firstScript.parentNode.insertBefore(ga, firstScript);
