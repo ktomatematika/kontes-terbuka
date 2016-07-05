@@ -64,6 +64,10 @@ class Contest < ActiveRecord::Base
       LONG_PROBLEM_MAX_MARK * LongProblem.where(contest: self).length
   end
 
+  def rank_participants
+    UserContest.where(contest: self).sort_by(&:total_score).reverse
+  end
+
   SHORT_PROB_START_SEPARATOR = '%%% START Bagian A'.freeze
   SHORT_PROB_END_SEPARATOR = '%%% END Bagian A'.freeze
   LONG_PROB_START_SEPARATOR = '%%% START Bagian B'.freeze

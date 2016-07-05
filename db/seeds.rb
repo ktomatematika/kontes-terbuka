@@ -16,7 +16,8 @@
 end
 
 ['Kelas 6', 'Kelas 7', 'Kelas 8', 'Kelas 9', 'Kelas 10', 'Kelas 11', 'Kelas 12',
- 'Guru sekolah', 'Guru/dosen/pengajar olimpiade', 'Umum'].each do |status|
+ 'Mahasiswa', 'Guru sekolah', 'Guru/dosen/pengajar olimpiade',
+ 'Umum'].each do |status|
   Status.find_or_create_by(name: status)
 end
 
@@ -51,14 +52,12 @@ Contest.find_or_create_by(name: 'KTO Matematika September 2015',
                           feedback_time: DateTime.new(2015, 10, 4, 0, 0, 0, '+7'))
 
 Contest.find_or_create_by(name: 'KTO Matematika Oktober 2015',
-
                           start_time: DateTime.new(2015, 10, 29, 23, 55, 0, '+7'),
                           end_time: DateTime.new(2015, 11, 2, 0, 0, 0, '+7'),
                           result_time: DateTime.new(2015, 11, 7, 21, 0, 0, '+7'),
                           feedback_time: DateTime.new(2015, 11, 8, 0, 0, 0, '+7'))
 
 Contest.find_or_create_by(name: 'KTO Matematika November 2015',
-
                           start_time: DateTime.new(2015, 11, 26, 23, 55, 0, '+7'),
                           end_time: DateTime.new(2015, 11, 30, 0, 0, 0, '+7'),
                           result_time: DateTime.new(2015, 12, 5, 21, 0, 0, '+7'),

@@ -20,7 +20,7 @@
         <% @user_contests.each do |uc| %>
           <% user = uc.user %>
           <tr>
-            <td>1</td>
+            <td><%= uc.rank %></td>
             <td><%= user.username %></td>
             <% if @short_problems.length > 0 %>
               <td><%= uc.short_marks %></td>

@@ -1,7 +1,12 @@
 Rails.application.routes.draw do
   root 'welcome#index'
 
-  resources :users
+  resources :users do
+    post 'mini_update', to: 'users#mini_update'
+    get 'change_password', to: 'users#change_password'
+    post 'update_password', to: 'users#update_password'
+  end
+
   resources :contests do
     get 'admin', to: 'contests#admin'
     get 'show_rules', to: 'contests#show_rules'

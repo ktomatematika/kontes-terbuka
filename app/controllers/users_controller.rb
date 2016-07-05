@@ -13,20 +13,15 @@ class UsersController < ApplicationController
 
   def create
     User.transaction do
-      @user = User.new(user_params)
-      @user.timezone = Province.find(user_params[:province_id]).timezone
+      user = User.new(user_params)
+      user.timezone = Province.find(user_params[:province_id]).timezone
       user.add_role :veteran if params[:osn] == 1
 
-      if verify_recaptcha(model: @user) && @user.save
-        cookies[:auth_token] = @user.auth_token
+      if verify_recaptcha(model: user) && user.save
+        cookies[:auth_token] = user.auth_token
         redirect_to root_path
       else
-        redirect_to register_path
-      end
-    end
-  rescue ActiveRecord::ActiveRecordError
-    respond_to do |format|
-      format.html do
+        # Due to client validations, this should not normally happen
         redirect_to register_path
       end
     end
@@ -34,6 +29,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    @user_contests = UserContest.where(user: @user)
   end
 
   def index
@@ -48,18 +44,16 @@ class UsersController < ApplicationController
     User.transaction do
       @user = User.find(params[:id])
       @user.update(user_edit_params)
-      @user.save!
     end
-
-    flash[:success] = 'Informasi berhasil diperbarui.'
     redirect_to user_path
+  end
 
-  rescue ActiveRecord::ActiveRecordError
-    respond_to do |format|
-      format.html do
-        render 'edit'
-      end
+  def mini_update
+    User.transaction do
+      @user = User.find(params[:id])
+      @user.update(user_mini_edit_params)
     end
+    redirect_to user_path
   end
 
   def destroy
@@ -78,6 +72,22 @@ class UsersController < ApplicationController
     render json: users.present? ? false : true
   end
 
+  def change_password
+    @user = User.find(params[:id])
+  end
+
+  def update_password
+    User.transaction do
+      @user = User.find(params[:id])
+      prms = user_change_password_params
+      if User.authenticate(@user.username, prms[:old_password]) &&
+        prms[:new_password] == prms[:confirm_new_password]
+        @user.update(password: encrypt_password(prms[:new_password]))
+      end
+    end
+    redirect_to user_path
+  end
+
   private
 
   def user_params
@@ -90,14 +100,15 @@ class UsersController < ApplicationController
   def user_edit_params
     params.require(:user).permit(:username, :email, :timezone,
                                  :fullname, :province_id, :status_id, :color_id,
-                                 :school, :terms_of_service, :profile_picture)
+                                 :school, :profile_picture)
   end
 
-  def province_name
-    @province_name = Province.find(@user.provinces_id).name
+  def user_mini_edit_params
+    params.require(:user).permit(:timezone, :color_id)
   end
 
-  def status_name
-    @status_name = Status.find(@user.statuses_id).name
+  def user_change_password_params
+    params.require(:user).permit(:old_password, :new_password,
+                                 :confirm_new_password)
   end
 end

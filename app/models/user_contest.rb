@@ -38,4 +38,13 @@ class UserContest < ActiveRecord::Base
     return 'perunggu' if total >= contest.bronze_cutoff
     ''
   end
+
+  def rank
+    result = 0
+    current_total = contest.max_score + 1
+    contest.rank_participants.each_with_index do |idx, uc|
+      result = (idx + 1) unless uc.total_score == current_total
+      return result if uc == self
+    end
+  end
 end

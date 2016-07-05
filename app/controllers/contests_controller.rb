@@ -26,15 +26,13 @@ class ContestsController < ApplicationController
 
   def show
     @contest = Contest.find(params[:id])
-    if UserContest.where(user: current_user, contest: @contest).empty? &&
-       @contest.currently_in_contest?
+    @user_contest = UserContest.find_by(contest: @contest, user: current_user)
+    if @user_contest.nil? && @contest.currently_in_contest?
       redirect_to contest_show_rules_path(params[:id])
     end
-    grab_problems
 
-    @user_contest = UserContest.find_by(contest: @contest, user: current_user)
-    @user_contests = UserContest.where(contest: @contest)
-                                .sort_by(&:total_score).reverse
+    grab_problems
+    @user_contests = @contest.rank_participants
   end
 
   def index
@@ -83,7 +81,6 @@ class ContestsController < ApplicationController
     submission_params.each_key do |prob_id|
       answer = submission_params[prob_id]
       next if answer == ''
-
       ShortSubmission.find_or_create_by(short_problem_id: prob_id,
                                         user: current_user)
                      .update(answer: answer)
@@ -96,7 +93,6 @@ class ContestsController < ApplicationController
     submission_params.each_key do |q_id|
       answer = submission_params[q_id]
       next if answer == ''
-
       FeedbackAnswer.find_or_create_by(feedback_question_id: q_id,
                                        user: current_user)
                     .update(answer: answer)
@@ -113,7 +109,7 @@ class ContestsController < ApplicationController
   end
 
   def give_feedback
-    @contest = Contest.find(params[:id]) 
+    @contest = Contest.find(params[:id])
     @feedback_questions = FeedbackQuestion.where(contest: @contest)
   end
 
