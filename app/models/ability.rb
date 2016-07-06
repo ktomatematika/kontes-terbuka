@@ -12,6 +12,7 @@ class Ability
       if user.has_role? :marking_manager
         can [:admin, :assign_markers, :save_markers], Contest
         can :mark_final, LongProblem
+        can [:create_marker, :remove_marker], Role
       end
 
       can [:mark_solo, :mark_final], LongProblem,

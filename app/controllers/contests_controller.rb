@@ -107,9 +107,6 @@ class ContestsController < ApplicationController
     @long_problems = LongProblem.where(contest: @contest)
   end
 
-  def save_markers
-  end
-
   def give_feedback
     @contest = Contest.find(params[:contest_id])
     @feedback_questions = FeedbackQuestion.where(contest: @contest)

@@ -1,0 +1,24 @@
+.container
+  %h1 Final: #{@long_problem}
+  %a.btn.btn-default.has-shade Download semua submisi
+  %table.table
+    %thead
+      %tr
+        %th ID
+        %th Nilai Akhir
+        %th Tag Anda
+        %th Komentar
+        %th Saran
+        %th
+
+    %tbody
+      - @long_submissions.each do |s|
+        %tr
+          %td= s.id
+          %td
+            %input
+          %td Catatan
+          %td
+            %input
+          %td
+            %input

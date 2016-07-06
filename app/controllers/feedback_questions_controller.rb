@@ -7,21 +7,6 @@ class FeedbackQuestionsController < ApplicationController
     redirect_to contest_admin_path
   end
 
-  def edit
-    @contest = Contest.find(params[:contest_id])
-    @feedback_question = @contest.feedback_questions.find(params[:id])
-  end
-
-  def update
-    @contest = Contest.find(params[:contest_id])
-    @feedback_question = @contest.feedback_questions.find(params[:id])
-    if @feedback_question.update(question: feedback_question_params[:question])
-      redirect_to contest_admin_path
-    else
-      render 'edit'
-    end
-  end
-
   def destroy
     @contest = Contest.find(params[:contest_id])
     @contest.feedback_questions.find(params[:id]).destroy

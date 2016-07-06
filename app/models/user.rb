@@ -74,4 +74,8 @@ class User < ActiveRecord::Base
       break unless User.exists?(column => self[column])
     end
   end
+
+  def to_s
+    username
+  end
 end

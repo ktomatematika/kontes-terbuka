@@ -52,4 +52,6 @@ Rails.application.routes.draw do
   post '/check', to: 'users#check_unique'
 
   get '/assign/:id', to: 'contests#assign_markers', as: :assign_markers
+  post 'create_marker', to: 'roles#create_marker'
+  delete 'remove_marker', to: 'roles#remove_marker'
 end

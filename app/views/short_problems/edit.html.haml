@@ -1,0 +1,14 @@
+.container
+  %h1 Buat isian
+  = form_for [@contest, @short_problem] do |f|
+    %p
+      = f.label :problem_no
+      = f.text_field :problem_no, class: 'form-control'
+    %p
+      = f.label :statement
+      = f.text_area :statement, class: 'form-control'
+    %p
+      = f.label :answer
+      = f.text_field :answer, class: 'form-control'
+    %p
+      = f.submit

@@ -64,20 +64,41 @@ class LongProblemsController < ApplicationController
   end
 
   def mark
-    @long_problem = LongProblem.find(params[:id])
     @contest = @long_problem.contest
     @long_submissions = LongSubmission.where(long_problem: @long_problem)
                                       .select do |ls|
       !SubmissionPage.where(long_submission: ls).empty?
     end
-    @markers = User.with_role :marker, @long_problem
+
+    @markers = User.with_role(:marker, @long_problem).reject do |u|
+      u == current_user
+    end
   end
 
   def mark_solo
+    @long_problem = LongProblem.find(params[:id])
+    unless current_user.has_role? :marker, @long_problem
+      redirect_to mark_final_path(params[:id])
+    end
     mark
   end
 
+  def submit_temporary_markings
+    params.each_key do |id|
+      value_hash = params[id]
+      mark = value_hash[:mark]
+      tags = value_hash[:tags]
+
+      next if marks == '' && tags == ''
+      TemporaryMarking.find_or_initialize_by(long_submission_id: id,
+                                             user: current_user)
+                      .update(tags: tags, mark: mark)
+    end
+    redirect_to mark_solo_path(params[:id])
+  end
+
   def mark_final
+    @long_problem = LongProblem.find(params[:id])
     mark
   end
 

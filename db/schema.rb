@@ -171,6 +171,18 @@ ActiveRecord::Schema.define(version: 20160706121308) do
     t.datetime "submission_updated_at"
   end
 
+  create_table "temporary_markings", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "long_submission_id"
+    t.integer  "mark"
+    t.string   "tags"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
+  add_index "temporary_markings", ["long_submission_id"], name: "index_temporary_markings_on_long_submission_id", using: :btree
+  add_index "temporary_markings", ["user_id"], name: "index_temporary_markings_on_user_id", using: :btree
+
   create_table "user_awards", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "award_id"
