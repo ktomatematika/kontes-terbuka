@@ -1,26 +1,39 @@
-%section
-  %h2 Feedback Questions
-  %table.table
-    %thead
-      %tr
-        %th Question
-        %th
-
-    %tbody
-      - @feedback_questions.each do |fq|
-        %tr
-          %td= fq.question
-          %td= link_to 'Hapus', [@contest, fq], method: :delete,
-            data: { confirm: 'Apakah Anda yakin?' }
-
-%section
-  .h3 Buat pertanyaan feedback
-  = form_for([@contest, @contest.feedback_questions.build],
-    html: { class: 'form-horizontal' }) do |f|
-    .form-group
-      = f.label :question, class: 'col-sm-2'
-      .col-sm-4= f.text_field :question, class: 'form-control'
-
-    .form-group
-      .col-sm-4.col-sm-offset-2= f.submit 'Buat feedback qn',
-        class: 'btn btn-default has-shade'
+<section>
+  <h2>Feedback Questions</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Question</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @feedback_questions.each do |fq| %>
+        <tr>
+          <td><%= fq.question %></td>
+          <td><%= link_to "Edit", [:edit, @contest, fq] %></td>
+          <td><%= link_to "Hapus", [@contest, fq],
+            method: :delete, data: { confirm: 'Apakah Anda yakin?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</section>
+<section>
+  <h3>Buat pertanyaan feedback</h3>
+  <%= form_for([@contest, @contest.feedback_questions.build],
+               html: { :class => "form-horizontal" }) do |f| %>
+   <div class="form-group">
+     <%= f.label :question, class: 'col-sm-2' %>
+     <div class="col-sm-4">
+       <%= f.text_area :question, class: 'form-control' %>
+     </div>
+   </div>
+   <div class="form-group">
+     <div class="col-sm-offset-2 col-sm-4">
+       <%= f.submit "Buat feedback qn", class: 'btn btn-default has-shade' %>
+     </div>
+   </div>
+ <% end %>
+</section>

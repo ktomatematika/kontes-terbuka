@@ -1,33 +1,33 @@
-.container
-  %h1 Solo: #{@long_problem}
-  %a.btn.btn-default.has-shade Download semua submisi
+<div class="container">
+  <h1><%= @long_problem %></h1>
+  <a class="btn btn-default has-shade">Download semua submisi</a>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nilai</th>
+        <th>Catatan</th>
+        <% @markers.each do |m| %>
+          <th><%= m.username %></th>
+        <% end %>
+        <th></th>
+      </tr>
+    </thead>
 
-  = form_for :temporary_marking do |f|
-    %table.table
-      %thead
-        %tr
-          %th ID
-          %th Nilai
-          %th Catatan
-          - @markers.each do |m|
-            %th= m
-          %th
+    <tbody>
+      <% @long_submissions.each do |s| %>
+        <tr>
+          <td><%= s.id %></td>
+          <td><input></td>
+          <td><input></td>
+          <% @markers.each do |m| %>
+            <td>Sudah</td>
+          <% end %>
+          <td><a>Download</a></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 
-      %tbody
-        - @long_submissions.each do |s|
-          %tr
-            %td= s.id
-            %td
-              = f.text_field mark
-            %td
-              = f.text_field tags
-            - @markers.each do |m|
-              %td= 'Sudah' unless TemporaryMarking.find_by(user: m,
-                long_submission: s).nil?
-            %td
-              %a Download
-
-    = f.submit 'Submit', class: 'btn btn-default has-shade'
-
-    = link_to 'Pindah', mark_final_path(params[:id]),
-      class: 'btn btn-default has-shade'
+  <a class="btn btn-default has-shade">Submit</a>
+</div>
