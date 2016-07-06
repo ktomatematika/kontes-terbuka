@@ -28,16 +28,6 @@ class User < ActiveRecord::Base
   has_many :marked_long_submissions, through: :temporary_markings,
                                      class_name: 'LongSubmission'
 
-  has_attached_file :profile_picture,
-                    url: '/profile_pictures/:id/:basename.:extension',
-                    path: ':rails_root/public/profile_pictures/ \
-                    :id/:basename.:extension'
-  validates_attachment_content_type :profile_picture, content_type: /image/
-
-  Paperclip.interpolates :id do |attachment, _style|
-    attachment.instance.id
-  end
-
   validates :timezone, presence: true,
                        inclusion: {
                          in: %w(WIB WITA WIT),
