@@ -8,6 +8,10 @@ class LongProblem < ActiveRecord::Base
   has_many :users, through: :long_submissions
   has_many :submission_pages, through: :long_submissions
 
+  def self.max_mark
+    7
+  end
+
   def to_s
     contest.to_s + ' no. ' + problem_no.to_s
   end

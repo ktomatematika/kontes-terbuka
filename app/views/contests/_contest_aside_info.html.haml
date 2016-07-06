@@ -1,0 +1,27 @@
+%aside.col-sm-4#ringkasan
+  %header
+    %h3 Ringkasan Jawaban Anda
+  .row
+    %article.col-xs-6.col-sm-12
+      %header
+        %h4 Bagian A
+
+      - @short_problems.each do |prob|
+        - submission = ShortSubmission.find_by(short_problem_id: prob.id,
+          user_id: current_user.id)
+        - if submission.nil?
+          = aside_display_unanswered(prob.problem_no)
+        - else
+          = aside_display_answered(prob.problem_no, submission.answer)
+
+    %article.col-xs-6.col-sm-12
+      %header
+        %h4 Bagian B
+
+      - @long_problems.each do |prob|
+        - submission = LongSubmission.find_by(long_problem: prob,
+          user: current_user)
+        - if SubmissionPage.where(long_submission: submission).empty?
+          = aside_display_unanswered(prob.problem_no)
+        - else
+          = aside_display_answered(prob.problem_no, 'sudah terjawab')

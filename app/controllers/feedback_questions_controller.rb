@@ -31,6 +31,6 @@ class FeedbackQuestionsController < ApplicationController
   private
 
   def feedback_question_params
-    params.require(:feedback_question)
+    params.require(:feedback_question).permit(:question)
   end
 end

@@ -58,10 +58,9 @@ class Contest < ActiveRecord::Base
     start_time <= now && now <= end_time
   end
 
-  LONG_PROBLEM_MAX_MARK = 7
   def max_score
     ShortProblem.where(contest: self).length +
-      LONG_PROBLEM_MAX_MARK * LongProblem.where(contest: self).length
+      LongProblem.max_mark * LongProblem.where(contest: self).length
   end
 
   def rank_participants

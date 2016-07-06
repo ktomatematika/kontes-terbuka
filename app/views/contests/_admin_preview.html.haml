@@ -1,0 +1,7 @@
+%h2 == ONLY ADMIN CAN SEE THIS ==
+%h3 Bagian A
+- @short_problems.each do |sp|
+  %p.admin-statement-preview #{sp.problem_no}. #{markdown_render(sp.statement)}
+%h3 Bagian B
+- @long_problems.each do |lp|
+  %p.admin-statement-preview #{lp.problem_no}. #{markdown_render(lp.statement)}

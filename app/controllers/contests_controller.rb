@@ -115,6 +115,19 @@ class ContestsController < ApplicationController
     @feedback_questions = FeedbackQuestion.where(contest: @contest)
   end
 
+  def download_feedback
+    @contest = Contest.find(params[:contest_id])
+    @user_contests = UserContest.where(contest: contest)
+    respond_to do |format|
+      format.html
+      format.csv do
+        headers['Content-Disposition'] =
+          "attachment; filename=\"Feedback #{@contest}\""
+        headers['Content-Type'] ||= 'text/csv'
+      end
+    end
+  end
+
   private
 
   def submission_params
