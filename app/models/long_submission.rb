@@ -7,6 +7,8 @@ class LongSubmission < ActiveRecord::Base
   has_many :submission_pages
   accepts_nested_attributes_for :submission_pages, allow_destroy: true, update_only: true
 
+  has_many :temporary_markings
+
   validate :uniqueness_of_page_number
 
   delegate :contest_id, to: :long_problem

@@ -22,6 +22,11 @@ class User < ActiveRecord::Base
   has_many :awards, through: :user_awards
 
   has_many :feedback_answers
+  has_many :feedback_questions, through: :feedback_answers
+
+  has_many :temporary_markings
+  has_many :marked_long_submissions, through: :temporary_markings,
+                                     class_name: 'LongSubmission'
 
   has_attached_file :profile_picture,
                     url: '/profile_pictures/:id/:basename.:extension',
