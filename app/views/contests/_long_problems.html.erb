@@ -12,20 +12,19 @@
     </div>
     <% ls = LongSubmission.find_by(user: current_user, long_problem: prob) %>
     <%= nested_form_for ls, url: submit_long_submission_path(ls),
-      html: { multipart: true },
-      method: :post do |f| %>
+      html: { multipart: true }, method: :post do |f| %>
+      <%= hidden_field_tag 'contest_id', @contest.id  %>
       <%= f.fields_for :submission_pages do |page_form| %>
-        <div class="row">
-            <%= page_form.text_field :page_number %>
-            <%= page_form.file_field :submission %>
-            <%= link_to "Lihat file", page_form.object.submission.url(:original, false) %>
-            <%= page_form.link_to_remove do %>
-              <span class="glyphicon glyphicon-trash"></span>
-            <% end %>
-        </div>
+        <%= page_form.text_field :page_number,
+          class: "form-control answer-input", placeholder: "No. halaman" %>
+        <%= link_to "Lihat file", page_form.object.submission.url(
+          :original, false) %>
+        <%= page_form.link_to_remove do %>
+          <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+        <% end %>
+        <%= page_form.file_field :submission %>
       <% end %>
       <%= f.link_to_add 'Tambah halaman', :submission_pages %>
-      <%= hidden_field_tag 'contest_id', @contest.id  %>
       <%= f.submit "Jawab", class: "btn btn-default has-shade" %>
     <% end %>
   <% end %>
