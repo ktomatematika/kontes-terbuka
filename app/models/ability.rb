@@ -4,11 +4,9 @@ class Ability
   # rubocop:disable AbcSize, MethodLength
   def initialize(user)
     unless user.nil?
-      can [:show, :index, :show_rules, :accept_rules, :short_problems_submit],
-          Contest
-      can :manage, User, id: user.id
+      can [:show, :index, :show_rules,
+           :accept_rules, :create_short_submissions], Contest
       can :show, User
-      cannot :index, User
       can :submit, LongProblem
 
       if user.has_role? :marking_manager

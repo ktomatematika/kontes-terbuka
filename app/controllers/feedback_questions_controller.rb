@@ -1,4 +1,6 @@
 class FeedbackQuestionsController < ApplicationController
+  load_and_authorize_resource
+
   def create
     FeedbackQuestion.create(contest_id: params[:contest_id],
                             question: feedback_question_params[:question])
