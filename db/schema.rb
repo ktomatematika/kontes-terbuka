@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160706113410) do
+ActiveRecord::Schema.define(version: 20160706120738) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -96,17 +96,23 @@ ActiveRecord::Schema.define(version: 20160706113410) do
     t.text     "feedback"
   end
 
-  create_table "market_items", force: :cascade do |t|
-    t.string   "name"
-    t.text     "description"
-    t.integer  "price"
-    t.integer  "current_quantity"
+  create_table "market_item_pictures", force: :cascade do |t|
+    t.integer  "market_item_id",       null: false
     t.string   "picture_file_name"
     t.string   "picture_content_type"
     t.integer  "picture_file_size"
     t.datetime "picture_updated_at"
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
+  end
+
+  create_table "market_items", force: :cascade do |t|
+    t.string   "name"
+    t.text     "description"
+    t.integer  "price"
+    t.integer  "current_quantity"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
   end
 
   create_table "provinces", force: :cascade do |t|
@@ -164,18 +170,6 @@ ActiveRecord::Schema.define(version: 20160706113410) do
     t.integer  "submission_file_size"
     t.datetime "submission_updated_at"
   end
-
-  create_table "temporary_markings", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "long_submission_id"
-    t.integer  "mark"
-    t.string   "tags"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
-  end
-
-  add_index "temporary_markings", ["long_submission_id"], name: "index_temporary_markings_on_long_submission_id", using: :btree
-  add_index "temporary_markings", ["user_id"], name: "index_temporary_markings_on_user_id", using: :btree
 
   create_table "user_awards", force: :cascade do |t|
     t.integer  "user_id"
@@ -252,6 +246,7 @@ ActiveRecord::Schema.define(version: 20160706113410) do
   add_index "versions", ["transaction_id"], name: "index_versions_on_transaction_id", using: :btree
 
   add_foreign_key "feedback_answers", "feedback_questions"
+  add_foreign_key "market_item_pictures", "market_items"
   add_foreign_key "submission_pages", "long_submissions"
   add_foreign_key "user_awards", "awards"
   add_foreign_key "user_awards", "users"
