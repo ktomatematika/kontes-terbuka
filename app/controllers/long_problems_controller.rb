@@ -2,13 +2,14 @@ class LongProblemsController < ApplicationController
   load_and_authorize_resource
 
   def create
-    @contest = Contest.find(params[:contest_id])
-    unless @contest.long_problems.find_by_problem_no(
+    contest = Contest.find(params[:contest_id])
+
+    unless contest.long_problems.find_by_problem_no(
       long_problem_params[:problem_no]
     )
-      @long_problem = @contest.long_problems.create(long_problem_params)
+      contest.long_problems.create(long_problem_params).fill_long_submissions
     end
-    redirect_to contest_admin_path(id: @contest.id)
+    redirect_to contest_admin_path(id: contest.id)
   end
 
   def edit
@@ -52,7 +53,8 @@ class LongProblemsController < ApplicationController
     #         page: page_number
     #       )
     #     else
-    #       @long_submission = long_submission_temp.where(page: page_number).first
+    #       @long_submission =
+    #         long_submission_temp.where(page: page_number).first
     #       @long_submission.update(submission: concern_params[s][:submission])
     #       @long_submission.save
     #     end

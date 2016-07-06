@@ -83,8 +83,8 @@ class ContestsController < ApplicationController
     submission_params.each_key do |prob_id|
       answer = submission_params[prob_id]
       next if answer == ''
-      ShortSubmission.find_or_create_by(short_problem_id: prob_id,
-                                        user: current_user)
+      ShortSubmission.find_or_initialize_by(short_problem_id: prob_id,
+                                            user: current_user)
                      .update(answer: answer)
     end
     redirect_to Contest.find(contest_id)

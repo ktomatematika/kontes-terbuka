@@ -3,11 +3,11 @@
   <%= form_for([@contest, @long_problem]) do |f| %>
     <p>
     <%= f.label :problem_no %><br>
-    <%= f.text_field :problem_no %>
+    <%= f.text_field :problem_no, class: 'form-control' %>
     </p>
     <p>
     <%= f.label :statement %><br>
-    <%= f.text_area :statement %>
+    <%= f.text_area :statement, class: 'form-control' %>
     </p>
     <p>
     <%= f.submit %>

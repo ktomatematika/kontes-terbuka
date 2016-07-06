@@ -11,4 +11,10 @@ class LongProblem < ActiveRecord::Base
   def to_s
     contest.to_s + ' no. ' + problem_no.to_s
   end
+
+  def fill_long_submissions
+    UserContest.where(contest: contest).find_each do |uc|
+      LongSubmission.find_or_create_by(user: uc.user, long_problem: self)
+    end
+  end
 end
