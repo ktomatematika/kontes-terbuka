@@ -28,9 +28,8 @@ class UserContest < ActiveRecord::Base
     end
   end
 
-  def total_score
-    short_marks + long_marks
-  end
+  total_score ||= short_marks + long_marks
+  attr_accessor :total_score
 
   def award
     total = total_score

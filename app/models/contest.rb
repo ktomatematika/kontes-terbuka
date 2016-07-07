@@ -1,4 +1,6 @@
 class Contest < ActiveRecord::Base
+  require 'csv'
+
   has_paper_trail
 
   has_many :user_contests
@@ -27,7 +29,8 @@ class Contest < ActiveRecord::Base
 
   has_attached_file :problem_tex,
                     url: '/problem_files/:id/:basename.:extension',
-                    path: ':rails_root/public/problem_files/:id/:basename.:extension'
+                    path: ':rails_root/public/problem_files/' \
+                    ':id/:basename.:extension'
   validates_attachment_content_type :problem_tex,
                                     content_type: ['application/x-tex']
 
@@ -60,10 +63,119 @@ class Contest < ActiveRecord::Base
 
   def max_score
     ShortProblem.where(contest: self).length +
-      LongProblem.max_mark * LongProblem.where(contest: self).length
+      LongProblem.MAX_MARK * LongProblem.where(contest: self).length
   end
 
   def rank_participants
     UserContest.where(contest: self).sort_by(&:total_score).reverse
+  end
+
+  def generate_placeholders_from_ktohasil(ktohasil_file_name)
+    ktohasil_file = CSV.read(ktohasil_file_name)
+
+    # Get short problem solutions
+    # [1..-1] because the first column is ignored. Lol assumptions
+    solutions = ktohasil_file[1][1..-1].reduce([]) do |memo, item|
+      # Assumption: empty cells after solutions
+      item.nil? ? memo : memo.push(item.to_i)
+    end
+    short_problems = solutions.length
+
+    # Get number of long problems
+    # Assumption: it's the nonzero integer from the right
+    long_problems = ktohasil_file[0].reverse.find { |i| i.to_i != 0 }.to_i
+
+    generate_problems(solutions, long_problems)
+
+    # LOL RUBY MAGIC
+    users = ktohasil_file.select do |row|
+      username = row[0]
+      !username.nil? && username.starts_with?('A')
+    end
+
+    users.each do |user_row|
+      username = user_row[0]
+      short_problem_answers = user_row[1..short_problems]
+      long_submission_array =
+        user_row[short_problems + 1..short_problems + 2 * long_problems]
+
+      long_submission_hashes = []
+      temporary_long_submission_hash = {}
+      long_submission_array.each_with_index do |item, idx|
+        if idx.even?
+          temporary_long_submission_hash[:score] = item
+        else
+          temporary_long_submission_hash[:feedback] = item
+          long_submission_hashes.push(temporary_long_submission_hash.clone)
+          temporary_long_submission_hash = {}
+        end
+      end
+
+      generate_user_and_submissions(username, short_problem_answers,
+                                    long_submission_hashes)
+    end
+  end
+
+  # This method generates placeholder ShortProblems and LongProblems.
+  # Params:
+  # - short_problem_answers: an array of numbers that contain answers to the
+  # short problems, in order. For example, if short_problem_answers is
+  # [2, 10, -3], then 3 short problems will be created with problem_no
+  # 1, 2, 3; the answers will be 2, 10, and -3, respectively.
+  # - long_problems: number of LongProblems to be created.
+  def generate_problems(short_problem_answers, long_problems)
+    short_problem_answers.each_with_index do |ans, i|
+      ShortProblem.create(contest: self, problem_no: (i + 1), answer: ans,
+                          statement: "#{self} isian no. #{i + 1}")
+    end
+    long_problems.times do |i|
+      LongProblem.create(contest: self, problem_no: (i + 1),
+                         statement: "#{self} esai no. #{i + 1}")
+    end
+  end
+
+  # This method generates placeholder User, ShortSubmissions and
+  # LongSubmissions by calling the respective functions. Just check the
+  # functions for info
+  # Params: username, short_problem_answers, long_submission_hashes
+  def generate_user_and_submissions(username, short_problem_answers,
+                                    long_submission_hashes)
+    u = User.create_placeholder_user(username)
+    UserContest.create(user: u, contest: self)
+    generate_short_submissions(u, short_problem_answers)
+    generate_long_submissions(u, long_submission_hashes)
+  end
+
+  # This method generates placeholder ShortSubmissions.
+  # Params:
+  # - user: the User that the short submissions are created for.
+  # - short_problem_answers: The answers to the contest's short problems by this
+  # user. It should be in order of the problem_no, from 1 to the size
+  # of the short_problem_answers array.
+  def generate_short_submissions(user, short_problem_answers)
+    short_problem_answers.each_with_index do |ans, idx|
+      next if ans.nil?
+      p_no = idx + 1
+      short_problem = ShortProblem.find_by(contest: self, problem_no: p_no)
+      ShortSubmission.create(user: user, short_problem: short_problem,
+                             answer: ans)
+    end
+  end
+
+  # This method generates placeholder LongSubmissions.
+  # Params:
+  # - user: the User that the short submissions are created for.
+  # - long_submission_hashes: an array of hashes. This has should contain two
+  # keys: score, which is the score the user got, and feedback, which is
+  # the feedback for the LongSubmission.
+  def generate_long_submissions(user, long_submission_hashes)
+    long_submission_hashes.each_with_index do |h, idx|
+      p_no = idx + 1
+      score = h[:score]
+      feedback = h[:feedback]
+      long_problem = LongProblem.find_by(contest: self, problem_no: p_no)
+      LongSubmission.create(user: user, long_problem: long_problem,
+                            score: score, feedback: feedback)
+    end
   end
 end

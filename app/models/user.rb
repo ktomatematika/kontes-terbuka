@@ -78,4 +78,14 @@ class User < ActiveRecord::Base
   def to_s
     username
   end
+
+  # Creates a user with this username. Password will be a random secure
+  # password and other fields either follow the username, or just take the
+  # first.
+  def self.create_placeholder_user(username)
+    User.create(username: username, email: username + '@a.com',
+                password: SecureRandom.base64(20), fullname: username,
+                school: username, province: Province.first,
+                status: Status.first, timezone: 'WIB')
+  end
 end
