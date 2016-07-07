@@ -11,13 +11,6 @@ class User < ActiveRecord::Base
   has_many :user_contests
   has_many :contests, through: :user_contests
 
-  has_many :short_submissions
-  has_many :short_problems, through: :short_submissions
-
-  has_many :long_submissions
-  has_many :long_problems, through: :long_submissions
-  has_many :submission_pages, through: :long_submissions
-
   has_many :user_awards
   has_many :awards, through: :user_awards
 
@@ -56,11 +49,12 @@ class User < ActiveRecord::Base
     self.hashed_password = BCrypt::Engine.hash_secret(password, salt)
   end
 
-  def self.authenticate(username, password)
-    user = User.find_by(username: username)
-    if user
-      hash = BCrypt::Engine.hash_secret(password, user.salt)
-      user if user.hashed_password == hash
+  def self.authenticate(username_or_email, password)
+    user = User.find_by(username: username_or_email) ||
+           User.find_by(email: username_or_email)
+    unless user.nil?
+      user if user.hashed_password == BCrypt::Engine.hash_secret(password,
+                                                                 user.salt)
     end
   end
 

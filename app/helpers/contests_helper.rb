@@ -37,7 +37,8 @@ module ContestsHelper
     end
   end
 
-  def show_long_mark(long_problem)
-    long_problem.score || '-'
+  def show_long_mark(long_submission)
+    return '-' if long_submission.nil?
+    long_submission.score
   end
 end

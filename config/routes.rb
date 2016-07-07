@@ -19,6 +19,8 @@ Rails.application.routes.draw do
 
     resources :feedback_questions
     post 'feedback_submit', to: 'contests#feedback_submit'
+
+    post 'update_marks', to: 'contests#update_marks'
   end
 
   resources :market_items

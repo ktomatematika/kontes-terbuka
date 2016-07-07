@@ -5,7 +5,7 @@ class LongProblem < ActiveRecord::Base
   belongs_to :contest
 
   has_many :long_submissions
-  has_many :users, through: :long_submissions
+  has_many :user_contests, through: :long_submissions
   has_many :submission_pages, through: :long_submissions
 
   MAX_MARK = 7

@@ -9,7 +9,7 @@ class ContestsController < ApplicationController
   def admin
     @contest = Contest.find(params[:contest_id])
     grab_problems
-    @feedback_questions = FeedbackQuestion.where(contest: @contest)
+    @feedback_questions = @contest.feedback_questions
   end
 
   def new
@@ -27,7 +27,7 @@ class ContestsController < ApplicationController
 
   def show
     @contest = Contest.find(params[:id])
-    @user_contest = UserContest.find_by(contest: @contest, user: current_user)
+    @user_contest = @contest.user_contests.find_by(user: current_user)
     if @user_contest.nil? && @contest.currently_in_contest?
       redirect_to contest_show_rules_path(params[:id])
     end
@@ -47,7 +47,8 @@ class ContestsController < ApplicationController
   def update
     @contest = Contest.find(params[:id])
     if @contest.update(contest_params)
-      redirect_to contest_url(@contest)
+      @contest.user_contests.each { |uc| uc.update_total_marks }
+      redirect_to @contest
     else
       render 'edit'
     end
@@ -70,7 +71,7 @@ class ContestsController < ApplicationController
       user_contest = UserContest.create(participate_params)
       contest = user_contest.contest
       contest.long_problems.each do |long_problem|
-        LongSubmission.create(user: user_contest.user,
+        LongSubmission.create(user_contest: user_contest.user,
                               long_problem: long_problem)
       end
     end
@@ -109,12 +110,12 @@ class ContestsController < ApplicationController
 
   def give_feedback
     @contest = Contest.find(params[:contest_id])
-    @feedback_questions = FeedbackQuestion.where(contest: @contest)
+    @feedback_questions = @contest.feedback_questions
   end
 
   def download_feedback
     @contest = Contest.find(params[:contest_id])
-    @user_contests = UserContest.where(contest: contest)
+    @user_contests = @contest.user_contests
     respond_to do |format|
       format.html
       format.csv do

@@ -1,0 +1,25 @@
+%article#all-result
+  %h2 Leaderboard
+  .table-responsive
+    %table.table.table-hover.table-bordered.has-shade
+      %thead
+        %tr
+          %th Peringkat
+          %th Username
+          - unless @short_problems.empty?
+            %th Bagian A
+          %th Total
+          %th Penghargaan
+
+      %tbody
+        - @user_contests.each do |uc|
+          - user = uc.user
+          %tr.clickable-row{ data: { link: @user } }
+            %td= uc.rank
+            %td= user.username
+            - unless @short_problems.empty?
+              %td= uc.short_marks
+            - @long_problems.each do |lp|
+              %td= show_long_mark uc.long_submissions.find_by(long_problem: lp)
+            %td= uc.total_marks
+            %td= uc.award

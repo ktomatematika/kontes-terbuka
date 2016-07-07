@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160706121308) do
+ActiveRecord::Schema.define(version: 20160707152010) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -88,12 +88,12 @@ ActiveRecord::Schema.define(version: 20160706121308) do
   add_index "long_problems", ["contest_id"], name: "index_long_problems_on_contest_id", using: :btree
 
   create_table "long_submissions", force: :cascade do |t|
-    t.integer  "user_id"
     t.integer  "long_problem_id"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
     t.integer  "score"
     t.text     "feedback"
+    t.integer  "user_contest_id"
   end
 
   create_table "market_item_pictures", force: :cascade do |t|
@@ -147,11 +147,11 @@ ActiveRecord::Schema.define(version: 20160706121308) do
   add_index "short_problems", ["contest_id"], name: "index_short_problems_on_contest_id", using: :btree
 
   create_table "short_submissions", force: :cascade do |t|
-    t.integer  "user_id"
     t.integer  "short_problem_id"
     t.string   "answer"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
+    t.integer  "user_contest_id"
   end
 
   create_table "statuses", force: :cascade do |t|
