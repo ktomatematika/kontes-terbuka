@@ -13,27 +13,22 @@ class UserContest < ActiveRecord::Base
 
   enforce_migration_validations
 
+  attr_accessor :rank
+
   def short_marks
-    ShortProblem.where(contest: contest).reduce(0) do |score, problem|
-      submission = short_submissions.find_by(short_problem: problem)
+    short_submissions.reduce(0) do |score, submission|
       score + (!submission.nil? && submission.correct? ? 1 : 0)
     end
   end
 
   def long_marks
-    LongProblem.where(contest: contest).reduce(0) do |score, problem|
-      submission = long_submissions.find_by(long_problem: problem)
+    long_submissions.reduce(0) do |score, submission|
       score + (submission.nil? || submission.score.nil? ? 0 : submission.score)
     end
   end
 
   def total_marks
-    @total_marks ||= short_marks + long_marks
-  end
-
-  def update_total_marks
-    @total_marks = nil
-    total_marks
+    short_marks + long_marks
   end
 
   def award
@@ -41,14 +36,5 @@ class UserContest < ActiveRecord::Base
     return 'Perak' if total_marks >= contest.silver_cutoff
     return 'Perunggu' if total_marks >= contest.bronze_cutoff
     ''
-  end
-
-  def rank
-    result = 0
-    current_total = contest.max_score + 1
-    contest.rank_participants.each_with_index do |uc, idx|
-      result = (idx + 1) unless uc.total_marks == current_total
-      return result if uc == self
-    end
   end
 end

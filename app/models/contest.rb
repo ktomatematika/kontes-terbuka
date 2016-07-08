@@ -67,10 +67,23 @@ class Contest < ActiveRecord::Base
   end
 
   def rank_participants
-    UserContest.where(contest: self).sort_by(&:total_marks).reverse
+    partcps = UserContest.where(contest: self).sort_by(&:total_marks).reverse
+
+    rank = 0
+    current_total = max_score + 1
+    partcps.each_with_index do |uc, idx|
+      new_total = uc.total_marks
+      if new_total == current_total
+        uc.rank = rank # carryover rank
+      else
+        current_total = new_total
+        uc.rank = idx + 1
+        rank = uc.rank
+      end
+    end
   end
 
-  def generate_placeholders_from_ktohasil(ktohasil_file_name)
+  def ktohasil_dump(ktohasil_file_name)
     ktohasil_file = CSV.read(ktohasil_file_name)
 
     # Get short problem solutions
@@ -97,7 +110,7 @@ class Contest < ActiveRecord::Base
       username = "C" + id.to_s + user_row[0]
       short_problem_answers = user_row[1..short_problems]
       long_submission_array =
-        user_row[short_problems + 1..short_problems + 2 * long_problems]
+        user_row[short_problems + 2..short_problems + 3 * long_problems]
 
       long_submission_hashes = []
       temporary_long_submission_hash = {}
@@ -173,6 +186,7 @@ class Contest < ActiveRecord::Base
     long_submission_hashes.each_with_index do |h, idx|
       p_no = idx + 1
       score = h[:score]
+      score = nil if score == '-'
       feedback = h[:feedback]
       long_problem = LongProblem.find_by(contest: self, problem_no: p_no)
       LongSubmission.create(user_contest: user_contest,

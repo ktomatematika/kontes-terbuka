@@ -8,13 +8,15 @@
           %th Username
           - unless @short_problems.empty?
             %th Bagian A
+          - @long_problems.each do |lp|
+            %th Bagian B no. #{lp.problem_no}
           %th Total
           %th Penghargaan
 
       %tbody
         - @user_contests.each do |uc|
           - user = uc.user
-          %tr.clickable-row{ data: { link: @user } }
+          %tr.clickable-row{ data: { link: user } }
             %td= uc.rank
             %td= user.username
             - unless @short_problems.empty?
