@@ -31,11 +31,11 @@ class ApplicationController < ActionController::Base
   WIT = TZInfo::Timezone.get('Asia/Jayapura')
 
   def set_timezone
-    Time.zone &&= case current_user.timezone
-                  when 'WIB' then WIB
-                  when 'WITA' then WITA
-                  when 'WIT' then WIT
-                  end
+    Time.zone = current_user && case current_user.timezone
+                                when 'WIB' then WIB
+                                when 'WITA' then WITA
+                                when 'WIT' then WIT
+                                end
     Time.zone = WIB if Time.zone.nil?
   end
 end

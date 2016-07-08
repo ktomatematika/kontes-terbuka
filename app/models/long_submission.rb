@@ -5,7 +5,8 @@ class LongSubmission < ActiveRecord::Base
   validates_uniqueness_of :user_contest_id, scope: :long_problem_id
 
   has_many :submission_pages
-  accepts_nested_attributes_for :submission_pages, allow_destroy: true, update_only: true
+  accepts_nested_attributes_for :submission_pages, allow_destroy: true,
+                                                   update_only: true
 
   has_many :temporary_markings
 

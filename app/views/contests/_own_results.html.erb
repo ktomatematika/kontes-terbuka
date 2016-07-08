@@ -9,7 +9,7 @@
     <h3>Bagian B</h3>
     <% @long_problems.each do |prob| %>
       <% ls = LongSubmission.find_by(long_problem: prob, user: current_user) %>
-      
+
       <h4>No. <%= prob.problem_no %>: <%= show_long_mark(ls) %>/7 poin</h4>
       <div class="row">
         <div class="col-sm-6">
@@ -23,7 +23,7 @@
       </div>
     <% end %>
   <% end %>
-  <h3>Total: <%= @user_contest.total_score %>/<%= @contest.max_score %> poin</h3>
+  <h3>Total: <%= @user_contest.total_marks %>/<%= @contest.max_score %> poin</h3>
   <%= show_award %>
   <p>Jika menurut Anda terdapat masalah dengan penilaian di kontes ini,
     seperti ada berkas Anda yang tidak dinilai atau menurut Anda nilainya

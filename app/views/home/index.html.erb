@@ -4,6 +4,8 @@
   start_time: @next_important_contest.start_time,
   end_time: @next_important_contest.end_time,
   result_time: @next_important_contest.result_time,
+  feedback_time: @next_important_contest.feedback_time,
+  results_released: @next_important_contest.result_released,
   url: url_for(@next_important_contest) } %>
 
 <!-- Facebook plugin -->
@@ -39,8 +41,7 @@ fjs.parentNode.insertBefore(js, fjs);
           Kami memiliki official account di LINE! Kami menyajikan berbagai
           konten menarik, seperti teorema-teorema yang berguna untuk olimpiade
           maupun kuis-kuis seru! Add kami di @ktom :)
-          <a href="http://line.me/ti/p/%40ktom", target="_blank",
-            class="line-btn">
+          <a href="http://line.me/ti/p/%40ktom", target="_blank", id="line-btn">
             <img height="36" border="0" alt="Add Friend" src="http://biz.line.naver.jp/line_business/img/btn/addfriends_en.png">
           </a>
         </article>

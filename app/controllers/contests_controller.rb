@@ -28,7 +28,7 @@ class ContestsController < ApplicationController
   def show
     @contest = Contest.find(params[:id])
     @user_contest = @contest.user_contests.find_by(user: current_user)
-    if @user_contest && @contest.currently_in_contest?
+    if !@user_contest && @contest.currently_in_contest?
       redirect_to contest_show_rules_path(params[:id])
     end
 
@@ -47,7 +47,6 @@ class ContestsController < ApplicationController
   def update
     @contest = Contest.find(params[:id])
     if @contest.update(contest_params)
-      @contest.user_contests.each(&:update_total_marks)
       redirect_to @contest, notice: "#{@contest} berhasil diubah."
     else
       render 'edit', alert: "#{@contest} gagal diubah!"

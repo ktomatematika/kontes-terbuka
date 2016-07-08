@@ -23,7 +23,7 @@ module UsersHelper
   def full_data_contents
     @user_contests.map do |uc|
       create_data_row([uc.contest,
-                       uc.total_score.to_s + '/' + uc.contest.max_score.to_s,
+                       uc.total_marks.to_s + '/' + uc.contest.max_score.to_s,
                        uc.rank.to_s + '/' +
                        UserContest.where(contest: uc.contest).length.to_s,
                        uc.award], 'td',

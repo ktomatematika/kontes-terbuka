@@ -1,7 +1,7 @@
 %article#all-result
   %h2 Leaderboard
   .table-responsive
-    %table.table.table-hover.table-bordered.has-shade
+    %table.table.table-hover.table-bordered
       %thead
         %tr
           %th Peringkat
@@ -16,7 +16,7 @@
       %tbody
         - @user_contests.each do |uc|
           - user = uc.user
-          %tr.clickable-row{ data: { link: user } }
+          %tr.clickable-row{ class: uc.award.downcase, data: { link: user_path(user) } }
             %td= uc.rank
             %td= user.username
             - unless @short_problems.empty?

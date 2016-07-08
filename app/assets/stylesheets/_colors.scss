@@ -3,4 +3,8 @@ $blue-color: 'blue' lighten(#337fff, 10);
 $green-color: 'green' lighten(#33b24c, 10);
 $yellow-color: 'yellow' lighten(#ffb200, 10);
 
-$colors: $red-color $blue-color $green-color $yellow-color
+$colors: $red-color $blue-color $green-color $yellow-color;
+
+$emas: lighten(gold, 20);
+$perak: lighten(silver, 10);
+$perunggu: lighten(brown, 35);
