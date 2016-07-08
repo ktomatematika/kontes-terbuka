@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+%html{ lang: 'id' }
+  %head
+    %title Kontes Terbuka Olimpiade Matematika
+    %meta{ name: 'viewport', content: 'width=device-width, initial-scale=1' }
+    = stylesheet_link_tag 'application', media: 'all',
+      'data-turbolinks-track' => true
+    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    = csrf_meta_tags
+    %script{ src: 'https://use.typekit.net/ieu7ith.js' }
+    :javascript
+      try{Typekit.load({async:true});}catch(e){}
+    %meta{ name: 'google-site-verification', content: 'LhbNAf_v-2MgcX8S04Z8XyabspyseSMCvKOIliwT1aY' }
+    = favicon_link_tag
+
+  - haml_tag "body #{yield :page_attributes}" do
+    #essential-data{ data: { color: (current_user.nil? ? '' : current_user.color), timezone: Time.zone.now.zone, user_id: (current_user.nil? ? nil : current_user.id) } }
+
+    %nav.navbar.navbar-default.navbar-fixed-top
+      .container-fluid
+        .navbar-header
+          %button.navbar-toggle.collapsed{ type: 'button', data: { toggle: 'collapse', target: '#top-navbar', }, 'aria-expanded' => 'false' }
+            %span.sr-only Toggle navigation
+            %span.glyphicon.glyphicon-th-list{ 'aria-hidden' => 'true' }
+
+          .navbar-brand#top-navbar-logo= link_to image_tag('logo.png',
+            alt: 'Logo KTOM', height: '50px'), root_path
+
+        .collapse.navbar-collapse#top-navbar
+          %ul.nav.navbar-nav.navbar-right
+            - if @current_user && @current_user.has_any_role?(:admin, { name: :marking_manager, resource: :any }, { name: :marker, resource: :any })
+              %li= link_to 'Admin', admin_path, class: 'has-shade'
+            %li= link_to 'Rumah', root_path, class: 'has-shade'
+            %li= link_to 'Kontes', contests_path, class: 'has-shade'
+            %li= link_to 'Pasar', market_items_path, class: 'has-shade'
+            %li= link_to 'Profil', current_user, class: 'has-shade'
+            %li= link_to 'Keluar', logout_path, class: 'has-shade'
+
+    - unless flash.empty?
+      #flash
+        - flash.each do |_, msg|
+          %p= msg
+        .text-right
+          %button.btn.btn-default.has-shade#close-flash Tutup
+
+    = yield
+
+    %footer.app-footer
+      #other-links{ role: 'navigation' }
+        %ul.list-inline
+          %li= link_to 'FAQ', faq_path, class: 'has-shade'
+          %li= link_to 'Buku', book_path, class: 'has-shade'
+          %li= link_to 'Donasi', donate_path, class: 'has-shade'
+          %li= link_to 'Tentang Kami', about_path, class: 'has-shade'
+          %li= link_to 'Kebijakan Privasi', privacy_path, class: 'has-shade'
+          %li= link_to 'Syarat dan Ketentuan', terms_path, class: 'has-shade'
+          %li= link_to 'FAQ', contact_path, class: 'has-shade'
+      %p.footer-text &copy; Kontes Terbuka Olimpiade Matematika 2016

@@ -1,0 +1,8 @@
+.container
+  %h1= @user
+  .row
+    .col-sm-5#profile
+      = render 'show_user_info'
+    .col-sm-7
+      = render 'show_history'
+      = render 'show_transactions' if can? :mini_edit, @user

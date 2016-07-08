@@ -19,16 +19,16 @@ class ContestsController < ApplicationController
   def create
     @contest = Contest.new(contest_params)
     if @contest.save
-      redirect_to @contest
+      redirect_to @contest, notice: "Kontes #{@contest} berhasil dibuat!"
     else
-      render 'new'
+      render 'new', alert: 'Kontes gagal dibuat!'
     end
   end
 
   def show
     @contest = Contest.find(params[:id])
     @user_contest = @contest.user_contests.find_by(user: current_user)
-    if @user_contest.nil? && @contest.currently_in_contest?
+    if @user_contest && @contest.currently_in_contest?
       redirect_to contest_show_rules_path(params[:id])
     end
 
@@ -47,17 +47,17 @@ class ContestsController < ApplicationController
   def update
     @contest = Contest.find(params[:id])
     if @contest.update(contest_params)
-      @contest.user_contests.each { |uc| uc.update_total_marks }
-      redirect_to @contest
+      @contest.user_contests.each(&:update_total_marks)
+      redirect_to @contest, notice: "#{@contest} berhasil diubah."
     else
-      render 'edit'
+      render 'edit', alert: "#{@contest} gagal diubah!"
     end
   end
 
   def destroy
     @contest = Contest.find(params[:id])
     @contest.destroy
-    redirect_to contests_path
+    redirect_to contests_path, notice: 'Kontes berhasil dihilangkan!'
   end
 
   def show_rules
@@ -88,7 +88,8 @@ class ContestsController < ApplicationController
                                             user: current_user)
                      .update(answer: answer)
     end
-    redirect_to Contest.find(contest_id)
+    redirect_to Contest.find(contest_id),
+                notice: 'Jawaban bagian A berhasil dikirimkan!'
   end
 
   def feedback_submit
@@ -100,7 +101,8 @@ class ContestsController < ApplicationController
                                        user: current_user)
                     .update(answer: answer)
     end
-    redirect_to Contest.find(contest_id)
+    redirect_to Contest.find(contest_id),
+                notice: 'Feedback berhasil dikirimkan!'
   end
 
   def assign_markers

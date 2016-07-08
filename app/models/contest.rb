@@ -39,8 +39,7 @@ class Contest < ActiveRecord::Base
   accepts_nested_attributes_for :long_submissions
 
   def self.next_contest
-    after_now = Contest.where('end_time > ?', Time.zone.now)
-    after_now.order('end_time')[0]
+    Contest.where('end_time > ?', Time.zone.now).order('end_time')[0]
   end
 
   def self.next_important_contest
@@ -107,7 +106,7 @@ class Contest < ActiveRecord::Base
     end
 
     users.each do |user_row|
-      username = "C" + id.to_s + user_row[0]
+      username = 'C' + id.to_s + user_row[0]
       short_problem_answers = user_row[1..short_problems]
       long_submission_array =
         user_row[short_problems + 2..short_problems + 3 * long_problems]

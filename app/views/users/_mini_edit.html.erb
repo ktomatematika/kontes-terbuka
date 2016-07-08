@@ -1,6 +1,6 @@
-<%= link_to "Ganti Password", change_password_path,
+<%= link_to "Ganti Password", user_change_password_path(@user),
   class: 'btn btn-default has-shade', type: 'button' %>
-<%= form_for :user, url: mini_update_path(@user), do |f| %>
+<%= form_for :user, url: user_mini_update_path(@user) do |f| %>
   <p>
   <label for="user_timezone">Zona waktu:</label>
   <%= f.text_field :timezone, class: "form-control" %>
@@ -8,7 +8,7 @@
 
   <p>
   <label for="user_color">Warna:</label>
-  <%= f.collection_select :color_id, Color.all(), :id, :name,
+  <%= f.collection_select :color_id, Color.all, :id, :name,
     { prompt: "Color" }, class: "form-control" %>
   </p>
   <%= f.submit "Ganti", class: "btn btn-default has-shade" %>

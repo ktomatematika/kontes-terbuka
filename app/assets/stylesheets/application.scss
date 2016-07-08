@@ -145,6 +145,19 @@ textarea {
   cursor: pointer;
 }
 
+#flash {
+  border: 1px solid #000;
+  border-radius: 0.5em;
+  padding: 0.5em;
+  position: fixed;
+  left: 0;
+  right: 0;
+  margin: 10px auto;
+  max-width: 80%;
+  z-index: 2;
+  background: rgba(255, 255, 255, 0.92);
+}
+
 // Table classes
 div.table {
   @extend table;
@@ -191,6 +204,7 @@ blockquote {
   font-size: 1.2em;
 }
 input, select, textarea {
+  height: 2em !important;
   font-size: 1em !important;
 }
 

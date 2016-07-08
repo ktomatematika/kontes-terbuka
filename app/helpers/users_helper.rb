@@ -1,7 +1,7 @@
 module UsersHelper
   def create_data_row(data_array, tag, additions = '')
     '<tr>' + data_array.map { |data| "<#{tag} #{additions}>#{data}</#{tag}>" }
-    .join + '</tr>'
+             .join + '</tr>'
   end
 
   def public_header_contents
@@ -27,8 +27,8 @@ module UsersHelper
                        uc.rank.to_s + '/' +
                        UserContest.where(contest: uc.contest).length.to_s,
                        uc.award], 'td',
-                       'class="clickable-row" data-link="' +
-                       contest_path(uc.contest) + '"')
+                      'class="clickable-row" data-link="' +
+                      contest_path(uc.contest) + '"')
     end.join.html_safe
   end
 end

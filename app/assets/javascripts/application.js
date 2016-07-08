@@ -28,4 +28,9 @@ $(document).ready(function() {
 		minFont: 12,
 		maxFont: 20,
 	});
+
+	$('#flash').hide().fadeIn('fast');
+	$('#close-flash').click(function() {
+		$('#flash').fadeOut('fast');
+	});
 });

@@ -21,7 +21,9 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
 
   def require_login
-    redirect_to login_path unless current_user
+    unless current_user
+      redirect_to login_path, 'Anda perlu masuk terlebih dahulu.'
+    end
   end
 
   WIB = TZInfo::Timezone.get('Asia/Jakarta')
@@ -29,12 +31,11 @@ class ApplicationController < ActionController::Base
   WIT = TZInfo::Timezone.get('Asia/Jayapura')
 
   def set_timezone
-    Time.zone = if current_user.nil?
-                  WIB
-                elsif [WIB, WITA, WIT].include? current_user.timezone
-                  current_user.timezone
-                else
-                  WIB
-                end
+    Time.zone &&= case current_user.timezone
+                  when 'WIB' then WIB
+                  when 'WITA' then WITA
+                  when 'WIT' then WIT
+                  end
+    Time.zone = WIB if Time.zone.nil?
   end
 end

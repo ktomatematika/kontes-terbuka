@@ -4,14 +4,15 @@ class RolesController < ApplicationController
   def create_marker
     long_problem = LongProblem.find(params[:long_problem_id])
     user = User.find_by(username: params[:username])
-
-    user.add_role :marker, long_problem unless user.nil?
-    redirect_to assign_markers_path(long_problem.contest)
+    user && user.add_role(:marker, long_problem)
+    redirect_to assign_markers_path(long_problem.contest),
+                notice: 'Korektor berhasil ditambahkan!'
   end
 
   def remove_marker
     long_problem = LongProblem.find(params[:long_problem_id])
     User.find(params[:user_id]).remove_role :marker, long_problem
-    redirect_to assign_markers_path(long_problem.contest)
+    redirect_to assign_markers_path(long_problem.contest),
+                notice: 'Korektor berhasil dibuang!'
   end
 end

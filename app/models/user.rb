@@ -26,9 +26,10 @@ class User < ActiveRecord::Base
                          in: %w(WIB WITA WIT),
                          message: 'Zona waktu %{value} tidak tersedia'
                        }
-  attr_accessor :password
 
+  attr_accessor :password
   validates :password, presence: true, confirmation: true, on: :create
+
   validates :terms_of_service, acceptance: true
 
   enforce_migration_validations

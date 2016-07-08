@@ -8,6 +8,8 @@ class Ability
            :accept_rules, :create_short_submissions], Contest
       can :show, User
       can :submit, LongProblem
+      can [:mini_edit, :mini_update,
+           :change_password, :update_password], User, id: user.id
 
       if user.has_role? :marking_manager
         can [:admin, :assign_markers, :save_markers], Contest

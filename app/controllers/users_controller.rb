@@ -21,15 +21,18 @@ class UsersController < ApplicationController
         cookies[:auth_token] = user.auth_token
         redirect_to root_path
       else
-        # Due to client validations, this should not normally happen
-        redirect_to register_path
+        redirect_to register_path, 'Terdapat kesalahan dalam registrasi. ' \
+          ' Jika registrasi masih tidak bisa dilakukan, ' \
+          " #{link_to 'kontak kami', contact_path}."
       end
     end
   end
 
   def show
     @user = User.find(params[:id])
-    @user_contests = UserContest.where(user: @user)
+    @user_contests = UserContest.joins(:contest)
+                                .where(user: @user,
+                                       'contests.result_released' => true)
   end
 
   def index
@@ -42,50 +45,51 @@ class UsersController < ApplicationController
 
   def update
     User.transaction do
-      @user = User.find(params[:id])
+      @user = User.find(params[:id]).update(user_edit_params)
       @user.update(user_edit_params)
     end
-    redirect_to user_path
+    redirect_to user_path(@user), notice: 'User berhasil diupdate!'
   end
 
   def mini_update
     User.transaction do
-      @user = User.find(params[:id])
-      @user.update(user_mini_edit_params)
+      @user = User.find(params[:user_id])
+      if @user.update(user_mini_edit_params)
+        redirect_to user_path(@user), notice: 'User berhasil diupdate!'
+      else
+        redirect_to user_path(@user),
+                    alert: 'Terdapat kesalahan dalam mengupdate User!'
+      end
     end
-    redirect_to user_path
   end
 
   def destroy
-    @user = User.find(params[:id])
-    @user.destroy
-    redirect_to users_path
+    User.find(params[:id]).destroy
+    redirect_to users_path, notice: 'User berhasil didelete!'
   end
 
   def check_unique
     users = User.all
-    unless params[:username].nil?
-      users = users.where(username: params[:username])
-    end
-    users = users.where(email: params[:email]) unless params[:email].nil?
-
+    params[:username] && users = users.where(username: params[:username])
+    params[:email] && users = users.where(email: params[:email])
     render json: users.present? ? false : true
   end
 
   def change_password
-    @user = User.find(params[:id])
+    @user = User.find(params[:user_id])
   end
 
   def update_password
     User.transaction do
-      @user = User.find(params[:id])
-      prms = user_change_password_params
-      if User.authenticate(@user.username, prms[:old_password]) &&
-         prms[:new_password] == prms[:confirm_new_password]
-        @user.update(password: encrypt_password(prms[:new_password]))
+      @user = User.find params[:user_id]
+      if User.authenticate(@user.username, params[:old_password]) &&
+         params[:new_password] == params[:confirm_new_password]
+        @user.password = params[:new_password]
+        @user.encrypt_password
+        @user.save
       end
     end
-    redirect_to user_path
+    redirect_to user_path(@user)
   end
 
   private
@@ -105,10 +109,5 @@ class UsersController < ApplicationController
 
   def user_mini_edit_params
     params.require(:user).permit(:timezone, :color_id)
-  end
-
-  def user_change_password_params
-    params.require(:user).permit(:old_password, :new_password,
-                                 :confirm_new_password)
   end
 end

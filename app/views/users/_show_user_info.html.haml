@@ -1,19 +1,16 @@
-<%= image_tag("/profile_pictures/#{@user.id}/#{@user.profile_picture.instance.profile_picture_file_name}", :alt => "Profil #{@user.username}", :height => "200px") %>
+%h2 Info
+- if can? :mini_edit, @user
+  %p Nama lengkap: #{@user.fullname}
+  %p Email: #{@user.email}
+%p Provinsi: #{@user.province}
+%p Status: #{@user.status}
+%p Sekolah/institusi: #{@user.school}
+- if can? :edit, @user
+  = link_to 'Edit Profil', edit_user_path, class: 'btn btn-default has-shade',
+    type: 'button'
+- elsif can? :mini_edit, @user
+  = render 'mini_edit'
 
-<% if can? :manage, @user %>
-  <p>Nama lengkap: <%= @user.fullname %></p>
-  <p>Email: <%= @user.email %></p>
-<% end %>
-<p>Provinsi: <%= @user.province.name %> </p>
-<p>Status: <%= @user.status.name %></p>
-<p>Sekolah/Institusi: <%= @user.school %></p>
-<% if can? :edit, @user %>
-  <%= link_to "Edit Profil", edit_user_path,
-    class: "btn btn-default has-shade", type: "button" %>
-<% elsif @user == current_user %>
-  <%= render 'mini_edit' %>
-<% end %>
-<p>Poin: <%= @user.point %></p>
-<% if @user == current_user %>
-  <%= link_to "Pasar", market_items_path, class: "btn btn-default has-shade" %>
-<% end %>
+%p Poin: #{@user.point}
+- if @user == current_user
+  = link_to 'Pasar', market_items_path, class: 'btn btn-default has-shade'

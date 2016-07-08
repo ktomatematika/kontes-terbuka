@@ -10,19 +10,8 @@ class MarketItemsController < ApplicationController
   end
 
   def create
-    MarketItem.transaction do
-      @market_item = MarketItem.new(item_params)
-      @market_item.save
-    end
-
-    redirect_to root_path
-
-  rescue ActiveRecord::ActiveRecordError
-    respond_to do |format|
-      format.html do
-        render 'new'
-      end
-    end
+    MarketItem.create(item_params)
+    redirect_to market_items_path, notice: 'Item berhasil dibuat!'
   end
 
   def edit
@@ -52,6 +41,7 @@ class MarketItemsController < ApplicationController
   private
 
   def item_params
-    params.require(:market_item).permit(:name, :description, :picture, :price, :current_quantity)
+    params.require(:market_item).permit(:name, :description, :picture, :price,
+                                        :current_quantity)
   end
 end

@@ -1,19 +1,15 @@
 class LongSubmissionsController < ApplicationController
   def submit
     LongSubmission.transaction do
-      @contest_id = params[:contest_id]
-      @long_submission = LongSubmission.find(params[:id])
-      @long_submission.update_attributes(submission_params)
-      @long_submission.save!
+      LongSubmission.find(params[:id]).update_attributes(submission_params)
+                    .save!
     end
 
-    redirect_to Contest.find(@contest_id)
+    redirect_to Contest.find(params[:contest_id])
 
   rescue ActiveRecord::ActiveRecordError
     respond_to do |format|
-      format.html do
-        redirect_to :back
-      end
+      format.html { redirect_to :back }
     end
   end
 
@@ -26,7 +22,8 @@ class LongSubmissionsController < ApplicationController
 
   def nested_params_pages
     nested = {}
-    nested[:submission_pages_attributes] = [:page_number, :submission, :_destroy, :id]
+    nested[:submission_pages_attributes] = [:page_number, :submission,
+                                            :_destroy, :id]
     nested
   end
 end
