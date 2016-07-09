@@ -37,4 +37,23 @@ class UserContest < ActiveRecord::Base
     return 'Perunggu' if total_marks >= contest.bronze_cutoff
     ''
   end
+
+  scope :short_marks, lambda {
+    joins{ short_submissions.outer }.
+    joins{ short_submissions.short_problem.outer }.
+    group(:id).
+    select('user_contests.id as id, sum(case when short_submissions.answer = short_problems.answer then 1 else 0 end) as short_mark')
+  }
+
+  scope :long_marks, lambda {
+    joins{ long_submissions.outer }.
+    group(:id).
+    select('user_contests.id as id, sum(long_submissions.score) as long_mark')
+  }
+
+  scope :include_marks, lambda {
+    joins{ UserContest.short_marks.as(short_marks).on { id == short_marks.id } }.
+    joins{ UserContest.long_marks.as(long_marks).on { id == long_marks.id } }.
+    select{ ['user_contests.*', 'short_marks.short_mark', 'long_marks.long_mark', '(short_marks.short_mark + long_marks.long_mark) as total_mark'] }
+  }
 end
