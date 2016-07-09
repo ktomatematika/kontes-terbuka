@@ -1,10 +1,24 @@
-<div class="container">
-  <h1>Pembagian Koreksi <%= @contest.name %></h1>
-  <% @long_problems.each do |lp| %>
-    <h2>No. <%= lp.problem_no %></h2>
-    <input>
-    <input>
-    <input>
-    <button>Submit</button>
-  <% end %>
-</div>
+.container
+  %h1 Pembagian Koreksi #{@contest.name}
+  - @long_problems.each do |lp|
+    %h2 No. #{lp.problem_no}
+
+    %table.table
+      %thead
+        %tr
+          %th Username
+          %th
+
+      %tbody
+        - User.with_role(:marker, lp).each do |u|
+          %tr
+            %td= u
+            %td= link_to 'Hapus',
+              remove_marker_path(long_problem_id: lp, user_id: u),
+              method: :delete, data: { confirm: 'Yakin?' }
+
+    = form_tag create_marker_path, method: :post, class: 'form-inline' do
+      = text_field_tag :username, nil, class: 'form-control',
+        placeholder: 'Tambah korektor'
+      = hidden_field_tag :long_problem_id, lp.id
+      = submit_tag 'Tambah korektor', class: 'btn btn-default has-shade'

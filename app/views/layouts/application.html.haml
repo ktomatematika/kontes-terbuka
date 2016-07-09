@@ -14,7 +14,7 @@
     = favicon_link_tag
 
   - haml_tag "body #{yield :page_attributes}" do
-    #essential-data{ data: { color: (current_user.nil? ? '' : current_user.color), timezone: Time.zone.now.zone, user_id: (current_user.nil? ? nil : current_user.id) } }
+    #essential-data{ data: { color: current_user && current_user.color, timezone: Time.zone.now.zone } }
 
     %nav.navbar.navbar-default.navbar-fixed-top
       .container-fluid
