@@ -38,6 +38,9 @@ class HomeController < ApplicationController
   def contact
   end
 
+  def construction
+  end
+
   def send_magic_email
     HomeMailer.magic_email.deliver_now
     redirect_to root_path

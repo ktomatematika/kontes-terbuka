@@ -44,6 +44,7 @@ Rails.application.routes.draw do
   get '/terms', to: 'home#terms'
   get '/contact', to: 'home#contact'
   get '/penguasa', to: 'home#admin', as: :admin
+  get '/construction', to: 'home#construction'
 
   resources :long_submissions do
     post 'submit' => 'long_submissions#submit', on: :member

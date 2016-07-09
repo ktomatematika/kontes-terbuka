@@ -80,22 +80,3 @@
   margin-top: 0.5em;
   margin-bottom: 0.5em;
 }
-
-.emas {
-  background-color: $emas;
-  &:hover {
-    background-color: lighten($emas, 10) !important;
-  }
-}
-.perak {
-  background-color: $perak;
-  &:hover {
-    background-color: lighten($perak, 5) !important;
-  }
-}
-.perunggu {
-  background-color: $perunggu;
-  &:hover {
-    background-color: lighten($perunggu, 10) !important;
-  }
-}

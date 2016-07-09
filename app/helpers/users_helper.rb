@@ -1,7 +1,6 @@
 module UsersHelper
-  def create_data_row(data_array, tag, additions = '')
-    '<tr>' + data_array.map { |data| "<#{tag} #{additions}>#{data}</#{tag}>" }
-             .join + '</tr>'
+  def create_data_row(data_array, tag, additions = '', tr_additions = '')
+    "<tr #{tr_additions}>" + data_array.map { |data| "<#{tag} #{additions}>#{data}</#{tag}>" }.join + '</tr>'
   end
 
   def public_header_contents
@@ -12,7 +11,8 @@ module UsersHelper
     @user_contests.map do |uc|
       create_data_row([uc.contest, uc.award], 'td',
                       'class="clickable-row" data-link="' +
-                      contest_path(uc.contest) + '"')
+                      contest_path(uc.contest) + '"', '',
+                      "class='#{uc.award.downcase}'")
     end.join.html_safe
   end
 
@@ -22,13 +22,15 @@ module UsersHelper
 
   def full_data_contents
     @user_contests.map do |uc|
+      uc = uc.contest.rank_participants.find { |u| u.user = uc.user}
       create_data_row([uc.contest,
                        uc.total_marks.to_s + '/' + uc.contest.max_score.to_s,
                        uc.rank.to_s + '/' +
                        UserContest.where(contest: uc.contest).length.to_s,
                        uc.award], 'td',
                       'class="clickable-row" data-link="' +
-                      contest_path(uc.contest) + '"')
+                      contest_path(uc.contest) + '"',
+                      "class='#{uc.award.downcase}'")
     end.join.html_safe
   end
 end
