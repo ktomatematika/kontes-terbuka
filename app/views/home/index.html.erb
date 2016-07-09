@@ -8,23 +8,6 @@
   results_released: @next_important_contest.result_released,
   url: url_for(@next_important_contest) } %>
 
-<!-- Google Analytics -->
-<script data-turbolinks-eval="false">
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-78763689-1', 'auto');
-  <% unless current_user.nil? %>
-    ga('set', 'UserId', <%= current_user.id %>)
-  <% end %>
-</script>
-<script>
-  ga('set', 'location', location.href.split('#')[0]);
-  ga('send', 'pageview', { "title": document.title });
-</script>
-
 <!-- Facebook plugin -->
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
