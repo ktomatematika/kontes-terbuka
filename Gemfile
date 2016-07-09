@@ -50,6 +50,8 @@ end
 gem 'paper_trail'
 # Migration Validators: to maintin referential integrity in database and models
 gem 'mv-postgresql'
+# Email with Mailgun
+gem 'rest-client'
 
 group :development do
 	# Access an IRB console on exception pages or by using <%= console %> in views

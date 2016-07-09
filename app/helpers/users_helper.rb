@@ -22,7 +22,7 @@ module UsersHelper
 
   def full_data_contents
     @user_contests.map do |uc|
-      uc = uc.contest.rank_participants.find { |u| u.user = uc.user}
+      uc = uc.contest.rank_participants.find { |u| u.user = uc.user }
       create_data_row([uc.contest,
                        uc.total_marks.to_s + '/' + uc.contest.max_score.to_s,
                        uc.rank.to_s + '/' +

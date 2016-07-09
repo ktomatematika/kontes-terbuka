@@ -10,6 +10,7 @@ class Ability
       can :submit, LongProblem
       can [:mini_edit, :mini_update,
            :change_password, :update_password], User, id: user.id
+      can :index, MarketItem
 
       if user.has_role? :marking_manager
         can [:admin, :assign_markers, :save_markers], Contest

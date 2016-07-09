@@ -17,5 +17,8 @@ Style/Documentation:
 Style/BracesAroundHashParameters:
   EnforcedStyle: context_dependent
 
+Style/ModuleFunction:
+  Enabled: extend_self
+
 Rails:
   Enabled: true

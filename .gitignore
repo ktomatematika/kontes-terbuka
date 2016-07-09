@@ -24,3 +24,6 @@
 /config/database.yml
 
 .vagrant/
+.sass-cache/
+
+/lib/mailgun_api_key.rb
