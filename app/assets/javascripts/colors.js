@@ -1,5 +1,5 @@
 function choose_color() {
-	var color = $('#essential-data').data('color').name;
+	var color = $('#essential-data').data('color');
 	var possible = ['red', 'blue', 'green', 'yellow'];
 
 	// Default value
