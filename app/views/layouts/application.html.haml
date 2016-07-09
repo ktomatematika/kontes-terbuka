@@ -25,8 +25,8 @@
 
     :javascript
       ga('set', 'location', location.href.split('#')[0]);
-      ga('send', 'pageview', { "title": document.title });
       #{track_uid}
+      ga('send', 'pageview', { "title": document.title });
 
     %meta{ name: 'google-site-verification', content: 'LhbNAf_v-2MgcX8S04Z8XyabspyseSMCvKOIliwT1aY' }
 
