@@ -4,8 +4,20 @@ Rails.application.routes.draw do
   resources :users do
     post 'mini_update', to: 'users#mini_update'
     get 'change_password', to: 'users#change_password'
-    post 'update_password', to: 'users#update_password'
+    post 'change_password', to: 'users#process_change_password'
   end
+
+  get '/sign', to: 'welcome#sign'
+  get '/register', to: 'users#new'
+  get '/login', to: 'sessions#new'
+  post '/login', to: 'sessions#create'
+  get '/logout', to: 'sessions#destroy'
+  post '/forgot', to: 'users#process_forgot_password'
+
+  post '/check', to: 'users#check_unique'
+  get '/verify/:verification', to: 'users#verify'
+  get 'reset_password/:verification', to: 'users#reset_password'
+  post 'reset_password/:verification', to: 'users#process_reset_password'
 
   resources :contests do
     get 'admin', to: 'contests#admin'
@@ -28,13 +40,6 @@ Rails.application.routes.draw do
   get '/mark_solo/:id', to: 'long_problems#mark_solo', as: :mark_solo
   get '/mark_final/:id', to: 'long_problems#mark_final', as: :mark_final
 
-  get '/sign', to: 'welcome#sign'
-  get '/register', to: 'users#new'
-  get '/login', to: 'sessions#new'
-  post '/login', to: 'sessions#create'
-  get '/logout', to: 'sessions#destroy'
-  delete '/logout', to: 'sessions#destroy'
-
   get '/home', to: 'home#index'
   get '/faq', to: 'home#faq'
   get '/book', to: 'home#book'
@@ -49,10 +54,6 @@ Rails.application.routes.draw do
   resources :long_submissions do
     post 'submit' => 'long_submissions#submit', on: :member
   end
-
-  get '/magic', to: 'home#send_magic_email', as: :magic
-
-  post '/check', to: 'users#check_unique'
 
   get '/assign/:id', to: 'contests#assign_markers', as: :assign_markers
   post 'create_marker', to: 'roles#create_marker'

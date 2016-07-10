@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160707152010) do
+ActiveRecord::Schema.define(version: 20160710182003) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,6 +61,22 @@ ActiveRecord::Schema.define(version: 20160707152010) do
     t.integer  "problem_tex_file_size"
     t.datetime "problem_tex_updated_at"
   end
+
+  create_table "delayed_jobs", force: :cascade do |t|
+    t.integer  "priority",   default: 0, null: false
+    t.integer  "attempts",   default: 0, null: false
+    t.text     "handler",                null: false
+    t.text     "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by"
+    t.string   "queue"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
   create_table "feedback_answers", force: :cascade do |t|
     t.integer  "feedback_question_id"
@@ -113,6 +129,14 @@ ActiveRecord::Schema.define(version: 20160707152010) do
     t.integer  "current_quantity"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
+  end
+
+  create_table "point_transactions", force: :cascade do |t|
+    t.integer  "point"
+    t.string   "description"
+    t.integer  "user_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "provinces", force: :cascade do |t|
@@ -193,8 +217,9 @@ ActiveRecord::Schema.define(version: 20160707152010) do
   create_table "user_contests", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "contest_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.boolean  "donation_nag", default: true
   end
 
   add_index "user_contests", ["contest_id"], name: "index_user_contests_on_contest_id", using: :btree
@@ -206,15 +231,17 @@ ActiveRecord::Schema.define(version: 20160707152010) do
     t.string   "hashed_password"
     t.string   "fullname"
     t.string   "school"
-    t.integer  "point",           default: 0
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
     t.string   "salt"
     t.string   "auth_token"
     t.integer  "province_id"
     t.integer  "status_id"
     t.integer  "color_id",        default: 1
-    t.string   "timezone"
+    t.string   "timezone",        default: "WIB"
+    t.string   "verification"
+    t.boolean  "enabled",         default: false
+    t.integer  "tries",           default: 0
   end
 
   add_index "users", ["color_id"], name: "index_users_on_color_id", using: :btree
@@ -282,5 +309,6 @@ ActiveRecord::Schema.define(version: 20160707152010) do
   validates("users", "school", presence: true)
   validates("users", "salt", presence: true)
   validates("users", "auth_token", presence: true)
+  validates("point_transactions", "description", presence: true)
 
 end

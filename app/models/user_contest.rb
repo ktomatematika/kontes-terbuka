@@ -38,6 +38,28 @@ class UserContest < ActiveRecord::Base
   #   ''
   # end
 
+  def give_points
+    points = 0
+
+    points += 3 if award = 'Emas'
+    points += 2 if award = 'Perak'
+    points += 1 if award = 'Perunggu'
+
+    points += 1 if short_submissions.select { |ss| ss.answer == '' }.empty?
+
+    points += long_submissions.inject(0) do |memo, item|
+      if item.score.nil?
+        memo
+      elsif item.score < 7
+        memo + 1
+      else
+        memo + 2
+      end
+
+      points
+    end
+  end
+
   scope :short_marks, lambda {
     joins{ short_submissions.outer }.
     joins{ short_submissions.short_problem.outer }.

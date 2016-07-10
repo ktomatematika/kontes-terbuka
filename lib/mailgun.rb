@@ -23,13 +23,14 @@ module Mailgun
   # contest: specify a contest to put contest tag
   # bcc_array: BCC params as an array.
   def send_message(**params)
-    params[:to] = 'no-reply@ktom.tomi.or.id' if params[:to].nil?
+    params[:to] = "no-reply@#{DOMAIN}" if params[:to].nil?
 
     if params[:to].include?(',') && !params[:force_to_many]
       raise 'You cannot send to many. Use BCC instead.'
     end
     params[:from] = FROM
-    params[:text] += "\n\nSalam,\nTim KTO Matematika"
+    params[:text] = "Salam sejahera,\n\n" + params[:text] +
+                    "\n\nSalam,\nTim KTO Matematika"
 
     unless params[:contest].nil?
       params[:subject] = "[#{params[:contest]}] #{params[:subject]}"
@@ -37,7 +38,9 @@ module Mailgun
     end
 
     unless params[:bcc_array].nil?
-      params[:bcc] += (',' + params[:bcc_array].join(', '))
+      params[:bcc] = '' if params[:bcc].nil?
+      params[:bcc] += ',' unless params[:bcc].empty?
+      params[:bcc] += params[:bcc_array].join(',')
       params.delete(:bcc_array)
     end
 

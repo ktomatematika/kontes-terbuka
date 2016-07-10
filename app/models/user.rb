@@ -21,11 +21,7 @@ class User < ActiveRecord::Base
   has_many :marked_long_submissions, through: :temporary_markings,
                                      class_name: 'LongSubmission'
 
-  validates :timezone, presence: true,
-                       inclusion: {
-                         in: %w(WIB WITA WIT),
-                         message: 'Zona waktu %{value} tidak tersedia'
-                       }
+  has_many :point_transactions
 
   attr_accessor :password
   validates :password, presence: true, confirmation: true, on: :create
@@ -34,9 +30,13 @@ class User < ActiveRecord::Base
 
   enforce_migration_validations
 
+  MAX_TRIES = 10
+  attr_accessor :MAX_TRIES
+
   before_validation(on: :create) do
     encrypt_password
     generate_token(:auth_token)
+    generate_token(:verification)
   end
 
   after_save :clear_password
@@ -44,19 +44,24 @@ class User < ActiveRecord::Base
   def self.time_zone_set
     %w(WIB WITA WIT)
   end
+  validates :timezone, presence: true,
+                       inclusion: {
+                         in: self.time_zone_set,
+                         message: 'Zona waktu tidak tersedia'
+                       }
 
   def encrypt_password
     self.salt = BCrypt::Engine.generate_salt
     self.hashed_password = BCrypt::Engine.hash_secret(password, salt)
   end
 
-  def self.authenticate(username_or_email, password)
-    user = User.find_by(username: username_or_email) ||
-           User.find_by(email: username_or_email)
-    unless user.nil?
-      user if user.hashed_password == BCrypt::Engine.hash_secret(password,
-                                                                 user.salt)
-    end
+  def self.get_user(username_or_email)
+    User.find_by(username: username_or_email) ||
+      User.find_by(email: username_or_email)
+  end
+
+  def authenticate(password)
+    hashed_password == BCrypt::Engine.hash_secret(password, salt)
   end
 
   def clear_password
@@ -74,6 +79,10 @@ class User < ActiveRecord::Base
     username
   end
 
+  def point
+    PointTransaction.where(user: self).sum(:point)
+  end
+
   # Creates a user with this username. Password will be a random secure
   # password and other fields either follow the username, or just take the
   # first.
@@ -81,6 +90,15 @@ class User < ActiveRecord::Base
     User.create(username: username, email: username + '@a.com',
                 password: SecureRandom.base64(20), fullname: username,
                 school: username, province: Province.first,
-                status: Status.first, timezone: 'WIB')
+                status: Status.first)
+  end
+
+  def reset_password
+    generate_token(:verification)
+    text = 'Untuk melanjutkan process reset password user Anda, klik link ' \
+      "ini: \n\n #{reset_password_path verification: verification}"
+    Mailgun.send_message to: user.email,
+                         subject: 'Reset Password KTO Matematika',
+                         text: text
   end
 end
