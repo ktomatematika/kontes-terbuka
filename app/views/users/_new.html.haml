@@ -1,0 +1,52 @@
+.row#register
+  .col-xs-10.col-sm-8.col-md-6.sign-grid
+    = render 'users/sign_header', title: 'Daftar', subtitle: 'Sudah punya akun?', link: 'Masuk.', anchor: '#login'
+
+    = form_for :user, url: users_path do |f|
+      .form-group.has-feedback(aria-described-by='user-help')
+        = f.text_field :username, class: 'form-control', placeholder: 'Username'
+        %span.glyphicon.form-glyphicon.form-control-feedback(aria-hidden='true')
+        %div#user-help.help-block.pre-help Username Anda harus terdiri atas huruf dan angka saja dan memiliki 6 - 20 karakter.
+
+      .form-group.has-feedback
+        = f.email_field :email, class: 'form-control', placeholder: 'Alamat email'
+        %span.glyphicon.form-glyphicon.form-control-feedback(aria-hidden='true')
+
+      .form-group.has-feedback(aria-described-by='pass-help')
+        = f.password_field :password, class: 'form-control', placeholder: 'Password'
+        %span.glyphicon.form-glyphicon.form-control-feedback.form-glyphicon-eye-open(aria-hidden='true')
+        = render 'users/password_help'
+
+      .form-group.has-feedback
+        = f.password_field :password_confirmation, class: 'form-control', placeholder: 'Ulangi password'
+        %span.glyphicon.form-glyphicon.form-control-feedback.form-glyphicon-eye-open(aria-hidden='true')
+
+      .form-group.has-feedback
+        = f.text_field :fullname, class: 'form-control', placeholder: 'Nama lengkap'
+        %span.glyphicon.form-glyphicon.form-control-feedback(aria-hidden='true')
+
+      .form-group.has-feedback
+        = f.collection_select :province_id, Province.all(), :id, :name, { prompt: 'Provinsi' }, { class: 'form-control' }
+        %span.glyphicon.form-glyphicon.form-control-feedback(aria-hidden='true')
+
+      .form-group.has-feedback
+        = f.collection_select :status_id, Status.all(), :id, :name, { prompt: 'Status' }, { class: 'form-control' }
+        %span.glyphicon.form-glyphicon.form-control-feedback(aria-hidden='true')
+
+      .form-group.has-feedback
+        = f.text_field :school, class: 'form-control', placeholder: 'Sekolah/institusi'
+        %span.glyphicon.form-glyphicon.form-control-feedback(aria-hidden='true')
+
+      .checkbox
+        %label
+          = f.check_box :osn
+          Centang bila Anda sudah pernah mendapatkan medali di OSN SMA (tingkat nasional).
+
+      .checkbox
+        %label
+          = f.check_box :terms_of_service
+          Saya menyetujui syarat dan ketentuan website ini.
+
+      %footer
+        = recaptcha_tags hl: 'id'
+        = f.submit 'Daftar', class: 'btn btn-lg btn-default sign-btn has-shade'

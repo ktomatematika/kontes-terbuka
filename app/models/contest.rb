@@ -109,7 +109,7 @@ class Contest < ActiveRecord::Base
       username = 'C' + id.to_s + user_row[0]
       short_problem_answers = user_row[1..short_problems]
       long_submission_array =
-        user_row[short_problems + 2..short_problems + 3 * long_problems]
+        user_row[short_problems + 2..short_problems + 2 * long_problems]
 
       long_submission_hashes = []
       temporary_long_submission_hash = {}
@@ -156,7 +156,6 @@ class Contest < ActiveRecord::Base
     uc = UserContest.create(user: u, contest: self)
     generate_short_submissions(uc, short_problem_answers)
     generate_long_submissions(uc, long_submission_hashes)
-    uc.update_total_marks
   end
 
   # This method generates placeholder ShortSubmissions.

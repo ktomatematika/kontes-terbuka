@@ -30,5 +30,7 @@ module KontesTerbuka
     config.middleware.use Rack::Protection
 
     config.autoload_paths.push("#{config.root}/lib")
+
+    config.active_job.queue_adapter = :delayed_job
   end
 end

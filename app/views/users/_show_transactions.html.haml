@@ -1,0 +1,20 @@
+#transactions
+  %h2 Riwayat Transaksi Poin
+  .table-responsive
+    %table.table.table-hover.has-shade.table-bordered#point-history
+      %thead
+        %tr
+          %th Waktu
+          %th Poin
+          %th Keterangan
+      %tbody
+        - @point_trnasactions each do |pt|
+          %tr
+            %td pt.updated_at
+            %td pt.point
+            %td pt.description
+
+  %nav
+    %a.prev-history(href='#') &lt;&lt;
+    %span.this-history 1
+    %a.next-history(href='#') &gt;&gt;

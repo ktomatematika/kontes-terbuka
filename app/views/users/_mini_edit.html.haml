@@ -1,0 +1,15 @@
+= link_to 'Ganti Password', user_change_password_path(@user), class: 'btn btn-default has-shade', type: 'button'
+= form_for :user, url: user_mini_update_path(@user) do |f|
+  %p
+    %label{ for: 'user_timezone' } Zona waktu:
+    %select.form-control#user_timezone{ name: 'user[timezone]' }
+      - User.time_zone_set.each do |tz|
+        %option{ value: tz, selected: (tz == @user.timezone) }= tz
+
+  %p
+    %label{ for: 'user_color' } Warna:
+    = f.collection_select :color_id, Color.all, :id, :name, { prompt: 'Color' }, class: 'form-control'
+
+  = f.submit 'Ganti', class: 'btn btn-default has-shade'
+
+%p Untuk mengganti data pribadi Anda, #{link_to 'kontak kami', contact_path}.

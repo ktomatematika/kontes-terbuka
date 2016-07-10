@@ -119,6 +119,8 @@ class UsersController < ApplicationController
     @user_contests = UserContest.joins(:contest)
                                 .where(user: @user,
                                        'contests.result_released' => true)
+    @point_transactions = PointTransaction.where(user: @user)
+                                          .sort_by(:updated_at).reverse
   end
 
   def index

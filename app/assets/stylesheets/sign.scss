@@ -1,4 +1,4 @@
-#login .left-footer {
+.left-footer {
   text-align: left;
   @media (min-width: 600px) {
     margin-left: 10px;
@@ -16,17 +16,13 @@
   }
 }
 
-#register-container > .row {
-  margin-top: 2%;
-}
-
 .form-control-feedback.glyphicon-eye-open {
   color: #333;
   cursor: pointer;
   pointer-events: auto;
 }
 
-#register, #login {
+.sign-grid {
   background: #fff;
   padding: 25px;
   border: 1px solid;
@@ -35,13 +31,13 @@
   position: absolute;
   left: 0;
   right: 0;
-  margin: 0 auto;
+  margin: 2% auto 0;
 
   header {
     margin-bottom: 10px;
 
     @media (max-width: 450px) {
-      .login-logo img {
+      .sign-logo img {
         width: 80%;
         height: 80%;
       }
@@ -49,14 +45,14 @@
 
     @media (min-width: 600px) {
 
-      .login-logo {
+      .sign-logo {
         float: left;
       }
 
-      .login-text {
+      .sign-text {
         float: right;
 
-        .h1 {
+        h1 {
           margin: 0;
         }
       }
@@ -68,7 +64,6 @@
   }
 
   footer {
-
     .g-recaptcha div div {
       margin: 0 auto 10px auto;
     }
@@ -114,7 +109,7 @@
     }
 
     @media (min-width: 600px) {
-      .btn-register, .btn-login {
+      .sign-btn {
         float: right;
       }
 

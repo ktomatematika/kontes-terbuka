@@ -33,6 +33,7 @@ class SessionsController < ApplicationController
         flash[:alert] = 'Password Anda salah. Ini percobaan ' \
           "ke-#{user.tries} dari #{User::MAX_TRIES} Anda. Setelah itu, Anda " \
           'perlu mereset password.'
+      end
     elsif params[:remember_me]
       cookies.permanent[:auth_token] = user.auth_token
     else

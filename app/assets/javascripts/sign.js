@@ -1,14 +1,18 @@
-var forgot = false;
-
 $(document).ready(function () {
 // Use the hash to determine which form to show. Defaults to register.
 	var hash = window.location.hash;
 	if (hash === '#login') {
 		$('#register').hide();
+		$('#forgot').hide();
 	} else if (hash === '#register') {
+		$('#login').hide();
+		$('#forgot').hide();
+	} else if (hash === '#forgot') {
+		$('#register').hide();
 		$('#login').hide();
 	} else {
 		$('#login').hide();
+		$('#forgot').hide();
 	}
 
 	// Show help text when input is selected
@@ -22,43 +26,21 @@ $(document).ready(function () {
 		$(this).nextAll('.pre-help').addClass('hidden');
 	});
 
-	// Forgot password
-	var password_div = $('#login-form #password').parent();
-	var remember_checkbox = $('#remember-me');
-	function restore_login() {
-		$('#login-form #username').parent().after(password_div);
-		$('#login-form .left-footer').prepend(remember_checkbox);
-		$('#forgot-link').text('Lupa password Anda?');
-		$('#login-form #forgot-help').remove();
-		$('#login-form input[type=submit]').prop('value', 'Masuk');
-		forgot = false;
-	}
-
-	$('#forgot-link').click(function () {
-		if (forgot) {
-			restore_login();
-		} else {
-			password_div.remove();
-			remember_checkbox.remove();
-			$('#forgot-link').text('Kembali');
-			$('#login-form').prepend('<p id="forgot-help">Masukkan username ' +
-					'atau email Anda. Kami akan mengirim Anda petunjuk ' +
-					'mengreset password.</p>');
-			$('#login-form input[type=submit]').prop('value', 'Kirim');
-			forgot = true;
-		}
-	});
-
 	// Fade in/out on switching forms.
 	$('.move-form').click(function (e) {
 		var right = $(this).attr('href');
 		if (right === '#login') {
-			restore_login();
 			$('#register').fadeOut();
+			$('#forgot').fadeOut();
 			$('#login').fadeIn();
 		} else if (right === '#register') {
 			$('#login').fadeOut();
+			$('#forgot').fadeOut();
 			$('#register').fadeIn();
+		} else if (right === '#forgot') {
+			$('#register').fadeOut();
+			$('#login').fadeOut();
+			$('#forgot').fadeIn();
 		}
 		e.preventDefault();
 	});

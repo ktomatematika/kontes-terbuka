@@ -21,11 +21,7 @@ class User < ActiveRecord::Base
   has_many :marked_long_submissions, through: :temporary_markings,
                                      class_name: 'LongSubmission'
 
-  validates :timezone, presence: true,
-                       inclusion: {
-                         in: %w(WIB WITA WIT),
-                         message: 'Zona waktu %{value} tidak tersedia'
-                       }
+  has_many :point_transactions
 
   attr_accessor :password
   validates :password, presence: true, confirmation: true, on: :create
@@ -48,6 +44,11 @@ class User < ActiveRecord::Base
   def self.time_zone_set
     %w(WIB WITA WIT)
   end
+  validates :timezone, presence: true,
+                       inclusion: {
+                         in: self.time_zone_set,
+                         message: 'Zona waktu tidak tersedia'
+                       }
 
   def encrypt_password
     self.salt = BCrypt::Engine.generate_salt
@@ -76,6 +77,10 @@ class User < ActiveRecord::Base
 
   def to_s
     username
+  end
+
+  def point
+    PointTransaction.where(user: self).sum(:point)
   end
 
   # Creates a user with this username. Password will be a random secure

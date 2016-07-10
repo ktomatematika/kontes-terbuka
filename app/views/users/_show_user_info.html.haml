@@ -11,6 +11,6 @@
 - elsif can? :mini_edit, @user
   = render 'mini_edit'
 
-%p Poin: #{@user.point}
-- if @user == current_user
+- if can? :mini_edit, @user
+  %p Poin: #{@user.point}
   = link_to 'Pasar', market_items_path, class: 'btn btn-default has-shade'
