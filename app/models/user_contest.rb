@@ -31,12 +31,12 @@ class UserContest < ActiveRecord::Base
     short_marks + long_marks
   end
 
-  def award
-    return 'Emas' if total_marks >= contest.gold_cutoff
-    return 'Perak' if total_marks >= contest.silver_cutoff
-    return 'Perunggu' if total_marks >= contest.bronze_cutoff
-    ''
-  end
+  # def award
+  #   return 'Emas' if total_marks >= contest.gold_cutoff
+  #   return 'Perak' if total_marks >= contest.silver_cutoff
+  #   return 'Perunggu' if total_marks >= contest.bronze_cutoff
+  #   ''
+  # end
 
   scope :short_marks, lambda {
     joins{ short_submissions.outer }.
@@ -56,4 +56,25 @@ class UserContest < ActiveRecord::Base
     joins{ UserContest.long_marks.as(long_marks).on { id == long_marks.id } }.
     select{ ['user_contests.*', 'short_marks.short_mark', 'long_marks.long_mark', '(short_marks.short_mark + long_marks.long_mark) as total_mark'] }
   }
+
+  scope :processed, lambda {
+    joins{ UserContest.include_marks.as(marks).on { id == marks.id } }.
+    joins{ contest }.
+    select{ ['user_contests.*', 
+              'marks.short_mark', 
+              'marks.long_mark', 
+              'marks.total_mark',
+              "case when marks.total_mark >= gold_cutoff then 'Emas'
+                    when marks.total_mark >= silver_cutoff then 'Perak'
+                    when marks.total_mark >= bronze_cutoff then 'Perunggu' 
+                    else '' end as award"] }.
+    order{ marks.total_mark.desc }
+  }
+
+  scope :include_long_problem_marks, lambda { |long_problem_id|
+    joins{ long_submissions.outer }.
+    where{ long_submissions.long_problem_id == long_problem_id }.
+    select{ ['user_contests.id as id', "long_submissions.score as problem_no_#{long_problem_id}"]}
+  }
+
 end
