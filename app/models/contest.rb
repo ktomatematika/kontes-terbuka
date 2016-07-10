@@ -65,13 +65,28 @@ class Contest < ActiveRecord::Base
       LongProblem::MAX_MARK * LongProblem.where(contest: self).length
   end
 
-  def rank_participants
-    partcps = UserContest.where(contest: self).sort_by(&:total_marks).reverse
+  def contest_result
+    filtered_query = UserContest.where(contest: self).processed
 
+    long_problems.each do |long_problem|
+      filtered_query = 
+      filtered_query.
+      joins{
+        UserContest.include_long_problem_marks(long_problem.id).
+        as("long_problem_marks_#{long_problem.id}").
+        on{ id == __send__("long_problem_marks_#{long_problem.id}").id }
+      }.
+      select{ __send__("long_problem_marks_#{long_problem.id}").__send__("problem_no_#{long_problem.id}") }
+    end
+    filtered_query
+  end
+
+  def rank_participants
+    partcps = contest_result.includes(:user)
     rank = 0
     current_total = max_score + 1
     partcps.each_with_index do |uc, idx|
-      new_total = uc.total_marks
+      new_total = uc.total_mark
       if new_total == current_total
         uc.rank = rank # carryover rank
       else
@@ -156,7 +171,6 @@ class Contest < ActiveRecord::Base
     uc = UserContest.create(user: u, contest: self)
     generate_short_submissions(uc, short_problem_answers)
     generate_long_submissions(uc, long_submission_hashes)
-    uc.update_total_marks
   end
 
   # This method generates placeholder ShortSubmissions.
