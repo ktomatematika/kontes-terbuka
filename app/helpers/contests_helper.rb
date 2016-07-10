@@ -38,7 +38,11 @@ module ContestsHelper
   end
 
   def show_long_mark(long_submission)
-    return '-' if long_submission.nil?
+    return '-' if long_submission.score.nil?
     long_submission.score
+  end
+
+  def dashify(number)
+    number.nil? ? '-' : number
   end
 end
