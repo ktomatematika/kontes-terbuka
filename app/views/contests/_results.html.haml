@@ -14,14 +14,15 @@
           %th Penghargaan
 
       %tbody
+        - no_short_problem = @short_problems.empty?
         - @user_contests.each do |uc|
           - user = uc.user
           %tr.clickable-row{ class: uc.award.downcase, data: { link: user_path(user) } }
             %td= uc.rank
             %td= user.username
-            - unless @short_problems.empty?
-              %td= uc.short_marks
+            - unless no_short_problem
+              %td= uc.short_mark
             - @long_problems.each do |lp|
-              %td= show_long_mark uc.long_submissions.find_by(long_problem: lp)
-            %td= uc.total_marks
+              %td= dashify uc.__send__("problem_no_#{lp.id}")
+            %td= uc.total_mark
             %td= uc.award
