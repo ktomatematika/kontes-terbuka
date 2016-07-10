@@ -52,6 +52,8 @@ gem 'paper_trail'
 gem 'mv-postgresql'
 # Email with Mailgun
 gem 'rest-client'
+# More Complex SQL Queries
+gem 'squeel'
 
 group :development do
 	# Access an IRB console on exception pages or by using <%= console %> in views

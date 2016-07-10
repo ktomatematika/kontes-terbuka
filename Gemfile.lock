@@ -159,6 +159,8 @@ GEM
       mimemagic (= 0.3.0)
     pg (0.18.4)
     pkg-config (1.1.7)
+    polyamorous (1.1.0)
+      activerecord (>= 3.0)
     rack (1.6.4)
     rack-protection (1.5.3)
       rack
@@ -220,6 +222,10 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    squeel (1.2.3)
+      activerecord (>= 3.0)
+      activesupport (>= 3.0)
+      polyamorous (~> 1.1.0)
     sshkit (1.11.1)
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
@@ -282,6 +288,7 @@ DEPENDENCIES
   rolify
   sass-rails
   spring
+  squeel
   table_flipper
   therubyracer
   turbolinks
