@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160707152010) do
+ActiveRecord::Schema.define(version: 20160709150245) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -207,14 +207,17 @@ ActiveRecord::Schema.define(version: 20160707152010) do
     t.string   "fullname"
     t.string   "school"
     t.integer  "point",           default: 0
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
     t.string   "salt"
     t.string   "auth_token"
     t.integer  "province_id"
     t.integer  "status_id"
     t.integer  "color_id",        default: 1
-    t.string   "timezone"
+    t.string   "timezone",        default: "WIB"
+    t.string   "verification"
+    t.boolean  "enabled",         default: false
+    t.integer  "tries",           default: 0
   end
 
   add_index "users", ["color_id"], name: "index_users_on_color_id", using: :btree

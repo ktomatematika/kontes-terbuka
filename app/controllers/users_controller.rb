@@ -1,12 +1,15 @@
 class UsersController < ApplicationController
-  load_and_authorize_resource except: [:new, :check_unique, :create]
-  skip_before_action :require_login, only: [:new, :check_unique, :create]
+  load_and_authorize_resource except: [:new, :check_unique, :create,
+                                       :forgot_password,
+                                       :process_forgot_password]
+  skip_before_action :require_login, only: [:new, :check_unique, :create,
+                                            :forgot_password,
+                                            :process_forgot_password]
 
   def new
     if current_user
       redirect_to root_path
     else
-      @user = User.new
       redirect_to sign_path(anchor: 'register')
     end
   end
@@ -18,13 +21,96 @@ class UsersController < ApplicationController
       user.add_role :veteran if params[:osn] == 1
 
       if verify_recaptcha(model: user) && user.save
-        cookies[:auth_token] = user.auth_token
-        redirect_to root_path
+        link = verify_link(verification: user.verification)
+        text = 'User berhasil dibuat! Sekarang, buka link ini untuk ' \
+          "memverifikasikan email Anda:\n\n" \
+          "#{link}"
+        Mailgun.send_message to: user.email,
+                             subject: 'Konfirmasi Pendaftaran Kontes' \
+                                      'Terbuka Olimpiade Matematika',
+                             text: text
+        redirect_to welcome_path, notice: 'User berhasil dibuat! ' \
+          'Sekarang, lakukan verifikasi dengan membuka link yang telah ' \
+          'kami berikan di email Anda.'
       else
-        redirect_to register_path, 'Terdapat kesalahan dalam registrasi. ' \
-          ' Jika registrasi masih tidak bisa dilakukan, ' \
+        redirect_to register_path, alert: 'Terdapat kesalahan dalam ' \
+        ' registrasi. Jika registrasi masih tidak bisa dilakukan, ' \
           " #{link_to 'kontak kami', contact_path}."
       end
+    end
+  end
+
+  def verify
+    u = User.find_by(verification: params[:verification])
+    if u.nil?
+      redirect_to welcome_path, alert: 'Terjadi kegagalan dalam verifikasi '
+        'atau reset password. Ini kemungkinan berarti Anda sudah ' \
+        'terverifikasi atau password Anda sudah terreset, ataupun batas ' \
+        'waktu verifikasi sudah lewat. Coba login; coba juga cek ulang link ' \
+        'yang diberikan dalam email Anda. Jika masih tidak bisa juga, coba ' \
+        'buat ulang user Anda, atau ' \
+        "#{link_to 'Kontak Kami', contact_path}.".html_safe
+    elsif u.enabled
+      # User is verified
+      redirect_to login_path, notice: 'Anda sudah terverifikasi!'
+    else
+      # Verify user
+      u.update(enabled: true, verification: nil)
+      redirect_to login_path, notice: 'Verifikasi berhasil! Silakan login.'
+    end
+  end
+
+  def reset_password
+    u = User.find_by verification: params[:verification]
+  end
+
+  def process_reset_password
+    user = User.find_by verification: params[:verification]
+    if user && params[:new_password] == params[:confirm_new_password]
+      user.password = params[:new_password]
+      user.encrypt_password
+      user.save
+      redirect_to login_path, notice: 'Password berhasil diubah! Silakan login.'
+    else
+      redirect_to reset_password_path(verification: params[verification]),
+        alert: 'Password gagal diubah! Silakan coba lagi.'
+    end
+  end
+
+  def change_password
+    @user = User.find(params[:user_id])
+  end
+
+  def process_change_password
+    user = User.find params[:user_id]
+    if user.authenticate(params[:old_password]) &&
+       params[:new_password] == params[:confirm_new_password]
+      user.password = params[:new_password]
+      user.encrypt_password
+      user.save
+      redirect_to user_path(user), notice: 'Password Anda berhasil diubah!'
+    else
+      redirect_to user_change_password_path(user), alert: 'Ada kegagalan. ' \
+        'Mohon coba lagi!'
+    end
+  end
+
+  def forgot_password
+    if current_user
+      redirect_to root_path
+    else
+      redirect_to sign_path(anchor: 'forgot')
+    end
+  end
+
+  def process_forgot_password
+    user = User.get_user params[:username]
+    if user.nil?
+      redirect_to sign_path, alert: 'User tidak ada.'
+    else
+      user.generate_token(:verification)
+      redirect_to login_path, notice: 'Cek email Anda untuk instruksi ' \
+      'selanjutnya.'
     end
   end
 
@@ -73,23 +159,6 @@ class UsersController < ApplicationController
     params[:username] && users = users.where(username: params[:username])
     params[:email] && users = users.where(email: params[:email])
     render json: users.present? ? false : true
-  end
-
-  def change_password
-    @user = User.find(params[:user_id])
-  end
-
-  def update_password
-    User.transaction do
-      @user = User.find params[:user_id]
-      if User.authenticate(@user.username, params[:old_password]) &&
-         params[:new_password] == params[:confirm_new_password]
-        @user.password = params[:new_password]
-        @user.encrypt_password
-        @user.save
-      end
-    end
-    redirect_to user_path(@user)
   end
 
   private

@@ -36,20 +36,7 @@
             placeholder: "Password" %>
           <span class="glyphicon form-glyphicon form-control-feedback glyphicon form-glyphicon-eye-open"
                 aria-hidden="true"></span>
-          <div id="pass-help" class="help-block pre-help">Password Anda harus
-            berisi setidaknya 6 karakter.<br>
-            Contoh mudah membuat password yang kuat:
-            <ul>
-              <li>Pikirkan dua makanan kesukaan Anda, contohnya nasi goreng dan
-                rendang</li>
-              <li>Pikirkan dua warna kesukaan Anda, contohnya putih mawar dan
-                hijau tua</li>
-              <li>Pikirkan angka kesukaan Anda, contohnya 477</li>
-              <li>Gabungkan: NasiGorengPutihMawar&amp;RendangHijauTua477</li>
-            </ul>
-            Password ini lebih aman dan lebih mudah diingat daripada password
-            yang menggunakan banyak angka dan simbol namun lebih pendek!
-          </div>
+          <%= render 'users/password_help' %>
         </div>
         <div class="form-group has-feedback">
           <%= f.password_field :password_confirmation, class: "form-control",

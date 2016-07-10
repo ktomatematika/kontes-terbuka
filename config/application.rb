@@ -29,6 +29,6 @@ module KontesTerbuka
 
     config.middleware.use Rack::Protection
 
-    config.action_controller.include_all_helpers = true
+    config.autoload_paths.push("#{config.root}/lib")
   end
 end

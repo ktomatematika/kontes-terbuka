@@ -34,9 +34,13 @@ class User < ActiveRecord::Base
 
   enforce_migration_validations
 
+  MAX_TRIES = 10
+  attr_accessor :MAX_TRIES
+
   before_validation(on: :create) do
     encrypt_password
     generate_token(:auth_token)
+    generate_token(:verification)
   end
 
   after_save :clear_password
@@ -50,13 +54,13 @@ class User < ActiveRecord::Base
     self.hashed_password = BCrypt::Engine.hash_secret(password, salt)
   end
 
-  def self.authenticate(username_or_email, password)
-    user = User.find_by(username: username_or_email) ||
-           User.find_by(email: username_or_email)
-    unless user.nil?
-      user if user.hashed_password == BCrypt::Engine.hash_secret(password,
-                                                                 user.salt)
-    end
+  def self.get_user(username_or_email)
+    User.find_by(username: username_or_email) ||
+      User.find_by(email: username_or_email)
+  end
+
+  def authenticate(password)
+    hashed_password == BCrypt::Engine.hash_secret(password, salt)
   end
 
   def clear_password
@@ -81,6 +85,15 @@ class User < ActiveRecord::Base
     User.create(username: username, email: username + '@a.com',
                 password: SecureRandom.base64(20), fullname: username,
                 school: username, province: Province.first,
-                status: Status.first, timezone: 'WIB')
+                status: Status.first)
+  end
+
+  def reset_password
+    generate_token(:verification)
+    text = 'Untuk melanjutkan process reset password user Anda, klik link ' \
+      "ini: \n\n #{reset_password_path verification: verification}"
+    Mailgun.send_message to: user.email,
+                         subject: 'Reset Password KTO Matematika',
+                         text: text
   end
 end
