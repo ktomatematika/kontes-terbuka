@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
 
   def require_login
     unless current_user
-      redirect_to login_path, 'Anda perlu masuk terlebih dahulu.'
+      redirect_to login_path, notice: 'Anda perlu masuk terlebih dahulu.'
     end
   end
 
