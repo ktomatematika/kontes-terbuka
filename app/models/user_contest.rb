@@ -41,33 +41,33 @@ class UserContest < ActiveRecord::Base
     joins{ short_submissions.outer }.
     joins{ short_submissions.short_problem.outer }.
     group(:id).
-    select('user_contests.id as id, sum(case when short_submissions.answer = short_problems.answer then 1 else 0 end) as short_mark')
+    select('user_contests.id as id, sum(case when short_submissions.answer = short_problems.answer then 1 else 0 end) as short_marks')
   }
 
   scope :long_marks, lambda {
     joins{ long_submissions.outer }.
     group(:id).
-    select('user_contests.id as id, sum(long_submissions.score) as long_mark')
+    select('user_contests.id as id, sum(long_submissions.score) as long_marks')
   }
 
   scope :include_marks, lambda {
     joins{ UserContest.short_marks.as(short_marks).on { id == short_marks.id } }.
     joins{ UserContest.long_marks.as(long_marks).on { id == long_marks.id } }.
-    select{ ['user_contests.*', 'short_marks.short_mark', 'long_marks.long_mark', '(short_marks.short_mark + long_marks.long_mark) as total_mark'] }
+    select{ ['user_contests.*', 'short_marks.short_marks', 'long_marks.long_marks', '(short_marks.short_marks + long_marks.long_marks) as total_marks'] }
   }
 
   scope :processed, lambda {
     joins{ UserContest.include_marks.as(marks).on { id == marks.id } }.
     joins{ contest }.
     select{ ['user_contests.*',
-              'marks.short_mark',
-              'marks.long_mark',
-              'marks.total_mark',
-              "case when marks.total_mark >= gold_cutoff then 'Emas'
-                    when marks.total_mark >= silver_cutoff then 'Perak'
-                    when marks.total_mark >= bronze_cutoff then 'Perunggu'
+              'marks.short_marks',
+              'marks.long_marks',
+              'marks.total_marks',
+              "case when marks.total_marks >= gold_cutoff then 'Emas'
+                    when marks.total_marks >= silver_cutoff then 'Perak'
+                    when marks.total_marks >= bronze_cutoff then 'Perunggu'
                     else '' end as award"] }.
-    order{ marks.total_mark.desc }
+    order{ marks.total_marks.desc }
   }
 
   scope :include_long_problem_marks, lambda { |long_problem_id|
