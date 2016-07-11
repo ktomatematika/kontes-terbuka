@@ -15,29 +15,6 @@ class UserContest < ActiveRecord::Base
 
   attr_accessor :rank
 
-  def short_marks
-    short_submissions.reduce(0) do |score, submission|
-      score + (!submission.nil? && submission.correct? ? 1 : 0)
-    end
-  end
-
-  def long_marks
-    long_submissions.reduce(0) do |score, submission|
-      score + (submission.nil? || submission.score.nil? ? 0 : submission.score)
-    end
-  end
-
-  def total_marks
-    short_marks + long_marks
-  end
-
-  # def award
-  #   return 'Emas' if total_marks >= contest.gold_cutoff
-  #   return 'Perak' if total_marks >= contest.silver_cutoff
-  #   return 'Perunggu' if total_marks >= contest.bronze_cutoff
-  #   ''
-  # end
-
   def give_points
     points = 0
 
@@ -82,13 +59,13 @@ class UserContest < ActiveRecord::Base
   scope :processed, lambda {
     joins{ UserContest.include_marks.as(marks).on { id == marks.id } }.
     joins{ contest }.
-    select{ ['user_contests.*', 
-              'marks.short_mark', 
-              'marks.long_mark', 
+    select{ ['user_contests.*',
+              'marks.short_mark',
+              'marks.long_mark',
               'marks.total_mark',
               "case when marks.total_mark >= gold_cutoff then 'Emas'
                     when marks.total_mark >= silver_cutoff then 'Perak'
-                    when marks.total_mark >= bronze_cutoff then 'Perunggu' 
+                    when marks.total_mark >= bronze_cutoff then 'Perunggu'
                     else '' end as award"] }.
     order{ marks.total_mark.desc }
   }

@@ -10,7 +10,7 @@
     <div class="problem-statement text-justify">
       <%= prob.problem_no %>. <%= markdown_render(prob.statement) %>
     </div>
-    <% ls = LongSubmission.find_by(user: current_user, long_problem: prob) %>
+    <% ls = LongSubmission.find_by(user_contest: @user_contest, long_problem: prob) %>
     <%= nested_form_for ls, url: submit_long_submission_path(ls),
       html: { multipart: true }, method: :post do |f| %>
       <%= hidden_field_tag 'contest_id', @contest.id  %>

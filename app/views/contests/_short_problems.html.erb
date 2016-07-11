@@ -15,7 +15,7 @@
         <%= prob.problem_no %>. <%= markdown_render(prob.statement) %>
       </div>
       <% submission = ShortSubmission.find_by(
-        short_problem: prob, user: current_user) %>
+        short_problem: prob, user_contest: @current_user) %>
       <% prev_answer = (submission == nil) ? "" : submission.answer %>
       <%= f.text_field prob.id, class: "form-control answer-input",
         placeholder: prev_answer.to_s,
