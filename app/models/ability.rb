@@ -6,6 +6,7 @@ class Ability
     unless user.nil?
       can [:show, :index, :show_rules,
            :accept_rules, :create_short_submissions], Contest
+      can [:give_feedback, :feedback_submit], Contest
       can :show, User
       can :submit, LongProblem
       can [:mini_edit, :mini_update,

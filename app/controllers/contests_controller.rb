@@ -1,5 +1,5 @@
 class ContestsController < ApplicationController
-  load_and_authorize_resource
+  authorize_resource
 
   def grab_problems
     @short_problems = @contest.short_problems.order('problem_no').all
