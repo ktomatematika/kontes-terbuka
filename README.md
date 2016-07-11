@@ -27,9 +27,7 @@ Bersabarlah. :3
 
 Setelah itu, masuk ke Vagrant: `vagrant ssh`
 
-Masuk ke tempat development: `cd /vagrant`
-
-Moment of truth: `bin/rails s` dan buka localhost:3000 di browser.
+Jalankan `bin/rails s` dan buka localhost:3000 di browser.
 
 Aduh, gagal? `vagrant destroy` dilanjutkan `vagrant up` lagi.
 

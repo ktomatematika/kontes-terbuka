@@ -70,7 +70,7 @@ class ContestsController < ApplicationController
       user_contest = UserContest.create(participate_params)
       contest = user_contest.contest
       contest.long_problems.each do |long_problem|
-        LongSubmission.create(user_contest: user_contest
+        LongSubmission.create(user_contest: user_contest,
                               long_problem: long_problem)
       end
     end

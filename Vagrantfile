@@ -64,4 +64,8 @@ Vagrant.configure('2') do |config|
 
 	# Forwards ssh
 	config.ssh.forward_agent = true
+
+  # Change synced folder
+  config.vm.synced_folder '.', '/vagrant', disabled: true
+  config.vm.synced_folder '.', '/home/vagrant'
 end
