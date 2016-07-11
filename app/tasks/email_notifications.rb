@@ -1,0 +1,3 @@
+class EmailNotifications
+
+end
