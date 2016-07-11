@@ -15,7 +15,7 @@ class UserContest < ActiveRecord::Base
 
   attr_accessor :rank
 
-  def give_points
+  def contest_points
     points = 0
 
     points += 3 if award == 'Emas'

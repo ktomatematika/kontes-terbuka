@@ -129,6 +129,13 @@ class ContestsController < ApplicationController
     end
   end
 
+  def give_points
+    contest = Contest.find(params[:contest_id])
+    contest.user_contests.each do |uc|
+      PointTransaction.create point: uc.contest_points, description: contest
+    end
+  end
+
   private
 
   def submission_params

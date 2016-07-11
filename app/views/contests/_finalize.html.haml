@@ -6,6 +6,8 @@
     = f.text_field :silver_cutoff, class: 'form-control', placeholder: 'Perak'
     = f.text_field :bronze_cutoff, class: 'form-control',
       placeholder: 'Perunggu'
-    = f.check_box :result_released, class: 'from-control'
+    = f.check_box :result_released, class: 'form-control'
     Siap dikeluarkan hasilnya!
     = f.submit 'RELEASE', class: 'btn btn-default has-shade'
+
+  = link_to 'Bagi-bagi poin', contest_give_points_path(contest: @contest), class: 'btn btn-default has-shade'

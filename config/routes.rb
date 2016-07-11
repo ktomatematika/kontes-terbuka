@@ -33,6 +33,8 @@ Rails.application.routes.draw do
     post 'feedback_submit', to: 'contests#feedback_submit'
 
     post 'update_marks', to: 'contests#update_marks'
+
+    get 'give_points', to: 'contests#give_points'
   end
 
   resources :market_items

@@ -5,9 +5,11 @@
 
   <%= form_for :feedback_answer, url: contest_feedback_submit_path do |f| %>
     <% @feedback_questions.each do |q| %>
+      <% fba_object = FeedbackAnswer.find_by(feedback_question: q) %>
+      <% answer = fba_object && fba_object.answer %>
       <p class="feedback-label"><%= q.question %></p>
       <%= f.text_area q.id, class: "form-control feedback-input", rows: 2,
-    placeholder: FeedbackAnswer.find_by(feedback_question: q).answer %>
+        placeholder: answer %>
     <% end %>
     <%= f.submit "Kirim", class: "btn btn-default has-shade" %>
   <% end %>
