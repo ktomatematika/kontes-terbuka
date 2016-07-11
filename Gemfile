@@ -79,8 +79,6 @@ end
 
 ### SECURITY
 
-# Authentication gem
-gem 'devise'
 # Authorization gem. Adds roles.
 gem 'rolify'
 # Another authorization gem; adds privileges.
@@ -89,6 +87,8 @@ gem 'cancancan'
 gem 'recaptcha', require: 'recaptcha/rails'
 # Adds various security stuff. You need protection!
 gem 'rack-protection'
+# Adds hashes for passwords.
+gem 'bcrypt', require: 'bcrypt'
 
 ### END SECURITY
 

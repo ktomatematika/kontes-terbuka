@@ -41,9 +41,9 @@ class UserContest < ActiveRecord::Base
   def give_points
     points = 0
 
-    points += 3 if award = 'Emas'
-    points += 2 if award = 'Perak'
-    points += 1 if award = 'Perunggu'
+    points += 3 if award == 'Emas'
+    points += 2 if award == 'Perak'
+    points += 1 if award == 'Perunggu'
 
     points += 1 if short_submissions.select { |ss| ss.answer == '' }.empty?
 
