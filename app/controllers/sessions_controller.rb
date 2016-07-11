@@ -2,8 +2,11 @@ class SessionsController < ApplicationController
   skip_before_action :require_login
 
   def new
-    redirect_to root_path if current_user
-    redirect_to sign_path(anchor: 'login')
+    if current_user
+      redirect_to root_path
+    else
+      redirect_to sign_path anchor: 'login'
+    end
   end
 
   def create
