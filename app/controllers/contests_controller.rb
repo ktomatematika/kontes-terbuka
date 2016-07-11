@@ -70,7 +70,7 @@ class ContestsController < ApplicationController
       user_contest = UserContest.create(participate_params)
       contest = user_contest.contest
       contest.long_problems.each do |long_problem|
-        LongSubmission.create(user_contest: user_contest.user,
+        LongSubmission.create(user_contest: user_contest
                               long_problem: long_problem)
       end
     end
@@ -80,14 +80,16 @@ class ContestsController < ApplicationController
 
   def create_short_submissions
     contest_id = params['contest_id']
+    contest = Contest.find(contest_id)
     submission_params.each_key do |prob_id|
       answer = submission_params[prob_id]
       next if answer == ''
+      user_contest = UserContest.find_by(user: current_user, contest: contest)
       ShortSubmission.find_or_initialize_by(short_problem_id: prob_id,
-                                            user: current_user)
+                                            user_contest: user_contest)
                      .update(answer: answer)
     end
-    redirect_to Contest.find(contest_id),
+    redirect_to contest,
                 notice: 'Jawaban bagian A berhasil dikirimkan!'
   end
 
