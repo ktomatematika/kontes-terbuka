@@ -2,7 +2,7 @@
   <h2>Hasil dan Umpan Balik</h2>
 
   <% unless @short_problems.empty? %>
-    <h3>Bagian A: <%= UserContest.include_marks.find_by id: @user_contest.id %>/<%= @short_problems.length %> poin</h3>
+    <h3>Bagian A: <%= @user_contest.short_mark %>/<%= @short_problems.length %> poin</h3>
   <% end %>
 
   <% unless @long_problems.empty? %>
@@ -10,7 +10,7 @@
     <% @long_problems.each do |prob| %>
       <% ls = LongSubmission.find_by long_problem: prob, user_contest: @user_contest %>
 
-      <h4>No. <%= prob.problem_no %>: <%= dasihfy @user_contest.__send__("problem_no_#{prob.id}") %>/7 poin</h4>
+      <h4>No. <%= prob.problem_no %>: <%= dashify @user_contest.__send__("problem_no_#{prob.id}") %>/7 poin</h4>
       <div class="row">
         <div class="col-sm-6">
           <h5>Soal</h5>
@@ -23,7 +23,7 @@
       </div>
     <% end %>
   <% end %>
-  <h3>Total: <%= UserContest.total_marks.find_by id: @user_contest.id %>/<%= @contest.max_score %> poin</h3>
+  <h3>Total: <%= @user_contest.total_mark %>/<%= @contest.max_score %> poin</h3>
   <%= show_award %>
   <p>Jika menurut Anda terdapat masalah dengan penilaian di kontes ini,
     seperti ada berkas Anda yang tidak dinilai atau menurut Anda nilainya
