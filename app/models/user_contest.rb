@@ -60,6 +60,7 @@ class UserContest < ActiveRecord::Base
 
       points
     end
+    points
   end
 
   scope :short_marks, lambda {
