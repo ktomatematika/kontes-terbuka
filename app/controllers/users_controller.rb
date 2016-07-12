@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  load_and_authorize_resource except: [:new, :check_unique, :create,
+  authorize_resource except: [:new, :check_unique, :create,
                                        :forgot_password,
                                        :process_forgot_password]
   skip_before_action :require_login, only: [:new, :check_unique, :create,
@@ -21,14 +21,7 @@ class UsersController < ApplicationController
       user.add_role :veteran if params[:osn] == 1
 
       if verify_recaptcha(model: user) && user.save
-        link = verify_link(verification: user.verification)
-        text = 'User berhasil dibuat! Sekarang, buka link ini untuk ' \
-          "memverifikasikan email Anda:\n\n" \
-          "#{link}"
-        Mailgun.send_message to: user.email,
-                             subject: 'Konfirmasi Pendaftaran Kontes' \
-                                      'Terbuka Olimpiade Matematika',
-                             text: text
+        user.send_verify_email
         redirect_to welcome_path, notice: 'User berhasil dibuat! ' \
           'Sekarang, lakukan verifikasi dengan membuka link yang telah ' \
           'kami berikan di email Anda.'
@@ -56,12 +49,15 @@ class UsersController < ApplicationController
     else
       # Verify user
       u.update(enabled: true, verification: nil)
+      Notifications.all.each do |n|
+        UserNotification.create(user: u, notification: n)
+      end
       redirect_to login_path, notice: 'Verifikasi berhasil! Silakan login.'
     end
   end
 
   def reset_password
-    u = User.find_by verification: params[:verification]
+    @user = User.find_by verification: params[:verification]
   end
 
   def process_reset_password
@@ -120,7 +116,7 @@ class UsersController < ApplicationController
                                 .where(user: @user,
                                        'contests.result_released' => true)
     @point_transactions = PointTransaction.where(user: @user)
-                                          .sort_by(:updated_at).reverse
+                                          .sort_by(:created_at).reverse
   end
 
   def index

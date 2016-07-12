@@ -108,12 +108,8 @@ class Contest < ActiveRecord::Base
     filtered_query
   end
 
-  def contest_result_includes_user
-    contest_result.includes(:user)
-  end
-
   def rank_participants
-    partcps = contest_result_includes_user
+    partcps = contest_result.includes(:user)
     rank = 0
     current_total = max_score + 1
     partcps.each_with_index do |uc, idx|

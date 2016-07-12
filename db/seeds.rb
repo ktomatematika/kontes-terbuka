@@ -1,4 +1,4 @@
-# Province, Status, Color model objects are fixed
+# Province, Status, Color, Notification model objects are fixed
 [['WIB', ['D.I. Aceh', 'Sumatera Utara', 'Sumatera Barat', 'Riau',
           'Kepulauan Riau', 'Jambi', 'Bengkulu', 'Bangka Belitung',
           'Sumatera Selatan', 'Lampung', 'Banten', 'D.K.I. Jakarta',
@@ -25,8 +25,16 @@ end
   Color.find_or_create_by(name: color)
 end
 
-# Previous contests.
 # rubocop:disable LineLength
+Notification.find_or_create_by(event: 'contest_starting', time: '24 hours', time_text: '24 jam', description: '24 jam sebelum kontes dimulai')
+Notification.find_or_create_by(event: 'contest_starting', time: '3 hours', time_text: '3 jam', description: '3 jam sebelum kontes dimulai')
+Notification.find_or_create_by(event: 'contest_started', description: 'Ketika kontes dimulai')
+Notification.find_or_create_by(event: 'contest_ending', time: '24 hours', time_text: '24 jam', description: '24 jam sebelum kontes selesai')
+Notification.find_or_create_by(event: 'contest_ending', time: '3 hours', time_text: '3 jam', description: '3 jam sebelum kontes selesai')
+Notification.find_or_create_by(event: 'results_released', description: 'Ketika hasil kontes dikeluarkan')
+Notification.find_or_create_by(event: 'feedback_ending', time: '6 hours', time_text: '6 jam', description: '6 jam sebelum feedback dibagikan')
+
+# Previous contests.
 Contest.find_or_create_by(name: 'KTO Matematika Juni 2015',
                           start_time: DateTime.new(2015, 6, 26, 23, 55, 0, '+7'),
                           end_time: DateTime.new(2015, 6, 30, 0, 0, 0, '+7'),

@@ -33,7 +33,7 @@ module Mailgun
                     "\n\nSalam,\nTim KTO Matematika"
 
     unless params[:contest].nil?
-      params[:subject] = "[#{params[:contest]}] #{params[:subject]}"
+      params[:subject] = "#{params[:contest]}: #{params[:subject]}"
       params.delete(:contest)
     end
 

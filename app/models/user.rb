@@ -57,6 +57,9 @@ class User < ActiveRecord::Base
 
   has_many :point_transactions
 
+  has_many :user_notifications
+  has_many :notifications, through: :user_notifications
+
   attr_accessor :password
   validates :password, presence: true, confirmation: true, on: :create
 
@@ -80,7 +83,7 @@ class User < ActiveRecord::Base
   end
   validates :timezone, presence: true,
                        inclusion: {
-                         in: self.time_zone_set,
+                         in: time_zone_set,
                          message: 'Zona waktu tidak tersedia'
                        }
 
@@ -133,6 +136,29 @@ class User < ActiveRecord::Base
       "ini: \n\n #{reset_password_path verification: verification}"
     Mailgun.send_message to: user.email,
                          subject: 'Reset Password KTO Matematika',
+                         text: text
+  end
+
+  VERIFY_TIME = 4.hours
+  VERIFY_TIME_INDO = '4 jam'.freeze
+  def destroy_if_unverified
+    destroy unless enabled
+  end
+  handle_asynchronously :destroy_if_unverified,
+                        run_at: proc { VERIFY_TIME.from_now },
+                        queue: user_verification
+
+  def send_verify_email
+    link = verify_link(verification: verification)
+    text = 'User berhasil dibuat! Sekarang, buka link ini untuk ' \
+      "memverifikasikan email Anda:\n\n" \
+      "#{link}\n\n" \
+      "Anda hanya memiliki waktu #{VERIFY_TIME_INDO} untuk mengverifikasi." \
+      'Jika Anda tidak mendaftar ke Kontes Terbuka Olimpiade Matematika, ' \
+      'Anda boleh mengacuhkan email ini.'
+    Mailgun.send_message to: email,
+                         subject: 'Konfirmasi Pendaftaran Kontes' \
+                                  'Terbuka Olimpiade Matematika',
                          text: text
   end
 end

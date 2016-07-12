@@ -117,8 +117,9 @@ class ContestsController < ApplicationController
   end
 
   def download_feedback
-    @contest = Contest.find(params[:contest_id])
-    @user_contests = @contest.user_contests
+    contest = Contest.find(params[:contest_id])
+    @feedback_questions = contest.feedback_questions
+    @user_contests = contest.user_contests
     respond_to do |format|
       format.csv do
         headers['Content-Disposition'] =

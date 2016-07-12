@@ -1,2 +1,3 @@
-- FeedbackAnswer.all.each do |fa|
-  = CSV.generate_line([fa.user, fa.feedback_question, fa.answer])
+= CSV.generate_line(['User'] + @feedback_questions.order_by(:id))
+- @user_contests.each do |uc|
+  = CSV.generate_line([uc.user] + uc.feedback_answers.order_by(:feedback_question_id))

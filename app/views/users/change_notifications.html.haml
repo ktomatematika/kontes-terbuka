@@ -1,0 +1,4 @@
+.container
+  %h1 Ganti Notifikasi
+  - @notifications.each do |n|
+    = check_box_tag n.description, '1', !UserNotification.find_by(notification: n).nil?

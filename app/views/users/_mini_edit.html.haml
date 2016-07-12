@@ -1,4 +1,5 @@
 = link_to 'Ganti Password', user_change_password_path(@user), class: 'btn btn-default has-shade', type: 'button'
+= link_to 'Ganti Notifikasi', user_change_notifications_path(@user), class: 'btn btn-default has-shade', type: 'button'
 = form_for :user, url: user_mini_update_path(@user) do |f|
   %p
     %label{ for: 'user_timezone' } Zona waktu:

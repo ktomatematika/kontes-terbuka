@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160712051842) do
+ActiveRecord::Schema.define(version: 20160712180553) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -131,6 +131,15 @@ ActiveRecord::Schema.define(version: 20160712051842) do
     t.datetime "updated_at",       null: false
   end
 
+  create_table "notifications", force: :cascade do |t|
+    t.string   "event"
+    t.string   "time"
+    t.string   "time_text"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.string   "description"
+  end
+
   create_table "point_transactions", force: :cascade do |t|
     t.integer  "point"
     t.string   "description"
@@ -225,6 +234,13 @@ ActiveRecord::Schema.define(version: 20160712051842) do
   add_index "user_contests", ["contest_id"], name: "index_user_contests_on_contest_id", using: :btree
   add_index "user_contests", ["user_id"], name: "index_user_contests_on_user_id", using: :btree
 
+  create_table "user_notifications", force: :cascade do |t|
+    t.integer  "user_id",         null: false
+    t.integer  "notification_id", null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string   "username"
     t.string   "email"
@@ -310,5 +326,7 @@ ActiveRecord::Schema.define(version: 20160712051842) do
   validates("users", "salt", presence: true)
   validates("users", "auth_token", presence: true)
   validates("point_transactions", "description", presence: true)
+  validates("notifications", "event", presence: true)
+  validates("notifications", "description", presence: true)
 
 end
