@@ -40,7 +40,7 @@ Rails.application.routes.draw do
     get 'give_points', to: 'contests#give_points'
   end
 
-  resources :market_items
+  #resources :market_items
 
   get '/mark_solo/:id', to: 'long_problems#mark_solo', as: :mark_solo
   get '/mark_final/:id', to: 'long_problems#mark_final', as: :mark_final
