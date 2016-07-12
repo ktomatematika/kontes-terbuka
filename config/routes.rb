@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
-  root 'welcome#index'
+  root 'home#construction'
+  get '*path', to: 'home#construction'
+
+  # root 'welcome#index'
 
   resources :users do
     post 'mini_update', to: 'users#mini_update'
@@ -51,7 +54,6 @@ Rails.application.routes.draw do
   get '/terms', to: 'home#terms'
   get '/contact', to: 'home#contact'
   get '/penguasa', to: 'home#admin', as: :admin
-  get '/construction', to: 'home#construction'
 
   resources :long_submissions do
     post 'submit' => 'long_submissions#submit', on: :member
