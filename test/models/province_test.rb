@@ -1,3 +1,18 @@
+# == Schema Information
+#
+# Table name: provinces
+#
+#  id         :integer          not null, primary key
+#  name       :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  timezone   :string
+#
+# Indexes
+#
+#  idx_mv_provinces_name_uniq  (name) UNIQUE
+#
+
 require 'test_helper'
 
 class ProvinceTest < ActiveSupport::TestCase

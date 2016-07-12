@@ -24,15 +24,14 @@ Rails.application.routes.draw do
     get 'show_rules', to: 'contests#show_rules'
     post 'accept_rules', to: 'contests#accept_rules', on: :collection
     get 'feedback', to: 'contests#give_feedback'
+    post 'feedback', to: 'contests#feedback_submit'
+    get 'download', to: 'contests#download_feedback'
 
     resources :short_problems
     post 'create_short_submissions', to: 'contests#create_short_submissions'
     resources :long_problems
 
     resources :feedback_questions
-    post 'feedback_submit', to: 'contests#feedback_submit'
-
-    post 'update_marks', to: 'contests#update_marks'
 
     get 'give_points', to: 'contests#give_points'
   end

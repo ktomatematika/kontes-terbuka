@@ -1,3 +1,25 @@
+# == Schema Information
+#
+# Table name: user_contests
+#
+#  id           :integer          not null, primary key
+#  user_id      :integer
+#  contest_id   :integer
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  donation_nag :boolean          default(TRUE)
+#
+# Indexes
+#
+#  index_user_contests_on_contest_id  (contest_id)
+#  index_user_contests_on_user_id     (user_id)
+#
+# Foreign Keys
+#
+#  fk_rails_418fd0bbd0  (contest_id => contests.id)
+#  fk_rails_ee078c9177  (user_id => users.id)
+#
+
 class UserContest < ActiveRecord::Base
   has_paper_trail
   belongs_to :user
@@ -10,6 +32,9 @@ class UserContest < ActiveRecord::Base
   has_many :long_submissions
   has_many :long_problems, through: :long_submissions
   has_many :submission_pages, through: :long_submissions
+
+  has_many :feedback_answers
+  has_many :feedback_questions, through: :feedback_answers
 
   enforce_migration_validations
 

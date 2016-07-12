@@ -1,3 +1,22 @@
+# == Schema Information
+#
+# Table name: submission_pages
+#
+#  id                      :integer          not null, primary key
+#  page_number             :integer
+#  long_submission_id      :integer
+#  created_at              :datetime         not null
+#  updated_at              :datetime         not null
+#  submission_file_name    :string
+#  submission_content_type :string
+#  submission_file_size    :integer
+#  submission_updated_at   :datetime
+#
+# Foreign Keys
+#
+#  fk_rails_62bec7c828  (long_submission_id => long_submissions.id)
+#
+
 class SubmissionPage < ActiveRecord::Base
   has_paper_trail
   belongs_to :long_submission

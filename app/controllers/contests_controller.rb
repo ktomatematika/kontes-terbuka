@@ -94,16 +94,16 @@ class ContestsController < ApplicationController
   end
 
   def feedback_submit
-    contest_id = params['contest_id']
+    contest = Contest.find(params[:contest_id])
+    user_contest = UserContest.find_by(user: current_user, contest: contest)
     feedback_params.each_key do |q_id|
       answer = feedback_params[q_id]
       next if answer == ''
       FeedbackAnswer.find_or_create_by(feedback_question_id: q_id,
-                                       user: current_user)
+                                       user_contest: user_contest)
                     .update(answer: answer)
     end
-    redirect_to Contest.find(contest_id),
-                notice: 'Feedback berhasil dikirimkan!'
+    redirect_to contest, notice: 'Feedback berhasil dikirimkan!'
   end
 
   def assign_markers
@@ -120,10 +120,9 @@ class ContestsController < ApplicationController
     @contest = Contest.find(params[:contest_id])
     @user_contests = @contest.user_contests
     respond_to do |format|
-      format.html
       format.csv do
         headers['Content-Disposition'] =
-          "attachment; filename=\"Feedback #{@contest}\""
+          "attachment; filename=\"Feedback #{@contest}\".csv"
         headers['Content-Type'] ||= 'text/csv'
       end
     end

@@ -1,0 +1,2 @@
+- FeedbackAnswer.all.each do |fa|
+  = CSV.generate_line([fa.user, fa.feedback_question, fa.answer])

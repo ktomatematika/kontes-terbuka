@@ -1,3 +1,40 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id              :integer          not null, primary key
+#  username        :string
+#  email           :string
+#  hashed_password :string
+#  fullname        :string
+#  school          :string
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  salt            :string
+#  auth_token      :string
+#  province_id     :integer
+#  status_id       :integer
+#  color_id        :integer          default(1)
+#  timezone        :string           default("WIB")
+#  verification    :string
+#  enabled         :boolean          default(FALSE)
+#  tries           :integer          default(0)
+#
+# Indexes
+#
+#  idx_mv_users_email_uniq     (email) UNIQUE
+#  idx_mv_users_username_uniq  (username) UNIQUE
+#  index_users_on_color_id     (color_id)
+#  index_users_on_province_id  (province_id)
+#  index_users_on_status_id    (status_id)
+#
+# Foreign Keys
+#
+#  fk_rails_560da4bd54  (province_id => provinces.id)
+#  fk_rails_87f75b7957  (color_id => colors.id)
+#  fk_rails_ce4a327a04  (status_id => statuses.id)
+#
+
 class User < ActiveRecord::Base
   rolify
   has_paper_trail
@@ -13,9 +50,6 @@ class User < ActiveRecord::Base
 
   has_many :user_awards
   has_many :awards, through: :user_awards
-
-  has_many :feedback_answers
-  has_many :feedback_questions, through: :feedback_answers
 
   has_many :temporary_markings
   has_many :marked_long_submissions, through: :temporary_markings,
