@@ -1,8 +1,5 @@
 Rails.application.routes.draw do
-  root 'home#construction'
-  get '*path', to: 'home#construction'
-
-  # root 'welcome#index'
+  root 'welcome#index'
 
   resources :users do
     post 'mini_update', to: 'users#mini_update'
