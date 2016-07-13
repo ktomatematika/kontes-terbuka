@@ -146,7 +146,7 @@ class User < ActiveRecord::Base
   end
   handle_asynchronously :destroy_if_unverified,
                         run_at: proc { VERIFY_TIME.from_now },
-                        queue: user_verification
+                        queue: 'user_verification'
 
   def send_verify_email
     link = verify_link(verification: verification)

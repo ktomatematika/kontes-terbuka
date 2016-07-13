@@ -158,12 +158,6 @@ $(document).ready(function() {
 			}
 		}
 
-		function window_type() {
-			var width = $(window).width();
-			// eslint-disable-next-line no-magic-numbers
-			return width >= 992 ? 'md' : width >= 1268 ? 'sm' : 'xs';
-		}
-
 		function update_month_calendar(year, month) {
 			$('#calendar').empty();
 			$('#this-time').text(months[month] + ' ' + year);

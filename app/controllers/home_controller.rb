@@ -27,6 +27,13 @@ class HomeController < ApplicationController
   end
 
   def about
+    @photo_dictionary = {}
+    Dir.glob('app/assets/images/panitia/*').each do |img|
+      img_file = img.split('/').last
+      image_path = 'panitia/' + img_file
+      image_tag = ActionController::Base.helpers.image_tag(image_path)
+      @photo_dictionary[img_file] = image_tag.tr('"', "'").html_safe
+    end
   end
 
   def privacy

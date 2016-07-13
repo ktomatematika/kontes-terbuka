@@ -20,12 +20,20 @@
   text-align: center;
 }
 
-.about-us-description {
-  background-color: #fff;
-  padding-top: 15px;
+.about-us-person {
+  border-radius: 1.5em 1.5em 0 0;
+  transition: background-color 0.2s ease;
+  cursor: pointer;
+  margin-top: 0.5em;
+  padding-bottom: 0.5em;
 }
 
 .active-about-us {
   background-color: #fff;
-  transition: background-color 0.5s ease;
+}
+
+.about-us-description {
+  background-color: #fff;
+  border-radius: 0 0 1.5em 1.5em;
+  padding: 0.5em 0;
 }
