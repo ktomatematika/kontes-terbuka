@@ -129,6 +129,14 @@ class ContestsController < ApplicationController
     end
   end
 
+  def download_certificate
+    uc = UserContest.find_by user: current_user, contest_id: params[:contest_id]
+    certificate_obj = CertificateManager.new(uc.id)
+    pdf_file = certificate_obj.create_and_give
+    send_file pdf_file
+    certificate_obj.clean_files
+  end
+
   def give_points
     contest = Contest.find(params[:contest_id])
     contest.user_contests.each do |uc|
