@@ -1,0 +1,16 @@
+- if current_user.nil?
+  - content_for :page_attributes do
+    nav-logo-only
+
+.container
+  %h1 Kontak Kami
+  %p Kami bisa dihubungi melalui:
+  %ul
+    %li
+      %a{ href: 'https://www.facebook.com/KTOMatematika' } Facebook KTO Matematika
+      (Paling cepat respon)
+    %li
+      Email ke mail at domain website ini
+    %li
+      %a{ href: 'https://line.me/ti/p/%40ktom' } Line KTO Matematika
+      (jarang open chat)
