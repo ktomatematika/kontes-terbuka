@@ -1,7 +1,7 @@
 #history
   %h2 Riwayat Kontes
   .table-responsive
-    %table.table.table-hover.has-shade-table-bordered#contest-history
+    %table.table.table-hover.has-shade.table-bordered#contest-history
       .thead
         = can?(:manage, @user) ? full_header_contents : public_header_contents
       .tbody

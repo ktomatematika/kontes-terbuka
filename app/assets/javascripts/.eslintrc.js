@@ -62,6 +62,7 @@ module.exports = {
 		'no-void': 'error',
 		'no-warning-comments': 'warn',
 		'no-with': 'warn',
+		'space-before-function-paren': ['error', 'never'],
 	},
 	'globals': {
 		'now': false,

@@ -2,9 +2,11 @@ Rails.application.routes.draw do
   root 'welcome#index'
 
   resources :users do
-    post 'mini_update', to: 'users#mini_update'
-    get 'change_password', to: 'users#change_password'
-    post 'change_password', to: 'users#process_change_password'
+    post 'mini-update', to: 'users#mini_update'
+    get 'change-password', to: 'users#change_password'
+    post 'change-password', to: 'users#process_change_password'
+    get 'change-notifications', to: 'users#change_notifications'
+    post 'change-notifications', to: 'users#process_change_notifications'
   end
 
   get '/sign', to: 'welcome#sign'
@@ -15,31 +17,31 @@ Rails.application.routes.draw do
   post '/forgot', to: 'users#process_forgot_password'
 
   post '/check', to: 'users#check_unique'
-  get '/verify/:verification', to: 'users#verify'
-  get 'reset_password/:verification', to: 'users#reset_password'
-  post 'reset_password/:verification', to: 'users#process_reset_password'
+  get '/verify/:verification', to: 'users#verify', as: :verify
+  get 'reset-password/:verification', to: 'users#reset_password', as: 'reset_password'
+  post 'reset-password/:verification', to: 'users#process_reset_password', as: 'process_reset_password'
 
   resources :contests do
     get 'admin', to: 'contests#admin'
-    get 'show_rules', to: 'contests#show_rules'
-    post 'accept_rules', to: 'contests#accept_rules', on: :collection
+    get 'rules', to: 'contests#show_rules'
+    post 'rules', to: 'contests#accept_rules'
     get 'feedback', to: 'contests#give_feedback'
     post 'feedback', to: 'contests#feedback_submit'
     get 'download', to: 'contests#download_feedback'
 
-    resources :short_problems
-    post 'create_short_submissions', to: 'contests#create_short_submissions'
-    resources :long_problems
+    resources :short_problems, path: '/short-problems'
+    post 'create-short-submissions', to: 'contests#create_short_submissions'
+    resources :long_problems, path: '/long-problems'
 
-    resources :feedback_questions
+    resources :feedback_questions, path: '/feedback-questions'
 
-    get 'give_points', to: 'contests#give_points'
+    post 'give-points', to: 'contests#give_points'
   end
 
-  #resources :market_items
+  #resources :market_items, path: '/market-items'
 
-  get '/mark_solo/:id', to: 'long_problems#mark_solo', as: :mark_solo
-  get '/mark_final/:id', to: 'long_problems#mark_final', as: :mark_final
+  get '/mark-solo/:id', to: 'long_problems#mark_solo', as: :mark_solo
+  get '/mark-final/:id', to: 'long_problems#mark_final', as: :mark_final
 
   get '/home', to: 'home#index'
   get '/faq', to: 'home#faq'
@@ -51,11 +53,11 @@ Rails.application.routes.draw do
   get '/contact', to: 'home#contact'
   get '/penguasa', to: 'home#admin', as: :admin
 
-  resources :long_submissions do
+  resources :long_submissions, path: '/long-submissions' do
     post 'submit' => 'long_submissions#submit', on: :member
   end
 
   get '/assign/:id', to: 'contests#assign_markers', as: :assign_markers
-  post 'create_marker', to: 'roles#create_marker'
-  delete 'remove_marker', to: 'roles#remove_marker'
+  post 'create-marker', to: 'roles#create_marker'
+  delete 'remove-marker', to: 'roles#remove_marker'
 end

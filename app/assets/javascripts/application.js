@@ -25,7 +25,7 @@
 
 $(document).ready(function() {
 	$('body').flowtype({
-		minFont: 12,
+		minFont: 14,
 		maxFont: 20,
 	});
 

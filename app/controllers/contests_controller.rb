@@ -95,6 +95,7 @@ class ContestsController < ApplicationController
 
   def feedback_submit
     contest = Contest.find(params[:contest_id])
+    authorize! :feedback_submit, contest
     user_contest = UserContest.find_by(user: current_user, contest: contest)
     feedback_params.each_key do |q_id|
       answer = feedback_params[q_id]
@@ -113,6 +114,7 @@ class ContestsController < ApplicationController
 
   def give_feedback
     @contest = Contest.find(params[:contest_id])
+    authorize! :give_feedback, @contest
     @feedback_questions = @contest.feedback_questions
   end
 

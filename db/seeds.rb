@@ -143,6 +143,7 @@ unless Rails.env.production?
                       province_id: 18,
                       status_id: 2,
                       timezone: 'WITA')
+  admin.enable
   admin.add_role 'admin'
 
   mod = User.create(username: 'moderator',
@@ -153,6 +154,7 @@ unless Rails.env.production?
                     province_id: 3,
                     status_id: 4,
                     timezone: 'WIB')
+  mod.enable
   mod.add_role 'moderator'
 
   donjar = User.create(username: 'donjar',
@@ -163,6 +165,7 @@ unless Rails.env.production?
                        province_id: 3,
                        status_id: 4,
                        timezone: 'WIB')
+  donjar.enable
   donjar.save
 
   satria = User.create(username: 'satria',
@@ -183,6 +186,7 @@ unless Rails.env.production?
                         province_id: 3,
                         status_id: 4,
                         timezone: 'WIB')
+  pentium.enable
   pentium.save
 
   # Buat submisi untuk Kontes Forever

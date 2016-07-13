@@ -35,7 +35,7 @@
   - haml_tag "body #{yield :page_attributes}" do
     #essential-data{ data: { color: current_user && current_user.color, timezone: Time.zone.now.zone } }
 
-    %nav.navbar.navbar-default.navbar-fixed-top
+    %nav.navbar.navbar-default.navbar-fixed-top#top-navbar-container
       .container-fluid
         .navbar-header
           %button.navbar-toggle.collapsed{ type: 'button', data: { toggle: 'collapse', target: '#top-navbar', }, 'aria-expanded' => 'false' }

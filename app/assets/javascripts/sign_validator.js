@@ -37,7 +37,7 @@ $(document).ready(function () {
 		return this.optional(elem) || /^[a-zA-Z0-9]+$/.test(value);
 	});
 
-	$('#register-form').validate({
+	$('#register form').validate({
 		// We don't register key up here; there will be a keyup listener
 		// where it will call a throttled version of validation. Basically
 		// it will only validate after 1000 ms of keyups, as to not send
@@ -143,30 +143,9 @@ $(document).ready(function () {
 		},
 	});
 
-	$('#login-form').validate({
-		rules: {
-			'session[username]': {
-				required: true,
-			},
-			'session[password]': {
-				required: true,
-				minlength: 6,
-			},
-		},
-		messages: {
-			'session[username]': {
-				required: 'Tolong masukkan username/email Anda.',
-			},
-			'session[password]': {
-				required: 'Tolong masukkan password.',
-				minlength: 'Password Anda harus minimal 6 karakter.',
-			},
-		},
-	});
-
 	var last = new Date();
 
-	$('#login input, #register input').keyup(function (e) {
+	$('#register input').keyup(function (e) {
 		var input = e.keyCode;
 
 		// This checks if the key entered is backspace, characters, or delete.

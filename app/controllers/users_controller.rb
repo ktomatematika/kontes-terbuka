@@ -1,10 +1,9 @@
 class UsersController < ApplicationController
-  authorize_resource except: [:new, :check_unique, :create,
-                                       :forgot_password,
-                                       :process_forgot_password]
-  skip_before_action :require_login, only: [:new, :check_unique, :create,
-                                            :forgot_password,
-                                            :process_forgot_password]
+  guest_actions = [:new, :check_unique, :create, :forgot_password,
+                   :process_forgot_password, :reset_password,
+                   :process_reset_password, :verify]
+  authorize_resource except: guest_actions
+  skip_before_action :require_login, only: guest_actions
 
   def new
     if current_user
@@ -21,8 +20,8 @@ class UsersController < ApplicationController
       user.add_role :veteran if params[:osn] == 1
 
       if verify_recaptcha(model: user) && user.save
-        user.send_verify_email
-        redirect_to welcome_path, notice: 'User berhasil dibuat! ' \
+        user.send_verify_email request.base_url
+        redirect_to root_path, notice: 'User berhasil dibuat! ' \
           'Sekarang, lakukan verifikasi dengan membuka link yang telah ' \
           'kami berikan di email Anda.'
       else
@@ -36,7 +35,7 @@ class UsersController < ApplicationController
   def verify
     u = User.find_by(verification: params[:verification])
     if u.nil?
-      redirect_to welcome_path, alert: 'Terjadi kegagalan dalam verifikasi '
+      redirect_to root_path, alert: 'Terjadi kegagalan dalam verifikasi '
         'atau reset password. Ini kemungkinan berarti Anda sudah ' \
         'terverifikasi atau password Anda sudah terreset, ataupun batas ' \
         'waktu verifikasi sudah lewat. Coba login; coba juga cek ulang link ' \
@@ -47,11 +46,7 @@ class UsersController < ApplicationController
       # User is verified
       redirect_to login_path, notice: 'Anda sudah terverifikasi!'
     else
-      # Verify user
-      u.update(enabled: true, verification: nil)
-      Notifications.all.each do |n|
-        UserNotification.create(user: u, notification: n)
-      end
+      u.enable
       redirect_to login_path, notice: 'Verifikasi berhasil! Silakan login.'
     end
   end
@@ -62,14 +57,20 @@ class UsersController < ApplicationController
 
   def process_reset_password
     user = User.find_by verification: params[:verification]
-    if user && params[:new_password] == params[:confirm_new_password]
-      user.password = params[:new_password]
-      user.encrypt_password
-      user.save
-      redirect_to login_path, notice: 'Password berhasil diubah! Silakan login.'
+    if user
+      if params[:new_password] == params[:confirm_new_password]
+        user.password = params[:new_password]
+        user.encrypt_password
+        user.verification = nil
+        user.save
+        redirect_to login_path, notice: 'Password berhasil diubah! Silakan login.'
+      else
+        redirect_to reset_password_path(verification: params[:verification]),
+          alert: 'Password baru tidak cocok! Coba lagi.'
+      end
     else
-      redirect_to reset_password_path(verification: params[verification]),
-        alert: 'Password gagal diubah! Silakan coba lagi.'
+      redirect_to reset_password_path(verification: params[:verification]),
+        alert: 'Terdapat kesalahan! Coba lagi.'
     end
   end
 
@@ -79,15 +80,19 @@ class UsersController < ApplicationController
 
   def process_change_password
     user = User.find params[:user_id]
-    if user.authenticate(params[:old_password]) &&
-       params[:new_password] == params[:confirm_new_password]
-      user.password = params[:new_password]
-      user.encrypt_password
-      user.save
-      redirect_to user_path(user), notice: 'Password Anda berhasil diubah!'
+    if user.authenticate(params[:old_password])
+      if params[:new_password] == params[:confirm_new_password]
+        user.password = params[:new_password]
+        user.encrypt_password
+        user.save
+        redirect_to user_path(user), notice: 'Password Anda berhasil diubah!'
+      else
+        redirect_to user_change_password_path(user), alert: 'Password baru ' \
+          'Anda tidak cocok!'
+      end
     else
-      redirect_to user_change_password_path(user), alert: 'Ada kegagalan. ' \
-        'Mohon coba lagi!'
+      redirect_to user_change_password_path(user), alert: 'Password lama ' \
+        'Anda salah!'
     end
   end
 
@@ -104,9 +109,24 @@ class UsersController < ApplicationController
     if user.nil?
       redirect_to sign_path, alert: 'User tidak ada.'
     else
-      user.generate_token(:verification)
+      user.forgot_password_process request.base_url
       redirect_to login_path, notice: 'Cek email Anda untuk instruksi ' \
       'selanjutnya.'
+    end
+  end
+
+  def change_notifications
+  end
+
+  def process_change_notifications
+    notif_id = params[:id]
+    checked = params[:checked]
+
+    if checked
+      UserNotification.find_by(user: current_user, notification_id: notif_id)
+      .destroy
+    else
+      UserNotification.create(user: current_user, notification_id: notif_id)
     end
   end
 
@@ -116,7 +136,7 @@ class UsersController < ApplicationController
                                 .where(user: @user,
                                        'contests.result_released' => true)
     @point_transactions = PointTransaction.where(user: @user)
-                                          .sort_by(:created_at).reverse
+                                          .order(:created_at).reverse
   end
 
   def index

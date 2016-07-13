@@ -148,8 +148,9 @@ class User < ActiveRecord::Base
                         run_at: proc { VERIFY_TIME.from_now },
                         queue: 'user_verification'
 
-  def send_verify_email
-    link = verify_link(verification: verification)
+  def send_verify_email(base_url)
+    link = base_url + Rails.application.routes.url_helpers.verify_path(
+      verification: verification)
     text = 'User berhasil dibuat! Sekarang, buka link ini untuk ' \
       "memverifikasikan email Anda:\n\n" \
       "#{link}\n\n" \
@@ -157,8 +158,27 @@ class User < ActiveRecord::Base
       'Jika Anda tidak mendaftar ke Kontes Terbuka Olimpiade Matematika, ' \
       'Anda boleh mengacuhkan email ini.'
     Mailgun.send_message to: email,
-                         subject: 'Konfirmasi Pendaftaran Kontes' \
+                         subject: 'Konfirmasi Pendaftaran Kontes ' \
                                   'Terbuka Olimpiade Matematika',
                          text: text
+  end
+
+  def enable
+    update(enabled: true, verification: nil)
+    Notification.all.find_each do |n|
+      UserNotification.create(user: self, notification: n)
+    end
+  end
+
+  def forgot_password_process(base_url)
+    generate_token(:verification)
+    link = base_url + Rails.application.routes.url_helpers
+    .reset_password_path( verification: verification)
+    Mailgun.send_message to: email,
+                         subject: 'Reset Password KTO Matematika',
+                         text: 'Klik link ini untuk mengreset password ' \
+                         "Anda:\n#{link}\n\n" \
+                         'Jika Anda tidak meminta password Anda untuk ' \
+                         'direset, acuhkan saja email ini.'
   end
 end

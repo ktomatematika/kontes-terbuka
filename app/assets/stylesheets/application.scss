@@ -53,11 +53,11 @@ h5, .h5 {
 }
 
 [nav-logo-only] {
-  #top-navbar, button {
+  #top-navbar, #top-navbar-container > button {
     display: none !important;
   }
 
-  nav > .container-fluid {
+  #top-navbar-container > .container-fluid {
     height: 70px;
   }
 }
@@ -134,7 +134,7 @@ h5, .h5 {
 }
 
 label {
-  font-weight: 300;
+  font-weight: 100;
 }
 
 textarea {

@@ -14,12 +14,12 @@
 
       .form-group.has-feedback(aria-described-by='pass-help')
         = f.password_field :password, class: 'form-control', placeholder: 'Password'
-        %span.glyphicon.form-glyphicon.form-control-feedback.form-glyphicon-eye-open(aria-hidden='true')
+        %span.glyphicon.form-glyphicon.form-control-feedback.glyphicon-eye-open(aria-hidden='true')
         = render 'users/password_help'
 
       .form-group.has-feedback
         = f.password_field :password_confirmation, class: 'form-control', placeholder: 'Ulangi password'
-        %span.glyphicon.form-glyphicon.form-control-feedback.form-glyphicon-eye-open(aria-hidden='true')
+        %span.glyphicon.form-glyphicon.form-control-feedback.glyphicon-eye-open(aria-hidden='true')
 
       .form-group.has-feedback
         = f.text_field :fullname, class: 'form-control', placeholder: 'Nama lengkap'

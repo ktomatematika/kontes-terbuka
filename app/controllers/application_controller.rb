@@ -30,7 +30,7 @@ class ApplicationController < ActionController::Base
     Time.zone = current_user && case current_user.timezone
                                 when 'WIB' then TZInfo::Timezone.get('Asia/Jakarta')
                                 when 'WITA' then TZInfo::Timezone.get('Asia/Makassar')
-                                when 'WIT' then TZInfo::Timezone.get('Asia/Makassar')
+                                when 'WIT' then TZInfo::Timezone.get('Asia/Jayapura')
                                 end
     Time.zone = TZInfo::Timezone.get('Asia/Jakarta') if Time.zone.nil?
   end

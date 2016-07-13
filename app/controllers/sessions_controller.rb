@@ -29,7 +29,7 @@ class SessionsController < ApplicationController
 
       if user.tries == User::MAX_TRIES
         # Too many tries
-        user.generate_token(:verification)
+        forgot_password_process(request.base_url)
         redirect_to login_path, notice: 'Anda sudah terlalu banyak mencoba ' \
           'dan perlu mereset password. Silakan cek link di email Anda.'
       else
@@ -43,7 +43,7 @@ class SessionsController < ApplicationController
       cookies[:auth_token] = user.auth_token
     end
 
-    if flash[:alert].nil?
+    if flash[:alert].nil? && flash[:notice].nil?
       user.update(tries: 0)
       redirect_to root_path
     else

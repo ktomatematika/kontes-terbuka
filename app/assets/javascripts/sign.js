@@ -47,15 +47,11 @@ $(document).ready(function () {
 
 	// Adds peek functionality of password inputs
 	var peek_buttons = $('.form-control-feedback.glyphicon-eye-open');
-	peek_buttons.mousedown(function (e) {
-		$(e.target).parent().children('input').prop('type', 'input');
+	peek_buttons.on('mousedown touchstart', function (e) {
+		$(e.target).parent().children('input').prop('type', 'text');
 	});
 
-	peek_buttons.mouseup(function (e) {
-		$(e.target).parent().children('input').prop('type', 'password');
-	});
-
-	peek_buttons.mouseleave(function (e) {
+	peek_buttons.on('mouseup mouseleave touchmove touchend touchcancel', function(e) {
 		$(e.target).parent().children('input').prop('type', 'password');
 	});
 });
