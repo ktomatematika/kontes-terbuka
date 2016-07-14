@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160713052032) do
+ActiveRecord::Schema.define(version: 20160714041253) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,8 +32,8 @@ ActiveRecord::Schema.define(version: 20160713052032) do
 
   create_table "contests", force: :cascade do |t|
     t.string   "name"
-    t.datetime "start_time"
-    t.datetime "end_time"
+    t.datetime "start_time",                               null: false
+    t.datetime "end_time",                                 null: false
     t.datetime "created_at",                               null: false
     t.datetime "updated_at",                               null: false
     t.string   "problem_pdf_file_name"
@@ -41,8 +41,8 @@ ActiveRecord::Schema.define(version: 20160713052032) do
     t.integer  "problem_pdf_file_size"
     t.datetime "problem_pdf_updated_at"
     t.text     "rule",                     default: "",    null: false
-    t.datetime "result_time"
-    t.datetime "feedback_time"
+    t.datetime "result_time",                              null: false
+    t.datetime "feedback_time",                            null: false
     t.integer  "gold_cutoff",              default: 0
     t.integer  "silver_cutoff",            default: 0
     t.integer  "bronze_cutoff",            default: 0
@@ -52,6 +52,11 @@ ActiveRecord::Schema.define(version: 20160713052032) do
     t.integer  "problem_tex_file_size"
     t.datetime "problem_tex_updated_at"
   end
+
+  add_index "contests", ["end_time"], name: "index_contests_on_end_time", using: :btree
+  add_index "contests", ["feedback_time"], name: "index_contests_on_feedback_time", using: :btree
+  add_index "contests", ["result_time"], name: "index_contests_on_result_time", using: :btree
+  add_index "contests", ["start_time"], name: "index_contests_on_start_time", using: :btree
 
   create_table "delayed_jobs", force: :cascade do |t|
     t.integer  "priority",   default: 0, null: false
@@ -77,6 +82,9 @@ ActiveRecord::Schema.define(version: 20160713052032) do
     t.integer  "user_contest_id"
   end
 
+  add_index "feedback_answers", ["feedback_question_id"], name: "index_feedback_answers_on_feedback_question_id", using: :btree
+  add_index "feedback_answers", ["user_contest_id"], name: "index_feedback_answers_on_user_contest_id", using: :btree
+
   create_table "feedback_questions", force: :cascade do |t|
     t.text     "question"
     t.datetime "created_at", null: false
@@ -86,22 +94,25 @@ ActiveRecord::Schema.define(version: 20160713052032) do
 
   create_table "long_problems", force: :cascade do |t|
     t.integer  "contest_id"
-    t.integer  "problem_no"
+    t.integer  "problem_no", null: false
     t.text     "statement"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
+  add_index "long_problems", ["contest_id", "problem_no"], name: "index_long_problems_on_contest_id_and_problem_no", unique: true, using: :btree
   add_index "long_problems", ["contest_id"], name: "index_long_problems_on_contest_id", using: :btree
 
   create_table "long_submissions", force: :cascade do |t|
-    t.integer  "long_problem_id"
+    t.integer  "long_problem_id", null: false
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
     t.integer  "score"
     t.text     "feedback"
-    t.integer  "user_contest_id"
+    t.integer  "user_contest_id", null: false
   end
+
+  add_index "long_submissions", ["long_problem_id", "user_contest_id"], name: "index_long_submissions_on_long_problem_id_and_user_contest_id", unique: true, using: :btree
 
   create_table "market_item_pictures", force: :cascade do |t|
     t.integer  "market_item_id",       null: false
@@ -113,10 +124,12 @@ ActiveRecord::Schema.define(version: 20160713052032) do
     t.datetime "updated_at",           null: false
   end
 
+  add_index "market_item_pictures", ["market_item_id"], name: "index_market_item_pictures_on_market_item_id", using: :btree
+
   create_table "market_items", force: :cascade do |t|
     t.string   "name"
     t.text     "description"
-    t.integer  "price"
+    t.integer  "price",            null: false
     t.integer  "current_quantity"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
@@ -134,10 +147,12 @@ ActiveRecord::Schema.define(version: 20160713052032) do
   create_table "point_transactions", force: :cascade do |t|
     t.integer  "point"
     t.string   "description"
-    t.integer  "user_id"
+    t.integer  "user_id",     null: false
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
+
+  add_index "point_transactions", ["user_id"], name: "index_point_transactions_on_user_id", using: :btree
 
   create_table "provinces", force: :cascade do |t|
     t.string   "name"
@@ -158,9 +173,10 @@ ActiveRecord::Schema.define(version: 20160713052032) do
 
   add_index "roles", ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id", using: :btree
   add_index "roles", ["name"], name: "index_roles_on_name", using: :btree
+  add_index "roles", ["resource_id"], name: "index_roles_on_resource_id", using: :btree
 
   create_table "short_problems", force: :cascade do |t|
-    t.integer  "contest_id"
+    t.integer  "contest_id", null: false
     t.integer  "problem_no"
     t.string   "statement"
     t.string   "answer"
@@ -168,15 +184,18 @@ ActiveRecord::Schema.define(version: 20160713052032) do
     t.datetime "updated_at", null: false
   end
 
+  add_index "short_problems", ["contest_id", "problem_no"], name: "index_short_problems_on_contest_id_and_problem_no", unique: true, using: :btree
   add_index "short_problems", ["contest_id"], name: "index_short_problems_on_contest_id", using: :btree
 
   create_table "short_submissions", force: :cascade do |t|
-    t.integer  "short_problem_id"
+    t.integer  "short_problem_id", null: false
     t.string   "answer"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
-    t.integer  "user_contest_id"
+    t.integer  "user_contest_id",  null: false
   end
+
+  add_index "short_submissions", ["short_problem_id", "user_contest_id"], name: "index_short_submissions_on_short_problem_id_and_user_contest_id", unique: true, using: :btree
 
   create_table "statuses", force: :cascade do |t|
     t.string   "name"
@@ -185,8 +204,8 @@ ActiveRecord::Schema.define(version: 20160713052032) do
   end
 
   create_table "submission_pages", force: :cascade do |t|
-    t.integer  "page_number"
-    t.integer  "long_submission_id"
+    t.integer  "page_number",             null: false
+    t.integer  "long_submission_id",      null: false
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
     t.string   "submission_file_name"
@@ -194,6 +213,8 @@ ActiveRecord::Schema.define(version: 20160713052032) do
     t.integer  "submission_file_size"
     t.datetime "submission_updated_at"
   end
+
+  add_index "submission_pages", ["page_number", "long_submission_id"], name: "index_submission_pages_on_page_number_and_long_submission_id", unique: true, using: :btree
 
   create_table "temporary_markings", force: :cascade do |t|
     t.integer  "user_id"
@@ -204,8 +225,7 @@ ActiveRecord::Schema.define(version: 20160713052032) do
     t.datetime "updated_at",         null: false
   end
 
-  add_index "temporary_markings", ["long_submission_id"], name: "index_temporary_markings_on_long_submission_id", using: :btree
-  add_index "temporary_markings", ["user_id"], name: "index_temporary_markings_on_user_id", using: :btree
+  add_index "temporary_markings", ["user_id", "long_submission_id"], name: "index_temporary_markings_on_user_id_and_long_submission_id", unique: true, using: :btree
 
   create_table "user_awards", force: :cascade do |t|
     t.integer  "user_id"
@@ -219,11 +239,10 @@ ActiveRecord::Schema.define(version: 20160713052032) do
     t.integer  "contest_id"
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
-    t.boolean  "donation_nag", default: true
+    t.boolean  "donation_nag", default: true, null: false
   end
 
-  add_index "user_contests", ["contest_id"], name: "index_user_contests_on_contest_id", using: :btree
-  add_index "user_contests", ["user_id"], name: "index_user_contests_on_user_id", using: :btree
+  add_index "user_contests", ["user_id", "contest_id"], name: "index_user_contests_on_user_id_and_contest_id", unique: true, using: :btree
 
   create_table "user_notifications", force: :cascade do |t|
     t.integer  "user_id",         null: false
@@ -231,6 +250,8 @@ ActiveRecord::Schema.define(version: 20160713052032) do
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
   end
+
+  add_index "user_notifications", ["user_id", "notification_id"], name: "index_user_notifications_on_user_id_and_notification_id", unique: true, using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "username"
@@ -247,15 +268,17 @@ ActiveRecord::Schema.define(version: 20160713052032) do
     t.integer  "color_id",        default: 1
     t.string   "timezone",        default: "WIB"
     t.string   "verification"
-    t.boolean  "enabled",         default: false
+    t.boolean  "enabled",         default: false, null: false
     t.integer  "tries",           default: 0
   end
 
+  add_index "users", ["auth_token"], name: "idx_mv_users_auth_token_uniq", unique: true, using: :btree
   add_index "users", ["color_id"], name: "index_users_on_color_id", using: :btree
   add_index "users", ["email"], name: "idx_mv_users_email_uniq", unique: true, using: :btree
   add_index "users", ["province_id"], name: "index_users_on_province_id", using: :btree
   add_index "users", ["status_id"], name: "index_users_on_status_id", using: :btree
   add_index "users", ["username"], name: "idx_mv_users_username_uniq", unique: true, using: :btree
+  add_index "users", ["verification"], name: "idx_mv_users_verification_uniq", unique: true, using: :btree
 
   create_table "users_roles", id: false, force: :cascade do |t|
     t.integer "user_id"
@@ -288,12 +311,24 @@ ActiveRecord::Schema.define(version: 20160713052032) do
   add_index "versions", ["transaction_id"], name: "index_versions_on_transaction_id", using: :btree
 
   add_foreign_key "feedback_answers", "feedback_questions"
+  add_foreign_key "feedback_answers", "user_contests"
+  add_foreign_key "long_problems", "contests"
+  add_foreign_key "long_submissions", "long_problems"
+  add_foreign_key "long_submissions", "user_contests"
   add_foreign_key "market_item_pictures", "market_items"
+  add_foreign_key "point_transactions", "users"
+  add_foreign_key "short_problems", "contests"
+  add_foreign_key "short_submissions", "short_problems"
+  add_foreign_key "short_submissions", "user_contests"
   add_foreign_key "submission_pages", "long_submissions"
+  add_foreign_key "temporary_markings", "long_submissions"
+  add_foreign_key "temporary_markings", "users"
   add_foreign_key "user_awards", "awards"
   add_foreign_key "user_awards", "users"
   add_foreign_key "user_contests", "contests"
   add_foreign_key "user_contests", "users"
+  add_foreign_key "user_notifications", "notifications"
+  add_foreign_key "user_notifications", "users"
   add_foreign_key "users", "colors"
   add_foreign_key "users", "provinces"
   add_foreign_key "users", "statuses"
@@ -319,5 +354,19 @@ ActiveRecord::Schema.define(version: 20160713052032) do
   validates("point_transactions", "description", presence: true)
   validates("notifications", "event", presence: true)
   validates("notifications", "description", presence: true)
+  validates("feedback_answers", "answer", presence: true)
+  validates("long_problems", "statement", presence: true)
+  validates("long_problems", "problem_no", custom: { statement: 'problem_no >= 1' })
+  validates("long_submissions", "score", custom: { statement: 'score >= 0', allow_nil: true })
+  validates("market_items", "name", presence: true)
+  validates("market_items", "description", presence: true)
+  validates("provinces", "timezone", presence: true)
+  validates("short_problems", "problem_no", custom: { statement: 'problem_no >= 1' })
+  validates("statuses", "name", presence: true)
+  validates("temporary_markings", "mark", custom: { statement: 'mark >= 0', allow_nil: true })
+  validates("users", "auth_token", uniqueness: true)
+  validates("users", "verification", uniqueness: true)
+  validates("users", "tries", custom: { statement: 'tries >= 0' })
+  validates("users", "timezone", presence: true)
 
 end

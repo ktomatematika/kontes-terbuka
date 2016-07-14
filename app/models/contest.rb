@@ -4,8 +4,8 @@
 #
 #  id                       :integer          not null, primary key
 #  name                     :string
-#  start_time               :datetime
-#  end_time                 :datetime
+#  start_time               :datetime         not null
+#  end_time                 :datetime         not null
 #  created_at               :datetime         not null
 #  updated_at               :datetime         not null
 #  problem_pdf_file_name    :string
@@ -13,8 +13,8 @@
 #  problem_pdf_file_size    :integer
 #  problem_pdf_updated_at   :datetime
 #  rule                     :text             default(""), not null
-#  result_time              :datetime
-#  feedback_time            :datetime
+#  result_time              :datetime         not null
+#  feedback_time            :datetime         not null
 #  gold_cutoff              :integer          default(0)
 #  silver_cutoff            :integer          default(0)
 #  bronze_cutoff            :integer          default(0)
@@ -23,6 +23,13 @@
 #  problem_tex_content_type :string
 #  problem_tex_file_size    :integer
 #  problem_tex_updated_at   :datetime
+#
+# Indexes
+#
+#  index_contests_on_end_time       (end_time)
+#  index_contests_on_feedback_time  (feedback_time)
+#  index_contests_on_result_time    (result_time)
+#  index_contests_on_start_time     (start_time)
 #
 
 class Contest < ActiveRecord::Base

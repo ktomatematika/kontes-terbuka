@@ -7,12 +7,11 @@
 #  contest_id   :integer
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
-#  donation_nag :boolean          default(TRUE)
+#  donation_nag :boolean          default(TRUE), not null
 #
 # Indexes
 #
-#  index_user_contests_on_contest_id  (contest_id)
-#  index_user_contests_on_user_id     (user_id)
+#  index_user_contests_on_user_id_and_contest_id  (user_id,contest_id) UNIQUE
 #
 # Foreign Keys
 #
@@ -24,7 +23,6 @@ class UserContest < ActiveRecord::Base
   has_paper_trail
   belongs_to :user
   belongs_to :contest
-  validates_uniqueness_of :user_id, scope: :contest_id
 
   has_many :short_submissions
   has_many :short_problems, through: :short_submissions

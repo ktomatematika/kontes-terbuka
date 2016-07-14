@@ -3,31 +3,35 @@
 # Table name: long_submissions
 #
 #  id              :integer          not null, primary key
-#  long_problem_id :integer
+#  long_problem_id :integer          not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  score           :integer
 #  feedback        :text
-#  user_contest_id :integer
+#  user_contest_id :integer          not null
+#
+# Indexes
+#
+#  index_long_submissions_on_long_problem_id_and_user_contest_id  (long_problem_id,user_contest_id) UNIQUE
+#
+# Foreign Keys
+#
+#  fk_rails_ab0e9f9d12  (user_contest_id => user_contests.id)
+#  fk_rails_f4fee8fddd  (long_problem_id => long_problems.id)
 #
 
 class LongSubmission < ActiveRecord::Base
   has_paper_trail
   belongs_to :user_contest
   belongs_to :long_problem
-  validates_uniqueness_of :user_contest, scope: :long_problem
 
   has_many :submission_pages
   accepts_nested_attributes_for :submission_pages, allow_destroy: true,
                                                    update_only: true
 
+  enforce_migration_validations
+
   has_many :temporary_markings
-
-  validate :uniqueness_of_page_number
-
-  delegate :contest_id, to: :long_problem
-
-  delegate :problem_no, to: :long_problem
 
   scope :filter_user_contest, lambda { |user_id, contest_id|
     includes(:long_problem)
@@ -36,16 +40,4 @@ class LongSubmission < ActiveRecord::Base
       .where('long_problems.contest_id = ?', contest_id)
       .order('long_problems.problem_no')
   }
-
-  # Validation method
-  def uniqueness_of_page_number
-    page_number_hash = {}
-    submission_pages.each do |page|
-      if page_number_hash[page.page_number]
-        errors.add(:"page.value", 'duplikat') if errors[:"page.value"].blank?
-        page.errors.add(:page, 'halaman ini duplikat')
-      end
-      page_number_hash[page.page_number] = true
-    end
-  end
 end

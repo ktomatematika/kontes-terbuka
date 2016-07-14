@@ -11,6 +11,10 @@
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
 #
+# Indexes
+#
+#  index_market_item_pictures_on_market_item_id  (market_item_id)
+#
 # Foreign Keys
 #
 #  fk_rails_7d71f7cc8f  (market_item_id => market_items.id)
@@ -18,7 +22,7 @@
 
 class MarketItemPicture < ActiveRecord::Base
   belongs_to :market_item
-  validates :market_item, presence: true
+  enforce_migration_validations
 
   has_attached_file :picture,
                     url: '/market/pictures/:id/:basename.:extension',

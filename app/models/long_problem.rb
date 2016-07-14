@@ -4,19 +4,25 @@
 #
 #  id         :integer          not null, primary key
 #  contest_id :integer
-#  problem_no :integer
+#  problem_no :integer          not null
 #  statement  :text
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
 # Indexes
 #
-#  index_long_problems_on_contest_id  (contest_id)
+#  index_long_problems_on_contest_id                 (contest_id)
+#  index_long_problems_on_contest_id_and_problem_no  (contest_id,problem_no) UNIQUE
+#
+# Foreign Keys
+#
+#  fk_rails_116a6ecec7  (contest_id => contests.id)
 #
 
 class LongProblem < ActiveRecord::Base
   resourcify
   has_paper_trail
+  enforce_migration_validations
 
   belongs_to :contest
 

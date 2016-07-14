@@ -206,12 +206,9 @@ blockquote {
 .btn-lg {
   font-size: 1.2em;
 }
-input[type="text"], input[type="password"], input[type="email"], select, textarea {
+input, select, textarea {
   height: 2em !important;
   font-size: 1em !important;
-}
-input[type="checkbox"] {
-  margin-top: 0.5em;
 }
 
 @each $name, $color in $colors {

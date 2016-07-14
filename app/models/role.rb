@@ -13,11 +13,13 @@
 #
 #  index_roles_on_name                                    (name)
 #  index_roles_on_name_and_resource_type_and_resource_id  (name,resource_type,resource_id)
+#  index_roles_on_resource_id                             (resource_id)
 #
 
 class Role < ActiveRecord::Base
   has_paper_trail
-  has_and_belongs_to_many :users, join_table: :users_roles
+  has_many :users, through: :users_roles
+  enforce_migration_validations
 
   belongs_to :resource,
              polymorphic: true
