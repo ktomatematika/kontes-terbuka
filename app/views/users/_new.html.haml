@@ -12,7 +12,7 @@
         = f.email_field :email, class: 'form-control', placeholder: 'Alamat email'
         %span.glyphicon.form-glyphicon.form-control-feedback(aria-hidden='true')
 
-      .form-group.has-feedback(aria-described-by='pass-help')
+        .form-group.has-feedback{ 'aria-described-by' => 'pass-help' }
         = f.password_field :password, class: 'form-control', placeholder: 'Password'
         %span.glyphicon.form-glyphicon.form-control-feedback.glyphicon-eye-open(aria-hidden='true')
         = render 'users/password_help'
@@ -45,7 +45,7 @@
       .checkbox
         %label
           = f.check_box :terms_of_service
-          Saya menyetujui syarat dan ketentuan website ini.
+          Saya menyetujui #{link_to 'kebijakan privasi', privacy_path} dan #{link_to 'syarat dan ketentuan', terms_path} website ini.
 
       %footer
         = recaptcha_tags hl: 'id'

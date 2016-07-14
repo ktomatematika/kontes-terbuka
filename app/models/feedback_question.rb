@@ -8,6 +8,14 @@
 #  updated_at :datetime         not null
 #  contest_id :integer
 #
+# Indexes
+#
+#  index_feedback_questions_on_contest_id  (contest_id)
+#
+# Foreign Keys
+#
+#  fk_rails_38d13509cf  (contest_id => contests.id)
+#
 
 class FeedbackQuestion < ActiveRecord::Base
   has_paper_trail

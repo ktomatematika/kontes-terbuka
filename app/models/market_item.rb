@@ -2,13 +2,12 @@
 #
 # Table name: market_items
 #
-#  id               :integer          not null, primary key
-#  name             :string
-#  description      :text
-#  price            :integer          not null
-#  current_quantity :integer
-#  created_at       :datetime         not null
-#  updated_at       :datetime         not null
+#  id          :integer          not null, primary key
+#  name        :string
+#  description :text
+#  price       :integer          not null
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
 #
 
 class MarketItem < ActiveRecord::Base

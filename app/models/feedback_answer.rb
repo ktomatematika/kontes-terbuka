@@ -11,6 +11,7 @@
 #
 # Indexes
 #
+#  feedback_question_and_user_contest_unique_pair  (feedback_question_id,user_contest_id) UNIQUE
 #  index_feedback_answers_on_feedback_question_id  (feedback_question_id)
 #  index_feedback_answers_on_user_contest_id       (user_contest_id)
 #

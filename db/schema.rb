@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160714041253) do
+ActiveRecord::Schema.define(version: 20160714174434) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -82,6 +82,7 @@ ActiveRecord::Schema.define(version: 20160714041253) do
     t.integer  "user_contest_id"
   end
 
+  add_index "feedback_answers", ["feedback_question_id", "user_contest_id"], name: "feedback_question_and_user_contest_unique_pair", unique: true, using: :btree
   add_index "feedback_answers", ["feedback_question_id"], name: "index_feedback_answers_on_feedback_question_id", using: :btree
   add_index "feedback_answers", ["user_contest_id"], name: "index_feedback_answers_on_user_contest_id", using: :btree
 
@@ -92,6 +93,8 @@ ActiveRecord::Schema.define(version: 20160714041253) do
     t.integer  "contest_id"
   end
 
+  add_index "feedback_questions", ["contest_id"], name: "index_feedback_questions_on_contest_id", using: :btree
+
   create_table "long_problems", force: :cascade do |t|
     t.integer  "contest_id"
     t.integer  "problem_no", null: false
@@ -101,7 +104,6 @@ ActiveRecord::Schema.define(version: 20160714041253) do
   end
 
   add_index "long_problems", ["contest_id", "problem_no"], name: "index_long_problems_on_contest_id_and_problem_no", unique: true, using: :btree
-  add_index "long_problems", ["contest_id"], name: "index_long_problems_on_contest_id", using: :btree
 
   create_table "long_submissions", force: :cascade do |t|
     t.integer  "long_problem_id", null: false
@@ -129,10 +131,9 @@ ActiveRecord::Schema.define(version: 20160714041253) do
   create_table "market_items", force: :cascade do |t|
     t.string   "name"
     t.text     "description"
-    t.integer  "price",            null: false
-    t.integer  "current_quantity"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.integer  "price",       null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "notifications", force: :cascade do |t|
@@ -185,7 +186,6 @@ ActiveRecord::Schema.define(version: 20160714041253) do
   end
 
   add_index "short_problems", ["contest_id", "problem_no"], name: "index_short_problems_on_contest_id_and_problem_no", unique: true, using: :btree
-  add_index "short_problems", ["contest_id"], name: "index_short_problems_on_contest_id", using: :btree
 
   create_table "short_submissions", force: :cascade do |t|
     t.integer  "short_problem_id", null: false
@@ -202,6 +202,8 @@ ActiveRecord::Schema.define(version: 20160714041253) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  add_index "statuses", ["name"], name: "idx_mv_statuses_name_uniq", unique: true, using: :btree
 
   create_table "submission_pages", force: :cascade do |t|
     t.integer  "page_number",             null: false
@@ -312,6 +314,7 @@ ActiveRecord::Schema.define(version: 20160714041253) do
 
   add_foreign_key "feedback_answers", "feedback_questions"
   add_foreign_key "feedback_answers", "user_contests"
+  add_foreign_key "feedback_questions", "contests"
   add_foreign_key "long_problems", "contests"
   add_foreign_key "long_submissions", "long_problems"
   add_foreign_key "long_submissions", "user_contests"
@@ -365,8 +368,9 @@ ActiveRecord::Schema.define(version: 20160714041253) do
   validates("statuses", "name", presence: true)
   validates("temporary_markings", "mark", custom: { statement: 'mark >= 0', allow_nil: true })
   validates("users", "auth_token", uniqueness: true)
-  validates("users", "verification", uniqueness: true)
   validates("users", "tries", custom: { statement: 'tries >= 0' })
   validates("users", "timezone", presence: true)
+  validates("statuses", "name", uniqueness: true)
+  validates("users", "verification", uniqueness: { allow_nil: true })
 
 end

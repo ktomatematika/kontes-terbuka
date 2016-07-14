@@ -11,7 +11,8 @@ class Ability
       can :show, User
       can :submit, LongProblem
       can [:mini_edit, :mini_update, :change_password,
-           :process_change_password, :change_notifications], User, id: user.id
+           :process_change_password, :change_notifications,
+           :process_change_notifications], User, id: user.id
       can :index, MarketItem
 
       if user.has_role? :marking_manager

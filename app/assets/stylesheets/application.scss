@@ -206,7 +206,8 @@ blockquote {
 .btn-lg {
   font-size: 1.2em;
 }
-input, select, textarea {
+input[type=text], input[type=password], input[type=email], input[type=date],
+select, textarea {
   height: 2em !important;
   font-size: 1em !important;
 }

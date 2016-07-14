@@ -1,6 +1,7 @@
+#process-change-notifications{ data: { path: user_process_change_notifications_path } }
 .container
   %h1 Ganti Notifikasi
   - Notification.all.each do |n|
     %p
-      = check_box_tag "checkbox_#{n.id}", nil, !UserNotification.find_by(notification: n).nil?
-      %label{ for: "checkbox_#{n.id}" }= n
+      = check_box_tag n.id, nil, !UserNotification.find_by(notification: n, user: @user).nil?, class: 'notifications-checkbox'
+      %label{ for: n.id }= n

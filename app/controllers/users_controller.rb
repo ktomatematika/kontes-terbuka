@@ -116,18 +116,22 @@ class UsersController < ApplicationController
   end
 
   def change_notifications
+    @user = User.find params[:user_id]
   end
 
   def process_change_notifications
     notif_id = params[:id]
     checked = params[:checked]
 
-    if checked
+    if checked == 'true'
+      UserNotification.create(user: current_user, notification_id: notif_id)
+    elsif checked == 'false'
       UserNotification.find_by(user: current_user, notification_id: notif_id)
                       .destroy
     else
-      UserNotification.create(user: current_user, notification_id: notif_id)
+      # log
     end
+    render nothing: true
   end
 
   def show
@@ -156,14 +160,12 @@ class UsersController < ApplicationController
   end
 
   def mini_update
-    User.transaction do
-      @user = User.find(params[:user_id])
-      if @user.update(user_mini_edit_params)
-        redirect_to user_path(@user), notice: 'User berhasil diupdate!'
-      else
-        redirect_to user_path(@user),
-                    alert: 'Terdapat kesalahan dalam mengupdate User!'
-      end
+    @user = User.find(params[:user_id])
+    if @user.update(user_mini_edit_params)
+      redirect_to user_path(@user), notice: 'User berhasil diupdate!'
+    else
+      redirect_to user_path(@user),
+                  alert: 'Terdapat kesalahan dalam mengupdate User!'
     end
   end
 

@@ -12,7 +12,6 @@
 #
 # Indexes
 #
-#  index_short_problems_on_contest_id                 (contest_id)
 #  index_short_problems_on_contest_id_and_problem_no  (contest_id,problem_no) UNIQUE
 #
 # Foreign Keys
