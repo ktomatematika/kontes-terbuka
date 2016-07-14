@@ -16,7 +16,7 @@ $(document).ready(function() {
 		if (typeof about_us_obj !== 'undefined') {
 			$('#daftar-panitia').append(
 					'<div class="col-md-' + MD_ROW + ' col-sm-' + SM_ROW +
-					'about-us-person "' +
+					' about-us-person "' +
 					'data-name="' + about_us_obj.name + '" ' +
 					'data-description="' + about_us_obj.description + '">' +
 					'<h3>' + about_us_obj.name + '</h3>' +
