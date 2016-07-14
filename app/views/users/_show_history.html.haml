@@ -6,8 +6,3 @@
         = can?(:manage, @user) ? full_header_contents : public_header_contents
       .tbody
         = can?(:manage, @user) ? full_data_contents : public_data_contents
-
-  %nav
-    %a.prev-history{ href: '#' } &lt;&lt;
-    %span.this-history 1
-    %a.next-history{ href: '#' } &gt;&gt;

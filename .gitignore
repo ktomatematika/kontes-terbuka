@@ -27,3 +27,4 @@
 .sass-cache/
 
 /lib/mailgun_api_key.rb
+.env
