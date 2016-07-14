@@ -89,6 +89,10 @@ class Contest < ActiveRecord::Base
     name
   end
 
+  def to_param
+    "#{id}-#{name.downcase.gsub(/[^0-9A-Za-z ]/, '').tr(' ', '-')}"
+  end
+
   def currently_in_contest?
     now = Time.zone.now
     start_time <= now && now <= end_time

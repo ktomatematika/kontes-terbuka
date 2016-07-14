@@ -12,7 +12,31 @@ var about_us_data = [
 	},
 	{
 		name: 'Fransisca Andriani',
-		description: 'Fransisca Andriani (Cis) pernah beruntung mendapatkan medali perak OSN 2013 dan medali emas OSN 2015 meskipun kemampuannya tidak seberapa. Dia juga mendapatkan keberuntungan lagi di 2016 saat diterima di Nanyang Technological University, Singapura untuk melanjutkan studi di bidang Matematika. Peran Cis di KTOM selain sebagai pengisi kuota perempuan (karena tidak ada perempuan lain yang mau) juga sebagai designer, pengelola utama Official Account LINE KTOM, dan terkadang korektor jawaban kontes. Dia juga sangat suka menyanyi, membaca, dan pandai menggerak2kan anggota wajah seperti hidung telinga dan alis.',
+		description: 'Fransisca Andriani (Cis) pernah beruntung mendapatkan medali perak OSN 2013 dan medali emas OSN 2015 meskipun kemampuannya tidak seberapa. Dia juga mendapatkan keberuntungan lagi di 2016 saat diterima di Nanyang Technological University, Singapura untuk melanjutkan studi di bidang Matematika. Peran Cis di KTOM selain sebagai pengisi kuota perempuan (karena tidak ada perempuan lain yang mau) juga sebagai designer, pengelola utama Official Account LINE KTOM, dan terkadang korektor jawaban kontes. Dia juga sangat suka menyanyi, membaca, dan pandai menggerak-gerakkan anggota wajah seperti hidung telinga dan alis.',
 		image: 'cis.jpg',
 	},
+	{
+		name: 'Rudi Adha Prihandoko',
+		description: '',
+		image: 'rudi.jpg',
+	},
+	{
+		name: 'Made Tantrawan',
+		description: 'Made Tantrawan merupakan salah satu peraih medali emas bidang matematika pada OSN 2008. Pada saat menempuh pendidikan sarjananya, pria yang akrab disapa Wawan ini sempat mewakili Indonesia di ajang International Mathematics Competition (IMC) di Bulgaria sebanyak 3 kali. Adapun dalam kompetisi tersebut, ia berhasil meraih 2nd prize di tahun 2010, 3rd prize di tahun 2011, dan 2nd prize kembali di tahun 2012. Saat ini, ia sedang melanjutkan studi S3 di NUS, Singapore dalam bidang matematika. Di sela-sela studinya, ia juga turut membantu KTO Matematika dalam beberapa bidang seperti tim soal, tim koreksi dan tim pengolah.',
+		image: 'wawan.jpg',
+	},
 ];
+
+// Randomize the order!
+var current_index = about_us_data.length;
+var temporary_value;
+var random_index;
+
+while (current_index !== 0) {
+	random_index = Math.floor(Math.random() * current_index);
+	current_index--;
+
+	temporary_value = about_us_data[current_index];
+	about_us_data[current_index] = about_us_data[random_index];
+	about_us_data[random_index] = temporary_value;
+}

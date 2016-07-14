@@ -118,6 +118,10 @@ class User < ActiveRecord::Base
     username
   end
 
+  def to_param
+    "#{id}-#{username.downcase}"
+  end
+
   def point
     PointTransaction.where(user: self).sum(:point)
   end
