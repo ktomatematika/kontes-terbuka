@@ -1,47 +1,48 @@
-about_us_data = [
-{
-	name: 'Ricky The Ising',
-	description: 'Si ganteng',
-	image: 'ricky.jpg',
-},
-{
-	name: 'Ricky The Ising',
-	description: 'Si ganteng',
-	image: 'ricky.jpg',
-},
-{
-	name: 'Ricky The Ising',
-	description: 'Si ganteng',
-	image: 'ricky.jpg',
-},
-{
-	name: 'Ricky The Ising',
-	description: 'Si ganteng',
-	image: 'ricky.jpg',
-},
-{
-	name: 'Ricky The Ising',
-	description: 'Si ganteng',
-	image: 'ricky.jpg',
-},
-{
-	name: 'Ricky The Ising',
-	description: 'Si ganteng',
-	image: 'ricky.jpg',
-},
-{
-	name: 'Ricky The Ising',
-	description: 'Si ganteng',
-	image: 'ricky.jpg',
-},
-{
-	name: 'Ricky The Ising',
-	description: 'Si ganteng',
-	image: 'ricky.jpg',
-},
-{
-	name: 'Ricky The Ising',
-	description: 'Si ganteng',
-	image: 'ricky.jpg',
-},
-]
+/* exported about_us_data */
+var about_us_data = [
+	{
+		name: 'Ricky The Ising',
+		description: 'Si ganteng',
+		image: 'ricky.jpg',
+	},
+	{
+		name: 'Ricky The Ising',
+		description: 'Si ganteng',
+		image: 'ricky.jpg',
+	},
+	{
+		name: 'Ricky The Ising',
+		description: 'Si ganteng',
+		image: 'ricky.jpg',
+	},
+	{
+		name: 'Ricky The Ising',
+		description: 'Si ganteng',
+		image: 'ricky.jpg',
+	},
+	{
+		name: 'Ricky The Ising',
+		description: 'Si ganteng',
+		image: 'ricky.jpg',
+	},
+	{
+		name: 'Ricky The Ising',
+		description: 'Si ganteng',
+		image: 'ricky.jpg',
+	},
+	{
+		name: 'Ricky The Ising',
+		description: 'Si ganteng',
+		image: 'ricky.jpg',
+	},
+	{
+		name: 'Ricky The Ising',
+		description: 'Si ganteng',
+		image: 'ricky.jpg',
+	},
+	{
+		name: 'Ricky The Ising',
+		description: 'Si ganteng',
+		image: 'ricky.jpg',
+	},
+];

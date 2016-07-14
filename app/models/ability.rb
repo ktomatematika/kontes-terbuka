@@ -7,7 +7,7 @@ class Ability
       can [:show, :index, :show_rules,
            :accept_rules, :create_short_submissions], Contest
       can [:give_feedback, :feedback_submit], Contest,
-        id: UserContest.where(user: user).pluck(:contest_id)
+          id: UserContest.where(user: user).pluck(:contest_id)
       can :show, User
       can :submit, LongProblem
       can [:mini_edit, :mini_update, :change_password,

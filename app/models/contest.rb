@@ -103,14 +103,14 @@ class Contest < ActiveRecord::Base
     filtered_query = UserContest.where(contest: self).processed
 
     long_problems.each do |long_problem|
-      filtered_query = 
-      filtered_query.
-      joins{
-        UserContest.include_long_problem_marks(long_problem.id).
-        as("long_problem_marks_#{long_problem.id}").
-        on{ id == __send__("long_problem_marks_#{long_problem.id}").id }
-      }.
-      select{ __send__("long_problem_marks_#{long_problem.id}").__send__("problem_no_#{long_problem.id}") }
+      filtered_query =
+        filtered_query
+        .joins do
+          UserContest.include_long_problem_marks(long_problem.id)
+                     .as("long_problem_marks_#{long_problem.id}")
+                     .on { id == __send__("long_problem_marks_#{long_problem.id}").id }
+        end
+        .select { __send__("long_problem_marks_#{long_problem.id}").__send__("problem_no_#{long_problem.id}") }
     end
     filtered_query
   end

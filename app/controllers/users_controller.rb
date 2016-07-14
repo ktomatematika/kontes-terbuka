@@ -36,12 +36,12 @@ class UsersController < ApplicationController
     u = User.find_by(verification: params[:verification])
     if u.nil?
       redirect_to root_path, alert: 'Terjadi kegagalan dalam verifikasi '
-        'atau reset password. Ini kemungkinan berarti Anda sudah ' \
-        'terverifikasi atau password Anda sudah terreset, ataupun batas ' \
-        'waktu verifikasi sudah lewat. Coba login; coba juga cek ulang link ' \
-        'yang diberikan dalam email Anda. Jika masih tidak bisa juga, coba ' \
-        'buat ulang user Anda, atau ' \
-        "#{link_to 'Kontak Kami', contact_path}.".html_safe
+      'atau reset password. Ini kemungkinan berarti Anda sudah ' \
+      'terverifikasi atau password Anda sudah terreset, ataupun batas ' \
+      'waktu verifikasi sudah lewat. Coba login; coba juga cek ulang link ' \
+      'yang diberikan dalam email Anda. Jika masih tidak bisa juga, coba ' \
+      'buat ulang user Anda, atau ' \
+      "#{link_to 'Kontak Kami', contact_path}.".html_safe
     elsif u.enabled
       # User is verified
       redirect_to login_path, notice: 'Anda sudah terverifikasi!'
@@ -66,11 +66,11 @@ class UsersController < ApplicationController
         redirect_to login_path, notice: 'Password berhasil diubah! Silakan login.'
       else
         redirect_to reset_password_path(verification: params[:verification]),
-          alert: 'Password baru tidak cocok! Coba lagi.'
+                    alert: 'Password baru tidak cocok! Coba lagi.'
       end
     else
       redirect_to reset_password_path(verification: params[:verification]),
-        alert: 'Terdapat kesalahan! Coba lagi.'
+                  alert: 'Terdapat kesalahan! Coba lagi.'
     end
   end
 
@@ -124,7 +124,7 @@ class UsersController < ApplicationController
 
     if checked
       UserNotification.find_by(user: current_user, notification_id: notif_id)
-      .destroy
+                      .destroy
     else
       UserNotification.create(user: current_user, notification_id: notif_id)
     end

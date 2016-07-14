@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(document).ready(function() {
 	var next_contest = $('#welcome-contest-data');
 	if (next_contest.length !== 0) {
 		var start = erb_to_date(next_contest.data('start-time'));

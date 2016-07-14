@@ -1,3 +1,4 @@
+/* exported fill_contest_text */
 function fill_contest_text() {
 	var current = new Date();
 

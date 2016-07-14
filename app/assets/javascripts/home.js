@@ -1,3 +1,4 @@
+/* exported fill_home_text */
 function fill_home_text() {
 	var current = new Date();
 
@@ -17,7 +18,7 @@ function fill_home_text() {
 		} else if (current > results) {
 			subtitle_text = ' Dikarenakan berbagai halangan, hasil kontes' +
 				' belum keluar. Mohon maaf atas ketidaknyamannya dan' +
-				' mohon bersabar :('
+				' mohon bersabar :(';
 			$('#home-btn-daftar').hide();
 		} else if (current > end) {
 			// Show time to results

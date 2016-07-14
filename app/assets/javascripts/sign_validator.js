@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(document).ready(function() {
 // Synergize with bootstrap by adding certain bootstrap classes to tags.
 	$.validator.setDefaults({
 		errorElement: 'span',
@@ -33,7 +33,7 @@ $(document).ready(function () {
 	});
 
 	// Adds a method to check whether a field is alphanumeric.
-	$.validator.addMethod('alphanum', function (value, elem) {
+	$.validator.addMethod('alphanum', function(value, elem) {
 		return this.optional(elem) || /^[a-zA-Z0-9]+$/.test(value);
 	});
 
@@ -145,7 +145,7 @@ $(document).ready(function () {
 
 	var last = new Date();
 
-	$('#register input').keyup(function (e) {
+	$('#register input').keyup(function(e) {
 		var input = e.keyCode;
 
 		// This checks if the key entered is backspace, characters, or delete.
@@ -169,7 +169,7 @@ $(document).ready(function () {
 			// Validate after 1000 milisecond.
 			var validate_time = 1000;
 			last = new Date();
-			window.setTimeout(function () {
+			window.setTimeout(function() {
 				if (new Date() - last >= validate_time) {
 					$(t).valid();
 				}

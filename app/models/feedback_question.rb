@@ -18,6 +18,6 @@ class FeedbackQuestion < ActiveRecord::Base
   has_many :users, through: :feedback_answers
 
   def to_s
-    question 
+    question
   end
 end

@@ -152,7 +152,8 @@ class User < ActiveRecord::Base
 
   def send_verify_email(base_url)
     link = base_url + Rails.application.routes.url_helpers.verify_path(
-      verification: verification)
+      verification: verification
+    )
     text = 'User berhasil dibuat! Sekarang, buka link ini untuk ' \
       "memverifikasikan email Anda:\n\n" \
       "#{link}\n\n" \
@@ -175,7 +176,7 @@ class User < ActiveRecord::Base
   def forgot_password_process(base_url)
     generate_token(:verification)
     link = base_url + Rails.application.routes.url_helpers
-    .reset_password_path( verification: verification)
+           .reset_password_path(verification: verification)
     Mailgun.send_message to: email,
                          subject: 'Reset Password KTO Matematika',
                          text: 'Klik link ini untuk mengreset password ' \

@@ -9,7 +9,7 @@ $(document).ready(function() {
 	$('.answer').hide();
 	$('.question').click(function() {
 		var answer = $(this).next();
-		var deactivate = (answer.css('display') !== 'none')
+		var deactivate = answer.css('display') !== 'none';
 		$('.answer').slideUp('fast');
 		if (!deactivate) {
 			$(this).next().slideDown('fast');

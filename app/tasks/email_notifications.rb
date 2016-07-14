@@ -67,6 +67,7 @@ class EmailNotifications
         email_array
       else
         email_array.push(uc.user.email)
+      end
     end
 
     Mailgun.send_message contest: contest, text: text, subject: subject,

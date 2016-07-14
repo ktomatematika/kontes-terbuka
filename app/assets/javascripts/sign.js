@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(document).ready(function() {
 // Use the hash to determine which form to show. Defaults to register.
 	var hash = window.location.hash;
 	if (hash === '#login') {
@@ -17,17 +17,17 @@ $(document).ready(function () {
 
 	// Show help text when input is selected
 	$('#register .pre-help, #login .pre-help').addClass('hidden');
-	$('#register input, #login input').focus(function () {
+	$('#register input, #login input').focus(function() {
 		if (!$(this).parent().hasClass('has-error')) {
 			$(this).nextAll('.pre-help').removeClass('hidden');
 		}
 	});
-	$('#register input, #login input').focusout(function () {
+	$('#register input, #login input').focusout(function() {
 		$(this).nextAll('.pre-help').addClass('hidden');
 	});
 
 	// Fade in/out on switching forms.
-	$('.move-form').click(function (e) {
+	$('.move-form').click(function(e) {
 		var right = $(this).attr('href');
 		if (right === '#login') {
 			$('#register').fadeOut();
@@ -47,7 +47,7 @@ $(document).ready(function () {
 
 	// Adds peek functionality of password inputs
 	var peek_buttons = $('.form-control-feedback.glyphicon-eye-open');
-	peek_buttons.on('mousedown touchstart', function (e) {
+	peek_buttons.on('mousedown touchstart', function(e) {
 		$(e.target).parent().children('input').prop('type', 'text');
 	});
 

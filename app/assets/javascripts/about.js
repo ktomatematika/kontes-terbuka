@@ -1,12 +1,22 @@
 $(document).ready(function() {
-	var len_round_mult_3 = 3 * Math.ceil(about_us_data.length / 3)
-	for (var i = 0; i < len_round_mult_3; i++) {
+	var MD_COLUMNS = 3;
+	var SM_COLUMNS = 2;
+	var BOOTSTRAP_ROW = 12;
+
+	var MD_ROW = BOOTSTRAP_ROW / MD_COLUMNS;
+	var SM_ROW = BOOTSTRAP_ROW / SM_COLUMNS;
+
+	var len_round_md = MD_COLUMNS *
+		Math.ceil(about_us_data.length / MD_COLUMNS);
+
+	for (var i = 0; i < len_round_md; i++) {
 		var about_us_obj = about_us_data[i];
 
 		// Add about us objects if not undefined
 		if (typeof about_us_obj !== 'undefined') {
 			$('#daftar-panitia').append(
-					'<div class="col-md-4 col-sm-6 about-us-person "' +
+					'<div class="col-md-' + MD_ROW + ' col-sm-' + SM_ROW +
+					'about-us-person "' +
 					'data-name="' + about_us_obj.name + '" ' +
 					'data-description="' + about_us_obj.description + '">' +
 					'<h3>' + about_us_obj.name + '</h3>' +
@@ -16,10 +26,10 @@ $(document).ready(function() {
 
 		// Clearfix + add placeholders for about us description
 		var clearfix_classes = 'clearfix visible-xs';
-		if (i % 2 === 1) {
+		if (i % SM_COLUMNS === SM_COLUMNS - 1) {
 			clearfix_classes += ' visible-sm';
 		}
-		if (i % 3 === 2) {
+		if (i % MD_COLUMNS === MD_COLUMNS - 1) {
 			clearfix_classes += ' visible-md visible-lg';
 		}
 		$('#daftar-panitia').append(
@@ -40,8 +50,8 @@ $(document).ready(function() {
 		if (!deactivate) {
 			me.addClass('active-about-us');
 			me.nextAll('.visible-' + window_type() + ':first')
-			  .nextAll('.about-us-description:first')
-			  .text(me.data('description')).slideDown('fast');
+				.nextAll('.about-us-description:first')
+				.text(me.data('description')).slideDown('fast');
 			ga('send', 'event', 'about-us', 'view', $(this).data('name'));
 		}
 	});

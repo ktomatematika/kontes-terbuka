@@ -1,7 +1,7 @@
-$(document).ready(function () {
+$(document).ready(function() {
 	var current_contest = $('#rules-contest-data');
 	if (current_contest.length !== 0) {
-		var name = current_contest.data('name')
+		var name = current_contest.data('name');
 		var start_time = erb_to_date(current_contest.data('start-time'))
 			.format_indo();
 		var end_time = erb_to_date(current_contest.data('end-time'))

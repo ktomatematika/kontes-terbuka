@@ -1,4 +1,4 @@
-/* exported now short_days MONTHS_IN_A_YEAR DAYS_IN_A_WEEK */
+/* exported now short_days MONTHS_IN_A_YEAR DAYS_IN_A_WEEK erb_to_date */
 
 var now = new Date();
 var months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli',
@@ -25,7 +25,7 @@ function erb_to_date(erb_string) {
  * a.compare_day(b) returns an integer < 0.
  */
 
-Date.prototype.compare_day = function (other) {
+Date.prototype.compare_day = function(other) {
 	var year_diff = this.getFullYear() - other.getFullYear();
 	var month_diff = this.getMonth() - other.getMonth();
 	var date_diff = this.getDate() - other.getDate();
@@ -38,7 +38,7 @@ Date.prototype.compare_day = function (other) {
 /* format_indo: format a date into Indonesian long form.
  * Example: "Senin, 13 Februari 2016 jam 08:00 WIB"
  */
-Date.prototype.format_indo = function () {
+Date.prototype.format_indo = function() {
 // Get timezone data from the essential-data content tag in
 	// application.html.erb.
 	var timezone = $('#essential-data').data('timezone');
@@ -79,7 +79,7 @@ Date.prototype.format_indo = function () {
  * or "7 hari 13 jam 0 menit 12 detik yang lalu" --> other < this
  */
 
-Date.prototype.indo_go_to = function (other) {
+Date.prototype.indo_go_to = function(other) {
 	var difference = this - other;
 	var text = '';
 	if (difference <= 0) {
