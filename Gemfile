@@ -90,7 +90,12 @@ gem 'recaptcha', require: 'recaptcha/rails'
 # Adds various security stuff. You need protection!
 gem 'rack-protection'
 # Adds hashes for passwords.
-gem 'bcrypt', require: 'bcrypt'
+gem 'bcrypt', require: false
+
+group :development do
+  # Security checkup
+  gem 'brakeman', require: false
+end
 
 ### END SECURITY
 

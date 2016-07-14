@@ -1,28 +1,24 @@
-<div class="container">
-  <h1><%= @long_problem %></h1>
-  <a class="btn btn-default has-shade">Download semua submisi</a>
-  <table class="table">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Nilai Akhir</th>
-        <th>Tag Anda</th>
-        <th>Komentar</th>
-        <th>Saran</th>
-        <th></th>
-      </tr>
-    </thead>
+.container
+  %h1= @long_problem
+  %a.btn.btn-default.has-shade Download semua submisi
+  %table.table
+    %thead
+      %tr
+        %th ID
+        %th Nilai Akhir
+        %th Tag Anda
+        %th Komentar
+        %th Saran
+        %th
 
-    <tbody>
-      <% @long_submissions.each do |s| %>
-        <tr>
-          <td><%= s.id %></td>
-          <td><input></td>
-          <td>Catatan</td>
-          <td><input></td>
-          <td><input></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-</div>
+    %tbody
+      - @long_submissions.each do |s|
+        %tr
+          %td= s.id
+          %td
+            %input
+          %td Catatan
+          %td
+            %input
+          %td
+            %input

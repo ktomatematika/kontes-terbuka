@@ -56,6 +56,7 @@ GEM
     bootstrap-sass (3.3.6)
       autoprefixer-rails (>= 5.2.1)
       sass (>= 3.3.4)
+    brakeman (3.3.2)
     builder (3.2.2)
     byebug (9.0.5)
     cancancan (1.15.0)
@@ -270,6 +271,7 @@ DEPENDENCIES
   annotate
   bcrypt
   bootstrap-sass
+  brakeman
   byebug
   cancancan
   capistrano
