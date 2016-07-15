@@ -25,10 +25,10 @@ class UsersController < ApplicationController
           'Sekarang, lakukan verifikasi dengan membuka link yang telah ' \
           'kami berikan di email Anda.'
       else
-        Ajat.info "register_fail|#{user.errors.full_messages}"
+        Ajat.info "register_fail|user:#{user.inspect}|#{user.errors.full_messages}"
         redirect_to register_path, alert: 'Terdapat kesalahan dalam ' \
         ' registrasi. Jika registrasi masih tidak bisa dilakukan, ' \
-          " #{ActionController::Base.helpers.link_to 'kontak kami', contact_path}.".html_safe
+          " #{ActionController::Base.helpers.link_to 'kontak kami', contact_path}."
       end
     end
   end
@@ -37,13 +37,13 @@ class UsersController < ApplicationController
     u = User.find_by(verification: params[:verification])
     if u.nil?
       Ajat.warn "verify_fail|verification:#{params[:verification]}"
-      redirect_to root_path, alert: 'Terjadi kegagalan dalam verifikasi '
+      redirect_to root_path, alert: 'Terjadi kegagalan dalam verifikasi ' \
       'atau reset password. Ini kemungkinan berarti Anda sudah ' \
       'terverifikasi atau password Anda sudah terreset, ataupun batas ' \
       'waktu verifikasi sudah lewat. Coba login; coba juga cek ulang link ' \
       'yang diberikan dalam email Anda. Jika masih tidak bisa juga, coba ' \
       'buat ulang user Anda, atau ' \
-      "#{ActionController::Base.helpers.link_to 'Kontak Kami', contact_path}.".html_safe
+      "#{ActionController::Base.helpers.link_to 'kontak kami', contact_path}."
     elsif u.enabled
       # User is verified
       Ajat.info "enabled_user_verify|uid:#{u.id}"
@@ -71,7 +71,7 @@ class UsersController < ApplicationController
         Ajat.info "user_reset_password|uid:#{user.id}"
         redirect_to login_path, notice: 'Password berhasil diubah! Silakan login.'
       else
-        Ajat.warn "user_reset_password_fail_user|#{user.errors.full_messages}"
+        Ajat.warn "user_reset_password_fail_user|user:#{user.inspect}|#{user.errors.full_messages}"
         redirect_to reset_password_path(verification: params[:verification]),
                     alert: 'Password baru tidak cocok! Coba lagi.'
       end

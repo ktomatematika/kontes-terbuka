@@ -58,7 +58,7 @@
     - unless flash.empty?
       #flash
         - flash.each do |_, msg|
-          %p= msg
+          %p= msg.html_safe
         .text-right
           %button.btn.btn-default.has-shade#close-flash Tutup
 

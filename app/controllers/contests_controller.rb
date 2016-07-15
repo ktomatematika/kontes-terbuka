@@ -21,7 +21,7 @@ class ContestsController < ApplicationController
     @contest = Contest.new(contest_params)
     if @contest.save
       Ajat.info "contest_created|id:#{@contest.id}"
-      redirect_to @contest, notice: "Kontes #{@contest} berhasil dibuat!"
+      redirect_to @contest, notice: "Kontes #{CGI.escapeHTML(@contest)} berhasil dibuat!"
     else
       Ajat.warn "contest_created_fail|#{@contest.errors.full_messages}"
       render 'new', alert: 'Kontes gagal dibuat!'
@@ -51,7 +51,7 @@ class ContestsController < ApplicationController
     @contest = Contest.find(params[:id])
     if @contest.update(contest_params)
       Ajat.info "contest_updated|id:#{@contest.id}"
-      redirect_to @contest, notice: "#{@contest} berhasil diubah."
+      redirect_to @contest, notice: "#{CGI.escapeHTML(@contest)} berhasil diubah."
     else
       Ajat.warn "contest_update_fail|#{@contest.errors.full_messages}"
       render 'edit', alert: "#{@contest} gagal diubah!"

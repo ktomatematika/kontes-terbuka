@@ -154,7 +154,7 @@ class User < ActiveRecord::Base
     text = 'User berhasil dibuat! Sekarang, buka link ini untuk ' \
       "memverifikasikan email Anda:\n\n" \
       "#{link}\n\n" \
-      "Anda hanya memiliki waktu #{VERIFY_TIME_INDO} untuk mengverifikasi." \
+      "Anda hanya memiliki waktu #{VERIFY_TIME_INDO} untuk mengverifikasi. " \
       'Jika Anda tidak mendaftar ke Kontes Terbuka Olimpiade Matematika, ' \
       'Anda boleh mengacuhkan email ini.'
     Mailgun.send_message to: email,
