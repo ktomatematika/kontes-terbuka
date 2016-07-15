@@ -41,7 +41,7 @@ set :rails_env, 'production'
 
 namespace :delayed_job do
   desc 'Restart delayed_job'
-  task :restart, roles: app do
+  task :restart, roles(:app) do
     run "#{deploy_to}/current/bin/delayed_job restart"
   end
 end
