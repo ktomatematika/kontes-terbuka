@@ -86,8 +86,11 @@ end
 gem 'paper_trail'
 # Profiler
 gem 'newrelic_rpm'
-# Add browser info in logs
-gem 'browser_details'
+
+group :production do
+  # Add browser info in logs
+  gem 'browser_details'
+end
 
 ### END MAINTENANCE
 

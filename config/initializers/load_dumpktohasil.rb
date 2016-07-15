@@ -1,0 +1,1 @@
+require 'dump_ktohasil'
