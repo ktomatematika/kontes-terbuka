@@ -106,7 +106,7 @@ class Contest < ActiveRecord::Base
   end
 
   def contest_result
-    filtered_query = UserContest.where(contest: self).processed
+    filtered_query = user_contests.processed
 
     long_problems.each do |long_problem|
       filtered_query =

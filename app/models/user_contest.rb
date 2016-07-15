@@ -74,7 +74,7 @@ class UserContest < ActiveRecord::Base
   scope :long_marks, lambda {
     joins { long_submissions.outer }
       .group(:id)
-      .select('user_contests.id as id, sum(long_submissions.score) as long_mark')
+      .select('user_contests.id as id, sum(coalesce(long_submissions.score, 0)) as long_mark')
   }
 
   # Show both short marks and long marks. Short and long marks

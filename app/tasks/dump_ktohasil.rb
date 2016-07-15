@@ -5,7 +5,7 @@ class DumpKtoHasil
     @contest = ctst
     @ktohasil_filename = ktohasil_file_name
   end
-  
+
   def run
     Contest.transaction do
       ktohasil_file = CSV.read(@ktohasil_filename)
@@ -24,6 +24,7 @@ class DumpKtoHasil
       long_problems = 0 if ktohasil_file[0].last == 'ga ada'
 
       generate_problems(solutions, long_problems)
+      Ajat.info "ktohasil_dump_generate_probs|sp:#{short_problems}|lp:#{long_problems}"
 
       # LOL RUBY MAGIC
       users = ktohasil_file.select do |row|
@@ -35,7 +36,7 @@ class DumpKtoHasil
         username = 'C' + @contest.id.to_s + user_row[0]
         short_problem_answers = user_row[1..short_problems]
         long_submission_array = user_row[short_problems + 2..
-                                         short_problems + 2 * long_problems]
+                                         short_problems + 2 + 2 * long_problems]
 
         long_submission_hashes = []
         temporary_long_submission_hash = {}
@@ -51,6 +52,7 @@ class DumpKtoHasil
 
         generate_user_and_submissions(username, short_problem_answers,
                                       long_submission_hashes)
+        Ajat.info "ktohasil_dump_generate_sols|ss:#{short_problem_answers.length}|lp:#{long_submission_hashes.length}"
       end
     end
   end
