@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
   before_action :require_login, :set_timezone
 
   protect_from_forgery with: :exception
+
   def current_user
     if cookies[:auth_token]
       begin

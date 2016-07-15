@@ -10,6 +10,7 @@ class ContestsController < ApplicationController
     @contest = Contest.find(params[:contest_id])
     grab_problems
     @feedback_questions = @contest.feedback_questions
+    Ajat.info "admin|uid:#{current_user.id}|contest_id:#{params[:contest_id]}"
   end
 
   def new
@@ -19,8 +20,10 @@ class ContestsController < ApplicationController
   def create
     @contest = Contest.new(contest_params)
     if @contest.save
+      Ajat.info "contest_created|id:#{@contest.id}"
       redirect_to @contest, notice: "Kontes #{@contest} berhasil dibuat!"
     else
+      Ajat.warn "contest_created_fail|#{@contest.errors}"
       render 'new', alert: 'Kontes gagal dibuat!'
     end
   end
@@ -47,8 +50,10 @@ class ContestsController < ApplicationController
   def update
     @contest = Contest.find(params[:id])
     if @contest.update(contest_params)
+      Ajat.info "contest_updated|id:#{@contest.id}"
       redirect_to @contest, notice: "#{@contest} berhasil diubah."
     else
+      Ajat.warn "contest_update_fail|#{@contest.errors}"
       render 'edit', alert: "#{@contest} gagal diubah!"
     end
   end
@@ -56,6 +61,7 @@ class ContestsController < ApplicationController
   def destroy
     @contest = Contest.find(params[:id])
     @contest.destroy
+    Ajat.warn "contest_destroyed|#{@contest}"
     redirect_to contests_path, notice: 'Kontes berhasil dihilangkan!'
   end
 
@@ -89,8 +95,7 @@ class ContestsController < ApplicationController
                                             user_contest: user_contest)
                      .update(answer: answer)
     end
-    redirect_to contest,
-                notice: 'Jawaban bagian A berhasil dikirimkan!'
+    redirect_to contest, notice: 'Jawaban bagian A berhasil dikirimkan!'
   end
 
   def feedback_submit
@@ -129,6 +134,7 @@ class ContestsController < ApplicationController
         headers['Content-Type'] ||= 'text/csv'
       end
     end
+    Ajat.info "feedback_downloaded|contest_id:#{contest.id}"
   end
 
   def download_certificate
@@ -144,6 +150,7 @@ class ContestsController < ApplicationController
     contest.user_contests.each do |uc|
       PointTransaction.create point: uc.contest_points, description: contest
     end
+    Ajat.info "point_given|contest_id:#{contest.id}"
   end
 
   private

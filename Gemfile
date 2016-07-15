@@ -41,8 +41,6 @@ gem 'redcarpet'
 
 ### UTILITIES
 
-# Logging
-gem 'paper_trail'
 # Migration Validators: to maintin referential integrity in database and models
 gem 'mv-postgresql'
 # Email with Mailgun
@@ -55,8 +53,6 @@ gem 'delayed_job_active_record'
 gem 'daemons'
 # Annotates model with schema
 gem 'annotate'
-# Profiler
-gem 'newrelic_rpm'
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
@@ -78,6 +74,17 @@ group :development, :test do
 end
 
 ### END UTILITIES
+
+### MAINTENANCE
+
+# Model logging
+gem 'paper_trail'
+# Profiler
+gem 'newrelic_rpm'
+# Add browser info in logs
+gem 'browser_details'
+
+### END MAINTENANCE
 
 ### SECURITY
 

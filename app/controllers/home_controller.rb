@@ -11,6 +11,7 @@ class HomeController < ApplicationController
     admin_roles = ActiveRecord::Base::Role::ADMIN_ROLES.map do |r|
       { name: r.to_sym, resource: :any }
     end
+    Ajat.info "app_admin|uid:#{current_user.id}"
 
     unless current_user.has_any_role?(*admin_roles)
       raise CanCan::AccessDenied, 'Unauthorized'
@@ -43,13 +44,5 @@ class HomeController < ApplicationController
   end
 
   def contact
-  end
-
-  def construction
-  end
-
-  def send_magic_email
-    HomeMailer.magic_email.deliver_now
-    redirect_to root_path
   end
 end

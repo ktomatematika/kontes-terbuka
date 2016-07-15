@@ -41,23 +41,23 @@ class UserContest < ActiveRecord::Base
   def contest_points
     points = 0
 
-    points += 3 if award == 'Emas'
-    points += 2 if award == 'Perak'
-    points += 1 if award == 'Perunggu'
+    points += 4 if award == 'Emas'
+    points += 3 if award == 'Perak'
+    points += 2 if award == 'Perunggu'
 
     points += 1 if short_submissions.select { |ss| ss.answer == '' }.empty?
 
     points += long_submissions.inject(0) do |memo, item|
-      if item.score.nil?
-        memo
-      elsif item.score < 7
-        memo + 1
-      else
-        memo + 2
+      case item.score
+      when nil then memo
+      when 0..7 then memo + 1
+      else memo + 2
       end
 
       points
     end
+
+    points += 1 if short_submissions.all? {|ss| !ss.answer.empty? }
     points
   end
 

@@ -22,6 +22,7 @@
 //= require bootstrap-sprockets
 //= require turbolinks
 //= require jquery_nested_form
+//= require browser_details
 
 $(document).ready(function() {
 	$('body').flowtype({

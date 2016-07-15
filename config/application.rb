@@ -26,11 +26,8 @@ module KontesTerbuka
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
-
     config.middleware.use Rack::Protection
-
     config.autoload_paths.push("#{config.root}/lib")
-
     config.active_job.queue_adapter = :delayed_job
   end
 end

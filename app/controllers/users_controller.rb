@@ -25,6 +25,7 @@ class UsersController < ApplicationController
           'Sekarang, lakukan verifikasi dengan membuka link yang telah ' \
           'kami berikan di email Anda.'
       else
+        Ajat.info "register_fail|#{user.errors}"
         redirect_to register_path, alert: 'Terdapat kesalahan dalam ' \
         ' registrasi. Jika registrasi masih tidak bisa dilakukan, ' \
           " #{link_to 'kontak kami', contact_path}."
@@ -35,6 +36,7 @@ class UsersController < ApplicationController
   def verify
     u = User.find_by(verification: params[:verification])
     if u.nil?
+      Ajat.warn "verify_fail|verification:#{params[:verification]}"
       redirect_to root_path, alert: 'Terjadi kegagalan dalam verifikasi '
       'atau reset password. Ini kemungkinan berarti Anda sudah ' \
       'terverifikasi atau password Anda sudah terreset, ataupun batas ' \
@@ -44,6 +46,7 @@ class UsersController < ApplicationController
       "#{link_to 'Kontak Kami', contact_path}.".html_safe
     elsif u.enabled
       # User is verified
+      Ajat.info "enabled_user_verify|uid:#{u.id}"
       redirect_to login_path, notice: 'Anda sudah terverifikasi!'
     else
       u.enable
@@ -59,16 +62,21 @@ class UsersController < ApplicationController
     user = User.find_by verification: params[:verification]
     if user
       if params[:new_password] == params[:confirm_new_password]
-        user.password = params[:new_password]
-        user.encrypt_password
-        user.verification = nil
-        user.save
+        User.transaction do
+          user.password = params[:new_password]
+          user.encrypt_password
+          user.verification = nil
+          user.save
+        end
+        Ajat.info "user_reset_password|uid:#{user.id}"
         redirect_to login_path, notice: 'Password berhasil diubah! Silakan login.'
       else
+        Ajat.warn "user_reset_password_fail_user|#{user.errors}"
         redirect_to reset_password_path(verification: params[:verification]),
                     alert: 'Password baru tidak cocok! Coba lagi.'
       end
     else
+      Ajat.warn "user_reset_password_fail_no_verification|verification:#{user.verification}"
       redirect_to reset_password_path(verification: params[:verification]),
                   alert: 'Terdapat kesalahan! Coba lagi.'
     end
@@ -82,15 +90,19 @@ class UsersController < ApplicationController
     user = User.find params[:user_id]
     if user.authenticate(params[:old_password])
       if params[:new_password] == params[:confirm_new_password]
-        user.password = params[:new_password]
-        user.encrypt_password
-        user.save
+        User.transaction do
+          user.password = params[:new_password]
+          user.encrypt_password
+          user.save
+        end
+        Ajat.info "user_change_password|uid:#{user.id}"
         redirect_to user_path(user), notice: 'Password Anda berhasil diubah!'
       else
         redirect_to user_change_password_path(user), alert: 'Password baru ' \
           'Anda tidak cocok!'
       end
     else
+      Ajat.warn "user_change_password_wrong_old|uid:#{user.id}"
       redirect_to user_change_password_path(user), alert: 'Password lama ' \
         'Anda salah!'
     end
@@ -107,9 +119,11 @@ class UsersController < ApplicationController
   def process_forgot_password
     user = User.get_user params[:username]
     if user.nil?
+      Ajat.warn "forgot_password_no_user|uname:#{params[:username]}"
       redirect_to sign_path, alert: 'User tidak ada.'
     else
       user.forgot_password_process request.base_url
+      Ajat.warn "forgot_password|uname:#{params[:username]}"
       redirect_to login_path, notice: 'Cek email Anda untuk instruksi ' \
       'selanjutnya.'
     end
@@ -129,7 +143,7 @@ class UsersController < ApplicationController
       UserNotification.find_by(user: current_user, notification_id: notif_id)
                       .destroy
     else
-      # log
+      Ajat.warn "change_notifs_error|notif_id:#{params[:id]}|checked:#{params[:checked]}"
     end
     render nothing: true
   end
@@ -162,8 +176,10 @@ class UsersController < ApplicationController
   def mini_update
     @user = User.find(params[:user_id])
     if @user.update(user_mini_edit_params)
+      Ajat.info "user_full_update|user:#{@user.id}"
       redirect_to user_path(@user), notice: 'User berhasil diupdate!'
     else
+      Ajat.warn "user_full_update_fail|user:#{@user.id}"
       redirect_to user_path(@user),
                   alert: 'Terdapat kesalahan dalam mengupdate User!'
     end
@@ -171,6 +187,7 @@ class UsersController < ApplicationController
 
   def destroy
     User.find(params[:id]).destroy
+    Ajat.warn "user_destroy|uid:#{params[:id]}"
     redirect_to users_path, notice: 'User berhasil didelete!'
   end
 

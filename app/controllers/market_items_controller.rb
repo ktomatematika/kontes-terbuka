@@ -36,6 +36,7 @@ class MarketItemsController < ApplicationController
 
   def destroy
     @market_item = MarketItem.find(params[:id])
+    Ajat.warn "market_item_destroyed|#{params[:id]}"
   end
 
   private

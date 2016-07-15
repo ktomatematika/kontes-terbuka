@@ -126,16 +126,6 @@ class User < ActiveRecord::Base
     PointTransaction.where(user: self).sum(:point)
   end
 
-  # Creates a user with this username. Password will be a random secure
-  # password and other fields either follow the username, or just take the
-  # first.
-  def self.create_placeholder_user(username)
-    User.create(username: username, email: username + '@a.com',
-                password: SecureRandom.base64(20), fullname: username,
-                school: username, province: Province.first,
-                status: Status.first)
-  end
-
   def reset_password
     generate_token(:verification)
     text = 'Untuk melanjutkan process reset password user Anda, klik link ' \
@@ -148,7 +138,10 @@ class User < ActiveRecord::Base
   VERIFY_TIME = 4.hours
   VERIFY_TIME_INDO = '4 jam'.freeze
   def destroy_if_unverified
-    destroy unless enabled
+    unless enabled
+      Ajat.warn "verification_expiry|uname:#{username}"
+      destroy
+    end
   end
   handle_asynchronously :destroy_if_unverified,
                         run_at: proc { VERIFY_TIME.from_now },
@@ -187,5 +180,6 @@ class User < ActiveRecord::Base
                          "Anda:\n#{link}\n\n" \
                          'Jika Anda tidak meminta password Anda untuk ' \
                          'direset, acuhkan saja email ini.'
+    Ajat.info "forgot_password_email_sent|uid:#{uid}"
   end
 end

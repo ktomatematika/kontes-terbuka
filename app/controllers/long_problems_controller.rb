@@ -30,6 +30,7 @@ class LongProblemsController < ApplicationController
   def destroy
     contest = Contest.find(params[:contest_id])
     @contest.long_problems.find(params[:id]).destroy
+    Ajat.info "long_prob_destroyed|contest:#{params[:contest_id]}|id:#{params[:id]}"
     redirect_to contest_admin_path(id: contest.id)
   end
 
