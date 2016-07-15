@@ -68,45 +68,45 @@
       margin: 0 auto 10px auto;
     }
 
-    @media (max-width: 480px) {
-      .g-recaptcha > div > div {
-        width: inherit !important;
-        position: relative;
-        display: block;
-        overflow: hidden;
-        max-width: 302px;
-        border-right: 1px solid #d3d3d3;
-        border-radius: 4px;
-        -webkit-box-shadow: 2px 0 4px -1px rgba(0,0,0,.08);
-        -moz-box-shadow: 2px 0 4px -1px rgba(0,0,0,.08);
-        box-shadow: 2px 0 4px -1px rgba(0,0,0,.08);
-        padding: 0;
-      }
+    //@media (max-width: 480px) {
+    //  .g-recaptcha > div > div {
+    //    width: inherit !important;
+    //    position: relative;
+    //    display: block;
+    //    overflow: hidden;
+    //    max-width: 302px;
+    //    border-right: 1px solid #d3d3d3;
+    //    border-radius: 4px;
+    //    -webkit-box-shadow: 2px 0 4px -1px rgba(0,0,0,.08);
+    //    -moz-box-shadow: 2px 0 4px -1px rgba(0,0,0,.08);
+    //    box-shadow: 2px 0 4px -1px rgba(0,0,0,.08);
+    //    padding: 0;
+    //  }
 
-      .g-recaptcha iframe {
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        border: 0;
-      }
+    //  .g-recaptcha iframe {
+    //    position: absolute;
+    //    top: 0;
+    //    bottom: 0;
+    //    left: 0;
+    //    width: 100%;
+    //    height: 100%;
+    //    border: 0;
+    //  }
 
-      .g-recaptcha > div {
-        position: relative;
-      }
+    //  .g-recaptcha > div {
+    //    position: relative;
+    //  }
 
-      .g-recaptcha > div:before {
-        position: absolute;
-        top: 38%;
-        left: 0;
-      }
+    //  .g-recaptcha > div:before {
+    //    position: absolute;
+    //    top: 38%;
+    //    left: 0;
+    //  }
 
-      .g-recaptcha:empty:before {
-        content: 'Something wrong occured';
-      }
-    }
+    //  .g-recaptcha:empty:before {
+    //    content: 'Something wrong occured';
+    //  }
+    //}
 
     @media (min-width: 600px) {
       .sign-btn {
