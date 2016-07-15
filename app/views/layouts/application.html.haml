@@ -30,7 +30,7 @@
 
     %meta{ name: 'google-site-verification', content: 'LhbNAf_v-2MgcX8S04Z8XyabspyseSMCvKOIliwT1aY' }
 
-    = favicon_link_tag
+    = render 'favicon'
 
   - haml_tag "body #{yield :page_attributes}" do
     #essential-data{ data: { color: current_user && current_user.color, timezone: Time.zone.now.zone } }

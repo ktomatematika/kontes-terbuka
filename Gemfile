@@ -37,6 +37,11 @@ gem 'nested_form'
 # Markdown parser
 gem 'redcarpet'
 
+group :development do
+  # Favicon set
+  gem 'rails_real_favicon'
+end
+
 ### END ASSETS
 
 ### UTILITIES
