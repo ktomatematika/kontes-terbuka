@@ -25,7 +25,7 @@ class UsersController < ApplicationController
           'Sekarang, lakukan verifikasi dengan membuka link yang telah ' \
           'kami berikan di email Anda.'
       else
-        Ajat.info "register_fail|#{user.errors}"
+        Ajat.info "register_fail|#{user.errors.full_messages}"
         redirect_to register_path, alert: 'Terdapat kesalahan dalam ' \
         ' registrasi. Jika registrasi masih tidak bisa dilakukan, ' \
           " #{ActionController::Base.helpers.link_to 'kontak kami', contact_path}.".html_safe
@@ -71,7 +71,7 @@ class UsersController < ApplicationController
         Ajat.info "user_reset_password|uid:#{user.id}"
         redirect_to login_path, notice: 'Password berhasil diubah! Silakan login.'
       else
-        Ajat.warn "user_reset_password_fail_user|#{user.errors}"
+        Ajat.warn "user_reset_password_fail_user|#{user.errors.full_messages}"
         redirect_to reset_password_path(verification: params[:verification]),
                     alert: 'Password baru tidak cocok! Coba lagi.'
       end
