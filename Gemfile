@@ -109,9 +109,6 @@ end
 ### PRODUCTION STUFF
 
 group :production do
-  # Adhere the app to the 12 principles listed in 12factor.net.
-  gem 'rails_12factor'
-
   # Use unicorn as the web server.
   gem 'unicorn'
 

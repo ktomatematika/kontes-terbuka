@@ -25,6 +25,12 @@ Ini bisa memakan waktu 1 jam, karena vagrant perlu mensetup segalanya
 dari awal, termasuk download Ubuntu (!), setup database, Ruby, dan Rails.
 Bersabarlah. :3
 
+Sambil mengunggu, buat file `.env` di root yang berisi environment variable:
+- RECAPTCHA_PUBLIC_KEY
+- RECAPTCHA_PRIVATE_KEY
+- MAILGUN_API_KEY
+- NEWRELIC_LICENSE_KEY
+
 Setelah itu, masuk ke Vagrant: `vagrant ssh`
 
 Masuk ke tempat development: `cd /vagrant`
