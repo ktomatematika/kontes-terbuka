@@ -33,7 +33,7 @@ class ApplicationController < ActionController::Base
                                 when 'WITA' then TZInfo::Timezone.get('Asia/Makassar')
                                 when 'WIT' then TZInfo::Timezone.get('Asia/Jayapura')
                                 end
-    Time.zone = TZInfo::Timezone.get('Asia/Jakarta') if Time.zone.nil?
+    Time.zone = TZInfo::Timezone.get('Asia/Jakarta') if current_user.nil?
   end
 
   rescue_from CanCan::AccessDenied do |exc|
