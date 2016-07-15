@@ -42,7 +42,6 @@ class MarketItemsController < ApplicationController
   private
 
   def item_params
-    params.require(:market_item).permit(:name, :description, :picture, :price,
-                                        :current_quantity)
+    params.require(:market_item).permit(:name, :description, :picture, :price)
   end
 end

@@ -1,3 +1,4 @@
+# rubocop:disable LineLength
 # == Schema Information
 #
 # Table name: submission_pages
@@ -20,6 +21,7 @@
 #
 #  fk_rails_62bec7c828  (long_submission_id => long_submissions.id)
 #
+# rubocop:enable LineLength
 
 class SubmissionPage < ActiveRecord::Base
   has_paper_trail

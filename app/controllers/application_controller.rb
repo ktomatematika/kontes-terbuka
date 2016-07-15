@@ -28,16 +28,23 @@ class ApplicationController < ActionController::Base
   end
 
   def set_timezone
-    Time.zone = current_user && case current_user.timezone
-                                when 'WIB' then TZInfo::Timezone.get('Asia/Jakarta')
-                                when 'WITA' then TZInfo::Timezone.get('Asia/Makassar')
-                                when 'WIT' then TZInfo::Timezone.get('Asia/Jayapura')
+    Time.zone = if current_user.nil?
+                  TZInfo::Timezone.get('Asia/Jakarta')
+                else
+                  case current_user.timezone
+                  when 'WIB' then TZInfo::Timezone.get('Asia/Jakarta')
+                  when 'WITA' then TZInfo::Timezone.get('Asia/Makassar')
+                  when 'WIT' then TZInfo::Timezone.get('Asia/Jayapura')
                                 end
-    Time.zone = TZInfo::Timezone.get('Asia/Jakarta') if current_user.nil?
+                end
   end
 
   rescue_from CanCan::AccessDenied do |exc|
-    Ajat.error "cannotah|uid=#{current_user.id}|#{request.env.extract!('PATH_INFO', 'QUERY_STRING', 'REMOTE_ADDR', 'REMOTE_HOST')}"
-    raise CanCan::AccessDenied
+    Ajat.error "cannotah|uid=#{current_user && current_user.id}|" \
+               "#{request.env.extract!('PATH_INFO',
+                                       'QUERY_STRING',
+                                       'REMOTE_ADDR',
+                                       'REMOTE_HOST')}"
+    raise exc
   end
 end

@@ -9,7 +9,7 @@ Rails.application.routes.draw do
     post 'change-password', to: 'users#process_change_password'
     get 'change-notifications', to: 'users#change_notifications'
     post 'change-notifications', to: 'users#process_change_notifications',
-      as: 'process_change_notifications'
+                                 as: 'process_change_notifications'
   end
 
   get '/sign', to: 'welcome#sign'
@@ -41,7 +41,7 @@ Rails.application.routes.draw do
     post 'give-points', to: 'contests#give_points'
   end
 
-  #resources :market_items, path: '/market-items'
+  # resources :market_items, path: '/market-items'
 
   get '/mark-solo/:id', to: 'long_problems#mark_solo', as: :mark_solo
   get '/mark-final/:id', to: 'long_problems#mark_final', as: :mark_final

@@ -111,7 +111,7 @@ class UserTest < ActiveSupport::TestCase
     assert_not with_space.save, 'User with a space can be saved'
 
     with_symbols = u.clone
-    with_symbols.username = "awiweor#@#"
+    with_symbols.username = "awiweor\#@#"
     with_symbols2 = with_symbols.clone
     with_symbols2.username = '234234_cd7'
     with_symbols3 = with_symbols.clone

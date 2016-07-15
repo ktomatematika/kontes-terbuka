@@ -1,3 +1,4 @@
+# rubocop:disable LineLength
 # == Schema Information
 #
 # Table name: long_problems
@@ -17,6 +18,7 @@
 #
 #  fk_rails_116a6ecec7  (contest_id => contests.id)
 #
+# rubocop:enable LineLength
 
 class LongProblem < ActiveRecord::Base
   resourcify

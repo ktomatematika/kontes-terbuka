@@ -88,6 +88,8 @@ gem 'paper_trail'
 gem 'newrelic_rpm'
 # Add browser info in logs
 gem 'browser_details'
+# Sitemap generator
+gem 'sitemap_generator'
 
 ### END MAINTENANCE
 

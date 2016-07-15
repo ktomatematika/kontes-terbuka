@@ -19,16 +19,26 @@ class UsersController < ApplicationController
       user.timezone = Province.find(user_params[:province_id]).timezone
       user.add_role :veteran if params[:osn] == 1
 
-      if verify_recaptcha(model: user) && user.save
-        user.send_verify_email request.base_url
-        redirect_to root_path, notice: 'User berhasil dibuat! ' \
-          'Sekarang, lakukan verifikasi dengan membuka link yang telah ' \
-          'kami berikan di email Anda.'
+      if verify_recaptcha(model: user)
+        if user.save
+          user.send_verify_email request.base_url
+          redirect_to root_path, notice: 'User berhasil dibuat! ' \
+            'Sekarang, lakukan verifikasi dengan membuka link yang telah ' \
+            'kami berikan di email Anda.'
+        else
+          Ajat.warn "register_fail|#{user.errors.full_messages}|" \
+            "user:#{user.inspect}"
+          redirect_to register_path, alert: 'Terdapat kesalahan dalam ' \
+          ' registrasi. Jika registrasi masih tidak bisa dilakukan, ' \
+            "#{ActionController::Base.helpers.link_to 'kontak kami',
+                                                      contact_path}."
+        end
       else
-        Ajat.info "register_fail|user:#{user.inspect}|#{user.errors.full_messages}"
-        redirect_to register_path, alert: 'Terdapat kesalahan dalam ' \
-        ' registrasi. Jika registrasi masih tidak bisa dilakukan, ' \
-          " #{ActionController::Base.helpers.link_to 'kontak kami', contact_path}."
+        Ajat.info "captcha_fail|user:#{user.inspect}"
+        redirect_to register_path, alert: 'Recaptcha Anda tidak cocok. ' \
+          'Apakah Anda manusia? Bila Anda masih mempunyai kesulitan, ' \
+          "#{ActionController::Base.helpers.link_to 'kontak kami',
+                                                    contact_path}."
       end
     end
   end
@@ -71,12 +81,14 @@ class UsersController < ApplicationController
         Ajat.info "user_reset_password|uid:#{user.id}"
         redirect_to login_path, notice: 'Password berhasil diubah! Silakan login.'
       else
-        Ajat.warn "user_reset_password_fail_user|user:#{user.inspect}|#{user.errors.full_messages}"
+        Ajat.warn "user_reset_password_fail_user|user:#{user.inspect}|" \
+        "#{user.errors.full_messages}"
         redirect_to reset_password_path(verification: params[:verification]),
                     alert: 'Password baru tidak cocok! Coba lagi.'
       end
     else
-      Ajat.warn "user_reset_password_fail_no_verification|verification:#{user.verification}"
+      Ajat.warn 'user_reset_password_fail_no_verification|' \
+        "verification:#{user.verification}"
       redirect_to reset_password_path(verification: params[:verification]),
                   alert: 'Terdapat kesalahan! Coba lagi.'
     end
@@ -143,7 +155,8 @@ class UsersController < ApplicationController
       UserNotification.find_by(user: current_user, notification_id: notif_id)
                       .destroy
     else
-      Ajat.warn "change_notifs_error|notif_id:#{params[:id]}|checked:#{params[:checked]}"
+      Ajat.warn "change_notifs_error|notif_id:#{params[:id]}|" \
+      "checked:#{params[:checked]}"
     end
     render nothing: true
   end

@@ -38,7 +38,6 @@ set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache',
 set :ssh_options, forward_agent: true, port: 1729
 set :rails_env, 'production'
 
-
 namespace :delayed_job do
   desc 'Restart delayed_job'
   task :restart, roles(:app) do

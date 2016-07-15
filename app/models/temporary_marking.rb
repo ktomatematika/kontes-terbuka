@@ -1,3 +1,4 @@
+# rubocop:disable LineLength
 # == Schema Information
 #
 # Table name: temporary_markings
@@ -19,6 +20,7 @@
 #  fk_rails_349a6ecb7e  (user_id => users.id)
 #  fk_rails_7dcab47693  (long_submission_id => long_submissions.id)
 #
+# rubocop:enable LineLength
 
 class TemporaryMarking < ActiveRecord::Base
   belongs_to :user

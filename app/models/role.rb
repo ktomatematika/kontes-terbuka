@@ -1,3 +1,4 @@
+# rubocop:disable LineLength
 # == Schema Information
 #
 # Table name: roles
@@ -15,6 +16,7 @@
 #  index_roles_on_name_and_resource_type_and_resource_id  (name,resource_type,resource_id)
 #  index_roles_on_resource_id                             (resource_id)
 #
+# rubocop:enable LineLength
 
 class Role < ActiveRecord::Base
   has_paper_trail

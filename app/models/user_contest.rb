@@ -57,7 +57,7 @@ class UserContest < ActiveRecord::Base
       points
     end
 
-    points += 1 if short_submissions.all? {|ss| !ss.answer.empty? }
+    points += 1 if short_submissions.all? { |ss| !ss.answer.empty? }
     points
   end
 
@@ -67,21 +67,28 @@ class UserContest < ActiveRecord::Base
     joins { short_submissions.outer }
       .joins { short_submissions.short_problem.outer }
       .group(:id)
-      .select('user_contests.id as id, sum(case when short_submissions.answer = short_problems.answer then 1 else 0 end) as short_mark')
+      .select('user_contests.id as id, sum(case when ' \
+      'short_submissions.answer = short_problems.answer then 1 else 0 end) ' \
+      'as short_mark')
   }
 
   # Show long marks on model objects. Long marks only
   scope :long_marks, lambda {
     joins { long_submissions.outer }
       .group(:id)
-      .select('user_contests.id as id, sum(coalesce(long_submissions.score, 0)) as long_mark')
+      .select('user_contests.id as id, ' \
+      'sum(coalesce(long_submissions.score, 0)) as long_mark')
   }
 
   # Show both short marks and long marks. Short and long marks
   scope :include_marks, lambda {
     joins { UserContest.short_marks.as(short_marks).on { id == short_marks.id } }
       .joins { UserContest.long_marks.as(long_marks).on { id == long_marks.id } }
-      .select { ['user_contests.*', 'short_marks.short_mark', 'long_marks.long_mark', '(short_marks.short_mark + long_marks.long_mark) as total_mark'] }
+      .select do
+        ['user_contests.*', 'short_marks.short_mark',
+         'long_marks.long_mark', '(short_marks.short_mark + ' \
+                   'long_marks.long_mark) as total_mark']
+      end
   }
 
   # Show marks + award (emas/perak/perunggu)
@@ -106,6 +113,9 @@ class UserContest < ActiveRecord::Base
   scope :include_long_problem_marks, lambda { |long_problem_id|
     joins { long_submissions.outer }
       .where { long_submissions.long_problem_id == long_problem_id }
-      .select { ['user_contests.id as id', "long_submissions.score as problem_no_#{long_problem_id}"] }
+      .select do
+        ['user_contests.id as id', 'long_submissions.score as ' \
+                   "problem_no_#{long_problem_id}"]
+      end
   }
 end

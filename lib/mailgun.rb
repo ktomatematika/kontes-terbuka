@@ -17,7 +17,7 @@ module Mailgun
   # contest: specify a contest to put contest tag
   # bcc_array: BCC params as an array.
   def send_message(**params)
-    params[:to] = "no-reply@#{DOMAIN}" if params[:to].nil?
+    params[:to] = "mail@#{DOMAIN}" if params[:to].nil?
 
     if params[:to].include?(',') && !params[:force_to_many]
       raise 'You cannot send to many. Use BCC instead.'
