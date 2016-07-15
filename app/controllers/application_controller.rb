@@ -35,4 +35,9 @@ class ApplicationController < ActionController::Base
                                 end
     Time.zone = TZInfo::Timezone.get('Asia/Jakarta') if Time.zone.nil?
   end
+
+  rescue_from CanCan::AccessDenied do |exc|
+    Ajat.error "cannotah|uid=#{current_user.id}|#{request.env.extract!('PATH_INFO', 'QUERY_STRING', 'REMOTE_ADDR', 'REMOTE_HOST')}"
+    raise CanCan::AccessDenied
+  end
 end
