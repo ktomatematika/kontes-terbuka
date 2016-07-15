@@ -26,7 +26,7 @@ var about_us_data = [
 		image: 'wawan.jpg',
 	},
 	{
-		name: 'Yoshua Yonatan',
+		name: 'Yoshua Yonatan Hamonangan',
 		description: 'Dengan kerja kerasnya, Yoshua Yonatan berhasil meraih emas pertama OSN 2010 bidang matematika. Cintanya terhadap matematika terus dibawa ke bidang kuliah dengan mengambil jurusan matematika dan mengharumkan tanah air dengan mendapatkan Second Prize di International Mathematics Competition (IMC) 2014. Saat ini, dia menjadi ketua tim soal KTO Matematika dan terus menerus mengingatkan rekan-rekannya untuk membuat soal. Orang yang saat ini sedang kuliah pascasarjana di ITB program PMDSU ini ternyata juga fans nomor 1 Apink, loh!',
 		image: 'yoyo.jpg',
 	},
@@ -34,6 +34,11 @@ var about_us_data = [
 		name: 'Erwin Eko Wahyudi',
 		description: 'Pria yang sering disapa dengan Erwin ini merupakan salah satu perintis pertama KTO Matematika. Berangkat dari medali perunggu di OSN 2011, dia terus menjalankan passionnya terhadap matematika hingga berhasil mendapatkan medali emas di ONMIPA 2015. Orang yang saat ini berkuliah Teknik Komputer di UGM ini terus menerapkan ilmunya dengan mengurusi bagian teknis KTO Matematika.',
 		image: 'erwin.jpg',
+	},
+	{
+		name: 'Kevin Christian Wibisono',
+		description: 'Kevin Christian Wibisono ialah seorang pencinta matematika yang diberi kesempatan untuk mendemonstrasikan kegemarannya sekaligus merepresentasikan negaranya dalam ajang olimpiade matematika paling prestisius bagi siswa sekolah dasar dan menengah. Saat ini, Kevin sedang menempuh pendidikan di National University of Singapore (NUS). Keinginannya untuk mendalami matematika membuatnya memilih jurusan Applied Mathematics. Sebagai bentuk kontribusi kepada pendidikan olimpiade matematika di Indonesia, Kevin mendedikasikan dirinya menjadi Ketua Tim Pengolah KTO Matematika, yang tanggung jawabnya meliputi pemeriksaan kualitas soal, jawaban, dan pembuatan buku. Pada waktu senggang, Kevin suka menonton film kriminal, mengerjakan soal-soal olimpiade matematika, maupun menguntit akun Instagram orang lain (yang tidak diproteksi tentunya).',
+		image: 'kevin.jpg',
 	},
 ];
 

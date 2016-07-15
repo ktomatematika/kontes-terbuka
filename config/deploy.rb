@@ -38,6 +38,14 @@ set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache',
 set :ssh_options, forward_agent: true, port: 1729
 set :rails_env, 'production'
 
+
+namespace :delayed_job do
+  desc 'Restart delayed_job'
+  task :restart, roles: app do
+    run "#{deploy_to}/current/bin/delayed_job restart"
+  end
+end
+
 namespace :deploy do
   desc 'Restart application'
   task :restart do
@@ -49,6 +57,6 @@ namespace :deploy do
     end
   end
 
-  after :publishing, 'deploy:restart'
+  after :publishing, 'deploy:restart', 'delayed_job:restart'
   after :finishing, 'deploy:cleanup'
 end
