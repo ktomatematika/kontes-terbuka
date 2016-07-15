@@ -12,7 +12,7 @@
         = f.email_field :email, class: 'form-control', placeholder: 'Alamat email'
         %span.glyphicon.form-glyphicon.form-control-feedback(aria-hidden='true')
 
-        .form-group.has-feedback{ 'aria-described-by' => 'pass-help' }
+      .form-group.has-feedback{ 'aria-described-by' => 'pass-help' }
         = f.password_field :password, class: 'form-control', placeholder: 'Password'
         %span.glyphicon.form-glyphicon.form-control-feedback.glyphicon-eye-open(aria-hidden='true')
         = render 'users/password_help'
