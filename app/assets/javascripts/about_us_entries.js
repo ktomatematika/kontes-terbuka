@@ -25,6 +25,16 @@ var about_us_data = [
 		description: 'Made Tantrawan merupakan salah satu peraih medali emas bidang matematika pada OSN 2008. Pada saat menempuh pendidikan sarjananya, pria yang akrab disapa Wawan ini sempat mewakili Indonesia di ajang International Mathematics Competition (IMC) di Bulgaria sebanyak 3 kali. Adapun dalam kompetisi tersebut, ia berhasil meraih 2nd prize di tahun 2010, 3rd prize di tahun 2011, dan 2nd prize kembali di tahun 2012. Saat ini, ia sedang melanjutkan studi S3 di NUS, Singapore dalam bidang matematika. Di sela-sela studinya, ia juga turut membantu KTO Matematika dalam beberapa bidang seperti tim soal, tim koreksi dan tim pengolah.',
 		image: 'wawan.jpg',
 	},
+	{
+		name: 'Yoshua Yonatan',
+		description: 'Dengan kerja kerasnya, Yoshua Yonatan berhasil meraih emas pertama OSN 2010 bidang matematika. Cintanya terhadap matematika terus dibawa ke bidang kuliah dengan mengambil jurusan matematika dan mengharumkan tanah air dengan mendapatkan Second Prize di International Mathematics Competition (IMC) 2014. Saat ini, dia menjadi ketua tim soal KTO Matematika dan terus menerus mengingatkan rekan-rekannya untuk membuat soal. Orang yang saat ini sedang kuliah pascasarjana di ITB program PMDSU ini ternyata juga fans nomor 1 Apink, loh!',
+		image: 'yoyo.jpg',
+	},
+	{
+		name: 'Erwin Eko Wahyudi',
+		description: 'Pria yang sering disapa dengan Erwin ini merupakan salah satu perintis pertama KTO Matematika. Berangkat dari medali perunggu di OSN 2011, dia terus menjalankan passionnya terhadap matematika hingga berhasil mendapatkan medali emas di ONMIPA 2015. Orang yang saat ini berkuliah Teknik Komputer di UGM ini terus menerapkan ilmunya dengan mengurusi bagian teknis KTO Matematika.',
+		image: 'erwin.jpg',
+	},
 ];
 
 // Randomize the order!
