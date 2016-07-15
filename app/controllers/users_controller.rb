@@ -28,7 +28,7 @@ class UsersController < ApplicationController
         Ajat.info "register_fail|#{user.errors}"
         redirect_to register_path, alert: 'Terdapat kesalahan dalam ' \
         ' registrasi. Jika registrasi masih tidak bisa dilakukan, ' \
-          " #{link_to 'kontak kami', contact_path}."
+          " #{ActionController::Base.helpers.link_to 'kontak kami', contact_path}.".html_safe
       end
     end
   end
@@ -43,7 +43,7 @@ class UsersController < ApplicationController
       'waktu verifikasi sudah lewat. Coba login; coba juga cek ulang link ' \
       'yang diberikan dalam email Anda. Jika masih tidak bisa juga, coba ' \
       'buat ulang user Anda, atau ' \
-      "#{link_to 'Kontak Kami', contact_path}.".html_safe
+      "#{ActionController::Base.helpers.link_to 'Kontak Kami', contact_path}.".html_safe
     elsif u.enabled
       # User is verified
       Ajat.info "enabled_user_verify|uid:#{u.id}"

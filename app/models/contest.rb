@@ -81,6 +81,8 @@ class Contest < ActiveRecord::Base
                            .order('feedback_time')[0]
     next_end = Contest.where('end_time > ?', Time.zone.now)
                       .order('end_time')[0]
+    return next_end if next_feedback.nil?
+    return next_feedback if next_end.nil?
     return next_feedback if next_feedback.feedback_time < next_end.end_time
     next_end
   end
