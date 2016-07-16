@@ -62,10 +62,14 @@ class DumpKtoHasil
   # first.
   def create_placeholder_user(username)
     Ajat.info "create_ph_user|name:#{username}"
-    User.create(username: username, email: username + '@a.com',
-                password: SecureRandom.base64(20), fullname: username,
-                school: username, province: Province.first,
-                status: Status.first)
+    User.find_or_create_by(username: username) do |u|
+      u.email = username + '@a.com'
+      u.password = SecureRandom.base64(20)
+      u.fullname = username
+      u.school = username
+      u.province = Province.first
+      u.status = Status.first
+    end
   end
 
   # This method generates placeholder ShortProblems and LongProblems in a
@@ -110,7 +114,7 @@ class DumpKtoHasil
   # of the short_problem_answers array.
   def generate_short_submissions(user_contest, short_problem_answers)
     short_problem_answers.each_with_index do |ans, idx|
-      next if ans.nil?
+      ans = '' if ans.nil?
       p_no = idx + 1
       short_problem = ShortProblem.find_by(contest: @contest, problem_no: p_no)
       ShortSubmission.create(user_contest: user_contest,
