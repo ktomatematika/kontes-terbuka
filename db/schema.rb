@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160714174434) do
+ActiveRecord::Schema.define(version: 20160716000155) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -312,29 +312,29 @@ ActiveRecord::Schema.define(version: 20160714174434) do
   add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
   add_index "versions", ["transaction_id"], name: "index_versions_on_transaction_id", using: :btree
 
-  add_foreign_key "feedback_answers", "feedback_questions"
-  add_foreign_key "feedback_answers", "user_contests"
-  add_foreign_key "feedback_questions", "contests"
-  add_foreign_key "long_problems", "contests"
-  add_foreign_key "long_submissions", "long_problems"
-  add_foreign_key "long_submissions", "user_contests"
-  add_foreign_key "market_item_pictures", "market_items"
-  add_foreign_key "point_transactions", "users"
-  add_foreign_key "short_problems", "contests"
-  add_foreign_key "short_submissions", "short_problems"
-  add_foreign_key "short_submissions", "user_contests"
-  add_foreign_key "submission_pages", "long_submissions"
-  add_foreign_key "temporary_markings", "long_submissions"
-  add_foreign_key "temporary_markings", "users"
-  add_foreign_key "user_awards", "awards"
-  add_foreign_key "user_awards", "users"
-  add_foreign_key "user_contests", "contests"
-  add_foreign_key "user_contests", "users"
-  add_foreign_key "user_notifications", "notifications"
-  add_foreign_key "user_notifications", "users"
-  add_foreign_key "users", "colors"
-  add_foreign_key "users", "provinces"
-  add_foreign_key "users", "statuses"
+  add_foreign_key "feedback_answers", "feedback_questions", on_delete: :cascade
+  add_foreign_key "feedback_answers", "user_contests", on_delete: :cascade
+  add_foreign_key "feedback_questions", "contests", on_delete: :cascade
+  add_foreign_key "long_problems", "contests", on_delete: :cascade
+  add_foreign_key "long_submissions", "long_problems", on_delete: :cascade
+  add_foreign_key "long_submissions", "user_contests", on_delete: :cascade
+  add_foreign_key "market_item_pictures", "market_items", on_delete: :cascade
+  add_foreign_key "point_transactions", "users", on_delete: :cascade
+  add_foreign_key "short_problems", "contests", on_delete: :cascade
+  add_foreign_key "short_submissions", "short_problems", on_delete: :cascade
+  add_foreign_key "short_submissions", "user_contests", on_delete: :cascade
+  add_foreign_key "submission_pages", "long_submissions", on_delete: :cascade
+  add_foreign_key "temporary_markings", "long_submissions", on_delete: :cascade
+  add_foreign_key "temporary_markings", "users", on_delete: :cascade
+  add_foreign_key "user_awards", "awards", on_delete: :cascade
+  add_foreign_key "user_awards", "users", on_delete: :cascade
+  add_foreign_key "user_contests", "contests", on_delete: :cascade
+  add_foreign_key "user_contests", "users", on_delete: :cascade
+  add_foreign_key "user_notifications", "notifications", on_delete: :cascade
+  add_foreign_key "user_notifications", "users", on_delete: :cascade
+  add_foreign_key "users", "colors", on_delete: :cascade
+  add_foreign_key "users", "provinces", on_delete: :cascade
+  add_foreign_key "users", "statuses", on_delete: :cascade
   validates("colors", "name", uniqueness: true)
   validates("colors", "name", presence: true)
   validates("contests", "name", presence: true)

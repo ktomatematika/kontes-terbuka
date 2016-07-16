@@ -16,9 +16,8 @@
 #
 # Foreign Keys
 #
-#  fk_rails_116a6ecec7  (contest_id => contests.id)
+#  fk_rails_116a6ecec7  (contest_id => contests.id) ON DELETE => cascade
 #
-# rubocop:enable LineLength
 
 class LongProblem < ActiveRecord::Base
   resourcify

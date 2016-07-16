@@ -15,8 +15,8 @@
 #
 # Foreign Keys
 #
-#  fk_rails_418fd0bbd0  (contest_id => contests.id)
-#  fk_rails_ee078c9177  (user_id => users.id)
+#  fk_rails_418fd0bbd0  (contest_id => contests.id) ON DELETE => cascade
+#  fk_rails_ee078c9177  (user_id => users.id) ON DELETE => cascade
 #
 
 class UserContest < ActiveRecord::Base

@@ -19,9 +19,8 @@
 #
 # Foreign Keys
 #
-#  fk_rails_62bec7c828  (long_submission_id => long_submissions.id)
+#  fk_rails_62bec7c828  (long_submission_id => long_submissions.id) ON DELETE => cascade
 #
-# rubocop:enable LineLength
 
 class SubmissionPage < ActiveRecord::Base
   has_paper_trail

@@ -14,7 +14,7 @@
 #
 # Foreign Keys
 #
-#  fk_rails_38d13509cf  (contest_id => contests.id)
+#  fk_rails_38d13509cf  (contest_id => contests.id) ON DELETE => cascade
 #
 
 class FeedbackQuestion < ActiveRecord::Base

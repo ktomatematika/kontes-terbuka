@@ -18,10 +18,9 @@
 #
 # Foreign Keys
 #
-#  fk_rails_0615442e63  (feedback_question_id => feedback_questions.id)
-#  fk_rails_374404a088  (user_contest_id => user_contests.id)
+#  fk_rails_0615442e63  (feedback_question_id => feedback_questions.id) ON DELETE => cascade
+#  fk_rails_374404a088  (user_contest_id => user_contests.id) ON DELETE => cascade
 #
-# rubocop:enable LineLength
 
 class FeedbackAnswer < ActiveRecord::Base
   has_paper_trail
