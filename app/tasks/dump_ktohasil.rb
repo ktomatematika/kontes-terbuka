@@ -114,8 +114,8 @@ class DumpKtoHasil
   # of the short_problem_answers array.
   def generate_short_submissions(user_contest, short_problem_answers)
     short_problem_answers.each_with_index do |ans, idx|
-      ans = '' if ans.nil?
       p_no = idx + 1
+      next if ans.nil?
       short_problem = ShortProblem.find_by(contest: @contest, problem_no: p_no)
       ShortSubmission.create(user_contest: user_contest,
                              short_problem: short_problem, answer: ans)

@@ -217,7 +217,8 @@ class UsersController < ApplicationController
     params.require(:user).permit(:username, :email, :password,
                                  :password_confirmation, :fullname,
                                  :province_id, :status_id, :color_id,
-                                 :school, :terms_of_service, :profile_picture)
+                                 :school, :terms_of_service, :profile_picture,
+                                 :osn)
   end
 
   def user_edit_params

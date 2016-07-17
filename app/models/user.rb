@@ -72,6 +72,8 @@ class User < ActiveRecord::Base
   MAX_TRIES = 10
   attr_accessor :MAX_TRIES
 
+  attr_accessor :osn
+
   before_validation(on: :create) do
     encrypt_password
     generate_token(:auth_token)
