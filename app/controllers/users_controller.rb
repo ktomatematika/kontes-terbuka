@@ -15,16 +15,23 @@ class UsersController < ApplicationController
 
   def create
     User.transaction do
-      user = User.new(user_params)
-      user.timezone = Province.find(user_params[:province_id]).timezone
-      user.add_role :veteran if params[:osn] == 1
+      if province_id.blank? || status_id.blank?
+        Ajat.warn "register_fail|#{user.errors.full_messages}|" \
+          "user:#{user.inspect}"
+        redirect_to register_path, alert: 'Terdapat kesalahan dalam ' \
+        ' registrasi. Jika registrasi masih tidak bisa dilakukan, ' \
+          "#{ActionController::Base.helpers.link_to 'kontak kami',
+                                                    contact_path}."
+      else
+        user = User.new(user_params)
+        user.timezone = Province.find(user_params[:province_id]).timezone
+        user.add_role :veteran if params[:osn] == 1
 
-      if verify_recaptcha(model: user)
-        if user.save
-          user.send_verify_email request.base_url
-          redirect_to root_path, notice: 'User berhasil dibuat! ' \
-            'Sekarang, lakukan verifikasi dengan membuka link yang telah ' \
-            'kami berikan di email Anda.'
+        if verify_recaptcha(model: user) && user.save
+            user.send_verify_email request.base_url
+            redirect_to root_path, notice: 'User berhasil dibuat! ' \
+              'Sekarang, lakukan verifikasi dengan membuka link yang telah ' \
+              'kami berikan di email Anda.'
         else
           Ajat.warn "register_fail|#{user.errors.full_messages}|" \
             "user:#{user.inspect}"
@@ -33,13 +40,6 @@ class UsersController < ApplicationController
             "#{ActionController::Base.helpers.link_to 'kontak kami',
                                                       contact_path}."
         end
-      else
-        Ajat.info "captcha_fail|user:#{user.inspect}"
-        redirect_to register_path, alert: 'Recaptcha Anda tidak cocok. ' \
-          'Apakah Anda manusia? Centang bagian "Saya bukan robot". Bila Anda ' \
-          'masih mempunyai kesulitan, ' \
-          "#{ActionController::Base.helpers.link_to 'kontak kami',
-                                                    contact_path}."
       end
     end
   end

@@ -49,4 +49,5 @@
 
       %footer
         = recaptcha_tags hl: 'id'
+        %input{ type: 'hidden', name: 'recaptcha' }
         = f.submit 'Daftar', class: 'btn btn-lg btn-default sign-btn has-shade'

@@ -1,31 +1,39 @@
 $(document).ready(function() {
-// Synergize with bootstrap by adding certain bootstrap classes to tags.
+	// Synergize with bootstrap by adding certain bootstrap classes to tags.
 	$.validator.setDefaults({
 		errorElement: 'span',
 		errorClass: 'help-block',
 		highlight: function(element) {
-			$(element).closest('.form-group').addClass('has-error');
-			$(element).closest('.form-group').removeClass('has-success');
-			if ($(element).prop('type') !== 'password') {
-				$(element).nextAll('.glyphicon')
+			var elem = $(element);
+			elem.closest('.form-group').addClass('has-error');
+			elem.closest('.form-group').removeClass('has-success');
+			if (elem.prop('type') !== 'password') {
+				elem.nextAll('.glyphicon')
 					.removeClass('glyphicon-ok')
 					.addClass('glyphicon-remove')
 					.empty();
 			}
+			if (elem.attr('name') === 'recaptcha') {
+				$('.g-recaptcha').addClass('show-recaptcha-error');
+			}
 		},
 		unhighlight: function(element) {
-			$(element).closest('.form-group').addClass('has-success');
-			$(element).closest('.form-group').removeClass('has-error');
-			if ($(element).prop('type') !== 'password') {
-				$(element).nextAll('.glyphicon')
+			var elem = $(element);
+			elem.closest('.form-group').addClass('has-success');
+			elem.closest('.form-group').removeClass('has-error');
+			if (elem.prop('type') !== 'password') {
+				elem.nextAll('.glyphicon')
 					.addClass('glyphicon-ok')
 					.removeClass('glyphicon-remove')
 					.empty();
 			}
+			elem.removeClass('show-recaptcha-error');
 		},
 		errorPlacement: function(error, element) {
-			if (element.parent('.input-group').length) {
+			if (element.attr('type') === 'checkbox') {
 				error.insertAfter(element.parent());
+			} else if (element.attr('name') === 'recaptcha') {
+				error.insertAfter(element.next());
 			} else {
 				error.insertAfter(element);
 			}
@@ -33,15 +41,22 @@ $(document).ready(function() {
 	});
 
 	// Adds a method to check whether a field is alphanumeric.
-	$.validator.addMethod('alphanum', function(value, elem) {
+	$.validator.addMethod('alphanum', function(value, elem, params) {
 		return this.optional(elem) || /^[a-zA-Z0-9]+$/.test(value);
 	});
+
+	// Adds a method to check recaptcha.
+	$.validator.addMethod('recaptcha', function(value, elem, params) {
+		return grecaptcha.getResponse().length !== 0;
+	});
+
 
 	$('#register form').validate({
 		// We don't register key up here; there will be a keyup listener
 		// where it will call a throttled version of validation. Basically
 		// it will only validate after 1000 ms of keyups, as to not send
 		// too much AJAX requests.
+		ignore: ':hidden:not([name=recaptcha])',
 		onkeyup: false,
 		rules: {
 			'user[username]': {
@@ -101,6 +116,9 @@ $(document).ready(function() {
 			'user[terms_of_service]': {
 				required: true,
 			},
+			'recaptcha': {
+				recaptcha: true,
+			},
 		},
 		messages: {
 			'user[username]': {
@@ -137,8 +155,12 @@ $(document).ready(function() {
 				required: 'Tolong masukkan nama sekolah/institusi Anda.',
 			},
 			'user[terms_of_service]': {
-				required: 'Anda harus menyetujui syarat dan ketentuan ' +
-					'website ini.',
+				required: 'Anda harus menyetujui kebijakan privasi dan ' +
+					'syarat dan ketentuan website ini.',
+			},
+			'recaptcha': {
+				recaptcha: 'Tolong centang kotak di atas dan ikuti petunjuk ' +
+					'yang tersedia, bila ada.',
 			},
 		},
 	});

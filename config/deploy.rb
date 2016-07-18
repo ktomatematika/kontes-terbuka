@@ -42,6 +42,7 @@ namespace :delayed_job do
   desc 'Restart delayed_job'
   task :restart do
     on roles(:app) do
+      execute "source /etc/default/unicorn"
       execute "RAILS_ENV=production ~/.rvm/bin/rvm default do " \
         "#{deploy_to}/current/bin/delayed_job restart"
     end

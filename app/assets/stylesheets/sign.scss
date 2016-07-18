@@ -140,3 +140,15 @@
 #forgot-help {
   margin: 10px 0;
 }
+
+#recaptcha-error {
+  float: left;
+}
+
+.show-recaptcha-error {
+  border: 1px solid #a94442;
+}
+
+.special-fields-error {
+  border: #a94442;
+}
