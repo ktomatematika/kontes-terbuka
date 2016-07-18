@@ -164,6 +164,7 @@ class User < ActiveRecord::Base
                                   'Terbuka Olimpiade Matematika',
                          text: text
   end
+  handle_asynchronously :send_verify_email, queue: 'send_verify_email'
 
   def enable
     update(enabled: true, verification: nil)
