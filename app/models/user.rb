@@ -147,7 +147,7 @@ class User < ActiveRecord::Base
   end
   handle_asynchronously :destroy_if_unverified,
                         run_at: proc { VERIFY_TIME.from_now },
-                        queue: 'user_verification'
+                        queue: 'destroy_if_unverified'
 
   def send_verify_email(base_url)
     link = base_url + Rails.application.routes.url_helpers.verify_path(
@@ -163,6 +163,7 @@ class User < ActiveRecord::Base
                          subject: 'Konfirmasi Pendaftaran Kontes ' \
                                   'Terbuka Olimpiade Matematika',
                          text: text
+    destroy_if_unverified
   end
   handle_asynchronously :send_verify_email, queue: 'send_verify_email'
 

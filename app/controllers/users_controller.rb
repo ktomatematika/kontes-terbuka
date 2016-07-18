@@ -36,7 +36,8 @@ class UsersController < ApplicationController
       else
         Ajat.info "captcha_fail|user:#{user.inspect}"
         redirect_to register_path, alert: 'Recaptcha Anda tidak cocok. ' \
-          'Apakah Anda manusia? Bila Anda masih mempunyai kesulitan, ' \
+          'Apakah Anda manusia? Centang bagian "Saya bukan robot". Bila Anda ' \
+          'masih mempunyai kesulitan, ' \
           "#{ActionController::Base.helpers.link_to 'kontak kami',
                                                     contact_path}."
       end
@@ -183,16 +184,16 @@ class UsersController < ApplicationController
       @user = User.find(params[:id]).update(user_edit_params)
       @user.update(user_edit_params)
     end
+    Ajat.info "user_full_update|user:#{@user.id}"
     redirect_to user_path(@user), notice: 'User berhasil diupdate!'
   end
 
   def mini_update
     @user = User.find(params[:user_id])
     if @user.update(user_mini_edit_params)
-      Ajat.info "user_full_update|user:#{@user.id}"
       redirect_to user_path(@user), notice: 'User berhasil diupdate!'
     else
-      Ajat.warn "user_full_update_fail|user:#{@user.id}"
+      Ajat.warn "user_mini_update_fail|user:#{@user.id}"
       redirect_to user_path(@user),
                   alert: 'Terdapat kesalahan dalam mengupdate User!'
     end
