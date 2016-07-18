@@ -17,7 +17,7 @@ var about_us_data = [
 	},
 	{
 		name: 'Rudi Adha Prihandoko',
-		description: '',
+		description: 'Prihandoko Rudi barangkali adalah sosok yang paling terkenal di kalangan pelatihan nasional olimpiade matematika. Peraih medali emas OSN SMA tahun 2004, Rudi mendapatkan medali perunggu APMO di tahun 2007 dan menjadi peraih honorable mention di IMO 2007. Dia juga menjadi asisten pelatihan dari tahun 2007 dan menjadi pembina dari tahun 2013 sampai sekarang; dia bahkan kenal hampir semua peserta IMO dari tahun 2001 sampai sekarang! Sebagai salah satu perintis KTO Matematika, Rudi terus membantu di berbagai hal.',
 		image: 'rudi.jpg',
 	},
 	{
@@ -37,13 +37,18 @@ var about_us_data = [
 	},
 	{
 		name: 'Kevin Christian Wibisono',
-		description: 'Kevin Christian Wibisono ialah seorang pencinta matematika yang diberi kesempatan untuk mendemonstrasikan kegemarannya sekaligus merepresentasikan negaranya dalam ajang olimpiade matematika paling prestisius bagi siswa sekolah dasar dan menengah. Saat ini, Kevin sedang menempuh pendidikan di National University of Singapore (NUS). Keinginannya untuk mendalami matematika membuatnya memilih jurusan Applied Mathematics. Sebagai bentuk kontribusi kepada pendidikan olimpiade matematika di Indonesia, Kevin mendedikasikan dirinya menjadi Ketua Tim Pengolah KTO Matematika, yang tanggung jawabnya meliputi pemeriksaan kualitas soal, jawaban, dan pembuatan buku. Pada waktu senggang, Kevin suka menonton film kriminal, mengerjakan soal-soal olimpiade matematika, maupun menguntit akun Instagram orang lain (yang tidak diproteksi tentunya).',
+		description: 'Kevin Christian Wibisono ialah seorang pencinta matematika yang diberi kesempatan untuk mendemonstrasikan kegemarannya sekaligus merepresentasikan negaranya dalam ajang olimpiade matematika paling prestisius bagi siswa sekolah dasar dan menengah. Saat ini, Kevin sedang menempuh pendidikan di National University of Singapore (NUS). Keinginannya untuk mendalami matematika membuatnya memilih jurusan Applied Mathematics. Sebagai bentuk kontribusi kepada pendidikan olimpiade matematika di Indonesia, Kevin mendedikasikan dirinya menjadi Ketua Tim Pengolah KTO Matematika, yang tanggung jawabnya meliputi pemeriksaan kualitas soal, jawaban, dan pembuatan buku. Pada waktu senggang, Kevin suka menonton film kriminal dan mengerjakan soal-soal olimpiade matematika.',
 		image: 'kevin.jpg',
 	},
 	{
 		name: 'Farras Mohammad Hibban Faddila',
 		description: 'Farras merupakan salah satu orang yang beruntung bisa meraih perak pada OSN 2014 dan emas pertama pada OSN 2015 serta berlanjut sampai Pelatnas Tahap 3. Selain hobi menekuni matematika, Farras juga suka bermain basket, gitar, dan Football Manager serta merupakan salah satu pendukung Manchester United yang setia. Sebagai pelajar SMA yang taat, saat ini Farras banyak meluangkan waktunya untuk membantu pembuatan konten di OA Line KTOM serta membantu KTOM di forum olimpiade.org.',
 		image: 'farras.jpg',
+	},
+	{
+		name: 'Ruben Solomon Partono',
+		description: 'Terjun dalam olimpiade matematika sejak SD, prestasi terakhir Ruben barubaru ini adalah mendapatkan medali emas OSN Matematika tahun 2014. Ingin sekali berpartisipasi dalam IMO, Ruben belum sampai-sampai juga. Semangat Ruben akan matematika terus dipertajam selama 2 tahun ikut dalam pelatihan nasional, melakukan bermacam-macam dosa berat bersama TOMI. Dihasut oleh Herbert Ilhan, Ruben akhirnya turut berdosa-dosa dalam KTO Matematika. Konon Ruben menyukai geometri, kombinatorik, dan perempuan. Ketika penat belajar, pelariannya adalah musik (Ruben juga suka bermain gitar seperti Ricky). Beberapa sumber mengatakan juga bahwa Ruben percaya dunia ini deterministik. Ruben ingin menyampaikan, "Ini description gua yang nulis sendiri tapi kenapa pakai sudut pandang orang ketiga ya?"',
+		image: 'ruben.jpg',
 	},
 ];
 
