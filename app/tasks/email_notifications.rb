@@ -6,6 +6,7 @@ class EmailNotifications
     notif = Notification.find_by(event: 'contest_starting', time_text: time_text)
     emails = notif.user_notifications.map(&:user.email)
 
+    Ajat.info "contest_starting|id:#{contest.id}|time:#{time_text}"
     Mailgun.send_message contest: contest, text: text, subject: subject,
                          bcc_array: emails
   end
@@ -17,6 +18,7 @@ class EmailNotifications
     notif = Notification.find_by(event: 'contest_started')
     emails = notif.user_notifications.map(&:user.email)
 
+    Ajat.info "contest_started|id:#{contest.id}"
     Mailgun.send_message contest: contest, text: text, subject: subject,
                          bcc_array: emails
   end
@@ -35,6 +37,7 @@ class EmailNotifications
       uc.nil? ? email_array : email_array.push(uc.user.email)
     end
 
+    Ajat.info "contest_ending|id:#{contest.id}"
     Mailgun.send_message contest: contest, text: text, subject: subject,
                          bcc_array: emails
   end
@@ -51,6 +54,7 @@ class EmailNotifications
       uc.nil? ? email_array : email_array.push(uc.user.email)
     end
 
+    Ajat.info "result_released|id:#{contest.id}"
     Mailgun.send_message contest: contest, text: text, subject: subject,
                          bcc_array: User.pluck(:email)
   end
@@ -71,6 +75,7 @@ class EmailNotifications
       end
     end
 
+    Ajat.info "feedback_ending|id:#{contest.id}|time:#{time_text}"
     Mailgun.send_message contest: contest, text: text, subject: subject,
                          bcc_array: User.pluck(:email)
   end

@@ -21,6 +21,7 @@ class ContestsController < ApplicationController
     @contest = Contest.new(contest_params)
     if @contest.save
       Ajat.info "contest_created|id:#{@contest.id}"
+      @contest.prepare_emails
       redirect_to @contest, notice: "Kontes #{CGI.escapeHTML(@contest.to_s)} " \
       'berhasil dibuat!'
     else
@@ -52,6 +53,10 @@ class ContestsController < ApplicationController
     @contest = Contest.find(params[:id])
     if @contest.update(contest_params)
       Ajat.info "contest_updated|id:#{@contest.id}"
+      if contest_params[:result_released] = 1
+        EmailNotifications.new.delay(queue: "contest_#{id}")
+                          .result_released(@contest)
+      end
       redirect_to @contest, notice: "#{CGI.escapeHTML(@contest.to_s)} " \
       'berhasil diubah.'
     else

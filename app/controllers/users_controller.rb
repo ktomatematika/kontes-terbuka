@@ -28,10 +28,10 @@ class UsersController < ApplicationController
         user.add_role :veteran if params[:osn] == 1
 
         if verify_recaptcha(model: user) && user.save
-            user.send_verify_email request.base_url
-            redirect_to root_path, notice: 'User berhasil dibuat! ' \
-              'Sekarang, lakukan verifikasi dengan membuka link yang telah ' \
-              'kami berikan di email Anda.'
+          user.send_verify_email request.base_url
+          redirect_to root_path, notice: 'User berhasil dibuat! ' \
+            'Sekarang, lakukan verifikasi dengan membuka link yang telah ' \
+            'kami berikan di email Anda.'
         else
           Ajat.warn "register_fail|#{user.errors.full_messages}|" \
             "user:#{user.inspect}"
