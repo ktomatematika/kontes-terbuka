@@ -39,6 +39,8 @@ class UserContest < ActiveRecord::Base
   attr_accessor :rank
 
   def contest_points
+    award = UserContest.processed.find(self.id).award
+
     points = 0
 
     points += 4 if award == 'Emas'

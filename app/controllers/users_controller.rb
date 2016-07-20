@@ -167,6 +167,7 @@ class UsersController < ApplicationController
     @user_contests = UserContest.joins(:contest)
                                 .where(user: @user,
                                        'contests.result_released' => true)
+                                .processed
     @point_transactions = PointTransaction.where(user: @user)
                                           .order(:created_at).reverse
   end
