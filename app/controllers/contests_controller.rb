@@ -36,7 +36,7 @@ class ContestsController < ApplicationController
     @user_contest = @user_contests.find { |uc| uc.user == current_user }
 
     if !@user_contest && @contest.currently_in_contest?
-      redirect_to contest_show_rules_path(params[:id])
+      redirect_to contest_rules_path(params[:id])
     end
 
     grab_problems
@@ -82,7 +82,10 @@ class ContestsController < ApplicationController
   def accept_rules
     contest = nil
     UserContest.transaction do
-      user_contest = UserContest.create(participate_params)
+      User.find(participate_params[:user_id]).add_role :veteran if participate_params[:osn] == '1'
+      participate_params[:osn] = nil
+      user_contest = UserContest.create(user_id: participate_params[:user_id], contest_id: participate_params[:contest_id])
+
       contest = user_contest.contest
       contest.long_problems.each do |long_problem|
         LongSubmission.create(user_contest: user_contest,
@@ -180,6 +183,6 @@ class ContestsController < ApplicationController
   end
 
   def participate_params
-    params.require(:user_contest).permit(:user_id, :contest_id)
+    params.require(:user_contest).permit(:user_id, :contest_id, :osn)
   end
 end

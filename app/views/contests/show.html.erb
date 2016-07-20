@@ -10,7 +10,6 @@
 <div class="container">
   <div class="row">
     <section>
-
       <%= render 'header' %>
 
       <% if current_user.has_role? :admin and Time.zone.now < @contest.start_time %>
