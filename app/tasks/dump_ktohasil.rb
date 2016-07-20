@@ -14,7 +14,7 @@ class DumpKtoHasil
       # [1..-1] because the first column is ignored. Lol assumptions
       solutions = ktohasil_file[1][1..-1].reduce([]) do |memo, item|
         # Assumption: empty cells after solutions
-        item.nil? ? memo : memo.push(item.to_i)
+        item.nil? ? memo : memo.push(item)
       end
       short_problems = solutions.length
 

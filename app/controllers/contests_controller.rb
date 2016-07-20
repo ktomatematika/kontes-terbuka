@@ -32,13 +32,14 @@ class ContestsController < ApplicationController
 
   def show
     @contest = Contest.find(params[:id])
+    @user_contests = @contest.results
+    @user_contest = @user_contests.find { |uc| uc.user == current_user }
+
     if !@user_contest && @contest.currently_in_contest?
       redirect_to contest_show_rules_path(params[:id])
     end
 
     grab_problems
-    @user_contests = @contest.results
-    @user_contest = @user_contests.find { |uc| uc.user == current_user }
   end
 
   def index

@@ -67,8 +67,10 @@ class UserContest < ActiveRecord::Base
   # Usage: UserContest.short_marks
   scope :short_marks, lambda {
     joins { short_submissions.outer }
-      .joins { short_submissions.short_problem.outer }
-      .where { short_submissions.short_problem_id == short_problems.id }
+      .joins { short_problems.outer }
+      .where { (short_submissions.short_problem_id == short_problems.id) |
+               ((short_submissions.short_problem_id == nil) &
+                (short_problems.id == nil)) }
       .group(:id)
       .select('user_contests.id as id, sum(case when ' \
       'short_submissions.answer = short_problems.answer then 1 else 0 end) ' \
