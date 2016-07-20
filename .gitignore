@@ -25,3 +25,5 @@
 
 .vagrant/
 .sass-cache/
+
+/config/initializers/env.rb
