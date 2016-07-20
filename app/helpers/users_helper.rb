@@ -13,7 +13,7 @@ module UsersHelper
     @user_contests.map do |uc|
       create_data_row([uc.contest, uc.award], 'td',
                       'class="clickable-row" data-link="' +
-                      contest_path(uc.contest) + '"', '',
+                      contest_path(uc.contest) + '"',
                       "class='#{uc.award.downcase}'")
     end.join.html_safe
   end
