@@ -15,7 +15,7 @@ class UsersController < ApplicationController
 
   def create
     User.transaction do
-      if province_id.blank? || status_id.blank?
+      if user_params[:province_id].blank? || user_params[:status_id].blank?
         Ajat.warn "register_fail|#{user.errors.full_messages}|" \
           "user:#{user.inspect}"
         redirect_to register_path, alert: 'Terdapat kesalahan dalam ' \
