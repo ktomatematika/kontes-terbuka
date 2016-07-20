@@ -25,9 +25,9 @@ class UsersController < ApplicationController
       else
         user = User.new(user_params)
         user.timezone = Province.find(user_params[:province_id]).timezone
-        user.add_role :veteran if params[:osn] == 1
 
         if verify_recaptcha(model: user) && user.save
+          user.add_role(:veteran) if user_params[:osn] == '1'
           user.send_verify_email request.base_url
           redirect_to root_path, notice: 'User berhasil dibuat! ' \
             'Sekarang, lakukan verifikasi dengan membuka link yang telah ' \
