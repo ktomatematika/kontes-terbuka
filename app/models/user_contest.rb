@@ -3,8 +3,8 @@
 # Table name: user_contests
 #
 #  id           :integer          not null, primary key
-#  user_id      :integer
-#  contest_id   :integer
+#  user_id      :integer          not null
+#  contest_id   :integer          not null
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #  donation_nag :boolean          default(TRUE), not null

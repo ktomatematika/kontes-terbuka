@@ -6,7 +6,7 @@
 #  question   :text
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  contest_id :integer
+#  contest_id :integer          not null
 #
 # Indexes
 #

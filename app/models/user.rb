@@ -12,9 +12,9 @@
 #  updated_at      :datetime         not null
 #  salt            :string
 #  auth_token      :string
-#  province_id     :integer
-#  status_id       :integer
-#  color_id        :integer          default(1)
+#  province_id     :integer          not null
+#  status_id       :integer          not null
+#  color_id        :integer          default(1), not null
 #  timezone        :string           default("WIB")
 #  verification    :string
 #  enabled         :boolean          default(FALSE), not null

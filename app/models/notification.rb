@@ -15,6 +15,7 @@ class Notification < ActiveRecord::Base
   has_many :user_notifications
   has_many :users, through: :user_notifications
   enforce_migration_validations
+  has_paper_trail
 
   def to_s
     description

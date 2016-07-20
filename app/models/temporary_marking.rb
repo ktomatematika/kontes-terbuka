@@ -4,8 +4,8 @@
 # Table name: temporary_markings
 #
 #  id                 :integer          not null, primary key
-#  user_id            :integer
-#  long_submission_id :integer
+#  user_id            :integer          not null
+#  long_submission_id :integer          not null
 #  mark               :integer
 #  tags               :string
 #  created_at         :datetime         not null

@@ -4,17 +4,15 @@
 # Table name: feedback_answers
 #
 #  id                   :integer          not null, primary key
-#  feedback_question_id :integer
+#  feedback_question_id :integer          not null
 #  answer               :text
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
-#  user_contest_id      :integer
+#  user_contest_id      :integer          not null
 #
 # Indexes
 #
 #  feedback_question_and_user_contest_unique_pair  (feedback_question_id,user_contest_id) UNIQUE
-#  index_feedback_answers_on_feedback_question_id  (feedback_question_id)
-#  index_feedback_answers_on_user_contest_id       (user_contest_id)
 #
 # Foreign Keys
 #

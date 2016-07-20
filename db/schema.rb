@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160720082711) do
+ActiveRecord::Schema.define(version: 20160720155458) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,10 +43,10 @@ ActiveRecord::Schema.define(version: 20160720082711) do
     t.text     "rule",                     default: "",    null: false
     t.datetime "result_time",                              null: false
     t.datetime "feedback_time",                            null: false
-    t.integer  "gold_cutoff",              default: 0
-    t.integer  "silver_cutoff",            default: 0
-    t.integer  "bronze_cutoff",            default: 0
-    t.boolean  "result_released",          default: false
+    t.integer  "gold_cutoff",              default: 0,     null: false
+    t.integer  "silver_cutoff",            default: 0,     null: false
+    t.integer  "bronze_cutoff",            default: 0,     null: false
+    t.boolean  "result_released",          default: false, null: false
     t.string   "problem_tex_file_name"
     t.string   "problem_tex_content_type"
     t.integer  "problem_tex_file_size"
@@ -75,28 +75,26 @@ ActiveRecord::Schema.define(version: 20160720082711) do
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
   create_table "feedback_answers", force: :cascade do |t|
-    t.integer  "feedback_question_id"
+    t.integer  "feedback_question_id", null: false
     t.text     "answer"
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
-    t.integer  "user_contest_id"
+    t.integer  "user_contest_id",      null: false
   end
 
   add_index "feedback_answers", ["feedback_question_id", "user_contest_id"], name: "feedback_question_and_user_contest_unique_pair", unique: true, using: :btree
-  add_index "feedback_answers", ["feedback_question_id"], name: "index_feedback_answers_on_feedback_question_id", using: :btree
-  add_index "feedback_answers", ["user_contest_id"], name: "index_feedback_answers_on_user_contest_id", using: :btree
 
   create_table "feedback_questions", force: :cascade do |t|
     t.text     "question"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer  "contest_id"
+    t.integer  "contest_id", null: false
   end
 
   add_index "feedback_questions", ["contest_id"], name: "index_feedback_questions_on_contest_id", using: :btree
 
   create_table "long_problems", force: :cascade do |t|
-    t.integer  "contest_id"
+    t.integer  "contest_id", null: false
     t.integer  "problem_no", null: false
     t.text     "statement"
     t.datetime "created_at", null: false
@@ -219,8 +217,8 @@ ActiveRecord::Schema.define(version: 20160720082711) do
   add_index "submission_pages", ["page_number", "long_submission_id"], name: "index_submission_pages_on_page_number_and_long_submission_id", unique: true, using: :btree
 
   create_table "temporary_markings", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "long_submission_id"
+    t.integer  "user_id",            null: false
+    t.integer  "long_submission_id", null: false
     t.integer  "mark"
     t.string   "tags"
     t.datetime "created_at",         null: false
@@ -237,8 +235,8 @@ ActiveRecord::Schema.define(version: 20160720082711) do
   end
 
   create_table "user_contests", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "contest_id"
+    t.integer  "user_id",                     null: false
+    t.integer  "contest_id",                  null: false
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
     t.boolean  "donation_nag", default: true, null: false
@@ -265,9 +263,9 @@ ActiveRecord::Schema.define(version: 20160720082711) do
     t.datetime "updated_at",                      null: false
     t.string   "salt"
     t.string   "auth_token"
-    t.integer  "province_id"
-    t.integer  "status_id"
-    t.integer  "color_id",        default: 1
+    t.integer  "province_id",                     null: false
+    t.integer  "status_id",                       null: false
+    t.integer  "color_id",        default: 1,     null: false
     t.string   "timezone",        default: "WIB"
     t.string   "verification"
     t.boolean  "enabled",         default: false, null: false

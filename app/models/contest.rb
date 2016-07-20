@@ -15,10 +15,10 @@
 #  rule                     :text             default(""), not null
 #  result_time              :datetime         not null
 #  feedback_time            :datetime         not null
-#  gold_cutoff              :integer          default(0)
-#  silver_cutoff            :integer          default(0)
-#  bronze_cutoff            :integer          default(0)
-#  result_released          :boolean          default(FALSE)
+#  gold_cutoff              :integer          default(0), not null
+#  silver_cutoff            :integer          default(0), not null
+#  bronze_cutoff            :integer          default(0), not null
+#  result_released          :boolean          default(FALSE), not null
 #  problem_tex_file_name    :string
 #  problem_tex_content_type :string
 #  problem_tex_file_size    :integer

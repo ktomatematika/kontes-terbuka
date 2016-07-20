@@ -4,7 +4,7 @@
 # Table name: long_problems
 #
 #  id         :integer          not null, primary key
-#  contest_id :integer
+#  contest_id :integer          not null
 #  problem_no :integer          not null
 #  statement  :text
 #  created_at :datetime         not null
