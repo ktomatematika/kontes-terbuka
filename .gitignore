@@ -25,5 +25,3 @@
 
 .vagrant/
 .sass-cache/
-
-.env
