@@ -9,6 +9,7 @@
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  description :string
+#  seconds     :integer
 #
 
 class Notification < ActiveRecord::Base

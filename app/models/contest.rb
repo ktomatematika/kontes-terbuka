@@ -149,8 +149,7 @@ class Contest < ActiveRecord::Base
     e = EmailNotifications.new
 
     Notification.where(event: 'contest_starting').find_each do |n|
-      time = n.time.to_time - Date.today.to_time
-      e.delay(run_at: start_time - time, queue: "contest_#{id}")
+      e.delay(run_at: start_time - n.seconds, queue: "contest_#{id}")
        .contest_starting(self, n.time_text)
     end
     Notification.where(event: 'contest_started').find_each do |n|
@@ -158,13 +157,11 @@ class Contest < ActiveRecord::Base
        .contest_started(self, n.time_text)
     end
     Notification.where(event: 'contest_ending').find_each do |n|
-      time = n.time.to_time - Date.today.to_time
-      e.delay(run_at: end_time - time, queue: "contest_#{id}")
+      e.delay(run_at: end_time - n.seconds, queue: "contest_#{id}")
        .contest_ending(self, n.time_text)
     end
     Notification.where(event: 'feedback_ending').find_each do |n|
-      time = n.time.to_time - Date.today.to_time
-      e.delay(run_at: feedback_time - time, queue: "contest_#{id}")
+      e.delay(run_at: feedback_time - n.seconds, queue: "contest_#{id}")
        .feedback_ending(self, n.time_text)
     end
   end
