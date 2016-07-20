@@ -58,6 +58,8 @@ gem 'delayed_job_active_record'
 gem 'daemons'
 # Annotates model with schema
 gem 'annotate'
+# Add comments in models
+gem 'migration_comments'
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
