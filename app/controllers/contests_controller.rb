@@ -51,10 +51,11 @@ class ContestsController < ApplicationController
 
   def update
     @contest = Contest.find(params[:id])
+    old_result_released = @contest.result_released
     if @contest.update(contest_params)
       Ajat.info "contest_updated|id:#{@contest.id}"
-      if contest_params[:result_released] = 1
-        EmailNotifications.new.delay(queue: "contest_#{id}")
+      if old_result_released == 0 && contest_params[:result_released] == 1
+        EmailNotifications.new.delay(queue: "contest_#{@contest.id}")
                           .result_released(@contest)
       end
       redirect_to @contest, notice: "#{CGI.escapeHTML(@contest.to_s)} " \
