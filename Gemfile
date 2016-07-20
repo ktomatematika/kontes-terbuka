@@ -55,6 +55,8 @@ gem 'delayed_job_active_record'
 gem 'daemons'
 # Annotates model with schema
 gem 'annotate'
+# Profiler
+gem 'newrelic_rpm'
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
@@ -70,6 +72,9 @@ end
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
+
+  # Environment variables for dev & test
+  gem 'dotenv-rails'
 end
 
 ### END UTILITIES

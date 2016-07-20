@@ -1,13 +1,7 @@
 module Mailgun
   extend self
 
-  if Rails.env == 'production'
-    KEY = ENV['MAILGUN_API_KEY']
-  else
-    require 'mailgun_api_key'
-    KEY = MailgunApiKey::MAILGUN_API_KEY
-  end
-
+  KEY = ENV['MAILGUN_API_KEY']
   DOMAIN = 'ktom.tomi.or.id'.freeze
   URL = "https://api:#{KEY}@api.mailgun.net/v3/#{DOMAIN}/messages".freeze
   FROM = "Kontes Terbuka Olimpiade Matematika <mail@#{DOMAIN}>".freeze

@@ -173,7 +173,7 @@ $(document).ready(function() {
 		}
 
 		function update_calendar() {
-			if (window_type() === 'md') {
+			if (window_type() === 'md' || window_type() === 'lg') {
 				update_year_calendar(displayed_year);
 			} else {
 				update_month_calendar(displayed_year, displayed_month);
@@ -186,7 +186,7 @@ $(document).ready(function() {
 		$(window).resize(update_calendar);
 
 		$('#prev-time').click(function(e) {
-			if (window_type() === 'md') {
+			if (window_type() === 'md' || window_type() === 'lg') {
 				displayed_year--;
 			} else if (displayed_month === 0) {
 				displayed_month += MONTHS_IN_A_YEAR - 1;
@@ -199,7 +199,7 @@ $(document).ready(function() {
 		});
 
 		$('#next-time').click(function(e) {
-			if (window_type() === 'md') {
+			if (window_type() === 'md' || window_type() === 'lg') {
 				displayed_year++;
 			} else if (displayed_month === MONTHS_IN_A_YEAR - 1) {
 				displayed_month -= MONTHS_IN_A_YEAR - 1;
