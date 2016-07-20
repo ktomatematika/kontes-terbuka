@@ -37,8 +37,8 @@ class ContestsController < ApplicationController
     end
 
     grab_problems
-    @user_contests = @contest.contest_result_includes_user
-    @user_contest = @user_contests.find_by(user: current_user)
+    @user_contests = @contest.results
+    @user_contest = @user_contests.find { |uc| uc.user == current_user }
   end
 
   def index

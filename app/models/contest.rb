@@ -105,7 +105,7 @@ class Contest < ActiveRecord::Base
       LongProblem::MAX_MARK * LongProblem.where(contest: self).length
   end
 
-  def contest_result
+  def scores
     filtered_query = user_contests.processed
 
     long_problems.each do |long_problem|
@@ -127,12 +127,8 @@ class Contest < ActiveRecord::Base
     filtered_query
   end
 
-  def contest_result_includes_user
-    contest_result.includes(:user)
-  end
-
-  def rank_participants
-    partcps = contest_result_includes_user
+  def results
+    partcps = scores.includes(:user)
     rank = 0
     current_total = max_score + 1
     partcps.each_with_index do |uc, idx|

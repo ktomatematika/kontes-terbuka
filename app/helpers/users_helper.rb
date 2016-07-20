@@ -1,6 +1,8 @@
 module UsersHelper
   def create_data_row(data_array, tag, additions = '', tr_additions = '')
-    "<tr #{tr_additions}>" + data_array.map { |data| "<#{tag} #{additions}>#{data}</#{tag}>" }.join + '</tr>'
+    "<tr #{tr_additions}>" + data_array.map do |data|
+      "<#{tag} #{additions}>#{data}</#{tag}>"
+    end.join + '</tr>'
   end
 
   def public_header_contents
@@ -22,9 +24,9 @@ module UsersHelper
 
   def full_data_contents
     @user_contests.map do |uc|
-      uc = uc.contest.rank_participants.find { |u| u.user = uc.user }
+      uc = uc.contest.results.find { |u| u.user = uc.user }
       create_data_row([uc.contest,
-                       uc.total_marks.to_s + '/' + uc.contest.max_score.to_s,
+                       uc.total_mark.to_s + '/' + uc.contest.max_score.to_s,
                        uc.rank.to_s + '/' +
                        UserContest.where(contest: uc.contest).length.to_s,
                        uc.award], 'td',
