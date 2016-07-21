@@ -21,6 +21,10 @@ class TexReader
       LongProblem.create(contest: @contest, problem_no: (index + 1),
                          statement: lp)
     end
+
+    tex_path = @contest.problem_tex.path
+    `pdflatex tex_path`
+    @contest.update(problem_pdf: File.open(tex_path[0...-3] + 'pdf', 'r'))
   end
 
   private
