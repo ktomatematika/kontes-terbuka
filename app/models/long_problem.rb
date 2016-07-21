@@ -39,7 +39,7 @@ class LongProblem < ActiveRecord::Base
 
   def fill_long_submissions
     UserContest.where(contest: contest).find_each do |uc|
-      LongSubmission.find_or_create_by(user: uc.user, long_problem: self)
+      LongSubmission.find_or_create_by(user_contest: uc, long_problem: self)
     end
   end
 end

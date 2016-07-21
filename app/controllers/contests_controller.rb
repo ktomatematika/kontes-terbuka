@@ -32,11 +32,15 @@ class ContestsController < ApplicationController
 
   def show
     @contest = Contest.find(params[:id])
-    @user_contests = @contest.results
-    @user_contest = @user_contests.find { |uc| uc.user == current_user }
 
-    if !@user_contest && @contest.currently_in_contest?
-      redirect_to contest_rules_path(params[:id])
+    if @contest.currently_in_contest?
+      @user_contest = UserContest.find_by user: current_user, contest: @contest
+      if @user_contest.nil?
+        redirect_to contest_rules_path(params[:id])
+      end
+    else
+      @user_contests = @contest.results # this is a big query
+      @user_contest = @user_contests.find { |uc| uc.user == current_user }
     end
 
     grab_problems

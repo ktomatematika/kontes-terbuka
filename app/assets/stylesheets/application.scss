@@ -206,9 +206,12 @@ blockquote {
 .btn-lg {
   font-size: 1.2em;
 }
-input[type=text], input[type=password], input[type=email], input[type=date],
-select, textarea {
+input[type=text], input[type=password], input[type=email], input[type=datetime],
+select {
   height: 2em !important;
+  font-size: 1em !important;
+}
+textarea {
   font-size: 1em !important;
 }
 

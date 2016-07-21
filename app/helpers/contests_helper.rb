@@ -31,7 +31,7 @@ module ContestsHelper
   end
 
   def show_award
-    award = @user_contest.processed.award
+    award = @user_contest.award
     unless award.empty?
       "<h3>Anda mendapatkan penghargaan #{award.downcase}!</h3>".html_safe
     end
