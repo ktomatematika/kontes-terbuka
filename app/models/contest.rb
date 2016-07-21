@@ -66,7 +66,7 @@ class Contest < ActiveRecord::Base
                     path: ':rails_root/public/problem_files/' \
                     ':id/:basename.:extension'
   validates_attachment_content_type :problem_tex,
-                                    content_type: ['application/x-tex']
+                                    content_type: ['text/x-tex']
 
   accepts_nested_attributes_for :long_problems
 
