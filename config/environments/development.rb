@@ -44,4 +44,6 @@ Rails.application.configure do
   Paperclip.options[:command_path] = '/usr/local/bin/'
 
   config.web_console.whitelisted_ips = '10.0.2.2'
+
+  Rails.application.routes.default_url_options[:host] = 'localhost:3000'
 end

@@ -38,6 +38,7 @@
 #
 
 class User < ActiveRecord::Base
+  include Rails.application.routes.url_helpers
   rolify
   has_paper_trail
 
@@ -131,7 +132,7 @@ class User < ActiveRecord::Base
   def reset_password
     generate_token(:verification)
     text = 'Untuk melanjutkan process reset password user Anda, klik link ' \
-      "ini: \n\n #{reset_password_path verification: verification}"
+      "ini: \n\n #{reset_password_url verification: verification}"
     Mailgun.send_message to: user.email,
                          subject: 'Reset Password KTO Matematika',
                          text: text
@@ -149,10 +150,8 @@ class User < ActiveRecord::Base
                         run_at: proc { VERIFY_TIME.from_now },
                         queue: 'destroy_if_unverified'
 
-  def send_verify_email(base_url)
-    link = base_url + Rails.application.routes.url_helpers.verify_path(
-      verification: verification
-    )
+  def send_verify_email
+    link = verify_url verification: verification
     text = 'User berhasil dibuat! Sekarang, buka link ini untuk ' \
       "memverifikasikan email Anda:\n\n" \
       "#{link}\n\n" \
@@ -174,10 +173,9 @@ class User < ActiveRecord::Base
     end
   end
 
-  def forgot_password_process(base_url)
+  def forgot_password_process
     generate_token(:verification)
-    link = base_url + Rails.application.routes.url_helpers
-           .reset_password_path(verification: verification)
+    link = reset_password_url verification: verification
     Mailgun.send_message to: email,
                          subject: 'Reset Password KTO Matematika',
                          text: 'Klik link ini untuk mengreset password ' \

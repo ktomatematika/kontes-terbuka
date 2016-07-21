@@ -22,7 +22,7 @@ class UsersController < ApplicationController
          user.save
         user.timezone = Province.find(user_params[:province_id]).timezone
         user.add_role(:veteran) if user_params[:osn] == '1'
-        user.send_verify_email request.base_url
+        user.send_verify_email
         redirect_to root_path, notice: 'User berhasil dibuat! ' \
           'Sekarang, lakukan verifikasi dengan membuka link yang telah ' \
           'kami berikan di email Anda.'
@@ -129,7 +129,7 @@ class UsersController < ApplicationController
       Ajat.warn "forgot_password_no_user|uname:#{params[:username]}"
       redirect_to sign_path, alert: 'User tidak ada.'
     else
-      user.forgot_password_process request.base_url
+      user.forgot_password_process
       Ajat.warn "forgot_password|uname:#{params[:username]}"
       redirect_to login_path, notice: 'Cek email Anda untuk instruksi ' \
       'selanjutnya.'
