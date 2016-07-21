@@ -15,31 +15,24 @@ class UsersController < ApplicationController
 
   def create
     User.transaction do
-      if user_params[:province_id].blank? || user_params[:status_id].blank?
+      user = User.new(user_params)
+
+      if !(user_params[:province_id].blank? ||
+          user_params[:status_id].blank?) && verify_recaptcha(model: user) &&
+         user.save
+        user.timezone = Province.find(user_params[:province_id]).timezone
+        user.add_role(:veteran) if user_params[:osn] == '1'
+        user.send_verify_email request.base_url
+        redirect_to root_path, notice: 'User berhasil dibuat! ' \
+          'Sekarang, lakukan verifikasi dengan membuka link yang telah ' \
+          'kami berikan di email Anda.'
+      else
         Ajat.warn "register_fail|#{user.errors.full_messages}|" \
           "user:#{user.inspect}"
         redirect_to register_path, alert: 'Terdapat kesalahan dalam ' \
         ' registrasi. Jika registrasi masih tidak bisa dilakukan, ' \
           "#{ActionController::Base.helpers.link_to 'kontak kami',
                                                     contact_path}."
-      else
-        user = User.new(user_params)
-        user.timezone = Province.find(user_params[:province_id]).timezone
-
-        if verify_recaptcha(model: user) && user.save
-          user.add_role(:veteran) if user_params[:osn] == '1'
-          user.send_verify_email request.base_url
-          redirect_to root_path, notice: 'User berhasil dibuat! ' \
-            'Sekarang, lakukan verifikasi dengan membuka link yang telah ' \
-            'kami berikan di email Anda.'
-        else
-          Ajat.warn "register_fail|#{user.errors.full_messages}|" \
-            "user:#{user.inspect}"
-          redirect_to register_path, alert: 'Terdapat kesalahan dalam ' \
-          ' registrasi. Jika registrasi masih tidak bisa dilakukan, ' \
-            "#{ActionController::Base.helpers.link_to 'kontak kami',
-                                                      contact_path}."
-        end
       end
     end
   end
@@ -80,7 +73,8 @@ class UsersController < ApplicationController
           user.save
         end
         Ajat.info "user_reset_password|uid:#{user.id}"
-        redirect_to login_path, notice: 'Password berhasil diubah! Silakan login.'
+        redirect_to login_path, notice: 'Password berhasil diubah! ' \
+        'Silakan login.'
       else
         Ajat.warn "user_reset_password_fail_user|user:#{user.inspect}|" \
         "#{user.errors.full_messages}"

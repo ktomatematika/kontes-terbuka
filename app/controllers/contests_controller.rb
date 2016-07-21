@@ -22,8 +22,7 @@ class ContestsController < ApplicationController
     if @contest.save
       Ajat.info "contest_created|id:#{@contest.id}"
       @contest.prepare_emails
-      redirect_to @contest, notice: "Kontes #{CGI.escapeHTML(@contest.to_s)} " \
-      'berhasil dibuat!'
+      redirect_to @contest, notice: "#{@contest} berhasil dibuat!"
     else
       Ajat.warn "contest_created_fail|#{@contest.errors.full_messages}"
       render 'new', alert: 'Kontes gagal dibuat!'
@@ -35,9 +34,7 @@ class ContestsController < ApplicationController
 
     if @contest.currently_in_contest?
       @user_contest = UserContest.find_by user: current_user, contest: @contest
-      if @user_contest.nil?
-        redirect_to contest_rules_path(params[:id])
-      end
+      redirect_to contest_rules_path(params[:id]) if @user_contest.nil?
     else
       @user_contests = @contest.results # this is a big query
       @user_contest = @user_contests.find { |uc| uc.user == current_user }
@@ -63,8 +60,7 @@ class ContestsController < ApplicationController
         EmailNotifications.new.delay(queue: "contest_#{@contest.id}")
                           .result_released(@contest)
       end
-      redirect_to @contest, notice: "#{CGI.escapeHTML(@contest.to_s)} " \
-      'berhasil diubah.'
+      redirect_to @contest, notice: "#{@contest} berhasil diubah."
     else
       Ajat.warn "contest_update_fail|#{@contest.errors.full_messages}"
       render 'edit', alert: "#{@contest} gagal diubah!"

@@ -39,7 +39,7 @@ class UserContest < ActiveRecord::Base
   attr_accessor :rank
 
   def contest_points
-    award = UserContest.processed.find(self.id).award
+    award = UserContest.processed.find(id).award
 
     points = 0
 
@@ -68,9 +68,11 @@ class UserContest < ActiveRecord::Base
   scope :short_marks, lambda {
     joins { short_submissions.outer }
       .joins { short_problems.outer }
-      .where { (short_submissions.short_problem_id == short_problems.id) |
-               ((short_submissions.short_problem_id == nil) &
-                (short_problems.id == nil)) }
+      .where do
+        (short_submissions.short_problem_id == short_problems.id) |
+          ((short_submissions.short_problem_id == nil) &
+           (short_problems.id == nil))
+      end
       .group(:id)
       .select('user_contests.id as id, sum(case when ' \
       'short_submissions.answer = short_problems.answer then 1 else 0 end) ' \

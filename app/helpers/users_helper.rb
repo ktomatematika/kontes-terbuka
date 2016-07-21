@@ -1,25 +1,27 @@
 module UsersHelper
-  def create_data_row(data_array, tag, additions = '', tr_additions = '')
-    "<tr #{tr_additions}>" + data_array.map do |data|
-      "<#{tag} #{additions}>#{data}</#{tag}>"
-    end.join + '</tr>'
+  def create_data_row(data_array, tag, tag_options = nil, tr_options = nil)
+    content_tag :tr, tr_options do
+      safe_join(data_array.map do |data|
+        content_tag(tag.to_s, data, tag_options)
+      end)
+    end
   end
 
   def public_header_contents
-    create_data_row(%w(Kontes Penghargaan), 'th').html_safe
+    create_data_row %w(Kontes Penghargaan), 'th'
   end
 
   def public_data_contents
     @user_contests.map do |uc|
       create_data_row([uc.contest, uc.award], 'td',
-                      'class="clickable-row" data-link="' +
-                      contest_path(uc.contest) + '"',
-                      "class='#{uc.award.downcase}'")
-    end.join.html_safe
+                      { class: 'clickable-row',
+                        'data-link' => 'contest_path(uc.contest)' },
+                      { class: uc.award.downcase })
+    end.join
   end
 
   def full_header_contents
-    create_data_row(%w(Kontes Nilai Peringkat Penghargaan), 'th').html_safe
+    create_data_row %w(Kontes Nilai Peringkat Penghargaan), 'th'
   end
 
   def full_data_contents
@@ -30,9 +32,9 @@ module UsersHelper
                        uc.rank.to_s + '/' +
                        UserContest.where(contest: uc.contest).length.to_s,
                        uc.award], 'td',
-                      'class="clickable-row" data-link="' +
-                      contest_path(uc.contest) + '"',
-                      "class='#{uc.award.downcase}'")
-    end.join.html_safe
+                      { class: 'clickable-row',
+                        'data-link' => contest_path(uc.contest) },
+                      { class: uc.award.downcase })
+    end.join
   end
 end
