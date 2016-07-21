@@ -165,6 +165,12 @@ class ContestsController < ApplicationController
     Ajat.info "point_given|contest_id:#{contest.id}"
   end
 
+  def read_problems
+    c = Contest.find(read_problems_params[:contest_id])
+    c.update(tex_file: read_problems_params[:tex_file])
+    TexReader.new(c, read_problems_params[:answers].split(',')).run
+  end
+
   private
 
   def submission_params
@@ -184,5 +190,9 @@ class ContestsController < ApplicationController
 
   def participate_params
     params.require(:user_contest).permit(:user_id, :contest_id, :osn)
+  end
+
+  def read_problems_params
+    params.permit(:tex_file, :answers)
   end
 end
