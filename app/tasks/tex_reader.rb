@@ -30,7 +30,7 @@ class TexReader
   private
 
   def sp_process
-    tex_file = Paperclip.io_adapters.for(ctst.problem_tex).read
+    tex_file = Paperclip.io_adapters.for(@contest.problem_tex).read
     sp_start_index = tex_file.index(SP_START_SEPARATOR) +
                      SP_START_SEPARATOR.length
     sp_end_index = tex_file.index(SP_END_SEPARATOR)
@@ -39,7 +39,7 @@ class TexReader
   end
 
   def lp_process
-    tex_file = Paperclip.io_adapters.for(ctst.problem_tex).read
+    tex_file = Paperclip.io_adapters.for(@contest.problem_tex).read
     lp_start_index = tex_file.index(LP_START_SEPARATOR) +
                      LP_START_SEPARATOR.length
     lp_end_index = tex_file.index(LP_END_SEPARATOR)
