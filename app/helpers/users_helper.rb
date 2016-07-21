@@ -25,7 +25,7 @@ module UsersHelper
   end
 
   def full_data_contents
-    @user_contests.map do |uc|
+    safe_join(@user_contests.map do |uc|
       uc = uc.contest.results.find { |u| u.user = uc.user }
       create_data_row([uc.contest,
                        uc.total_mark.to_s + '/' + uc.contest.max_score.to_s,
@@ -35,6 +35,6 @@ module UsersHelper
                       { class: 'clickable-row',
                         'data-link' => contest_path(uc.contest) },
                       { class: uc.award.downcase })
-    end.join
+    end)
   end
 end
