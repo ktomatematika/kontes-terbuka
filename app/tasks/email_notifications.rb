@@ -74,7 +74,7 @@ class EmailNotifications
       UserContest.find_by(contest: contest, user: un.user)
     end
     emails = user_contests.inject([]) do |email_array, uc|
-      if uc.nil? && uc.feedback_answers.empty?
+      if uc.nil? || uc.feedback_answers.empty?
         email_array
       else
         email_array.push(uc.user.email)
