@@ -1,0 +1,23 @@
+%article#bagian-a
+  %header
+    %h2 Bagian A: Isian Singkat
+    %h4.text-justify
+      Jawaban setiap soal dipastikan berupa
+      bilangan bulat. Setiap soal bernilai 1 poin. Tidak ada
+      pengurangan untuk jawaban yang salah ataupun kosong. Anda boleh
+      terus mengisi jawaban sebelum kontes berakhir; jawaban yang
+      dikoreksi adalah jawaban yang Anda isi terakhir. Kosongkan
+      jawaban yang tidak ingin Anda ganti.
+
+  = form_for :short_answer,
+    url: contest_create_short_submissions_path(contest_id: params[:id]) do |f|
+    - @short_problems.each do |prob|
+      %h5.problem_no No. #{prob.problem_no}
+      .text-justify= markdown_render prob.statement
+      - submission = ShortSubmission.find_by(short_problem: prob,
+        user_contest: @current_user)
+      - prev_answer = submission.nil? ? '' : submission.answer
+      = f.text_field prob.id, class: 'form-control answer-input',
+        placeholder: prev_answer.to_s, autocomplete: 'off'
+    = hidden_field_tag 'contest_id', @contest.id
+    = f.submit 'Jawab', class: 'btn btn-default has-shade'

@@ -2,8 +2,7 @@ module ContestsHelper
   def markdown_render(text)
     renderer = Redcarpet::Render::HTML.new(escape_html: true)
     markdown = Redcarpet::Markdown.new(renderer)
-    rendered_text = markdown.render(text)
-    rendered_text.gsub('<p>', '').gsub('</p>', '').html_safe
+    rendered_text = sanitize markdown.render(text)
   end
 
   def contests_info_hash

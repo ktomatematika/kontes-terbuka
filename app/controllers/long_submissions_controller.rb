@@ -1,8 +1,7 @@
 class LongSubmissionsController < ApplicationController
   def submit
     LongSubmission.transaction do
-      LongSubmission.find(params[:id]).update_attributes(submission_params)
-                    .save!
+      LongSubmission.find(params[:id]).update(submission_params)
     end
 
     redirect_to Contest.find(params[:contest_id])

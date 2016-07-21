@@ -1,0 +1,31 @@
+%article#bagian-b
+  %header
+    %h2 Bagian B: Uraian
+    %h4.text-justify
+      Setiap soal bernilai 7 poin. Tidak ada
+      pengurangan untuk jawaban yang salah ataupun kosong. Solusi boleh
+      Anda ketik, scan, ataupun foto. Unggah solusi Anda dengan form di
+      bawah ini.
+
+  - @long_problems.each do |prob|
+    %h5.problem_no No. #{prob.problem_no}
+    .text-justify= markdown_render prob.statement
+    - ls = LongSubmission.find_by(user_contest: @user_contest,
+      long_problem: prob)
+    = nested_form_for ls, url: submit_long_submission_path(ls),
+      html: { multipart: true }, method: :post do |f|
+      = hidden_field_tag 'contest_id', @contest.id
+      = f.fields_for :submission_pages do |page_form|
+        = page_form.text_field :page_number,
+          class: 'form-control answer-input', placeholder: 'No. halaman'
+        = link_to 'Lihat file',
+          page_form.object.submission.url(:original, false)
+        = page_form.link_to_remove do
+          %span.glyphicon.glyphicon-trash{ 'aria-hidden' => 'true' }
+
+        = page_form.file_field :submission
+
+      = f.link_to_add 'Tambah halaman', :submission_pages
+      = f.submit 'Jawab', class: 'btn btn-default has-shade'
+
+      = console
