@@ -1,31 +1,4 @@
 module ContestsHelper
-  def markdown_render(text)
-    renderer = Redcarpet::Render::HTML.new(escape_html: true)
-    markdown = Redcarpet::Markdown.new(renderer)
-
-    # Do not render with markdown those that are in math mode. To achieve
-    # this, we split the text with dollar sign and \[, \]
-    # as delimiter, then we alternately render. This is needed,
-    # since if not, $a_2$ will make the 2 become italic by render rules.
-
-    # Split text, while leaving $, \[, \] intact.
-    split_text = text.split(/(\$|\\\[|\\\])/)
-
-    render = true
-    safe_join(split_text.map do |t|
-      if t == '$' || t == '\[' || t == '\]'
-        render = !render
-        t
-      elsif !render
-        t
-      elsif /[[:punct:]]/.match(t[0]).nil? # does not start with punct
-        sanitize(' ' + markdown.render(t)) # add some spacing to tex
-      else
-        sanitize(markdown.render(t))
-      end
-    end)
-  end
-
   def contests_info_hash
     result = {}
     @contests.each do |c|

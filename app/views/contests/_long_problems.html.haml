@@ -9,7 +9,7 @@
 
   - @long_problems.each do |prob|
     %h5.problem_no No. #{prob.problem_no}
-    .text-justify.latex= markdown_render prob.statement
+    .text-justify= prob.statement
     - ls = LongSubmission.find_by(user_contest: @user_contest,
       long_problem: prob)
     = nested_form_for ls, url: submit_long_submission_path(ls),

@@ -1,14 +1,10 @@
 $(document).ready(function() {
 	var problems = $('.latex');
 
-	$.each(problems, function(j, label) {
-		renderMathInElement(label, {
-			delimiters: [
-				{ left: '$', right: '$', display: false },
-				{ left: '\\[', right: '\\]', display: true },
-			],
-		});
+	$.each($('.math.inline'), function(idx, prob) {
+		katex.render(prob.innerText, prob)
 	});
-
-	$('.latex > p').css('display', 'inline');
+	$.each($('.math.display'), function(idx, prob) {
+		katex.render(prob.innerText, prob, { displayMode: true })
+	});
 });
