@@ -175,6 +175,8 @@ GEM
     polyamorous (1.1.0)
       activerecord (>= 3.0)
     rack (1.6.4)
+    rack-mini-profiler (0.10.1)
+      rack (>= 1.2.0)
     rack-protection (1.5.3)
       rack
     rack-test (0.6.3)
@@ -303,6 +305,7 @@ DEPENDENCIES
   paper_trail
   paperclip
   pg
+  rack-mini-profiler
   rack-protection
   rails (= 4.2.6)
   rails_real_favicon

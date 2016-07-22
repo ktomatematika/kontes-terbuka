@@ -91,6 +91,8 @@ gem 'browser_details'
 gem 'sitemap_generator'
 # Auto-email exceptions
 gem 'exception_notification'
+# Database profiler
+gem 'rack-mini-profiler'
 
 ### END MAINTENANCE
 

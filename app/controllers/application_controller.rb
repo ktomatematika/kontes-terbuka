@@ -10,6 +10,12 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery with: :exception
 
+  before_action do
+    if current_user && current_user.has_any_role?(:panitia, :admin)
+      Rack::MiniProfiler.authorize_request
+    end
+  end
+
   def current_user
     if cookies[:auth_token]
       begin
