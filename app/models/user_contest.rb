@@ -70,8 +70,10 @@ class UserContest < ActiveRecord::Base
       .joins { short_problems.outer }
       .where do
         (short_submissions.short_problem_id == short_problems.id) |
-          (short_submissions.short_problem_id.nil? &
-           short_problems.id.nil?)
+          # rubocop:disable Style/NilComparison
+          ((short_submissions.short_problem_id == nil) &
+           (short_problems.id == nil))
+        # rubocop:enable Style/NilComparison
       end
       .group(:id)
       .select('user_contests.id as id, sum(case when ' \
