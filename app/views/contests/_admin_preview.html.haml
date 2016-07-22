@@ -2,8 +2,8 @@
 %h3 Bagian A
 - @short_problems.each do |prob|
   %h5.problem_no No. #{prob.problem_no}
-  .text-justify= prob.statement
+  .text-justify.latex= markdown_render prob.statement
 %h3 Bagian B
 - @long_problems.each do |prob|
   %h5.problem_no No. #{prob.problem_no}
-  .text-justify= prob.statement
+  .text-justify.latex= markdown_render prob.statement
