@@ -85,6 +85,8 @@ Rails.application.configure do
 
   config.middleware.use ExceptionNotification::Rack,
                         mailgun: {},
-                        ignore_exceptions: ['ActionController::InvalidAuthenticityToken'] +
-                                           ExceptionNotifier.ignored_exceptions
+                        ignore_exceptions:
+                        ['ActionController::InvalidAuthenticityToken',
+                         'CanCan::AccessDenied'] +
+                        ExceptionNotifier.ignored_exceptions
 end

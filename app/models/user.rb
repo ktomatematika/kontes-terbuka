@@ -182,6 +182,6 @@ class User < ActiveRecord::Base
                          "Anda:\n#{link}\n\n" \
                          'Jika Anda tidak meminta password Anda untuk ' \
                          'direset, acuhkan saja email ini.'
-    Ajat.info "forgot_password_email_sent|uid:#{uid}"
+    Ajat.info "forgot_password_email_sent|uid:#{id}"
   end
 end
