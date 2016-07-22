@@ -50,6 +50,16 @@ var about_us_data = [
 		description: 'Terjun dalam olimpiade matematika sejak SD, prestasi terakhir Ruben barubaru ini adalah mendapatkan medali emas OSN Matematika tahun 2014. Ingin sekali berpartisipasi dalam IMO, Ruben belum sampai-sampai juga. Semangat Ruben akan matematika terus dipertajam selama 2 tahun ikut dalam pelatihan nasional, melakukan bermacam-macam dosa berat bersama TOMI. Dihasut oleh Herbert Ilhan, Ruben akhirnya turut berdosa-dosa dalam KTO Matematika. Konon Ruben menyukai geometri, kombinatorik, dan perempuan. Ketika penat belajar, pelariannya adalah musik (Ruben juga suka bermain gitar seperti Ricky). Beberapa sumber mengatakan juga bahwa Ruben percaya dunia ini deterministik. Ruben ingin menyampaikan, "Ini description gua yang nulis sendiri tapi kenapa pakai sudut pandang orang ketiga ya?"',
 		image: 'ruben.jpg',
 	},
+	{
+		name: 'Bivan Alzacky Harmanto',
+		description: 'Bivan Alzacky Harmanto adalah salah satu siswa yang berhasil mengikuti IMO 2012 dan 2013 dan menyumbangkan medali perunggu untuk Indonesia. Saat ini Bivan sedang menempuh studi S-1 di KAIST (universitas nomor 1 di Korea untuk bidang Teknik) jurusan Ilmu Komputer. Saat ini Bivan juga menjadi salah satu anggota tim koreksi KTO Matematika. Kegemaran Bivan, selain utak-atik soal-soal Matematika (khususnya geometri) dan komputer, adalah suka cek Facebook tanpa alasan yang jelas (sekadar buka dan lihat-lihat saja), suka membagi ceritanya di blognya, dan juga suka bermain game di laptopnya. Oh iya satu lagi, board game juga sekarang adalah salah satu kegemarannya, berkat salah satu temannya di KAIST yang terbilang sangat gila terhadap board game.',
+		image: 'bivan.jpg',
+	},
+	{
+		name: 'Muhammad Afifurrahman',
+		description: 'Muhammad Afifurrahman, biasa dipanggil Afif, adalah seorang lajang muda yang akan menuntut ilmu di FMIPA ITB. Lelaki asli Banjarmasin ini menjalani masa sekolah menengahnya selama enam tahun di Banten, dan tercatat pernah mewakili provinsi Banten dalam OSN 2014 dan 2015 di bidang matematika, masing-masing memperoleh medali perak dan emas. Pria penggemar mie dan FM ini tercatat pula berhasil menembus pelatihan nasional tahap tiga calon peserta IMO di 2016, dan berhasil membuat banyak pacarnya menjadi sepuluh kali lipat lebih banyak selama menjalani pelatihan nasional. Saat ini, pria yang mengaku dirinya ganteng ini membantu mengurus akun-akun media sosial KTOM, menyumbang soal untuk kontes bulanan, dan berputar-putar keliling internet, mencari hal-hal yang menarik.',
+		image: 'afif.jpg',
+	},
 ];
 
 // Randomize the order!
