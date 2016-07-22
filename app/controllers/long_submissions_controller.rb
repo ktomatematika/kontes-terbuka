@@ -7,6 +7,7 @@ class LongSubmissionsController < ApplicationController
         flash[:alert] = 'Jawaban bagian B gagal diupload! Pastikan nomor
         halaman di setiap soal berbeda-beda dan file-file yang Anda upload
         merupakan file PDF/zip/Word/gambar.'
+      end
     end
 
     redirect_to Contest.find(params[:contest_id])

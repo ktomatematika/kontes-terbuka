@@ -9,7 +9,7 @@ class Ability
       can [:download_pdf, :give_feedback, :feedback_submit], Contest,
           id: UserContest.where(user: user).pluck(:contest_id)
 
-      can :download, SubmissionPage, id: user.user_contests.map { |uc| uc.long_submissions }.flatten.map { |ls| ls.submission_pages }.flatten.map { |p| p.id }
+      can :download, SubmissionPage, id: user.user_contests.map(&:long_submissions).flatten.map(&:submission_pages).flatten.map(&:id)
       can :show, User
       can :submit, LongProblem
       can [:mini_edit, :mini_update, :change_password,
