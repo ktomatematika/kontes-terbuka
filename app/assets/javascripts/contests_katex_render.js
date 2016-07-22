@@ -1,10 +1,12 @@
 $(document).ready(function() {
 	var problems = $('.latex');
 
-	$.each($('.math.inline'), function(idx, prob) {
-		katex.render(prob.innerText, prob)
-	});
-	$.each($('.math.display'), function(idx, prob) {
-		katex.render(prob.innerText, prob, { displayMode: true })
+	$.each(problems, function(j, label) {
+		renderMathInElement(label, {
+			delimiters: [
+				{ left: '$', right: '$', display: false },
+				{ left: '\\[', right: '\\]', display: true },
+			],
+		});
 	});
 });

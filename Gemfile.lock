@@ -157,6 +157,7 @@ GEM
     nokogiri (1.6.8)
       mini_portile2 (~> 2.1.0)
       pkg-config (~> 1.1.7)
+    pandoc-ruby (2.0.1)
     paper_trail (5.1.1)
       activerecord (>= 3.0, < 6.0)
       activesupport (>= 3.0, < 6.0)
@@ -296,6 +297,7 @@ DEPENDENCIES
   mv-postgresql
   nested_form
   newrelic_rpm
+  pandoc-ruby
   paper_trail
   paperclip
   pg

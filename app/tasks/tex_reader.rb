@@ -48,30 +48,7 @@ class TexReader
   end
 
   def tex_file_process(tex_string)
-    preprocessed = tex_string.delete("\n").delete("\t").split('\item').gsub('`', '\`').gsub("'", "\'")
-
-    level = 0
-    `echo '#{preprocessed}' | pandoc -f latex -t html`.split(/(<ul>|<\/ul>|<ol>|<\/ol>)/).inject(['']) do |memo, item|
-      if item == '<ul>' || item == '<ol>'
-        level += 1
-
-        if level == 1
-          memo
-        else
-          memo << item
-        end
-      elsif item == '</ul>' || item == '</ol>'
-        level -= 1
-
-        if level == 0
-          memo
-        else
-          memo << item
-        end
-      else
-        memo[-1] += item
-        memo
-      end
-    end
+    preprocessed = tex_string.delete("\n").delete("\t").split('\item')
+    PandocRuby.convert(preprocessed, from: :latex, to: :markdown).split(/\n\d+\.\s*/)
   end
 end
