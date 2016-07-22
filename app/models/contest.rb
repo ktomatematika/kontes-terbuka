@@ -57,13 +57,13 @@ class Contest < ActiveRecord::Base
 
   has_attached_file :problem_pdf,
                     url: '/problems/:id/:basename.:extension',
-                    path: ':rails_root/public/problems/:id/:basename.:extension'
+                    path: ':rails_root/public/contest_files/problems/:id/:basename.:extension'
   validates_attachment_content_type :problem_pdf,
                                     content_type: ['application/pdf']
 
   has_attached_file :problem_tex,
-                    url: '/problem_files/:id/:basename.:extension',
-                    path: ':rails_root/public/problem_files/' \
+                    url: '/problems/:id/:basename.:extension',
+                    path: ':rails_root/public/contest_files/problems/' \
                     ':id/:basename.:extension'
   validates_attachment_content_type :problem_tex,
                                     content_type: ['text/x-tex']
