@@ -12,12 +12,12 @@ $(document).ready(function() {
 			.format_indo();
 
 		$('#rules-text').html($('#rules-text').html()
-				.replace(/\$name/g, name)
-				.replace(/\$start_time/g, start_time)
-				.replace(/\$end_time/g, end_time)
-				.replace(/\$result_time/g, result_time)
-				.replace(/\$feedback_time/g, feedback_time)
-				.replace(/\$1hal1soal/g,
+				.replace(/\%name/g, name)
+				.replace(/\%start_time/g, start_time)
+				.replace(/\%end_time/g, end_time)
+				.replace(/\%result_time/g, result_time)
+				.replace(/\%feedback_time/g, feedback_time)
+				.replace(/\%1hal1soal/g,
 					$('#rules-contest-data').data('halsoal'))
 				);
 	}

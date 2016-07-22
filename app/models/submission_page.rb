@@ -34,7 +34,16 @@ class SubmissionPage < ActiveRecord::Base
                     'no:problem_no/peserta:user_id/kontes:contest_id_' \
                     'no:problem_no_peserta:user_id_hal:page_number.:extension'
   validates_attachment_content_type :submission,
-                                    content_type: ['application/pdf']
+                                    content_type: ['application/pdf',
+                                                   'application/vnd.' \
+                                                   'openxmlformats-' \
+                                                   'officedocument.' \
+                                                   'wordprocessingml.' \
+                                                   'document',
+                                                   'application/msword',
+                                                   'image/png',
+                                                   'image/jpeg',
+                                                   'application/zip']
 
   Paperclip.interpolates :contest_id do |attachment, _style|
     attachment.instance.long_submission.long_problem.contest_id
@@ -45,7 +54,7 @@ class SubmissionPage < ActiveRecord::Base
   end
 
   Paperclip.interpolates :user_id do |attachment, _style|
-    attachment.instance.long_submission.user_id
+    attachment.instance.long_submission.user_contest.user_id
   end
 
   Paperclip.interpolates :page_number do |attachment, _style|

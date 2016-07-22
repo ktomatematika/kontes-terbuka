@@ -18,14 +18,12 @@
       = f.fields_for :submission_pages do |page_form|
         = page_form.text_field :page_number,
           class: 'form-control answer-input', placeholder: 'No. halaman'
+        = page_form.file_field :submission
+
         = link_to 'Lihat file',
           page_form.object.submission.url(:original, false)
         = page_form.link_to_remove do
           %span.glyphicon.glyphicon-trash{ 'aria-hidden' => 'true' }
 
-        = page_form.file_field :submission
-
       = f.link_to_add 'Tambah halaman', :submission_pages
       = f.submit 'Jawab', class: 'btn btn-default has-shade'
-
-      = console
