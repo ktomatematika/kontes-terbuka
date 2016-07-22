@@ -14,6 +14,7 @@
 //= require jquery.turbolinks
 //= require jquery_ujs
 //= require validate
+//= require validate-additional
 //= require katex/katex
 //= require katex_render.min.js
 //= require flowtype.js

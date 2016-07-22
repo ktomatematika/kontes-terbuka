@@ -51,7 +51,8 @@ $(document).ready(function() {
 		$(this).parent().children('input').prop('type', 'text');
 	});
 
-	peek_buttons.on('mouseup mouseleave touchmove touchend touchcancel', function() {
+	peek_buttons.on('mouseup mouseleave touchmove touchend touchcancel',
+	function() {
 		$(this).parent().children('input').prop('type', 'password');
 	});
 });

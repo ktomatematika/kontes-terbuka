@@ -17,7 +17,8 @@
       - submission = ShortSubmission.find_by(short_problem: prob,
         user_contest: @current_user)
       - prev_answer = submission.nil? ? '' : submission.answer
-      = f.text_field prob.id, class: 'form-control answer-input',
-        placeholder: prev_answer.to_s, autocomplete: 'off'
+      .form-group
+        = f.text_field prob.id, class: 'form-control answer-input',
+          placeholder: prev_answer.to_s, autocomplete: 'off'
     = hidden_field_tag 'contest_id', @contest.id
     = f.submit 'Jawab', class: 'btn btn-default has-shade'

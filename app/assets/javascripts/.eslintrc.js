@@ -63,6 +63,7 @@ module.exports = {
 		'no-warning-comments': 'warn',
 		'no-with': 'warn',
 		'space-before-function-paren': ['error', 'never'],
+		'no-unused-vars': ['error', { args: 'none' }],
 	},
 	'globals': {
 		'now': false,
@@ -83,5 +84,6 @@ module.exports = {
 		'MONTHS_IN_A_YEAR': false,
 		'DAYS_IN_A_WEEK': false,
 		'MONTH_CALENDAR_IN_A_ROW': false,
+		'grecaptcha': false,
 	}
 };
