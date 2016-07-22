@@ -14,11 +14,10 @@
     - @short_problems.each do |prob|
       %h5.problem_no No. #{prob.problem_no}
       .text-justify.latex= markdown_render prob.statement
-      - submission = ShortSubmission.find_by(short_problem: prob,
-        user_contest: @current_user)
+      - submission = @user_contest.short_submissions.find_by short_problem: prob
       - prev_answer = submission.nil? ? '' : submission.answer
       .form-group
         = f.text_field prob.id, class: 'form-control answer-input',
-          placeholder: prev_answer.to_s, autocomplete: 'off'
+          placeholder: prev_answer, autocomplete: 'off'
     = hidden_field_tag 'contest_id', @contest.id
     = f.submit 'Jawab', class: 'btn btn-default has-shade'

@@ -48,3 +48,8 @@ $.validator.addMethod('alphanum', function(value, elem, params) {
 $.validator.addMethod('recaptcha', function(value, elem, params) {
 	return grecaptcha.getResponse().length !== 0;
 });
+
+// Adds a method to check for integers.
+$.validator.addMethod('integer', function(value, elem, params) {
+	return this.optional(elem) || /^-?\d+$/.test(value);
+});

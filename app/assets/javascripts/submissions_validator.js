@@ -3,9 +3,9 @@ $(document).ready(function() {
 	$('#bagian-b form').validate();
 	$.each($('#bagian-a form input[type=text]'), function(idx, elem) {
 		$(elem).rules('add', {
-			digits: true,
+			integer: true,
 			messages: {
-				digits: 'Jawaban Anda harus berupa bilangan bulat.',
+				integer: 'Jawaban Anda harus berupa bilangan bulat.',
 			},
 		});
 	});
