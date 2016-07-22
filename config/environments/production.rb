@@ -83,5 +83,8 @@ Rails.application.configure do
 
   Rails.application.routes.default_url_options[:host] = 'https://ktom.tomi.or.id'
 
-  config.middleware.use ExceptionNotification::Rack, mailgun: {}
+  config.middleware.use ExceptionNotification::Rack,
+                        mailgun: {},
+                        ignore_exceptions: ['ActionController::InvalidAuthenticityToken'] +
+                                           ExceptionNotifier.ignored_exceptions
 end
