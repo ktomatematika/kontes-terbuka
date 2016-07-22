@@ -89,6 +89,8 @@ gem 'newrelic_rpm'
 gem 'browser_details'
 # Sitemap generator
 gem 'sitemap_generator'
+# Auto-email exceptions
+gem 'exception_notification'
 
 ### END MAINTENANCE
 

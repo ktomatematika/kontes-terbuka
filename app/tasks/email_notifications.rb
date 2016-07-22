@@ -17,7 +17,7 @@ class EmailNotifications
   def contest_started(contest)
     subject = 'Kontes sudah dimulai!'
     text = "#{contest} sudah dimulai! Silakan membuka soalnya di " \
-    "#{contest_url contest}."
+    "#{contest_url contest}"
     notif = Notification.find_by(event: 'contest_started')
     emails = notif.user_notifications.map { |un| un.user.email }
 
