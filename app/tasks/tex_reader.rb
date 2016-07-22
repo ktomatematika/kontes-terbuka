@@ -49,6 +49,15 @@ class TexReader
 
   def tex_file_process(tex_string)
     preprocessed = tex_string.delete("\n").delete("\t").split('\item')
-    PandocRuby.convert(preprocessed, from: :latex, to: :markdown).split(/\n\d+\.\s*/)
+
+    nest_level = 0
+    preprocessed.reduce([]) do |memo, item|
+      next memo if item.empty?
+      nest_level == 0 ? memo << item : memo[-1] += item
+
+      nest_level += 1 if item.include? '\\begin'
+      nest_level -= 1 if item.include? '\\end'
+      memo
+    end
   end
 end
