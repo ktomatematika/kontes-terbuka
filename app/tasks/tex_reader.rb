@@ -43,7 +43,6 @@ class TexReader
 
   def tex_file_process(tex_string)
     preprocessed = tex_string.delete("\n").delete("\t").split('\item')
-
-    `echo '#{preprocessed}' | pandoc -f latex -t markdown`.split(/\n\d+\.\s*/)
+    PandocRuby.convert(preprocessed, from: :latex, to: :markdown).split(/\n\d+\.\s*/)
   end
 end

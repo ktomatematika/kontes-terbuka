@@ -61,6 +61,8 @@ gem 'annotate'
 # Add comments in models
 gem 'migration_comments'
 
+gem 'pandoc-ruby'
+
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console'
