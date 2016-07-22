@@ -1,5 +1,5 @@
 class RolesController < ApplicationController
-  load_and_authorize_resource
+  authorize_resource
 
   def create_marker
     long_problem = LongProblem.find(params[:long_problem_id])

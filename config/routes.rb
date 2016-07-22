@@ -39,6 +39,9 @@ Rails.application.routes.draw do
     resources :feedback_questions, path: '/feedback-questions'
 
     post 'give-points', to: 'contests#give_points'
+
+    get 'pdf', to: 'contests#download_pdf'
+    get 'submissions/:id', to: 'submission_pages#download'
   end
 
   # resources :market_items, path: '/market-items'
@@ -57,7 +60,7 @@ Rails.application.routes.draw do
   get '/penguasa', to: 'home#admin', as: :admin
 
   resources :long_submissions, path: '/long-submissions' do
-    post 'submit' => 'long_submissions#submit', on: :member
+    post 'submit', to: 'long_submissions#submit', on: :member
   end
 
   get '/assign/:id', to: 'contests#assign_markers', as: :assign_markers

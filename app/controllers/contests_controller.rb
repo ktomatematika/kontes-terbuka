@@ -76,7 +76,9 @@ class ContestsController < ApplicationController
 
   def show_rules
     @contest = Contest.find(params[:contest_id])
-    @user_contest = UserContest.new
+    unless UserContest.find_by(contest: @contest, user: current_user).nil?
+      redirect_to contest_path(@contest)
+    end
   end
 
   def accept_rules
@@ -135,8 +137,13 @@ class ContestsController < ApplicationController
     @feedback_questions = @contest.feedback_questions
   end
 
+  def download_pdf
+    @contest = Contest.find(params[:contest_id])
+    send_file @contest.problem_pdf.path
+  end
+
   def download_feedback
-    contest = Contest.find(params[:contest_id])
+    @contest = Contest.find(params[:contest_id])
     @feedback_questions = contest.feedback_questions
     @user_contests = contest.user_contests
     respond_to do |format|
@@ -158,8 +165,8 @@ class ContestsController < ApplicationController
   end
 
   def give_points
-    contest = Contest.find(params[:contest_id])
-    contest.user_contests.each do |uc|
+    @contest = Contest.find(params[:contest_id])
+    @contest.user_contests.each do |uc|
       PointTransaction.create point: uc.contest_points, description: contest
     end
     Ajat.info "point_given|contest_id:#{contest.id}"

@@ -28,8 +28,7 @@ class SubmissionPage < ActiveRecord::Base
   enforce_migration_validations
 
   has_attached_file :submission,
-                    url: '/submissions/kontes:contest_id/no:problem_no/peserta:user_id/' \
-                    'kontes:contest_id_no:problem_no_peserta:user_id_hal:page_number.:extension',
+                    url: '/contests/:contest_id/submissions/:id',
                     path: ':rails_root/public/contest_files/submissions/kontes:contest_id/' \
                     'no:problem_no/peserta:user_id/kontes:contest_id_' \
                     'no:problem_no_peserta:user_id_hal:page_number.:extension'
