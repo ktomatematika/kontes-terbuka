@@ -79,6 +79,7 @@ class ContestsController < ApplicationController
     unless UserContest.find_by(contest: @contest, user: current_user).nil?
       redirect_to contest_path(@contest)
     end
+    @user_contest = UserContest.new
   end
 
   def accept_rules
