@@ -39,10 +39,12 @@ Date.prototype.compare_day = function(other) {
  * Example: "Senin, 13 Februari 2016 jam 08:00 WIB"
  */
 Date.prototype.format_indo = function() {
-// Get timezone data from the essential-data content tag in
+	// Get timezone data from the essential-data content tag in
 	// application.html.erb.
+	
+	var copy = new Date(this);
 	var timezone = $('#essential-data').data('timezone');
-	var parsed_timezone = this.getTimezoneOffset() / -60;
+	var parsed_timezone = copy.getTimezoneOffset() / -60;
 
 	// Diff is the difference from the user's timezone vs the parsed_timezone.
 	// We need to correct for difference.
@@ -58,15 +60,15 @@ Date.prototype.format_indo = function() {
 		diff = 0;
 	}
 
-	this.setHours(this.getHours() + diff);
+	copy.setHours(copy.getHours() + diff);
 
-	var day = long_days[this.getDay()];
-	var date = this.getDate();
-	var month = months[this.getMonth()];
-	var year = this.getFullYear();
-	var hour = this.getHours();
+	var day = long_days[copy.getDay()];
+	var date = copy.getDate();
+	var month = months[copy.getMonth()];
+	var year = copy.getFullYear();
+	var hour = copy.getHours();
 	if (hour < 10) { hour = '0' + hour; }
-	var minute = this.getMinutes();
+	var minute = copy.getMinutes();
 	if (minute < 10) { minute = '0' + minute; }
 
 	return day + ', ' + date + ' ' + month + ' ' + year + ' jam ' + hour +
