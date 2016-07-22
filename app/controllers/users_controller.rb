@@ -83,7 +83,7 @@ class UsersController < ApplicationController
       end
     else
       Ajat.warn 'user_reset_password_fail_no_verification|' \
-        "verification:#{user.verification}"
+        "verification:#{params[:verification]}"
       redirect_to reset_password_path(verification: params[:verification]),
                   alert: 'Terdapat kesalahan! Coba lagi.'
     end
