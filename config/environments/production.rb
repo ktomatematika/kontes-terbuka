@@ -89,4 +89,6 @@ Rails.application.configure do
                         ['ActionController::InvalidAuthenticityToken',
                          'CanCan::AccessDenied'] +
                         ExceptionNotifier.ignored_exceptions
+
+  config.middleware.use Rack::Deflater
 end

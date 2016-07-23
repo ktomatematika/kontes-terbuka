@@ -1,0 +1,28 @@
+= content_tag 'div', '', id: 'contest-data',
+  data: { name: @contest.name,
+  start_time: @contest.start_time,
+  end_time: @contest.end_time,
+  result_time: @contest.result_time,
+  feedback_time: @contest.feedback_time,
+  result_released: @contest.result_released }
+
+.container
+  .row
+    %section
+      = render 'header'
+      - if can?(:preview, Contest) && !@contest.started?
+        = render 'contest_preview'
+
+      - if @contest.currently_in_contest?
+        = render 'short_problems' unless @short_problems.empty?
+        = render 'long_problems' unless @long_problems.empty?
+
+      - if @contest.result_released
+        = render 'own_results' unless @user_contest.nil?
+        = render 'feedback' unless @contest.feedback_closed?
+        = render 'results'
+      - elsif @contest.ended? && can?(:preview, Contest)
+        %h2 == HANYA PANITIA ==
+        = render 'results'
+
+      = render 'contest_aside_info' if @contest.currently_in_contest?

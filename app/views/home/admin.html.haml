@@ -1,0 +1,7 @@
+.container
+  %h1 Halaman Admin
+  = link_to 'Kontes Baru', new_contest_path if can? :create, Contest
+  %h2 Koreksian
+  %ul
+    - @long_problems.each do |lp|
+      %li= link_to lp, mark_solo_path(lp)

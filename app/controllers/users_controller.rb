@@ -167,7 +167,7 @@ class UsersController < ApplicationController
   end
 
   def index
-    @users = User.all
+    @users = User.where(enabled: true)
   end
 
   def edit

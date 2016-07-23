@@ -31,6 +31,4 @@ class Role < ActiveRecord::Base
             allow_nil: true
 
   scopify
-
-  ADMIN_ROLES = %w(admin marking_manager marker).freeze
 end

@@ -1,0 +1,27 @@
+.container
+  = console
+  %h1 Daftar User
+  %table.table.table-responsive
+    %tr
+      %th Username
+      %th= 'Email' if can? :see_all, User
+      %th= 'Nama Lengkap' if can? :see_all, User
+      %th Provinsi
+      %th Status
+      %th Sekolah/Institusi
+      %th= 'Poin' if can? :see_all, User
+      %th= 'Edit' if can? :edit, User
+      %th= 'Hapus' if can? :destroy, User
+
+    - @users.each do |u|
+      %tr
+        %td= u.username
+        %td= u.email if can? :see_all, User
+        %td= u.fullname if can? :see_all, User
+        %td= u.province
+        %td= u.status
+        %td= u.school
+        %td= u.point if can? :see_all, User
+        %td= link_to 'Edit', edit_user_path(u) if can? :edit, u
+        %td= link_to 'Hapus', user_path(u), method: :delete,
+          data: { confirm: 'Eh serius? Hati-hati' } if can? :destroy, User
