@@ -15,7 +15,7 @@
       %th= 'Poin' if can? :see_full_index, User
 
     - @users.each do |u|
-      %tr.users-index-row.clickable-row{ data: { link: user_path(u) } }
+      %tr.users-index-row.clickable-row{ data: { link: user_path(u), enabled: u.verification.nil?.to_s } }
         %td= u.username
         %td= u.email if can? :see_full_index, User
         %td= u.fullname if can? :see_full_index, User

@@ -32,6 +32,10 @@
   background-color: #fff; 
 }
 
+.users-index-row[data-enabled=false] {
+  color: #00f;
+}
+
 #prev-users-index {
   float: left;
 }

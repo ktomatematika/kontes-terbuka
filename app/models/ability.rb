@@ -10,6 +10,8 @@ class Ability
           id: UserContest.where(user: user).pluck(:contest_id)
 
       can :download, SubmissionPage, id: user.submission_pages.pluck(:id)
+      can :index, User
+      can :show, User, id: User.where(enabled: true).pluck(:id)
       can [:show, :index], User
       can :submit, LongProblem
       can [:see_full, :mini_edit, :mini_update, :change_password,
@@ -28,6 +30,7 @@ class Ability
       if user.has_role? :panitia
         can :preview, Contest
         can [:see_full_index, :see_full, :edit, :update], User
+        can :destroy, User, id: User.where.not(verification: nil).pluck(:id)
         can [:admin, :profile], Ability
       end
 

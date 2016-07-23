@@ -117,6 +117,7 @@ class Contest < ActiveRecord::Base
     filtered_query = user_contests.processed
 
     long_problems.each do |long_problem|
+      byebug
       filtered_query =
         filtered_query
         .joins do
@@ -176,5 +177,9 @@ class Contest < ActiveRecord::Base
 
   def destroy_prepared_emails
     Delayed::Job.where(queue: "contest_#{id}").destroy_all
+  end
+
+  def purge_panitia
+    User.with_role(:panitia).each { |u| user_contests.find_by(user: u).destroy }
   end
 end

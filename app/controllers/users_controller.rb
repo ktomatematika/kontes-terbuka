@@ -172,7 +172,7 @@ class UsersController < ApplicationController
   def index
     @page = 25
     @users = User.all
-    @users = @users.where(enabled: true) if can? :see_full_index, User
+    @users = @users.where(enabled: true) unless can? :see_full_index, User
     params[:start] = 0 if params[:start].to_i < 0
     @users = @users.limit(@page).offset(params[:start])
   end

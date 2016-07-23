@@ -31,3 +31,7 @@
             - User.time_zone_set.each do |tz|
               %option{ value: tz, selected: (tz == @user.timezone) }= tz
         = f.submit 'Ganti', class: 'btn btn-default has-shade'
+
+  - if can? :destroy, @user
+    = link_to 'Hancurkan', @user, method: :delete,
+      class: 'btn btn-default has-shade', data: { confirm: 'Eh serius?' }
