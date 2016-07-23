@@ -2,8 +2,8 @@ class ContestsController < ApplicationController
   authorize_resource
 
   def grab_problems
-    @short_problems = @contest.short_problems.order('problem_no').all
-    @long_problems = @contest.long_problems.order('problem_no').all
+    @short_problems = @contest.short_problems.order('problem_no').include(short_submissions: :user_contest)
+    @long_problems = @contest.long_problems.order('problem_no').include(long_submissions: :user_contest)
   end
 
   def admin
