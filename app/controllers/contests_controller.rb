@@ -78,7 +78,7 @@ class ContestsController < ApplicationController
     @contest = Contest.find(params[:contest_id])
     @user_contest = UserContest.find_by(contest: @contest,
                                         user: current_user) ||
-      UserContest.new
+                    UserContest.new
   end
 
   def accept_rules

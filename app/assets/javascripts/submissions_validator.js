@@ -1,11 +1,29 @@
+function distinct(arr) {
+	for (var i = 0; i < arr.length; i++) {
+		for (var j = 0; j < i; j++) {
+			if (arr[i] === arr[j]) {
+				return false;
+			}
+		}
+	}
+	return true;
+}
+
 $(document).ready(function() {
 	$('#bagian-a form').validate();
 	$('#bagian-b form').validate({
 		submitHandler: function(form) {
-			if ($(form).find('.fields:visible').length !== 0) {
-				form.submit();
-			} else {
+			var inputs = $(form).find('.fields:visible input[type=text]');
+			var page_numbers = $.map(inputs, function(elem) {
+				return $(elem).val();
+			});
+
+			if (page_numbers.length === 0) {
 				alert('Anda tidak mengupload apa-apa!');
+			} else if (!distinct(page_numbers)) {
+				alert('Nomor halaman Anda ada yang duplikat!');
+			} else {
+				form.submit();
 			}
 		},
 	});

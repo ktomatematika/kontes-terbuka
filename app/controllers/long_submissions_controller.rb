@@ -1,25 +1,12 @@
 class LongSubmissionsController < ApplicationController
   def submit
-    begin
-      pages = params[:long_submission] &&
-              params[:long_submission][:submission_pages_attributes]
-      numbers = pages && pages.map { |_, v| v['page_number'] }
-
-      if pages.nil? || !pages.detect { |_, v| v[:submission].nil? }.nil?
-        flash[:alert] = 'Jawaban bagian B gagal dikirim! Masukan sesuatu ' \
-          'di setiap halaman.'
-      elsif !numbers.detect { |n| numbers.rindex(n) != numbers.index(n) }.nil?
-        flash[:alert] = 'Jawaban bagian B gagal dikirim! ' \
-          'Pastikan setiap nomor halaman Anda berbeda.'
-      else
-        LongSubmission.find(params[:id]).update!(submission_params)
-        flash[:notice] = 'Jawaban bagian B berhasil diupload!'
-      end
-    rescue ActiveRecord::ActiveRecordError
-      flash[:alert] = 'Jawaban bagian B gagal dikirim! Jika ini berlanjut, ' \
-        "#{ActionController::Base.helpers.link_to 'kontak kami', contact_path}."
-    end
-    redirect_to Contest.find(params[:contest_id])
+    LongSubmission.find(params[:id]).update!(submission_params)
+    redirect_to Contest.find(params[:contest_id]),
+      notice: 'Jawaban bagian B berhasil diupload!'
+  rescue ActiveRecord::ActiveRecordError
+    redirect_to Contest.find(params[:contest_id]),
+      alert: 'Jawaban bagian B gagal dikirim! Jika ini berlanjut, ' \
+      "#{ActionController::Base.helpers.link_to 'kontak kami', contact_path}."
   end
 
   private
