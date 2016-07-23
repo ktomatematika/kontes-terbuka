@@ -17,18 +17,18 @@ class Ability
            :process_change_notifications], User, id: user.id
 
       if user.has_role? :marking_manager
-        can [:admin, :assign_markers, :save_markers], Contest
+        can [:assign_markers, :save_markers], Contest
         can :mark_final, LongProblem
         can [:create_marker, :remove_marker], Role
       end
 
-      can [:mark_solo, :mark_final], LongProblem,
+      can [:mark_solo, :mark_final, :download], LongProblem,
           id: LongProblem.with_role(:marker, user).pluck(:id)
 
       if user.has_role? :panitia
         can :preview, Contest
-        can [:see_all, :edit, :update], User
-        can :admin, Ability
+        can [:see_full_index, :see_full, :edit, :update], User
+        can [:admin, :profile], Ability
       end
 
       can :manage, :all if user.has_role? :admin

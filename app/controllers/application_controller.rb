@@ -1,17 +1,13 @@
 require 'active_record'
 
 class ApplicationController < ActionController::Base
-  # Prevent CSRF attacks by raising an exception.
-  # For APIs, you may want to use :null_session instead.
-  include CanCan::ControllerAdditions
+  protect_from_forgery with: :exception
 
   before_action :set_paper_trail_whodunnit
   before_action :require_login, :set_timezone
 
-  protect_from_forgery with: :exception
-
   before_action do
-    if current_user && current_user.has_any_role?(:panitia, :admin)
+    if can? :profile, Ability
       Rack::MiniProfiler.authorize_request
     end
   end

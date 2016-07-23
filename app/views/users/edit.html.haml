@@ -1,0 +1,33 @@
+.container
+  %h1 Edit #{@user}
+
+  .row
+    .col-md-6
+      = form_for :user, url: user_path(@user), method: :patch do |f|
+        %p
+          %label{ for: 'user_email' } Email:
+          = f.text_field :email, class: 'form-control'
+        %p
+          %label{ for: 'user_fullname' } Nama lengkap:
+          = f.text_field :fullname, class: 'form-control'
+        %p
+          %label{ for: 'user_school' } Sekolah/Institusi:
+          = f.text_field :school, class: 'form-control'
+        %p
+          %label{ for: 'user_province' } Provinsi:
+          = f.collection_select :province_id, Province.all(), :id, :name,
+            { prompt: 'Provinsi' }, class: 'form-control'
+        %p
+          %label{ for: 'user_status' } Status:
+          = f.collection_select :status_id, Status.all(), :id, :name,
+            { prompt: 'Status' }, class: 'form-control'
+        %p
+          %label{ for: 'user_color' } Warna:
+          = f.collection_select :color_id, Color.all(), :id, :name,
+            { prompt: 'Warna' }, class: 'form-control'
+        %p
+          %label{ for: 'user_timezone' } Zona waktu:
+          %select.form-control#user_timezone{ name: 'user[timezone]' }
+            - User.time_zone_set.each do |tz|
+              %option{ value: tz, selected: (tz == @user.timezone) }= tz
+        = f.submit 'Ganti', class: 'btn btn-default has-shade'

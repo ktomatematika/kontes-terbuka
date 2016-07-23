@@ -45,6 +45,9 @@ Rails.application.routes.draw do
     get 'submissions/:id', to: 'submission_pages#download'
   end
 
+  get '/download-submissions/:id', to: 'long_problems#download',
+                                   as: 'download-submissions'
+
   # resources :market_items, path: '/market-items'
 
   get '/mark-solo/:id', to: 'long_problems#mark_solo', as: :mark_solo

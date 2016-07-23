@@ -27,3 +27,4 @@
 .sass-cache/
 
 /config/initializers/env.rb
+.byebug_history

@@ -12,12 +12,12 @@ module UsersHelper
   end
 
   def public_data_contents
-    @user_contests.map do |uc|
+    safe_join(@user_contests.map do |uc|
       create_data_row([uc.contest, uc.award], 'td',
                       { class: 'clickable-row',
                         'data-link' => 'contest_path(uc.contest)' },
                       { class: uc.award.downcase })
-    end.join
+    end)
   end
 
   def full_header_contents
@@ -36,5 +36,15 @@ module UsersHelper
                         'data-link' => contest_path(uc.contest) },
                       { class: uc.award.downcase })
     end)
+  end
+
+  def index_start
+    return 0 if params[:start].nil?
+    params[:start].to_i
+  end
+
+  def start_plus(num)
+    start_num = params[:start].to_i + num
+    params.merge(start: start_num).permit(:start)
   end
 end

@@ -1,5 +1,7 @@
 class FeedbackQuestionsController < ApplicationController
-  authorize_resource
+  after_action do
+    authorize! params[:action].to_sym, @feedback_question || FeedbackQuestion
+  end
 
   def create
     FeedbackQuestion.create(contest_id: params[:contest_id],

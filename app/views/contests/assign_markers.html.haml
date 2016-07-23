@@ -15,10 +15,9 @@
             %td= u
             %td= link_to 'Hapus',
               remove_marker_path(long_problem_id: lp, user_id: u),
-              method: :delete, data: { confirm: 'Yakin?' }
+              method: :delete
 
     = form_tag create_marker_path, method: :post, class: 'form-inline' do
-      = text_field_tag :username, nil, class: 'form-control',
-        placeholder: 'Tambah korektor'
+      = select_tag 'username', panitia_options(lp), class: 'form-control'
       = hidden_field_tag :long_problem_id, lp.id
       = submit_tag 'Tambah korektor', class: 'btn btn-default has-shade'

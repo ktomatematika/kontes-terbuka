@@ -1,5 +1,7 @@
 class MarketItemsController < ApplicationController
-  authorize_resource
+  after_action do
+    authorize! params[:action].to_sym, @market_item || MarketItem
+  end
 
   def index
     @market_items = MarketItem.all

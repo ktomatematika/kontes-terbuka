@@ -1,27 +1,25 @@
 .container
-  = console
   %h1 Daftar User
-  %table.table.table-responsive
+  - if index_start != 0
+    = link_to 'Sebelum', start_plus(-@page), id: 'prev-users-index'
+  - if index_start + @page < @users.count
+    = link_to 'Berikutnya', start_plus(@page), id: 'next-users-index'
+  %table.table.table-responsive#users-index
     %tr
       %th Username
-      %th= 'Email' if can? :see_all, User
-      %th= 'Nama Lengkap' if can? :see_all, User
+      %th= 'Email' if can? :see_full_index, User
+      %th= 'Nama Lengkap' if can? :see_full_index, User
       %th Provinsi
       %th Status
       %th Sekolah/Institusi
-      %th= 'Poin' if can? :see_all, User
-      %th= 'Edit' if can? :edit, User
-      %th= 'Hapus' if can? :destroy, User
+      %th= 'Poin' if can? :see_full_index, User
 
     - @users.each do |u|
-      %tr
+      %tr.users-index-row.clickable-row{ data: { link: user_path(u) } }
         %td= u.username
-        %td= u.email if can? :see_all, User
-        %td= u.fullname if can? :see_all, User
+        %td= u.email if can? :see_full_index, User
+        %td= u.fullname if can? :see_full_index, User
         %td= u.province
         %td= u.status
         %td= u.school
-        %td= u.point if can? :see_all, User
-        %td= link_to 'Edit', edit_user_path(u) if can? :edit, u
-        %td= link_to 'Hapus', user_path(u), method: :delete,
-          data: { confirm: 'Eh serius? Hati-hati' } if can? :destroy, User
+        %td= u.point if can? :see_full_index, User

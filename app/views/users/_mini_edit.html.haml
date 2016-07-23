@@ -1,5 +1,7 @@
-= link_to 'Ganti Password', user_change_password_path(@user), class: 'btn btn-default has-shade', type: 'button'
-= link_to 'Ganti Notifikasi', user_change_notifications_path(@user), class: 'btn btn-default has-shade', type: 'button'
+= link_to 'Ganti Password', user_change_password_path(@user),
+  class: 'btn btn-default has-shade', type: 'button'
+= link_to 'Ganti Notifikasi', user_change_notifications_path(@user),
+  class: 'btn btn-default has-shade', type: 'button'
 = form_for :user, url: user_mini_update_path(@user) do |f|
   %p
     %label{ for: 'user_timezone' } Zona waktu:
@@ -9,7 +11,8 @@
 
   %p
     %label{ for: 'user_color' } Warna:
-    = f.collection_select :color_id, Color.all, :id, :name, { prompt: 'Color' }, class: 'form-control'
+    = f.collection_select :color_id, Color.all, :id, :name,
+      { prompt: 'Warna' }, class: 'form-control'
 
   = f.submit 'Ganti', class: 'btn btn-default has-shade'
 

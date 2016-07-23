@@ -3,11 +3,17 @@
   %h3#subtitle
   %h3.update-regularly#time-remaining
   - if @contest.currently_in_contest?
-    = link_to 'Download soal', @contest.problem_pdf.url(:original, false),
-      class: 'btn btn-default btn-lg has-shade'
-    = link_to 'Lihat ulang aturan', contest_rules_path(@contest),
-      class: 'btn btn-default btn-lg has-shade'
+    %div#contest-buttons
+      = link_to 'Download soal', @contest.problem_pdf.url(:original, false),
+        class: 'btn btn-default btn-lg has-shade'
+      = link_to 'Lihat ulang aturan', contest_rules_path(@contest),
+        class: 'btn btn-default btn-lg has-shade'
 
-  - if can? :admin, Contest
-    = link_to 'Administrasi', contest_admin_path(contest_id: @contest),
-      class: 'btn btn-default btn-lg has-shade'
+  %div
+    - if can? :admin, Contest
+      = link_to 'Administrasi', contest_admin_path(contest_id: @contest),
+        class: 'btn btn-default btn-lg has-shade'
+
+    - if can? :assign_markers, Contest
+      = link_to 'Bagi koreksian', assign_markers_path(id: @contest.id),
+        class: 'btn btn-default btn-lg has-shade'

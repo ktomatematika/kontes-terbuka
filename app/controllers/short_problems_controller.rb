@@ -1,5 +1,7 @@
 class ShortProblemsController < ApplicationController
-  authorize_resource
+  after_action do
+    authorize! params[:action].to_sym, @short_problem || ShortProblem
+  end
 
   def create
     contest = Contest.find(params[:contest_id])

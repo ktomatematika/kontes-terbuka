@@ -18,6 +18,8 @@ class HomeController < ApplicationController
     @long_problems = LongProblem.joins { contest }.order do
       [contest.result_time.desc, problem_no.asc]
     end.select { |lp| can? :mark_solo, lp }
+
+    @panitia = User.with_role :panitia
   end
 
   def faq

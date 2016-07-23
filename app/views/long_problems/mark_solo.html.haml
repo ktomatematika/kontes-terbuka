@@ -1,6 +1,7 @@
 .container
   %h1= @long_problem
-  %a.btn.btn-default.has-shade Download semua submisi
+  = link_to 'Download semua submisi', download_submissions_path,
+    class: 'btn btn-default has-shade'
   %table.table
     %thead
       %tr
@@ -14,7 +15,7 @@
     %tbody
       - @long_submissions.each do |s|
         %tr
-          %td= s.id
+          %td= s.user.id
           %td
             %input
           %td
