@@ -36,6 +36,8 @@ gem 'paperclip'
 gem 'nested_form'
 # Markdown parser
 gem 'redcarpet'
+# Zip submissions
+gem 'rubyzip'
 
 group :development do
   # Favicon set

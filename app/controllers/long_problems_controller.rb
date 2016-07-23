@@ -1,5 +1,7 @@
 class LongProblemsController < ApplicationController
-  authorize_resource
+  after_action do
+    authorize! params[:action].to_sym, @long_problem || LongProblem
+  end
 
   def create
     contest = Contest.find(params[:contest_id])
@@ -78,10 +80,17 @@ class LongProblemsController < ApplicationController
 
   def mark_solo
     @long_problem = LongProblem.find(params[:id])
-    unless current_user.has_role? :marker, @long_problem
-      redirect_to mark_final_path(params[:id])
-    end
     mark
+  end
+
+  def download
+    @long_problem = LongProblem.find(params[:id])
+    unless File.file? @long_problem.zip_location
+      @long_problem.compress_submissions
+    end
+
+    send_file @long_problem.zip_location, type: 'application/zip',
+                                          disposition: 'attachment'
   end
 
   def submit_temporary_markings

@@ -8,14 +8,18 @@ class HomeController < ApplicationController
   end
 
   def admin
-    admin_roles = ActiveRecord::Base::Role::ADMIN_ROLES.map do |r|
-      { name: r.to_sym, resource: :any }
-    end
     Ajat.info "app_admin|uid:#{current_user.id}"
 
-    unless current_user.has_any_role?(*admin_roles)
+    if cannot? :admin, Ability
       raise CanCan::AccessDenied, 'Unauthorized'
     end
+
+    #TODO Henry akan membereskan query n+1 ini.
+    @long_problems = LongProblem.joins { contest }.order do
+      [contest.result_time.desc, problem_no.asc]
+    end.select { |lp| can? :mark_solo, lp }
+
+    @panitia = User.with_role :panitia
   end
 
   def faq

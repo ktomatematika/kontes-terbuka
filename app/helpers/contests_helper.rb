@@ -59,4 +59,11 @@ module ContestsHelper
   def dashify(number)
     number.nil? ? '-' : number
   end
+
+  def panitia_options(lp)
+    users = User.with_role(:panitia)
+                .where.not(id: User.with_role(:marker, lp).pluck(:id))
+    options_for_select users.pluck(:username, :fullname)
+                            .map { |u| ["#{u[0]} (#{u[1]})", u[0]] }
+  end
 end

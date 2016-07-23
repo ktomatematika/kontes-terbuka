@@ -20,7 +20,7 @@
 
 class Role < ActiveRecord::Base
   has_paper_trail
-  has_many :users, through: :users_roles
+  has_and_belongs_to_many :users, join_table: :users_roles
   enforce_migration_validations
 
   belongs_to :resource,
@@ -31,6 +31,4 @@ class Role < ActiveRecord::Base
             allow_nil: true
 
   scopify
-
-  ADMIN_ROLES = %w(admin marking_manager marker).freeze
 end

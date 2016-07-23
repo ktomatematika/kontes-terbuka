@@ -313,6 +313,7 @@ DEPENDENCIES
   redcarpet
   rest-client
   rolify
+  rubyzip
   sass-rails
   sitemap_generator
   spring

@@ -1,0 +1,25 @@
+.container
+  %h1 Daftar User
+  - if index_start != 0
+    = link_to 'Sebelum', start_plus(-@page), id: 'prev-users-index'
+  - if index_start + @page < @users.count
+    = link_to 'Berikutnya', start_plus(@page), id: 'next-users-index'
+  %table.table.table-responsive#users-index
+    %tr
+      %th Username
+      %th= 'Email' if can? :see_full_index, User
+      %th= 'Nama Lengkap' if can? :see_full_index, User
+      %th Provinsi
+      %th Status
+      %th Sekolah/Institusi
+      %th= 'Poin' if can? :see_full_index, User
+
+    - @users.each do |u|
+      %tr.users-index-row.clickable-row{ data: { link: user_path(u) } }
+        %td= u.username
+        %td= u.email if can? :see_full_index, User
+        %td= u.fullname if can? :see_full_index, User
+        %td= u.province
+        %td= u.status
+        %td= u.school
+        %td= u.point if can? :see_full_index, User

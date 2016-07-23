@@ -2,7 +2,10 @@ class UsersController < ApplicationController
   guest_actions = [:new, :check_unique, :create, :forgot_password,
                    :process_forgot_password, :reset_password,
                    :process_reset_password, :verify]
-  authorize_resource except: guest_actions
+  after_action do
+    action = params[:action].to_sym
+    authorize!(action, @user || User) unless guest_actions.include? action
+  end
   skip_before_action :require_login, only: guest_actions
 
   def new
@@ -167,7 +170,11 @@ class UsersController < ApplicationController
   end
 
   def index
+    @page = 25
     @users = User.all
+    @users = @users.where(enabled: true) if can? :see_full_index, User
+    params[:start] = 0 if params[:start].to_i < 0
+    @users = @users.limit(@page).offset(params[:start])
   end
 
   def edit
@@ -175,12 +182,10 @@ class UsersController < ApplicationController
   end
 
   def update
-    User.transaction do
-      @user = User.find(params[:id]).update(user_edit_params)
-      @user.update(user_edit_params)
-    end
-    Ajat.info "user_full_update|user:#{@user.id}"
-    redirect_to user_path(@user), notice: 'User berhasil diupdate!'
+    user = User.find(params[:id])
+    user.update(user_edit_params)
+    Ajat.info "user_full_update|user:#{user.id}"
+    redirect_to user_path(user), notice: 'User berhasil diupdate!'
   end
 
   def mini_update

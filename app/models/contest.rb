@@ -94,9 +94,18 @@ class Contest < ActiveRecord::Base
     "#{id}-#{name.downcase.gsub(/[^0-9A-Za-z ]/, '').tr(' ', '-')}"
   end
 
+  def started?
+    Time.zone.now >= start_time
+  end
+  def ended?
+    Time.zone.now >= end_time
+  end
+  def feedback_closed?
+    Time.zone.now >= start_time
+  end
+
   def currently_in_contest?
-    now = Time.zone.now
-    start_time <= now && now <= end_time
+    started? && !ended?
   end
 
   def max_score

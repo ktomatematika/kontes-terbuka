@@ -1,0 +1,24 @@
+.container
+  %h1 Halaman Admin
+  - if can? :create, Contest
+    = link_to 'Kontes Baru', new_contest_path,
+      class: 'btn btn-default has-shade'
+
+  %h2 Daftar Panitia
+  %table.table.table-condensed.table-hover
+    %thead
+      %tr
+        %th Username
+        %th Nama Lengkap
+    
+    %tbody
+      - @panitia.each do |p|
+        %tr.clickable-row{ data: { link: user_path(p) } }
+          %td= p.username
+          %td= p.fullname
+
+  - unless @long_problems.empty?
+    %h2 Koreksian
+    %ul
+      - @long_problems.each do |lp|
+        %li= link_to lp, mark_solo_path(lp)
