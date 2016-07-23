@@ -53,3 +53,13 @@ $.validator.addMethod('recaptcha', function(value, elem, params) {
 $.validator.addMethod('integer', function(value, elem, params) {
 	return this.optional(elem) || /^-?\d+$/.test(value);
 });
+
+// Adds a method to check for positive integers.
+$.validator.addMethod('positiveint', function(value, elem, params) {
+	return this.optional(elem) || (value !== '0' && /^\d+$/.test(value));
+});
+
+// Adds a method to check that some files have been inputted.
+$.validator.addMethod('has_data', function(value, elem, params) {
+	return $(elem).prevAll('.fields:visible').length !== 0;
+});

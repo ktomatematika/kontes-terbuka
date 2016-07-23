@@ -76,10 +76,9 @@ class ContestsController < ApplicationController
 
   def show_rules
     @contest = Contest.find(params[:contest_id])
-    unless UserContest.find_by(contest: @contest, user: current_user).nil?
-      redirect_to contest_path(@contest)
-    end
-    @user_contest = UserContest.new
+    @user_contest = UserContest.find_by(contest: @contest,
+                                        user: current_user) ||
+      UserContest.new
   end
 
   def accept_rules

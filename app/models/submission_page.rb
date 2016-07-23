@@ -32,6 +32,7 @@ class SubmissionPage < ActiveRecord::Base
                     path: ':rails_root/public/contest_files/submissions/kontes:contest_id/' \
                     'no:problem_no/peserta:user_id/kontes:contest_id_' \
                     'no:problem_no_peserta:user_id_hal:page_number.:extension'
+  validates_with AttachmentPresenceValidator, attributes: :submission
   validates_attachment_content_type :submission,
                                     content_type: ['application/pdf',
                                                    'application/vnd.' \

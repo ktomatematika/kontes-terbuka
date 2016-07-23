@@ -5,25 +5,34 @@
   result_time: @contest.result_time,
   feedback_time: @contest.feedback_time,
   halsoal: image_tag('1hal1soal.png', alt: 'Penjelasan 1 soal di 1 halaman',
-                   class: 'img-responsive').tr('"', "'")
+                     class: 'img-responsive').tr('"', "'")
 } %>
 <div class="container">
   <h1>Petunjuk Kontes</h1>
 
-  <%= form_for @user_contest, url: contest_rules_path do |f| %>
-  <p>Sebelum itu... Ada yang tertinggal.</p>
-  <%= check_box_tag 'user_contest[osn]' %> Centang jika Anda pernah mendapatkan medali di OSN Matematika SMA (tingkat nasional).
-  <br><br><br>
-  <div id="rules-text">
-    <%= markdown_render(@contest.rule) %>
-  </div>
+  <% if @user_contest.id.nil? %>
+    <%= form_for @user_contest, url: contest_rules_path do |f| %>
+      <p>Sebelum itu... Ada yang tertinggal.</p>
+      <%= check_box_tag 'user_contest[osn]' %> Centang jika Anda pernah mendapatkan medali di OSN Matematika SMA (tingkat nasional).
+      <br><br><br>
+      <div id="rules-text">
+        <%= markdown_render(@contest.rule) %>
+      </div>
 
-
-    <%= f.hidden_field :user_id, value: current_user.id %>
-    <%= f.hidden_field :contest_id, value: @contest.id %>
-    <div class="btn-center-container">
-      <%= f.button "Saya sudah membaca dan menyetujui",
-        class: "btn btn-default has-shade", id: 'rules-agree-btn' %>
-  </div>
-<% end %>
+      <%= f.hidden_field :user_id, value: current_user.id %>
+      <%= f.hidden_field :contest_id, value: @contest.id %>
+      <div class="btn-center-container">
+        <%= f.button "Saya sudah membaca dan menyetujui",
+          class: "btn btn-default has-shade", id: 'rules-agree-btn' %>
+      </div>
+    <% end %>
+  <% else %>
+      <div id='#rules-text'>
+        <%= markdown_render @contest.rule %>
+      </div>
+      <div class='btn-center-container'>
+        <%= link_to 'Kembali', contest_path(@contest),
+          class: 'btn btn-default has-shade', id: 'rules-agree-btn' %>
+    </div>
+  <% end %>
 </div>

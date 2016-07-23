@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   root 'welcome#index'
 
+  get 'contests/14-kto-matematika-juli-2016.', to: redirect('https://ktom.tomi.or.id/contests/14')
   get '/rekap', to: redirect('https://docs.google.com/forms/d/e/1FAIpQLSclj4NMtO30isnDBlIeSpootIkJ06i77xFJe1Gw5inhcMdnfQ/viewform')
 
   resources :users do

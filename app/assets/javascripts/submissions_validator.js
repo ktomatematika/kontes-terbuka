@@ -1,6 +1,14 @@
 $(document).ready(function() {
 	$('#bagian-a form').validate();
-	$('#bagian-b form').validate();
+	$('#bagian-b form').validate({
+		submitHandler: function(form) {
+			if ($(form).find('.fields:visible').length !== 0) {
+				form.submit();
+			} else {
+				alert('Anda tidak mengupload apa-apa!');
+			}
+		},
+	});
 	$.each($('#bagian-a form input[type=text]'), function(idx, elem) {
 		$(elem).rules('add', {
 			integer: true,
@@ -16,10 +24,11 @@ function validate_long_submissions() {
 		if ($.isEmptyObject($(elem).rules())) {
 			$(elem).rules('add', {
 				required: true,
-				digits: true,
+				positiveint: true,
 				messages: {
 					required: 'Masukan nomor halaman Anda.',
-					digits: 'Nomor halaman harus berupa bilangan bulat.',
+					positiveint: 'Nomor halaman harus berupa bilangan bulat ' +
+						'positif.',
 				},
 			});
 		}
@@ -28,10 +37,10 @@ function validate_long_submissions() {
 		if ($.isEmptyObject($(elem).rules())) {
 			$(elem).rules('add', {
 				required: true,
-				extension: 'docx',
+				extension: 'docx|doc|pdf|zip|jpg|jpeg|png',
 				messages: {
 					required: 'Masukan file Anda.',
-					extension: 'File yang Anda upload tidak diterima.' +
+					extension: 'File yang Anda upload tidak diterima. ' +
 						'Pastikan filenya memiliki extension ' +
 						'docx/doc/pdf/zip/jpg/jpeg/png.'
 				},
