@@ -49,6 +49,11 @@ class User < ActiveRecord::Base
   belongs_to :color
 
   has_many :user_contests
+
+  has_many :long_submissions, through: :user_contests
+  has_many :long_problems, through: :user_contests
+  has_many :submission_pages, through: :user_contests
+
   has_many :contests, through: :user_contests
 
   has_many :user_awards
