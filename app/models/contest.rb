@@ -195,6 +195,9 @@ class Contest < ActiveRecord::Base
   end
 
   def purge_panitia
-    User.with_role(:panitia).each { |u| user_contests.find_by(user: u).destroy }
+    User.with_role(:panitia).each do |u|
+      uc = user_contests.find_by(user: u)
+      uc.destroy unless uc.nil?
+    end
   end
 end
