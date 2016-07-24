@@ -117,7 +117,6 @@ class Contest < ActiveRecord::Base
     filtered_query = user_contests.processed
 
     long_problems.each do |long_problem|
-      byebug
       filtered_query =
         filtered_query
         .joins do
