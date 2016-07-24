@@ -109,8 +109,8 @@ class ContestsController < ApplicationController
   end
 
   def create_short_submissions
-    @contest_id = params['@contest_id']
-    @contest = Contest.find(@contest_id)
+    contest_id = params['contest_id']
+    @contest = Contest.find(contest_id)
     submission_params.each_key do |prob_id|
       answer = submission_params[prob_id]
       next if answer == ''
