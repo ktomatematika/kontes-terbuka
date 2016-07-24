@@ -27,7 +27,7 @@ class ContestsController < ApplicationController
     @contest = Contest.new(contest_params)
     if @contest.save
       Ajat.info "contest_created|id:#{@contest.id}"
-      @contest.prepare_emails
+      @contest.prepare_jobs
       redirect_to @contest, notice: "#{@contest} berhasil dibuat!"
     else
       Ajat.warn "contest_created_fail|#{@contest.errors.full_messages}"
@@ -62,6 +62,7 @@ class ContestsController < ApplicationController
     old_result_released = @contest.result_released
     if @contest.update(contest_params)
       Ajat.info "contest_updated|id:#{@contest.id}"
+      @contest.prepare_jobs
       if old_result_released == 0 && contest_params[:result_released] == 1
         EmailNotifications.new.delay(queue: "contest_#{@contest.id}")
                           .result_released(@contest)

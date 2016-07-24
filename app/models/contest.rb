@@ -97,9 +97,11 @@ class Contest < ActiveRecord::Base
   def started?
     Time.zone.now >= start_time
   end
+
   def ended?
     Time.zone.now >= end_time
   end
+
   def feedback_closed?
     Time.zone.now >= start_time
   end
@@ -151,30 +153,44 @@ class Contest < ActiveRecord::Base
     end
   end
 
-  def prepare_emails
-    destroy_prepared_emails
+  def prepare_jobs
+    destroy_prepared_jobs
 
     e = EmailNotifications.new
 
     Notification.where(event: 'contest_starting').find_each do |n|
-      e.delay(run_at: start_time - n.seconds, queue: "contest_#{id}")
-       .contest_starting(self, n.time_text)
+      run_at = start_time - n.seconds
+      if Time.zone.now >= run_at
+        e.delay(run_at: run_at, queue: "contest_#{id}")
+         .contest_starting(self, n.time_text)
+      end
     end
     Notification.where(event: 'contest_started').find_each do |n|
-      e.delay(run_at: start_time, queue: "contest_#{id}")
-       .contest_started(self, n.time_text)
+      run_at = start_time
+      if Time.zone.now >= run_at
+        e.delay(run_at: run_at, queue: "contest_#{id}")
+         .contest_started(self, n.time_text)
+      end
     end
     Notification.where(event: 'contest_ending').find_each do |n|
-      e.delay(run_at: end_time - n.seconds, queue: "contest_#{id}")
-       .contest_ending(self, n.time_text)
+      run_at = end_time - n.seconds
+      if Time.zone.now >= run_at
+        e.delay(run_at: run_at, queue: "contest_#{id}")
+         .contest_ending(self, n.time_text)
+      end
     end
     Notification.where(event: 'feedback_ending').find_each do |n|
-      e.delay(run_at: feedback_time - n.seconds, queue: "contest_#{id}")
-       .feedback_ending(self, n.time_text)
+      run_at = feedback_time - n.seconds
+      if Time.zone.now >= run_at
+        e.delay(run_at: run_at, queue: "contest_#{id}")
+         .feedback_ending(self, n.time_text)
+      end
     end
+
+    purge_panitia.delay(run_at: end_time)
   end
 
-  def destroy_prepared_emails
+  def destroy_prepared_jobs
     Delayed::Job.where(queue: "contest_#{id}").destroy_all
   end
 

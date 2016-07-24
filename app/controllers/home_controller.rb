@@ -12,7 +12,7 @@ class HomeController < ApplicationController
 
     authorize! :admin, Ability
 
-    #TODO Henry akan membereskan query n+1 ini.
+    # TODO: Henry akan membereskan query n+1 ini.
     @long_problems = LongProblem.joins { contest }.order do
       [contest.result_time.desc, problem_no.asc]
     end.select { |lp| can? :mark_solo, lp }

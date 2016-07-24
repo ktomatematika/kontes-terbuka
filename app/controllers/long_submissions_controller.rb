@@ -5,16 +5,16 @@ class LongSubmissionsController < ApplicationController
 
   def submit
     @long_submission = LongSubmission.find(params[:id])
-    LongSubmission.transaction do 
+    LongSubmission.transaction do
       @long_submission.submission_pages.destroy_all
       @long_submission.update!(submission_params)
     end
     redirect_to Contest.find(params[:contest_id]),
-      notice: 'Jawaban bagian B berhasil diupload!'
+                notice: 'Jawaban bagian B berhasil diupload!'
   rescue ActiveRecord::ActiveRecordError
     redirect_to Contest.find(params[:contest_id]),
-      alert: 'Jawaban bagian B gagal dikirim! Jika ini berlanjut, ' \
-      "#{ActionController::Base.helpers.link_to 'kontak kami', contact_path}."
+                alert: 'Jawaban bagian B gagal dikirim! Jika ini berlanjut, ' \
+                "#{ActionController::Base.helpers.link_to 'kontak kami', contact_path}."
   end
 
   private

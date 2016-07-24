@@ -7,9 +7,7 @@ class ApplicationController < ActionController::Base
   before_action :require_login, :set_timezone
 
   before_action do
-    if can? :profile, Ability
-      Rack::MiniProfiler.authorize_request
-    end
+    Rack::MiniProfiler.authorize_request if can? :profile, Ability
   end
 
   def current_user
