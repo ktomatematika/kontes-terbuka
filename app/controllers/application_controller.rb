@@ -8,7 +8,6 @@ class ApplicationController < ActionController::Base
 
   before_action do
     if can? :profile, Ability
-      Ajat.info 'DEBUGGGGGG'
       Rack::MiniProfiler.authorize_request
     end
   end
