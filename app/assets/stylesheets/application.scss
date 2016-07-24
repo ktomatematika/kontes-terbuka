@@ -158,6 +158,27 @@ textarea {
   background: rgba(255, 255, 255, 0.92);
 }
 
+.three-container {
+  margin-bottom: 0.5em;
+  display: flex;
+
+  div {
+    flex: 1;
+
+    &:nth-child(1) {
+      text-align: left;
+    }
+
+    &:nth-child(2) {
+      text-align: center;
+    }
+
+    &:nth-child(3) {
+      text-align: right;
+    }
+  }
+}
+
 // Table classes
 div.table {
   @extend table;

@@ -45,6 +45,12 @@ module UsersHelper
 
   def start_plus(num)
     start_num = params[:start].to_i + num
-    params.merge(start: start_num).permit(:start)
+    params.merge(start: start_num).permit(:start, :disabled)
+  end
+
+  def toggle_disable
+    disabled = !params[:disabled].nil? && params[:disabled] == 'true'
+    prms = params.merge(disabled: !disabled).permit(:start, :disabled)
+    link_to 'Toggle disabled users', prms
   end
 end

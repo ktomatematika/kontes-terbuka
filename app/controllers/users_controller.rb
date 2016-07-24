@@ -170,11 +170,13 @@ class UsersController < ApplicationController
   end
 
   def index
-    @page = 25
-    @users = User.all
-    @users = @users.where(enabled: true) unless can? :see_full_index, User
+    @page = 50
+    @users = User.order(:username)
+    if !(can? :see_full_index, User) || (params[:disabled] == 'false')
+      @users = @users.where(enabled: true)
+    end
     params[:start] = 0 if params[:start].to_i < 0
-    @users = @users.limit(@page).offset(params[:start])
+    @shown_users = @users.limit(@page).offset(params[:start])
   end
 
   def edit
