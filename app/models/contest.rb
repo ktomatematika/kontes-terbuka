@@ -160,28 +160,28 @@ class Contest < ActiveRecord::Base
 
     Notification.where(event: 'contest_starting').find_each do |n|
       run_at = start_time - n.seconds
-      if Time.zone.now >= run_at
+      if Time.zone.now < run_at
         e.delay(run_at: run_at, queue: "contest_#{id}")
          .contest_starting(self, n.time_text)
       end
     end
     Notification.where(event: 'contest_started').find_each do |n|
       run_at = start_time
-      if Time.zone.now >= run_at
+      if Time.zone.now < run_at
         e.delay(run_at: run_at, queue: "contest_#{id}")
          .contest_started(self, n.time_text)
       end
     end
     Notification.where(event: 'contest_ending').find_each do |n|
       run_at = end_time - n.seconds
-      if Time.zone.now >= run_at
+      if Time.zone.now < run_at
         e.delay(run_at: run_at, queue: "contest_#{id}")
          .contest_ending(self, n.time_text)
       end
     end
     Notification.where(event: 'feedback_ending').find_each do |n|
       run_at = feedback_time - n.seconds
-      if Time.zone.now >= run_at
+      if Time.zone.now < run_at
         e.delay(run_at: run_at, queue: "contest_#{id}")
          .feedback_ending(self, n.time_text)
       end
