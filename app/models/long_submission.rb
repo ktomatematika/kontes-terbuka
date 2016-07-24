@@ -45,4 +45,29 @@ class LongSubmission < ActiveRecord::Base
   def has_submitted?
     !submission_pages.empty?
   end
+
+  def location
+    Rails.root.join('public', 'contest_files', 'submissions',
+                    "kontes#{long_problem.contest_id}",
+                    "no#{long_problem.problem_no}",
+                    "peserta#{user_contest.user_id}").to_s.freeze
+  end
+
+  def zip_location
+    (location + '.zip').freeze
+  end
+
+  def compress
+    require 'zip'
+    filenames = Dir.entries(location + '/').reject do |f|
+      File.directory? f
+    end
+
+    File.delete(zip_location)
+    Zip::File.open(zip_location, Zip::File::CREATE) do |zipfile|
+      filenames.each do |filename|
+        zipfile.add filename, "#{location}/#{filename}"
+      end
+    end
+  end
 end

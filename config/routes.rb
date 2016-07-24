@@ -37,6 +37,12 @@ Rails.application.routes.draw do
     post 'create-short-submissions', to: 'contests#create_short_submissions'
     resources :long_problems, path: '/long-problems'
 
+    resources :long_submissions, path: '/long-submissions' do
+      post 'submit', to: 'long_submissions#submit'
+      delete 'destroy_submissions', to: 'long_submissions#destroy_submissions'
+      get 'download', to: 'long_submissions#download'
+    end
+
     resources :feedback_questions, path: '/feedback-questions'
 
     post 'give-points', to: 'contests#give_points'
@@ -62,10 +68,6 @@ Rails.application.routes.draw do
   get '/terms', to: 'home#terms'
   get '/contact', to: 'home#contact'
   get '/penguasa', to: 'home#admin', as: :admin
-
-  resources :long_submissions, path: '/long-submissions' do
-    post 'submit', to: 'long_submissions#submit', on: :member
-  end
 
   get '/assign/:id', to: 'contests#assign_markers', as: :assign_markers
   post 'create-marker', to: 'roles#create_marker'

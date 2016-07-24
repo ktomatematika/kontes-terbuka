@@ -241,3 +241,7 @@ textarea {
     background: lighten($color, 20);
   }
 }
+
+input[type=file] {
+  display: inline-block;
+}

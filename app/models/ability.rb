@@ -13,7 +13,8 @@ class Ability
       can :index, User
       can :show, User, id: User.where(enabled: true).pluck(:id)
       can [:show, :index], User
-      can :submit, LongSubmission, id: user.long_submissions.pluck(:id)
+      can [:submit, :destroy, :download], LongSubmission,
+          id: user.long_submissions.pluck(:id)
       can [:see_full, :mini_edit, :mini_update, :change_password,
            :process_change_password, :change_notifications,
            :process_change_notifications], User, id: user.id
