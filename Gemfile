@@ -81,6 +81,23 @@ end
 
 ### END UTILITIES
 
+### MAINTENANCE
+
+# Model logging
+gem 'paper_trail'
+# Profiler
+gem 'newrelic_rpm'
+# Add browser info in logs
+gem 'browser_details'
+# Sitemap generator
+gem 'sitemap_generator'
+# Auto-email exceptions
+gem 'exception_notification'
+# Database profiler
+gem 'rack-mini-profiler'
+
+### END MAINTENANCE
+
 ### SECURITY
 
 # Authorization gem. Adds roles.
@@ -100,23 +117,6 @@ group :development do
 end
 
 ### END SECURITY
-
-### MAINTENANCE
-
-# Model logging
-gem 'paper_trail'
-# Profiler
-gem 'newrelic_rpm'
-# Add browser info in logs
-gem 'browser_details'
-# Sitemap generator
-gem 'sitemap_generator'
-# Auto-email exceptions
-gem 'exception_notification'
-# Database profiler
-gem 'rack-mini-profiler'
-
-### END MAINTENANCE
 
 ### PRODUCTION STUFF
 
