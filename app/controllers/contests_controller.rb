@@ -39,13 +39,14 @@ class ContestsController < ApplicationController
     @contest = Contest.find(params[:id])
 
     if @contest.currently_in_contest?
-      @user_contest = @contest.user_contests.find_by user: current_user
+      @user_contest = @contest.user_contests
+                              .includes([short_submissions: :short_problem],
+                                        [long_submissions: :long_problem])
+                              .find_by(user: current_user)
       redirect_to contest_rules_path(params[:id]) if @user_contest.nil?
     else
       @user_contests = @contest.results # this is a big query
-      @user_contest = @user_contests.find { |uc| uc.user == current_user }.
-                      includes([short_submissions: :short_problem], 
-                                [long_submissions: :long_problem])
+      @user_contest = @user_contests.find { |uc| uc.user == current_user }
     end
 
     grab_problems
