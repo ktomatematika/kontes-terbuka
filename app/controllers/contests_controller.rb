@@ -39,7 +39,7 @@ class ContestsController < ApplicationController
     @contest = Contest.find(params[:id])
 
     if @contest.currently_in_contest?
-      @user_contest = UserContest.find_by user: current_user, contest: @contest
+      @user_contest = @contest.user_contests.find_by user: current_user
       redirect_to contest_rules_path(params[:id]) if @user_contest.nil?
     else
       @user_contests = @contest.results # this is a big query
@@ -88,40 +88,40 @@ class ContestsController < ApplicationController
   end
 
   def accept_rules
-    contest = nil
+    @contest = nil
     UserContest.transaction do
       User.find(participate_params[:user_id]).add_role :veteran if participate_params[:osn] == '1'
       participate_params[:osn] = nil
-      user_contest = UserContest.create(user_id: participate_params[:user_id], contest_id: participate_params[:contest_id])
+      user_contest = UserContest.find_or_create_by(user_id: participate_params[:user_id], contest_id: participate_params[:contest_id])
 
-      contest = user_contest.contest
-      contest.long_problems.each do |long_problem|
+      @contest = user_contest.contest
+      @contest.long_problems.each do |long_problem|
         LongSubmission.create(user_contest: user_contest,
                               long_problem: long_problem)
       end
     end
 
-    redirect_to contest
+    redirect_to @contest
   end
 
   def create_short_submissions
-    contest_id = params['contest_id']
-    contest = Contest.find(contest_id)
+    @contest_id = params['@contest_id']
+    @contest = Contest.find(@contest_id)
     submission_params.each_key do |prob_id|
       answer = submission_params[prob_id]
       next if answer == ''
-      user_contest = UserContest.find_by(user: current_user, contest: contest)
+      user_contest = UserContest.find_by(user: current_user, contest: @contest)
       ShortSubmission.find_or_initialize_by(short_problem_id: prob_id,
                                             user_contest: user_contest)
                      .update(answer: answer)
     end
-    redirect_to contest, notice: 'Jawaban bagian A berhasil dikirimkan!'
+    redirect_to @contest, notice: 'Jawaban bagian A berhasil dikirimkan!'
   end
 
   def feedback_submit
-    contest = Contest.find(params[:contest_id])
-    authorize! :feedback_submit, contest
-    user_contest = UserContest.find_by(user: current_user, contest: contest)
+    @contest = Contest.find(params[:@contest_id])
+    authorize! :feedback_submit, @contest
+    user_contest = UserContest.find_by(user: current_user, contest: @contest)
     feedback_params.each_key do |q_id|
       answer = feedback_params[q_id]
       next if answer == ''
@@ -129,7 +129,7 @@ class ContestsController < ApplicationController
                                        user_contest: user_contest)
                     .update(answer: answer)
     end
-    redirect_to contest, notice: 'Feedback berhasil dikirimkan!'
+    redirect_to @contest, notice: 'Feedback berhasil dikirimkan!'
   end
 
   def assign_markers
