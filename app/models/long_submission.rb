@@ -41,4 +41,8 @@ class LongSubmission < ActiveRecord::Base
       .where('long_problems.contest_id = ?', contest_id)
       .order('long_problems.problem_no')
   }
+
+  def has_submitted?
+    !submission_pages.empty?
+  end
 end

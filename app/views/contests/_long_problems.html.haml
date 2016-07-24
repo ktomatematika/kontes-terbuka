@@ -10,8 +10,13 @@
   - @long_problems.each do |prob|
     %h5.problem_no No. #{prob.problem_no}
     .text-justify.latex= markdown_render prob.statement
-    - ls = LongSubmission.find_by(user_contest: @user_contest,
-      long_problem: prob)
+    - ls = @user_contest.long_submissions.find_by(long_problem: prob)
+    - if ls.has_submitted?
+      %p.text-warning.text-justify
+        Anda sudah mengupload jawaban; Anda bisa melihatnya dengan klik
+        'Lihat file' di setiap halaman di bawah ini. Jika Anda ingin
+        mengganti jawaban Anda, silakan upload lagi. Semua lembar jawaban Anda
+        yang lama akan hilang dan digantikan dengan jawaban Anda yang baru.
     = nested_form_for ls, url: submit_long_submission_path(ls),
       html: { multipart: true }, method: :post do |f|
       = hidden_field_tag 'contest_id', @contest.id

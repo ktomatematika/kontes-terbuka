@@ -10,9 +10,7 @@ class HomeController < ApplicationController
   def admin
     Ajat.info "app_admin|uid:#{current_user.id}"
 
-    if cannot? :admin, Ability
-      raise CanCan::AccessDenied, 'Unauthorized'
-    end
+    authorize! :admin, Ability
 
     #TODO Henry akan membereskan query n+1 ini.
     @long_problems = LongProblem.joins { contest }.order do

@@ -1,6 +1,14 @@
 class LongSubmissionsController < ApplicationController
+  after_action do
+    authorize! params[:action].to_sym, @long_submission || LongSubmission
+  end
+
   def submit
-    LongSubmission.find(params[:id]).update!(submission_params)
+    @long_submission = LongSubmission.find(params[:id])
+    LongSubmission.transaction do 
+      @long_submission.submission_pages.destroy_all
+      @long_submission.update!(submission_params)
+    end
     redirect_to Contest.find(params[:contest_id]),
       notice: 'Jawaban bagian B berhasil diupload!'
   rescue ActiveRecord::ActiveRecordError

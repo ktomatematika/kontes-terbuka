@@ -68,10 +68,8 @@ class LongProblemsController < ApplicationController
 
   def mark
     @contest = @long_problem.contest
-    @long_submissions = LongSubmission.where(long_problem: @long_problem)
-                                      .reject do |ls|
-      SubmissionPage.where(long_submission: ls).empty?
-    end
+    @long_submissions = @long_problem.long_submissions
+                                     .select { ls.has_submitted? }
 
     @markers = User.with_role(:marker, @long_problem).reject do |u|
       u == current_user

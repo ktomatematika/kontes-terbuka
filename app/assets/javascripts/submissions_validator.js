@@ -11,21 +11,23 @@ function distinct(arr) {
 
 $(document).ready(function() {
 	$('#bagian-a form').validate();
-	$('#bagian-b form').validate({
-		submitHandler: function(form) {
-			var inputs = $(form).find('.fields:visible input[type=text]');
-			var page_numbers = $.map(inputs, function(elem) {
-				return $(elem).val();
-			});
+	$.each($('#bagian-b form'), function(idx, elem) {
+		$(elem).validate({
+			submitHandler: function(form) {
+				var inputs = $(form).find('.fields:visible input[type=text]');
+				var page_numbers = $.map(inputs, function(elem) {
+					return $(elem).val();
+				});
 
-			if (page_numbers.length === 0) {
-				alert('Anda tidak mengupload apa-apa!');
-			} else if (!distinct(page_numbers)) {
-				alert('Nomor halaman Anda ada yang duplikat!');
-			} else {
-				form.submit();
-			}
-		},
+				if (page_numbers.length === 0) {
+					alert('Anda tidak mengupload apa-apa!');
+				} else if (!distinct(page_numbers)) {
+					alert('Nomor halaman Anda ada yang duplikat!');
+				} else {
+					form.submit();
+				}
+			},
+		});
 	});
 	$.each($('#bagian-a form input[type=text]'), function(idx, elem) {
 		$(elem).rules('add', {
@@ -60,7 +62,7 @@ function validate_long_submissions() {
 					required: 'Masukan file Anda.',
 					extension: 'File yang Anda upload tidak diterima. ' +
 						'Pastikan filenya memiliki extension ' +
-						'docx/doc/pdf/zip/jpg/jpeg/png.'
+						'docx/doc/pdf/zip/jpg/jpeg/png.',
 				},
 			});
 		}
