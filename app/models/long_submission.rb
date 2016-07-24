@@ -63,7 +63,7 @@ class LongSubmission < ActiveRecord::Base
       File.directory? f
     end
 
-    File.delete(zip_location)
+    File.delete(zip_location) if File.file?(zip_location)
     Zip::File.open(zip_location, Zip::File::CREATE) do |zipfile|
       filenames.each do |filename|
         zipfile.add filename, "#{location}/#{filename}"
