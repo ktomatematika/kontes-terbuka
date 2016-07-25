@@ -8,7 +8,7 @@ class HomeController < ApplicationController
   end
 
   def admin
-    Ajat.info "app_admin|uid:#{current_user.id}"
+    Ajat.info "app_admin|uid:#{current_user.id}|uname:#{current_user}"
 
     authorize! :admin, Ability
 
@@ -17,7 +17,7 @@ class HomeController < ApplicationController
       [contest.result_time.desc, problem_no.asc]
     end.select { |lp| can? :mark_solo, lp }
 
-    @panitia = User.with_role :panitia
+    @panitia = User.with_role(:panitia).order(:username)
   end
 
   def faq

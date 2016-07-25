@@ -6,15 +6,16 @@ class Ability
     unless user.nil?
       can [:show, :index, :show_rules,
            :accept_rules, :create_short_submissions], Contest
+      can [:show_rules, :accept_rules], Contest,
+        id: Contest.where('start_time <= ? AND ? <= end_time',
+                          Time.zone.now, Time.zone.now).pluck(:id)
       can [:download_pdf, :give_feedback, :feedback_submit], Contest,
           id: UserContest.where(user: user).pluck(:contest_id)
-
-      can :download, SubmissionPage, id: user.submission_pages.pluck(:id)
-      can :index, User
-      can :show, User, id: User.where(enabled: true).pluck(:id)
-      can [:show, :index], User
       can [:submit, :destroy, :download], LongSubmission,
           id: user.long_submissions.pluck(:id)
+
+      can :show, User, id: User.where(enabled: true).pluck(:id)
+      can :index, User
       can [:see_full, :mini_edit, :mini_update, :change_password,
            :process_change_password, :change_notifications,
            :process_change_notifications], User, id: user.id
@@ -31,7 +32,7 @@ class Ability
       if user.has_role? :panitia
         can :preview, Contest
         can [:see_full_index, :see_full, :edit, :update], User
-        can :destroy, User, id: User.where.not(verification: nil).pluck(:id)
+        can :destroy, User, id: User.where(enabled: false).pluck(:id)
         can [:admin, :profile], Ability
       end
 

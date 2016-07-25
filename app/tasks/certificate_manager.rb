@@ -1,20 +1,18 @@
 class CertificateManager
-  attr_accessor :user_contest_id
+  attr_accessor :user_contest
 
-  def initialize(ucid)
-    @user_contest_id = ucid
+  def initialize(uc)
+    @user_contest = uc
   end
 
   def create_and_give
     clean_files_without_delay
 
-    user_contest = UserContest.find(user_contest_id)
-
     filename = "#{user_contest.id}.tex"
     pdf_filename = "#{user_contest.id}.pdf"
-    name = user_contest.user.fullname
-    award = user_contest.award
-    contest = user_contest.contest.name
+    name = @user_contest.user.fullname
+    award = @user_contest.award
+    contest = @user_contest.contest.name
 
     contents = nil
     if award == ''

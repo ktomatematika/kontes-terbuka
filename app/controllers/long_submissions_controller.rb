@@ -1,13 +1,10 @@
 class LongSubmissionsController < ApplicationController
-  after_action do
-    authorize! params[:action].to_sym, @long_submission || LongSubmission
-  end
-
   def submit
-    @long_submission = LongSubmission.find(params[:long_submission_id])
+    long_submission = LongSubmission.find(params[:long_submission_id])
+    authorize! :submit, long_submission
     LongSubmission.transaction do
-      @long_submission.submission_pages.destroy_all
-      @long_submission.update!(submission_params)
+      long_submission.submission_pages.destroy_all
+      long_submission.update!(submission_params)
     end
     redirect_to Contest.find(params[:contest_id]),
                 notice: 'Jawaban bagian B berhasil diupload!'
@@ -19,8 +16,9 @@ class LongSubmissionsController < ApplicationController
   end
 
   def destroy_submissions
-    @long_submission = LongSubmission.find(params[:long_submission_id])
-    if @long_submission.submission_pages.destroy_all
+    long_submission = LongSubmission.find(params[:long_submission_id])
+    authorize! :destroy_submissions, long_submission
+    if long_submission.submission_pages.destroy_all
       flash[:notice] = 'Jawaban Anda berhasil dibuang!'
     else
       flash[:alert] = 'Jawaban Anda gagal dibuang! Jika ini terjadi terus, ' \
@@ -31,10 +29,11 @@ class LongSubmissionsController < ApplicationController
   end
 
   def download
-    @long_submission = LongSubmission.find(params[:long_submission_id])
-    @long_submission.compress
-    send_file @long_submission.zip_location, type: 'application/zip',
-                                             disposition: 'attachment'
+    long_submission = LongSubmission.find(params[:long_submission_id])
+    authorize! :download, long_submission
+    long_submission.compress
+    send_file long_submission.zip_location, type: 'application/zip',
+                                            disposition: 'attachment'
   rescue Errno::ENOENT
     redirect_to Contest.find(params[:contest_id]), alert: 'Jawaban Anda ' \
       'tidak ditemukan! Mohon buang dan upload ulang.'

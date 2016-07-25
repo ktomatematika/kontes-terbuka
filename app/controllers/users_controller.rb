@@ -2,10 +2,6 @@ class UsersController < ApplicationController
   guest_actions = [:new, :check_unique, :create, :forgot_password,
                    :process_forgot_password, :reset_password,
                    :process_reset_password, :verify]
-  after_action do
-    action = params[:action].to_sym
-    authorize!(action, @user || User) unless guest_actions.include? action
-  end
   skip_before_action :require_login, only: guest_actions
 
   def new
@@ -63,10 +59,12 @@ class UsersController < ApplicationController
 
   def reset_password
     @user = User.find_by verification: params[:verification]
+    authorize! :reset_password, @user
   end
 
   def process_reset_password
     user = User.find_by verification: params[:verification]
+    authorize! :process_reset_password, user
     if user
       if params[:new_password] == params[:confirm_new_password]
         User.transaction do
@@ -94,10 +92,12 @@ class UsersController < ApplicationController
 
   def change_password
     @user = User.find(params[:user_id])
+    authorize! :change_password, @user
   end
 
   def process_change_password
     user = User.find params[:user_id]
+    authorize! :process_change_password, user
     if user.authenticate(params[:old_password])
       if params[:new_password] == params[:confirm_new_password]
         User.transaction do
@@ -128,6 +128,8 @@ class UsersController < ApplicationController
 
   def process_forgot_password
     user = User.get_user params[:username]
+    authorize! :process_forgot_password, user
+
     if user.nil?
       Ajat.warn "forgot_password_no_user|uname:#{params[:username]}"
       redirect_to sign_path, alert: 'User tidak ada.'
@@ -141,9 +143,11 @@ class UsersController < ApplicationController
 
   def change_notifications
     @user = User.find params[:user_id]
+    authorize! :change_notifications, @user
   end
 
   def process_change_notifications
+    authorize! :process_change_notifications, current_user
     notif_id = params[:id]
     checked = params[:checked]
 
@@ -161,6 +165,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    authorize! :show, @user
     @user_contests = UserContest.joins(:contest)
                                 .where(user: @user,
                                        'contests.result_released' => true)
@@ -172,6 +177,7 @@ class UsersController < ApplicationController
   def index
     @page = 50
     @users = User.order(:username)
+    authorize! :index, @users
     if !(can? :see_full_index, User) || (params[:disabled] == 'false')
       @users = @users.where(enabled: true)
     end
@@ -181,10 +187,12 @@ class UsersController < ApplicationController
 
   def edit
     @user = User.find(params[:id])
+    authorize! :edit, @user
   end
 
   def update
     user = User.find(params[:id])
+    authorize! :edit, user
     user.update(user_edit_params)
     Ajat.info "user_full_update|user:#{user.id}"
     redirect_to user_path(user), notice: 'User berhasil diupdate!'
@@ -202,7 +210,9 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    User.find(params[:id]).destroy
+    user = User.find(params[:id])
+    authorize! :destroy, user
+    user.destroy
     Ajat.warn "user_destroy|uid:#{params[:id]}"
     redirect_to users_path, notice: 'User berhasil didelete!'
   end

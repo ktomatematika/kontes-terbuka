@@ -5,14 +5,14 @@
       Setiap soal bernilai 7 poin. Tidak ada
       pengurangan untuk jawaban yang salah ataupun kosong. Solusi boleh
       Anda ketik, scan, ataupun foto. Unggah solusi Anda dengan form di
-      bawah ini. Total file yang Anda upload maksimal 5 MB per soal.
+      bawah ini. Total file yang Anda upload maksimal 10 MB per soal.
 
   - @long_problems.each do |prob|
     %h5.problem_no No. #{prob.problem_no}
     .text-justify.latex= markdown_render prob.statement
     - ls = @user_contest.long_submissions.find_by(long_problem: prob)
 
-    - if ls.has_submitted?
+    - if ls.submitted?
       %p.text-warning.text-justify
         Anda sudah mengupload jawaban. Jika Anda ingin mengubah jawaban Anda,
         klik 'buang' di bawah dan upload ulang.
@@ -21,7 +21,7 @@
             contest_long_submission_download_path(contest_id: @contest.id,
             long_submission_id: ls.id), class: 'btn btn-default has-shade'
           = link_to 'Buang',
-            contest_long_submission_destroy_submissions_path(contest_id: @contest.id,
+            contest_long_submission_destroy_subs_path(contest_id: @contest.id,
             long_submission_id: ls.id),
             method: :delete, class: 'btn btn-default has-shade',
             data: { confirm: 'Anda yakin ingin membuang jawaban?' }

@@ -1,8 +1,4 @@
 class ContestsController < ApplicationController
-  after_action do
-    authorize! params[:action].to_sym, @contest || Contest
-  end
-
   def grab_problems
     @short_problems = @contest.short_problems
                               .order('problem_no')
@@ -14,9 +10,12 @@ class ContestsController < ApplicationController
 
   def admin
     @contest = Contest.find(params[:contest_id])
+    authorize! :admin, @contest
+
     grab_problems
     @feedback_questions = @contest.feedback_questions
-    Ajat.info "admin|uid:#{current_user.id}|contest_id:#{params[:contest_id]}"
+    Ajat.info "admin|uid:#{current_user.id}|uname:#{current_user}|" \
+    "contest_id:#{params[:contest_id]}"
   end
 
   def new
@@ -24,13 +23,14 @@ class ContestsController < ApplicationController
   end
 
   def create
-    @contest = Contest.new(contest_params)
-    if @contest.save
-      Ajat.info "contest_created|id:#{@contest.id}"
-      @contest.prepare_jobs
-      redirect_to @contest, notice: "#{@contest} berhasil dibuat!"
+    contest = Contest.new(contest_params)
+    authorize! :admin, contest
+    if contest.save
+      Ajat.info "contest_created|id:#{contest.id}"
+      contest.prepare_jobs
+      redirect_to contest, notice: "#{contest} berhasil dibuat!"
     else
-      Ajat.warn "contest_created_fail|#{@contest.errors.full_messages}"
+      Ajat.warn "contest_created_fail|#{contest.errors.full_messages}"
       render 'new', alert: 'Kontes gagal dibuat!'
     end
   end
@@ -58,29 +58,32 @@ class ContestsController < ApplicationController
 
   def edit
     @contest = Contest.find(params[:id])
+    authorize! :edit, @contest
   end
 
   def update
-    @contest = Contest.find(params[:id])
-    old_result_released = @contest.result_released
-    if @contest.update(contest_params)
-      Ajat.info "contest_updated|id:#{@contest.id}"
-      @contest.prepare_jobs
+    contest = Contest.find(params[:id])
+    authorize! :update, contest
+    old_result_released = contest.result_released
+    if contest.update(contest_params)
+      Ajat.info "contest_updated|id:#{contest.id}"
+      contest.prepare_jobs
       if old_result_released == 0 && contest_params[:result_released] == 1
-        EmailNotifications.new.delay(queue: "contest_#{@contest.id}")
-                          .result_released(@contest)
+        EmailNotifications.new.delay(queue: "contest_#{contest.id}")
+                          .result_released(contest)
       end
-      redirect_to @contest, notice: "#{@contest} berhasil diubah."
+      redirect_to contest, notice: "#{contest} berhasil diubah."
     else
-      Ajat.warn "contest_update_fail|#{@contest.errors.full_messages}"
-      render 'edit', alert: "#{@contest} gagal diubah!"
+      Ajat.warn "contest_update_fail|#{contest.errors.full_messages}"
+      render 'edit', alert: "#{contest} gagal diubah!"
     end
   end
 
   def destroy
-    @contest = Contest.find(params[:id])
-    @contest.destroy
-    Ajat.warn "contest_destroyed|#{@contest}"
+    contest = Contest.find(params[:id])
+    authorize! :destroy, contest
+    contest.destroy
+    Ajat.warn "contest_destroyed|#{contest}"
     redirect_to contests_path, notice: 'Kontes berhasil dihilangkan!'
   end
 
@@ -92,40 +95,44 @@ class ContestsController < ApplicationController
   end
 
   def accept_rules
-    @contest = nil
-    UserContest.transaction do
-      User.find(participate_params[:user_id]).add_role :veteran if participate_params[:osn] == '1'
-      participate_params[:osn] = nil
-      user_contest = UserContest.find_or_create_by(user_id: participate_params[:user_id], contest_id: participate_params[:contest_id])
+    contest = nil
 
-      @contest = user_contest.contest
-      @contest.long_problems.each do |long_problem|
-        LongSubmission.create(user_contest: user_contest,
-                              long_problem: long_problem)
+    if contest.currently_in_contest?
+      UserContest.transaction do
+        User.find(participate_params[:user_id]).add_role :veteran if participate_params[:osn] == '1'
+        participate_params[:osn] = nil
+        user_contest = UserContest.find_or_create_by(user_id: participate_params[:user_id], contest_id: participate_params[:contest_id])
+
+        contest = user_contest.contest
+        contest.long_problems.each do |long_problem|
+          LongSubmission.create(user_contest: user_contest,
+                                long_problem: long_problem)
+        end
       end
     end
 
-    redirect_to @contest
+    redirect_to contest
   end
 
   def create_short_submissions
     contest_id = params['contest_id']
-    @contest = Contest.find(contest_id)
+    contest = Contest.find(contest_id)
+    authorize! :create_short_submissions, contest
     submission_params.each_key do |prob_id|
       answer = submission_params[prob_id]
       next if answer == ''
-      user_contest = UserContest.find_by(user: current_user, contest: @contest)
+      user_contest = UserContest.find_by(user: current_user, contest: contest)
       ShortSubmission.find_or_initialize_by(short_problem_id: prob_id,
                                             user_contest: user_contest)
                      .update(answer: answer)
     end
-    redirect_to @contest, notice: 'Jawaban bagian A berhasil dikirimkan!'
+    redirect_to contest, notice: 'Jawaban bagian A berhasil dikirimkan!'
   end
 
   def feedback_submit
-    @contest = Contest.find(params[:@contest_id])
-    authorize! :feedback_submit, @contest
-    user_contest = UserContest.find_by(user: current_user, contest: @contest)
+    contest = Contest.find(params[:contest_id])
+    authorize! :feedback_submit, contest
+    user_contest = UserContest.find_by(user: current_user, contest: contest)
     feedback_params.each_key do |q_id|
       answer = feedback_params[q_id]
       next if answer == ''
@@ -133,11 +140,12 @@ class ContestsController < ApplicationController
                                        user_contest: user_contest)
                     .update(answer: answer)
     end
-    redirect_to @contest, notice: 'Feedback berhasil dikirimkan!'
+    redirect_to contest, notice: 'Feedback berhasil dikirimkan!'
   end
 
   def assign_markers
     @contest = Contest.find(params[:id])
+    authorize! :assign_markers, @contest
     @long_problems = LongProblem.where(contest: @contest)
   end
 
@@ -148,12 +156,14 @@ class ContestsController < ApplicationController
   end
 
   def download_pdf
-    @contest = Contest.find(params[:contest_id])
-    send_file @contest.problem_pdf.path
+    contest = Contest.find(params[:contest_id])
+    authorize! :download_pdf, contest
+    send_file contest.problem_pdf.path
   end
 
   def download_feedback
     @contest = Contest.find(params[:contest_id])
+    authorize! :download_feedback, @contest
     @feedback_questions = contest.feedback_questions
     @user_contests = contest.user_contests
     respond_to do |format|
@@ -167,7 +177,10 @@ class ContestsController < ApplicationController
   end
 
   def download_certificate
-    uc = UserContest.find_by user: current_user, contest_id: params[:contest_id]
+    contest = Contest.find params[:contest_id]
+    authorize! :download_certificate, contest
+
+    uc = UserContest.find_by user: current_user, contest: contest
     certificate_obj = CertificateManager.new(uc.id)
     pdf_file = certificate_obj.create_and_give
     send_file pdf_file
@@ -175,15 +188,18 @@ class ContestsController < ApplicationController
   end
 
   def give_points
-    @contest = Contest.find(params[:contest_id])
-    @contest.user_contests.each do |uc|
-      PointTransaction.create point: uc.contest_points, description: contest
+    contest = Contest.find(params[:contest_id])
+    authorize! :give_points, contest
+    contest.user_contests.each do |uc|
+      PointTransaction.create!(point: uc.contest_points, description: contest)
     end
     Ajat.info "point_given|contest_id:#{contest.id}"
+    redirect_to contest, notice: 'Point sudah dibagi-bagi~'
   end
 
   def read_problems
     c = Contest.find(read_problems_params[:contest_id])
+    authorize! :read_problems, c
     c.update(tex_file: read_problems_params[:tex_file])
     TexReader.new(c, read_problems_params[:answers].split(',')).run
   end

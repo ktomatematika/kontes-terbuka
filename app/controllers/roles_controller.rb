@@ -1,7 +1,5 @@
 class RolesController < ApplicationController
-  after_action do
-    authorize! params[:action].to_sym, @role || Role
-  end
+  authorize_resource
 
   def create_marker
     long_problem = LongProblem.find(params[:long_problem_id])

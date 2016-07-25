@@ -22,8 +22,10 @@ Rails.application.routes.draw do
 
   post '/check', to: 'users#check_unique'
   get '/verify/:verification', to: 'users#verify', as: :verify
-  get 'reset-password/:verification', to: 'users#reset_password', as: 'reset_password'
-  post 'reset-password/:verification', to: 'users#process_reset_password', as: 'process_reset_password'
+  get 'reset-password/:verification', to: 'users#reset_password',
+    as: 'reset_password'
+  post 'reset-password/:verification', to: 'users#process_reset_password',
+    as: 'process_reset_password'
 
   resources :contests do
     get 'admin', to: 'contests#admin'
@@ -39,7 +41,7 @@ Rails.application.routes.draw do
 
     resources :long_submissions, path: '/long-submissions' do
       post 'submit', to: 'long_submissions#submit'
-      delete 'destroy_submissions', to: 'long_submissions#destroy_submissions'
+      delete 'destroy_subs', to: 'long_submissions#destroy_submissions'
       get 'download', to: 'long_submissions#download'
     end
 
@@ -48,7 +50,6 @@ Rails.application.routes.draw do
     post 'give-points', to: 'contests#give_points'
 
     get 'pdf', to: 'contests#download_pdf'
-    get 'submissions/:id', to: 'submission_pages#download'
   end
 
   get '/download-submissions/:id', to: 'long_problems#download',

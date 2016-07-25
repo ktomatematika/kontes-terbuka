@@ -2,8 +2,8 @@
   %h1 Admin: #{@contest.name}
   = link_to 'Kembali', contest_path(id: @contest.id)
 
-  = render 'edit' if can? :manage, Contest
+  = render 'edit' if can? :edit, Contest
   = render 'manage_short_problems' if can? :manage, ShortProblem
   = render 'manage_long_problems' if can? :manage, LongProblem
   = render 'manage_feedback_questions' if can? :manage, FeedbackQuestion
-  = render 'finalize' if can? :manage, Contest
+  = render 'finalize' if can? :edit, Contest
