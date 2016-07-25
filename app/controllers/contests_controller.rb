@@ -144,7 +144,7 @@ class ContestsController < ApplicationController
   def assign_markers
     @contest = Contest.find(params[:id])
     authorize! :assign_markers, @contest
-    @long_problems = LongProblem.where(contest: @contest)
+    @long_problems = LongProblem.where(contest: @contest).order(:problem_no)
   end
 
   def give_feedback
