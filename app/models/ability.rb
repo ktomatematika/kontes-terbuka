@@ -11,7 +11,7 @@ class Ability
                           Time.zone.now, Time.zone.now).pluck(:id)
       can [:download_pdf, :give_feedback, :feedback_submit], Contest,
           id: UserContest.where(user: user).pluck(:contest_id)
-      can [:submit, :destroy, :download], LongSubmission,
+      can [:submit, :destroy_submissions, :download], LongSubmission,
           id: user.long_submissions.pluck(:id)
 
       can :show, User, id: User.where(enabled: true).pluck(:id)
