@@ -95,15 +95,13 @@ class ContestsController < ApplicationController
   end
 
   def accept_rules
-    contest = nil
+    contest = Contest.find(participate_params[:contest_id])
 
     if contest.currently_in_contest?
       UserContest.transaction do
         User.find(participate_params[:user_id]).add_role :veteran if participate_params[:osn] == '1'
         participate_params[:osn] = nil
         user_contest = UserContest.find_or_create_by(user_id: participate_params[:user_id], contest_id: participate_params[:contest_id])
-
-        contest = user_contest.contest
         contest.long_problems.each do |long_problem|
           LongSubmission.create(user_contest: user_contest,
                                 long_problem: long_problem)
