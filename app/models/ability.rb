@@ -7,8 +7,8 @@ class Ability
       can [:show, :index, :show_rules,
            :accept_rules, :create_short_submissions], Contest
       can [:show_rules, :accept_rules], Contest,
-        id: Contest.where('start_time <= ? AND ? <= end_time',
-                          Time.zone.now, Time.zone.now).pluck(:id)
+          id: Contest.where('start_time <= ? AND ? <= end_time',
+                            Time.zone.now, Time.zone.now).pluck(:id)
       can [:download_pdf, :give_feedback, :feedback_submit], Contest,
           id: UserContest.where(user: user).pluck(:contest_id)
       can [:submit, :destroy_submissions, :download], LongSubmission,

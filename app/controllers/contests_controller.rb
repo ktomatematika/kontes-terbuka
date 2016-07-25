@@ -156,7 +156,9 @@ class ContestsController < ApplicationController
   def download_pdf
     contest = Contest.find(params[:contest_id])
     authorize! :download_pdf, contest
-    send_file contest.problem_pdf.path
+    send_file contest.problem_pdf.path,
+              type: 'application/pdf', disposition: 'attachment',
+              filename: File.basename(contest.problem_pdf.path)
   end
 
   def download_feedback
@@ -181,7 +183,9 @@ class ContestsController < ApplicationController
     uc = UserContest.find_by user: current_user, contest: contest
     certificate_obj = CertificateManager.new(uc.id)
     pdf_file = certificate_obj.create_and_give
-    send_file pdf_file
+    send_file pdf_file, type: 'application/pdf',
+                        disposition: 'attachment',
+                        filename: File.basename(pdf_file)
     certificate_obj.clean_files
   end
 

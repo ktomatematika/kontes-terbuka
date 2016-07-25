@@ -49,12 +49,11 @@ class LongProblemsController < ApplicationController
   end
 
   def download
-    unless File.file? @long_problem.zip_location
-      @long_problem.compress_submissions
-    end
+    loc = @long_problem.zip_location
+    @long_problem.compress_submissions unless File.file? loc
 
-    send_file @long_problem.zip_location, type: 'application/zip',
-                                          disposition: 'attachment'
+    send_file loc, type: 'application/zip', disposition: 'attachment',
+                   filename: File.basename(loc)
   end
 
   def submit_temporary_markings

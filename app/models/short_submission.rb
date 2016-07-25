@@ -25,8 +25,4 @@ class ShortSubmission < ActiveRecord::Base
   belongs_to :user_contest
   belongs_to :short_problem
   enforce_migration_validations
-
-  def correct?
-    answer == short_problem.answer
-  end
 end
