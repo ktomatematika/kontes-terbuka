@@ -177,7 +177,7 @@ class UsersController < ApplicationController
   def index
     @page = 50
     @users = User.order(:username)
-    authorize! :index, @users
+    authorize! :index, User
     if !(can? :see_full_index, User) || (params[:disabled] == 'false')
       @users = @users.where(enabled: true)
     end
