@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160720155458) do
+ActiveRecord::Schema.define(version: 20160726085657) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,25 +32,29 @@ ActiveRecord::Schema.define(version: 20160720155458) do
 
   create_table "contests", force: :cascade do |t|
     t.string   "name"
-    t.datetime "start_time",                               null: false
-    t.datetime "end_time",                                 null: false
-    t.datetime "created_at",                               null: false
-    t.datetime "updated_at",                               null: false
+    t.datetime "start_time",                                  null: false
+    t.datetime "end_time",                                    null: false
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
     t.string   "problem_pdf_file_name"
     t.string   "problem_pdf_content_type"
     t.integer  "problem_pdf_file_size"
     t.datetime "problem_pdf_updated_at"
-    t.text     "rule",                     default: "",    null: false
-    t.datetime "result_time",                              null: false
-    t.datetime "feedback_time",                            null: false
-    t.integer  "gold_cutoff",              default: 0,     null: false
-    t.integer  "silver_cutoff",            default: 0,     null: false
-    t.integer  "bronze_cutoff",            default: 0,     null: false
-    t.boolean  "result_released",          default: false, null: false
+    t.text     "rule",                        default: "",    null: false
+    t.datetime "result_time",                                 null: false
+    t.datetime "feedback_time",                               null: false
+    t.integer  "gold_cutoff",                 default: 0,     null: false
+    t.integer  "silver_cutoff",               default: 0,     null: false
+    t.integer  "bronze_cutoff",               default: 0,     null: false
+    t.boolean  "result_released",             default: false, null: false
     t.string   "problem_tex_file_name"
     t.string   "problem_tex_content_type"
     t.integer  "problem_tex_file_size"
     t.datetime "problem_tex_updated_at"
+    t.string   "marking_scheme_file_name"
+    t.string   "marking_scheme_content_type"
+    t.integer  "marking_scheme_file_size"
+    t.datetime "marking_scheme_updated_at"
   end
 
   add_index "contests", ["end_time"], name: "index_contests_on_end_time", using: :btree

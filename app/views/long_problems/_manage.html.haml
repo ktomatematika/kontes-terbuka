@@ -12,11 +12,13 @@
         %td= lp.problem_no
         %td.text-justify= lp.statement
         %td= link_to 'Edit', [:edit, @contest, lp]
-        %td= link_to 'Hapus', [@contest, lp], method: :delete, data: { confirm: 'Apakah Anda yakin?' }
+        %td= link_to 'Hapus', [@contest, lp], method: :delete,
+          data: { confirm: 'Apakah Anda yakin?' }
 
 %section
   %h3 Buat soal
-  = form_for [@contest, @contest.long_problems.build], html: { class: 'form-horizontal' } do |f|
+  = form_for [@contest, @contest.long_problems.build],
+    html: { class: 'form-horizontal' } do |f|
     .form-group
       = f.label :problem_no, class: 'col-sm-2'
       .col-sm-4

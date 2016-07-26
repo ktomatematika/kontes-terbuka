@@ -14,11 +14,13 @@
         %td.text-justify= sp.statement
         %td= sp.answer
         %td= link_to 'Edit', [:edit, @contest, sp]
-        %td= link_to 'Hapus', [@contest, sp], method: :delete, data: { confirm: 'Apakah Anda yakin?' }
+        %td= link_to 'Hapus', [@contest, sp], method: :delete,
+          data: { confirm: 'Apakah Anda yakin?' }
 
 %section
   %h3 Buat soal
-  = form_for [@contest, @contest.short_problems.build], html: { class: 'form-horizontal' } do |f|
+  = form_for [@contest, @contest.short_problems.build],
+    html: { class: 'form-horizontal' } do |f|
     .form-group
       = f.label :problem_no, class: 'col-sm-2'
       .col-sm-4

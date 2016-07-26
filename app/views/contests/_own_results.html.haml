@@ -1,0 +1,31 @@
+#indiv-result
+  %h2 Hasil dan Umpan Balik
+
+  - unless @short_problems.empty?
+    %h3 Bagian A: #{@user_contest.short_mark}/#{@short_problems.length} poin
+
+  - unless @long_problems.empty?
+    %h3 Bagian B
+    - @long_problems.each do |prob|
+      - ls = prob.long_submissions.find_by user_contest: @user_contest
+
+      %h4 No. #{prob.problem_no}: #{dashify @user_contest.__send__('problem_no_' + prob.id)}/#{LongProblem::MAX_MARK} poin
+      .row
+        .col-sm-6
+          %h5 Soal
+          = prob.statement
+        .col-sm-6
+          %h5 Umpan Balik
+          = ls.feedback
+
+  %h3 Total: #{@user_contest.total_mark}/#{@contest.max_score} poin
+  = show_award
+  %p
+    Jika menurut Anda terdapat masalah dengan penilaian di kontes ini,
+    seperti ada berkas Anda yang tidak dinilai atau menurut Anda nilainya
+    kurang tepat, Anda bisa #{link_to 'mengontak kami.', contact_path}
+  %p
+    Jangan lupa bahwa Anda bisa mendiskusikan soal-soal dan jawaban kontes ini
+    di forum olimpiade.org. Ada beberapa veteran lomba yang akan membantu
+    menjawab pertanyaan-pertanyaan Anda. Jangan malu bertanya; inilah media
+    yang tepat untuk menambah wawasan olimpiade matematika Anda!

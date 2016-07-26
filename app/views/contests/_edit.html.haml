@@ -1,14 +1,15 @@
 %h2 Edit
 
 = form_for :contest, url: contest_path(@contest), method: :patch do |f|
-  %label{for: 'contest_name'} Nama kontes
+  %label{ for: 'contest_name' } Nama kontes
   = f.text_field :name, class: 'form-control'
-  %label{for: 'contest_start_time'} Waktu mulai kontes
+  %label{ for: 'contest_start_time' } Waktu mulai kontes
   = f.datetime_field :start_time, class: 'form-control'
-  %label{for: 'contest_end_time'} Waktu selesai kontes
+  %label{ for: 'contest_end_time' } Waktu selesai kontes
   = f.datetime_field :end_time, class: 'form-control'
-  %label{for: 'contest_result_time'} Hasil kontes diumumkan
+  %label{ for: 'contest_result_time' } Hasil kontes diumumkan
   = f.datetime_field :result_time, class: 'form-control'
-  %label{for: 'contest_feedback_time'} Terakhir kumpul feedback
+  %label{ for: 'contest_feedback_time' } Terakhir kumpul feedback
   = f.datetime_field :feedback_time, class: 'form-control'
+  = f.file_field :marking_scheme
   = f.submit class: 'btn btn-default has-shade'

@@ -157,6 +157,12 @@ class ContestsController < ApplicationController
     send_file contest.problem_pdf.path
   end
 
+  def download_marking_scheme
+    contest = Contest.find(params[:contest_id])
+    authorize! :download_marking_scheme, contest
+    send_file contest.marking_scheme.path
+  end
+
   def download_feedback
     @contest = Contest.find(params[:contest_id])
     authorize! :download_feedback, @contest
@@ -225,7 +231,7 @@ class ContestsController < ApplicationController
     params.require(:contest).permit(:name, :start_time, :end_time, :result_time,
                                     :feedback_time, :problem_pdf, :gold_cutoff,
                                     :silver_cutoff, :bronze_cutoff,
-                                    :result_released)
+                                    :result_released, :marking_scheme)
   end
 
   def participate_params

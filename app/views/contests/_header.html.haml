@@ -3,7 +3,7 @@
   %h3#subtitle
   %h3.update-regularly#time-remaining
   - if @contest.currently_in_contest?
-    %div#contest-buttons
+    #contest-buttons
       = link_to 'Download soal', @contest.problem_pdf.url(:original, false),
         class: 'btn btn-default btn-lg has-shade'
       = link_to 'Lihat ulang aturan', contest_rules_path(@contest),

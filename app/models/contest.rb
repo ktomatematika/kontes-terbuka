@@ -2,27 +2,31 @@
 #
 # Table name: contests
 #
-#  id                       :integer          not null, primary key
-#  name                     :string
-#  start_time               :datetime         not null
-#  end_time                 :datetime         not null
-#  created_at               :datetime         not null
-#  updated_at               :datetime         not null
-#  problem_pdf_file_name    :string
-#  problem_pdf_content_type :string
-#  problem_pdf_file_size    :integer
-#  problem_pdf_updated_at   :datetime
-#  rule                     :text             default(""), not null
-#  result_time              :datetime         not null
-#  feedback_time            :datetime         not null
-#  gold_cutoff              :integer          default(0), not null
-#  silver_cutoff            :integer          default(0), not null
-#  bronze_cutoff            :integer          default(0), not null
-#  result_released          :boolean          default(FALSE), not null
-#  problem_tex_file_name    :string
-#  problem_tex_content_type :string
-#  problem_tex_file_size    :integer
-#  problem_tex_updated_at   :datetime
+#  id                          :integer          not null, primary key
+#  name                        :string
+#  start_time                  :datetime         not null
+#  end_time                    :datetime         not null
+#  created_at                  :datetime         not null
+#  updated_at                  :datetime         not null
+#  problem_pdf_file_name       :string
+#  problem_pdf_content_type    :string
+#  problem_pdf_file_size       :integer
+#  problem_pdf_updated_at      :datetime
+#  rule                        :text             default(""), not null
+#  result_time                 :datetime         not null
+#  feedback_time               :datetime         not null
+#  gold_cutoff                 :integer          default(0), not null
+#  silver_cutoff               :integer          default(0), not null
+#  bronze_cutoff               :integer          default(0), not null
+#  result_released             :boolean          default(FALSE), not null
+#  problem_tex_file_name       :string
+#  problem_tex_content_type    :string
+#  problem_tex_file_size       :integer
+#  problem_tex_updated_at      :datetime
+#  marking_scheme_file_name    :string
+#  marking_scheme_content_type :string
+#  marking_scheme_file_size    :integer
+#  marking_scheme_updated_at   :datetime
 #
 # Indexes
 #
@@ -57,15 +61,21 @@ class Contest < ActiveRecord::Base
 
   has_attached_file :problem_pdf,
                     url: '/contests/:id/pdf',
-                    path: ':rails_root/public/contest_files/problems/:id/:basename.:extension'
+                    path: ':rails_root/public/contest_files/problems/' \
+                    ':id/soal.:extension'
   validates_attachment_content_type :problem_pdf,
                                     content_type: ['application/pdf']
 
   has_attached_file :problem_tex,
                     path: ':rails_root/public/contest_files/problems/' \
-                    ':id/:basename.:extension'
+                    ':id/soal.:extension'
   validates_attachment_content_type :problem_tex,
                                     content_type: ['text/x-tex']
+
+  has_attached_file :marking_scheme,
+                    url: '/contests/:id/ms-pdf',
+                    path: ':rails_root/public/contest_files/problems/' \
+                    ':id/ms.:extension'
 
   accepts_nested_attributes_for :long_problems
 

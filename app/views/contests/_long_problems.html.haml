@@ -38,7 +38,8 @@
               class: 'form-control answer-input', placeholder: 'No. halaman'
             = page_form.link_to_remove do
               %span.glyphicon.glyphicon-trash{ 'aria-hidden' => 'true' }
-            = page_form.file_field :submission
+            = page_form.file_field :submission, class: 'long-problem-file'
 
-        = f.link_to_add 'Tambah halaman', :submission_pages
+        = f.link_to_add 'Tambah halaman', :submission_pages,
+          class: 'long-problem-file'
         = f.submit 'Jawab', class: 'btn btn-default has-shade'

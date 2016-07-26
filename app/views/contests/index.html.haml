@@ -1,0 +1,16 @@
+= content_tag 'div', '', id: 'contests-data', data: contests_info_hash
+.container#all-contests-container
+  %header
+    %h1 Kontes-kontes
+    %h4 Catatan: tanggal kontes-kontes berikutnya masih bisa berubah kapanpun.
+
+  %section#contests-container
+    %article.three-container
+      %div
+        %a#prev-time{ href: '#' }
+      %div
+        %span#this-time
+      %div
+        %a#next-time{ href: '#' }
+
+    %article#calendar
