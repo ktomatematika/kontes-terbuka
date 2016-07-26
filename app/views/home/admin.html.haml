@@ -4,6 +4,12 @@
     = link_to 'Kontes Baru', new_contest_path,
       class: 'btn btn-default has-shade'
 
+  - unless @long_problems.empty?
+    %h2 Koreksian
+    %ul
+      - @long_problems.each do |lp|
+        %li= link_to lp, mark_solo_path(lp)
+
   - if current_user.has_role? :panitia
     %h2 Fitur Panitia
     %ul
@@ -30,9 +36,3 @@
         %tr.clickable-row{ data: { link: user_path(p) } }
           %td= p.username
           %td= p.fullname
-
-  - unless @long_problems.empty?
-    %h2 Koreksian
-    %ul
-      - @long_problems.each do |lp|
-        %li= link_to lp, mark_solo_path(lp)

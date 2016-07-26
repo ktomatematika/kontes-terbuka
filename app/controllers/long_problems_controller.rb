@@ -38,6 +38,7 @@ class LongProblemsController < ApplicationController
   def mark
     @contest = @long_problem.contest
     @long_submissions = @long_problem.long_submissions.submitted
+                                     .joins(:users).order(:id)
 
     @markers = User.with_role(:marker, @long_problem).reject do |u|
       u == current_user

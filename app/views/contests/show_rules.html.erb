@@ -12,9 +12,6 @@
 
   <% if @user_contest.id.nil? %>
     <%= form_for @user_contest, url: contest_rules_path do |f| %>
-      <p>Sebelum itu... Ada yang tertinggal.</p>
-      <%= check_box_tag 'user_contest[osn]' %> Centang jika Anda pernah mendapatkan medali di OSN Matematika SMA (tingkat nasional).
-      <br><br><br>
       <div id="rules-text">
         <%= markdown_render(@contest.rule) %>
       </div>

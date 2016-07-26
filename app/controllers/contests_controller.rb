@@ -99,9 +99,7 @@ class ContestsController < ApplicationController
 
     if contest.currently_in_contest?
       UserContest.transaction do
-        User.find(participate_params[:user_id]).add_role :veteran if participate_params[:osn] == '1'
-        participate_params[:osn] = nil
-        user_contest = UserContest.find_or_create_by(user_id: participate_params[:user_id], contest_id: participate_params[:contest_id])
+        user_contest = UserContest.find_or_create_by(participate_params)
         contest.long_problems.each do |long_problem|
           LongSubmission.create(user_contest: user_contest,
                                 long_problem: long_problem)
@@ -235,7 +233,7 @@ class ContestsController < ApplicationController
   end
 
   def participate_params
-    params.require(:user_contest).permit(:user_id, :contest_id, :osn)
+    params.require(:user_contest).permit(:user_id, :contest_id)
   end
 
   def read_problems_params
