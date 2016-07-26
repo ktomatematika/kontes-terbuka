@@ -10,7 +10,7 @@
     - @long_problems.each do |lp|
       %tr
         %td= lp.problem_no
-        %td= lp.statement
+        %td.text-justify= lp.statement
         %td= link_to 'Edit', [:edit, @contest, lp]
         %td= link_to 'Hapus', [@contest, lp], method: :delete, data: { confirm: 'Apakah Anda yakin?' }
 

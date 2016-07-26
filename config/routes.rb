@@ -34,6 +34,7 @@ Rails.application.routes.draw do
     get 'feedback', to: 'contests#give_feedback'
     post 'feedback', to: 'contests#feedback_submit'
     get 'download', to: 'contests#download_feedback'
+    get 'summary', to: 'contests#summary'
 
     resources :short_problems, path: '/short-problems'
     post 'create-short-submissions', to: 'contests#create_short_submissions'
@@ -58,6 +59,8 @@ Rails.application.routes.draw do
   # resources :market_items, path: '/market-items'
 
   get '/mark-solo/:id', to: 'long_problems#mark_solo', as: :mark_solo
+  post '/submit-markings/:id', to: 'long_problems#submit_temporary_markings',
+                               as: :submit_markings
   get '/mark-final/:id', to: 'long_problems#mark_final', as: :mark_final
 
   get '/home', to: 'home#index'

@@ -2,27 +2,29 @@
   %h1= @long_problem
   = link_to 'Download semua submisi', download_submissions_path,
     class: 'btn btn-default has-shade'
-  %table.table
-    %thead
-      %tr
-        %th ID
-        %th Nilai
-        %th Catatan
-        - @markers.each do |m|
-          %th= m.username
-        %th
+  %span Download ini memakan waktu. Sabar ya. :3
 
-    %tbody
-      - @long_submissions.each do |s|
+  = form_tag submit_markings_path do
+    %table.table
+      %thead
         %tr
-          %td= s.user_contest.id
-          %td
-            %input
-          %td
-            %input
+          %th ID
+          %th Nilai
+          %th Catatan
           - @markers.each do |m|
-            %td Sudah
-          %td
-            %a Download
+            %th= m.username
 
-  %a.btn.btn-default.has-shade Submit
+      %tbody
+        - @long_submissions.each do |s|
+          - tm = TemporaryMarking.find_by(long_submission: s, user: current_user)
+          %tr
+            %td= s.user_contest.user.id
+            %td= text_field_tag "marking[#{s.id}][mark]", tm.nil? ? '' : tm.mark, class: 'form-control'
+            %td= text_field_tag "marking[#{s.id}][tags]", tm.nil? ? '' : tm.tags, class: 'form-control'
+            - @markers.each do |m|
+              - if TemporaryMarking.find_by(long_submission: s, user: m).nil?
+                %td
+              - else
+                %td Sudah
+
+    = submit_tag 'Input nilai', class: 'btn btn-default has-shade'

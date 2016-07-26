@@ -4,13 +4,27 @@
     = link_to 'Kontes Baru', new_contest_path,
       class: 'btn btn-default has-shade'
 
+  - if current_user.has_role? :panitia
+    %h2 Fitur Panitia
+    %ul
+      %li Melihat page ini
+      %li Bisa koreksi
+      %li Submisi akan dibuang setelah suatu kontes selesai
+      %li Preview soal dan hasil kontes
+      %li Melihat ringkasan kontes
+      %li
+        Melihat semua data (yang relevan) di user. Bisa edit juga. Tolong
+        jangan diabuse, ini diberikan supaya bisa bantu monitor.
+      %li Delete user yang belum teraktivasi
+      %li Melihat performa website dengan data di atas kiri
+
   %h2 Daftar Panitia
   %table.table.table-condensed.table-hover
     %thead
       %tr
         %th Username
         %th Nama Lengkap
-    
+
     %tbody
       - @panitia.each do |p|
         %tr.clickable-row{ data: { link: user_path(p) } }

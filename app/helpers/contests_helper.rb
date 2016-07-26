@@ -67,4 +67,13 @@ module ContestsHelper
     options_for_select users.pluck(:username, :fullname)
                             .map { |u| ["#{u[0]} (#{u[1]})", u[0]] }
   end
+
+  def average(sum)
+    sum = 0 if sum.nil?
+    sum.to_f / @count
+  end
+
+  def percentage(num)
+    number_to_percentage num * 100, precision: 2
+  end
 end

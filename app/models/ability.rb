@@ -30,7 +30,7 @@ class Ability
           id: LongProblem.with_role(:marker, user).pluck(:id)
 
       if user.has_role? :panitia
-        can :preview, Contest
+        can [:preview, :summary], Contest
         can [:see_full_index, :see_full, :edit, :update], User
         can :destroy, User, id: User.where(enabled: false).pluck(:id)
         can [:admin, :profile], Ability

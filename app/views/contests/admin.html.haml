@@ -3,7 +3,7 @@
   = link_to 'Kembali', contest_path(id: @contest.id)
 
   = render 'edit' if can? :edit, Contest
-  = render 'manage_short_problems' if can? :manage, ShortProblem
-  = render 'manage_long_problems' if can? :manage, LongProblem
-  = render 'manage_feedback_questions' if can? :manage, FeedbackQuestion
+  = render 'short_problems/manage' if can? :manage, ShortProblem
+  = render 'long_problems/manage' if can? :manage, LongProblem
+  = render 'feedback_questions/manage' if can? :manage, FeedbackQuestion
   = render 'finalize' if can? :edit, Contest

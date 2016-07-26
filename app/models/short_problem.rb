@@ -26,4 +26,14 @@ class ShortProblem < ActiveRecord::Base
   has_many :short_submissions
   has_many :user_contests, through: :short_submissions
   enforce_migration_validations
+
+  def most_answer
+    ShortProblem.find_by_sql ['SELECT answer, COUNT(*) AS count ' \
+                              'FROM short_submissions ' \
+                              'WHERE SHORT_PROBLEM_ID = ? ' \
+                              'GROUP BY answer HAVING COUNT(*) = ' \
+                              '(SELECT COUNT(*) FROM short_submissions ' \
+                              'GROUP BY answer ORDER BY COUNT(*) DESC LIMIT 1)',
+                              id]
+  end
 end

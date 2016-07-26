@@ -127,12 +127,15 @@ class UsersController < ApplicationController
   end
 
   def process_forgot_password
-    user = User.get_user params[:username]
-    authorize! :process_forgot_password, user
+    user = User.find_by(username: params[:username], email: params[:email])
 
     if user.nil?
       Ajat.warn "forgot_password_no_user|uname:#{params[:username]}"
-      redirect_to sign_path, alert: 'User tidak ada.'
+      redirect_to login_path, alert: 'User tidak ada.'
+    elsif !user.enabled?
+      Ajat.warn "forgot_password_not_enabled|uname:#{params[:username]}"
+      redirect_to login_path, alert: 'Kamu belum verifikasi! Cek email ' \
+        'Anda untuk verifikasi.'
     else
       user.forgot_password_process
       Ajat.warn "forgot_password|uname:#{params[:username]}"

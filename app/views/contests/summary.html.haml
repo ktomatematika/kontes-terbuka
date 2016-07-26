@@ -1,0 +1,48 @@
+.container
+  %h1 Ringkasan
+  %p Banyak peserta: #{@count}
+
+  %h2 Isian
+  %table.table.table-condensed.table-striped.table-responsive
+    %thead
+      %tr
+        %th No.
+        %th Soal
+        %th Jawaban
+        %th % Benar
+        %th Jawaban terbanyak
+        %th % Jawaban
+
+    %tbody
+      - @short_problems.each do |sp|
+        - ss = sp.short_submissions
+        - most = sp.most_answer
+        %tr
+          %td= sp.problem_no
+          %td= truncate sp.statement, length: 100, separator: ' '
+          %td= sp.answer
+          %td= percentage average ss.where(answer: sp.answer).count
+          %td= most.map(&:answer)
+          %td= percentage average(most.empty? ? nil : most[0].count)
+
+  %h2 Uraian
+  %table.table.table-condensed.table-striped.table-responsive
+    %thead
+      %tr
+        %th No.
+        %th Soal
+        %th -
+        - (LongProblem::MAX_MARK + 1).times do |i|
+          %th= i
+        %th Rata-rata
+
+    %tbody
+      - @long_problems.each do |lp|
+        - ls = lp.long_submissions
+        %tr
+          %td= lp.problem_no
+          %td= truncate lp.statement, length: 100, separator: ' '
+          %td= ls.where(score: nil).count
+          - (LongProblem::MAX_MARK + 1).times do |i|
+            %td= ls.where(score: i).count
+          %td= average ls.sum(:score)

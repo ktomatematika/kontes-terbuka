@@ -57,7 +57,7 @@ class LongProblemsController < ApplicationController
   end
 
   def submit_temporary_markings
-    params.each do |id, val|
+    params[:marking].each do |id, val|
       mark = val[:mark]
       tags = val[:tags]
 

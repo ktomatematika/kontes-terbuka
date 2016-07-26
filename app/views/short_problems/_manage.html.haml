@@ -11,7 +11,7 @@
     - @short_problems.each do |sp|
       %tr
         %td= sp.problem_no
-        %td= sp.statement
+        %td.text-justify= sp.statement
         %td= sp.answer
         %td= link_to 'Edit', [:edit, @contest, sp]
         %td= link_to 'Hapus', [@contest, sp], method: :delete, data: { confirm: 'Apakah Anda yakin?' }

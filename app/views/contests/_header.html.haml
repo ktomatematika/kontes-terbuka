@@ -10,6 +10,10 @@
         class: 'btn btn-default btn-lg has-shade'
 
   %div
+    - if can? :summary, Contest
+      = link_to 'Ringkasan', contest_summary_path(contest_id: @contest),
+        class: 'btn btn-default btn-lg has-shade'
+
     - if can? :admin, Contest
       = link_to 'Administrasi', contest_admin_path(contest_id: @contest),
         class: 'btn btn-default btn-lg has-shade'

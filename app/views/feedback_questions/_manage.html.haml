@@ -10,7 +10,7 @@
     %tbody
       - @feedback_questions.each do |fq|
         %tr
-          %td= fq.question
+          %td.text-justify= fq.question
           %td= link_to 'Edit', [:edit, @contest, fq]
           %td= link_to 'Hapus', [@contest, fq], method: :delete,
             data: { confirm: 'Apakah Anda yakin?' }

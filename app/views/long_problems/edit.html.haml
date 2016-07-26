@@ -1,6 +1,6 @@
 .container
-  %h1 Buat isian
-  = form_for [@contest, @short_problem], html: { class: 'form-horizontal' } do |f|
+  %h1 Edit
+  = form_for [@contest, @long_problem], html: { class: 'form-horizontal' } do |f|
     .form-group
       = f.label :problem_no, class: 'col-sm-2'
       .col-sm-4
@@ -10,10 +10,6 @@
       .col-sm-10
         = find_and_preserve do
           = f.text_area :statement, class: 'form-control'
-    .form-group
-      = f.label :answer, class: 'col-sm-2'
-      .col-sm-4
-        = f.text_field :answer, class: 'form-control', autocomplete: 'off'
     .form-group
       .col-sm-offset-2.col-sm-4
         = f.submit 'Edit soal', class: 'btn btn-default has-shade'

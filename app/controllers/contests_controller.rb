@@ -206,6 +206,17 @@ class ContestsController < ApplicationController
     TexReader.new(c, read_problems_params[:answers].split(',')).run
   end
 
+  def summary
+    @contest = Contest.find(params[:contest_id])
+    authorize! :summary, @contest
+
+    @count = @contest.user_contests.count
+    redirect_to contest_path(@contest), notice: 'Tidak ada data' if @count == 0
+
+    @short_problems = @contest.short_problems.order(:problem_no)
+    @long_problems = @contest.long_problems.order(:problem_no)
+  end
+
   private
 
   def submission_params

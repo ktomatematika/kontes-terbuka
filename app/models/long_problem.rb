@@ -52,17 +52,14 @@ class LongProblem < ActiveRecord::Base
     (problems_location + '.zip').freeze
   end
 
-  def compress_submissions
-    require 'zip'
-    filenames = Dir.entries(problems_location + '/').reject do |f|
-      File.directory? f
+  def delete_submission_zips
+    Dir.entries(problems_location).each do |f|
+      File.delete(problems_location + '/' + f) if File.extname(f) == '.zip'
     end
-    File.delete(zip_location) if File.file?(zip_location)
+  end
 
-    Zip::File.open(zip_location, Zip::File::CREATE) do |zipfile|
-      filenames.each do |filename|
-        zipfile.add filename, "#{problems_location}/#{filename}"
-      end
-    end
+  def compress_submissions
+    File.delete(zip_location) if File.file?(zip_location)
+    ZipFileGenerator.new(problems_location, zip_location).write
   end
 end

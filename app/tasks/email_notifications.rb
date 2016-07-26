@@ -28,7 +28,7 @@ class EmailNotifications
 
   def contest_ending(contest, time_text)
     subject = "Kontes berakhir dalam waktu #{time_text}"
-    text = "Hanya mengingatkan saja, #{contest} akan berakhir dalam waktu" \
+    text = "Hanya mengingatkan saja, #{contest} akan berakhir dalam waktu " \
       "#{time_text}.\nSiap-siap mengumpulkan segala pekerjaan Anda " \
         "di #{contest_url contest}\n\n" \
       'Antisipasi segala kegagalan teknis. Ingat, kami hampir tidak pernah ' \

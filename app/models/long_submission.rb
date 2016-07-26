@@ -42,7 +42,7 @@ class LongSubmission < ActiveRecord::Base
       .order('long_problems.problem_no')
   }
 
-  scope :submitted, -> { joins(:submission_pages) }
+  scope :submitted, -> { joins(:submission_pages).group(:id) }
   def submitted?
     !submission_pages.empty?
   end
