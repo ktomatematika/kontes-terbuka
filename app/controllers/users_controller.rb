@@ -59,12 +59,10 @@ class UsersController < ApplicationController
 
   def reset_password
     @user = User.find_by verification: params[:verification]
-    authorize! :reset_password, @user
   end
 
   def process_reset_password
     user = User.find_by verification: params[:verification]
-    authorize! :process_reset_password, user
     if user
       if params[:new_password] == params[:confirm_new_password]
         User.transaction do
