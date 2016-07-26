@@ -58,7 +58,6 @@ class UsersController < ApplicationController
   end
 
   def reset_password
-    @user = User.find_by verification: params[:verification]
   end
 
   def process_reset_password

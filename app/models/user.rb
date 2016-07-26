@@ -135,7 +135,7 @@ class User < ActiveRecord::Base
   end
 
   def reset_password
-    generate_token(:verification)
+    update(verification: generate_token(:verification))
     text = 'Untuk melanjutkan process reset password user Anda, klik link ' \
       "ini: \n\n #{reset_password_url verification: verification}"
     Mailgun.send_message to: user.email,
@@ -179,7 +179,7 @@ class User < ActiveRecord::Base
   end
 
   def forgot_password_process
-    generate_token(:verification)
+    update(verification: generate_token(:verification))
     link = reset_password_url verification: verification
     Mailgun.send_message to: email,
                          subject: 'Reset Password KTO Matematika',

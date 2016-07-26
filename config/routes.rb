@@ -24,7 +24,7 @@ Rails.application.routes.draw do
   get '/verify/:verification', to: 'users#verify', as: :verify
   get 'reset-password/:verification', to: 'users#reset_password',
                                       as: 'reset_password'
-  post 'reset-password/:verification', to: 'users#process_reset_password',
+  post 'reset-password', to: 'users#process_reset_password',
                                        as: 'process_reset_password'
 
   resources :contests do
