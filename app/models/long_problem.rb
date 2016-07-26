@@ -59,6 +59,7 @@ class LongProblem < ActiveRecord::Base
   end
 
   def compress_submissions
+    delete_submission_zips
     File.delete(zip_location) if File.file?(zip_location)
     ZipFileGenerator.new(problems_location, zip_location).write
   end
