@@ -128,7 +128,7 @@ class UsersController < ApplicationController
 
     if user.nil?
       Ajat.warn "forgot_password_no_user|uname:#{params[:username]}"
-      redirect_to login_path, alert: 'User tidak ada.'
+      redirect_to login_path, alert: 'Kombinasi user dan email tidak ditemukan.'
     elsif !user.enabled?
       Ajat.warn "forgot_password_not_enabled|uname:#{params[:username]}"
       redirect_to login_path, alert: 'Kamu belum verifikasi! Cek email ' \
