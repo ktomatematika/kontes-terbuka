@@ -9,21 +9,24 @@
         %th No.
         %th Soal
         %th Jawaban
+        %th # Benar
         %th % Benar
         %th Jawaban terbanyak
+        %th # Jawaban
         %th % Jawaban
 
     %tbody
       - @short_problems.each do |sp|
-        - ss = sp.short_submissions
         - most = sp.most_answer
         %tr
           %td= sp.problem_no
-          %td= truncate sp.statement, length: 100, separator: ' '
+          %td.text-justify.latex= markdown_render sp.statement
           %td= sp.answer
-          %td= percentage average ss.where(answer: sp.answer).count
+          %td= sp.correct
+          %td= percentage average sp.correct
           %td= most.map(&:answer)
-          %td= percentage average(most.empty? ? nil : most[0].count)
+          %td= most.empty? ? 0 : most[0].count
+          %td= percentage average(most.empty? ? 0 : most[0].count)
 
   %h2 Uraian
   %table.table.table-condensed.table-striped.table-responsive
@@ -41,7 +44,7 @@
         - ls = lp.long_submissions
         %tr
           %td= lp.problem_no
-          %td= truncate lp.statement, length: 100, separator: ' '
+          %td.text-justify.latex= markdown_render lp.statement
           %td= ls.where(score: nil).count
           - (LongProblem::MAX_MARK + 1).times do |i|
             %td= ls.where(score: i).count

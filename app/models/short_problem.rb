@@ -30,10 +30,15 @@ class ShortProblem < ActiveRecord::Base
   def most_answer
     ShortProblem.find_by_sql ['SELECT answer, COUNT(*) AS count ' \
                               'FROM short_submissions ' \
-                              'WHERE SHORT_PROBLEM_ID = ? ' \
+                              'WHERE short_problem_id = ? ' \
                               'GROUP BY answer HAVING COUNT(*) = ' \
                               '(SELECT COUNT(*) FROM short_submissions ' \
+                              'WHERE short_problem_id = ? ' \
                               'GROUP BY answer ORDER BY COUNT(*) DESC LIMIT 1)',
-                              id]
+                              id, id]
+  end
+
+  def correct
+    short_submissions.where(answer: answer).count
   end
 end
