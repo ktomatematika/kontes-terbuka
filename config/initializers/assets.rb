@@ -9,7 +9,7 @@ Rails.application.config.assets.paths <<
 
 Rails.application.config.assets.register_mime_type('text/html', '.html')
 
-NonStupidDigestAssets.whitelist = [/.html$/]
+NonStupidDigestAssets.whitelist = [/.html/]
 
 # Precompile additional assets.
 # application.js, application.css, and all non-JS/CSS in app/assets folder
