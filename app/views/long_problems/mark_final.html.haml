@@ -27,7 +27,7 @@
       %tbody
         - @long_submissions.each do |s|
           %tr
-            %td= s.id
+            %td= s.user_contest.user_id
             - @markers.each do |m|
               %td= TemporaryMarking.find_by(long_submission: s, user: m).mark
               %td= TemporaryMarking.find_by(long_submission: s, user: m).tags
@@ -37,6 +37,6 @@
               class: 'form-control'
             %td= text_field_tag "marking[#{s.id}][suggestion]", '',
               class: 'form-control'
-            %td.text-justify.latex= markdown_render s.feedback
+            %td.text-justify.latex= markdown_render s.feedback.to_s
 
       = submit_tag 'Input nilai', class: 'btn btn-default has-shade'

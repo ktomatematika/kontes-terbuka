@@ -29,6 +29,7 @@ class LongProblem < ActiveRecord::Base
   has_many :long_submissions
   has_many :user_contests, through: :long_submissions
   has_many :submission_pages, through: :long_submissions
+  has_many :temporary_markings, through: :long_submissions
 
   MAX_MARK = 7
   attr_accessor :MAX_MARK
