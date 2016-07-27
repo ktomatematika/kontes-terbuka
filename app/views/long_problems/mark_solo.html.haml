@@ -35,3 +35,6 @@
                 %td Sudah
 
     = submit_tag 'Input nilai', class: 'btn btn-default has-shade'
+
+  = link_to 'Diskusi', mark_final_path(@long_problem),
+    class: 'btn btn-default has-shade' if @long_problem.all_marked?
