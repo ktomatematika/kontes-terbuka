@@ -37,10 +37,10 @@
               class: 'form-control'
             = find_and_preserve do
               %td= text_area_tag "marking[#{s.id}][comment]", '',
-                class: 'form-control', rows: 3
+                class: 'form-control mark-textarea', rows: 3
             = find_and_preserve do
               %td= text_area_tag "marking[#{s.id}][suggestion]", '',
-                class: 'form-control', rows: 3
+                class: 'form-control mark-textarea', rows: 3
             %td.text-justify.latex= markdown_render s.feedback.to_s
 
     = submit_tag 'Input nilai', class: 'btn btn-default has-shade'
