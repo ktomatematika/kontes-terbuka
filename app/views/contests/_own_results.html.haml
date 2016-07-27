@@ -16,7 +16,7 @@
           = prob.statement
         .col-sm-6
           %h5 Umpan Balik
-          = ls.feedback
+          .text-justify.latex= markdown_render ls.feedback
 
   %h3 Total: #{@user_contest.total_mark}/#{@contest.max_score} poin
   = show_award

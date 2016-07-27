@@ -7,6 +7,10 @@
     class: 'btn btn-default has-shade'
   %span Download ini memakan waktu. Sabar ya. :3
 
+  %div
+    Catatan: Anda bisa menggunakan LaTeX (bungkus dengan $) dan Markdown.
+    Markdown syntax bisa dilihat di <a href='https://github.com/adam-p/
+    markdown-here/wiki/Markdown-Cheatsheet'>sini.</a>
   = form_tag submit_final_markings_path do
     %table.table
       %thead
@@ -35,6 +39,6 @@
               class: 'form-control'
             %td= text_field_tag "marking[#{s.id}][suggestion]", '',
               class: 'form-control'
-            %td= s.feedback
+            %td.text-justify.latex= markdown_render s.feedback
 
       = submit_tag 'Input nilai', class: 'btn btn-default has-shade'
