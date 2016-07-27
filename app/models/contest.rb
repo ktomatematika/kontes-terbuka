@@ -135,13 +135,13 @@ class Contest < ActiveRecord::Base
           UserContest.include_long_problem_marks(long_problem.id)
                      .as("long_problem_marks_#{long_problem.id}")
                      .on do
-                       id == send('long_problem_marks_' \
+                       id == __send__('long_problem_marks_' \
                                                      "#{long_problem.id}").id
                      end
         end
         .select do
-          send("long_problem_marks_#{long_problem.id}")
-            .send("problem_no_#{long_problem.id}")
+          __send__("long_problem_marks_#{long_problem.id}")
+            .__send__("problem_no_#{long_problem.id}")
         end
     end
     filtered_query

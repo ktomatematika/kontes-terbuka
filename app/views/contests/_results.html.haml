@@ -23,6 +23,6 @@
             - unless no_short_problem
               %td= uc.short_mark
             - @long_problems.each do |lp|
-              %td= LongSubmission::MAX_MARK[uc.send("problem_no_#{lp.id}")]
+              %td= LongSubmission::SCORE_HASH[uc.send("problem_no_#{lp.id}")]
             %td= uc.total_mark
             %td= uc.award

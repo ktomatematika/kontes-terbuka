@@ -15,15 +15,15 @@
           = f.text_field :school, class: 'form-control'
         %p
           %label{ for: 'user_province' } Provinsi:
-          = f.collection_select :province_id, Province.all(), :id, :name,
+          = f.collection_select :province_id, Province.all, :id, :name,
             { prompt: 'Provinsi' }, class: 'form-control'
         %p
           %label{ for: 'user_status' } Status:
-          = f.collection_select :status_id, Status.all(), :id, :name,
+          = f.collection_select :status_id, Status.all, :id, :name,
             { prompt: 'Status' }, class: 'form-control'
         %p
           %label{ for: 'user_color' } Warna:
-          = f.collection_select :color_id, Color.all(), :id, :name,
+          = f.collection_select :color_id, Color.all, :id, :name,
             { prompt: 'Warna' }, class: 'form-control'
         %p
           %label{ for: 'user_timezone' } Zona waktu:

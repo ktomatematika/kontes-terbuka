@@ -1,14 +1,17 @@
 .row#login
   .col-xs-10.col-sm-8.col-md-6.sign-grid
-    = render 'users/sign_header', title: 'Masuk', subtitle: 'Belum punya akun?', link: 'Daftar.', anchor: '#register'
+    = render 'users/sign_header', title: 'Masuk',
+      subtitle: 'Belum punya akun?', link: 'Daftar.', anchor: '#register'
 
     = form_tag login_path do
       .form-group.has-feedback
-        = text_field_tag :username, params[:email], class: 'form-control', placeholder: 'Username/Email', autofocus: true
-        %span.glyphicon.form-glyphicon.form-control-feedback(aria-hidden='true')
+        = text_field_tag :username, params[:email], class: 'form-control',
+          placeholder: 'Username/Email', autofocus: true
+        %span.glyphicon.form-glyphicon.form-control-feedback{ 'aria-hidden' => 'true' }
       .form-group.has-feedback
-        = password_field_tag :password, params[:password], class: 'form-control', placeholder: 'Password'
-        %span.glyphicon.form-glyphicon.form-control-feedback.glyphicon-eye-open(aria-hidden='true')
+        = password_field_tag :password, params[:password],
+          class: 'form-control', placeholder: 'Password'
+        %span.glyphicon.form-glyphicon.form-control-feedback.glyphicon-eye-open{ 'aria-hidden' => 'true' }
 
       %footer
         .left-footer
@@ -16,6 +19,6 @@
             %label
               = check_box_tag :remember_me, 1, params[:remember_me]
               Ingat saya
-          %a.move-form#forgot-link(href='#forgot') Lupa password Anda?
+          %a.move-form#forgot-link{ href: '#forgot' } Lupa password Anda?
 
         = submit_tag 'Masuk', class: 'btn btn-lg btn-default sign-btn has-shade'

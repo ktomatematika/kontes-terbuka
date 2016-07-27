@@ -3,5 +3,7 @@
   %h1 Ganti Notifikasi
   - Notification.all.each do |n|
     %p
-      = check_box_tag n.id, nil, !UserNotification.find_by(notification: n, user: @user).nil?, class: 'notifications-checkbox'
+      = check_box_tag n.id, nil,
+        !UserNotification.find_by(notification: n, user: @user).nil?,
+        class: 'notifications-checkbox'
       %label{ for: n.id }= n

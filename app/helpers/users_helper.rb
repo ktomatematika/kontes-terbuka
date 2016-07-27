@@ -1,12 +1,6 @@
 module UsersHelper
-  def create_data_row(data_array, tag, tag_options = nil, tr_options = nil)
-    content_tag :tr, tr_options do
-      safe_join(data_array.map do |data|
-        content_tag(tag.to_s, data, tag_options)
-      end)
-    end
-  end
 
+  # Four of the methods below are helpers for users#show_history.
   def public_header_contents
     create_data_row %w(Kontes Penghargaan), 'th'
   end
@@ -38,16 +32,19 @@ module UsersHelper
     end)
   end
 
+  # Helper to set start user in users#index.
   def index_start
     return 0 if params[:start].nil?
     params[:start].to_i
   end
 
+  # Helper to set start user in users#index.
   def start_plus(num)
     start_num = params[:start].to_i + num
     params.merge(start: start_num).permit(:start, :disabled)
   end
 
+  # Helper to toggle disabled users in users#index.
   def toggle_disable
     disabled = !params[:disabled].nil? && params[:disabled] == 'true'
     prms = params.merge(disabled: !disabled).permit(:start, :disabled)
