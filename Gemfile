@@ -62,6 +62,8 @@ gem 'daemons'
 gem 'annotate'
 # Add comments in models
 gem 'migration_comments'
+# Do not generate digssts for error pages
+gem 'non-stupid-digest-assets'
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views

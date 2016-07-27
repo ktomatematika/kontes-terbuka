@@ -43,7 +43,7 @@ class LongSubmission < ActiveRecord::Base
   }
 
   SCORE_HASH = [*0..LongProblem::MAX_MARK].each_with_object({}) do |item, memo|
-    memo[item] = item
+    memo[item] = item.to_s
   end
   SCORE_HASH[nil] = '-'
   attr_accessor :SCORE_HASH

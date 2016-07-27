@@ -160,6 +160,8 @@ GEM
     nokogiri (1.6.8)
       mini_portile2 (~> 2.1.0)
       pkg-config (~> 1.1.7)
+    non-stupid-digest-assets (1.0.8)
+      sprockets (>= 2.0)
     paper_trail (5.1.1)
       activerecord (>= 3.0, < 6.0)
       activesupport (>= 3.0, < 6.0)
@@ -302,6 +304,7 @@ DEPENDENCIES
   mv-postgresql
   nested_form
   newrelic_rpm
+  non-stupid-digest-assets
   paper_trail
   paperclip
   pg

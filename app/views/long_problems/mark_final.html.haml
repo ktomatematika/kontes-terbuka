@@ -29,14 +29,17 @@
           %tr
             %td= s.user_contest.user_id
             - @markers.each do |m|
-              %td= TemporaryMarking.find_by(long_submission: s, user: m).mark
-              %td= TemporaryMarking.find_by(long_submission: s, user: m).tags
+              - tm = TemporaryMarking.find_by(long_submission: s, user: m)
+              %td= tm && tm.mark
+              %td= tm && tm.tags
             %td= text_field_tag "marking[#{s.id}][score]",
               LongSubmission::SCORE_HASH[s.score], class: 'form-control'
-            %td= text_field_tag "marking[#{s.id}][comment]", '',
-              class: 'form-control'
-            %td= text_field_tag "marking[#{s.id}][suggestion]", '',
-              class: 'form-control'
+            = find_and_preserve do
+              %td= text_area_tag "marking[#{s.id}][comment]", '',
+                class: 'form-control', rows: 3
+            = find_and_preserve do
+              %td= text_area_tag "marking[#{s.id}][suggestion]", '',
+                class: 'form-control', rows: 3
             %td.text-justify.latex= markdown_render s.feedback.to_s
 
-      = submit_tag 'Input nilai', class: 'btn btn-default has-shade'
+    = submit_tag 'Input nilai', class: 'btn btn-default has-shade'
