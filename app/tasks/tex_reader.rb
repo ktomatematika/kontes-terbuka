@@ -51,9 +51,9 @@ class TexReader
     preprocessed = tex_string.delete("\n").delete("\t").split('\item')
 
     nest_level = 0
-    preprocessed.reduce([]) do |memo, item|
+    preprocessed.each_with_object([]) do |item, memo|
       next memo if item.empty?
-      nest_level == 0 ? memo << item : memo[-1] += item
+      nest_level.zero? ? memo << item : memo[-1] += item
 
       nest_level += 1 if item.include? '\\begin'
       nest_level -= 1 if item.include? '\\end'

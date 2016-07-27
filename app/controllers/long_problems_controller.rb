@@ -39,13 +39,12 @@ class LongProblemsController < ApplicationController
     @contest = @long_problem.contest
     @long_submissions = @long_problem.long_submissions.submitted
 
-    @markers = User.with_role(:marker, @long_problem).reject do |u|
-      u == current_user
-    end
+    @markers = User.with_role(:marker, @long_problem)
   end
 
   def mark_solo
     mark
+    @markers = @markers.where.not(id: current_user.id)
   end
 
   def download

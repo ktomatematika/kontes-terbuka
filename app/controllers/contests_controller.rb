@@ -68,7 +68,7 @@ class ContestsController < ApplicationController
     if contest.update(contest_params)
       Ajat.info "contest_updated|id:#{contest.id}"
       contest.prepare_jobs
-      if old_result_released == 0 && contest_params[:result_released] == 1
+      if old_result_released.zero? && contest_params[:result_released] == 1
         EmailNotifications.new.delay(queue: "contest_#{contest.id}")
                           .result_released(contest)
       end
@@ -211,7 +211,7 @@ class ContestsController < ApplicationController
     authorize! :summary, @contest
 
     @count = @contest.user_contests.count
-    redirect_to contest_path(@contest), notice: 'Tidak ada data' if @count == 0
+    redirect_to contest_path(@contest), notice: 'Tidak ada data' if @count.zero?
 
     @short_problems = @contest.short_problems.order(:problem_no)
     @long_problems = @contest.long_problems.order(:problem_no)

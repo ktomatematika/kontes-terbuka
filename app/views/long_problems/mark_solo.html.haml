@@ -8,7 +8,7 @@
   %span Download ini memakan waktu. Sabar ya. :3
 
   = form_tag submit_temporary_markings_path do
-    %table.table
+    %table.table.table-condensed.table-striped.table-responsive
       %thead
         %tr
           %th ID
@@ -37,4 +37,4 @@
     = submit_tag 'Input nilai', class: 'btn btn-default has-shade'
 
   = link_to 'Diskusi', mark_final_path(@long_problem),
-    class: 'btn btn-default has-shade' if @long_problem.all_marked?
+    class: 'btn btn-default has-shade' if all_marked

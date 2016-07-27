@@ -1,5 +1,4 @@
 module UsersHelper
-
   # Four of the methods below are helpers for users#show_history.
   def public_header_contents
     create_data_row %w(Kontes Penghargaan), 'th'

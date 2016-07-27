@@ -20,7 +20,7 @@ class DumpKtoHasil
 
       # Get number of long problems
       # Assumption: it's the nonzero integer from the right
-      long_problems = ktohasil_file[0].reverse.find { |i| i.to_i != 0 }.to_i
+      long_problems = ktohasil_file[0].reverse.find { |i| i.to_i.nonzero? }.to_i
       long_problems = 0 if ktohasil_file[0].last == 'ga ada'
 
       generate_problems(solutions, long_problems)

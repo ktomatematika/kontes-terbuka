@@ -12,14 +12,14 @@
     Markdown syntax bisa dilihat di <a href='https://github.com/adam-p/
     markdown-here/wiki/Markdown-Cheatsheet'>sini.</a>
   = form_tag submit_final_markings_path do
-    %table.table
+    %table.table.table-condensed.table-striped.table-responsive
       %thead
         %tr
           %th ID
           - @markers.each do |m|
             %th Nilai #{m}
+            %th Tag #{m}
           %th Nilai Akhir
-          %th Tag Anda
           %th Komentar
           %th Saran
           %th Feedback Akhir
@@ -30,11 +30,9 @@
             %td= s.id
             - @markers.each do |m|
               %td= TemporaryMarking.find_by(long_submission: s, user: m).mark
-            %td
-              %td= text_field_tag "marking[#{s.id}][score]",
-                LongSubmission::SCORE_HASH[s.score], class: 'form-control'
-            %td= TemporaryMarking.find_by(long_submission: s,
-              user: current_user).tags
+              %td= TemporaryMarking.find_by(long_submission: s, user: m).tags
+            %td= text_field_tag "marking[#{s.id}][score]",
+              LongSubmission::SCORE_HASH[s.score], class: 'form-control'
             %td= text_field_tag "marking[#{s.id}][comment]", '',
               class: 'form-control'
             %td= text_field_tag "marking[#{s.id}][suggestion]", '',
