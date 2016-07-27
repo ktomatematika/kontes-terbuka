@@ -56,10 +56,6 @@ module ContestsHelper
     end
   end
 
-  def dashify(number)
-    number.nil? ? '-' : number
-  end
-
   def panitia_options(long_problem)
     users = User.with_role(:panitia)
                 .where.not(id: User.with_role(:marker, long_problem).pluck(:id))

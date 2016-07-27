@@ -42,6 +42,12 @@ class LongSubmission < ActiveRecord::Base
       .order('long_problems.problem_no')
   }
 
+  SCORE_HASH = [*0..LongProblem::MAX_MARK].each_with_object({}) do |item, memo|
+    memo[item] = item
+  end
+  SCORE_HASH[nil] = '-'
+  attr_accessor :SCORE_HASH
+
   scope :submitted, -> { joins(:submission_pages).group(:id) }
   def submitted?
     !submission_pages.empty?

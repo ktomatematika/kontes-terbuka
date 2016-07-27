@@ -25,7 +25,7 @@ Rails.application.routes.draw do
   get 'reset-password/:verification', to: 'users#reset_password',
                                       as: 'reset_password'
   post 'reset-password', to: 'users#process_reset_password',
-                                       as: 'process_reset_password'
+                         as: 'process_reset_password'
 
   resources :contests do
     get 'admin', to: 'contests#admin'
@@ -60,8 +60,11 @@ Rails.application.routes.draw do
   # resources :market_items, path: '/market-items'
 
   get '/mark-solo/:id', to: 'long_problems#mark_solo', as: :mark_solo
-  post '/submit-markings/:id', to: 'long_problems#submit_temporary_markings',
-                               as: :submit_markings
+  post '/submit-temporary-markings/:id',
+       to: 'long_problems#submit_temporary_markings',
+       as: :submit_temporary_markings
+  post '/submit-final-markings/:id',
+       to: 'long_problems#submit_final_markings', as: :submit_final_markings
   get '/mark-final/:id', to: 'long_problems#mark_final', as: :mark_final
 
   get '/home', to: 'home#index'

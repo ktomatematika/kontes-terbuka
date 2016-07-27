@@ -1,0 +1,29 @@
+= content_tag 'div', '', id: 'rules-contest-data',
+  data: { name: @contest.name,
+  start_time: @contest.start_time,
+  end_time: @contest.end_time,
+  result_time: @contest.result_time,
+  feedback_time: @contest.feedback_time,
+  halsoal: image_tag('1hal1soal.png', alt: 'Penjelasan 1 soal di 1 halaman',
+    class: 'img-responsive').tr('"', "'") }
+
+.container
+  %h1 Petunjuk Kontes
+
+  - if @user_contest.id.nil?
+    = form_for @user_contest, url: contest_rules_path do |f|
+      #rules-text
+        = markdown_render @contest.rule
+
+      = f.hidden_field :user_id, value: current_user.id
+      = f.hidden_field :contest_id, value: @contest.id
+      .btn-center-container
+        = f.button 'Saya sudah membaca dan menyetujui',
+          class: 'btn btn-default has-shade', id: 'rules-agree-btn'
+  - else
+    #rules-text
+      = markdown_render @contest.rule
+
+    .btn-center-container
+      = link_to 'Kembali', contest_path(@contest),
+        class: 'btn btn-default has-shade', id: 'rules-agree-btn'

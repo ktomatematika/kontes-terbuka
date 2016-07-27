@@ -9,7 +9,7 @@
     - @long_problems.each do |prob|
       - ls = prob.long_submissions.find_by user_contest: @user_contest
 
-      %h4 No. #{prob.problem_no}: #{dashify @user_contest.__send__('problem_no_' + prob.id)}/#{LongProblem::MAX_MARK} poin
+      %h4 No. #{prob.problem_no}: #{LongSubmission::MAX_MARK[@user_contest.send('problem_no_' + prob.id)]}/#{LongProblem::MAX_MARK} poin
       .row
         .col-sm-6
           %h5 Soal

@@ -7,7 +7,7 @@
     class: 'btn btn-default has-shade'
   %span Download ini memakan waktu. Sabar ya. :3
 
-  = form_tag submit_markings_path do
+  = form_tag submit_temporary_markings_path do
     %table.table
       %thead
         %tr
@@ -19,11 +19,15 @@
 
       %tbody
         - @long_submissions.each do |s|
-          - tm = TemporaryMarking.find_by(long_submission: s, user: current_user)
+          - tm = TemporaryMarking.find_by(long_submission: s,
+            user: current_user)
           %tr
             %td= s.user_contest.user.id
-            %td= text_field_tag "marking[#{s.id}][mark]", tm.nil? ? '' : tm.mark, class: 'form-control'
-            %td= text_field_tag "marking[#{s.id}][tags]", tm.nil? ? '' : tm.tags, class: 'form-control'
+            %td= text_field_tag "marking[#{s.id}][mark]",
+              tm.nil? ? '' : LongSubmission::MAX_MARK[tm.mark],
+              class: 'form-control'
+            %td= text_field_tag "marking[#{s.id}][tags]",
+              tm.nil? ? '' : tm.tags, class: 'form-control'
             - @markers.each do |m|
               - if TemporaryMarking.find_by(long_submission: s, user: m).nil?
                 %td

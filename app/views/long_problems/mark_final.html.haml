@@ -1,24 +1,40 @@
 .container
   %h1= @long_problem
-  %a.btn.btn-default.has-shade Download semua submisi
-  %table.table
-    %thead
-      %tr
-        %th ID
-        %th Nilai Akhir
-        %th Tag Anda
-        %th Komentar
-        %th Saran
-        %th
+  = link_to 'Download Marking Scheme',
+    @contest.marking_scheme.url(:original, false),
+    class: 'btn btn-default has-shade'
+  = link_to 'Download semua submisi', download_submissions_path,
+    class: 'btn btn-default has-shade'
+  %span Download ini memakan waktu. Sabar ya. :3
 
-    %tbody
-      - @long_submissions.each do |s|
+  = form_tag submit_final_markings_path do
+    %table.table
+      %thead
         %tr
-          %td= s.id
-          %td
-            %input
-          %td Catatan
-          %td
-            %input
-          %td
-            %input
+          %th ID
+          - @markers.each do |m|
+            %th Nilai #{m}
+          %th Nilai Akhir
+          %th Tag Anda
+          %th Komentar
+          %th Saran
+          %th Feedback Akhir
+
+      %tbody
+        - @long_submissions.each do |s|
+          %tr
+            %td= s.id
+            - @markers.each do |m|
+              %td= TemporaryMarking.find_by(long_submission: s, user: m).mark
+            %td
+              %td= text_field_tag "marking[#{s.id}][score]",
+                LongSubmission::SCORE_HASH[s.score], class: 'form-control'
+            %td= TemporaryMarking.find_by(long_submission: s,
+              user: current_user).tags
+            %td= text_field_tag "marking[#{s.id}][comment]", '',
+              class: 'form-control'
+            %td= text_field_tag "marking[#{s.id}][suggestion]", '',
+              class: 'form-control'
+            %td= s.feedback
+
+      = submit_tag 'Input nilai', class: 'btn btn-default has-shade'

@@ -72,6 +72,17 @@ class LongProblemsController < ApplicationController
     mark
   end
 
+  def submit_final_markings
+    params[:marking].each do |id, val|
+      feedback = (val[:comment] + ' ' + val[:suggestion]).strip
+      next if val[:score] == '' && feedback == ''
+      score = LongSubmission::SCORE_HASH.key(val[:score])
+
+      LongSubmission.find(id).update(score: score, feedback: feedback)
+    end
+    redirect_to mark_final_path(params[:id]), notice: 'Nilai berhasil diupdate!'
+  end
+
   private
 
   def long_problem_params
