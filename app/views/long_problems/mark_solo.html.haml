@@ -24,7 +24,7 @@
           %tr
             %td= s.user_contest.user.id
             %td= text_field_tag "marking[#{s.id}][mark]",
-              tm.nil? ? '' : LongSubmission::MAX_MARK[tm.mark],
+              tm.nil? ? '' : LongSubmission::SCORE_HASH[tm.mark],
               class: 'form-control'
             %td= text_field_tag "marking[#{s.id}][tags]",
               tm.nil? ? '' : tm.tags, class: 'form-control'
