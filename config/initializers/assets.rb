@@ -1,4 +1,5 @@
 # Be sure to restart your server when you modify this file.
+require 'haml'
 
 # Version of your assets, change this if you want to expire all your assets.
 Rails.application.config.assets.version = '1.0'
@@ -7,11 +8,16 @@ Rails.application.config.assets.version = '1.0'
 Rails.application.config.assets.paths <<
   Rails.root.join('app', 'assets', 'html')
 
-Rails.application.config.assets.register_mime_type('text/html', '.html')
+class HamlTemplate < Tilt::HamlTemplate
+  def prepare
+    @options = @options.merge format: :html5
+    super
+  end
+end
+
+Rails.application.config.before_initialize do
+  require 'sprockets'
+  Sprockets.register_engine '.haml', HamlTemplate
+end
 
 NonStupidDigestAssets.whitelist = [/.html/]
-
-# Precompile additional assets.
-# application.js, application.css, and all non-JS/CSS in app/assets folder
-# are already added.
-# Rails.application.config.assets.precompile += %w( search.js )
