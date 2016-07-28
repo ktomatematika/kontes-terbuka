@@ -64,4 +64,10 @@ class LongProblem < ActiveRecord::Base
     File.delete(zip_location) if File.file?(zip_location)
     ZipFileGenerator.new(problems_location, zip_location).write
   end
+
+  def all_marked?
+    markers_count = User.with_role(:marker, self).count
+    temporary_count = temporary_markings.count
+    long_submissions.submitted.length * markers_count == temporary_count
+  end
 end
