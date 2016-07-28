@@ -59,10 +59,13 @@ class LongProblemsController < ApplicationController
       mark = val[:mark]
       tags = val[:tags]
 
-      next if mark == '' && tags == ''
+      update_hash = { mark: mark, tags: tags }
+      update_hash.delete(mark) if mark.empty?
+      update_hash.delete(tags) if tags.empty?
+
       TemporaryMarking.find_or_initialize_by(long_submission_id: id,
                                              user: current_user)
-                      .update(tags: tags, mark: mark)
+                      .update(update_hash)
     end
     redirect_to mark_solo_path(params[:id]), notice: 'Nilai berhasil diupdate!'
   end
@@ -74,10 +77,13 @@ class LongProblemsController < ApplicationController
   def submit_final_markings
     params[:marking].each do |id, val|
       feedback = (val[:comment] + ' ' + val[:suggestion]).strip
-      next if val[:score] == '' && feedback == ''
       score = LongSubmission::SCORE_HASH.key(val[:score])
 
-      LongSubmission.find(id).update(score: score, feedback: feedback)
+      update_hash = { score: score, feedback: feedback }
+      update_hash.delete(score) if score.nil?
+      update_hash.delete(feedback) if feedback.nil?
+
+      LongSubmission.find(id).update(update_hash)
     end
     redirect_to mark_final_path(params[:id]), notice: 'Nilai berhasil diupdate!'
   end

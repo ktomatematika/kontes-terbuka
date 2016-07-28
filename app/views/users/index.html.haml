@@ -10,7 +10,7 @@
     %div
       - if index_start + @page < @users.count
         = link_to 'Berikutnya', start_plus(@page), id: 'next-users-index'
-  %table.table.table-condensed.table-responsive#users-index
+  %table.table.table-condensed.table-responsive.small-table
     %tr
       %th Username
       %th= 'Email' if can? :see_full_index, User
