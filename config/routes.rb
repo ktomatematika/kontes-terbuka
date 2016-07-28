@@ -80,4 +80,6 @@ Rails.application.routes.draw do
   get '/assign/:id', to: 'contests#assign_markers', as: :assign_markers
   post 'create-marker', to: 'roles#create_marker'
   delete 'remove-marker', to: 'roles#remove_marker'
+
+  match '*path', to: 'errors#error_4xx', via: :all
 end

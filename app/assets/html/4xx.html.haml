@@ -27,19 +27,6 @@
       ga('set', 'location', location.href.split('#')[0]);
       ga('send', 'pageview', { "title": document.title });
 
-    :css
-      body {
-        text-align: center;
-      }
-      #logo-ktom-cons {
-        display: block;
-        margin: 10px auto;
-        cursor: pointer;
-      }
-      #construction, #logo-ktom-cons {
-        max-width: 60%;
-      }
-
   %body
     %nav.navbar.navbar-default.navbar-fixed-top#top-navbar-container
       .container-fluid
@@ -48,6 +35,8 @@
 
     .container.text-center
       %h1 Ups!
-      %p Anda pergi ke arah yang salah. Anda ingin berlatih, kan? Coba ini:
-      %p#soal-4xx
-      %small#sumber-4xx
+      %h3 Anda pergi ke arah yang salah. Hati-hati ketika berkelana!
+      %div#soal-container-4xx
+        %h5 Barangkali Anda ingin mencari soal? Ayok latihan dengan soal ini:
+        %p#soal-4xx
+        %small#sumber-4xx

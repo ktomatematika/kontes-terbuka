@@ -35,16 +35,16 @@ class ApplicationController < ActionController::Base
                   when 'WIB' then TZInfo::Timezone.get('Asia/Jakarta')
                   when 'WITA' then TZInfo::Timezone.get('Asia/Makassar')
                   when 'WIT' then TZInfo::Timezone.get('Asia/Jayapura')
-                                end
+                  end
                 end
   end
 
-  rescue_from CanCan::AccessDenied do |exc|
+  rescue_from CanCan::AccessDenied do
     Ajat.error "cannotah|uid=#{current_user && current_user.id}|" \
                "#{request.env.extract!('PATH_INFO',
                                        'QUERY_STRING',
                                        'REMOTE_ADDR',
                                        'REMOTE_HOST')}"
-    raise exc
+    head 400
   end
 end

@@ -108,7 +108,7 @@ function show_prob(item) {
 
 $(document).ready(function() {
 	show_prob(get_rand());
-	$('#o-4xx').contextmenu(function(e) {
+	$('#logo-4xx').contextmenu(function(e) {
 		e.preventDefault();
 		show_prob(get_rand());
 	});

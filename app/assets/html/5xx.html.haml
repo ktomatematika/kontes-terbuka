@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+%html{ lang: 'id' }
+  %head
+    %title Kontes Terbuka Olimpiade Matematika
+    %meta{ name: 'viewport', content: 'width=device-width, initial-scale=1' }
+    = stylesheet_link_tag 'application', media: 'all',
+      'data-turbolinks-track' => true
+    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+
+    -# Adobe Typekit
+    %script{ src: 'https://use.typekit.net/ieu7ith.js' }
+    :javascript
+      try{Typekit.load({async:true});}catch(e){}
+
+    -# Google Analytics
+    %script{ data: { 'turbolinks-eval' => 'false' } }
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;
+      i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},
+      i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];
+      a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script',
+      '//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-78763689-1', 'auto');
+
+    :javascript
+      ga('set', 'location', location.href.split('#')[0]);
+      ga('send', 'pageview', { "title": document.title });
+
+  %body
+    %nav.navbar.navbar-default.navbar-fixed-top#top-navbar-container
+      .container-fluid
+        .navbar-header
+          .navbar-brand#top-navbar-logo= ActionController::Base.helpers.link_to(image_tag('logo.png', alt: 'Logo KTOM', height: '50px'), '/')
+
+    .container.text-center
+      %h1 Oh tidak!
+      %p
+        Terdapat kesalahan dalam server. Barangkali ada yang sedang mencoba
+        untuk meretas website ini.
+      %p
+        Kami sudah mendapatkan semua informasi yang dibutuhkan.
+        Tunggu sementara kami memerangi masalah ini!
+      = image_tag 'tank.png', alt: 'Tank', class: 'img-responsive',
+        id: 'img-5xx'
