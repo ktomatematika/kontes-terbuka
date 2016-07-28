@@ -48,4 +48,4 @@
           %td= ls.where(score: nil).count
           - (LongProblem::MAX_MARK + 1).times do |i|
             %td= ls.where(score: i).count
-          %td= average ls.sum(:score)
+          %td= ls.sum(:score) / lp.long_submissions.where.not(score: nil).count
