@@ -7,6 +7,6 @@ class ErrorsController < ApplicationController
                                                     'QUERY_STRING',
                                                     'REMOTE_ADDR',
                                                     'REMOTE_HOST')}"
-    raise ActionController::RoutingError, params[:path]
+    head 400
   end
 end
