@@ -54,8 +54,13 @@ module ContestsHelper
     number_to_percentage num * 100, precision: 2
   end
 
-  # Helper for contests#own_results.
-  def score(problem_id)
-    LongSubmission::SCORE_HASH[@user_contest.send('problem_no_' + problem_id)]
+  # Helper for contests#_own_results and contests#_results.
+  def score(uc, problem_id)
+    LongSubmission::SCORE_HASH[uc.send('problem_no_' + problem_id)]
+  end
+
+  # Helper for contests#_results.
+  def mask_score?
+    !@contest.result_released && current_user.has_role?(:marker, lp)
   end
 end

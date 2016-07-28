@@ -23,6 +23,9 @@
             - unless no_short_problem
               %td= uc.short_mark
             - @long_problems.each do |lp|
-              %td= LongSubmission::SCORE_HASH[uc.send("problem_no_#{lp.id}")]
+              - if mask_score?
+                %td ?
+              - else
+                %td= score(uc, lp)
             %td= uc.total_mark
             %td= uc.award
