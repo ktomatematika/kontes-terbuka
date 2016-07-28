@@ -92,20 +92,23 @@ var problem_array = [
 function get_rand() {
 	return (new Date).getSeconds() % problem_array.length;
 }
+
 function show_prob(item) {
-	$('#soal').html(problem_array[item][0]);
-	$('#sumber').html('Sumber: ' + problem_array[item][1]);
-	renderMathInElement($('#soal')[0], {
-		delimiters: [
-			{left: '$', right: '$', display: false},
-			{left: '\\[', right: '\\]', display: true},
-		],
-	});
+	if ($('#soal-4xx').length !== 0) {
+		$('#soal-4xx').html(problem_array[item][0]);
+		$('#sumber-4xx').html('Sumber: ' + problem_array[item][1]);
+		renderMathInElement($('#soal-4xx')[0], {
+			delimiters: [
+				{left: '$', right: '$', display: false},
+				{left: '\\[', right: '\\]', display: true},
+			],
+		});
+	}
 }
 
 $(document).ready(function() {
 	show_prob(get_rand());
-	$('#4xx-logo').contextmenu(function(e) {
+	$('#o-4xx').contextmenu(function(e) {
 		e.preventDefault();
 		show_prob(get_rand());
 	});
