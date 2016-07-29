@@ -10,7 +10,7 @@
       - ls = prob.long_submissions.find_by user_contest: @user_contest
 
       %h4
-        No. #{prob.problem_no}: #{score(@user_contest, prob.id)}/
+        No. #{prob.problem_no}: #{score(@user_contest, prob)}/
         #{LongProblem::MAX_MARK} poin
       .row
         .col-sm-6
