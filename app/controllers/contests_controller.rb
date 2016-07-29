@@ -154,12 +154,16 @@ class ContestsController < ApplicationController
   def download_pdf
     contest = Contest.find(params[:contest_id])
     authorize! :download_pdf, contest
+
+    response.headers['X-Accel-Buffering'] = 'no'
     send_file contest.problem_pdf.path
   end
 
   def download_marking_scheme
     contest = Contest.find(params[:contest_id])
     authorize! :download_marking_scheme, contest
+
+    response.headers['X-Accel-Buffering'] = 'no'
     send_file contest.marking_scheme.path
   end
 
@@ -185,6 +189,8 @@ class ContestsController < ApplicationController
     uc = UserContest.find_by user: current_user, contest: contest
     certificate_obj = CertificateManager.new(uc.id)
     pdf_file = certificate_obj.create_and_give
+
+    response.headers['X-Accel-Buffering'] = 'no'
     send_file pdf_file
     certificate_obj.clean_files
   end
