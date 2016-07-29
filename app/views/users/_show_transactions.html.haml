@@ -5,7 +5,6 @@
       %thead
         = create_data_row(%w(Waktu Poin Keterangan), 'th')
       %tbody
-        = console
         - @point_transactions.each do |pt|
           = create_data_row([pt[:updated_at], pt[:point], pt[:description]],
                             'td')
