@@ -1,0 +1,19 @@
+#nag-fade
+  #nag-container
+    %h1 Tunggu sebentar...
+    %p
+      Kontes Terbuka Olimpiade Matematika adalah sebuah inisiatif yang
+      diadakan secara cuma-cuma. Tidak ada satupun anggota di tim kami yang
+      mendapatkan keuntungan material dari kegiatan ini.
+    %p
+      Kami akan sangat bersukacita bila Anda ataupun orang-orang di sekitar
+      Anda berkenan untuk memberikan donasi agar kegiatan olimpiade matematika
+      di Indonesia seperti KTO Matematika ini bisa terus berjalan dengan
+      lancar dan bahkan berkembang menjadi berbagai kegiatan yang terus
+      memajukan olimpiade matematika Indonesia.
+    %p
+      Untuk cara-cara donasi,
+      #{link_to 'silakan cek halaman ini.', donate_path}
+
+    %a.btn.btn-default.has-shade#close-nag{ data: { href: stop_nag_path(@user_contest) } } Tutup
+    %a.btn.btn-default.has-shade Jangan tunjukkan lagi

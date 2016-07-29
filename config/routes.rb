@@ -55,7 +55,9 @@ Rails.application.routes.draw do
   end
 
   get '/download-submissions/:id', to: 'long_problems#download',
-                                   as: 'download-submissions'
+                                   as: 'download_submissions'
+
+  post '/stop-nag/:id', to: 'user_contests#stop_nag', as: 'stop_nag'
 
   # resources :market_items, path: '/market-items'
 
