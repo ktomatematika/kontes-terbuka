@@ -60,9 +60,9 @@ class LongProblemsController < ApplicationController
       mark = val[:mark]
       tags = val[:tags]
 
-      update_hash = { mark: mark, tags: tags }
-      update_hash.delete(mark) if mark.empty?
-      update_hash.delete(tags) if tags.empty?
+      update_hash = { mark: LongSubmission::SCORE_HASH.key(mark), tags: tags }
+      update_hash.delete(:mark) if mark.empty?
+      update_hash.delete(:tags) if tags.empty?
 
       TemporaryMarking.find_or_initialize_by(long_submission_id: id,
                                              user: current_user)
@@ -85,8 +85,8 @@ class LongProblemsController < ApplicationController
       score = LongSubmission::SCORE_HASH.key(val[:score])
 
       update_hash = { score: score, feedback: feedback }
-      update_hash.delete(score) if score.nil?
-      update_hash.delete(feedback) if feedback.nil?
+      update_hash.delete(:score) if score.nil?
+      update_hash.delete(:feedback) if feedback.nil?
 
       LongSubmission.find(id).update(update_hash)
     end

@@ -33,7 +33,6 @@ class LongSubmissionsController < ApplicationController
     authorize! :download, long_submission
     long_submission.compress
 
-    response.headers['X-Accel-Buffering'] = 'no'
     send_file long_submission.zip_location
   rescue Errno::ENOENT
     redirect_to Contest.find(params[:contest_id]), alert: 'Jawaban Anda ' \
