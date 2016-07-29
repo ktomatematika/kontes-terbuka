@@ -23,7 +23,7 @@
             - unless no_short_problem
               %td= uc.short_mark
             - @long_problems.each do |lp|
-              - if mask_score?
+              - if mask_score?(lp)
                 %td ?
               - else
                 %td= score(uc, lp)

@@ -57,12 +57,23 @@ module ContestsHelper
   # Helper for contests#_own_results and contests#_results.
   def score(user_contest, long_problem)
     LongSubmission::SCORE_HASH[user_contest.send(
-      'problem_no_' + long_problem.id
+      'problem_no_' + long_problem.id.to_s
     )]
   end
 
   # Helper for contests#_results.
-  def mask_score?
-    !@contest.result_released && current_user.has_role?(:marker, lp)
+  def mask_score?(long_problem)
+    !@contest.result_released && current_user.has_role?(:marker, long_problem)
+  end
+
+  # Helper for contests#summary. Determines the average mark of a problem
+  # to be shown in summary.
+  def average_mark(long_submissions)
+    count = long_submissions.where.not(score: nil).count
+    if count == 0
+      0
+    else
+      (long_submissions.sum(:score).to_f / count).round(2)
+    end
   end
 end

@@ -2,10 +2,7 @@
   %h2 Feedback Questions
   %table.table
     %thead
-      %tr
-        %th Question
-        %th
-        %th
+      = create_data_row(['Question', '', ''], 'th')
 
     %tbody
       - @feedback_questions.each do |fq|

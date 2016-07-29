@@ -5,15 +5,8 @@
   %h2 Isian
   %table.table.table-condensed.table-striped.table-responsive
     %thead
-      %tr
-        %th No.
-        %th Soal
-        %th Jawaban
-        %th # Benar
-        %th % Benar
-        %th Jawaban terbanyak
-        %th # Jawaban
-        %th % Jawaban
+      = create_data_row(['No.', 'Soal', 'Jawaban', '# Benar', '% Benar',
+                         'Jawaban terbanyak', '# Jawaban', '% Jawab'], 'th')
 
     %tbody
       - @short_problems.each do |sp|
@@ -31,13 +24,8 @@
   %h2 Uraian
   %table.table.table-condensed.table-striped.table-responsive
     %thead
-      %tr
-        %th No.
-        %th Soal
-        %th -
-        - (LongProblem::MAX_MARK + 1).times do |i|
-          %th= i
-        %th Rata-rata
+      = create_data_row(['No.', 'Soal', '-'] + (0..LongProblem::MAX_MARK).to_a + ['Rata-rata'],
+                        'th')
 
     %tbody
       - @long_problems.each do |lp|
@@ -48,4 +36,4 @@
           %td= ls.where(score: nil).count
           - (LongProblem::MAX_MARK + 1).times do |i|
             %td= ls.where(score: i).count
-          %td= ls.sum(:score) / lp.long_submissions.where.not(score: nil).count
+          %td= average_mark(ls)

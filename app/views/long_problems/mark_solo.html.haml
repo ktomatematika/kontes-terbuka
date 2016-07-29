@@ -10,29 +10,20 @@
   = form_tag submit_temporary_markings_path, id: 'mark-solo-form' do
     %table.table.table-condensed.table-striped.table-responsive.small-table
       %thead
-        %tr
-          %th ID
-          %th Nilai
-          %th Catatan
-          - @markers.each do |m|
-            %th= m.username
+        = create_data_row(%w(ID Nilai Catatan) + @markers.pluck(:username),
+          :td)
 
       %tbody
         - @long_submissions.each do |s|
           - tm = TemporaryMarking.find_by(long_submission: s,
             user: current_user)
-          %tr
-            %td= s.user_contest.user.id
-            %td= text_field_tag "marking[#{s.id}][mark]",
-              tm.nil? ? '' : LongSubmission::SCORE_HASH[tm.mark],
-              class: 'form-control'
-            %td= text_field_tag "marking[#{s.id}][tags]",
-              tm.nil? ? '' : tm.tags, class: 'form-control'
-            - @markers.each do |m|
-              - if TemporaryMarking.find_by(long_submission: s, user: m).nil?
-                %td
-              - else
-                %td Sudah
+          = create_data_row([s.user_contest.user.id,
+                             text_field_tag("marking[#{s.id}][mark]",
+                             tm.nil? ? '' : LongSubmission::SCORE_HASH[tm.mark],
+                             class: 'form-control'),
+                             text_field_tag("marking[#{s.id}][tags]",
+                             tm.nil? ? '' : tm.tags, class: 'form-control')] + show_if_done_array(s),
+                             'td')
 
     = submit_tag 'Input nilai', class: 'btn btn-default has-shade'
 

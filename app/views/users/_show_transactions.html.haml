@@ -3,13 +3,9 @@
   .table-responsive
     %table.table.table-hover.has-shade.table-bordered#point-history
       %thead
-        %tr
-          %th Waktu
-          %th Poin
-          %th Keterangan
+        = create_data_row(%w(Waktu Poin Keterangan), 'th')
       %tbody
+        = console
         - @point_transactions.each do |pt|
-          %tr
-            %td pt.updated_at
-            %td pt.point
-            %td pt.description
+          = create_data_row([pt[:updated_at], pt[:point], pt[:description]],
+                            'td')

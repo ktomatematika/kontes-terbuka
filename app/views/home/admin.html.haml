@@ -27,12 +27,10 @@
   %h2 Daftar Panitia
   %table.table.table-condensed.table-hover
     %thead
-      %tr
-        %th Username
-        %th Nama Lengkap
+      = create_data_row(['Username', 'Nama Lengkap'], 'th')
 
     %tbody
       - @panitia.each do |p|
-        %tr.clickable-row{ data: { link: user_path(p) } }
-          %td= p.username
-          %td= p.fullname
+        = create_data_row([p.username, p.fullname], 'td',
+                          { class: 'clickable-row',
+                            'data-link' => user_path(p) })

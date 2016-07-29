@@ -14,15 +14,8 @@
   = form_tag submit_final_markings_path do
     %table.table.table-condensed.table-striped.table-responsive.small-table
       %thead
-        %tr
-          %th ID
-          - @markers.each do |m|
-            %th Nilai #{m}
-            %th Tag #{m}
-          %th Nilai Akhir
-          %th Komentar
-          %th Saran
-          %th Feedback Akhir
+        = create_data_row(['ID'] + @markers.map { |m| ["Nilai #{m}", "Tag #{m}"] }.flatten + ['Nilai Akhir', 'Komentar', 'Saran', 'Feedback Akhir'],
+          'th')
 
       %tbody
         - @long_submissions.each do |s|
