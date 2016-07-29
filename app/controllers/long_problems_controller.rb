@@ -73,7 +73,7 @@ class LongProblemsController < ApplicationController
 
   def mark_final
     unless @long_problem.all_marked? ||
-      current_user.has_role?(:marker, @long_problem)
+           current_user.has_role?(:marker, @long_problem)
       redirect_to mark_solo_path(@long_problem)
     end
     mark
@@ -91,6 +91,11 @@ class LongProblemsController < ApplicationController
       LongSubmission.find(id).update(update_hash)
     end
     redirect_to mark_final_path(params[:id]), notice: 'Nilai berhasil diupdate!'
+  end
+
+  def autofill
+    @long_problem.autofill
+    redirect_to mark_final_path(params[:id]), notice: 'Sulap selesai!'
   end
 
   private

@@ -55,7 +55,8 @@ Rails.application.routes.draw do
   end
 
   get '/download-submissions/:id', to: 'long_problems#download',
-                                   as: 'download-submissions'
+                                   as: 'download_submissions'
+  get '/autofill-marks/:id', to: 'long_problems#autofill', as: 'autofill_marks'
 
   # resources :market_items, path: '/market-items'
 

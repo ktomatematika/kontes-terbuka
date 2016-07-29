@@ -70,7 +70,7 @@ module ContestsHelper
   # to be shown in summary.
   def average_mark(long_submissions)
     count = long_submissions.where.not(score: nil).count
-    if count == 0
+    if count.zero?
       0
     else
       (long_submissions.sum(:score).to_f / count).round(2)
