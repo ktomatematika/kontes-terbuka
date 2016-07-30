@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160726085657) do
+ActiveRecord::Schema.define(version: 20160730035813) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -98,11 +98,15 @@ ActiveRecord::Schema.define(version: 20160726085657) do
   add_index "feedback_questions", ["contest_id"], name: "index_feedback_questions_on_contest_id", using: :btree
 
   create_table "long_problems", force: :cascade do |t|
-    t.integer  "contest_id", null: false
-    t.integer  "problem_no", null: false
+    t.integer  "contest_id",          null: false
+    t.integer  "problem_no",          null: false
     t.text     "statement"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+    t.string   "report_file_name"
+    t.string   "report_content_type"
+    t.integer  "report_file_size"
+    t.datetime "report_updated_at"
   end
 
   add_index "long_problems", ["contest_id", "problem_no"], name: "index_long_problems_on_contest_id_and_problem_no", unique: true, using: :btree
@@ -112,7 +116,7 @@ ActiveRecord::Schema.define(version: 20160726085657) do
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
     t.integer  "score"
-    t.text     "feedback"
+    t.text     "feedback",        null: false
     t.integer  "user_contest_id", null: false
   end
 

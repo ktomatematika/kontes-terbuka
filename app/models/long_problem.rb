@@ -3,12 +3,16 @@
 #
 # Table name: long_problems
 #
-#  id         :integer          not null, primary key
-#  contest_id :integer          not null
-#  problem_no :integer          not null
-#  statement  :text
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id                  :integer          not null, primary key
+#  contest_id          :integer          not null
+#  problem_no          :integer          not null
+#  statement           :text
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
+#  report_file_name    :string
+#  report_content_type :string
+#  report_file_size    :integer
+#  report_updated_at   :datetime
 #
 # Indexes
 #
