@@ -27,7 +27,7 @@ class Ability
       end
 
       can [:mark_solo, :mark_final, :download, :submit_temporary_markings,
-           :submit_final_markings], LongProblem,
+           :submit_final_markings, :autofill], LongProblem,
           id: LongProblem.with_role(:marker, user).pluck(:id)
 
       if user.has_role? :panitia
