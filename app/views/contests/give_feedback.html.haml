@@ -3,7 +3,7 @@
 
   = link_to 'Kembali', @contest, class: 'btn btn-default has-shade'
 
-  - form_for :feedback_answer, url: contest_feedback_path do |f|
+  = form_for :feedback_answer, url: contest_feedback_path do |f|
     - @feedback_questions.each do |q|
       - fba_object = FeedbackAnswer.find_by feedback_question: q
       - answer = fba_object && fba_object.answer
@@ -12,4 +12,4 @@
         = f.text_area q.id, class: 'form-control feedback-input',
           placeholder: answer
 
-      = f.submit 'Kirim', class: 'btn btn-default has-shade'
+    = f.submit 'Kirim', class: 'btn btn-default has-shade'

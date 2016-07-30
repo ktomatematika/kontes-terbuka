@@ -64,14 +64,8 @@ class ContestsController < ApplicationController
   def update
     contest = Contest.find(params[:id])
     authorize! :update, contest
-    old_result_released = contest.result_released
     if contest.update(contest_params)
       Ajat.info "contest_updated|id:#{contest.id}"
-      contest.prepare_jobs
-      if old_result_released.zero? && contest_params[:result_released] == 1
-        EmailNotifications.new.delay(queue: "contest_#{contest.id}")
-                          .result_released(contest)
-      end
       redirect_to contest, notice: "#{contest} berhasil diubah."
     else
       Ajat.warn "contest_update_fail|#{contest.errors.full_messages}"
@@ -125,6 +119,12 @@ class ContestsController < ApplicationController
     redirect_to contest, notice: 'Jawaban bagian A berhasil dikirimkan!'
   end
 
+  def give_feedback
+    @contest = Contest.find(params[:contest_id])
+    authorize! :give_feedback, @contest
+    @feedback_questions = @contest.feedback_questions
+  end
+
   def feedback_submit
     contest = Contest.find(params[:contest_id])
     authorize! :feedback_submit, contest
@@ -143,12 +143,6 @@ class ContestsController < ApplicationController
     @contest = Contest.find(params[:id])
     authorize! :assign_markers, @contest
     @long_problems = LongProblem.where(contest: @contest).order(:problem_no)
-  end
-
-  def give_feedback
-    @contest = Contest.find(params[:contest_id])
-    authorize! :give_feedback, @contest
-    @feedback_questions = @contest.feedback_questions
   end
 
   def download_pdf

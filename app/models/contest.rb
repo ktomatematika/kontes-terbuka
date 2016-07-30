@@ -113,7 +113,7 @@ class Contest < ActiveRecord::Base
   end
 
   def feedback_closed?
-    Time.zone.now >= start_time
+    Time.zone.now >= feedback_time
   end
 
   def currently_in_contest?
@@ -163,9 +163,17 @@ class Contest < ActiveRecord::Base
     end
   end
 
+  after_save :prepare_jobs
   def prepare_jobs
     destroy_prepared_jobs
+    purge_panitia.delay(run_at: end_time)
+    prepare_emails
+    if changes['result_released'] == [false, true]
+      jobs_on_result_released
+    end
+  end
 
+  def prepare_emails
     e = EmailNotifications.new
 
     Notification.where(event: 'contest_starting').find_each do |n|
@@ -196,12 +204,15 @@ class Contest < ActiveRecord::Base
          .feedback_ending(self, n.time_text)
       end
     end
-
-    purge_panitia.delay(run_at: end_time)
   end
 
   def destroy_prepared_jobs
     Delayed::Job.where(queue: "contest_#{id}").destroy_all
+  end
+
+  def jobs_on_result_released
+    EmailNotifications.new.delay(queue: "contest_#{contest.id}")
+                      .result_released(contest)
   end
 
   def purge_panitia

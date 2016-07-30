@@ -19,7 +19,7 @@
 
       - if @contest.result_released
         = render 'own_results' unless @user_contest.nil?
-        = render 'feedback' unless @contest.feedback_closed?
+        = render 'feedback' unless @contest.feedback_closed? || @user_contest.nil?
         = render 'results'
       - elsif @contest.ended? && can?(:preview, Contest)
         %h2 == HANYA PANITIA ==

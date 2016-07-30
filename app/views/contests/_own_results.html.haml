@@ -13,10 +13,10 @@
         No. #{prob.problem_no}: #{score(@user_contest, prob)}/
         #{LongProblem::MAX_MARK} poin
       .row
-        .col-sm-6
+        .col-sm-7
           %h5 Soal
-          = prob.statement
-        .col-sm-6
+          .text-justify.latex= markdown_render prob.statement
+        .col-sm-5
           %h5 Umpan Balik
           .text-justify.latex= markdown_render ls.feedback
 
