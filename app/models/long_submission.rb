@@ -8,7 +8,7 @@
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  score           :integer
-#  feedback        :text             not null
+#  feedback        :string           default(""), not null
 #  user_contest_id :integer          not null
 #
 # Indexes

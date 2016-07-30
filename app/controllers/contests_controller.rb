@@ -136,7 +136,9 @@ class ContestsController < ApplicationController
                                        user_contest: user_contest)
                     .update(answer: answer)
     end
-    redirect_to contest, notice: 'Feedback berhasil dikirimkan!'
+    redirect_to contest, notice: 'Feedback berhasil dikirimkan! ' \
+                                 'Sertifikat akan dikirimkan setelah waktu ' \
+                                 'feedback ditutup.'
   end
 
   def assign_markers
@@ -149,7 +151,6 @@ class ContestsController < ApplicationController
     contest = Contest.find(params[:contest_id])
     authorize! :download_pdf, contest
 
-    response.headers['X-Accel-Buffering'] = 'no'
     send_file contest.problem_pdf.path
   end
 
@@ -157,7 +158,6 @@ class ContestsController < ApplicationController
     contest = Contest.find(params[:contest_id])
     authorize! :download_marking_scheme, contest
 
-    response.headers['X-Accel-Buffering'] = 'no'
     send_file contest.marking_scheme.path
   end
 
@@ -184,7 +184,6 @@ class ContestsController < ApplicationController
     certificate_obj = CertificateManager.new(uc.id)
     pdf_file = certificate_obj.create_and_give
 
-    response.headers['X-Accel-Buffering'] = 'no'
     send_file pdf_file
     certificate_obj.clean_files
   end

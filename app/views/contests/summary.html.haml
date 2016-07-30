@@ -13,7 +13,7 @@
         - most = sp.most_answer
         %tr
           %td= sp.problem_no
-          %td.text-justify.latex= markdown_render sp.statement
+          = latex_and_markdown :td, sp.statement
           %td= sp.answer
           %td= sp.correct
           %td= percentage average sp.correct
@@ -32,7 +32,7 @@
         - ls = lp.long_submissions
         %tr
           %td= lp.problem_no
-          %td.text-justify.latex= markdown_render lp.statement
+          = latex_and_markdown :td, lp.statement
           %td= ls.where(score: nil).count
           - (LongProblem::MAX_MARK + 1).times do |i|
             %td= ls.where(score: i).count

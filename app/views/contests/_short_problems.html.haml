@@ -13,7 +13,7 @@
     url: contest_create_short_submissions_path(contest_id: params[:id]) do |f|
     - @short_problems.each do |prob|
       %h5.problem_no No. #{prob.problem_no}
-      .text-justify.latex= markdown_render prob.statement
+      = latex_and_markdown :div, prob.statement
       - submission = @user_contest.short_submissions.find_by short_problem: prob
       - prev_answer = submission.nil? ? '' : submission.answer
       .form-group

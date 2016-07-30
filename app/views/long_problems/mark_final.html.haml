@@ -35,6 +35,6 @@
             = find_and_preserve do
               %td= text_area_tag "marking[#{s.id}][suggestion]", '',
                 class: 'form-control mark-textarea', rows: 3
-            %td.text-justify.latex= markdown_render s.feedback.to_s
+            = latex_and_markdown :td, s.feedback
 
     = submit_tag 'Input nilai', class: 'btn btn-default has-shade'

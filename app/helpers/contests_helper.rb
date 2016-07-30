@@ -76,4 +76,9 @@ module ContestsHelper
       (long_submissions.sum(:score).to_f / count).round(2)
     end
   end
+
+  # Helper for contests#_own_results.
+  def score_out_of_total(lp)
+    score(@user_contest, lp).to_s + '/' + LongProblem::MAX_MARK.to_s + ' poin'
+  end
 end

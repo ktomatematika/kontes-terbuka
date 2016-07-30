@@ -168,9 +168,7 @@ class Contest < ActiveRecord::Base
     destroy_prepared_jobs
     purge_panitia.delay(run_at: end_time)
     prepare_emails
-    if changes['result_released'] == [false, true]
-      jobs_on_result_released
-    end
+    jobs_on_result_released if changes['result_released'] == [false, true]
   end
 
   def prepare_emails

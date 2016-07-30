@@ -51,7 +51,6 @@ class LongProblemsController < ApplicationController
     loc = @long_problem.zip_location
     @long_problem.compress_submissions
 
-    response.headers['X-Accel-Buffering'] = 'no'
     send_file loc
   end
 

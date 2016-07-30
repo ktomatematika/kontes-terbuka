@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160730161813) do
+ActiveRecord::Schema.define(version: 20160730173851) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -112,12 +112,12 @@ ActiveRecord::Schema.define(version: 20160730161813) do
   add_index "long_problems", ["contest_id", "problem_no"], name: "index_long_problems_on_contest_id_and_problem_no", unique: true, using: :btree
 
   create_table "long_submissions", force: :cascade do |t|
-    t.integer  "long_problem_id", null: false
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.integer  "long_problem_id",              null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
     t.integer  "score"
-    t.text     "feedback",        null: false
-    t.integer  "user_contest_id", null: false
+    t.string   "feedback",        default: "", null: false
+    t.integer  "user_contest_id",              null: false
   end
 
   add_index "long_submissions", ["long_problem_id", "user_contest_id"], name: "index_long_submissions_on_long_problem_id_and_user_contest_id", unique: true, using: :btree
