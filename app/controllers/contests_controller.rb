@@ -206,10 +206,10 @@ class ContestsController < ApplicationController
   end
 
   def read_problems
-    c = Contest.find(read_problems_params[:contest_id])
+    c = Contest.find(params[:contest_id])
     authorize! :read_problems, c
-    c.update(tex_file: read_problems_params[:tex_file])
-    TexReader.new(c, read_problems_params[:answers].split(',')).run
+    c.update(problem_tex: params[:problem_tex])
+    TexReader.new(c, params[:answers].split(',')).run
   end
 
   def summary
@@ -242,9 +242,5 @@ class ContestsController < ApplicationController
 
   def participate_params
     params.require(:user_contest).permit(:user_id, :contest_id)
-  end
-
-  def read_problems_params
-    params.permit(:tex_file, :answers)
   end
 end
