@@ -32,6 +32,8 @@ class LongSubmissionsController < ApplicationController
     long_submission = LongSubmission.find(params[:long_submission_id])
     authorize! :download, long_submission
     long_submission.compress
+
+    send_file long_submission.zip_location
   rescue Errno::ENOENT
     redirect_to Contest.find(params[:contest_id]), alert: 'Jawaban Anda ' \
       'tidak ditemukan! Mohon buang dan upload ulang.'
