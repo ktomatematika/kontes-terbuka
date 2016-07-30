@@ -24,8 +24,9 @@
               %td= uc.short_mark
             - @long_problems.each do |lp|
               - if mask_score?(lp)
+                - mask = true
                 %td ?
               - else
                 %td= score(uc, lp)
-            %td= uc.total_mark
+            %td= (defined? mask).nil? ? uc.total_mark : '?'
             %td= uc.award

@@ -1,6 +1,7 @@
 class FeedbackQuestionsController < ApplicationController
+  load_and_authorize_resource
+
   def create
-    authorize! :create, FeedbackQuestion
     FeedbackQuestion.create(contest_id: params[:contest_id],
                             question: feedback_question_params[:question])
     redirect_to contest_admin_path
@@ -8,11 +9,23 @@ class FeedbackQuestionsController < ApplicationController
 
   def destroy
     contest = Contest.find(params[:contest_id])
-    fq = contest.feedback_questions.find(params[:id])
-    authorize! :destroy, fq
-    fq.destroy
+    @feedback_question.destroy
     Ajat.info "feedback_q_destroyed|cid:#{params[:contest_id]}|id:#{params[:id]}"
     redirect_to contest_admin_path
+  end
+
+  def edit
+    @contest = Contest.find(params[:contest_id])
+  end
+
+  def update
+    @contest = Contest.find(params[:contest_id])
+
+    if @feedback_question.update(feedback_question_params)
+      redirect_to contest_admin_path(id: @contest.id)
+    else
+      render 'edit', alert: 'FQ gagal diupdate!'
+    end
   end
 
   private
