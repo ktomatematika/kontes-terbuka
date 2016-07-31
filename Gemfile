@@ -26,9 +26,7 @@ gem 'turbolinks'
 gem 'jquery-turbolinks'
 # Use Bootstrap, the CSS framework (getbootstrap.com)
 gem 'bootstrap-sass'
-# Add katex, the LaTeX preprocessor by Khan Academy.
-gem 'katex-rails'
-# Javascript interpreter as a dependency for LESS, which is needed for katex
+# Javascript interpreter
 gem 'therubyracer', platforms: :ruby
 # Adds attachments, in the form of long submissions
 gem 'paperclip'
