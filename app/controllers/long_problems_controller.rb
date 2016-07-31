@@ -43,6 +43,9 @@ class LongProblemsController < ApplicationController
   end
 
   def mark_solo
+    unless current_user.has_role? :marker, @long_problem
+      redirect_to mark_final_path(@long_problem)
+    end
     mark
     @markers = @markers.where.not(id: current_user.id)
   end
@@ -71,8 +74,8 @@ class LongProblemsController < ApplicationController
   end
 
   def mark_final
-    unless @long_problem.all_marked? ||
-           current_user.has_role?(:marker, @long_problem)
+    if !@long_problem.all_marked? &&
+       current_user.has_role?(:marker, @long_problem)
       redirect_to mark_solo_path(@long_problem)
     end
     mark
