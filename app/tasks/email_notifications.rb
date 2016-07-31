@@ -62,7 +62,7 @@ class EmailNotifications
 
     Ajat.info "result_released|id:#{contest.id}"
     Mailgun.send_message contest: contest, text: text, subject: subject,
-                         bcc_array: User.pluck(:email)
+                         bcc_array: emails
   end
 
   def feedback_ending(contest, time_text)
@@ -84,6 +84,6 @@ class EmailNotifications
 
     Ajat.info "feedback_ending|id:#{contest.id}|time:#{time_text}"
     Mailgun.send_message contest: contest, text: text, subject: subject,
-                         bcc_array: User.pluck(:email)
+                         bcc_array: emails
   end
 end
