@@ -209,8 +209,8 @@ class Contest < ActiveRecord::Base
   end
 
   def jobs_on_result_released
-    EmailNotifications.new.delay(queue: "contest_#{contest.id}")
-                      .result_released(contest)
+    EmailNotifications.new.delay(queue: "contest_#{id}")
+                      .results_released(self)
   end
 
   def purge_panitia
