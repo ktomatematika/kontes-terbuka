@@ -87,8 +87,8 @@ class LongProblemsController < ApplicationController
       score = LongSubmission::SCORE_HASH.key(val[:score])
 
       update_hash = { score: score, feedback: feedback }
-      update_hash.delete(:score) if score.nil?
-      update_hash.delete(:feedback) if feedback.nil?
+      update_hash.delete(:score) if val[:score].empty?
+      update_hash.delete(:feedback) if feedback.empty?
 
       LongSubmission.find(id).update(update_hash)
     end
