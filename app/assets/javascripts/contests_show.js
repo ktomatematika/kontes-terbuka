@@ -33,10 +33,9 @@ function fill_contest_text() {
 			$('.row > section').removeClass('col-sm-8');
 
 			if (current < current_feedback_time) {
-				subtitle = 'Hasil kontes sudah keluar! Jangan lupa untuk ' +
-					'memberikan feedback ke kami paling lambat ' +
-					current_feedback_time.format_indo() + ', untuk mendapatkan' +
-					' sertifikatnya!';
+				subtitle = 'Hasil kontes sudah keluar! Jangan lupa, Anda ' +
+					'bisa memberikan feedback ke kami paling lambat ' +
+					current_feedback_time.format_indo() + '!';
 				time_remaining = '(' + current.indo_go_to(current_feedback_time)
 					+ ')';
 			}

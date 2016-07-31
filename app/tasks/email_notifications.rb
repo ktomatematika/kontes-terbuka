@@ -49,8 +49,9 @@ class EmailNotifications
   def results_released(contest)
     subject = 'Hasil sudah keluar!'
     text = "Hasil #{contest} sudah keluar! Silakan cek di:\n " \
-      "#{contest_url contest}\n\nIngat, Anda perlu mengisi feedback untuk " \
-      'mendapatkan sertifikat.'
+      "#{contest_url contest}\n\nSelamat bagi yang mendapatkan penghargaan! " \
+      'Jika Anda belum beruntung, jangan berkecil hati karena masih ada ' \
+      'kontes-kontes berikutnya.'
     notif = Notification.find_by(event: 'results_released')
     user_contests = notif.user_notifications.map do |un|
       UserContest.find_by(contest: contest, user: un.user)
@@ -67,8 +68,8 @@ class EmailNotifications
   def feedback_ending(contest, time_text)
     subject = "Feedback kontes ditutup dalam waktu #{time_text}"
     text = "Hanya mengingatkan saja, waktu pengisian feedback #{contest} " \
-      "ditutup #{time_text} lagi. Ingat, Anda perlu mengisi feedback untuk " \
-      'mendapatkan sertifikat.'
+      "ditutup #{time_text} lagi. Ingat, salah satu syarat mendapatkan " \
+      'sertifikat adalah mengisi feedback ini.'
     notif = Notification.find_by(event: 'feedback_ending', time_text: time_text)
     user_contests = notif.user_notifications.map do |un|
       UserContest.find_by(contest: contest, user: un.user)

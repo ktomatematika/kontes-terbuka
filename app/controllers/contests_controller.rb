@@ -137,7 +137,8 @@ class ContestsController < ApplicationController
                     .update(answer: answer)
     end
     redirect_to contest, notice: 'Feedback berhasil dikirimkan! ' \
-                                 'Sertifikat akan dikirimkan setelah waktu ' \
+                                 'Jika nilai Anda minimal satu poin, Anda ' \
+                                 'akan mendapatkan sertifikat setelah waktu ' \
                                  'feedback ditutup.'
   end
 
