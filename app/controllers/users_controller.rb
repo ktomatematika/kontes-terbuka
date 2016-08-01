@@ -166,9 +166,11 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     authorize! :show, @user
-    @user_contests = UserContest.joins(:contest)
-                                .where(user: @user,
-                                       'contests.result_released' => true)
+    @user_contests = Contest.where(result_released: true)
+                            .order(id: :desc)
+                            .map do |c|
+                              c.results.find { |u| u.user_id = @user.id }
+                            end.compact
     @point_transactions = PointTransaction.where(user: @user)
                                           .order(:created_at).reverse
   end
