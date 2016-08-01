@@ -6,6 +6,7 @@ module UsersHelper
 
   def public_data_contents
     safe_join(@user_contests.map do |uc|
+      uc = uc.contest.results.find { |u| u.user_id == uc.user_id }
       create_data_row([uc.contest, uc.award], 'td',
                       { class: 'clickable-row',
                         'data-link' => 'contest_path(uc.contest)' },

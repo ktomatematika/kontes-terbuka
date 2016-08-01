@@ -20,6 +20,6 @@ Rails.application.config.before_initialize do
   Sprockets.register_engine '.haml', HamlTemplate
 end
 
-Rails.application.config.assets.precompile << /\.(?:svg|eot|woff|ttf)$/
+Rails.application.config.assets.precompile << /\.(?:woff2|eot|woff|ttf)$/
 
-NonStupidDigestAssets.whitelist = [/\.(?:svg|eot|woff|ttf|html)$/]
+NonStupidDigestAssets.whitelist = [/\.(?:woff2|eot|woff|ttf|html)$/]
