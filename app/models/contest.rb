@@ -166,9 +166,10 @@ class Contest < ActiveRecord::Base
   after_save :prepare_jobs
   def prepare_jobs
     destroy_prepared_jobs
-    purge_panitia.delay(run_at: end_time)
+    purge_panitia.delay(run_at: end_time, queue: "contest_#{id}")
     prepare_emails
     jobs_on_result_released if changes['result_released'] == [false, true]
+    check_veteran.delay(run_at: feedback_time, queue: "contest_#{id}")
   end
 
   def prepare_emails
@@ -217,6 +218,21 @@ class Contest < ActiveRecord::Base
     User.with_any_role(:panitia, :admin).each do |u|
       uc = user_contests.find_by(user: u)
       uc.destroy unless uc.nil?
+    end
+  end
+
+  def check_veteran
+    users.each do |u|
+      gold = 0
+      u.user_contests.include_marks.each do |uc|
+        if uc.total_mark >= uc.contest.gold_cutoff
+          gold += 1
+        end
+      end
+
+      if gold >= 3
+        u.add_role :veteran
+      end
     end
   end
 end
