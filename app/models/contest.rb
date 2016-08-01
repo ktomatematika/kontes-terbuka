@@ -169,7 +169,7 @@ class Contest < ActiveRecord::Base
     purge_panitia.delay(run_at: end_time, queue: "contest_#{id}")
     prepare_emails
     jobs_on_result_released if changes['result_released'] == [false, true]
-    check_veteran.delay(run_at: feedback_time, queue: "contest_#{id}")
+    jobs_on_feedback_time_end
   end
 
   def prepare_emails
@@ -214,6 +214,11 @@ class Contest < ActiveRecord::Base
                       .results_released(self)
   end
 
+  def jobs_on_feedback_time_end
+    check_veteran.delay(run_at: feedback_time, queue: "contest_#{id}")
+    award_points.delay(run_at: feedback_time, queue: "contest_#{id}")
+  end
+
   def purge_panitia
     User.with_any_role(:panitia, :admin).each do |u|
       uc = user_contests.find_by(user: u)
@@ -233,6 +238,14 @@ class Contest < ActiveRecord::Base
       if gold >= 3
         u.add_role :veteran
       end
+    end
+  end
+
+  def award_points
+    user_contests.processed.each do |uc|
+      PointTransaction.create(point: UserContest.contest_points(uc),
+                              user_id: uc.user_id,
+                              description: uc.contest.to_s)
     end
   end
 end

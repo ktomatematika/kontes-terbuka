@@ -38,31 +38,6 @@ class UserContest < ActiveRecord::Base
 
   attr_accessor :rank
 
-  def contest_points
-    award = UserContest.processed.find(id).award
-
-    points = 0
-
-    points += 4 if award == 'Emas'
-    points += 3 if award == 'Perak'
-    points += 2 if award == 'Perunggu'
-
-    points += 1 if short_submissions.select { |ss| ss.answer == '' }.empty?
-
-    points += long_submissions.inject(0) do |memo, item|
-      case item.score
-      when nil then memo
-      when 0..7 then memo + 1
-      else memo + 2
-      end
-
-      points
-    end
-
-    points += 1 if short_submissions.all? { |ss| !ss.answer.empty? }
-    points
-  end
-
   # Show short marks on model objects. Short marks only
   # Usage: UserContest.short_marks
   scope :short_marks, lambda {
@@ -127,4 +102,25 @@ class UserContest < ActiveRecord::Base
                    "problem_no_#{long_problem_id}"]
       end
   }
+
+  def self.contest_points(processed_uc)
+    award = processed_uc.award
+
+    points = 0
+
+    # Award points based on award
+    points += 5 if award == 'Emas'
+    points += 4 if award == 'Perak'
+    points += 3 if award == 'Perunggu'
+
+    points += processed_uc.long_submissions.inject(0) do |memo, item|
+      case item.score
+      when nil then memo
+      when 0..6 then memo + 1 # +1 if score not nil
+      else memo + 2 # +2 if score is 7
+      end
+    end
+
+    points
+  end
 end
