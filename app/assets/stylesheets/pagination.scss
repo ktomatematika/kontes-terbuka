@@ -1,0 +1,55 @@
+@import "colors";
+
+$link: #337ab7;
+
+@each $name, $color in $colors {
+  .pagination.has-shade[data-shade="#{$name}"] {
+    display: block;
+    margin: 0.5em 0;
+    text-align: center;
+
+    > * {
+      border: 1px solid darken($color, 10);
+      border-radius: 0.2em;
+      display: inline-block;
+      width: 2em;
+      height: 2em;
+      line-height: 2em;
+      margin: 0.2em;
+      color: inherit;
+    }
+
+    .previous_page {
+      margin-right: 1em;
+    }
+    .next_page {
+      margin-left: 1em;
+    }
+
+    .current {
+      border: 0;
+      font-weight: 300;
+      font-style: inherit;
+    }
+
+    .disabled {
+      background-color: lighten($color, 30);
+      border-color: lighten($color, 15);
+    }
+
+    > :not(.disabled):not(.current) {
+      background-color: lighten($color, 5);
+
+      &:hover {
+        text-decoration: none;
+        background-color: $color;
+        border-color: darken($color, 15);
+      }
+      &:focus {
+        text-decoration: none;
+        background-color: darken($color, 5);
+        border-color: darken($color, 20);
+      }
+    }
+  }
+}
