@@ -62,6 +62,8 @@ gem 'annotate'
 gem 'migration_comments'
 # Do not generate digssts for error pages
 gem 'non-stupid-digest-assets'
+# Add pagination
+gem 'will_paginate'
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views

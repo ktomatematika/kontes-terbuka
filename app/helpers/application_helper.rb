@@ -50,4 +50,10 @@ module ApplicationHelper
     content_tag tag, (markdown_render text.to_s),
                 class: ['latex', 'text-justify']
   end
+
+  # Helper with settings for will_paginate.
+  def paginate(objects)
+    will_paginate objects, previous_label: '←', next_label: '→',
+                           link_separator: '', class: 'pagination has-shade'
+  end
 end

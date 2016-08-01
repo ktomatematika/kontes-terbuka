@@ -30,21 +30,9 @@ module UsersHelper
     end)
   end
 
-  # Helper to set start user in users#index.
-  def index_start
-    return 0 if params[:start].nil?
-    params[:start].to_i
-  end
-
-  # Helper to set start user in users#index.
-  def start_plus(num)
-    start_num = params[:start].to_i + num
-    params.merge(start: start_num).permit(:start, :disabled)
-  end
-
   # Helper to toggle disabled users in users#index.
   def toggle_disable
-    disabled = !params[:disabled].nil? && params[:disabled] == 'true'
+    disabled = params[:disabled].nil? || params[:disabled] == 'true'
     prms = params.merge(disabled: !disabled).permit(:start, :disabled)
     link_to 'Toggle disabled users', prms
   end

@@ -190,4 +190,6 @@ class User < ActiveRecord::Base
                          'direset, acuhkan saja email ini.'
     Ajat.info "forgot_password_email_sent|uid:#{id}"
   end
+
+  self.per_page = 50
 end

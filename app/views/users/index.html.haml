@@ -1,15 +1,9 @@
 .container
   %h1 Daftar User
-  .three-container
-    %div
-      - if index_start != 0
-        = link_to 'Sebelum', start_plus(-@page), id: 'prev-users-index'
-    %div
-      - if can? :see_full_index, User
-        = toggle_disable
-    %div
-      - if index_start + @page < @users.count
-        = link_to 'Berikutnya', start_plus(@page), id: 'next-users-index'
+  %div
+    - if can? :see_full_index, User
+      = toggle_disable
+  = paginate @users
   %table.table.table-condensed.table-responsive.small-table
     %tr
       %th Username
@@ -20,7 +14,7 @@
       %th Sekolah/Institusi
       %th= 'Poin' if can? :see_full_index, User
 
-    - @shown_users.each do |u|
+    - @users.each do |u|
       %tr.users-index-row.clickable-row{ data: { link: user_path(u), enabled: u.verification.nil?.to_s } }
         %td= u.username
         %td= u.email if can? :see_full_index, User

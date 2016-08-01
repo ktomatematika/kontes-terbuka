@@ -170,20 +170,18 @@ class UsersController < ApplicationController
                             .order(id: :desc)
                             .map do |c|
                               c.results.find { |u| u.user_id = @user.id }
-                            end.compact
+                            end.compact.paginate(page: params[:page])
     @point_transactions = PointTransaction.where(user: @user)
-                                          .order(:created_at).reverse
+                                          .page(params[:page])
+                                          .order(created_at: :desc)
   end
 
   def index
-    @page = 50
-    @users = User.order(:username)
+    @users = User.page(params[:page]).order(:username)
     authorize! :index, User
     if !(can? :see_full_index, User) || (params[:disabled] == 'false')
       @users = @users.where(enabled: true)
     end
-    params[:start] = 0 if params[:start].to_i < 0
-    @shown_users = @users.limit(@page).offset(params[:start])
   end
 
   def edit

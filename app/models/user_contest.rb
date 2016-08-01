@@ -127,4 +127,6 @@ class UserContest < ActiveRecord::Base
                    "problem_no_#{long_problem_id}"]
       end
   }
+
+  self.per_page = 5
 end
