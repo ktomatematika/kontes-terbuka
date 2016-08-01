@@ -9,7 +9,7 @@ module UsersHelper
       uc = uc.contest.results.find { |u| u.user_id == uc.user_id }
       create_data_row([uc.contest, uc.award], 'td',
                       { class: 'clickable-row',
-                        'data-link' => 'contest_path(uc.contest)' },
+                        'data-link' => contest_path(uc.contest) },
                       { class: uc.award.downcase })
     end)
   end
