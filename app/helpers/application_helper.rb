@@ -54,6 +54,7 @@ module ApplicationHelper
   # Helper with settings for will_paginate.
   def paginate(objects)
     will_paginate objects, previous_label: '←', next_label: '→',
-                           link_separator: '', class: 'pagination has-shade'
+                           link_separator: '', class: 'pagination has-shade',
+                           inner_window: 2, outer_window: 0
   end
 end

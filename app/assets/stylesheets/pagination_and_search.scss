@@ -1,12 +1,10 @@
 @import "colors";
 
-$link: #337ab7;
-
 @each $name, $color in $colors {
   .pagination.has-shade[data-shade="#{$name}"] {
     display: block;
     margin: 0.5em 0;
-    text-align: center;
+    text-align: right;
 
     > * {
       border: 1px solid darken($color, 10);
@@ -15,15 +13,18 @@ $link: #337ab7;
       width: 2em;
       height: 2em;
       line-height: 2em;
-      margin: 0.2em;
+      margin: 0 0.2em;
       color: inherit;
+      text-align: center;
     }
 
-    .previous_page {
-      margin-right: 1em;
+    .previous_page, .next_page {
+      display: none;
     }
-    .next_page {
-      margin-left: 1em;
+
+    .gap {
+      border: 0;
+      margin: 0 -0.3em;
     }
 
     .current {
@@ -37,7 +38,7 @@ $link: #337ab7;
       border-color: lighten($color, 15);
     }
 
-    > :not(.disabled):not(.current) {
+    > :not(.disabled):not(.current):not(.gap) {
       background-color: lighten($color, 5);
 
       &:hover {
@@ -51,5 +52,17 @@ $link: #337ab7;
         border-color: darken($color, 20);
       }
     }
+  }
+}
+
+#users-search {
+  padding: 0.5em 15px;
+  margin: 0;
+
+  .glyphicon {
+    top: 0.5em;
+    right: 0.7em;
+    cursor: pointer;
+    pointer-events: auto;
   }
 }

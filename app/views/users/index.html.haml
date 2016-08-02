@@ -1,9 +1,13 @@
 .container
   %h1 Daftar User
-  %div
-    - if can? :see_full_index, User
-      = toggle_disable
-  = paginate @users
+  - if can? :see_full_index, User
+    = toggle_disable
+  .row
+    .col-sm-3.form-group.has-feedback#users-search
+      %input.form-control{ type: 'text' }
+      %span.glyphicon.glyphicon-search.form-control-feedback{ 'aria-hidden' => true }
+    .col-sm-9
+      = paginate @users
   %table.table.table-condensed.table-responsive.small-table
     %tr
       %th Username
