@@ -22,6 +22,4 @@ class PointTransaction < ActiveRecord::Base
   has_paper_trail
   belongs_to :user
   enforce_migration_validations
-
-  self.per_page = 5
 end
