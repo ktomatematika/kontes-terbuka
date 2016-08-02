@@ -169,8 +169,9 @@ class UsersController < ApplicationController
     @user_contests = Contest.where(result_released: true)
                             .order(id: :desc)
                             .map do |c|
-                              c.results.find { |u| u.user_id = @user.id }
-                            end.compact.paginate(page: params[:page])
+                              c.results.find { |u| u.user_id == @user.id }
+                            end.compact.paginate(page: params[:page],
+                                                 per_page: 5)
     @point_transactions = PointTransaction.where(user: @user)
                                           .page(params[:page])
                                           .order(created_at: :desc)
