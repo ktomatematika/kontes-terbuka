@@ -250,7 +250,7 @@ class Contest < ActiveRecord::Base
   end
 
   # This method generates an array containing the number of people getting
-  # a certain total score.
+  # a certain total score, excluding veterans.
   def array_of_scores
     res = Array.new(max_score + 1).fill(0)
     scores.each do |uc|
