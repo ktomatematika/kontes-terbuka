@@ -210,6 +210,7 @@ class ContestsController < ApplicationController
     @contest = Contest.find(params[:contest_id])
     authorize! :summary, @contest
 
+    @scores = @contest.array_of_scores
     @count = @contest.user_contests.count
     redirect_to contest_path(@contest), notice: 'Tidak ada data' if @count.zero?
 

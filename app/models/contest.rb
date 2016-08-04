@@ -248,4 +248,14 @@ class Contest < ActiveRecord::Base
                               description: uc.contest.to_s)
     end
   end
+
+  # This method generates an array containing the number of people getting
+  # a certain total score.
+  def array_of_scores
+    res = Array.new(max_score + 1).fill(0)
+    scores.each do |uc|
+      res[uc.total_mark] += 1
+    end
+    res
+  end
 end

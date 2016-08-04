@@ -2,6 +2,19 @@
   %h1 Ringkasan
   %p Banyak peserta: #{@count}
 
+  %h2 Total
+  %table.table.table-condensed.table-striped.table-responsive
+    %thead
+      = create_data_row(['Nilai', '#', 'Kumulatif', '% kum dari semua',
+                         '% kum >= 1'],
+                         'th')
+    %tbody
+      - @scores.length.times do |mark|
+        - total = @scores.take(mark + 1).inject(&:+)
+        = create_data_row([mark, @scores[mark], total,
+                           percentage(average(total)),
+                           percentage(total - @scores[0])], 'td')
+
   %h2 Isian
   %table.table.table-condensed.table-striped.table-responsive
     %thead
