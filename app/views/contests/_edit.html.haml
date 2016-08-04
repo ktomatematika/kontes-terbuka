@@ -1,16 +1,44 @@
 %h2 Edit
 
-= form_for :contest, url: contest_path(@contest), method: :patch do |f|
-  = f.label :name, 'Nama kontes'
-  = f.text_field :name, class: 'form-control'
-  = f.label :start_time, 'Waktu mulai kontes'
-  = f.datetime_field :start_time, class: 'form-control'
-  = f.label :end_time, 'Waktu selesai kontes'
-  = f.datetime_field :end_time, class: 'form-control'
-  = f.label :result_time, 'Hasil kontes diumumkan'
-  = f.datetime_field :result_time, class: 'form-control'
-  = f.label :feedback_time, 'Terakhir kumpul feedback'
-  = f.datetime_field :feedback_time, class: 'form-control'
-  = f.label :marking_scheme, 'Marking Scheme'
-  = f.file_field :marking_scheme, class: 'form-control'
-  = f.submit class: 'btn btn-default has-shade'
+= form_for :contest, url: contest_path(@contest), method: :patch,
+html: { class: 'form-horizontal' } do |f|
+  .form-group
+    = f.label :name, 'Nama kontes', class: 'col-sm-3'
+    .col-sm-9
+      = f.text_field :name, class: 'form-control'
+  .form-group
+    = f.label :start_time, 'Waktu mulai kontes', class: 'col-sm-3'
+    .col-sm-9
+      = f.datetime_field :start_time, class: 'form-control'
+  .form-group
+    = f.label :end_time, 'Waktu selesai kontes', class: 'col-sm-3'
+    .col-sm-9
+      = f.datetime_field :end_time, class: 'form-control'
+  .form-group
+    = f.label :result_time, 'Hasil kontes diumumkan', class: 'col-sm-3'
+    .col-sm-9
+      = f.datetime_field :result_time, class: 'form-control'
+  .form-group
+    = f.label :feedback_time, 'Terakhir kumpul feedback', class: 'col-sm-3'
+    .col-sm-9
+      = f.datetime_field :feedback_time, class: 'form-control'
+  .form-group
+    = f.label :marking_scheme, 'Marking Scheme', class: 'col-sm-3'
+    .col-sm-9
+      = f.file_field :marking_scheme
+  .form-group
+    = f.label :bronze_cutoff, 'Cutoff Perunggu', class: 'col-sm-3'
+    .col-sm-9
+      = f.text_field :bronze_cutoff, class: 'form-control'
+  .form-group
+    = f.label :silver_cutoff, 'Cutoff Perak', class: 'col-sm-3'
+    .col-sm-9
+      = f.text_field :silver_cutoff, class: 'form-control'
+  .form-group
+    = f.label :gold_cutoff, 'Cutoff Emas', class: 'col-sm-3'
+    .col-sm-9
+      = f.text_field :gold_cutoff, class: 'form-control'
+  = f.label :result_released do
+    = f.check_box :result_released
+  Siap dikeluarkan hasilnya!
+  = f.submit class: 'btn btn-default has-shade', style: 'display: block;'

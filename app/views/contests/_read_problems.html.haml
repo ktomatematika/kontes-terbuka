@@ -1,7 +1,0 @@
-%h2 Magic
-= form_tag contest_read_problems_path, multipart: true do
-  = label_tag :problem_tex, 'Soal TeX'
-  = file_field_tag :problem_tex, class: 'form-control'
-  = label_tag :answers, 'Jawaban'
-  = text_field_tag :answers, '', class: 'form-control'
-  = submit_tag 'Submit', class: 'btn btn-default has-shade'

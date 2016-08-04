@@ -1,0 +1,11 @@
+%h2 Magic
+= link_to 'Bagi-bagi poin', contest_give_points_path(contest: @contest),
+class: 'btn btn-default has-shade' if can? :give_points, Contest
+
+- if can? :read_problems, Contest
+  = form_tag contest_read_problems_path, multipart: true do
+    = label_tag :problem_tex, 'Soal TeX'
+    = file_field_tag :problem_tex, class: 'form-control'
+    = label_tag :answers, 'Jawaban'
+    = text_field_tag :answers, '', class: 'form-control'
+    = submit_tag 'Submit', class: 'btn btn-default has-shade'
