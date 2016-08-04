@@ -17,7 +17,7 @@
         - no_short_problem = @short_problems.empty?
         - @user_contests.each do |uc|
           - user = uc.user
-          %tr.clickable-row{ class: uc.award.downcase, data: { link: user_path(user) } }
+          %tr.clickable-row{ class: row_classes(user, ['clickable-row', uc.award.downcase]), data: { link: user_path(user) } }
             %td= uc.rank
             %td= user.username
             - unless no_short_problem

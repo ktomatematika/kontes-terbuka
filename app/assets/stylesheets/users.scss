@@ -32,6 +32,11 @@
   background-color: #fff;
 }
 
-.users-index-row[data-enabled=false] {
-  color: #00f;
+tr {
+  &.veteran {
+    color: #494;
+  }
+  &.disabled {
+    color: #00f;
+  }
 }
