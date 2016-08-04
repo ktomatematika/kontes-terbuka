@@ -1,5 +1,10 @@
 $(document).ready(function() {
 	$('#users-search > .glyphicon').click(function() {
-		window.location.redirect(window.location.host + window.location.pathname + '?search=' + $("#users-search > input").val());
+		var search_val = $('#users-search > input').val();
+		var search = '';
+		if (search_val !== '') {
+			search = '?search=' + search_val
+		}
+		document.location.href = window.location.pathname + search;
 	});
 });

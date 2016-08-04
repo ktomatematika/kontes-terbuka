@@ -4,7 +4,7 @@
     = toggle_disable
   .row
     .col-sm-3.form-group.has-feedback#users-search
-      %input.form-control{ type: 'text' }
+      = text_field_tag 'search', params[:search], class: 'form-control'
       %span.glyphicon.glyphicon-search.form-control-feedback{ 'aria-hidden' => true }
     .col-sm-9
       = paginate @users

@@ -180,7 +180,8 @@ class UsersController < ApplicationController
   end
 
   def index
-    @users = User.where('username ILIKE ?', params[:search])
+    params[:search] = '' if params[:search].nil?
+    @users = User.where('username ILIKE ?', '%' + params[:search] + '%')
                  .paginate(page: params[:page], per_page: 50)
                  .order(:username)
     authorize! :index, User
