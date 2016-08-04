@@ -1,5 +1,5 @@
 .container
-  %h1= @user
+  %h1{ class: row_classes(@user) }= @user
   .row
     .col-sm-5#profile
       = render 'show_user_info'

@@ -9,9 +9,10 @@
                            '% untuk cutoff'], 'th')
       %tbody
         - @scores.length.times do |mark|
+          - count = (@count - @scores[0]).to_f
           - total = @scores.take(mark + 1).inject(&:+)
           = create_data_row([mark, @scores[mark], total, total - @scores[0],
-                             percentage(average(total - @scores[0]))], 'td')
+                             percentage((total - @scores[0]) / count)], 'td')
 
   %h2 Isian
   %table.table.table-condensed.table-striped.table-responsive

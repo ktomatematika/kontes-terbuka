@@ -58,9 +58,8 @@ module ApplicationHelper
                            inner_window: 2, outer_window: 0, param_name: param
   end
 
-  # Helper to display classes in users#index, contests#index
-  # according to the user's state.
-  def row_classes(user, starting_classes)
+  # Helper to display classes according to the user's state.
+  def row_classes(user, starting_classes = [])
     starting_classes.push('disabled') unless user.verification.nil?
     starting_classes.push('veteran') if user.has_role? :veteran
     starting_classes
