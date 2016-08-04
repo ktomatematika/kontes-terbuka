@@ -43,7 +43,8 @@ class LongProblemsController < ApplicationController
   end
 
   def mark_solo
-    unless current_user.has_role? :marker, @long_problem
+    if !current_user.has_role? :marker, @long_problem ||
+      @long_problem.start_mark_final
       redirect_to mark_final_path(@long_problem)
     end
     mark
@@ -74,7 +75,7 @@ class LongProblemsController < ApplicationController
   end
 
   def mark_final
-    if !@long_problem.all_marked? &&
+    if !@long_problem.start_mark_final && !@long_problem.all_marked? &&
        current_user.has_role?(:marker, @long_problem)
       redirect_to mark_solo_path(@long_problem)
     end
@@ -100,13 +101,22 @@ class LongProblemsController < ApplicationController
     redirect_to mark_final_path(params[:id]), notice: 'Sulap selesai!'
   end
 
+  def upload_report
+    if @long_problem.update(report_params)
+      flash[:notice] = 'Laporan telah diupload!'
+    else
+      flash[:alert] = 'Laporan gagal diupload!'
+    end
+    redirect_to mark_final_path
+  end
+
   private
 
   def long_problem_params
     params.require(:long_problem).permit(:problem_no, :statement, :answer)
   end
 
-  def submission_params
-    params[:long_problem]
+  def report_params
+    params.require(:long_problem).permit(:report)
   end
 end

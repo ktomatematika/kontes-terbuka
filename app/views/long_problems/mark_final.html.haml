@@ -38,3 +38,8 @@
             = latex_and_markdown :td, s.feedback
 
     = submit_tag 'Input nilai', class: 'btn btn-default has-shade'
+
+  %h2 Upload Laporan
+  = form_for :long_problem, url: upload_report_path do |f|
+    = f.file_field :report
+    = f.submit 'Upload', class: 'btn btn-default has-shade'

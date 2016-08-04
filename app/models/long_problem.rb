@@ -13,6 +13,7 @@
 #  report_content_type :string
 #  report_file_size    :integer
 #  report_updated_at   :datetime
+#  start_mark_final    :boolean          default(FALSE)
 #
 # Indexes
 #
@@ -34,6 +35,17 @@ class LongProblem < ActiveRecord::Base
   has_many :user_contests, through: :long_submissions
   has_many :submission_pages, through: :long_submissions
   has_many :temporary_markings, through: :long_submissions
+
+  has_attached_file :report,
+                    path: ':rails_root/public/contest_files/submissions/' \
+                    'kontes:contest_id/lap:contest_id-:problem_no.:extension'
+  do_not_validate_attachment_file_type :report
+  Paperclip.interpolates :contest_id do |attachment, _style|
+    attachment.instance.contest_id
+  end
+  Paperclip.interpolates :problem_no do |attachment, _style|
+    attachment.instance.problem_no
+  end
 
   MAX_MARK = 7
   attr_accessor :MAX_MARK

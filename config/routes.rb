@@ -56,6 +56,8 @@ Rails.application.routes.draw do
   get '/download-submissions/:id', to: 'long_problems#download',
                                    as: 'download_submissions'
   get '/autofill-marks/:id', to: 'long_problems#autofill', as: 'autofill_marks'
+  post '/upload-report/:id', to: 'long_problems#upload_report',
+    as: 'upload_report'
 
   # resources :market_items, path: '/market-items'
 
