@@ -254,7 +254,7 @@ class Contest < ActiveRecord::Base
   def array_of_scores
     res = Array.new(max_score + 1).fill(0)
     scores.each do |uc|
-      res[uc.total_mark] += 1
+      res[uc.total_mark] += 1 unless uc.user.has_role?(:veteran)
     end
     res
   end

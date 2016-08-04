@@ -66,6 +66,13 @@ module ContestsHelper
     !@contest.result_released && current_user.has_role?(:marker, long_problem)
   end
 
+  # Helper for contests#summary, so that one knows whether one can see the
+  # scores summary or not.
+  def can_see_summary?
+    @contest.result_released == true ||
+      !@long_problems.map { |lp| mask_score? lp }.any?
+  end
+
   # Helper for contests#summary. Determines the average mark of a problem
   # to be shown in summary.
   def average_mark(long_submissions)

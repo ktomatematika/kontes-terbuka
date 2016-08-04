@@ -52,10 +52,10 @@ module ApplicationHelper
   end
 
   # Helper with settings for will_paginate.
-  def paginate(objects)
+  def paginate(objects, param = 'page')
     will_paginate objects, previous_label: '←', next_label: '→',
                            link_separator: '', class: 'pagination has-shade',
-                           inner_window: 2, outer_window: 0
+                           inner_window: 2, outer_window: 0, param_name: param
   end
 
   # Helper to display classes in users#index, contests#index

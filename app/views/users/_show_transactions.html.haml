@@ -1,6 +1,6 @@
 #transactions
   %h2 Riwayat Transaksi Poin
-  = paginate @point_transactions
+  = paginate @point_transactions, 'page_transactions'
   .table-responsive
     %table.table.table-hover.has-shade.table-bordered#point-history
       %thead

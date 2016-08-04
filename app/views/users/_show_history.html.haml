@@ -1,6 +1,6 @@
 #history
   %h2 Riwayat Kontes
-  = paginate @user_contests
+  = paginate @user_contests, 'page_history'
   .table-responsive
     %table.table.table-hover.has-shade.table-bordered#contest-history
       %thead
