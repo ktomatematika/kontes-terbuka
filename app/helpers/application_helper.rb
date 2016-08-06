@@ -46,9 +46,9 @@ module ApplicationHelper
   end
 
   # Helper to show text that is rendered with latex and markdown.
-  def latex_and_markdown(tag, text)
+  def latex_and_markdown(tag, text, classes = [])
     content_tag tag, (markdown_render text.to_s),
-                class: ['latex', 'text-justify']
+                class: (['latex', 'text-justify'] + classes)
   end
 
   # Helper with settings for will_paginate.
