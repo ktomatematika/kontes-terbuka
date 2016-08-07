@@ -230,14 +230,10 @@ class Contest < ActiveRecord::Base
     users.each do |u|
       gold = 0
       u.user_contests.include_marks.each do |uc|
-        if uc.total_mark >= uc.contest.gold_cutoff
-          gold += 1
-        end
+        gold += 1 if uc.total_mark >= uc.contest.gold_cutoff
       end
 
-      if gold >= 3
-        u.add_role :veteran
-      end
+      u.add_role :veteran if gold >= 3
     end
   end
 

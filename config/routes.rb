@@ -57,7 +57,7 @@ Rails.application.routes.draw do
                                    as: 'download_submissions'
   get '/autofill-marks/:id', to: 'long_problems#autofill', as: 'autofill_marks'
   post '/upload-report/:id', to: 'long_problems#upload_report',
-    as: 'upload_report'
+                             as: 'upload_report'
 
   # resources :market_items, path: '/market-items'
 
@@ -82,6 +82,8 @@ Rails.application.routes.draw do
   get '/assign/:id', to: 'contests#assign_markers', as: :assign_markers
   post 'create-marker', to: 'roles#create_marker'
   delete 'remove-marker', to: 'roles#remove_marker'
+
+  post '/line-bot', to: 'line#callback'
 
   match '*path', to: 'errors#error_4xx', via: :all
 end

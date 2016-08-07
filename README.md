@@ -17,7 +17,6 @@ Vagrant menggunakan VirtualBox untuk menjalankan virtual machinenya.
 Install beberapa plugin Vagrant:
 ```
 vagrant plugin install vagrant-vbguest
-vagrant plugin install vagrant-librarian-chef-nochef
 ```
 
 Nyalakan Vagrant: `vagrant up`  
@@ -25,11 +24,7 @@ Ini bisa memakan waktu 1 jam, karena vagrant perlu mensetup segalanya
 dari awal, termasuk download Ubuntu (!), setup database, Ruby, dan Rails.
 Bersabarlah. :3
 
-Sambil mengunggu, buat file `.env` di root yang berisi environment variable:
-- RECAPTCHA_PUBLIC_KEY
-- RECAPTCHA_PRIVATE_KEY
-- MAILGUN_API_KEY
-- NEWRELIC_LICENSE_KEY
+Sambil menunggu, copy file env.rb.default ke env.rb dan isi dengan environment variables yang digunakan.
 
 Setelah itu, masuk ke Vagrant: `vagrant ssh`
 
