@@ -12,9 +12,9 @@ class LineController < ApplicationController
     receive_req.data.each do |msg|
       case msg.content
       when Line::Bot::Message::Text
-        LineClient.send_text to_mid: msg.from_mid, text: msg.content
+        LineClient.send_text to_mid: msg.from_mid, text: msg.content.to_s
       when Line::Bot::Operation::AddedAsFriend
-        LineClient.send_text to_mid: msg.from_mid, text: msg.content
+        LineClient.send_text to_mid: msg.from_mid, text: msg.content.to_s
       end
     end
 
