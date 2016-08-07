@@ -127,6 +127,8 @@ GEM
     json (1.8.3)
     kgio (2.10.0)
     libv8 (3.16.14.15)
+    line-bot-api (0.1.8)
+      rack (>= 1.6)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
     mail (2.6.4)
@@ -295,6 +297,7 @@ DEPENDENCIES
   haml
   jquery-rails
   jquery-turbolinks
+  line-bot-api
   migration_comments
   mv-postgresql
   nested_form

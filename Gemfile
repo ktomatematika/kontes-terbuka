@@ -64,6 +64,8 @@ gem 'migration_comments'
 gem 'non-stupid-digest-assets'
 # Add pagination
 gem 'will_paginate', github: 'jonatack/will_paginate'
+# Try: line-bot
+gem 'line-bot-api'
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
