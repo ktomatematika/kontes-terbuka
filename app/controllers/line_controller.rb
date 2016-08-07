@@ -7,11 +7,14 @@ class LineController < ApplicationController
       head :bad_request
     end
 
-    receive_req = Line::Bot::Receive::Request.new params
+    receive_req = Line::Bot::Receive::Request.new request.env
 
     receive_req.data.each do |msg|
-      if msg.content == Line::Bot::Message::Text
-        LineClient.send_text to: msg.from_mid, text: msg.content[:text]
+      case msg.content
+      when Line::Bot::Message::Text
+        LineClient.send_text to_mid: msg.from_mid, text: msg.content
+      when Line::Bot::Operation::AddedAsFriend
+        LineClient.send_text to_mid: msg.from_mid, text: msg.content
       end
     end
 
