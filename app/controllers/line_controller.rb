@@ -13,9 +13,7 @@ class LineController < ApplicationController
 
       case msg.content
       when Line::Bot::Message::Text
-        unless /mid/i.match(msg.content[:text]).nil?
-          response = mid
-        end
+        response = mid unless /mid/i.match(msg.content[:text]).nil?
       end
 
       LineClient.send_text to_mid: mid, text: response

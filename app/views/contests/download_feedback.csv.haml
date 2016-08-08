@@ -1,3 +1,5 @@
-= CSV.generate_line(['User'] + @feedback_questions.order_by(:id))
+= CSV.generate_line(@feedback_questions)
 - @user_contests.each do |uc|
-  = CSV.generate_line([uc.user] + uc.feedback_answers.order_by(:feedback_question_id))
+  - @feedback_questions.each do |fq|
+    fq.
+  = CSV.generate_line(uc.feedback_answers.order(:feedback_question_id))

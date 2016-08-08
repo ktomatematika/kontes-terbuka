@@ -165,16 +165,18 @@ class ContestsController < ApplicationController
   def download_feedback
     @contest = Contest.find(params[:contest_id])
     authorize! :download_feedback, @contest
-    @feedback_questions = contest.feedback_questions
-    @user_contests = contest.user_contests
+    @feedback_questions = @contest.feedback_questions.include(:user_contests)
+                                  .order(:id)
+    @user_contests = @contest.user_contests.joins(:feedback_answers).group(:id)
     respond_to do |format|
+      format.html
       format.csv do
         headers['Content-Disposition'] =
           "attachment; filename=\"Feedback #{@contest}\".csv"
         headers['Content-Type'] ||= 'text/csv'
       end
     end
-    Ajat.info "feedback_downloaded|contest_id:#{contest.id}"
+    Ajat.info "feedback_downloaded|contest_id:#{@contest.id}"
   end
 
   def download_certificate
