@@ -1,6 +1,10 @@
-%h2 Magic
+%h2 Macam-macam
 = link_to 'Bagi-bagi poin', contest_give_points_path(contest: @contest),
 class: 'btn btn-default has-shade' if can? :give_points, Contest
+
+= link_to 'Download feedback',
+  contest_download_feedback_path(contest: @contest),
+  class: 'btn btn-default has-shade' if can? :download_feedback, Contest
 
 - if can? :read_problems, Contest
   = form_tag contest_read_problems_path, multipart: true do
