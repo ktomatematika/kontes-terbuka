@@ -8,7 +8,6 @@ class FeedbackQuestionsController < ApplicationController
   end
 
   def destroy
-    contest = Contest.find(params[:contest_id])
     @feedback_question.destroy
     Ajat.info "feedback_q_destroyed|cid:#{params[:contest_id]}|id:#{params[:id]}"
     redirect_to contest_admin_path

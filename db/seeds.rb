@@ -21,7 +21,7 @@ end
   Status.find_or_create_by(name: status)
 end
 
-%w(Sistem Acak Kosong Merah Hijau Biru Kuning).each do |color|
+%w(Sistem Acak Merah Hijau Biru Kuning).each do |color|
   Color.find_or_create_by(name: color)
 end
 

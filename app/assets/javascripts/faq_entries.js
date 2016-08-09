@@ -10,7 +10,7 @@ var faq_data = [
 	},
 	{
 		question: 'Hadiahnya apa kak?',
-		answer: '<p>Dengan mengikuti kontes ini dengan sungguh-sungguh Anda bisa mendapatkan penghargaan emas, perak, ataupun perunggu. Nanti Anda akan mendapatkan poin yang jumlahnya ditentukan dari berbagai kriteria. Poinnya bisa ditukarkan dengan berbagai barang menarik loh dengan gratis! Anda juga akan mendapatkan sertifikat atas apresiasi Anda.</p><p>Namun, menurut kami hadiah yang paling berguna adalah ilmu yang Anda bisa dapatkan dengan latihan rutin di kontes-kontes ini! Kerja keras dan keuletan Anda akan terbayar dengan prestasi-prestasi yang akan Anda ukir nanti. Siapa tahu Anda bisa mengikuti lomba internasional. A thousand miles start from a single step. :)</p>',
+		answer: '<p>Dengan mengikuti kontes ini dengan sungguh-sungguh Anda bisa mendapatkan penghargaan emas, perak, ataupun perunggu. Nanti Anda akan mendapatkan kubus yang jumlahnya ditentukan dari berbagai kriteria. Kubusnya bisa ditukarkan dengan berbagai barang menarik loh dengan gratis! Anda juga akan mendapatkan sertifikat atas apresiasi Anda.</p><p>Namun, menurut kami hadiah yang paling berguna adalah ilmu yang Anda bisa dapatkan dengan latihan rutin di kontes-kontes ini! Kerja keras dan keuletan Anda akan terbayar dengan prestasi-prestasi yang akan Anda ukir nanti. Siapa tahu Anda bisa mengikuti lomba internasional. A thousand miles start from a single step. :)</p>',
 	},
 	{
 		question: 'Murid SD/murid SMP/murid SMA/guru/dosen/mahasiswa/kakek/nenek/bayi boleh ikut tidak?',

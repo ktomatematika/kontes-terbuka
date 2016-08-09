@@ -19,11 +19,11 @@
         %div
           = link_to 'Lihat',
             contest_long_submission_download_path(contest_id: @contest.id,
-            long_submission_id: ls.id), class: 'btn btn-default has-shade'
+            long_submission_id: ls.id), class: 'btn'
           = link_to 'Buang',
             contest_long_submission_destroy_subs_path(contest_id: @contest.id,
             long_submission_id: ls.id),
-            method: :delete, class: 'btn btn-default has-shade',
+            method: :delete, class: 'btn',
             data: { confirm: 'Anda yakin ingin membuang jawaban?' }
 
     - else
@@ -42,4 +42,4 @@
 
         = f.link_to_add 'Tambah halaman', :submission_pages,
           class: 'long-problem-file'
-        = f.submit 'Jawab', class: 'btn btn-default has-shade'
+        = f.submit 'Jawab', class: 'btn'

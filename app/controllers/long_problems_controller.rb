@@ -43,8 +43,8 @@ class LongProblemsController < ApplicationController
   end
 
   def mark_solo
-    unless current_user.has_role? :marker, @long_problem ||
-                                           @long_problem.start_mark_final
+    unless current_user.has_role?(:marker, @long_problem ||
+                                           @long_problem.start_mark_final)
       redirect_to mark_final_path(@long_problem)
     end
     mark

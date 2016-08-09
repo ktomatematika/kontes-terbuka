@@ -36,7 +36,7 @@
     = render 'favicon'
 
   - haml_tag "body #{yield :page_attributes}" do
-    #essential-data{ data: { color: current_user && current_user.color, timezone: Time.zone.now.zone } }
+    #essential-data{ data: { color: @color, timezone: Time.zone.now.zone } }
 
     %nav.navbar.navbar-default.navbar-fixed-top#top-navbar-container
       .container-fluid
@@ -64,7 +64,7 @@
         - flash.each do |_, msg|
           %p= sanitize msg
         .text-right
-          %button.btn.btn-default.has-shade#close-flash Tutup
+          %button.btn#close-flash Tutup
 
     = yield
 

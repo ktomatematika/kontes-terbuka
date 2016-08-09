@@ -2,9 +2,9 @@
   %h1= @long_problem
   = link_to 'Download Marking Scheme',
     @contest.marking_scheme.url(:original, false),
-    class: 'btn btn-default has-shade'
+    class: 'btn'
   = link_to 'Download semua submisi', download_submissions_path,
-    class: 'btn btn-default has-shade'
+    class: 'btn'
   %span Download ini memakan waktu. Sabar ya. :3
 
   = form_tag submit_temporary_markings_path, id: 'mark-solo-form' do
@@ -25,7 +25,7 @@
                              tm.nil? ? '' : tm.tags, class: 'form-control')] + show_if_done_array(s),
                              'td')
 
-    = submit_tag 'Input nilai', class: 'btn btn-default has-shade'
+    = submit_tag 'Input nilai', class: 'btn'
 
   = link_to 'Diskusi', mark_final_path(@long_problem),
-    class: 'btn btn-default has-shade' if @long_problem.all_marked?
+    class: 'btn' if @long_problem.all_marked?

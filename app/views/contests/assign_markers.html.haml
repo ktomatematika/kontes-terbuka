@@ -20,4 +20,4 @@
     = form_tag create_marker_path, method: :post, class: 'form-inline' do
       = select_tag 'username', panitia_options(lp), class: 'form-control'
       = hidden_field_tag :long_problem_id, lp.id
-      = submit_tag 'Tambah korektor', class: 'btn btn-default has-shade'
+      = submit_tag 'Tambah korektor', class: 'btn'

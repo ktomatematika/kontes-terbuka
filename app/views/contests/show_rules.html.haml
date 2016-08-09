@@ -19,11 +19,11 @@
       = f.hidden_field :contest_id, value: @contest.id
       .btn-center-container
         = f.button 'Saya sudah membaca dan menyetujui',
-          class: 'btn btn-default has-shade', id: 'rules-agree-btn'
+          class: 'btn', id: 'rules-agree-btn'
   - else
     #rules-text
       = markdown_render @contest.rule
 
     .btn-center-container
       = link_to 'Kembali', contest_path(@contest),
-        class: 'btn btn-default has-shade', id: 'rules-agree-btn'
+        class: 'btn', id: 'rules-agree-btn'

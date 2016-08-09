@@ -3,11 +3,30 @@ require 'active_record'
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
-  before_action :set_paper_trail_whodunnit
-  before_action :require_login, :set_timezone
+  before_action :set_paper_trail_whodunnit, :require_login, :set_timezone,
+                :set_color
 
   before_action do
     Rack::MiniProfiler.authorize_request if can? :profile, Ability
+  end
+
+  def set_color
+    color_data = if current_user.nil?
+                   'Sistem'
+                 else
+                   current_user.color.name
+                 end
+
+    possible_colors = %w(Merah Hijau Biru Kuning)
+
+    @color = case color_data
+             when 'Sistem'
+               possible_colors[Time.zone.now.month % possible_colors.length]
+             when 'Acak'
+               possible_colors[Time.zone.now.to_i % possible_colors.length]
+             else
+               color_data
+             end
   end
 
   def current_user

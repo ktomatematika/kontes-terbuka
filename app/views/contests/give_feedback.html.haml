@@ -1,7 +1,7 @@
 .container
   %h1 Feedback untuk #{@contest}
 
-  = link_to 'Kembali', @contest, class: 'btn btn-default has-shade'
+  = link_to 'Kembali', @contest, class: 'btn'
 
   = form_for :feedback_answer, url: contest_feedback_path do |f|
     - @feedback_questions.each do |q|
@@ -12,4 +12,4 @@
         = f.text_area q.id, class: 'form-control feedback-input',
           placeholder: answer
 
-    = f.submit 'Kirim', class: 'btn btn-default has-shade'
+    = f.submit 'Kirim', class: 'btn'

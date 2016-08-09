@@ -1,8 +1,7 @@
 .container
   %h1 Halaman Admin
   - if can? :create, Contest
-    = link_to 'Kontes Baru', new_contest_path,
-      class: 'btn btn-default has-shade'
+    = link_to 'Kontes Baru', new_contest_path, class: 'btn'
 
   - unless @long_problems.empty?
     %h2 Koreksian

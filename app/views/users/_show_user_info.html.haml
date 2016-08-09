@@ -5,11 +5,11 @@
 %p Status: #{@user.status}
 %p Sekolah/institusi: #{@user.school}
 - if can? :edit, @user
-  = link_to('Edit Profil', edit_user_path, class: 'btn btn-default has-shade',
+  = link_to('Edit Profil', edit_user_path, class: 'btn',
     type: 'button')
 - elsif can? :mini_edit, @user
   = render 'mini_edit'
 
 - if can? :see_full, @user
-  %p Poin: #{@user.point}
-  /= link_to 'Pasar', market_items_path, class: 'btn btn-default has-shade'
+  %p #{@user.point} #{point_image}
+  /= link_to 'Pasar', market_items_path, class: 'btn'

@@ -1,9 +1,9 @@
 %h2 Macam-macam
-= link_to 'Bagi-bagi poin', contest_give_points_path,
-class: 'btn btn-default has-shade' if can? :give_points, Contest
+= link_to 'Bagi-bagi kubus', contest_give_points_path,
+class: 'btn' if can? :give_points, Contest
 
 = link_to 'Download feedback', contest_download_path(format: :csv),
-  class: 'btn btn-default has-shade' if can? :download_feedback, Contest
+  class: 'btn' if can? :download_feedback, Contest
 
 - if can? :read_problems, Contest
   %h3 Masukkan Problems
@@ -12,4 +12,4 @@ class: 'btn btn-default has-shade' if can? :give_points, Contest
     = file_field_tag :problem_tex, class: 'form-control'
     = label_tag :answers, 'Jawaban'
     = text_field_tag :answers, '', class: 'form-control'
-    = submit_tag 'Submit', class: 'btn btn-default has-shade'
+    = submit_tag 'Submit', class: 'btn'

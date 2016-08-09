@@ -5,19 +5,19 @@
   - if @contest.currently_in_contest?
     #contest-buttons
       = link_to 'Download soal', @contest.problem_pdf.url(:original, false),
-        class: 'btn btn-default btn-lg has-shade'
+        class: 'btn btn-lg'
       = link_to 'Lihat ulang aturan', contest_rules_path(@contest),
-        class: 'btn btn-default btn-lg has-shade'
+        class: 'btn btn-lg'
 
   %div
     - if can? :summary, Contest
       = link_to 'Ringkasan', contest_summary_path(contest_id: @contest),
-        class: 'btn btn-default btn-lg has-shade'
+        class: 'btn btn-lg'
 
     - if can? :admin, Contest
       = link_to 'Administrasi', contest_admin_path(contest_id: @contest),
-        class: 'btn btn-default btn-lg has-shade'
+        class: 'btn btn-lg'
 
     - if can? :assign_markers, Contest
       = link_to 'Bagi koreksian', assign_markers_path(id: @contest.id),
-        class: 'btn btn-default btn-lg has-shade'
+        class: 'btn btn-lg'

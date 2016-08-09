@@ -97,7 +97,8 @@ h5,
 }
 
 @each $name, $color in $colors {
-  .btn.has-shade[data-shade="#{$name}"] {
+  .btn[data-shade="#{$name}"] {
+    color: inherit;
     background-color: lighten($color, 5);
     border-color: darken($color, 10);
 
@@ -212,9 +213,12 @@ textarea {
   right: 3em;
 }
 
-
 #img-5xx {
   display: inline-block;
+}
+
+.point-img {
+  height: 1em;
 }
 
 // scss-lint:disable PlaceholderInExtend

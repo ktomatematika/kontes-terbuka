@@ -1,10 +1,10 @@
 #transactions
-  %h2 Riwayat Transaksi Poin
+  %h2 Riwayat Transaksi Kubus
   = paginate @point_transactions, 'page_transactions'
   .table-responsive
     %table.table.table-hover.has-shade.table-bordered#point-history
       %thead
-        = create_data_row(%w(Waktu Poin Keterangan), 'th')
+        = create_data_row(%w(Waktu Kubus Keterangan), 'th')
       %tbody
         - @point_transactions.each do |pt|
           = create_data_row([pt[:updated_at], pt[:point], pt[:description]],

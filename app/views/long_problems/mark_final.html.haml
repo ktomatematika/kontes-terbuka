@@ -2,11 +2,11 @@
   %h1= @long_problem
   = link_to 'Download Marking Scheme',
     @contest.marking_scheme.url(:original, false),
-    class: 'btn btn-default has-shade'
+    class: 'btn'
   = link_to 'Download semua submisi', download_submissions_path,
-    class: 'btn btn-default has-shade'
+    class: 'btn'
   %span Download ini memakan waktu. Sabar ya. :3
-  = link_to 'Magic', autofill_marks_path, class: 'btn btn-default has-shade'
+  = link_to 'Magic', autofill_marks_path, class: 'btn'
 
   %div
     Catatan: Anda bisa menggunakan LaTeX (bungkus dengan $) dan Markdown.
@@ -37,9 +37,9 @@
                 class: 'form-control mark-text', rows: 3
             = latex_and_markdown :td, s.feedback, ['mark-text']
 
-    = submit_tag 'Input nilai', class: 'btn btn-default has-shade'
+    = submit_tag 'Input nilai', class: 'btn'
 
   %h2 Upload Laporan
   = form_for :long_problem, url: upload_report_path do |f|
     = f.file_field :report
-    = f.submit 'Upload', class: 'btn btn-default has-shade'
+    = f.submit 'Upload', class: 'btn'
