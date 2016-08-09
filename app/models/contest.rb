@@ -267,4 +267,13 @@ class Contest < ActiveRecord::Base
     end
     res
   end
+
+  # Jonathan: This method... you know lah.
+  def feedback_answers_hash
+    hash = Hash.new { |h, k| h[k] = {} }
+    feedback_answers.each do |answer|
+      hash[answer.user_contest_id][answer.feedback_question_id] = answer.answer
+    end
+    hash
+  end
 end
