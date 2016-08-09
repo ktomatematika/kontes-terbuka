@@ -6,6 +6,7 @@ class: 'btn btn-default has-shade' if can? :give_points, Contest
   class: 'btn btn-default has-shade' if can? :download_feedback, Contest
 
 - if can? :read_problems, Contest
+  %h3 Masukkan Problems
   = form_tag contest_read_problems_path, multipart: true do
     = label_tag :problem_tex, 'Soal TeX'
     = file_field_tag :problem_tex, class: 'form-control'

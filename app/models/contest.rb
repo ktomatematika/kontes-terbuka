@@ -268,12 +268,21 @@ class Contest < ActiveRecord::Base
     res
   end
 
-  # Jonathan: This method... you know lah.
-  def feedback_answers_hash
+  def feedback_answers_matrix
     hash = Hash.new { |h, k| h[k] = {} }
-    feedback_answers.each do |answer|
-      hash[answer.user_contest_id][answer.feedback_question_id] = answer.answer
+
+    feedback_answers.each do |fa|
+      hash[fa.user_contest_id][fa.feedback_question_id] = fa.answer
     end
-    hash
+
+    feedback_questions.each do |fq|
+      hash.each { |_ucid, h| h[fq.id] = '' if h[fq.id].nil? }
+    end
+
+    res = []
+    hash.each do |_ucid, h|
+      res.append(h.sort_by { |fqid, _ans| fqid }.map { |arr| arr[1] })
+    end
+    res
   end
 end

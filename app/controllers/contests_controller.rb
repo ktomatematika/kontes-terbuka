@@ -165,9 +165,8 @@ class ContestsController < ApplicationController
   def download_feedback
     @contest = Contest.find(params[:contest_id])
     authorize! :download_feedback, @contest
-    @feedback_questions = @contest.feedback_questions.include(:user_contests)
-                                  .order(:id)
-    @user_contests = @contest.user_contests.joins(:feedback_answers).group(:id)
+    @feedback_questions = @contest.feedback_questions
+    @feedback_matrix = @contest.feedback_answers_matrix
     respond_to do |format|
       format.html
       format.csv do
