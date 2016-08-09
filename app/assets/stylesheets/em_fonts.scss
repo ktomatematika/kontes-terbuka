@@ -33,9 +33,3 @@ textarea {
 .small-table {
   font-size: 0.8em;
 }
-
-@each $name, $color in $colors {
-  table.has-shade[data-shade="#{$name}"]:not(.month-calendar) tbody tr:hover {
-    background: lighten($color, 20);
-  }
-}

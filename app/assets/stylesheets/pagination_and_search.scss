@@ -7,7 +7,7 @@
     text-align: right;
 
     > * {
-      border: 1px solid darken($color, 10);
+      border: 1px solid $color;
       border-radius: 0.2em;
       color: inherit;
       display: inline-block;
@@ -36,22 +36,22 @@
     }
 
     .disabled {
-      background-color: lighten($color, 30);
-      border-color: lighten($color, 15);
+      background-color: lighten($color, 40);
+      border-color: lighten($color, 25);
     }
 
     > :not(.disabled):not(.current):not(.gap) {
-      background-color: lighten($color, 5);
+      background-color: lighten($color, 15);
 
       &:hover {
-        background-color: $color;
-        border-color: darken($color, 15);
+        background-color: lighten($color, 10);
+        border-color: darken($color, 5);
         text-decoration: none;
       }
 
       &:focus {
-        background-color: darken($color, 5);
-        border-color: darken($color, 20);
+        background-color: lighten($color, 5);
+        border-color: darken($color, 10);
         text-decoration: none;
       }
     }

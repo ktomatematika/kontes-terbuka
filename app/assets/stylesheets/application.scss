@@ -99,22 +99,22 @@ h5,
 @each $name, $color in $colors {
   .btn[data-shade="#{$name}"] {
     color: inherit;
-    background-color: lighten($color, 5);
-    border-color: darken($color, 10);
+    background-color: lighten($color, 15);
+    border-color: $color;
 
     &:hover:not([disabled]) {
-      background-color: $color;
-      border-color: darken($color, 15);
+      background-color: lighten($color, 10);
+      border-color: darken($color, 5);
     }
 
     &:active:not([disabled]) {
-      background-color: darken($color, 5);
-      border-color: darken($color, 20);
+      background-color: lighten($color, 5);
+      border-color: darken($color, 10);
     }
   }
 
   .point-image[data-shade="#{$name}"] {
-    fill: darken($color, 10);
+    fill: $color;
   }
 }
 
@@ -152,7 +152,7 @@ h5,
   .app-footer, .navbar-nav {
     a:hover {
       &.has-shade[data-shade="#{$name}"] {
-        color: $color
+        color: lighten($color, 10);
       }
     }
   }
@@ -264,4 +264,10 @@ th {
 .caption {
   @extend caption;
   display: table-caption;
+}
+
+@each $name, $color in $colors {
+  table.has-shade[data-shade="#{$name}"]:not(.month-calendar) tbody tr:hover {
+    background: lighten($color, 30);
+  }
 }

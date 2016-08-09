@@ -1,6 +1,6 @@
-$red-color: 'Merah' lighten(#e53333, 10);
-$blue-color: 'Biru' lighten(#337fff, 10);
-$green-color: 'Hijau' lighten(#33b24c, 10);
-$yellow-color: 'Kuning' lighten(#ffb200, 10);
+$red-color: 'Merah' #e53333;
+$blue-color: 'Biru' #337fff;
+$green-color: 'Hijau' #33b24c;
+$yellow-color: 'Kuning' #ffb200;
 
 $colors: $red-color $blue-color $green-color $yellow-color;
