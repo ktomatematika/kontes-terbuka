@@ -1,0 +1,3 @@
+linters:
+  LeadingZero:
+    style: include_zero

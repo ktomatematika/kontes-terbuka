@@ -1,5 +1,4 @@
 = CSV.generate_line(@feedback_questions)
 - @user_contests.each do |uc|
   - @feedback_questions.each do |fq|
-    fq.
   = CSV.generate_line(uc.feedback_answers.order(:feedback_question_id))

@@ -1,0 +1,39 @@
+// scss-lint:disable ImportantRule
+blockquote {
+  font-size: 1em;
+
+  footer {
+    font-size: 0.8em;
+  }
+}
+
+.btn {
+  font-size: 1em;
+}
+
+.btn-lg {
+  font-size: 1.2em;
+}
+
+[type=text],
+[type=password],
+[type=email],
+[type=datetime],
+select {
+  font-size: 1em !important;
+  height: 2em !important;
+}
+
+textarea {
+  font-size: 1em !important;
+}
+
+.small-table {
+  font-size: 0.8em;
+}
+
+@each $name, $color in $colors {
+  table.has-shade[data-shade="#{$name}"]:not(.month-calendar) tbody tr:hover {
+    background: lighten($color, 20);
+  }
+}

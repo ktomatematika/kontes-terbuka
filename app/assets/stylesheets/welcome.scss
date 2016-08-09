@@ -1,20 +1,22 @@
-@import "colors";
+@import 'colors';
 $bg-overlay: linear-gradient(rgba(255, 255, 255, 0.1),
 rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.1));
 
-html, body {
+html,
+body {
   height: 100%;
 }
 
-header.teaser {
-  text-align: center;
+.teaser {
   background: $bg-overlay, image-url('welcome-bg.jpg');
+  background-color: #fff;
   background-position: right center;
   background-size: auto 140%;
-  background-color: #fff;
 
   min-height: 100%;
   padding: 0 3%;
+
+  text-align: center;
 
   .welcome-logo {
     padding: 20px 0 0 10px;
@@ -41,8 +43,8 @@ header.teaser {
 
 #features {
   div div {
-    text-align: center;
     display: block;
+    text-align: center;
   }
 
   .glyphicon {
@@ -58,15 +60,15 @@ header.teaser {
 }
 
 #testimonies {
-  background: #ffffff;
+  background: #fff;
 
   h1 {
     padding-bottom: 20px;
   }
 
   blockquote {
-    margin: 5px 30px;
     border-color: #ccc;
+    margin: 5px 30px;
 
     @each $name, $color in $colors {
       &.has-shade[data-shade="#{$name}"] {
@@ -85,6 +87,6 @@ header.teaser {
 }
 
 #teaser {
-  text-align: center;
   padding-bottom: 1%;
+  text-align: center;
 }

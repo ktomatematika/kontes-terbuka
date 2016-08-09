@@ -1,13 +1,15 @@
-@import "colors";
+@import 'colors';
 
 .home-article {
+  background: #fff;
   border: 1px solid #000;
   border-radius: 15px;
-  padding: 20px;
-  background: #fff;
   margin-top: 20px;
+  padding: 20px;
 
-  h1, h2, h3 {
+  h1,
+  h2,
+  h3 {
     margin-top: 0;
   }
 }

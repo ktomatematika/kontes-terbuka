@@ -1,10 +1,12 @@
-@import "colors";
+@import 'colors';
 
 .month-calendar {
   display: table;
   font-size: 14px;
 
-  .caption, .th, .td {
+  .caption,
+  .th,
+  .td {
     text-align: center;
   }
 
@@ -13,8 +15,8 @@
   }
 
   .today {
-    font-weight: 600;
     border: double #000 1px !important;
+    font-weight: 600;
   }
 
   .has-contest {
@@ -54,9 +56,11 @@
   text-align: center;
 }
 
-.answer-input, .feedback-label, .feedback-input {
-  margin-top: 0.5em;
+.answer-input,
+.feedback-label,
+.feedback-input {
   margin-bottom: 0.5em;
+  margin-top: 0.5em;
 }
 
 .latex > p {
@@ -67,6 +71,6 @@
   margin-bottom: 10px;
 }
 
-input[type=file].long-problem-file {
+.long-problem-file {
   display: inline-block;
 }

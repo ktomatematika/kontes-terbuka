@@ -1,0 +1,40 @@
+// scss-lint:disable PlaceholderInExtend
+.table {
+  @extend table;
+  display: table;
+}
+
+.thead {
+  @extend thead;
+  display: table-header-group;
+}
+
+.tr {
+  @extend tr;
+  display: table-row;
+}
+
+.td {
+  @extend td;
+  display: table-cell;
+}
+
+.th {
+  @extend th;
+  display: table-cell;
+  font-weight: 300;
+}
+
+th {
+  font-weight: 300;
+}
+
+.tbody {
+  @extend tbody;
+  display: table-row-group;
+}
+
+.caption {
+  @extend caption;
+  display: table-caption;
+}

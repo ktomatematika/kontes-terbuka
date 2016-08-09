@@ -60,20 +60,18 @@ gem 'daemons'
 gem 'annotate'
 # Add comments in models
 gem 'migration_comments'
-# Do not generate digssts for error pages
+# Do not generate digests for error pages
 gem 'non-stupid-digest-assets'
 # Add pagination
 gem 'will_paginate', github: 'jonatack/will_paginate'
-# Try: line-bot
+# API for LINE bot
 gem 'line-bot-api'
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console'
-
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
-
   # ?
   gem 'table_flipper'
 end
@@ -115,11 +113,6 @@ gem 'rack-protection'
 # Adds hashes for passwords.
 gem 'bcrypt'
 
-group :development do
-  # Security checkup
-  gem 'brakeman', require: false
-end
-
 ### END SECURITY
 
 ### PRODUCTION STUFF
@@ -127,7 +120,6 @@ end
 group :production do
   # Use unicorn as the web server.
   gem 'unicorn'
-
   # This gem kills unicorn workers after certain time to prevent memory
   # leakage.
   gem 'unicorn-worker-killer'

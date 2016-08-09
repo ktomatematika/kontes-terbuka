@@ -1,46 +1,61 @@
-/*
- *= require_self
- *= require_tree .
- *= require vendors
- */
+//= require_self
+//= require_tree .
+//= require vendors
 
-// "bootstrap-sprockets" must be imported before "bootstrap" and "bootstrap/variables"
-@import "bootstrap-sprockets";
-@import "bootstrap";
-@import "colors";
+// 'bootstrap-sprockets' must be imported before 'bootstrap' and 'bootstrap/variables'
+@import 'bootstrap-sprockets';
+@import 'bootstrap';
+@import 'colors';
 
 body {
   background: #f3f3ee;
-  padding-top: calc(60px + 2%);
+
   font-size: 18px;
   font-weight: 100;
 }
 
-h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
   font-weight: 300;
 
-  &, p {
+  &,
+  p {
     line-height: 1.45;
   }
 }
 
-h1, .h1 {
+h1,
+.h1 {
   font-size: 2.5em;
 }
 
-h2, .h2 {
+h2,
+.h2 {
   font-size: 2.0em;
 }
 
-h3, .h3 {
+h3,
+.h3 {
   font-size: 1.5em;
 }
 
-h4, .h4 {
+h4,
+.h4 {
   font-size: 1.3em;
 }
 
-h5, .h5 {
+h5,
+.h5 {
   font-size: 1em;
 }
 
@@ -53,7 +68,8 @@ h5, .h5 {
 }
 
 [nav-logo-only] {
-  #top-navbar, #top-navbar-container > button {
+  #top-navbar,
+  #top-navbar-container > button {
     display: none !important;
   }
 
@@ -99,17 +115,17 @@ h5, .h5 {
 
 .app-footer {
   background: #000;
-  text-align: center;
-  padding: 0 5% 3% 5%;
   margin-top: 20px;
+  padding: 0 5% 3%;
+  text-align: center;
 
   .list-inline {
     padding-top: 2em;
 
     a {
+      color: #fff;
       display: inline-block;
       margin: 0 10px 10px 10px;
-      color: #fff;
       text-decoration: none;
 
       &:hover {
@@ -146,21 +162,21 @@ textarea {
 }
 
 #flash {
+  background: rgba(255, 255, 255, 0.92);
   border: 1px solid #000;
   border-radius: 0.5em;
-  padding: 0.5em;
-  position: fixed;
   left: 0;
-  right: 0;
   margin: 10px auto;
   max-width: 80%;
+  padding: 0.5em;
+  position: fixed;
+  right: 0;
   z-index: 2;
-  background: rgba(255, 255, 255, 0.92);
 }
 
 .three-container {
-  margin-bottom: 0.5em;
   display: flex;
+  margin-bottom: 0.5em;
 
   div {
     flex: 1;
@@ -182,85 +198,21 @@ textarea {
 .veteran {
   color: #494;
 }
+
 .disabled {
   color: #00f;
 }
 
+
 #soal-container-4xx {
-  position: absolute;
   bottom: 3em;
   left: 3em;
-  right: 3em;
   margin: 0 auto;
+  position: absolute;
+  right: 3em;
 }
+
 
 #img-5xx {
   display: inline-block;
-}
-
-// Table classes
-div.table {
-  @extend table;
-  display: table;
-}
-.thead {
-  @extend thead;
-  display: table-header-group;
-}
-.tr {
-  @extend tr;
-  display: table-row;
-}
-.td {
-  @extend td;
-  display: table-cell;
-}
-.th {
-  @extend th;
-  font-weight: 300;
-  display: table-cell;
-}
-th {
-  font-weight: 300;
-}
-.tbody {
-  @extend tbody;
-  display: table-row-group;
-}
-.caption {
-  @extend caption;
-  display: table-caption;
-}
-
-// Change bootstrap's font size to em, because duh
-blockquote {
-  font-size: 1em;
-
-  footer {
-    font-size: 0.8em;
-  }
-}
-.btn {
-  font-size: 1em;
-}
-.btn-lg {
-  font-size: 1.2em;
-}
-input[type=text], input[type=password], input[type=email], input[type=datetime],
-select {
-  height: 2em !important;
-  font-size: 1em !important;
-}
-textarea {
-  font-size: 1em !important;
-}
-
-.small-table {
-  font-size: 0.8em;
-}
-
-@each $name, $color in $colors {
-  table.has-shade[data-shade="#{$name}"]:not(.month-calendar) tbody tr:hover {
-    background: lighten($color, 20);
-  }
 }
