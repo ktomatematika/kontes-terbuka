@@ -279,6 +279,7 @@ PLATFORMS
 
 DEPENDENCIES
   annotate
+  autoprefixer-rails
   bcrypt
   bootstrap-sass
   browser_details

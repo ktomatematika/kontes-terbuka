@@ -36,6 +36,8 @@ gem 'nested_form'
 gem 'redcarpet'
 # Zip submissions
 gem 'rubyzip'
+# Autoprefixer
+gem 'autoprefixer-rails'
 
 group :development do
   # Favicon set

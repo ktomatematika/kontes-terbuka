@@ -30,18 +30,6 @@ $prefixes: '-webkit-' '-ms-' '-o-' '';
   }
 }
 
-@-webkit-keyframes circle {
-  @include rotate();
-}
-
-@-ms-keyframes circle {
-  @include rotate();
-}
-
-@-o-keyframes circle {
-  @include rotate();
-}
-
 @keyframes circle {
   @include rotate();
 }

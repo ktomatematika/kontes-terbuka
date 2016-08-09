@@ -21,8 +21,6 @@
 
 #home-middle-container {
   @media(min-width: 992px) {
-    display: -webkit-flex;
-    display: -ms-flexbox;
     display: flex;
     overflow: hidden;
 
