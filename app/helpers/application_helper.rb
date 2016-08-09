@@ -67,15 +67,6 @@ module ApplicationHelper
 
   # Helper to display point image.
   def point_image
-    case @color
-    when 'Merah'
-      image_tag 'point/merah.svg', alt: 'kubus', class: 'point-img'
-    when 'Biru'
-      image_tag 'point/biru.svg', alt: 'kubus', class: 'point-img'
-    when 'Hijau'
-      image_tag 'point/hijau.svg', alt: 'kubus', class: 'point-img'
-    when 'Kuning'
-      image_tag 'point/kuning.svg', alt: 'kubus', class: 'point-img'
-    end
+    inline_svg 'point.svg', class: 'point-image'
   end
 end

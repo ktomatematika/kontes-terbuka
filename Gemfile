@@ -38,6 +38,8 @@ gem 'redcarpet'
 gem 'rubyzip'
 # Autoprefixer
 gem 'autoprefixer-rails'
+# Inline SVG
+gem 'inline_svg'
 
 group :development do
   # Favicon set

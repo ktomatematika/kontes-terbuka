@@ -112,6 +112,14 @@ h5,
       border-color: darken($color, 20);
     }
   }
+
+  .point-image[data-shade="#{$name}"] {
+    fill: darken($color, 10);
+  }
+}
+
+.point-image {
+  height: 1em;
 }
 
 .app-footer {
@@ -215,10 +223,6 @@ textarea {
 
 #img-5xx {
   display: inline-block;
-}
-
-.point-img {
-  height: 1em;
 }
 
 // scss-lint:disable PlaceholderInExtend
