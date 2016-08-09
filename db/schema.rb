@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160804110128) do
+ActiveRecord::Schema.define(version: 20160809150225) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -272,8 +272,8 @@ ActiveRecord::Schema.define(version: 20160804110128) do
     t.datetime "updated_at",                      null: false
     t.string   "salt"
     t.string   "auth_token"
-    t.integer  "province_id",                     null: false
-    t.integer  "status_id",                       null: false
+    t.integer  "province_id"
+    t.integer  "status_id"
     t.integer  "color_id",        default: 1,     null: false
     t.string   "timezone",        default: "WIB"
     t.string   "verification"
@@ -339,9 +339,9 @@ ActiveRecord::Schema.define(version: 20160804110128) do
   add_foreign_key "user_contests", "users", on_delete: :cascade
   add_foreign_key "user_notifications", "notifications", on_delete: :cascade
   add_foreign_key "user_notifications", "users", on_delete: :cascade
-  add_foreign_key "users", "colors", on_delete: :cascade
-  add_foreign_key "users", "provinces", on_delete: :cascade
-  add_foreign_key "users", "statuses", on_delete: :cascade
+  add_foreign_key "users", "colors", on_delete: :nullify
+  add_foreign_key "users", "provinces", on_delete: :nullify
+  add_foreign_key "users", "statuses", on_delete: :nullify
   validates("colors", "name", uniqueness: true)
   validates("colors", "name", presence: true)
   validates("contests", "name", presence: true)

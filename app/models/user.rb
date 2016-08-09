@@ -12,8 +12,8 @@
 #  updated_at      :datetime         not null
 #  salt            :string
 #  auth_token      :string
-#  province_id     :integer          not null
-#  status_id       :integer          not null
+#  province_id     :integer
+#  status_id       :integer
 #  color_id        :integer          default(1), not null
 #  timezone        :string           default("WIB")
 #  verification    :string
@@ -32,9 +32,9 @@
 #
 # Foreign Keys
 #
-#  fk_rails_560da4bd54  (province_id => provinces.id) ON DELETE => cascade
-#  fk_rails_87f75b7957  (color_id => colors.id) ON DELETE => cascade
-#  fk_rails_ce4a327a04  (status_id => statuses.id) ON DELETE => cascade
+#  fk_rails_560da4bd54  (province_id => provinces.id) ON DELETE => nullify
+#  fk_rails_87f75b7957  (color_id => colors.id) ON DELETE => nullify
+#  fk_rails_ce4a327a04  (status_id => statuses.id) ON DELETE => nullify
 #
 
 class User < ActiveRecord::Base
