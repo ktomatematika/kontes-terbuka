@@ -1,2 +1,2 @@
-/etc/init.d/nginx reload
+nginx -s reopen
 service unicorn restart
