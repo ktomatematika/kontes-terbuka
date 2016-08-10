@@ -2,6 +2,7 @@ require 'active_record'
 
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
+  skip_before_action :require_login, only: :maintenance
 
   before_action :set_paper_trail_whodunnit, :require_login, :set_timezone,
                 :set_color
@@ -27,6 +28,9 @@ class ApplicationController < ActionController::Base
              else
                color_data
              end
+  end
+
+  def maintenance
   end
 
   def current_user

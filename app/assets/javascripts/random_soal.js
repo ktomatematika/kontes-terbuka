@@ -25,9 +25,9 @@ var problem_array = [
 	'+ q = r$. Jika $p$ anggota $\\{ 1, 2, \\ldots, 100 ' +
 	'\\}$ tentukan nilai terbesar $p$ yang mungkin.',
 	'KTO Matematika Agustus 2015'],
-	['Diberikan persegi $ABCD$. Misalkan $E$ dan $F$' +
-	'berturut-turut titik tengah dari sisi $AD$ dan $' +
-	'AB$ dan misalkan pula $G$ merupakan titik potong ' +
+	['Diberikan persegi $ABCD$. Misalkan $E$ dan $F$ ' +
+	'berturut-turut titik tengah dari sisi $AD$ dan ' +
+	'$AB$ dan misalkan pula $G$ merupakan titik potong ' +
 	'antara garis $CE$ dan $DF$. Diketahui bahwa luas ' +
 	'segitiga $DEG$ adalah 1. Hitung luas persegi $ABCD$.',
 	'KTO Matematika Agustus 2015'],
@@ -94,10 +94,10 @@ function get_rand() {
 }
 
 function show_prob(item) {
-	if ($('#soal-4xx').length !== 0) {
-		$('#soal-4xx').html(problem_array[item][0]);
-		$('#sumber-4xx').html('Sumber: ' + problem_array[item][1]);
-		renderMathInElement($('#soal-4xx')[0], {
+	if ($('.random-soal').length !== 0) {
+		$('.random-soal').html(problem_array[item][0]);
+		$('.random-soal-sumber').html('Sumber: ' + problem_array[item][1]);
+		renderMathInElement($('.random-soal')[0], {
 			delimiters: [
 				{left: '$', right: '$', display: false},
 				{left: '\\[', right: '\\]', display: true},
@@ -108,8 +108,11 @@ function show_prob(item) {
 
 $(document).ready(function() {
 	show_prob(get_rand());
-	$('#logo-4xx').contextmenu(function(e) {
+	$('.right-ganti-soal').contextmenu(function(e) {
 		e.preventDefault();
+		show_prob(get_rand());
+	});
+	$('.ganti-soal').click(function(e) {
 		show_prob(get_rand());
 	});
 });
