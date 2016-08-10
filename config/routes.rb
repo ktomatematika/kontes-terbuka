@@ -1,8 +1,6 @@
 Rails.application.routes.draw do
   root 'welcome#index'
 
-  match '*path', to: 'application#maintenance', via: :all
-
   resources :users do
     post 'mini-update', to: 'users#mini_update'
     get 'change-password', to: 'users#change_password'
