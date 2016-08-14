@@ -23,6 +23,8 @@ class TexReader
     end
 
     tex_path = @contest.problem_tex.path
+    FileUtils.cp(Rails.root.join('app', 'assets', 'images', 'logo.png').to_s,
+                 tex_path + '/..')
     `pdflatex tex_path`
     @contest.update(problem_pdf: File.open(tex_path[0...-3] + 'pdf', 'r'))
   end

@@ -2,10 +2,8 @@ class ContestsController < ApplicationController
   def grab_problems
     @short_problems = @contest.short_problems
                               .order('problem_no')
-                              .includes(short_submissions: :user_contest)
     @long_problems = @contest.long_problems
                              .order('problem_no')
-                             .includes(long_submissions: :user_contest)
   end
 
   def admin
@@ -39,10 +37,7 @@ class ContestsController < ApplicationController
     @contest = Contest.find(params[:id])
 
     if @contest.currently_in_contest?
-      @user_contest = @contest.user_contests
-                              .includes([short_submissions: :short_problem],
-                                        [long_submissions: :long_problem])
-                              .find_by(user: current_user)
+      @user_contest = @contest.user_contests.find_by(user: current_user)
       redirect_to contest_rules_path(params[:id]) if @user_contest.nil?
     else
       @user_contests = @contest.results # this is a big query
@@ -178,16 +173,13 @@ class ContestsController < ApplicationController
     Ajat.info "feedback_downloaded|contest_id:#{@contest.id}"
   end
 
-  def download_certificate
+  def send_certificates
     contest = Contest.find params[:contest_id]
-    authorize! :download_certificate, contest
+    authorize! :send_certificates, contest
 
-    uc = UserContest.find_by user: current_user, contest: contest
-    certificate_obj = CertificateManager.new(uc.id)
-    pdf_file = certificate_obj.create_and_give
-
-    send_file pdf_file
-    certificate_obj.clean_files
+    contest.user_contests.each do |uc|
+      CertificateManager.new(uc).delay(queue: "contest_#{contest.id}_cert").run
+    end
   end
 
   def give_points

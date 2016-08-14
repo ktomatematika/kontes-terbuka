@@ -5,6 +5,9 @@ class: 'btn' if can? :give_points, Contest
 = link_to 'Download feedback', contest_download_path(format: :csv),
   class: 'btn' if can? :download_feedback, Contest
 
+= link_to 'Kirim sertifikat', contest_send_certificates_path,
+  class: 'btn' if can? :send_certificates, Contest
+
 - if can? :read_problems, Contest
   %h3 Masukkan Problems
   = form_tag contest_read_problems_path, multipart: true do

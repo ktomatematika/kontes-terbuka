@@ -18,13 +18,14 @@
 *~
 
 # Ignore public
-/public/submissions
-/public/problems
+/public/contest_files
 
+# Sensitive files
 /config/database.yml
+/config/initializers/env.rb
+/app/assets/images/certificate/
+/app/views/contests/certificate.tex.haml
 
 .vagrant/
 .sass-cache/
-
-/config/initializers/env.rb
 .byebug_history

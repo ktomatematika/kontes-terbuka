@@ -76,6 +76,8 @@ group :development do
   gem 'web-console'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+  # Shoot those n+1 queries!
+  gem 'bullet'
   # ?
   gem 'table_flipper'
 end

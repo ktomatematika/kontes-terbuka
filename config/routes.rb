@@ -51,6 +51,7 @@ Rails.application.routes.draw do
     get 'ms-pdf', to: 'contests#download_marking_scheme'
 
     post 'read-problems', to: 'contests#read_problems'
+    get 'send-certificates', to: 'contests#send_certificates'
   end
 
   get '/download-submissions/:id', to: 'long_problems#download',

@@ -1,101 +1,49 @@
 class CertificateManager
-  attr_accessor :user_contest
+  attr_accessor :user_contest, :contest, :user, :tex_path, :pdf_path
+  TEMPLATE = File.read(Rails.root.join('app', 'views', 'contests',
+                                       'certificate.tex.haml'))
 
   def initialize(uc)
     @user_contest = uc
+    @contest = uc.contest
+    @user = uc.user
+    @tex_path = Rails.root.join('public', 'contest_files', 'certificates',
+                                "#{uc.id}.tex")
+    @pdf_path = Rails.root.join('public', 'contest_files', 'certificates',
+                                "#{uc.id}.pdf")
   end
 
-  def create_and_give
-    clean_files_without_delay
+  def run
+    compile_to_pdf certificate_tex
+    send_certificate @pdf_path
+    clean_files
+  end
 
-    filename = "#{user_contest.id}.tex"
-    pdf_filename = "#{user_contest.id}.pdf"
-    name = @user_contest.user.fullname
-    award = @user_contest.award
-    contest = @user_contest.contest.name
+  def certificate_tex
+    @filename = "#{@user_contest.id}.tex"
+    Haml::Engine.new(TEMPLATE).render(Object.new,
+                                      name: @user.fullname,
+                                      contest: @contest,
+                                      award: @user_contest.award)
+  end
 
-    contents = nil
-    if award == ''
-      contents = 'telah berpartisipasi dalam'
-    else
-      contents = "telah meraih
+  def compile_to_pdf(contents)
+    File.write(@tex_path, contents)
+    2.times { `pdflatex #{@tex_path}` } # do twice to render pdf correctly
+  end
 
-      {\\color{emphasis} \\large Medali #{award}}
-
-      pada"
-    end
-
-    tex = "\\documentclass[17pt]{extarticle}
-
-    \\usepackage[T1]{fontenc} % Encoding
-    \\usepackage{DejaVuSans} % Font
-    \\renewcommand*\\familydefault{\\sfdefault} % Sans Serif base
-
-    \\usepackage[dvipsnames]{xcolor} % Color some text
-    \\usepackage{graphicx} % Graphics support
-    \\usepackage[a4paper,landscape,left=2cm,right=2cm,top=2.3cm,bottom=2.3cm]{geometry} % Margins
-    \\usepackage{background} % Background for frame
-
-    \\definecolor{emphasis}{HTML}{1435B0}
-
-    \\linespread{1.3}
-
-    \\backgroundsetup{
-      scale=1,
-      angle=0,
-      contents={
-        \\includegraphics[width=\\paperwidth,height=\\paperheight]{frame.jpg}
-      }
-    }
-
-    \\begin{document}
-    \\pagenumbering{gobble}
-    \\centering{
-
-    \\includegraphics[width=10cm]{logo.png}
-
-    \\vspace{1em}
-
-    {\\Large PENGHARGAAN}
-
-    \\vspace{1em}
-
-    {\\color{emphasis} \\large #{name}}
-
-    #{contents}
-
-    {\\color{emphasis} \\large #{contest}}
-
-    \\vfill
-
-    \\begin{minipage}{0.4\\textwidth}
-      \\centering
-      \\includegraphics[height=2cm]{ilhan.png}
-
-      \\small{Herbert Ilhan Tanujaya
-
-      Ketua KTO Matematika}
-    \\end{minipage}
-    \\begin{minipage}{0.4\\textwidth}
-      \\centering
-      \\includegraphics[height=2cm]{barra.png}
-
-      \\small{Aleams Barra
-
-      Ketua TOMI}
-    \\end{minipage}
-    }
-    \\end{document}"
-
-    File.write("public/certificates/#{filename}", tex)
-    2.times { `pdflatex #{filename}` } # to render pdf correctly
-    "public/certificates/#{pdf_filename}"
+  def send_certificate(pdf_file)
+    text = "Terlampir adalah sertifikat untuk #{@contest}. " \
+           'Sekali lagi, terima kasih atas partisipasinya!'
+    Mailgun.send_message to: @user.email,
+                         contest: @contest,
+                         subject: 'Sertifikat Partisipasi',
+                         text: text,
+                         attachment: File.new(pdf_file, 'r')
   end
 
   def clean_files
-    File.delete("public/certificates/#{user_contest_id}.tex")
-    File.delete("public/certificates/#{user_contest_id}.pdf")
+    File.delete @tex_path
+    File.delete @pdf_path
   end
-  handle_asynchronously :clean_files, run_at: proc { 5.minutes.from_now },
-                                      queue: 'delete_certificates'
 end

@@ -117,7 +117,7 @@ Contest.find_or_create_by(name: 'KTO Matematika Juli 2016',
                           start_time: DateTime.new(2016, 7, 22, 12, 0, 0, '+7'),
                           end_time: DateTime.new(2016, 7, 24, 17, 0, 0, '+7'),
                           result_time: DateTime.new(2016, 7, 31, 0, 0, 0, '+7'),
-                          feedback_time: DateTime.new(2016, 7, 6, 0, 0, 0, '+7'))
+                          feedback_time: DateTime.new(2016, 9, 6, 0, 0, 0, '+7'))
 
 # Test Zone
 unless Rails.env.production?
@@ -125,7 +125,7 @@ unless Rails.env.production?
                                       start_time: DateTime.new(2016, 7, 22, 12, 0, 0, '+7'),
                                       end_time: DateTime.new(2020, 7, 24, 17, 0, 0, '+7'),
                                       result_time: DateTime.new(2020, 7, 31, 0, 0, 0, '+7'),
-                                      feedback_time: DateTime.new(2020, 7, 6, 0, 0, 0, '+7'))
+                                      feedback_time: DateTime.new(2020, 9, 6, 0, 0, 0, '+7'))
 
   # rubocop:enable LineLength
 

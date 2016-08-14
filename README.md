@@ -11,20 +11,24 @@ Install Vagrant dan VirtualBox:
 - https://www.virtualbox.org/wiki/Downloads
 
 Vagrant adalah sebuah virtual machine yang digunakan untuk menjalankan app.
-Keuntungannya, development environmentnya akan stabil di mesin manapun.  
+Keuntungannya, development environmentnya akan stabil di mesin manapun.
+
 Vagrant menggunakan VirtualBox untuk menjalankan virtual machinenya.
 
-Install beberapa plugin Vagrant:
-```
-vagrant plugin install vagrant-vbguest
-```
+Install plugin Vagrant: `vagrant plugin install vagrant-vbguest`
 
-Nyalakan Vagrant: `vagrant up`  
+Nyalakan Vagrant: `vagrant up`
+
 Ini bisa memakan waktu 1 jam, karena vagrant perlu mensetup segalanya
 dari awal, termasuk download Ubuntu (!), setup database, Ruby, dan Rails.
 Bersabarlah. :3
 
-Sambil menunggu, copy file env.rb.default ke env.rb dan isi dengan environment variables yang digunakan.
+Sambil menunggu, ini adalah file-file yang dibutuhkan:
+- config/initializers/env.rb, ambil dari config/initializers/env.rb.default
+- config/database.yml, ambil dari config/database.yml.default
+- app/assets/images/certificate. File-file yang dibutuhkan (untuk membuat
+sertifikat): barra.png, frame.jpg, ilhan.png, logo.png
+- app/views/contests/certificate.tex.haml
 
 Setelah itu, masuk ke Vagrant: `vagrant ssh`
 

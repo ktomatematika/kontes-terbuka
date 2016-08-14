@@ -65,6 +65,9 @@ GEM
     browser_details (0.0.6)
       useragent (>= 0.4)
     builder (3.2.2)
+    bullet (5.2.1)
+      activesupport (>= 3.0.0)
+      uniform_notifier (~> 1.10.0)
     byebug (9.0.5)
     cancancan (1.15.0)
     capistrano (3.5.0)
@@ -272,6 +275,7 @@ GEM
     unicorn-worker-killer (0.4.4)
       get_process_mem (~> 0)
       unicorn (>= 4, < 6)
+    uniform_notifier (1.10.0)
     useragent (0.16.7)
     web-console (3.3.0)
       activemodel (>= 4.2)
@@ -287,6 +291,7 @@ DEPENDENCIES
   bcrypt
   bootstrap-sass
   browser_details
+  bullet
   byebug
   cancancan
   capistrano
