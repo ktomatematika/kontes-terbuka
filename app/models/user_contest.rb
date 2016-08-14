@@ -88,8 +88,7 @@ class UserContest < ActiveRecord::Base
              when marks.total_mark >= silver_cutoff then 'Perak'
              when marks.total_mark >= bronze_cutoff then 'Perunggu'
              else '' end as award"]
-    end
-      .order { marks.total_mark.desc }
+    end.order { marks.total_mark.desc }
   }
 
   # Given a long problem ID, this shows table of user contest id
@@ -101,6 +100,11 @@ class UserContest < ActiveRecord::Base
         ['user_contests.id as id', 'long_submissions.score as ' \
                    "problem_no_#{long_problem_id}"]
       end
+  }
+
+  # Add this scope to filter all that are eligible to get certificates.
+  scope :can_get_certificates, lambda {
+    where('total_mark >= 1')
   }
 
   def contest_points
