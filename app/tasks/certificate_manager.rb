@@ -7,10 +7,10 @@ class CertificateManager
     @user_contest = uc
     @contest = uc.contest
     @user = uc.user
-    @tex_path = Rails.root.join('public', 'contest_files', 'certificates',
-                                "#{uc.id}.tex")
-    @pdf_path = Rails.root.join('public', 'contest_files', 'certificates',
-                                "#{uc.id}.pdf")
+    @path = Rails.root.join('public', 'contest_files',
+                            'certificates', uc.id.to_s).to_s
+    @tex_path = @path + '.tex'
+    @pdf_path = @path + '.pdf'
   end
 
   def run
@@ -28,7 +28,11 @@ class CertificateManager
 
   def compile_to_pdf(contents)
     File.write(@tex_path, contents)
-    2.times { `pdflatex #{@tex_path}` } # do twice to render pdf correctly
+    # do twice to render pdf correctly
+    2.times do
+      `pdflatex -interaction=nonstopmode
+      -output-directory=#{@tex_path}/.. #{@tex_path}`
+    end
   end
 
   def send_certificate(pdf_file)
@@ -36,13 +40,12 @@ class CertificateManager
            'Sekali lagi, terima kasih atas partisipasinya!'
     Mailgun.send_message to: @user.email,
                          contest: @contest,
-                         subject: 'Sertifikat Partisipasi',
+                         subject: 'Sertifikat Kontes',
                          text: text,
                          attachment: File.new(pdf_file, 'r')
   end
 
   def clean_files
-    File.delete @tex_path
-    File.delete @pdf_path
+    File.delete(*Dir.glob(@path + '*'))
   end
 end
