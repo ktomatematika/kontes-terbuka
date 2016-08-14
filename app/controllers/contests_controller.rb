@@ -177,15 +177,16 @@ class ContestsController < ApplicationController
     contest = Contest.find params[:contest_id]
     authorize! :send_certificates, contest
 
-    contest.user_contests.each do |uc|
+    contest.user_contests.processed.each do |uc|
       CertificateManager.new(uc).delay(queue: "contest_#{contest.id}_cert").run
     end
+    redirect_to contest, notice: 'Sertifikat sudah dikirim-kirim~'
   end
 
   def give_points
     contest = Contest.find(params[:contest_id])
     authorize! :give_points, contest
-    contest.user_contests.each do |uc|
+    contest.user_contests.processed.each do |uc|
       PointTransaction.create!(point: uc.contest_points, description: contest)
     end
     Ajat.info "point_given|contest_id:#{contest.id}"

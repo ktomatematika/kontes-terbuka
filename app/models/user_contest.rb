@@ -103,9 +103,7 @@ class UserContest < ActiveRecord::Base
       end
   }
 
-  def self.contest_points(processed_uc)
-    award = processed_uc.award
-
+  def contest_points
     points = 0
 
     # Award points based on award
@@ -113,7 +111,7 @@ class UserContest < ActiveRecord::Base
     points += 4 if award == 'Perak'
     points += 3 if award == 'Perunggu'
 
-    points += processed_uc.long_submissions.inject(0) do |memo, item|
+    points += long_submissions.inject(0) do |memo, item|
       case item.score
       when nil then memo
       when 0..6 then memo + 1 # +1 if score not nil

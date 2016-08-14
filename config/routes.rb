@@ -45,7 +45,7 @@ Rails.application.routes.draw do
 
     resources :feedback_questions, path: '/feedback-questions'
 
-    post 'give-points', to: 'contests#give_points'
+    get 'give-points', to: 'contests#give_points'
 
     get 'pdf', to: 'contests#download_pdf'
     get 'ms-pdf', to: 'contests#download_marking_scheme'
