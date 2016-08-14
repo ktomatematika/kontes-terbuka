@@ -23,7 +23,6 @@
 # Sensitive files
 /config/database.yml
 /config/initializers/env.rb
-/app/assets/images/certificate/
 /app/views/contests/certificate.tex.haml
 
 .vagrant/

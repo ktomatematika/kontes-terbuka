@@ -20,7 +20,6 @@ class CertificateManager
   end
 
   def certificate_tex
-    @filename = "#{@user_contest.id}.tex"
     Haml::Engine.new(TEMPLATE).render(Object.new,
                                       name: @user.fullname,
                                       contest: @contest,
