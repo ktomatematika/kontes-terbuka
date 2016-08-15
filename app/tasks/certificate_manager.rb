@@ -29,9 +29,10 @@ class CertificateManager
   def compile_to_pdf(contents)
     File.write(@tex_path, contents)
     # do twice to render pdf correctly
-    2.times do
-      `pdflatex -interaction=nonstopmode
-      -output-directory=#{@tex_path}/.. #{@tex_path}`
+    Dir.chdir(@tex_path + '/..') do
+      2.times do
+        `pdflatex -interaction=nonstopmode #{@tex_path}`
+      end
     end
   end
 
