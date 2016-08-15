@@ -29,7 +29,7 @@ class CertificateManager
   def compile_to_pdf(contents)
     File.write(@tex_path, contents)
     # do twice to render pdf correctly
-    Dir.chdir(@tex_path + '/..') do
+    Dir.chdir(File.dirname(@tex_path)) do
       2.times do
         `pdflatex -interaction=nonstopmode #{@tex_path}`
       end
