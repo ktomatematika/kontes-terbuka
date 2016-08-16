@@ -179,7 +179,8 @@ class ContestsController < ApplicationController
 
     contest.user_contests.processed.can_get_certificates.each do |uc|
       unless uc.feedback_answers.empty?
-        CertificateManager.new(uc).delay(queue: "contest_#{contest.id}_cert").run
+        CertificateManager.new(uc).delay(queue: "contest_#{contest.id}_cert")
+                          .run
       end
     end
     redirect_to contest, notice: 'Sertifikat sudah dikirim-kirim~'
