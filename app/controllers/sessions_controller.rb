@@ -30,10 +30,10 @@ class SessionsController < ApplicationController
       user.tries += 1
       user.save
 
-      if user.tries == User::MAX_TRIES
+      if user.tries >= User::MAX_TRIES
         # Too many tries
-        forgot_password_process(request.base_url)
-        redirect_to login_path, notice: 'Anda sudah terlalu banyak mencoba ' \
+        user.forgot_password_process
+        flash[:notice] = 'Anda sudah terlalu banyak mencoba ' \
           'dan perlu mereset password. Silakan cek link di email Anda.'
         Ajat.warn "too_many_tries|tries:#{user.tries}|user:#{params[:username]}"
       else
