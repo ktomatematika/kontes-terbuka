@@ -1,6 +1,6 @@
 .container
   %h1 Admin: #{@contest.name}
-  = link_to 'Kembali', contest_path(id: @contest.id)
+  = link_to 'Kembali', contest_path(id: @contest.id), class: 'btn'
 
   = render 'edit' if can? :edit, Contest
   = render 'misc'

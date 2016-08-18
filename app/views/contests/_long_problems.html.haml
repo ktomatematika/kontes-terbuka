@@ -2,10 +2,11 @@
   %header
     %h2 Bagian B: Uraian
     %h4.text-justify
-      Setiap soal bernilai 7 poin. Tidak ada
-      pengurangan untuk jawaban yang salah ataupun kosong. Solusi boleh
-      Anda ketik, scan, ataupun foto. Unggah solusi Anda dengan form di
-      bawah ini. Total file yang Anda upload maksimal 10 MB per soal.
+      Unggah solusi Anda pada formulir di bawah ini. Ukuran file keseluruhan
+      per soal paling besar 10 MB. Tuliskan jawaban beserta langkah pekerjaan
+      Anda secara lengkap. Jawaban boleh diketik, difoto, ataupun di-scan.
+      Setiap soal bernilai 7 angka. Tidak ada pengurangan nilai untuk
+      jawaban yang salah.
 
   - @long_problems.each do |prob|
     %h5.problem_no No. #{prob.problem_no}
@@ -14,8 +15,8 @@
 
     - if ls.submitted?
       %p.text-warning.text-justify
-        Anda sudah mengupload jawaban. Jika Anda ingin mengubah jawaban Anda,
-        klik 'buang' di bawah dan upload ulang.
+        Anda sudah mengunggah jawaban. Jika Anda ingin mengubah jawaban Anda,
+        klik 'buang' di bawah dan lakukan pengunggahan ulang.
         %div
           = link_to 'Lihat',
             contest_long_submission_download_path(contest_id: @contest.id,
