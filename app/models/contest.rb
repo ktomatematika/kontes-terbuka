@@ -148,7 +148,7 @@ class Contest < ActiveRecord::Base
   end
 
   def results
-    partcps = scores.includes(:user)
+    partcps = scores
     rank = 0
     current_total = max_score + 1
     partcps.each_with_index do |uc, idx|
