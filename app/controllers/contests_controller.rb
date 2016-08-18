@@ -190,7 +190,8 @@ class ContestsController < ApplicationController
     contest = Contest.find(params[:contest_id])
     authorize! :give_points, contest
     contest.user_contests.processed.each do |uc|
-      PointTransaction.create!(point: uc.contest_points, description: contest)
+      PointTransaction.create(user: uc.user, point: uc.contest_points,
+                              description: contest)
     end
     Ajat.info "point_given|contest_id:#{contest.id}"
     redirect_to contest, notice: 'Point sudah dibagi-bagi~'
