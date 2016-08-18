@@ -3,7 +3,7 @@
 # Table name: point_transactions
 #
 #  id          :integer          not null, primary key
-#  point       :integer
+#  point       :integer          not null
 #  description :string
 #  user_id     :integer          not null
 #  created_at  :datetime         not null
