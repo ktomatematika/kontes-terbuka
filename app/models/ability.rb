@@ -20,6 +20,9 @@ class Ability
            :process_change_password, :change_notifications,
            :process_change_notifications], User, id: user.id
 
+      can :stop_nag, UserContest, id: UserContest.where(user: user)
+                                                 .pluck(:id)
+
       if user.has_role? :marking_manager
         can [:assign_markers, :save_markers], Contest
         can :mark_final, LongProblem
