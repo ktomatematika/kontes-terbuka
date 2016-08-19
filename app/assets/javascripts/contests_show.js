@@ -60,10 +60,3 @@ function fill_contest_text() {
 		$('#time-remaining').text(time_remaining);
 	}
 }
-
-$(document).ready(function() {
-	$('#close-nag').click(function() {
-		$('#nag-fade').fadeOut();
-		$.post($(this).data('href'));
-	});
-});

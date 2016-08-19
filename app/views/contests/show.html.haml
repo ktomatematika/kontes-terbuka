@@ -27,4 +27,4 @@
 
     = render 'contest_aside_info' if @contest.currently_in_contest?
 
-= render 'nag' if !@user_contest.nil? && @user_contest.donation_nag && (@contest.currently_in_contest? || @contest.result_released)
+= render 'nag' if show_nag

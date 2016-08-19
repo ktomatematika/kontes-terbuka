@@ -88,4 +88,10 @@ module ContestsHelper
   def score_out_of_total(lp)
     score(@user_contest, lp).to_s + '/' + LongProblem::MAX_MARK.to_s + ' poin'
   end
+
+  # Helper for contests#show, to show nag or not
+  def show_nag
+    !@user_contest.nil? && @user_contest.donation_nag &&
+      (@contest.currently_in_contest? || @contest.result_released)
+  end
 end
