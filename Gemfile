@@ -102,7 +102,7 @@ gem 'sitemap_generator'
 # Auto-email exceptions
 gem 'exception_notification'
 # Database profiler
-gem 'rack-mini-profiler', require: false
+# gem 'rack-mini-profiler', require: false
 
 ### END MAINTENANCE
 
