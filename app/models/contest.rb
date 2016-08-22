@@ -229,7 +229,7 @@ class Contest < ActiveRecord::Base
 
   def jobs_on_feedback_time_end
     check_veteran.delay(run_at: feedback_time, queue: "contest_#{id}")
-    award_points.delay(run_at: feedback_time, queue: "contest_#{id}")
+    #award_points.delay(run_at: feedback_time, queue: "contest_#{id}")
   end
 
   def purge_panitia
