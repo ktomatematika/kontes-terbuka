@@ -21,7 +21,7 @@ class Ability
            :process_change_notifications], User, id: user.id
 
       can :stop_nag, UserContest, id: UserContest.where(user: user)
-                                                 .pluck(:id)
+        .pluck(:id)
 
       if user.has_role? :marking_manager
         can [:assign_markers, :save_markers], Contest

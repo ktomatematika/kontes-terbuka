@@ -5,8 +5,6 @@ module Mailgun
   DOMAIN = 'ktom.tomi.or.id'.freeze
   URL = "https://api:#{KEY}@api.mailgun.net/v3/#{DOMAIN}/messages".freeze
   FROM = "Kontes Terbuka Olimpiade Matematika <mail@#{DOMAIN}>".freeze
-
-  # rubocop:disable AbcSize, MethodLength
   # Sends a message with Mailgun. Pass a hash of options.
   # Some options:
   # to: message recipient. Please only specify one recipient; if you want more,
@@ -19,7 +17,8 @@ module Mailgun
   def send_message(**params)
     params[:to] = "mail@#{DOMAIN}" if params[:to].nil?
 
-    if params[:to].include?(',') && !params[:force_to_many]
+    if (params[:to].include?(',') || params[:to].is_a?(Array)) &&
+       !params[:force_to_many]
       raise 'You cannot send to many. Use BCC instead.'
     end
     params[:from] = FROM
