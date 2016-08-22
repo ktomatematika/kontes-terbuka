@@ -21,7 +21,7 @@
       %tbody
         - @long_submissions.each do |s|
           %tr
-            %td= s.user_contest.user_id
+            %td= s.user_contest.id
             - @markers.each do |m|
               - tm = TemporaryMarking.find_by(long_submission: s, user: m)
               %td= tm && tm.mark

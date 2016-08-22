@@ -30,8 +30,8 @@ class SubmissionPage < ActiveRecord::Base
   has_attached_file :submission,
                     url: '/contests/:contest_id/submissions/:id',
                     path: ':rails_root/public/contest_files/submissions/' \
-                    'kontes:cid/no:pno/peserta:uid/' \
-                    'kontes:cid_no:pno_peserta:uid_hal:page_number.:extension'
+                    'kontes:cid/no:pno/peserta:ucid/' \
+                    'kontes:cid_no:pno_peserta:ucid_hal:page_number.:extension'
   validates_with AttachmentPresenceValidator, attributes: :submission
   validates_attachment_content_type :submission,
                                     content_type: ['application/pdf',
@@ -53,7 +53,11 @@ class SubmissionPage < ActiveRecord::Base
     attachment.instance.long_submission.long_problem.problem_no
   end
 
-  Paperclip.interpolates :uid do |attachment, _style|
-    attachment.instance.long_submission.user_contest.user_id
+  Paperclip.interpolates :ucid do |attachment, _style|
+    attachment.instance.long_submission.user_contest.id
+  end
+
+  Paperclip.interpolates :page_number do |attachment, _style|
+    attachment.instance.page_number
   end
 end

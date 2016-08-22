@@ -57,7 +57,7 @@ class LongSubmission < ActiveRecord::Base
     Rails.root.join('public', 'contest_files', 'submissions',
                     "kontes#{long_problem.contest_id}",
                     "no#{long_problem.problem_no}",
-                    "peserta#{user_contest.user_id}").to_s.freeze
+                    "peserta#{user_contest.id}").to_s.freeze
   end
 
   def zip_location
