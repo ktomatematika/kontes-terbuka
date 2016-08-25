@@ -23,13 +23,13 @@
       %li Delete user yang belum teraktivasi
       %li Melihat performa website dengan data di atas kiri
 
-  %h2 Daftar Panitia
-  %table.table.table-condensed.table-hover
-    %thead
-      = create_data_row(['Username', 'Nama Lengkap'], 'th')
+    %h2 Daftar Panitia
+    %table.table.table-condensed.table-hover
+      %thead
+        = create_data_row(['Username', 'Nama Lengkap'], 'th')
 
-    %tbody
-      - @panitia.each do |p|
-        = create_data_row([p.username, p.fullname], 'td',
-                          { class: 'clickable-row',
-                            'data-link' => user_path(p) })
+      %tbody
+        - @panitia.each do |p|
+          = create_data_row([p.username, p.fullname], 'td',
+                            { class: 'clickable-row',
+                              'data-link' => user_path(p) })

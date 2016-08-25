@@ -28,7 +28,7 @@ class Ability
         can [:create_marker, :remove_marker], Role
       end
 
-      if user.has_role? :marker
+      if user.has_role? :marker, :any
         can [:mark_solo, :mark_final, :download, :submit_temporary_markings,
              :submit_final_markings, :autofill, :upload_report], LongProblem,
             id: LongProblem.with_role(:marker, user).pluck(:id)
