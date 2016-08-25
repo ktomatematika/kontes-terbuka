@@ -37,7 +37,7 @@ class LongProblem < ActiveRecord::Base
   has_many :temporary_markings, through: :long_submissions
 
   has_attached_file :report,
-                    path: ':rails_root/public/contest_files/feedbacks/' \
+                    path: ':rails_root/public/contest_files/reports/' \
                     ':contest_id/lap:contest_id-:problem_no.:extension'
   do_not_validate_attachment_file_type :report
   Paperclip.interpolates :contest_id do |attachment, _style|

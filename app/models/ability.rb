@@ -20,8 +20,7 @@ class Ability
            :process_change_password, :change_notifications,
            :process_change_notifications], User, id: user.id
 
-      can :stop_nag, UserContest, id: UserContest.where(user: user)
-        .pluck(:id)
+      can :stop_nag, UserContest, id: UserContest.where(user: user).pluck(:id)
 
       if user.has_role? :marking_manager
         can [:assign_markers, :save_markers], Contest
@@ -29,9 +28,12 @@ class Ability
         can [:create_marker, :remove_marker], Role
       end
 
-      can [:mark_solo, :mark_final, :download, :submit_temporary_markings,
-           :submit_final_markings, :autofill, :upload_report], LongProblem,
-          id: LongProblem.with_role(:marker, user).pluck(:id)
+      if user.has_role? :marker
+        can [:mark_solo, :mark_final, :download, :submit_temporary_markings,
+             :submit_final_markings, :autofill, :upload_report], LongProblem,
+            id: LongProblem.with_role(:marker, user).pluck(:id)
+        can :admin, Ability
+      end
 
       if user.has_role? :panitia
         can [:preview, :summary, :download_marking_scheme], Contest
