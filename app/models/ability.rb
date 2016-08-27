@@ -32,14 +32,16 @@ class Ability
         can [:mark_solo, :mark_final, :download, :submit_temporary_markings,
              :submit_final_markings, :autofill, :upload_report], LongProblem,
             id: LongProblem.with_role(:marker, user).pluck(:id)
-        can :admin, Ability
+        can :download_marking_scheme, Contest,
+          id: LongProblem.with_role(:marker, user).pluck(:contest_id)
+        can :admin, Application
       end
 
       if user.has_role? :panitia
-        can [:preview, :summary, :download_marking_scheme], Contest
+        can [:preview, :summary], Contest
         can [:see_full_index, :see_full, :edit, :update], User
         can :destroy, User, id: User.where(enabled: false).pluck(:id)
-        can [:admin, :profile], Ability
+        can [:admin, :profile], Application
       end
 
       can :manage, :all if user.has_role? :admin

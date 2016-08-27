@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
                 :set_color
 
   before_action do
-    Rack::MiniProfiler.authorize_request if can? :profile, Ability
+    Rack::MiniProfiler.authorize_request if can? :profile, Application
   end
 
   def set_color

@@ -50,7 +50,7 @@
 
         .collapse.navbar-collapse#top-navbar
           %ul.nav.navbar-nav.navbar-right
-            - if can? :admin, Ability
+            - if can? :admin, Application
               %li= link_to 'Admin', admin_path, class: 'has-shade'
             %li= link_to 'Rumah', root_path, class: 'has-shade'
             %li= link_to 'Kontes', contests_path, class: 'has-shade'

@@ -10,7 +10,7 @@ class HomeController < ApplicationController
   def admin
     Ajat.info "app_admin|uid:#{current_user.id}|uname:#{current_user}"
 
-    authorize! :admin, Ability
+    authorize! :admin, Application
 
     # TODO: Henry akan membereskan query n+1 ini.
     @long_problems = LongProblem.joins { contest }.order do
