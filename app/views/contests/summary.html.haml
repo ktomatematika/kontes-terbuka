@@ -12,7 +12,7 @@
           - count = (@count - @scores[0]).to_f
           - total = @scores.take(mark + 1).inject(&:+)
           = create_data_row([mark, @scores[mark], total, total - @scores[0],
-                             count - total + @scores[0],
+                             count.to_i - total + @scores[0],
                              percentage((total - @scores[0]) / count),
                              percentage((count - total + @scores[0]) / count)],
                              'td')
