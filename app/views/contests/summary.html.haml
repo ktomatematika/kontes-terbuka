@@ -5,14 +5,17 @@
     %h2 Total (tanpa veteran)
     %table.table.table-condensed.table-striped.table-responsive
       %thead
-        = create_data_row(['Nilai', '#', 'Kumulatif', 'Tanpa 0',
-                           '% untuk cutoff'], 'th')
+        = create_data_row(['Nilai', '#', 'Kumulatif', 'Tanpa 0', 'Balik',
+                           '% untuk cutoff', '% balik'], 'th')
       %tbody
         - @scores.length.times do |mark|
           - count = (@count - @scores[0]).to_f
           - total = @scores.take(mark + 1).inject(&:+)
           = create_data_row([mark, @scores[mark], total, total - @scores[0],
-                             percentage((total - @scores[0]) / count)], 'td')
+                             count - total + @scores[0],
+                             percentage((total - @scores[0]) / count),
+                             percentage((count - total + @scores[0]) / count)],
+                             'td')
 
   %h2 Isian
   %table.table.table-condensed.table-striped.table-responsive
