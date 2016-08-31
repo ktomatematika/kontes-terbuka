@@ -173,7 +173,7 @@ class User < ActiveRecord::Base
 
   def enable
     update(enabled: true, verification: nil)
-    Notification.all.find_each do |n|
+    Notification.find_each do |n|
       UserNotification.create(user: self, notification: n)
     end
   end

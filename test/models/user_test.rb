@@ -38,38 +38,17 @@
 require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
-  # username should exist
-  # should be unique
-  # should have [6, 20] chars
-  # should be alphanumeric
-  # email should exist
-  # should be unique
-  # should be in an email format
-  # password should exist
-  # should be at least 6 chars
-  # full name should exist
-  # school should exist
-  # terms of service should be accepted
-  # province should exist
-  # status should exist
-  # time zone should exist
-  # time zone should correspond to the province as default
-  # color preference should exist
-
-  prov = Province.find_by(name: 'Bali')
-  stat = Status.find_by(name: 'Kelas 8')
+  prov = Province.first
+  stat = Status.first
+  color = Color.first
   u = User.new(username: 'asdfasdf', password: 'halohalo',
                password_confirmation: 'halohalo',
                email: 'test@gmail.com', fullname: 'Nama Lengkap',
                province: prov, status: stat, school: 'SMAK 1',
-               terms_of_service: '1')
+               color: color, terms_of_service: '1')
 
   test 'user that fulfills all criteria is OK' do
-    user = User.new(username: 'asdfasdf', password: 'halohalo',
-                    password_confirmation: 'halohalo',
-                    email: 'test@gmail.com', fullname: 'Nama Lengkap',
-                    province: prov, status: stat, school: 'SMAK 1',
-                    terms_of_service: '1')
+    user = u.clone
     assert user.save, 'User is not saved'
     user.destroy
   end

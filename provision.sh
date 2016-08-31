@@ -8,6 +8,9 @@ apt-get install --yes software-properties-common python-software-properties git-
 apt-get install --yes postgresql-9.5 libpq-dev
 sudo -u postgres psql -c "create role ubuntu with createdb login password 'password';"
 
+# Auto CD to /vagrant
+echo "\n\ncd /vagrant" >> /home/ubuntu/.bashrc
+
 # Installs rvm, Ruby, Bundler and runs bundle install, which installs a lot.
 su ubuntu <<'EOF'
 gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
