@@ -26,7 +26,7 @@ Bersabarlah. :3
 Sambil menunggu, ini adalah file-file yang dibutuhkan:
 - config/initializers/env.rb, ambil dari config/initializers/env.rb.default
 - config/database.yml, ambil dari config/database.yml.default
-- app/assets/images/certificate. File-file yang dibutuhkan (untuk membuat
+- public/contest_files/certificates. File-file yang dibutuhkan (untuk membuat
 sertifikat): barra.png, frame.jpg, ilhan.png, logo.png
 - app/views/contests/certificate.tex.haml
 

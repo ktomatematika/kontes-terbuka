@@ -24,5 +24,5 @@ cp config/database.yml.default config/database.yml
 bundle install
 rvm rvmrc warning ignore allGemfiles
 cp /vagrant/config/database.yml.default /vagrant/config/database.yml
-bin/rake db:setup
+bin/rake db:schema:load db:seed
 EOF
