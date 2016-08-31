@@ -19,12 +19,15 @@
 
 class FeedbackQuestion < ActiveRecord::Base
   has_paper_trail
-  belongs_to :contest
   enforce_migration_validations
+
+  # Associations
+  belongs_to :contest
 
   has_many :feedback_answers
   has_many :users, through: :feedback_answers
 
+  # Display methods
   def to_s
     question
   end

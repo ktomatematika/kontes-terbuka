@@ -22,7 +22,11 @@
 #
 
 class TemporaryMarking < ActiveRecord::Base
+  has_paper_trail
+  enforce_migration_validations
+
+  # Associations
   belongs_to :user
   belongs_to :long_submission
-  enforce_migration_validations
+
 end

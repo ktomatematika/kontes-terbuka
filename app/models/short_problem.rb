@@ -22,11 +22,15 @@
 
 class ShortProblem < ActiveRecord::Base
   has_paper_trail
-  belongs_to :contest
-  has_many :short_submissions
-  has_many :user_contests, through: :short_submissions
   enforce_migration_validations
 
+  # Associations
+  belongs_to :contest
+
+  has_many :short_submissions
+  has_many :user_contests, through: :short_submissions
+
+  # Methods
   def most_answer
     ShortProblem.find_by_sql ['SELECT answer, COUNT(*) AS count ' \
                               'FROM short_submissions ' \

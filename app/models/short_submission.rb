@@ -22,7 +22,10 @@
 
 class ShortSubmission < ActiveRecord::Base
   has_paper_trail
+  enforce_migration_validations
+
+  # Associations
   belongs_to :user_contest
   belongs_to :short_problem
-  enforce_migration_validations
+
 end

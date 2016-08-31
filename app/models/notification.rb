@@ -12,11 +12,14 @@
 #
 
 class Notification < ActiveRecord::Base
+  has_paper_trail
+  enforce_migration_validations
+
+  # Associations
   has_many :user_notifications
   has_many :users, through: :user_notifications
-  enforce_migration_validations
-  has_paper_trail
 
+  # Display methods
   def to_s
     description
   end

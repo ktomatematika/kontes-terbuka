@@ -21,13 +21,18 @@
 #
 
 class MarketItemPicture < ActiveRecord::Base
-  belongs_to :market_item
+  has_paper_trail
   enforce_migration_validations
 
+  # Associations
+  belongs_to :market_item
+
+  # Attachments
   has_attached_file :picture,
                     url: '/market/pictures/:id/:basename.:extension',
                     path: ':rails_root/public/market/pictures/' \
                     ':id/:basename.:extension'
 
+  # Validations
   validates_attachment_content_type :picture, content_type: /image/
 end

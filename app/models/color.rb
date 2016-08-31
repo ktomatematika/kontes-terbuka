@@ -14,10 +14,12 @@
 
 class Color < ActiveRecord::Base
   has_paper_trail
-  has_many :user
-
   enforce_migration_validations
 
+  # Associations
+  has_many :user
+
+  # Display methods
   def to_s
     name
   end

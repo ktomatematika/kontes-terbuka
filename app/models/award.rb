@@ -10,7 +10,9 @@
 
 class Award < ActiveRecord::Base
   has_paper_trail
+  enforce_migration_validations
+
+  # Associations
   has_many :user_awards
   has_many :users, through: :user_awards
-  enforce_migration_validations
 end
