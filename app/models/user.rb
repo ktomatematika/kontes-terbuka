@@ -41,19 +41,26 @@ class User < ActiveRecord::Base
   include Rails.application.routes.url_helpers
   rolify
   has_paper_trail
+  enforce_migration_validations
+
+  # Callbacks
+  before_validation(on: :create) do
+    encrypt_password
+    generate_token(:auth_token)
+    generate_token(:verification)
+  end
+
+  after_save :clear_password
 
   # Associations
-
   belongs_to :province
   belongs_to :status
   belongs_to :color
 
   has_many :user_contests
-
   has_many :long_submissions, through: :user_contests
   has_many :long_problems, through: :user_contests
   has_many :submission_pages, through: :user_contests
-
   has_many :contests, through: :user_contests
 
   has_many :user_awards
@@ -63,39 +70,46 @@ class User < ActiveRecord::Base
   has_many :marked_long_submissions, through: :temporary_markings,
                                      class_name: 'LongSubmission'
 
-  has_many :point_transactions
-
   has_many :user_notifications
   has_many :notifications, through: :user_notifications
 
-  attr_accessor :password
+  has_many :point_transactions
+
+  # Validations
   validates :password, presence: true, confirmation: true, on: :create
-
   validates :terms_of_service, acceptance: true
+  validates :timezone, presence: true,
+                        inclusion: {
+                          in: time_zone_set,
+                          message: 'Zona waktu tidak tersedia'
+                        }
 
-  enforce_migration_validations
-
-  MAX_TRIES = 10
-  attr_accessor :MAX_TRIES
-
+  # Other ActiveRecord
+  attr_accessor :password
   attr_accessor :osn
 
-  before_validation(on: :create) do
-    encrypt_password
-    generate_token(:auth_token)
-    generate_token(:verification)
+  # Display methods
+  def to_s
+    username
   end
 
-  after_save :clear_password
+  def to_param
+    "#{id}-#{username.downcase}"
+  end
 
+  # Other methods
   def self.time_zone_set
     %w(WIB WITA WIT)
   end
-  validates :timezone, presence: true,
-                       inclusion: {
-                         in: time_zone_set,
-                         message: 'Zona waktu tidak tersedia'
-                       }
+
+  def point
+    PointTransaction.where(user: self).sum(:point)
+  end
+
+  # TODO: Refactor several of the methods to concerns.
+  # Password and verification concerns.
+
+  MAX_TRIES = 10
 
   def encrypt_password
     self.salt = BCrypt::Engine.generate_salt
@@ -120,18 +134,6 @@ class User < ActiveRecord::Base
       self[column] = SecureRandom.urlsafe_base64
       break unless User.exists?(column => self[column])
     end
-  end
-
-  def to_s
-    username
-  end
-
-  def to_param
-    "#{id}-#{username.downcase}"
-  end
-
-  def point
-    PointTransaction.where(user: self).sum(:point)
   end
 
   def reset_password

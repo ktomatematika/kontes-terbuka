@@ -38,9 +38,15 @@
 
 class Contest < ActiveRecord::Base
   require 'csv'
-
   has_paper_trail
+  enforce_migration_validations
 
+  # Callbacks
+  before_create do
+    self.rule = File.open('app/assets/default_rules.txt', 'r').read
+  end
+
+  # Associations
   has_many :user_contests
   has_many :users, through: :user_contests
 
@@ -54,11 +60,7 @@ class Contest < ActiveRecord::Base
   has_many :feedback_questions
   has_many :feedback_answers, through: :feedback_questions
 
-  enforce_migration_validations
-  before_create do
-    self.rule = File.open('app/assets/default_rules.txt', 'r').read
-  end
-
+  # Attachments
   has_attached_file :problem_pdf,
                     url: '/contests/:id/pdf',
                     path: ':rails_root/public/contest_files/problems/' \
@@ -77,8 +79,8 @@ class Contest < ActiveRecord::Base
                     path: ':rails_root/public/contest_files/problems/' \
                     ':id/ms.:extension'
 
+  # Other ActiveRecord
   accepts_nested_attributes_for :long_problems
-
   accepts_nested_attributes_for :long_submissions
 
   def self.next_contest

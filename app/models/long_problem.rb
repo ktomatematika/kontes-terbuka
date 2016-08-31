@@ -25,10 +25,11 @@
 #
 
 class LongProblem < ActiveRecord::Base
-  resourcify
   has_paper_trail
   enforce_migration_validations
+  resourcify
 
+  # Associations
   belongs_to :contest
 
   has_many :long_submissions
@@ -36,10 +37,13 @@ class LongProblem < ActiveRecord::Base
   has_many :submission_pages, through: :long_submissions
   has_many :temporary_markings, through: :long_submissions
 
+  # Attachments
   has_attached_file :report,
                     path: ':rails_root/public/contest_files/reports/' \
                     ':contest_id/lap:contest_id-:problem_no.:extension'
   do_not_validate_attachment_file_type :report
+
+  # Paperclip interpolations
   Paperclip.interpolates :contest_id do |attachment, _style|
     attachment.instance.contest_id
   end
@@ -47,12 +51,14 @@ class LongProblem < ActiveRecord::Base
     attachment.instance.problem_no
   end
 
-  MAX_MARK = 7
-  attr_accessor :MAX_MARK
-
+  # Display methods
   def to_s
     contest.to_s + ' no. ' + problem_no.to_s
   end
+
+  # TODO: Refactor several of the methods to concerns.
+
+  MAX_MARK = 7
 
   def fill_long_submissions
     UserContest.where(contest: contest).find_each do |uc|

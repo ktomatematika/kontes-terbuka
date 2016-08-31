@@ -21,6 +21,9 @@
 
 class UserContest < ActiveRecord::Base
   has_paper_trail
+  enforce_migration_validations
+
+  # Associations
   belongs_to :user
   belongs_to :contest
 
@@ -34,9 +37,11 @@ class UserContest < ActiveRecord::Base
   has_many :feedback_answers
   has_many :feedback_questions, through: :feedback_answers
 
-  enforce_migration_validations
-
+  # Other ActiveRecord
   attr_accessor :rank
+
+  # TODO: Refactor several of the methods to concerns.
+  # Marks related scopes
 
   # Show short marks on model objects. Short marks only
   # Usage: UserContest.short_marks
@@ -106,6 +111,8 @@ class UserContest < ActiveRecord::Base
   scope :can_get_certificates, lambda {
     where('total_mark >= 1')
   }
+
+  # Other methods
 
   def contest_points
     points = 0

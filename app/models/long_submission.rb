@@ -23,32 +23,28 @@
 
 class LongSubmission < ActiveRecord::Base
   has_paper_trail
+  enforce_migration_validations
+
+  # Associations
   belongs_to :user_contest
   belongs_to :long_problem
-
   has_many :submission_pages
+  has_many :temporary_markings
+
+  # Other ActiveRecord
   accepts_nested_attributes_for :submission_pages, allow_destroy: true,
                                                    update_only: true
 
-  enforce_migration_validations
+  # Scopes
+  scope :submitted, -> { joins(:submission_pages).group(:id) }
 
-  has_many :temporary_markings
-
-  scope :filter_user_contest, lambda { |user_id, contest_id|
-    includes(:long_problem)
-      .references(:all)
-      .where(user_id: user_id)
-      .where('long_problems.contest_id = ?', contest_id)
-      .order('long_problems.problem_no')
-  }
+  # TODO: Refactor several of the methods to concerns.
 
   SCORE_HASH = [*0..LongProblem::MAX_MARK].each_with_object({}) do |item, memo|
     memo[item] = item.to_s
   end
   SCORE_HASH[nil] = '-'
-  attr_accessor :SCORE_HASH
 
-  scope :submitted, -> { joins(:submission_pages).group(:id) }
   def submitted?
     !submission_pages.empty?
   end
