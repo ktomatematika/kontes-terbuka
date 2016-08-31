@@ -22,9 +22,13 @@
 
 class FeedbackAnswer < ActiveRecord::Base
   has_paper_trail
+  enforce_migration_validations
+
+  # Associations
   belongs_to :feedback_question
   belongs_to :user_contest
 
+  # Display methods
   def to_s
     answer
   end

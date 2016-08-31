@@ -38,9 +38,18 @@
 
 class Contest < ActiveRecord::Base
   require 'csv'
-
+  include ContestJobs
   has_paper_trail
+  enforce_migration_validations
 
+  # Callbacks
+  before_create do
+    self.rule = File.open('app/assets/default_rules.txt', 'r').read
+  end
+
+  after_save :prepare_jobs
+
+  # Associations
   has_many :user_contests
   has_many :users, through: :user_contests
 
@@ -54,10 +63,7 @@ class Contest < ActiveRecord::Base
   has_many :feedback_questions
   has_many :feedback_answers, through: :feedback_questions
 
-  before_create do
-    self.rule = File.open('app/assets/default_rules.txt', 'r').read
-  end
-
+  # Attachments
   has_attached_file :problem_pdf,
                     url: '/contests/:id/pdf',
                     path: ':rails_root/public/contest_files/problems/' \
@@ -76,8 +82,8 @@ class Contest < ActiveRecord::Base
                     path: ':rails_root/public/contest_files/problems/' \
                     ':id/ms.:extension'
 
+  # Other ActiveRecord
   accepts_nested_attributes_for :long_problems
-
   accepts_nested_attributes_for :long_submissions
 
   validates_datetime :start_time, on_or_before: :end_time
@@ -174,92 +180,7 @@ class Contest < ActiveRecord::Base
     end
   end
 
-  after_save :prepare_jobs
-  def prepare_jobs
-    destroy_prepared_jobs
-    purge_panitia.delay(run_at: end_time, queue: "contest_#{id}")
-    prepare_emails
-    prepare_line
-    jobs_on_result_released if changes['result_released'] == [false, true]
-    jobs_on_feedback_time_end
-  end
 
-  def prepare_emails
-    e = EmailNotifications.new self
-
-    Notification.where(event: 'contest_starting').find_each do |n|
-      run_at = start_time - n.seconds
-      if Time.zone.now < run_at
-        e.delay(run_at: run_at, queue: "contest_#{id}")
-         .contest_starting(n.time_text)
-      end
-    end
-    Notification.where(event: 'contest_started').find_each do |n|
-      run_at = start_time
-      if Time.zone.now < run_at
-        e.delay(run_at: run_at, queue: "contest_#{id}")
-         .contest_started(n.time_text)
-      end
-    end
-    Notification.where(event: 'contest_ending').find_each do |n|
-      run_at = end_time - n.seconds
-      if Time.zone.now < run_at
-        e.delay(run_at: run_at, queue: "contest_#{id}")
-         .contest_ending(n.time_text)
-      end
-    end
-    Notification.where(event: 'feedback_ending').find_each do |n|
-      run_at = feedback_time - n.seconds
-      if Time.zone.now < run_at
-        e.delay(run_at: run_at, queue: "contest_#{id}")
-         .feedback_ending(n.time_text)
-      end
-    end
-  end
-
-  def prepare_line
-    l = LineNag.new self
-
-    l.delay(run_at: start_time - 1.day, queue: "contest_#{id}")
-     .contest_starting('24 jam')
-    l.delay(run_at: start_time, queue: "contest_#{id}")
-     .contest_started
-    l.delay(run_at: end_time - 1.day, queue: "contest_#{id}")
-     .contest_ending('24 jam')
-  end
-
-  def destroy_prepared_jobs
-    Delayed::Job.where(queue: "contest_#{id}").destroy_all
-  end
-
-  def jobs_on_result_released
-    EmailNotifications.new(self).delay(queue: "contest_#{id}")
-                      .results_released
-    LineNag.new(self).delay(queue: "contest_#{id}").result_and_next_contest
-  end
-
-  def jobs_on_feedback_time_end
-    check_veteran.delay(run_at: feedback_time, queue: "contest_#{id}")
-    # award_points.delay(run_at: feedback_time, queue: "contest_#{id}")
-  end
-
-  def purge_panitia
-    User.with_any_role(:panitia, :admin).each do |u|
-      uc = user_contests.find_by(user: u)
-      uc.destroy unless uc.nil?
-    end
-  end
-
-  def check_veteran
-    users.each do |u|
-      gold = 0
-      u.user_contests.include_marks.each do |uc|
-        gold += 1 if uc.total_mark >= uc.contest.gold_cutoff
-      end
-
-      u.add_role :veteran if gold >= 3
-    end
-  end
 
   def award_points
     user_contests.processed.each do |uc|

@@ -34,22 +34,29 @@
 #
 
 class User < ActiveRecord::Base
-  include Rails.application.routes.url_helpers
+  include UserPasswordVerification
   rolify
   has_paper_trail
+  enforce_migration_validations
+
+  # Callbacks
+  before_validation(on: :create) do
+    encrypt_password
+    generate_token(:auth_token)
+    generate_token(:verification)
+  end
+
+  after_save :clear_password
 
   # Associations
-
   belongs_to :province
   belongs_to :status
   belongs_to :color
 
   has_many :user_contests
-
   has_many :long_submissions, through: :user_contests
   has_many :long_problems, through: :user_contests
   has_many :submission_pages, through: :user_contests
-
   has_many :contests, through: :user_contests
 
   has_many :user_awards
@@ -59,67 +66,37 @@ class User < ActiveRecord::Base
   has_many :marked_long_submissions, through: :temporary_markings,
                                      class_name: 'LongSubmission'
 
-  has_many :point_transactions
-
   has_many :user_notifications
   has_many :notifications, through: :user_notifications
 
-  attr_accessor :password
+  has_many :point_transactions
+
   validates :password, presence: true, confirmation: true, on: :create
   validates :username, length: { in: 6..20 },
     format: { with: /\A[a-zA-Z0-9]+\z/ }
   validates :email, format: { with: /\A.+@.+\z/ }
   validates :tries, numericality: { greater_than_or_equal_to: 0 }
 
+  # Validations
+  validates :password, presence: true, confirmation: true, on: :create
   validates :terms_of_service, acceptance: true
 
-  MAX_TRIES = 10
-  attr_accessor :MAX_TRIES
-
-  attr_accessor :osn
-
-  before_validation(on: :create) do
-    encrypt_password
-    generate_token(:auth_token)
-    generate_token(:verification)
-  end
-
-  after_save :clear_password
-
+  # NOTE: This needs to come before the validation.
   def self.time_zone_set
     %w(WIB WITA WIT)
   end
+
   validates :timezone, presence: true,
-                       inclusion: {
-                         in: time_zone_set,
-                         message: 'Zona waktu tidak tersedia'
-                       }
+                        inclusion: {
+                          in: time_zone_set,
+                          message: 'Zona waktu tidak tersedia'
+                        }
 
-  def encrypt_password
-    self.salt = BCrypt::Engine.generate_salt
-    self.hashed_password = BCrypt::Engine.hash_secret(password, salt)
-  end
+  # Other ActiveRecord
+  attr_accessor :password
+  attr_accessor :osn
 
-  def self.get_user(username_or_email)
-    User.find_by(username: username_or_email) ||
-      User.find_by(email: username_or_email)
-  end
-
-  def authenticate(password)
-    hashed_password == BCrypt::Engine.hash_secret(password, salt)
-  end
-
-  def clear_password
-    self.password = nil
-  end
-
-  def generate_token(column)
-    loop do
-      self[column] = SecureRandom.urlsafe_base64
-      break unless User.exists?(column => self[column])
-    end
-  end
-
+  # Display methods
   def to_s
     username
   end
@@ -128,64 +105,14 @@ class User < ActiveRecord::Base
     "#{id}-#{username.downcase}"
   end
 
+  # Other methods
+
   def point
     PointTransaction.where(user: self).sum(:point)
   end
 
-  def reset_password
-    generate_token(:verification)
-    save
-    text = 'Untuk melanjutkan process reset password user Anda, klik link ' \
-      "ini: \n\n #{reset_password_url verification: verification}"
-    Mailgun.send_message to: user.email,
-                         subject: 'Reset Password KTO Matematika',
-                         text: text
-  end
-
-  VERIFY_TIME = 4.hours
-  VERIFY_TIME_INDO = '4 jam'.freeze
-  def destroy_if_unverified
-    unless enabled
-      Ajat.warn "verification_expiry|uname:#{username}"
-      destroy
-    end
-  end
-  handle_asynchronously :destroy_if_unverified,
-                        run_at: proc { VERIFY_TIME.from_now },
-                        queue: 'destroy_if_unverified'
-
-  def send_verify_email
-    link = verify_url verification: verification
-    text = 'User berhasil dibuat! Sekarang, buka link ini untuk ' \
-      "memverifikasikan email Anda:\n\n#{link}\n\n" \
-      "Anda hanya memiliki waktu #{VERIFY_TIME_INDO} untuk mengverifikasi. " \
-      'Jika Anda tidak mendaftar ke Kontes Terbuka Olimpiade Matematika, ' \
-      'Anda boleh mengacuhkan email ini.'
-    Mailgun.send_message to: email,
-                         subject: 'Konfirmasi Pendaftaran Kontes ' \
-                                  'Terbuka Olimpiade Matematika',
-                         text: text
-    destroy_if_unverified
-  end
-  handle_asynchronously :send_verify_email, queue: 'send_verify_email'
-
-  def enable
-    update(enabled: true, verification: nil)
-    Notification.find_each do |n|
-      UserNotification.create(user: self, notification: n)
-    end
-  end
-
-  def forgot_password_process
-    generate_token(:verification)
-    save
-    link = reset_password_url verification: verification
-    Mailgun.send_message to: email,
-                         subject: 'Reset Password KTO Matematika',
-                         text: 'Klik link ini untuk mengreset password ' \
-                         "Anda:\n#{link}\n\n" \
-                         'Jika Anda tidak meminta password Anda untuk ' \
-                         'direset, acuhkan saja email ini.'
-    Ajat.info "forgot_password_email_sent|uid:#{id}"
+  def self.get_user(username_or_email)
+    User.find_by(username: username_or_email) ||
+      User.find_by(email: username_or_email)
   end
 end

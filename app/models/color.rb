@@ -10,8 +10,10 @@
 
 class Color < ActiveRecord::Base
   has_paper_trail
+  # Associations
   has_many :user
 
+  # Display methods
   def to_s
     name
   end

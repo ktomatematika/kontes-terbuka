@@ -22,8 +22,13 @@
 #
 
 class TemporaryMarking < ActiveRecord::Base
+  has_paper_trail
+  enforce_migration_validations
+
+  # Associations
   belongs_to :user
   belongs_to :long_submission
 
-  validates :mark, numericality: { greater_than_or_equal_to: 0, allow_nil: true }
+  validates :mark,
+    numericality: { greater_than_or_equal_to: 0, allow_nil: true }
 end

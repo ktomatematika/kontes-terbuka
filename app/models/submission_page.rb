@@ -24,8 +24,11 @@
 
 class SubmissionPage < ActiveRecord::Base
   has_paper_trail
+
+  # Associations
   belongs_to :long_submission
 
+  # Attachments
   has_attached_file :submission,
                     url: '/contests/:contest_id/submissions/:id',
                     path: ':rails_root/public/contest_files/submissions/' \
@@ -44,6 +47,7 @@ class SubmissionPage < ActiveRecord::Base
                                                    'image/jpeg',
                                                    'application/zip']
 
+  # Paperclip interpolations                                                 
   Paperclip.interpolates :cid do |attachment, _style|
     attachment.instance.long_submission.long_problem.contest_id
   end

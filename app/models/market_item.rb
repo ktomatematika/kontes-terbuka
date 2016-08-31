@@ -13,5 +13,6 @@
 class MarketItem < ActiveRecord::Base
   has_paper_trail
 
+  # Associations
   has_many :market_item_pictures
 end
