@@ -1,7 +1,7 @@
 module UserPasswordVerification
   extend ActiveSupport::Concern
   include Rails.application.routes.url_helpers
-  
+
   MAX_TRIES = 10
   VERIFY_TIME = 4.hours
   VERIFY_TIME_INDO = '4 jam'.freeze

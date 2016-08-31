@@ -130,69 +130,73 @@ if Rails.env.development?
   # rubocop:enable LineLength
 
   admin = User.find_or_initialize_by(username: 'adminadmin')
-                      admin.update(email: 'admin@gmail.com',
-                      password: 'adminadmin',
-                      fullname: 'Sharon Lynn',
-                      school: 'INTEGRATED',
-                      province_id: 18,
-                      status_id: 2,
-                      timezone: 'WITA')
+  admin.update(email: 'admin@gmail.com',
+               password: 'adminadmin',
+               fullname: 'Sharon Lynn',
+               school: 'INTEGRATED',
+               province_id: 18,
+               status_id: 2,
+               timezone: 'WITA')
   admin.enable
   admin.add_role 'admin'
 
   mod = User.find_or_initialize_by(username: 'moderator')
   mod.update(
-                    email: 'momod@gmail.com',
-                    password: 'moderator',
-                    fullname: 'Tanu Tanu',
-                    school: 'Loren',
-                    province_id: 3,
-                    status_id: 4,
-                    timezone: 'WIB')
+    email: 'momod@gmail.com',
+    password: 'moderator',
+    fullname: 'Tanu Tanu',
+    school: 'Loren',
+    province_id: 3,
+    status_id: 4,
+    timezone: 'WIB'
+  )
   mod.enable
   mod.add_role 'moderator'
 
   donjar = User.find_or_initialize_by(username: 'donjar')
   donjar.update(
-                       email: 'donjar@gmail.com',
-                       password: 'donjar',
-                       fullname: 'Tanu Tanu',
-                       school: 'Loren',
-                       province_id: 3,
-                       status_id: 4,
-                       timezone: 'WIB')
+    email: 'donjar@gmail.com',
+    password: 'donjar',
+    fullname: 'Tanu Tanu',
+    school: 'Loren',
+    province_id: 3,
+    status_id: 4,
+    timezone: 'WIB'
+  )
   donjar.enable
   donjar.save
 
   satria = User.find_or_initialize_by(username: 'satria')
   satria.update(
-                       email: 'satria@gmail.com',
-                       password: 'satria',
-                       fullname: 'Tanu Tanu',
-                       school: 'Loren',
-                       province_id: 3,
-                       status_id: 4,
-                       timezone: 'WIB')
+    email: 'satria@gmail.com',
+    password: 'satria',
+    fullname: 'Tanu Tanu',
+    school: 'Loren',
+    province_id: 3,
+    status_id: 4,
+    timezone: 'WIB'
+  )
   satria.add_role 'marking_manager'
 
   pentium = User.find_or_initialize_by(username: 'pentium')
   pentium.update(
-                        email: 'penti@gmail.com',
-                        password: 'pentium',
-                        fullname: 'Tanu Tanu',
-                        school: 'Loren',
-                        province_id: 3,
-                        status_id: 4,
-                        timezone: 'WIB')
+    email: 'penti@gmail.com',
+    password: 'pentium',
+    fullname: 'Tanu Tanu',
+    school: 'Loren',
+    province_id: 3,
+    status_id: 4,
+    timezone: 'WIB'
+  )
   pentium.enable
   pentium.save
 
   # Buat submisi untuk Kontes Forever
   uc = UserContest.find_or_create_by(user: donjar, contest: contest)
   soal1 = LongProblem.find_or_create_by(contest: contest, problem_no: 1,
-                             statement: 'Berapa sih nilai 3 + 5?')
+                                        statement: 'Berapa sih nilai 3 + 5?')
   soal2 = LongProblem.find_or_create_by(contest: contest, problem_no: 2,
-                             statement: 'Berapa sih nilai 7 + 8?')
+                                        statement: 'Berapa sih nilai 7 + 8?')
   LongSubmission.find_or_create_by(user_contest: uc, long_problem: soal1)
   LongSubmission.find_or_create_by(user_contest: uc, long_problem: soal2)
   pentium.add_role 'marker', soal1

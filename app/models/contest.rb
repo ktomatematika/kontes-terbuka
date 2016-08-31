@@ -94,7 +94,7 @@ class Contest < ActiveRecord::Base
   def result_released_when_contest_ended
     if result_released && end_time <= Time.zone.now
       errors.add :result_released,
-        'Result should be released after contest ended'
+                 'Result should be released after contest ended'
     end
   end
 
@@ -155,8 +155,7 @@ class Contest < ActiveRecord::Base
                        id == __send__('long_problem_marks_' \
                                                      "#{long_problem.id}").id
                      end
-        end
-        .select do
+        end.select do
           __send__("long_problem_marks_#{long_problem.id}")
             .__send__("problem_no_#{long_problem.id}")
         end
@@ -179,8 +178,6 @@ class Contest < ActiveRecord::Base
       end
     end
   end
-
-
 
   def award_points
     user_contests.processed.each do |uc|

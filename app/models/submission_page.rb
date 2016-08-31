@@ -47,7 +47,7 @@ class SubmissionPage < ActiveRecord::Base
                                                    'image/jpeg',
                                                    'application/zip']
 
-  # Paperclip interpolations                                                 
+  # Paperclip interpolations
   Paperclip.interpolates :cid do |attachment, _style|
     attachment.instance.long_submission.long_problem.contest_id
   end

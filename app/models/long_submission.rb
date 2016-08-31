@@ -36,7 +36,7 @@ class LongSubmission < ActiveRecord::Base
                                                    update_only: true
 
   validates :score,
-    numericality: { allow_nil: true, greater_than_or_equal_to: 0 }
+            numericality: { allow_nil: true, greater_than_or_equal_to: 0 }
 
   # Scopes
   scope :submitted, -> { joins(:submission_pages).group(:id) }

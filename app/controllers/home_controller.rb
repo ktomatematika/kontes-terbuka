@@ -13,9 +13,12 @@ class HomeController < ApplicationController
     authorize! :admin, Application
 
     # TODO: Henry akan membereskan query n+1 ini.
-    @long_problems = LongProblem.joins { contest }.order do
+    @all_lp = LongProblem.joins { contest }.order do
       [contest.result_time.desc, problem_no.asc]
-    end.includes(:contest).select { |lp| can? :mark_final, lp }
+    end
+    @long_problems = @all_lp.includes(:contest).select do |lp|
+      can? :mark_final, lp
+    end
 
     @panitia = User.with_role(:panitia).order(:username)
   end

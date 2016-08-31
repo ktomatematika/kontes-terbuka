@@ -9,7 +9,8 @@ class DumpKtoHasil
   def run
     Contest.transaction do
       ktohasil_file = CSV.read(@ktohasil_filename)
-      Ajat.info "ktohasil_dump|contest:#{@contest.id}|file:#{@ktohasil_filename}"
+      Ajat.info 'ktohasil_dump|' \
+        "contest:#{@contest.id}|file:#{@ktohasil_filename}"
       # Get short problem solutions
       # [1..-1] because the first column is ignored. Lol assumptions
       solutions = ktohasil_file[1][1..-1].reduce([]) do |memo, item|
@@ -24,7 +25,8 @@ class DumpKtoHasil
       long_problems = 0 if ktohasil_file[0].last == 'ga ada'
 
       generate_problems(solutions, long_problems)
-      Ajat.info "ktohasil_dump_generate_probs|sp:#{short_problems}|lp:#{long_problems}"
+      Ajat.info 'ktohasil_dump_generate_probs|' \
+        "sp:#{short_problems}|lp:#{long_problems}"
 
       # LOL RUBY MAGIC
       users = ktohasil_file.select do |row|
@@ -52,7 +54,8 @@ class DumpKtoHasil
 
         generate_user_and_submissions(username, short_problem_answers,
                                       long_submission_hashes)
-        Ajat.info "ktohasil_dump_generate_sols|ss:#{short_problem_answers.length}|lp:#{long_submission_hashes.length}"
+        Ajat.info 'ktohasil_dump_generate_sols|' \
+        "ss:#{short_problem_answers.length}|lp:#{long_submission_hashes.length}"
       end
     end
   end
@@ -90,7 +93,8 @@ class DumpKtoHasil
       LongProblem.create(contest: @contest, problem_no: (i + 1),
                          statement: "#{@contest} esai no. #{i + 1}")
     end
-    Ajat.info "generate_problems|sp_ans:#{short_problem_answers}|lps:#{long_problems}"
+    Ajat.info 'generate_problems|' \
+      "sp_ans:#{short_problem_answers}|lps:#{long_problems}"
   end
 
   # This method generates placeholder User, ShortSubmissions and
@@ -120,7 +124,8 @@ class DumpKtoHasil
       ShortSubmission.create(user_contest: user_contest,
                              short_problem: short_problem, answer: ans)
     end
-    Ajat.info "generate_ss|uc_id:#{user_contest.id}|sp_ans:#{short_problem_answers}"
+    Ajat.info 'generate_ss|' \
+      "uc_id:#{user_contest.id}|sp_ans:#{short_problem_answers}"
   end
 
   # This method generates placeholder LongSubmissions in a contest.
@@ -141,6 +146,7 @@ class DumpKtoHasil
                             long_problem: long_problem, score: score,
                             feedback: feedback)
     end
-    Ajat.info "generate_ls|uid:#{user_contest.user.id}|cid:#{user_contest.contest.id}"
+    Ajat.info 'generate_ls|' \
+      "uid:#{user_contest.user.id}|cid:#{user_contest.contest.id}"
   end
 end

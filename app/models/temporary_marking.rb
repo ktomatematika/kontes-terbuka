@@ -30,5 +30,5 @@ class TemporaryMarking < ActiveRecord::Base
   belongs_to :long_submission
 
   validates :mark,
-    numericality: { greater_than_or_equal_to: 0, allow_nil: true }
+            numericality: { greater_than_or_equal_to: 0, allow_nil: true }
 end

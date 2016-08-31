@@ -32,10 +32,10 @@ module UserContestMarking
       joins { UserContest.short_marks.as(short_marks).on { id == short_marks.id } }
         .joins { UserContest.long_marks.as(long_marks).on { id == long_marks.id } }
         .select do
-          ['user_contests.*', 'short_marks.short_mark',
-           'long_marks.long_mark', '(short_marks.short_mark + ' \
-                     'long_marks.long_mark) as total_mark']
-        end
+        ['user_contests.*', 'short_marks.short_mark',
+         'long_marks.long_mark', '(short_marks.short_mark + ' \
+                   'long_marks.long_mark) as total_mark']
+      end
     }
 
     # Show marks + award (emas/perak/perunggu)

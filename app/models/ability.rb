@@ -33,7 +33,7 @@ class Ability
              :submit_final_markings, :autofill, :upload_report], LongProblem,
             id: LongProblem.with_role(:marker, user).pluck(:id)
         can :download_marking_scheme, Contest,
-          id: LongProblem.with_role(:marker, user).pluck(:contest_id)
+            id: LongProblem.with_role(:marker, user).pluck(:contest_id)
         can :admin, Application
       end
 

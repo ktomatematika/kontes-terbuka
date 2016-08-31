@@ -73,7 +73,7 @@ class User < ActiveRecord::Base
 
   validates :password, presence: true, confirmation: true, on: :create
   validates :username, length: { in: 6..20 },
-    format: { with: /\A[a-zA-Z0-9]+\z/ }
+                       format: { with: /\A[a-zA-Z0-9]+\z/ }
   validates :email, format: { with: /\A.+@.+\z/ }
   validates :tries, numericality: { greater_than_or_equal_to: 0 }
 
@@ -87,10 +87,10 @@ class User < ActiveRecord::Base
   end
 
   validates :timezone, presence: true,
-                        inclusion: {
-                          in: time_zone_set,
-                          message: 'Zona waktu tidak tersedia'
-                        }
+                       inclusion: {
+                         in: time_zone_set,
+                         message: 'Zona waktu tidak tersedia'
+                       }
 
   # Other ActiveRecord
   attr_accessor :password
