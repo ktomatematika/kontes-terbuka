@@ -6,7 +6,7 @@
 #  id                  :integer          not null, primary key
 #  contest_id          :integer          not null
 #  problem_no          :integer          not null
-#  statement           :text
+#  statement           :text             not null
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
 #  report_file_name    :string
@@ -27,7 +27,6 @@
 class LongProblem < ActiveRecord::Base
   resourcify
   has_paper_trail
-  enforce_migration_validations
 
   belongs_to :contest
 
@@ -47,6 +46,8 @@ class LongProblem < ActiveRecord::Base
     attachment.instance.problem_no
   end
 
+  validates :problem_no, numericality: { greater_than_or_equal_to: 1 }
+
   MAX_MARK = 7
   attr_accessor :MAX_MARK
 
@@ -56,7 +57,7 @@ class LongProblem < ActiveRecord::Base
 
   def fill_long_submissions
     UserContest.where(contest: contest).find_each do |uc|
-      LongSubmission.find_or_create_by(user_contest: uc, long_problem: self)
+      LongSubmission.create(user_contest: uc, long_problem: self)
     end
   end
 

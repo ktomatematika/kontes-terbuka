@@ -50,8 +50,10 @@ end
 
 ### UTILITIES
 
-# Migration Validators: to maintin referential integrity in database and models
-gem 'mv-postgresql'
+# Schema Validations: to maintin referential integrity in database and models
+gem 'schema_validations'
+# Add time validations
+gem 'validates_timeliness'
 # Email with Mailgun
 gem 'rest-client'
 # Allows for more complex SQL queries
@@ -62,8 +64,6 @@ gem 'delayed_job_active_record'
 gem 'daemons'
 # Annotates model with schema
 gem 'annotate'
-# Add comments in models
-gem 'migration_comments'
 # Do not generate digests for error pages
 gem 'non-stupid-digest-assets'
 # Add pagination

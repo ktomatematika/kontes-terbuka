@@ -3,7 +3,7 @@
 # Table name: colors
 #
 #  id         :integer          not null, primary key
-#  name       :string
+#  name       :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
@@ -15,8 +15,6 @@
 class Color < ActiveRecord::Base
   has_paper_trail
   has_many :user
-
-  enforce_migration_validations
 
   def to_s
     name

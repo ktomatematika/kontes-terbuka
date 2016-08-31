@@ -34,8 +34,6 @@ class UserContest < ActiveRecord::Base
   has_many :feedback_answers
   has_many :feedback_questions, through: :feedback_answers
 
-  enforce_migration_validations
-
   attr_accessor :rank
 
   # Show short marks on model objects. Short marks only

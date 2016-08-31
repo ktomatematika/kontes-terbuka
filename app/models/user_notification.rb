@@ -22,5 +22,4 @@
 class UserNotification < ActiveRecord::Base
   belongs_to :user
   belongs_to :notification
-  enforce_migration_validations
 end

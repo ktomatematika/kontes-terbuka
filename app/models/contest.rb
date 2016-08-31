@@ -3,7 +3,7 @@
 # Table name: contests
 #
 #  id                          :integer          not null, primary key
-#  name                        :string
+#  name                        :string           not null
 #  start_time                  :datetime         not null
 #  end_time                    :datetime         not null
 #  created_at                  :datetime         not null
@@ -12,7 +12,7 @@
 #  problem_pdf_content_type    :string
 #  problem_pdf_file_size       :integer
 #  problem_pdf_updated_at      :datetime
-#  rule                        :text             default(""), not null
+#  rule                        :text             default("")
 #  result_time                 :datetime         not null
 #  feedback_time               :datetime         not null
 #  gold_cutoff                 :integer          default(0), not null
@@ -54,7 +54,6 @@ class Contest < ActiveRecord::Base
   has_many :feedback_questions
   has_many :feedback_answers, through: :feedback_questions
 
-  enforce_migration_validations
   before_create do
     self.rule = File.open('app/assets/default_rules.txt', 'r').read
   end
@@ -80,6 +79,18 @@ class Contest < ActiveRecord::Base
   accepts_nested_attributes_for :long_problems
 
   accepts_nested_attributes_for :long_submissions
+
+  validates_datetime :start_time, on_or_before: :end_time
+  validates_datetime :end_time, on_or_before: :result_time
+  validates_datetime :result_time, on_or_before: :feedback_time
+  validate :result_released_when_contest_ended
+
+  def result_released_when_contest_ended
+    if result_released && end_time <= Time.zone.now
+      errors.add :result_released,
+        'Result should be released after contest ended'
+    end
+  end
 
   def self.next_contest
     Contest.where('end_time > ?', Time.zone.now).order('end_time')[0]

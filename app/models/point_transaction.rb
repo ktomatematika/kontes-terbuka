@@ -4,7 +4,7 @@
 #
 #  id          :integer          not null, primary key
 #  point       :integer          not null
-#  description :string
+#  description :string           not null
 #  user_id     :integer          not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
@@ -21,5 +21,4 @@
 class PointTransaction < ActiveRecord::Base
   has_paper_trail
   belongs_to :user
-  enforce_migration_validations
 end

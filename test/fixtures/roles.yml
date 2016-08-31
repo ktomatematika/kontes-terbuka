@@ -14,15 +14,3 @@
 #  index_roles_on_name                                    (name)
 #  index_roles_on_name_and_resource_type_and_resource_id  (name,resource_type,resource_id)
 #
-
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
-# This model initially had no columns defined.  If you add columns to the
-# model remove the '{}' from the fixture names and add the columns immediately
-# below each fixture, per the syntax in the comments below
-#
-one: {}
-# column: value
-#
-two: {}
-#  column: value

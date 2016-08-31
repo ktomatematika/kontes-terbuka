@@ -24,6 +24,3 @@
 #  problem_tex_file_size    :integer
 #  problem_tex_updated_at   :datetime
 #
-
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-

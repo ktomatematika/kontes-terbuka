@@ -10,7 +10,6 @@ module ActiveSupport
 
     # Add more helper methods to be used by all tests here...
     setup do
-      require "#{Rails.root}/db/seeds.rb"
       User.all(&:destroy)
     end
   end

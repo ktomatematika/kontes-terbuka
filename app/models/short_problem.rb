@@ -5,9 +5,9 @@
 #
 #  id         :integer          not null, primary key
 #  contest_id :integer          not null
-#  problem_no :integer
+#  problem_no :integer          not null
 #  statement  :string
-#  answer     :string
+#  answer     :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
@@ -25,7 +25,8 @@ class ShortProblem < ActiveRecord::Base
   belongs_to :contest
   has_many :short_submissions
   has_many :user_contests, through: :short_submissions
-  enforce_migration_validations
+
+  validates :problem_no, numericality: { greater_than_or_equal_to: 0 }
 
   def most_answer
     ShortProblem.find_by_sql ['SELECT answer, COUNT(*) AS count ' \

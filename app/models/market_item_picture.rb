@@ -22,7 +22,6 @@
 
 class MarketItemPicture < ActiveRecord::Base
   belongs_to :market_item
-  enforce_migration_validations
 
   has_attached_file :picture,
                     url: '/market/pictures/:id/:basename.:extension',

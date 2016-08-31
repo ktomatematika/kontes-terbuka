@@ -120,7 +120,7 @@ Contest.find_or_create_by(name: 'KTO Matematika Juli 2016',
                           feedback_time: DateTime.new(2016, 9, 6, 0, 0, 0, '+7'))
 
 # Test Zone
-unless Rails.env.production?
+if Rails.env.development?
   contest = Contest.find_or_create_by(name: 'Kontes Forever',
                                       start_time: DateTime.new(2016, 7, 22, 12, 0, 0, '+7'),
                                       end_time: DateTime.new(2020, 7, 24, 17, 0, 0, '+7'),
@@ -129,8 +129,8 @@ unless Rails.env.production?
 
   # rubocop:enable LineLength
 
-  admin = User.create(username: 'adminadmin',
-                      email: 'admin@gmail.com',
+  admin = User.find_or_initialize_by(username: 'adminadmin')
+                      admin.update(email: 'admin@gmail.com',
                       password: 'adminadmin',
                       fullname: 'Sharon Lynn',
                       school: 'INTEGRATED',
@@ -140,7 +140,8 @@ unless Rails.env.production?
   admin.enable
   admin.add_role 'admin'
 
-  mod = User.create(username: 'moderator',
+  mod = User.find_or_initialize_by(username: 'moderator')
+  mod.update(
                     email: 'momod@gmail.com',
                     password: 'moderator',
                     fullname: 'Tanu Tanu',
@@ -151,7 +152,8 @@ unless Rails.env.production?
   mod.enable
   mod.add_role 'moderator'
 
-  donjar = User.create(username: 'donjar',
+  donjar = User.find_or_initialize_by(username: 'donjar')
+  donjar.update(
                        email: 'donjar@gmail.com',
                        password: 'donjar',
                        fullname: 'Tanu Tanu',
@@ -162,7 +164,8 @@ unless Rails.env.production?
   donjar.enable
   donjar.save
 
-  satria = User.create(username: 'satria',
+  satria = User.find_or_initialize_by(username: 'satria')
+  satria.update(
                        email: 'satria@gmail.com',
                        password: 'satria',
                        fullname: 'Tanu Tanu',
@@ -172,7 +175,8 @@ unless Rails.env.production?
                        timezone: 'WIB')
   satria.add_role 'marking_manager'
 
-  pentium = User.create(username: 'pentium',
+  pentium = User.find_or_initialize_by(username: 'pentium')
+  pentium.update(
                         email: 'penti@gmail.com',
                         password: 'pentium',
                         fullname: 'Tanu Tanu',
@@ -184,12 +188,12 @@ unless Rails.env.production?
   pentium.save
 
   # Buat submisi untuk Kontes Forever
-  uc = UserContest.create(user: donjar, contest: contest)
-  soal1 = LongProblem.create(contest: contest, problem_no: 1,
+  uc = UserContest.find_or_create_by(user: donjar, contest: contest)
+  soal1 = LongProblem.find_or_create_by(contest: contest, problem_no: 1,
                              statement: 'Berapa sih nilai 3 + 5?')
-  soal2 = LongProblem.create(contest: contest, problem_no: 2,
+  soal2 = LongProblem.find_or_create_by(contest: contest, problem_no: 2,
                              statement: 'Berapa sih nilai 7 + 8?')
-  LongSubmission.create(user_contest: uc, long_problem: soal1)
-  LongSubmission.create(user_contest: uc, long_problem: soal2)
+  LongSubmission.find_or_create_by(user_contest: uc, long_problem: soal1)
+  LongSubmission.find_or_create_by(user_contest: uc, long_problem: soal2)
   pentium.add_role 'marker', soal1
 end

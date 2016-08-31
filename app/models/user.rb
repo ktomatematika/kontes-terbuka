@@ -3,22 +3,22 @@
 # Table name: users
 #
 #  id              :integer          not null, primary key
-#  username        :string
-#  email           :string
-#  hashed_password :string
-#  fullname        :string
-#  school          :string
+#  username        :string           not null
+#  email           :string           not null
+#  hashed_password :string           not null
+#  fullname        :string           not null
+#  school          :string           not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
-#  salt            :string
-#  auth_token      :string
+#  salt            :string           not null
+#  auth_token      :string           not null
 #  province_id     :integer
 #  status_id       :integer
 #  color_id        :integer          default(1), not null
-#  timezone        :string           default("WIB")
+#  timezone        :string           default("WIB"), not null
 #  verification    :string
 #  enabled         :boolean          default(FALSE), not null
-#  tries           :integer          default(0)
+#  tries           :integer          default(0), not null
 #
 # Indexes
 #
@@ -70,10 +70,12 @@ class User < ActiveRecord::Base
 
   attr_accessor :password
   validates :password, presence: true, confirmation: true, on: :create
+  validates :username, length: { in: 6..20 },
+    format: { with: /\A[a-zA-Z0-9]+\z/ }
+  validates :email, format: { with: /\A.+@.+\z/ }
+  validates :tries, numericality: { greater_than_or_equal_to: 0 }
 
   validates :terms_of_service, acceptance: true
-
-  enforce_migration_validations
 
   MAX_TRIES = 10
   attr_accessor :MAX_TRIES

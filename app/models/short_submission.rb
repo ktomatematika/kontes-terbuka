@@ -5,7 +5,7 @@
 #
 #  id               :integer          not null, primary key
 #  short_problem_id :integer          not null
-#  answer           :string
+#  answer           :string           not null
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
 #  user_contest_id  :integer          not null
@@ -24,5 +24,4 @@ class ShortSubmission < ActiveRecord::Base
   has_paper_trail
   belongs_to :user_contest
   belongs_to :short_problem
-  enforce_migration_validations
 end

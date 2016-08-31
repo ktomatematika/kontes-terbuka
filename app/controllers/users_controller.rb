@@ -184,6 +184,7 @@ class UsersController < ApplicationController
     @users = User.where('username ILIKE ?', '%' + params[:search] + '%')
                  .paginate(page: params[:page], per_page: 50)
                  .order(:username)
+                 .includes(:province, :status)
     authorize! :index, User
     if !(can? :see_full_index, User) || (params[:disabled] == 'false')
       @users = @users.where(enabled: true)

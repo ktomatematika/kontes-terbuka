@@ -5,7 +5,7 @@
 #
 #  id                   :integer          not null, primary key
 #  feedback_question_id :integer          not null
-#  answer               :text
+#  answer               :text             not null
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
 #  user_contest_id      :integer          not null
@@ -24,7 +24,6 @@ class FeedbackAnswer < ActiveRecord::Base
   has_paper_trail
   belongs_to :feedback_question
   belongs_to :user_contest
-  enforce_migration_validations
 
   def to_s
     answer

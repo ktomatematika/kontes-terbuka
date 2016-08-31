@@ -30,9 +30,9 @@ class LongSubmission < ActiveRecord::Base
   accepts_nested_attributes_for :submission_pages, allow_destroy: true,
                                                    update_only: true
 
-  enforce_migration_validations
-
   has_many :temporary_markings
+
+  validates :score, numericality: { allow_nil: true, greater_than_or_equal_to: 0 }
 
   scope :filter_user_contest, lambda { |user_id, contest_id|
     includes(:long_problem)

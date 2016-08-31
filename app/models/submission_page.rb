@@ -25,7 +25,6 @@
 class SubmissionPage < ActiveRecord::Base
   has_paper_trail
   belongs_to :long_submission
-  enforce_migration_validations
 
   has_attached_file :submission,
                     url: '/contests/:contest_id/submissions/:id',
