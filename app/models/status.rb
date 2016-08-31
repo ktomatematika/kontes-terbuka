@@ -7,10 +7,6 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
-# Indexes
-#
-#  idx_mv_statuses_name_uniq  (name) UNIQUE
-#
 
 class Status < ActiveRecord::Base
   has_paper_trail

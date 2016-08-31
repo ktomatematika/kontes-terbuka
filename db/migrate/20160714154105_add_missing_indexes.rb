@@ -11,7 +11,5 @@ class AddMissingIndexes < ActiveRecord::Migration
     remove_column :market_items, :current_quantity
 
     remove_index :short_problems, name: :index_short_problems_on_contest_id
-
-    validates :statuses, :name, uniqueness: true
   end
 end

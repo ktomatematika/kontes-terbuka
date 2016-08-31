@@ -7,10 +7,6 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
-# Indexes
-#
-#  idx_mv_colors_name_uniq  (name) UNIQUE
-#
 
 class Color < ActiveRecord::Base
   has_paper_trail

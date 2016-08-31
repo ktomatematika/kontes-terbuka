@@ -6,7 +6,6 @@ class AddNotifications < ActiveRecord::Migration
       t.string :time_text
       t.timestamps null: false
     end
-    validates :notifications, :event, presence: true
 
     create_table :user_notifications do |t|
       t.integer :user_id, null: false
