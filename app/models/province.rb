@@ -8,10 +8,6 @@
 #  updated_at :datetime         not null
 #  timezone   :string           not null
 #
-# Indexes
-#
-#  idx_mv_provinces_name_uniq  (name) UNIQUE
-#
 
 class Province < ActiveRecord::Base
   has_paper_trail
