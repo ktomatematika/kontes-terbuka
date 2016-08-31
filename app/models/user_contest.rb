@@ -41,13 +41,7 @@ class UserContest < ActiveRecord::Base
   # Other ActiveRecord
   attr_accessor :rank
 
-  # Add this scope to filter all that are eligible to get certificates.
-  scope :can_get_certificates, lambda {
-    where('total_mark >= 1')
-  }
-
   # Other methods
-
   def contest_points
     points = 0
 

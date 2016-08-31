@@ -65,5 +65,10 @@ module UserContestMarking
                      "problem_no_#{long_problem_id}"]
         end
     }
+
+    # Add this scope to filter all that are eligible to get certificates.
+    scope :can_get_certificates, lambda {
+      where('total_mark >= 1')
+    }
   end
 end
