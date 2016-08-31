@@ -78,6 +78,12 @@ class User < ActiveRecord::Base
   # Validations
   validates :password, presence: true, confirmation: true, on: :create
   validates :terms_of_service, acceptance: true
+
+  # NOTE: This needs to come before the validation.
+  def self.time_zone_set
+    %w(WIB WITA WIT)
+  end
+
   validates :timezone, presence: true,
                         inclusion: {
                           in: time_zone_set,
@@ -98,9 +104,6 @@ class User < ActiveRecord::Base
   end
 
   # Other methods
-  def self.time_zone_set
-    %w(WIB WITA WIT)
-  end
 
   def point
     PointTransaction.where(user: self).sum(:point)
