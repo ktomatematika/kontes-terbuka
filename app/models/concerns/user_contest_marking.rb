@@ -1,4 +1,3 @@
-# Scopes related to user_contest marking.
 module UserContestMarking
   extend ActiveSupport::Concern
   included do
