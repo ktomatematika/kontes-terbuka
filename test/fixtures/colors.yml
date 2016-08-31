@@ -10,3 +10,7 @@
 # Indexes
 #
 #  idx_mv_colors_name_uniq  (name) UNIQUE
+
+red:
+  id: 1
+  name: 'red'
