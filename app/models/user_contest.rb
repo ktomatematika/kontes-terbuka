@@ -22,7 +22,6 @@
 class UserContest < ActiveRecord::Base
   include UserContestMarking
   has_paper_trail
-  enforce_migration_validations
 
   # Associations
   belongs_to :user

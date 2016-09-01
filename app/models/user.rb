@@ -37,7 +37,6 @@ class User < ActiveRecord::Base
   include UserPasswordVerification
   rolify
   has_paper_trail
-  enforce_migration_validations
 
   # Callbacks
   before_validation(on: :create) do

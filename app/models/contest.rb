@@ -40,7 +40,6 @@ class Contest < ActiveRecord::Base
   require 'csv'
   include ContestJobs
   has_paper_trail
-  enforce_migration_validations
 
   # Callbacks
   before_create do
