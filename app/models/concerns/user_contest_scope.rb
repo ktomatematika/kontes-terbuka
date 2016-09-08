@@ -1,4 +1,4 @@
-module UserContestMarking
+module UserContestScope
   extend ActiveSupport::Concern
   included do
     # Show short marks on model objects. Short marks only

@@ -20,7 +20,7 @@
 #
 
 class UserContest < ActiveRecord::Base
-  include UserContestMarking
+  include UserContestScope
   has_paper_trail
 
   # Associations
