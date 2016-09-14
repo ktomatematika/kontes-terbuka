@@ -22,9 +22,13 @@
 #
 # Indexes
 #
-#  index_users_on_color_id     (color_id)
-#  index_users_on_province_id  (province_id)
-#  index_users_on_status_id    (status_id)
+#  idx_mv_users_auth_token_uniq    (auth_token) UNIQUE
+#  idx_mv_users_email_uniq         (email) UNIQUE
+#  idx_mv_users_username_uniq      (username) UNIQUE
+#  idx_mv_users_verification_uniq  (verification) UNIQUE
+#  index_users_on_color_id         (color_id)
+#  index_users_on_province_id      (province_id)
+#  index_users_on_status_id        (status_id)
 #
 # Foreign Keys
 #

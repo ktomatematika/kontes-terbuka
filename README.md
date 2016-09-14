@@ -32,8 +32,6 @@ sertifikat): barra.png, frame.jpg, ilhan.png, logo.png
 
 Setelah itu, masuk ke Vagrant: `vagrant ssh`
 
-Masuk ke tempat development: `cd /vagrant`
-
 Moment of truth: `bin/rails s` dan buka localhost:3000 di browser.
 
 Aduh, gagal? `vagrant destroy` dilanjutkan `vagrant up` lagi.
@@ -44,6 +42,14 @@ sudo apt-get autoremove
 sudo apt upgrade
 sudo apt dist-upgrade
 ```
+
+## Import database
+(Daily dump dilakukan dengan `pg_dump kontes_terbuka_production` yang di-pipe
+ke `split`)
+
+Untuk import database dari daily dump yang sudah ada:
+- Masukkan file-file yang mau diimport ke folder import
+- Jalankan import.sh
 
 ## Kontribusi
 Ayok difork! Lihat issuesnya tuh sebanyak pasir di pantai.

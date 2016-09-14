@@ -60,8 +60,8 @@ module ApplicationHelper
 
   # Helper to display classes according to the user's state.
   def row_classes(user, starting_classes = [])
-    starting_classes.push('disabled') unless user.verification.nil?
-    starting_classes.push('veteran') if user.has_role? :veteran
+    starting_classes.push('disabled') unless user.enabled?
+    starting_classes.push('veteran') if user.has_cached_role? :veteran
     starting_classes
   end
 

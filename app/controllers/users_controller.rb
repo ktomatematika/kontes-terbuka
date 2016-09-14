@@ -168,8 +168,10 @@ class UsersController < ApplicationController
     authorize! :show, @user
     @user_contests = Contest.where(result_released: true)
                             .order(id: :desc)
+                            .includes(:long_problems)
                             .map do |c|
-                              c.results.find { |u| u.user_id == @user.id }
+                              c.results
+                               .find { |u| u.user_id == @user.id }
                             end.compact.paginate(page: params[:page_history],
                                                  per_page: 5)
     @point_transactions = PointTransaction.where(user: @user)
@@ -180,12 +182,12 @@ class UsersController < ApplicationController
   end
 
   def index
+    authorize! :index, User
     params[:search] = '' if params[:search].nil?
     @users = User.where('username ILIKE ?', '%' + params[:search] + '%')
                  .paginate(page: params[:page], per_page: 50)
                  .order(:username)
-                 .includes(:province, :status)
-    authorize! :index, User
+                 .includes(:province, :status, :roles)
     if !(can? :see_full_index, User) || (params[:disabled] == 'false')
       @users = @users.where(enabled: true)
     end
