@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(version: 20160831124049) do
   end
 
   create_table "colors", force: :cascade do |t|
-    t.string   "name",       :null=>false, :index=>{:name=>"idx_mv_colors_name_uniq", :unique=>true, :using=>:btree}
+    t.string   "name",       :null=>false
     t.datetime "created_at", :null=>false
     t.datetime "updated_at", :null=>false
   end
@@ -124,13 +124,6 @@ ActiveRecord::Schema.define(version: 20160831124049) do
     t.datetime "updated_at",  :null=>false
   end
 
-  create_table "migration_validators", force: :cascade do |t|
-    t.string "table_name",      :null=>false, :index=>{:name=>"unique_idx_on_migration_validators", :with=>["column_name", "validation_type"], :using=>:btree}
-    t.string "column_name",     :null=>false
-    t.string "validation_type", :null=>false
-    t.string "options"
-  end
-
   create_table "notifications", force: :cascade do |t|
     t.string   "event",       :null=>false
     t.string   "time_text"
@@ -149,7 +142,7 @@ ActiveRecord::Schema.define(version: 20160831124049) do
   end
 
   create_table "provinces", force: :cascade do |t|
-    t.string   "name",       :null=>false, :index=>{:name=>"idx_mv_provinces_name_uniq", :unique=>true, :using=>:btree}
+    t.string   "name",       :null=>false
     t.datetime "created_at", :null=>false
     t.datetime "updated_at", :null=>false
     t.string   "timezone",   :null=>false
@@ -182,7 +175,7 @@ ActiveRecord::Schema.define(version: 20160831124049) do
   end
 
   create_table "statuses", force: :cascade do |t|
-    t.string   "name",       :null=>false, :index=>{:name=>"idx_mv_statuses_name_uniq", :unique=>true, :using=>:btree}
+    t.string   "name",       :null=>false
     t.datetime "created_at", :null=>false
     t.datetime "updated_at", :null=>false
   end
@@ -230,20 +223,20 @@ ActiveRecord::Schema.define(version: 20160831124049) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "username",        :null=>false, :index=>{:name=>"idx_mv_users_username_uniq", :unique=>true, :using=>:btree}
-    t.string   "email",           :null=>false, :index=>{:name=>"idx_mv_users_email_uniq", :unique=>true, :using=>:btree}
+    t.string   "username",        :null=>false
+    t.string   "email",           :null=>false
     t.string   "hashed_password", :null=>false
     t.string   "fullname",        :null=>false
     t.string   "school",          :null=>false
     t.datetime "created_at",      :null=>false
     t.datetime "updated_at",      :null=>false
     t.string   "salt",            :null=>false
-    t.string   "auth_token",      :null=>false, :index=>{:name=>"idx_mv_users_auth_token_uniq", :unique=>true, :using=>:btree}
+    t.string   "auth_token",      :null=>false
     t.integer  "province_id",     :index=>{:name=>"index_users_on_province_id", :using=>:btree}
     t.integer  "status_id",       :index=>{:name=>"index_users_on_status_id", :using=>:btree}
     t.integer  "color_id",        :default=>1, :null=>false, :index=>{:name=>"index_users_on_color_id", :using=>:btree}
     t.string   "timezone",        :default=>"WIB", :null=>false
-    t.string   "verification",    :index=>{:name=>"idx_mv_users_verification_uniq", :unique=>true, :using=>:btree}
+    t.string   "verification"
     t.boolean  "enabled",         :default=>false, :null=>false
     t.integer  "tries",           :default=>0, :null=>false
   end
