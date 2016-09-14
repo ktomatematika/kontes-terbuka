@@ -177,7 +177,7 @@ class ContestsController < ApplicationController
     contest = Contest.find params[:contest_id]
     authorize! :send_certificates, contest
 
-    contest.full_feedback_user_contests.processed.can_get_certificates.each do |uc|
+    contest.full_feedback_user_contests.processed.eligible_score.each do |uc|
       CertificateManager.new(uc).delay(queue: "contest_#{contest.id}_cert")
                         .run
     end

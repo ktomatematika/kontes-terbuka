@@ -65,8 +65,8 @@ module UserContestScope
         end
     }
 
-    # Add this scope to filter all that are eligible to get certificates.
-    scope :can_get_certificates, lambda {
+    # Add this scope to filter that has high enough score to get certificates
+    scope :eligible_score, lambda {
       where('total_mark >= 1')
     }
   end

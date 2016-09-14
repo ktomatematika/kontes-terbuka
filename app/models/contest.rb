@@ -214,7 +214,7 @@ class Contest < ActiveRecord::Base
     res
   end
 
-  # This method finds all user_contests who fills 
+  # This method finds all user_contests who fills
   # all feedback questions in that particular contest.
   def full_feedback_user_contests
     filtered_query = user_contests
@@ -227,10 +227,9 @@ class Contest < ActiveRecord::Base
                         .on do
                           id == __send__("feedback_answer_#{feedback_question.id}").user_contest_id
                         end
-        end.
-        where(feedback_question.id == __send__("feedback_answer_#{feedback_question.id}").feedback_question_id)
+        end
+        .where(feedback_question.id == __send__("feedback_answer_#{feedback_question.id}").feedback_question_id)
     end
-    filtered_query.
-      select('user_contests.*')
+    filtered_query.select('user_contests.*')
   end
 end
