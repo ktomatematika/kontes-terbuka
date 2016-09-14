@@ -51,7 +51,7 @@ end
 ### UTILITIES
 
 # Schema Validations: to maintin referential integrity in database and models
-#gem 'schema_validations'
+gem 'schema_validations'
 # Add time validations
 gem 'validates_timeliness'
 # Email with Mailgun
