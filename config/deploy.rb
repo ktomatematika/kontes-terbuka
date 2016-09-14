@@ -1,5 +1,5 @@
 # config valid only for current version of Capistrano
-lock '3.5'
+lock '3.6.1'
 
 set :application, 'kontes-terbuka'
 set :repo_url, 'git@github.com:donjar/kontes-terbuka.git'
