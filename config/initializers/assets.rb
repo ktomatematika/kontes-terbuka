@@ -17,7 +17,8 @@ end
 
 Rails.application.config.before_initialize do
   require 'sprockets'
-  Sprockets.register_engine '.haml', HamlTemplate
+  Sprockets.register_mime_type 'text/haml', extensions: ['.haml']
+  Sprockets.register_transformer 'text/haml', 'text/html', HamlTemplate
 end
 
 Rails.application.config.assets.precompile << /\.(?:woff2|eot|woff|ttf)$/
