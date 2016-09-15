@@ -3,9 +3,16 @@
 
   = link_to 'Kembali', @contest, class: 'btn'
 
+  %p Perhatikan bahwa untuk mendapatkan sertifikat, Anda perlu:
+  %ul
+    %li mendapatkan minimal nilai #{UserContest::CUTOFF_CERTIFICATE} di kontes
+    %li menjawab semua pertanyaan feedback di bawah ini
+  %p= certificate_criteria_unfulfilled_message
+
   = form_for :feedback_answer, url: contest_feedback_path do |f|
     - @feedback_questions.each do |q|
-      - fba_object = FeedbackAnswer.find_by feedback_question: q
+      - fba_object = FeedbackAnswer.find_by feedback_question: q,
+        user_contest: @user_contest
       - answer = fba_object && fba_object.answer
       %p.feedback-label= q
       = find_and_preserve do

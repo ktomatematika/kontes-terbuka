@@ -1,11 +1,12 @@
 @import 'colors';
 
-.home-article {
+.home-section {
   background: #fff;
   border: 1px solid #000;
-  border-radius: 15px;
-  margin-top: 20px;
-  padding: 20px;
+  border-radius: 0.75em;
+  margin-top: 1em;
+  padding: 1em;
+  text-align: center;
 
   h1,
   h2,
@@ -19,42 +20,24 @@
   word-wrap: break-word;
 }
 
-#home-middle-container {
-  @media(min-width: 992px) {
-    display: flex;
-    overflow: hidden;
-
-    > div {
-      flex: 1;
-    }
-  }
-
-  > div > article {
-    height: calc(100% - 40px);
-    text-align: center;
-  }
-}
-
 #img-buku-ktom {
-  margin-bottom: 10px;
+  margin-bottom: 0.5em;
 }
 
 #fb-box {
-  margin-top: 20px;
-}
-
-#line-box {
-  text-align: center;
-}
-
-#leaderboard > .table-responsive, #leaderboard-table {
-  margin: 0;
+  margin-top: 1em;
 }
 
 #img-promo-kontes {
-  margin-bottom: 10px;
+  margin-bottom: 0.5em;
 }
 
-#line-btn {
-  display: block;
+#iklan-lomba {
+  padding: inherit 2em;
+}
+
+#home-btn-daftar {
+  @media (max-width: 400px) {
+    font-size: 1em;
+  }
 }

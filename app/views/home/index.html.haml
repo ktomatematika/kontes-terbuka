@@ -1,0 +1,70 @@
+= content_for :page_attributes do
+  data-no-turbolink="true"
+
+= content_tag 'div', '', id: 'home-contest-data', data: { name: @next_important_contest.name, start_time: @next_important_contest.start_time, end_time: @next_important_contest.end_time, result_time: @next_important_contest.result_time, feedback_time: @next_important_contest.feedback_time, results_released: @next_important_contest.result_released, url: url_for(@next_important_contest) }
+
+/ Facebook plugin
+#fb-root
+%script
+  (function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/id_ID/sdk.js#xfbml=1&version=v2.6";
+  fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+
+/ Rest of document
+.container#home-container
+
+  %header#greeting
+    %h1 Halo, #{current_user}
+
+  %main
+    .row
+      .col-md-8
+        %section.home-section#this-contest
+          %h2#next-contest-name
+          %h3#next-contest-time
+          %a.btn.btn-lg.update-regularly#home-btn-daftar{ type: 'button', disabled: true }
+        .row
+          .col-md-6.col-md-push-6
+            %section.home-section#info-kontes
+              %h2 Baru?
+              %p
+                #{link_to 'FAQ', faq_path} kami berisi banyak informasi mengenai
+                kontes-kontes kami.
+              %p
+                Soal-soal kontes sebelumnya bisa diperoleh dari
+                %a{ href: 'http://olimpiade.org/discussions/main-topic/13/', target: "_blank" }
+                  link ini.
+              %p
+                Anda juga bisa #{link_to 'membeli buku kami', book_path}
+                yang berisi kumpulan soal, solusi, maupun tips dan trik
+                olimpiade matematika!
+              = image_tag 'buku/buku1.png', alt: "Buku KTOM 1",
+                class: "img-responsive center-block", id: "img-buku-ktom"
+
+          .col-md-6.col-md-pull-6
+            %section.home-section#prev-contests
+              %h2 Kontes-kontes sebelumnya
+              - @prev_contests.each do |c|
+                %h5= link_to c.name, c
+              %p= link_to 'Daftar kontes', contests_path
+
+      .col-md-4
+        %section#fb-box.hidden-sm.hidden-xs
+          .fb-page{ data: { 'small-header' => 'true', href: 'https://www.facebook.com/KTOMatematika/', 'adapt-container-width' => 'true' } }
+            .fb-xfbml-parse-ignore
+              %blockquote{ cite: 'https://www.facebook.com/KTOMatematika/' }
+                %a{ href: 'https://www.facebook.com/KTOMatematika/', target: '_blank' }
+                  Kontes Terbuka Olimpiade Matematika
+
+        %section.home-section#iklan-lomba
+          %h2 Kontes Tersponsori
+          %h3 OLMAT UINSA
+          = image_tag 'sponsor.jpg', alt: 'OSN',
+            class: 'img-responsive center-block', id: 'img-promo-kontes'
+          OLMAT UINSA adalah salah satu lomba terbesar di pulau Jawa yang
+          diikuti oleh ribuan peserta setiap tahunya. Soalnya seru dan
+          menantang; total hadiahnya puluhan juta rupiah. Ayok bergabung!

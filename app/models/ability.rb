@@ -39,7 +39,7 @@ class Ability
 
       if user.has_role? :panitia
         can [:preview, :summary], Contest
-        can [:see_full_index, :see_full, :edit, :update], User
+        can [:see_full_index, :see_full], User
         can :destroy, User, id: User.where(enabled: false).pluck(:id)
         can [:admin, :profile], Application
       end

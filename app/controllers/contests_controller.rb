@@ -64,7 +64,7 @@ class ContestsController < ApplicationController
       redirect_to contest, notice: "#{contest} berhasil diubah."
     else
       Ajat.warn "contest_update_fail|#{contest.errors.full_messages}"
-      render 'edit', alert: "#{contest} gagal diubah!"
+      redirect_to contest, alert: "#{contest} gagal diubah!"
     end
   end
 
@@ -118,21 +118,23 @@ class ContestsController < ApplicationController
     @contest = Contest.find(params[:contest_id])
     authorize! :give_feedback, @contest
     @feedback_questions = @contest.feedback_questions
+    @user_contest = UserContest.find_by contest: @contest, user: current_user
   end
 
   def feedback_submit
     contest = Contest.find(params[:contest_id])
     authorize! :feedback_submit, contest
     user_contest = UserContest.find_by(user: current_user, contest: contest)
-    feedback_params.each_key do |q_id|
-      answer = feedback_params[q_id]
+    feedback_params.each do |q_id, answer|
       next if answer == ''
-      FeedbackAnswer.find_or_create_by(feedback_question_id: q_id,
-                                       user_contest: user_contest)
+      FeedbackAnswer.find_or_initialize_by(feedback_question_id: q_id,
+                                           user_contest: user_contest)
                     .update(answer: answer)
     end
     redirect_to contest, notice: 'Feedback berhasil dikirimkan! ' \
-                                 'Jika nilai Anda minimal satu poin, Anda ' \
+                                 'Jika nilai Anda minimal ' \
+                                 "#{UserContest::CUTOFF_CERTIFICATE} " \
+                                 'poin, Anda ' \
                                  'akan mendapatkan sertifikat setelah waktu ' \
                                  'feedback ditutup.'
   end

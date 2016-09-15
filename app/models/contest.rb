@@ -91,9 +91,8 @@ class Contest < ActiveRecord::Base
   validate :result_released_when_contest_ended
 
   def result_released_when_contest_ended
-    if result_released && end_time <= Time.zone.now
-      errors.add :result_released,
-                 'Result should be released after contest ended'
+    if result_released && end_time > Time.zone.now
+      errors.add :result_released, 'after contest ended'
     end
   end
 
