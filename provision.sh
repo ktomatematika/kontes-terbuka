@@ -1,4 +1,5 @@
 export DEBIAN_FRONTEND=noninteractive
+#echo "nameserver 8.8.8.8" > /etc/resolv.conf
 
 # Install many stuff.
 apt-get update

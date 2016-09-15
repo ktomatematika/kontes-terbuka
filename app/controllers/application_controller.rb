@@ -12,11 +12,13 @@ class ApplicationController < ActionController::Base
   end
 
   def set_color
+    Bullet.enable = false
     color_data = if current_user.nil?
                    'Sistem'
                  else
                    current_user.color.name
                  end
+    Bullet.enable = true
 
     possible_colors = %w(Merah Hijau Biru Kuning)
 

@@ -160,7 +160,7 @@ class ContestsController < ApplicationController
   def download_feedback
     @contest = Contest.find(params[:contest_id])
     authorize! :download_feedback, @contest
-    @feedback_questions = @contest.feedback_questions
+    @feedback_questions = @contest.feedback_questions.order(:id)
     @feedback_matrix = @contest.feedback_answers_matrix
     respond_to do |format|
       format.html
