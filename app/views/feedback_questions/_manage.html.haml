@@ -13,6 +13,15 @@
             data: { confirm: 'Apakah Anda yakin?' }
 
 %section
+  %h3 Copy pertanyaan feedback
+  = form_tag contest_copy_feedback_questions_path,
+    method: :post, class: 'form-inline' do
+    = select_tag 'other_contest_id',
+      options_for_select(Contest.order(id: :desc).pluck(:name, :id)),
+      class: 'form-control'
+    = submit_tag 'Copy', class: 'btn'
+
+%section
   %h3 Buat pertanyaan feedback
   = form_for [@contest, @contest.feedback_questions.build],
     html: { class: 'form-horizontal' } do |f|

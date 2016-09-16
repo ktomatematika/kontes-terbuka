@@ -28,6 +28,16 @@ class FeedbackQuestionsController < ApplicationController
     end
   end
 
+  def copy
+    @contest = Contest.find(params[:contest_id])
+
+    Contest.find(params[:other_contest_id]).feedback_questions.pluck(:question)
+           .each do |q|
+      FeedbackQuestion.create(contest: @contest, question: q)
+    end
+    redirect_to contest_admin_path, notice: 'FQ berhasil dicopy!'
+  end
+
   private
 
   def feedback_question_params

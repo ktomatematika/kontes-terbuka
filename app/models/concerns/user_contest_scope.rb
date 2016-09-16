@@ -65,7 +65,6 @@ module UserContestScope
         end
     }
 
-
     CUTOFF_CERTIFICATE = 1
     # Add this scope to filter that has high enough score to get certificates
     scope :eligible_score, lambda {

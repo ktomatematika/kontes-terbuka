@@ -1,6 +1,6 @@
-$emas: lighten(#ffd700, 20);
-$perak: lighten(#c0c0c0, 10);
-$perunggu: lighten(#cd7f32, 25);
+$emas: #ffe766;
+$perak: #dadada;
+$perunggu: #e6bf99;
 
 .emas {
   background-color: $emas;
@@ -10,7 +10,6 @@ $perunggu: lighten(#cd7f32, 25);
   }
 }
 
-
 .perak {
   background-color: $perak;
 
@@ -18,7 +17,6 @@ $perunggu: lighten(#cd7f32, 25);
     background-color: lighten($perak, 5) !important;
   }
 }
-
 
 .perunggu {
   background-color: $perunggu;

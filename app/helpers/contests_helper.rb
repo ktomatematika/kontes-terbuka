@@ -102,8 +102,8 @@ module ContestsHelper
       "Maaf, karena nilai Anda di bawah #{UserContest::CUTOFF_CERTIFICATE}, " \
         'Anda tidak akan mendapatkan sertifikat.'
     elsif !@contest.full_feedback_user_contests
-      .find_by(id: @user_contest.id).nil?
-      "Anda belum menjawab semua pertanyaan di bawah ini."
+                   .find_by(id: @user_contest.id).nil?
+      'Anda belum menjawab semua pertanyaan di bawah ini.'
     end
   end
 end

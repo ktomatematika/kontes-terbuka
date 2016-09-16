@@ -33,6 +33,7 @@ Rails.application.routes.draw do
     get 'download', to: 'contests#download_feedback'
     get 'summary', to: 'contests#summary'
     get 'download-results', to: 'contests#download_results'
+    post 'copy-feedback-questions', to: 'feedback_questions#copy'
 
     resources :short_problems, path: '/short-problems'
     post 'create-short-submissions', to: 'contests#create_short_submissions'

@@ -225,7 +225,7 @@ class ContestsController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.pdf { render pdf: "Hasil #{@contest}" }
+      format.pdf { render pdf: "Hasil #{@contest}", orientation: 'Landscape' }
     end
   end
 

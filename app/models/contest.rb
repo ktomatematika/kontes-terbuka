@@ -228,7 +228,7 @@ class Contest < ActiveRecord::Base
           FeedbackAnswer.as("fa_#{feedback_question.id}")
                         .on do
                           id == __send__("fa_#{feedback_question.id}")
-                          .user_contest_id
+                                .user_contest_id
                         end
         end
         .where(feedback_question.id == __send__("fa_#{feedback_question.id}")

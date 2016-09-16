@@ -1,0 +1,27 @@
+@import 'award_colors';
+@import 'user_colors';
+
+body {
+  font-size: 18px;
+  font-weight: 100;
+}
+
+#contest-results-pdf {
+  border: 0.5px solid #000;
+
+  th {
+    border-bottom: 1px solid #000;
+  }
+
+  * {
+    border: 0.5px solid #000;
+    text-align: center !important;
+    page-break-inside: avoid !important;
+  }
+
+  caption {
+    color: #000;
+    font-size: 2.5em;
+    margin-bottom: 10px;
+  }
+}
