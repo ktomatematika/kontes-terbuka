@@ -2,7 +2,7 @@
 = link_to 'Bagi-bagi kubus', contest_give_points_path,
   class: 'btn' if can? :give_points, Contest
 
-= link_to 'Download feedback', contest_download_path(format: :csv),
+= link_to 'Download feedback', contest_download_path,
   class: 'btn' if can? :download_feedback, Contest
 
 = link_to 'Kirim sertifikat', contest_send_certificates_path,

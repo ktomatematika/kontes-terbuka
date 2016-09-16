@@ -30,9 +30,11 @@ Rails.application.routes.draw do
     post 'rules', to: 'contests#accept_rules'
     get 'feedback', to: 'contests#give_feedback'
     post 'feedback', to: 'contests#feedback_submit'
-    get 'download', to: 'contests#download_feedback'
+    get 'download-feedback', to: 'contests#download_feedback',
+                             defaults: { format: 'csv' }
     get 'summary', to: 'contests#summary'
-    get 'download-results', to: 'contests#download_results'
+    get 'download-results', to: 'contests#download_results',
+                            defaults: { format: 'pdf' }
     post 'copy-feedback-questions', to: 'feedback_questions#copy'
 
     resources :short_problems, path: '/short-problems'
@@ -88,6 +90,15 @@ Rails.application.routes.draw do
   delete 'remove-marker', to: 'roles#remove_marker'
 
   post '/line-bot', to: 'line#callback'
+
+  namespace :ktom do
+    get 'soal', to: redirect('https://docs.google.com/document/d/' \
+    '15jvs6JbssVYYcEVWi1W_p6teR1AJ5op-0R6qg1Ir-lQ')
+    get 'prod', to: redirect('https://docs.google.com/document/d/' \
+    '1gmxPLbdkTdUtR6I5dKhadZ8lGTdzwx9qvUEn49JQAug')
+    get 'produksi', to: redirect('https://docs.google.com/document/d/' \
+    '1gmxPLbdkTdUtR6I5dKhadZ8lGTdzwx9qvUEn49JQAug')
+  end
 
   match '*path', to: 'errors#error_4xx', via: :all
 end
