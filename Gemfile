@@ -5,7 +5,7 @@ source 'https://rubygems.org'
 # Ruby version
 ruby '2.3.1'
 # Rails version
-gem 'rails', '4.2.6'
+gem 'rails', '~> 4'
 # Use postgres as database.
 gem 'pg'
 
