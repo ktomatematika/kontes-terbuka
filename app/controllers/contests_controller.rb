@@ -1,9 +1,8 @@
 class ContestsController < ApplicationController
   def grab_problems
-    @short_problems = @contest.short_problems
-                              .order('problem_no')
-    @long_problems = @contest.long_problems
-                             .order('problem_no')
+    @short_problems = @contest.short_problems.order('problem_no')
+    @long_problems = @contest.long_problems.order('problem_no')
+    @no_short_probs = @short_problems.empty?
   end
 
   def admin
@@ -212,8 +211,22 @@ class ContestsController < ApplicationController
     @count = @scores.inject(&:+)
     redirect_to contest_path(@contest), notice: 'Tidak ada data' if @count.zero?
 
-    @short_problems = @contest.short_problems.order(:problem_no)
-    @long_problems = @contest.long_problems.order(:problem_no)
+    grab_problems
+  end
+
+  def download_results
+    @contest = Contest.find(params[:contest_id])
+
+    if @contest.result_released?
+      @user_contests = @contest.results(user: :roles) # this is a big query
+    end
+
+    grab_problems
+
+    respond_to do |format|
+      format.html
+      format.pdf { render pdf: "Hasil #{@contest}" }
+    end
   end
 
   private

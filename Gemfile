@@ -56,7 +56,7 @@ end
 gem 'validates_timeliness'
 # Email with Mailgun
 gem 'rest-client'
-# Allows for more complex SQL queries
+# Allows more complex SQL queries
 gem 'squeel'
 # Adds delayed job queueing for jobs that are executed in the future
 gem 'delayed_job_active_record'
@@ -70,6 +70,9 @@ gem 'non-stupid-digest-assets'
 gem 'will_paginate', github: 'jonatack/will_paginate'
 # API for LINE bot
 gem 'line-bot-api'
+# Generate PDF
+gem 'wicked_pdf'
+gem 'wkhtmltopdf-binary'
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views

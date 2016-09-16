@@ -32,6 +32,7 @@ Rails.application.routes.draw do
     post 'feedback', to: 'contests#feedback_submit'
     get 'download', to: 'contests#download_feedback'
     get 'summary', to: 'contests#summary'
+    get 'download-results', to: 'contests#download_results'
 
     resources :short_problems, path: '/short-problems'
     post 'create-short-submissions', to: 'contests#create_short_submissions'
@@ -39,7 +40,7 @@ Rails.application.routes.draw do
 
     resources :long_submissions, path: '/long-submissions' do
       post 'submit', to: 'long_submissions#submit'
-      delete 'destroy_subs', to: 'long_submissions#destroy_submissions'
+      delete 'destroy-subs', to: 'long_submissions#destroy_submissions'
       get 'download', to: 'long_submissions#download'
     end
 

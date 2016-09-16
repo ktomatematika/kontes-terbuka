@@ -2,7 +2,11 @@
 var faq_data = [
 	{
 		question: 'KTOM itu apa ya?',
-		answer: 'KTOM, singkatan dari Kontes Terbuka Olimpiade Matematika, adalah sebuah inisiatif dari Tim Olimpiade Matematika Indonesia untuk menyediakan sarana latihan olimpiade matematika untuk semua. Cek <a href="ktom.tomi.or.id/about">link ini</a> kalau mau tau lebih lanjut!',
+		answer: 'KTOM, singkatan dari Kontes Terbuka Olimpiade Matematika, adalah sebuah inisiatif dari Tim Olimpiade Matematika Indonesia untuk menyediakan sarana latihan olimpiade matematika untuk semua. Cek <a href="about">link ini</a> kalau mau tau lebih lanjut!',
+	},
+	{
+		question: 'Panitia KTOM siapa aja kak?',
+		answer: 'Kami adalah tim yang cukup besar yang saling bekerja bahu-membahu, baik dalam pembuatan soal, koreksi, pembuatan buku, sosial media, dan banyak lainnya. Hampir semua tim kami pernah memenangkan medali OSN, dengan setidaknya 15 dari kami mendapatkan medali emas OSN dan setidaknya 10 dari kami mendapatkan medali di International Mathematical Olympiad (IMO), olimpiade matematika paling prestigius di dunia. Kami berdedikasi membuat inisiatif ini agar semua orang di Indonesia juga bisa merasakan serunya olimpiade matematika. Mau tahu lebih lanjut tentang tim kami? Cek <a href="about">ini!</a>',
 	},
 	{
 		question: 'Cara daftarnya bagaimana, kak?',
@@ -34,15 +38,15 @@ var faq_data = [
 	},
 	{
 		question: 'Wah kok keren banget kak?',
-		answer: 'Iya dong, makanya ayok <a href="ktom.tomi.or.id/register">daftar</a> :)',
+		answer: 'Iya dong, makanya ayok <a href="register">daftar</a> :)',
 	},
 	{
 		question: 'Cara belajarnya bagaimana kak?',
-		answer: 'Ada banyak kok sarananya! Untuk soal-soal kontes sebelumnya, Anda bisa cek di halaman utama kami. Anda bisa mulai berlatih dari sumber itu! Kami juga memiliki official account LINE yang memberikan kuis matematika mingguan! Selain itu, kami juga memiliki buku kumpulan soal dan solusi KTO Matematika yang bisa dicek <a href="ktom.tomi.or.id/book">di sini.</a> Jangan patah semangat! Kamu pasti bisa!',
+		answer: 'Ada banyak kok sarananya! Untuk soal-soal kontes sebelumnya, Anda bisa cek di halaman utama kami. Anda bisa mulai berlatih dari sumber itu! Kami juga memiliki official account LINE yang memberikan kuis matematika mingguan! Selain itu, kami juga memiliki buku kumpulan soal dan solusi KTO Matematika yang bisa dicek <a href="book">di sini.</a> Jangan patah semangat! Kamu pasti bisa!',
 	},
 	{
 		question: 'Aduh, solusi aku tidak bisa ter-upload!',
-		answer: 'Pertama, pastikan bahwa total file yang Anda upload tidak melebihi 10 MB di setiap soal. Jika masih error, kemungkinan ada masalah dengan server kami :(. Tunggu pengumuman selanjutnya ya! Anda juga bisa <a href="ktom.tomi.or.id/contact">mengontak kami.</a>',
+		answer: 'Pertama, pastikan bahwa total file yang Anda upload tidak melebihi 10 MB di setiap soal. Jika masih error, kemungkinan ada masalah dengan server kami :(. Tunggu pengumuman selanjutnya ya! Anda juga bisa <a href="contact">mengontak kami.</a>',
 	},
 	{
 		question: 'Solusinya bisa dicek di mana?',
@@ -50,11 +54,11 @@ var faq_data = [
 	},
 	{
 		question: 'Dengar-dengar ada bukunya juga ya?',
-		answer: 'Benar sekali. Kami mencetak buku ini 6 bulan sekali; buku ini berisi kumpulan soal dan solusi kontes-kontes kami. Ada berbagai tips, trik, dan komentar juga dari tim kami yang sudah sangat berpengalaman. Banyak juga referensi lanjutan untuk mempelajari suatu hal lebih lanjut. Info selebihnya bisa dicek di <a href="ktom.tomi.or.id/book">link ini.</a>',
+		answer: 'Benar sekali. Kami mencetak buku ini 6 bulan sekali; buku ini berisi kumpulan soal dan solusi kontes-kontes kami. Ada berbagai tips, trik, dan komentar juga dari tim kami yang sudah sangat berpengalaman. Banyak juga referensi lanjutan untuk mempelajari suatu hal lebih lanjut. Info selebihnya bisa dicek di <a href="book">link ini.</a>',
 	},
 	{
 		question: 'Kak kalau mau donasi bagaimana?',
-		answer: 'Wah, Anda baik sekali :) Jika Anda berminat memberi donasi, baik secara materi ataupun nonmateri, silakan cek <a href="ktom.tomi.or.id/donate">link ini</a> atau kontak kami <a href="ktom.tomi.or.id/contact">di sini</a> :)',
+		answer: 'Wah, Anda baik sekali :) Jika Anda berminat memberi donasi, baik secara materi ataupun nonmateri, silakan cek <a href="donate">link ini</a> atau kontak kami <a href="contact">di sini</a> :)',
 	},
 	{
 		question: 'Sertifikatnya di mana kak?',

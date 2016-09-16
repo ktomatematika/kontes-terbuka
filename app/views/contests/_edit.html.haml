@@ -38,6 +38,10 @@ html: { class: 'form-horizontal' } do |f|
     = f.label :gold_cutoff, 'Cutoff Emas', class: 'col-sm-3'
     .col-sm-9
       = f.text_field :gold_cutoff, class: 'form-control'
+  .form-group
+    = f.label :rule, 'Peraturan', class: 'col-sm-3'
+    .col-sm-9
+      = f.text_area :rule, class: 'form-control'
   = f.label :result_released do
     = f.check_box :result_released
   Siap dikeluarkan hasilnya!

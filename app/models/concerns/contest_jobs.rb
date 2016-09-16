@@ -15,8 +15,9 @@ module ContestJobs
   end
 
   def purge_panitia
+    ucs = user_contests.includes(:user)
     User.with_any_role(:panitia, :admin).each do |u|
-      uc = user_contests.find_by(user: u)
+      uc = ucs.find_by(user: u)
       uc.destroy unless uc.nil?
     end
   end

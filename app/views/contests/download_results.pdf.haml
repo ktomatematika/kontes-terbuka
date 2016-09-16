@@ -1,12 +1,11 @@
 %article#all-result
-  %h2 Leaderboard
   .table-responsive
     %table.table.table-hover.table-bordered
       %thead
         %tr
           %th Peringkat
           %th Username
-          - unless @short_problems.empty?
+          - unless @no_short_probs
             %th Bagian A
           - @long_problems.each do |lp|
             %th Bagian B no. #{lp.problem_no}
@@ -14,19 +13,14 @@
           %th Penghargaan
 
       %tbody
-        - no_short_problem = @short_problems.empty?
         - @user_contests.each do |uc|
           - user = uc.user
-          %tr{ class: row_classes(user, ['clickable-row', uc.award.downcase]), data: { link: user_path(user) } }
+          %tr{ class: row_classes(user, [uc.award.downcase]) }
             %td= uc.rank
             %td= user.username
-            - unless no_short_problem
+            - unless @no_short_probs
               %td= uc.short_mark
             - @long_problems.each do |lp|
-              - if mask_score?(lp)
-                - mask = true
-                %td ?
-              - else
-                %td= score(uc, lp)
-            %td= (defined? mask).nil? ? uc.total_mark : '?'
+              %td= score(uc, lp)
+            %td= uc.total_mark
             %td= uc.award
