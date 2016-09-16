@@ -1,0 +1,36 @@
+[no-nav] {
+  padding-top: 0;
+
+  > .navbar-fixed-top {
+    display: none;
+  }
+}
+
+[nav-logo-only] {
+  #top-navbar,
+  #top-navbar-container > button {
+    display: none !important;
+  }
+
+  #top-navbar-container > .container-fluid {
+    height: 70px;
+  }
+}
+
+[no-footer] > .app-footer {
+  display: none;
+}
+
+.navbar-fixed-top {
+  .navbar-brand {
+    padding: 10px;
+  }
+
+  .navbar-toggle {
+    margin: 15px 15px 15px 0;
+  }
+
+  .navbar-nav li a {
+    line-height: 2em;
+  }
+}

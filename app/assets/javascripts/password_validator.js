@@ -9,7 +9,7 @@ $(document).ready(function() {
 				required: true,
 				minlength: 6,
 				equalTo: '#_new_password',
-			}
+			},
 		},
 		messages: {
 			'[new_password]': {
@@ -44,7 +44,7 @@ $(document).ready(function() {
 				required: true,
 				minlength: 6,
 				equalTo: '#_new_password',
-			}
+			},
 		},
 		messages: {
 			'[old_password]': {
