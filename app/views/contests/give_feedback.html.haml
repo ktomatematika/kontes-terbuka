@@ -8,6 +8,9 @@
     %li mendapatkan minimal nilai #{UserContest::CUTOFF_CERTIFICATE} di kontes
     %li menjawab semua pertanyaan feedback di bawah ini
   %p= certificate_criteria_unfulfilled_message
+  %p 
+    Feedback ini akan dikirim secara anonim. Dengan kata lain, kami tidak akan
+    mengetahui siapa yang mengisi jawaban yang Anda berikan.
 
   = form_for :feedback_answer, url: contest_feedback_path do |f|
     - @feedback_questions.each do |q|

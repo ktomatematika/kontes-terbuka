@@ -40,8 +40,11 @@
 
 .faq {
   border-radius: 5px;
-  cursor: pointer;
   padding: 0.5em 1em;
+
+  &.question {
+    cursor: pointer;
+  }
 }
 
 .question {
