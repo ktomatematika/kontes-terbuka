@@ -26,10 +26,12 @@ ValidatesTimeliness.setup do |config|
   # Use the plugin date/time parser which is stricter and extendable
   # config.use_plugin_parser = false
   #
-  # Add one or more formats making them valid. e.g. add_formats(:date, 'd(st|rd|th) of mmm, yyyy')
+  # Add one or more formats making them valid.
+  # e.g. add_formats(:date, 'd(st|rd|th) of mmm, yyyy')
   # config.parser.add_formats()
   #
-  # Remove one or more formats making them invalid. e.g. remove_formats(:date, 'dd/mm/yyy')
+  # Remove one or more formats making them invalid.
+  # e.g. remove_formats(:date, 'dd/mm/yyy')
   # config.parser.remove_formats()
   #
   # Change the ambiguous year threshold when parsing a 2 digit year
