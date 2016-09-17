@@ -1,4 +1,3 @@
-# rubocop:disable LineLength
 # == Schema Information
 #
 # Table name: temporary_markings
@@ -21,6 +20,7 @@
 #  fk_rails_7dcab47693  (long_submission_id => long_submissions.id) ON DELETE => cascade
 #
 
+# rubocop:disable LineLength
 class TemporaryMarking < ActiveRecord::Base
   has_paper_trail
 

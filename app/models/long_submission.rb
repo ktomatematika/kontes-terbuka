@@ -1,4 +1,3 @@
-# rubocop:disable LineLength
 # == Schema Information
 #
 # Table name: long_submissions
@@ -21,6 +20,7 @@
 #  fk_rails_f4fee8fddd  (long_problem_id => long_problems.id) ON DELETE => cascade
 #
 
+# rubocop:disable LineLength
 class LongSubmission < ActiveRecord::Base
   has_paper_trail
 

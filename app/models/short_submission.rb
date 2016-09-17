@@ -1,4 +1,3 @@
-# rubocop:disable LineLength
 # == Schema Information
 #
 # Table name: short_submissions
@@ -20,6 +19,7 @@
 #  fk_rails_1467c5d84d  (short_problem_id => short_problems.id) ON DELETE => cascade
 #
 
+# rubocop:disable LineLength
 class ShortSubmission < ActiveRecord::Base
   has_paper_trail
 

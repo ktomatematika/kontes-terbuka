@@ -22,9 +22,13 @@
 #
 # Indexes
 #
-#  index_users_on_color_id     (color_id)
-#  index_users_on_province_id  (province_id)
-#  index_users_on_status_id    (status_id)
+#  idx_mv_users_auth_token_uniq    (auth_token) UNIQUE
+#  idx_mv_users_email_uniq         (email) UNIQUE
+#  idx_mv_users_username_uniq      (username) UNIQUE
+#  idx_mv_users_verification_uniq  (verification) UNIQUE
+#  index_users_on_color_id         (color_id)
+#  index_users_on_province_id      (province_id)
+#  index_users_on_status_id        (status_id)
 #
 # Foreign Keys
 #
@@ -70,13 +74,13 @@ class User < ActiveRecord::Base
 
   has_many :point_transactions
 
+  # Validations
   validates :password, presence: true, confirmation: true, on: :create
   validates :username, length: { in: 6..20 },
                        format: { with: /\A[a-zA-Z0-9]+\z/ }
-  validates :email, format: { with: /\A.+@.+\z/ }
+  validates :email, format: { with: /\A[^@\s]+@([^@\s]+)\z/ }
   validates :tries, numericality: { greater_than_or_equal_to: 0 }
 
-  # Validations
   validates :password, presence: true, confirmation: true, on: :create
   validates :terms_of_service, acceptance: true
 

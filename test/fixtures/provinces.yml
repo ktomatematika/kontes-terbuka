@@ -1,0 +1,19 @@
+# == Schema Information
+#
+# Table name: provinces
+#
+#  id         :integer          not null, primary key
+#  name       :string           not null
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  timezone   :string           not null
+#
+# Indexes
+#
+#  idx_mv_provinces_name_uniq  (name) UNIQUE
+#
+
+jabar:
+  id: 1
+  name: 'Jawa Barat'
+  timezone: 'WIB'

@@ -3,13 +3,14 @@
 # Table name: colors
 #
 #  id         :integer          not null, primary key
-#  name       :string
+#  name       :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
 # Indexes
 #
 #  idx_mv_colors_name_uniq  (name) UNIQUE
+#
 
 red:
   id: 1

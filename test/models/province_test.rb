@@ -3,10 +3,10 @@
 # Table name: provinces
 #
 #  id         :integer          not null, primary key
-#  name       :string
+#  name       :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  timezone   :string
+#  timezone   :string           not null
 #
 # Indexes
 #

@@ -2,12 +2,13 @@
 #
 # Table name: notifications
 #
-#  id         :integer          not null, primary key
-#  event      :string
-#  time       :string
-#  time_text  :string
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id          :integer          not null, primary key
+#  event       :string           not null
+#  time_text   :string
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  description :string           not null
+#  seconds     :integer
 #
 
 require 'test_helper'

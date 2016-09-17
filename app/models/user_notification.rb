@@ -1,4 +1,3 @@
-# rubocop:disable LineLength
 # == Schema Information
 #
 # Table name: user_notifications
@@ -19,6 +18,7 @@
 #  fk_rails_d238d8ef07  (notification_id => notifications.id) ON DELETE => cascade
 #
 
+# rubocop:disable LineLength
 class UserNotification < ActiveRecord::Base
   has_paper_trail
 

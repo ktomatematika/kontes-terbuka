@@ -3,16 +3,20 @@
 # Table name: short_problems
 #
 #  id         :integer          not null, primary key
-#  contest_id :integer
-#  problem_no :integer
+#  contest_id :integer          not null
+#  problem_no :integer          not null
 #  statement  :string
-#  answer     :string
+#  answer     :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
 # Indexes
 #
-#  index_short_problems_on_contest_id  (contest_id)
+#  index_short_problems_on_contest_id_and_problem_no  (contest_id,problem_no) UNIQUE
+#
+# Foreign Keys
+#
+#  fk_rails_60f1de2193  (contest_id => contests.id) ON DELETE => cascade
 #
 
 require 'test_helper'

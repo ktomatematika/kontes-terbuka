@@ -3,9 +3,13 @@
 # Table name: statuses
 #
 #  id         :integer          not null, primary key
-#  name       :string
+#  name       :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#
+# Indexes
+#
+#  idx_mv_statuses_name_uniq  (name) UNIQUE
 #
 
 require 'test_helper'
