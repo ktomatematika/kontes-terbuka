@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(version: 20160918044056) do
   end
 
   create_table "colors", force: :cascade do |t|
-    t.string   "name",       :null=>false, :index=>{:name=>"index_colors_on_name", :unique=>true, :using=>:btree}
+    t.string   "name",       :null=>false
     t.datetime "created_at", :null=>false
     t.datetime "updated_at", :null=>false
   end
@@ -122,13 +122,6 @@ ActiveRecord::Schema.define(version: 20160918044056) do
     t.integer  "price",       :null=>false
     t.datetime "created_at",  :null=>false
     t.datetime "updated_at",  :null=>false
-  end
-
-  create_table "migration_validators", force: :cascade do |t|
-    t.string "table_name",      :null=>false, :index=>{:name=>"unique_idx_on_migration_validators", :with=>["column_name", "validation_type"], :using=>:btree}
-    t.string "column_name",     :null=>false
-    t.string "validation_type", :null=>false
-    t.string "options"
   end
 
   create_table "notifications", force: :cascade do |t|
@@ -230,27 +223,23 @@ ActiveRecord::Schema.define(version: 20160918044056) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "username",        :null=>false
-    t.string   "email",           :null=>false
+    t.string   "username",        :null=>false, :index=>{:name=>"index_users_on_username", :unique=>true, :using=>:btree}
+    t.string   "email",           :null=>false, :index=>{:name=>"index_users_on_email", :unique=>true, :using=>:btree}
     t.string   "hashed_password", :null=>false
     t.string   "fullname",        :null=>false
     t.string   "school",          :null=>false
     t.datetime "created_at",      :null=>false
     t.datetime "updated_at",      :null=>false
     t.string   "salt",            :null=>false
-    t.string   "auth_token",      :null=>false
+    t.string   "auth_token",      :null=>false, :index=>{:name=>"index_users_on_auth_token", :unique=>true, :using=>:btree}
     t.integer  "province_id",     :index=>{:name=>"index_users_on_province_id", :using=>:btree}
     t.integer  "status_id",       :index=>{:name=>"index_users_on_status_id", :using=>:btree}
     t.integer  "color_id",        :default=>1, :null=>false, :index=>{:name=>"index_users_on_color_id", :using=>:btree}
     t.string   "timezone",        :default=>"WIB", :null=>false
-    t.string   "verification"
+    t.string   "verification",    :index=>{:name=>"index_users_on_verification", :unique=>true, :using=>:btree}
     t.boolean  "enabled",         :default=>false, :null=>false
     t.integer  "tries",           :default=>0, :null=>false
   end
-  add_index "users", ["auth_token"], :name=>"index_users_on_auth_token", :unique=>true, :using=>:btree
-  add_index "users", ["email"], :name=>"index_users_on_email", :unique=>true, :using=>:btree
-  add_index "users", ["username"], :name=>"index_users_on_username", :unique=>true, :using=>:btree
-  add_index "users", ["verification"], :name=>"index_users_on_verification", :unique=>true, :using=>:btree
 
   create_table "users_roles", id: false, force: :cascade do |t|
     t.integer "user_id", :index=>{:name=>"index_users_roles_on_user_id_and_role_id", :with=>["role_id"], :using=>:btree}
