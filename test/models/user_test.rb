@@ -40,9 +40,9 @@
 require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
-  create(:province)
-  create(:status)
-  create(:color)
+  create(:province) if Province.all.empty?
+  create(:status) if Status.all.empty?
+  create(:color) if Color.all.empty?
 
   test 'user that fulfills all criteria is OK' do
     assert build(:user).save, 'User is not saved'

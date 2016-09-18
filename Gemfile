@@ -36,7 +36,7 @@ gem 'nested_form'
 gem 'redcarpet'
 # Zip submissions
 gem 'rubyzip'
-# Autoprefixer
+# Autoprefixer for SCSS
 gem 'autoprefixer-rails'
 # Inline SVG
 gem 'inline_svg'
