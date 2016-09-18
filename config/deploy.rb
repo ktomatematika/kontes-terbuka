@@ -24,8 +24,7 @@ set :deploy_to, '/home/ktom/kontes-terbuka'
 set :linked_files, fetch(:linked_files, [])
   .push('config/database.yml', 'config/secrets.yml',
         'config/initializers/env.rb',
-        'app/views/contests/certificate.tex.haml',
-        'bin/delayed_job')
+        'app/views/contests/certificate.tex.haml')
 
 # Default value for linked_dirs is []
 set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache',

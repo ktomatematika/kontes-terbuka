@@ -22,8 +22,6 @@
 #
 #  fk_rails_116a6ecec7  (contest_id => contests.id) ON DELETE => cascade
 #
-
-# rubocop:disable LineLength
 class LongProblem < ActiveRecord::Base
   has_paper_trail
   resourcify

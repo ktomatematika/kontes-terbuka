@@ -10,7 +10,7 @@
 #
 # Indexes
 #
-#  idx_mv_provinces_name_uniq  (name) UNIQUE
+#  index_provinces_on_name  (name) UNIQUE
 #
 
 class Province < ActiveRecord::Base

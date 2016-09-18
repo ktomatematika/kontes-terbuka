@@ -51,7 +51,7 @@ end
 ### UTILITIES
 
 # Schema Validations: to maintin referential integrity in database and models
-#gem 'schema_validations'
+gem 'schema_validations', group: [:development, :test] # production :(
 # Add time validations
 gem 'validates_timeliness'
 # Email with Mailgun
@@ -88,6 +88,8 @@ end
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
+  # Factory girl: factories for testing
+  gem 'factory_girl_rails'
 end
 
 ### END UTILITIES

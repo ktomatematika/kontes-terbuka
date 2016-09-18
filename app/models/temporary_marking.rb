@@ -19,8 +19,6 @@
 #  fk_rails_349a6ecb7e  (user_id => users.id) ON DELETE => cascade
 #  fk_rails_7dcab47693  (long_submission_id => long_submissions.id) ON DELETE => cascade
 #
-
-# rubocop:disable LineLength
 class TemporaryMarking < ActiveRecord::Base
   has_paper_trail
 
