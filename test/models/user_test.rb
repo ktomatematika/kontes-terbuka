@@ -40,10 +40,6 @@
 require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
-  create(:province) if Province.all.empty?
-  create(:status) if Status.all.empty?
-  create(:color) if Color.all.empty?
-
   test 'user that fulfills all criteria is OK' do
     assert build(:user).save, 'User is not saved'
   end
@@ -104,5 +100,36 @@ class UserTest < ActiveSupport::TestCase
 
     assert_not build(:user, email: 'a@b@c.com').save, 'a@b@c.com can be saved.'
     assert_not build(:user, email: 'abc.com').save, 'abc.com can be saved.'
+  end
+
+  test 'full name should exist' do
+    assert_not build(:user, fullname: nil).save,
+      'User with no full name can be saved.'
+  end
+
+  test 'school should exist' do
+    assert_not build(:user, school: nil).save,
+      'User with no school can be saved.'
+  end
+
+  test 'timezone follows province' do
+    prov = create(:province, timezone: 'ABC')
+    assert create(:user, province: prov).timezone == 'ABC',
+      'User timezone is not defaulted to the province.'
+  end
+
+  test 'timezone defaults to WIB' do
+    assert create(:user).timezone == 'WIB',
+      'User timezone default is not WIB.'
+  end
+
+  test 'user is not enabled by default' do
+    assert_not create(:user).enabled,
+      'User is enabled on creation.'
+  end
+
+  test 'user tries start with 0' do
+    assert_not create(:user).tries == 0,
+      'User does not start with zero tries.'
   end
 end

@@ -14,14 +14,32 @@ FactoryGirl.define do
 
   factory :user do
     username 'default'
-    password { username || 'qwerqwer' }
-    password_confirmation { username || 'qwerqwer' }
+    password 'qwerqwre'
+    password_confirmation 'qwerqwre'
     email { (username || 'qwerqwer') + '@a.b' }
-    fullname { username || 'qwerqwer' }
-    province { Province.first }
-    status { Status.first }
-    school { username || 'qwerqwer' }
-    color { Color.first }
+    fullname 'qwerqwer'
+    province do
+      Province.first || (if username.nil? || username.empty?
+                           create :province, name: 'asdf'
+                         else
+                           create :province, name: username
+                         end)
+    end
+    status do
+      Status.first || (if username.nil? || username.empty?
+                         create :status, name: 'asdf'
+                       else
+                         create :status, name: username
+                       end)
+    end
+    color do
+      Color.first || (if username.nil? || username.empty?
+                        create :color, name: 'asdf'
+                      else
+                        create :color, name: username
+                      end)
+    end
+    school 'qwerty'
     terms_of_service '1'
   end
 end
