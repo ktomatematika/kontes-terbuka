@@ -10,7 +10,7 @@ apt-get install --yes postgresql-9.5 libpq-dev
 sudo -u postgres psql -c "create role ubuntu with createdb login password 'password';"
 
 # Auto CD to /vagrant and squelch perl warnings
-echo "\n\ncd /vagrant\nLC_ALL=en_US.UTF-8" >> /home/ubuntu/.bashrc
+printf "\n\ncd /vagrant\nexport LC_ALL=en_US.UTF-8" >> /home/ubuntu/.bashrc
 
 # Installs rvm, Ruby, Bundler and runs bundle install, which installs a lot.
 su ubuntu <<'EOF'

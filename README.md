@@ -47,9 +47,17 @@ sudo apt dist-upgrade
 (Daily dump dilakukan dengan `pg_dump kontes_terbuka_production` yang di-pipe
 ke `split`)
 
-Untuk import database dari daily dump yang sudah ada:
-- Masukkan file-file yang mau diimport ke folder import
-- Jalankan import.sh
+Untuk import database dari daily dump yang sudah ada, masukkan file-file yang mau diimport ke folder import terlebih dahulu.
+```bash
+chmod u+x import.sh
+./import.sh
+```
+
+## Install LaTeX on Vagrant
+```bash
+chmod u+x tex.sh
+./tex.sh
+```
 
 ## Kontribusi
 Ayok difork! Lihat issuesnya tuh sebanyak pasir di pantai.
