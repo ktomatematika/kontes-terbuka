@@ -28,7 +28,7 @@ class TexReader
       tex_path = @contest.problem_tex.path
       FileUtils.cp(
         Rails.root.join('app', 'assets', 'images', 'logo-hires.png').to_s,
-        File.dirname(tex_path) + 'logo.png'
+        File.dirname(tex_path) + '/logo.png'
       )
       Dir.chdir(File.dirname(tex_path)) do
         `pdflatex -interaction=nonstopmode #{tex_path}`
