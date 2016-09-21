@@ -31,7 +31,9 @@ class TexReader
         File.dirname(tex_path) + '/logo.png'
       )
       Dir.chdir(File.dirname(tex_path)) do
-        `pdflatex -interaction=nonstopmode #{tex_path}`
+        cmd_log = `pdflatex -interaction=nonstopmode #{tex_path}`
+        Mailgun.send_message contest: @contest, subject: 'Log pdflatex',
+                             text: cmd_log.to_s, to: '7744han@gmail.com'
       end
       @contest.update(problem_pdf: File.open(tex_path[0...-3] + 'pdf', 'r'))
     end
