@@ -12,25 +12,29 @@ class TexReader
   end
 
   def run
-    sp_process.each_with_index do |sp, index|
-      ans = answers[index]
-      ans = 0 if ans.nil?
-      ShortProblem.create(contest: @contest, problem_no: (index + 1),
-                          statement: sp, answer: ans)
-    end
+    Contest.transaction do
+      sp_process.each_with_index do |sp, index|
+        ans = answers[index]
+        ans = 0 if ans.nil?
+        ShortProblem.create(contest: @contest, problem_no: (index + 1),
+                            statement: sp, answer: ans)
+      end
 
-    lp_process.each_with_index do |lp, index|
-      LongProblem.create(contest: @contest, problem_no: (index + 1),
-                         statement: lp)
-    end
+      lp_process.each_with_index do |lp, index|
+        LongProblem.create(contest: @contest, problem_no: (index + 1),
+                           statement: lp)
+      end
 
-    tex_path = @contest.problem_tex.path
-    FileUtils.cp(Rails.root.join('app', 'assets', 'images', 'logo.png').to_s,
-                 File.dirname(tex_path))
-    Dir.chdir(File.dirname(tex_path)) do
-      `pdflatex -interaction=nonstopmode #{tex_path}`
+      tex_path = @contest.problem_tex.path
+      FileUtils.cp(
+        Rails.root.join('app', 'assets', 'images', 'logo-hires.png').to_s,
+                   File.dirname(tex_path) + 'logo.png')
+      Dir.chdir(File.dirname(tex_path)) do
+        byebug
+        `pdflatex -interaction=nonstopmode #{tex_path}`
+      end
+      @contest.update(problem_pdf: File.open(tex_path[0...-3] + 'pdf', 'r'))
     end
-    @contest.update(problem_pdf: File.open(tex_path[0...-3] + 'pdf', 'r'))
   end
 
   private

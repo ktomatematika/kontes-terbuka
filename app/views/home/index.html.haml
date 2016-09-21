@@ -1,7 +1,7 @@
 = content_for :page_attributes do
   data-no-turbolink="true"
 
-= content_tag 'div', '', id: 'home-contest-data', data: { name: @next_important_contest.name, start_time: @next_important_contest.start_time, end_time: @next_important_contest.end_time, result_time: @next_important_contest.result_time, feedback_time: @next_important_contest.feedback_time, results_released: @next_important_contest.result_released, url: url_for(@next_important_contest) }
+= content_tag 'div', '', id: 'home-contest-data', data: { name: @next_important_contest.name, start_time: @next_important_contest.start_time, end_time: @next_important_contest.end_time, result_time: @next_important_contest.result_time, feedback_time: @next_important_contest.feedback_time, results_released: @next_important_contest.result_released }
 
 / Facebook plugin
 #fb-root
@@ -26,7 +26,7 @@
         %section.home-section#this-contest
           %h2#next-contest-name
           %h3#next-contest-time
-          %a.btn.btn-lg.update-regularly#home-btn-daftar{ type: 'button', disabled: true }
+          %a.btn.btn-lg.update-regularly#home-btn-daftar{ type: 'button', href: url_for(@next_important_contest) }
         .row
           .col-md-6.col-md-push-6
             %section.home-section#info-kontes

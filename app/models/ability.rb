@@ -5,7 +5,8 @@ class Ability
   def initialize(user)
     unless user.nil?
       can [:show, :index, :show_rules,
-           :accept_rules, :create_short_submissions], Contest
+           :accept_rules, :create_short_submissions,
+           :download_results], Contest
       can [:show_rules, :accept_rules], Contest,
           id: Contest.where('start_time <= ? AND ? <= end_time',
                             Time.zone.now, Time.zone.now).pluck(:id)

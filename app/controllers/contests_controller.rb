@@ -201,6 +201,7 @@ class ContestsController < ApplicationController
     authorize! :read_problems, c
     c.update(problem_tex: params[:problem_tex])
     TexReader.new(c, params[:answers].split(',')).run
+    redirect_to contest_admin_path, notice: 'TeX berhasil dibaca!'
   end
 
   def summary
@@ -216,6 +217,7 @@ class ContestsController < ApplicationController
 
   def download_results
     @contest = Contest.find(params[:contest_id])
+    authorize! :download_results, @contest
 
     if @contest.result_released?
       @user_contests = @contest.results(user: :roles) # this is a big query
@@ -227,6 +229,30 @@ class ContestsController < ApplicationController
       format.html
       format.pdf { render pdf: "Hasil #{@contest}", orientation: 'Landscape' }
     end
+  end
+
+  def destroy_short_probs
+    @contest = Contest.find(params[:contest_id])
+    authorize! :destroy_short_probs, @contest
+
+    @contest.short_problems.destroy_all
+    redirect_to contest_admin_path, notice: 'Bagian A hancur!'
+  end
+
+  def destroy_long_probs
+    @contest = Contest.find(params[:contest_id])
+    authorize! :destroy_long_probs, @contest
+
+    @contest.long_problems.destroy_all
+    redirect_to contest_admin_path, notice: 'Bagian B hancur!'
+  end
+
+  def destroy_feedback_qns
+    @contest = Contest.find(params[:contest_id])
+    authorize! :destroy_feedback_qns, @contest
+
+    @contest.feedback_questions.destroy_all
+    redirect_to contest_admin_path, notice: 'Pertanyaan feedback hancur!'
   end
 
   private

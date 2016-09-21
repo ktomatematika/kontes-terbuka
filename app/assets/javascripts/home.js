@@ -11,9 +11,6 @@ function fill_home_text() {
 		var subtitle_text, button_text;
 
 		if (results_released) {
-			$('#home-btn-daftar').removeAttr('disabled', false);
-			$('#home-btn-daftar').prop('href',
-					$('#home-contest-data').data('url'));
 			button_text = 'Hasil sudah diumumkan!';
 		} else if (current > results) {
 			subtitle_text = ' Dikarenakan berbagai halangan, hasil kontes' +
@@ -33,12 +30,8 @@ function fill_home_text() {
 			subtitle_text += end.format_indo();
 
 			if (start > current) {
-				$('home-btn-daftar').attr('disabled', true);
 				button_text = current.indo_go_to(start);
 			} else {
-				$('#home-btn-daftar').removeAttr('disabled', false);
-				$('#home-btn-daftar').prop('href',
-						$('#home-contest-data').data('url'));
 				button_text = 'Kontes sudah dimulai!';
 			}
 		}

@@ -2,7 +2,7 @@
 = link_to 'Bagi-bagi kubus', contest_give_points_path,
   class: 'btn' if can? :give_points, Contest
 
-= link_to 'Download feedback', contest_download_path,
+= link_to 'Download feedback', contest_download_feedback_path,
   class: 'btn' if can? :download_feedback, Contest
 
 = link_to 'Kirim sertifikat', contest_send_certificates_path,
@@ -10,9 +10,14 @@
 
 - if can? :read_problems, Contest
   %h3 Masukkan Problems
-  = form_tag contest_read_problems_path, multipart: true do
-    = label_tag :problem_tex, 'Soal TeX'
-    = file_field_tag :problem_tex, class: 'form-control'
-    = label_tag :answers, 'Jawaban'
-    = text_field_tag :answers, '', class: 'form-control'
+  = form_tag contest_read_problems_path, multipart: true,
+    class: 'form-horizontal' do
+    .form-group
+      = label_tag :problem_tex, 'Soal TeX', class: 'col-sm-4'
+      .col-sm-8
+        = file_field_tag :problem_tex
+    .form-group
+      = label_tag :answers, 'Jawaban (comma separated)', class: 'col-sm-4'
+      .col-sm-8
+        = text_field_tag :answers, '', class: 'form-control'
     = submit_tag 'Submit', class: 'btn'

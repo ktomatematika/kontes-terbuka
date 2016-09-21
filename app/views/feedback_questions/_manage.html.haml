@@ -11,6 +11,9 @@
           %td= link_to 'Edit', [:edit, @contest, fq]
           %td= link_to 'Hapus', [@contest, fq], method: :delete,
             data: { confirm: 'Apakah Anda yakin?' }
+  = link_to 'Hapus semua', contest_destroy_feedback_qns_path,
+    data: { confirm: 'Apakah Anda yakin?' }, method: :post,
+    class: 'btn'
 
 %section
   %h3 Copy pertanyaan feedback

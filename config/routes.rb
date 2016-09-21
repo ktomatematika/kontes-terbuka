@@ -36,6 +36,9 @@ Rails.application.routes.draw do
     get 'download-results', to: 'contests#download_results',
                             defaults: { format: 'pdf' }
     post 'copy-feedback-questions', to: 'feedback_questions#copy'
+    post 'destroy-short-probs', to: 'contests#destroy_short_probs'
+    post 'destroy-long-probs', to: 'contests#destroy_long_probs'
+    post 'destroy-feedback_qns', to: 'contests#destroy_feedback_qns'
 
     resources :short_problems, path: '/short-problems'
     post 'create-short-submissions', to: 'contests#create_short_submissions'
