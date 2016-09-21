@@ -8,14 +8,19 @@ FactoryGirl.define do
   end
 
   factory :province do
-    name 'Jawa Barat'
-    timezone 'WIB'
+    name 'Sulawesi Selatan'
+    timezone 'WITA'
   end
 
   factory :user do
     username 'default'
-    password 'qwerqwre'
-    password_confirmation 'qwerqwre'
+
+    transient do
+      pass 'qwerqwerty'
+    end
+
+    password { pass }
+    password_confirmation { pass }
     email { (username || 'qwerqwer') + '@a.b' }
     fullname 'qwerqwer'
     province do

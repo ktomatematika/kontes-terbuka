@@ -104,32 +104,133 @@ class UserTest < ActiveSupport::TestCase
 
   test 'full name should exist' do
     assert_not build(:user, fullname: nil).save,
-      'User with no full name can be saved.'
+               'User with no full name can be saved.'
   end
 
   test 'school should exist' do
     assert_not build(:user, school: nil).save,
-      'User with no school can be saved.'
+               'User with no school can be saved.'
   end
 
   test 'timezone follows province' do
-    prov = create(:province, timezone: 'ABC')
-    assert create(:user, province: prov).timezone == 'ABC',
-      'User timezone is not defaulted to the province.'
+    prov = create(:province, timezone: 'WIT')
+    assert_equal create(:user, province: prov).timezone, 'WIT',
+           'User timezone is not defaulted to the province.'
   end
 
-  test 'timezone defaults to WIB' do
-    assert create(:user).timezone == 'WIB',
-      'User timezone default is not WIB.'
+  test 'timezone defaults to WIB when province is nil' do
+    assert_equal create(:user, province: nil).timezone, 'WIB',
+      'User timezone default is not WIB on nil province.'
   end
 
   test 'user is not enabled by default' do
-    assert_not create(:user).enabled,
-      'User is enabled on creation.'
+    assert_not create(:user).enabled, 'User is enabled on creation.'
   end
 
   test 'user tries start with 0' do
-    assert_not create(:user).tries == 0,
-      'User does not start with zero tries.'
+    assert create(:user).tries.zero?, 'User does not start with zero tries.'
+  end
+
+  test 'nullify attributes on delete' do
+    u = create(:user)
+    u.province.destroy
+    assert_nil u.province, 'Province is not nullified on delete.'
+    u.color.destroy
+    assert_nil u.color, 'Color is not nullified on delete.'
+    u.status.destroy
+    assert_nil u.status, 'Status is not nullified on delete.'
+  end
+
+  test 'password is encrypted and cleared before save' do
+    password = 'asdfasdf'
+    u = create(:user, password: 'asdfasdf', password_confirmation: password)
+    assert_nil u.password, 'Password is not cleared.'
+    assert_not_equal u.hashed_password, password, 'Password is stored unencrypted!'
+  end
+
+  test 'password needs confirmation' do
+    assert_not build(:user, password: 'qwerty',
+                      password_confirmation: nil).save,
+                      'Passwords without confirmation can be saved.'
+    assert_not build(:user, password: 'qwerty',
+                      password_confirmation: 'azerty').save,
+                      'Passwords that does not match can be saved.'
+  end
+
+  test 'salt is sufficiently strong' do
+    u = create(:user)
+    s = u.salt
+    assert s.length >= 20, 'Salt length is < 20.'
+    assert_no_match /\A[a-z]*\z$/, s, 'Salt is all lowercase.'
+    assert_no_match /\A[A-Z]*\z$/, s, 'Salt is all uppercase.'
+    assert_no_match /\A[0-9]*\z$/, s, 'Salt is all numbers.'
+  end
+
+  test 'hashed password starts with salt' do
+    u = create(:user)
+    assert u.hashed_password.start_with?(u.salt),
+      'Hashed password does not start with salt.'
+  end
+
+  test 'salt actually works' do
+    u1 = create(:user, pass: 'qwerty')
+    u2 = create(:user, username: 'otheruser', pass: 'qwerty')
+    assert_not_equal u1.hashed_password, u2.hashed_password,
+      'Password can be rainbow tabled!'
+  end
+
+  test 'hashed password is strong' do
+    u = create(:user)
+    p = u.hashed_password
+    assert p.length >= 50, 'Hashed passowrd length is < 50'
+    assert_no_match /\A[a-z]*\z$/, p, 'Hashed pass is all lowercase.'
+    assert_no_match /\A[A-Z]*\z$/, p, 'Hashed pass is all uppercase.'
+    assert_no_match /\A[0-9]*\z$/, p, 'Hashed pass is all numbers.'
+  end
+
+  test 'auth token and verification are generated' do
+    u = create(:user)
+    assert_not_empty u.auth_token, 'Auth token is empty.'
+    assert_not_empty u.verification, 'Verification is empty.'
+  end
+
+  test 'auth token and verification are unique' do
+    25.times { |i| create(:user, username: 'cobaaja' + i.to_s) }
+    auth_tokens = User.pluck(:auth_token)
+    verifications = User.pluck(:verification)
+
+    assert_equal auth_tokens.uniq.length, auth_tokens.length,
+      'There exist duplicate auth tokens!'
+    assert_equal verifications.uniq.length, verifications.length,
+      'There exist duplicate verifications!'
+  end
+
+  test 'user associations' do
+    assert_equal User.reflect_on_association(:province).macro, :belongs_to,
+      'User does not belong to province.'
+    assert_equal User.reflect_on_association(:color).macro, :belongs_to,
+      'User does not belong to color.'
+    assert_equal User.reflect_on_association(:status).macro, :belongs_to,
+      'User does not belong to status.'
+    assert_equal User.reflect_on_association(:user_contests).macro, :has_many,
+      'User has many user contests is false.'
+    assert_equal User.reflect_on_association(:user_awards).macro, :has_many,
+      'User has many user awards is false.'
+    assert_equal User.reflect_on_association(:temporary_markings).macro,
+      :has_many, 'User has many temporary markings contests is false.'
+    assert_equal User.reflect_on_association(:user_notifications).macro,
+      :has_many, 'User has many user notifications contests is false.'
+    assert_equal User.reflect_on_association(:point_transactions).macro,
+      :has_many, 'User has many point transactions contests is false.'
+  end
+
+  test 'tries need to be >= 0' do
+    assert_not build(:user, tries: -2).save,
+      'User with negative tries can be saved.'
+  end
+
+  test 'terms of service needs to be accepted' do
+    assert_not build(:user, terms_of_service: nil).save,
+      'User that does not accept terms of service can be registered.'
   end
 end
