@@ -115,12 +115,12 @@ class UserTest < ActiveSupport::TestCase
   test 'timezone follows province' do
     prov = create(:province, timezone: 'WIT')
     assert_equal create(:user, province: prov).timezone, 'WIT',
-           'User timezone is not defaulted to the province.'
+                 'User timezone is not defaulted to the province.'
   end
 
   test 'timezone defaults to WIB when province is nil' do
     assert_equal create(:user, province: nil).timezone, 'WIB',
-      'User timezone default is not WIB on nil province.'
+                 'User timezone default is not WIB on nil province.'
   end
 
   test 'user is not enabled by default' do
@@ -150,11 +150,11 @@ class UserTest < ActiveSupport::TestCase
 
   test 'password needs confirmation' do
     assert_not build(:user, password: 'qwerty',
-                      password_confirmation: nil).save,
-                      'Passwords without confirmation can be saved.'
+                            password_confirmation: nil).save,
+               'Passwords without confirmation can be saved.'
     assert_not build(:user, password: 'qwerty',
-                      password_confirmation: 'azerty').save,
-                      'Passwords that does not match can be saved.'
+                            password_confirmation: 'azerty').save,
+               'Passwords that does not match can be saved.'
   end
 
   test 'salt is sufficiently strong' do
@@ -169,14 +169,14 @@ class UserTest < ActiveSupport::TestCase
   test 'hashed password starts with salt' do
     u = create(:user)
     assert u.hashed_password.start_with?(u.salt),
-      'Hashed password does not start with salt.'
+           'Hashed password does not start with salt.'
   end
 
   test 'salt actually works' do
     u1 = create(:user, pass: 'qwerty')
     u2 = create(:user, username: 'otheruser', pass: 'qwerty')
     assert_not_equal u1.hashed_password, u2.hashed_password,
-      'Password can be rainbow tabled!'
+                     'Password can be rainbow tabled!'
   end
 
   test 'hashed password is strong' do
@@ -200,37 +200,37 @@ class UserTest < ActiveSupport::TestCase
     verifications = User.pluck(:verification)
 
     assert_equal auth_tokens.uniq.length, auth_tokens.length,
-      'There exist duplicate auth tokens!'
+                 'There exist duplicate auth tokens!'
     assert_equal verifications.uniq.length, verifications.length,
-      'There exist duplicate verifications!'
+                 'There exist duplicate verifications!'
   end
 
   test 'user associations' do
     assert_equal User.reflect_on_association(:province).macro, :belongs_to,
-      'User does not belong to province.'
+                 'User does not belong to province.'
     assert_equal User.reflect_on_association(:color).macro, :belongs_to,
-      'User does not belong to color.'
+                 'User does not belong to color.'
     assert_equal User.reflect_on_association(:status).macro, :belongs_to,
-      'User does not belong to status.'
+                 'User does not belong to status.'
     assert_equal User.reflect_on_association(:user_contests).macro, :has_many,
-      'User has many user contests is false.'
+                 'User has many user contests is false.'
     assert_equal User.reflect_on_association(:user_awards).macro, :has_many,
-      'User has many user awards is false.'
+                 'User has many user awards is false.'
     assert_equal User.reflect_on_association(:temporary_markings).macro,
-      :has_many, 'User has many temporary markings contests is false.'
+                 :has_many, 'User has many temporary markings contests is false.'
     assert_equal User.reflect_on_association(:user_notifications).macro,
-      :has_many, 'User has many user notifications contests is false.'
+                 :has_many, 'User has many user notifications contests is false.'
     assert_equal User.reflect_on_association(:point_transactions).macro,
-      :has_many, 'User has many point transactions contests is false.'
+                 :has_many, 'User has many point transactions contests is false.'
   end
 
   test 'tries need to be >= 0' do
     assert_not build(:user, tries: -2).save,
-      'User with negative tries can be saved.'
+               'User with negative tries can be saved.'
   end
 
   test 'terms of service needs to be accepted' do
     assert_not build(:user, terms_of_service: nil).save,
-      'User that does not accept terms of service can be registered.'
+               'User that does not accept terms of service can be registered.'
   end
 end
