@@ -5,23 +5,23 @@ class Ability
   def initialize(user)
     unless user.nil?
       can [:show, :index, :show_rules,
-           :accept_rules, :create_short_submissions,
-           :download_results], Contest
+           :accept_rules, :create_short_submissions], Contest
+      can :download_results, Contest, result_released: true
       can [:show_rules, :accept_rules], Contest,
           id: Contest.where('start_time <= ? AND ? <= end_time',
                             Time.zone.now, Time.zone.now).pluck(:id)
       can [:download_pdf, :give_feedback, :feedback_submit], Contest,
-          id: UserContest.where(user: user).pluck(:contest_id)
+          user_contest: UserContest.where(user: user)
       can [:submit, :destroy_submissions, :download], LongSubmission,
-          id: user.long_submissions.pluck(:id)
+          user: user
 
-      can :show, User, id: User.where(enabled: true).pluck(:id)
+      can :show, User, enabled: true
       can :index, User
       can [:see_full, :mini_edit, :mini_update, :change_password,
            :process_change_password, :change_notifications,
            :process_change_notifications], User, id: user.id
 
-      can :stop_nag, UserContest, id: UserContest.where(user: user).pluck(:id)
+      can :stop_nag, UserContest, user: user
 
       if user.has_role? :marking_manager
         can [:assign_markers, :save_markers], Contest
@@ -41,7 +41,7 @@ class Ability
       if user.has_role? :panitia
         can [:preview, :summary], Contest
         can [:see_full_index, :see_full], User
-        can :destroy, User, id: User.where(enabled: false).pluck(:id)
+        can :destroy, User, enabled: false
         can [:admin, :profile], Application
       end
 

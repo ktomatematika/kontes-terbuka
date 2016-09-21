@@ -10,19 +10,19 @@
         class: 'btn btn-lg'
 
   %div
-    - if can? :summary, Contest
+    - if can? :summary, @contest
       = link_to 'Ringkasan', contest_summary_path(contest_id: @contest),
         class: 'btn btn-lg'
 
-    - if can? :admin, Contest
+    - if can? :admin, @contest
       = link_to 'Administrasi', contest_admin_path(contest_id: @contest),
         class: 'btn btn-lg'
 
-    - if can? :assign_markers, Contest
+    - if can? :assign_markers, @contest
       = link_to 'Bagi koreksian', assign_markers_path(id: @contest.id),
         class: 'btn btn-lg'
 
-    - if can? :download_results, Contest
+    - if can? :download_results, @contest
       = link_to 'Download Hasil',
         contest_download_results_path(contest_id: @contest.id),
         class: 'btn btn-lg'

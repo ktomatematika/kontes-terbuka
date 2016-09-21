@@ -83,8 +83,7 @@ class User < ActiveRecord::Base
   validates :tries, numericality: { greater_than_or_equal_to: 0 }
 
   validates :password, presence: true, confirmation: true, on: :create
-  validates :password_confirmation, presence: true
-  validates :terms_of_service, presence: true, acceptance: true
+  validates :terms_of_service, acceptance: true
 
   # NOTE: This needs to come before the validation.
   def self.time_zone_set
