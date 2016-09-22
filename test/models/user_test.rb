@@ -150,7 +150,7 @@ class UserTest < ActiveSupport::TestCase
 
   test 'password needs confirmation' do
     assert_not build(:user, password: 'qwerty',
-                            password_confirmation: nil).save,
+                            password_confirmation: '').save,
                'Passwords without confirmation can be saved.'
     assert_not build(:user, password: 'qwerty',
                             password_confirmation: 'azerty').save,
@@ -230,7 +230,7 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test 'terms of service needs to be accepted' do
-    assert_not build(:user, terms_of_service: nil).save,
+    assert_not build(:user, terms_of_service: '0').save,
                'User that does not accept terms of service can be registered.'
   end
 end

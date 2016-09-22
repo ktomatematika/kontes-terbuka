@@ -1,5 +1,9 @@
 %article#all-result
   %h2 Leaderboard
+  - if can? :download_results, @contest
+    = link_to 'Download Hasil',
+      contest_download_results_path(contest_id: @contest.id),
+      class: 'btn btn-lg'
   .table-responsive
     %table.table.table-hover.table-bordered.contest-results
       %thead
