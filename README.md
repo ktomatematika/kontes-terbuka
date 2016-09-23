@@ -1,5 +1,15 @@
-# kontes-terbuka
-Repo ini berisi kode untuk website. Website apa ya...
+# kontes-terbuka: Website Kontes Terbuka Olimpiade Matematika
+![Logo Kontes Terbuka Olimpiade Matematika](https://github.com/donjar/kontes-terbuka/raw/production/app/assets/images/logo-hires.png)
+[Click here for English version.](ENGLISH.md)
+
+Repo ini berisi kode untuk website Kontes Terbuka Olimpiade Matematika yang
+bisa diakses di https://ktom.tomi.or.id. Website ini dibuat oleh dua anggota
+KTO Matematika:
+- Herbert Ilhan Tanujaya (@donjar)
+- Jonathan Mulyawan Woenardi (@woenardi)
+
+Website ini awalnya dibuat dengan tujuan pembelajaran. Namun, website ini terus
+berkembang hingga menjadi cukup besar.
 
 ## Setup, dengan Vagrant
 Catatan: Setting Vagrant ini menggunakan 2 GB RAM. Jika dirasa terlalu banyak,
@@ -12,14 +22,13 @@ Install Vagrant dan VirtualBox:
 
 Vagrant adalah sebuah virtual machine yang digunakan untuk menjalankan app.
 Keuntungannya, development environmentnya akan stabil di mesin manapun.
-
 Vagrant menggunakan VirtualBox untuk menjalankan virtual machinenya.
 
 Install plugin Vagrant: `vagrant plugin install vagrant-vbguest`
 
 Nyalakan Vagrant: `vagrant up`
 
-Ini bisa memakan waktu 1 jam, karena vagrant perlu mensetup segalanya
+Ini bisa memakan waktu 1 jam, karena Vagrant perlu mensetup segalanya
 dari awal, termasuk download Ubuntu (!), setup database, Ruby, dan Rails.
 Bersabarlah. :3
 
@@ -47,17 +56,21 @@ sudo apt dist-upgrade
 (Daily dump dilakukan dengan `pg_dump kontes_terbuka_production` yang di-pipe
 ke `split`)
 
-Untuk import database dari daily dump yang sudah ada, masukkan file-file yang mau diimport ke folder import terlebih dahulu.
+Untuk import database dari daily dump yang sudah ada, masukkan file-file
+yang mau diimport ke folder `import` di rootterlebih dahulu. Kemudian:
 ```bash
 chmod u+x import.sh
 ./import.sh
 ```
 
-## Install LaTeX on Vagrant
+## Install LaTeX di Vagrant
+LaTeX diinstall oleh TeX Live dengan profile yang sudah disediakan. Installasi
+ini seminimal mungkin untuk menjalankan berbagai fungsi LaTeX yang diperlukan.
+Jalankan:
 ```bash
 chmod u+x tex.sh
 ./tex.sh
 ```
 
 ## Kontribusi
-Ayok difork! Lihat issuesnya tuh sebanyak pasir di pantai.
+Ayok fork :D
