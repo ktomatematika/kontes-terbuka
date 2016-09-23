@@ -13,7 +13,7 @@ class Ability
       can [:download_pdf, :give_feedback, :feedback_submit], Contest,
           id: UserContest.where(user: user).pluck(:contest_id)
       can [:submit, :destroy_submissions, :download], LongSubmission,
-          user: user
+          user_id: user.id
 
       can :show, User, enabled: true
       can :index, User
