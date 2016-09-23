@@ -9,8 +9,9 @@
 #
 # Indexes
 #
-#  idx_mv_colors_name_uniq  (name) UNIQUE
+#  index_colors_on_name  (name) UNIQUE
 #
+# rubocop:enable Metrics/LineLength
 
 require 'test_helper'
 

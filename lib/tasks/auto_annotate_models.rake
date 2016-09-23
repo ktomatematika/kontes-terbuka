@@ -39,8 +39,8 @@ if Rails.env.development?
       'sort'                    => 'false',
       'force'                   => 'false',
       'trace'                   => 'false',
-      'wrapper_open'            => nil,
-      'wrapper_close'           => nil
+      'wrapper_open'            => 'rubocop:disable Metrics/LineLength',
+      'wrapper_close'           => 'rubocop:enable Metrics/LineLength'
     )
   end
 

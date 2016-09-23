@@ -12,6 +12,7 @@
 #
 #  index_provinces_on_name  (name) UNIQUE
 #
+# rubocop:enable Metrics/LineLength
 
 class Province < ActiveRecord::Base
   has_paper_trail

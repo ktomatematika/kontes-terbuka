@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/LineLength
 # == Schema Information
 #
 # Table name: short_problems
@@ -18,6 +19,8 @@
 #
 #  fk_rails_60f1de2193  (contest_id => contests.id) ON DELETE => cascade
 #
+# rubocop:enable Metrics/LineLength
+
 class ShortProblem < ActiveRecord::Base
   has_paper_trail
 

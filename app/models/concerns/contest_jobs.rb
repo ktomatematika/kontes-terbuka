@@ -32,11 +32,11 @@ module ContestJobs
          .contest_starting(n.time_text)
       end
     end
-    Notification.where(event: 'contest_started').find_each do |n|
+    Notification.where(event: 'contest_started').find_each do |_n|
       run_at = start_time
       if Time.zone.now < run_at
         e.delay(run_at: run_at, queue: "contest_#{id}")
-         .contest_started(n.time_text)
+         .contest_started
       end
     end
     Notification.where(event: 'contest_ending').find_each do |n|

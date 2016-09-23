@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/LineLength
 # == Schema Information
 #
 # Table name: user_notifications
@@ -17,6 +18,7 @@
 #  fk_rails_cdbff2ee9e  (user_id => users.id) ON DELETE => cascade
 #  fk_rails_d238d8ef07  (notification_id => notifications.id) ON DELETE => cascade
 #
+# rubocop:enable Metrics/LineLength
 
 require 'test_helper'
 

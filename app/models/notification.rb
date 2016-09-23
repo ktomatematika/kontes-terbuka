@@ -10,6 +10,7 @@
 #  description :string           not null
 #  seconds     :integer
 #
+# rubocop:enable Metrics/LineLength
 
 class Notification < ActiveRecord::Base
   has_paper_trail

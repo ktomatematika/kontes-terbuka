@@ -9,8 +9,9 @@
 #
 # Indexes
 #
-#  idx_mv_statuses_name_uniq  (name) UNIQUE
+#  index_statuses_on_name  (name) UNIQUE
 #
+# rubocop:enable Metrics/LineLength
 
 require 'test_helper'
 

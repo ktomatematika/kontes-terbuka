@@ -18,6 +18,7 @@
 #  fk_rails_418fd0bbd0  (contest_id => contests.id) ON DELETE => cascade
 #  fk_rails_ee078c9177  (user_id => users.id) ON DELETE => cascade
 #
+# rubocop:enable Metrics/LineLength
 
 class UserContest < ActiveRecord::Base
   include UserContestScope

@@ -12,11 +12,10 @@ class EmailNotifications
       'kemudian. Siapkan segala peralatan dan alat perang Anda!'
     notif = Notification.find_by(event: 'contest_starting',
                                  time_text: time_text)
-    emails = notif.user_notifications.map { |un| un.user.email }
+    users = notif.users
 
     Ajat.info "contest_starting|id:#{@contest.id}|time:#{time_text}"
-    Mailgun.send_message contest: @contest, text: text, subject: subject,
-                         bcc_array: emails
+    send_emails(text: text, subject: subject, users: users)
   end
 
   def contest_started
@@ -24,11 +23,10 @@ class EmailNotifications
     text = "#{@contest} sudah dimulai! Silakan membuka soalnya di " \
     "#{contest_url @contest}"
     notif = Notification.find_by(event: 'contest_started')
-    emails = notif.user_notifications.map { |un| un.user.email }
+    users = notif.users
 
     Ajat.info "contest_started|id:#{@contest.id}"
-    Mailgun.send_message contest: @contest, text: text, subject: subject,
-                         bcc_array: emails
+    send_emails(text: text, subject: subject, users: users)
   end
 
   def contest_ending(time_text)
@@ -39,16 +37,10 @@ class EmailNotifications
       'Antisipasi segala kegagalan teknis. Ingat, kami hampir tidak pernah ' \
       'memberikan waktu tambahan.'
     notif = Notification.find_by(event: 'contest_ending', time_text: time_text)
-    user_contests = notif.user_notifications.map do |un|
-      UserContest.find_by(contest: @contest, user: un.user)
-    end
-    emails = user_contests.inject([]) do |email_array, uc|
-      uc.nil? ? email_array : email_array.push(uc.user.email)
-    end
+    users = notif.users.join(:contests).where('contests.id = ?', @contest.id)
 
     Ajat.info "contest_ending|id:#{@contest.id}"
-    Mailgun.send_message contest: @contest, text: text, subject: subject,
-                         bcc_array: emails
+    send_emails(text: text, subject: subject, users: users)
   end
 
   def results_released
@@ -58,16 +50,10 @@ class EmailNotifications
       'Jika Anda belum beruntung, jangan berkecil hati karena masih ada ' \
       'kontes-kontes berikutnya.'
     notif = Notification.find_by(event: 'results_released')
-    user_contests = notif.user_notifications.map do |un|
-      UserContest.find_by(contest: @contest, user: un.user)
-    end
-    emails = user_contests.inject([]) do |email_array, uc|
-      uc.nil? ? email_array : email_array.push(uc.user.email)
-    end
+    emails = notif.users.join(:contests).where('contests.id = ?', @contest.id)
 
     Ajat.info "result_released|id:#{@contest.id}"
-    Mailgun.send_message contest: @contest, text: text, subject: subject,
-                         bcc_array: emails
+    send_emails(text: text, subject: subject, users: users)
   end
 
   def feedback_ending(time_text)
@@ -79,16 +65,24 @@ class EmailNotifications
     user_contests = notif.user_notifications.map do |un|
       UserContest.find_by(contest: @contest, user: un.user)
     end
-    emails = user_contests.inject([]) do |email_array, uc|
+    users = user_contests.inject([]) do |email_array, uc|
       if uc.nil? || uc.feedback_answers.empty?
         email_array
       else
-        email_array.push(uc.user.email)
+        email_array.push(uc.user)
       end
     end
 
     Ajat.info "feedback_ending|id:#{@contest.id}|time:#{time_text}"
-    Mailgun.send_message contest: @contest, text: text, subject: subject,
-                         bcc_array: emails
+    send_emails(text: text, subject: subject, users: users)
+  end
+
+  private
+
+  def send_emails(**hash)
+    hash[:users].pluck(:email).each_slice(200) do |arr|
+      Mailgun.send_message contest: @contest, text: hash[:text],
+                           subject: hash[:subject], bcc_array: arr
+    end
   end
 end

@@ -35,6 +35,7 @@
 #  index_contests_on_result_time    (result_time)
 #  index_contests_on_start_time     (start_time)
 #
+# rubocop:enable Metrics/LineLength
 
 require 'test_helper'
 

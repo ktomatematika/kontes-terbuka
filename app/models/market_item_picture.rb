@@ -19,6 +19,7 @@
 #
 #  fk_rails_7d71f7cc8f  (market_item_id => market_items.id) ON DELETE => cascade
 #
+# rubocop:enable Metrics/LineLength
 
 class MarketItemPicture < ActiveRecord::Base
   has_paper_trail

@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/LineLength
 # == Schema Information
 #
 # Table name: temporary_markings
@@ -19,6 +20,7 @@
 #  fk_rails_349a6ecb7e  (user_id => users.id) ON DELETE => cascade
 #  fk_rails_7dcab47693  (long_submission_id => long_submissions.id) ON DELETE => cascade
 #
+# rubocop:enable Metrics/LineLength
 
 require 'test_helper'
 

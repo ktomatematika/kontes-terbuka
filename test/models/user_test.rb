@@ -22,13 +22,13 @@
 #
 # Indexes
 #
-#  idx_mv_users_auth_token_uniq    (auth_token) UNIQUE
-#  idx_mv_users_email_uniq         (email) UNIQUE
-#  idx_mv_users_username_uniq      (username) UNIQUE
-#  idx_mv_users_verification_uniq  (verification) UNIQUE
-#  index_users_on_color_id         (color_id)
-#  index_users_on_province_id      (province_id)
-#  index_users_on_status_id        (status_id)
+#  index_users_on_auth_token    (auth_token) UNIQUE
+#  index_users_on_color_id      (color_id)
+#  index_users_on_email         (email) UNIQUE
+#  index_users_on_province_id   (province_id)
+#  index_users_on_status_id     (status_id)
+#  index_users_on_username      (username) UNIQUE
+#  index_users_on_verification  (verification) UNIQUE
 #
 # Foreign Keys
 #
@@ -36,6 +36,7 @@
 #  fk_rails_87f75b7957  (color_id => colors.id) ON DELETE => nullify
 #  fk_rails_ce4a327a04  (status_id => statuses.id) ON DELETE => nullify
 #
+# rubocop:enable Metrics/LineLength
 
 require 'test_helper'
 
@@ -145,7 +146,8 @@ class UserTest < ActiveSupport::TestCase
     password = 'asdfasdf'
     u = create(:user, password: 'asdfasdf', password_confirmation: password)
     assert_nil u.password, 'Password is not cleared.'
-    assert_not_equal u.hashed_password, password, 'Password is stored unencrypted!'
+    assert_not_equal u.hashed_password, password,
+                     'Password is stored unencrypted!'
   end
 
   test 'password needs confirmation' do
@@ -161,9 +163,9 @@ class UserTest < ActiveSupport::TestCase
     u = create(:user)
     s = u.salt
     assert s.length >= 20, 'Salt length is < 20.'
-    assert_no_match /\A[a-z]*\z$/, s, 'Salt is all lowercase.'
-    assert_no_match /\A[A-Z]*\z$/, s, 'Salt is all uppercase.'
-    assert_no_match /\A[0-9]*\z$/, s, 'Salt is all numbers.'
+    assert_no_match(/\A[a-z]*\z$/, s, 'Salt is all lowercase.')
+    assert_no_match(/\A[A-Z]*\z$/, s, 'Salt is all uppercase.')
+    assert_no_match(/\A[0-9]*\z$/, s, 'Salt is all numbers.')
   end
 
   test 'hashed password starts with salt' do
@@ -183,9 +185,9 @@ class UserTest < ActiveSupport::TestCase
     u = create(:user)
     p = u.hashed_password
     assert p.length >= 50, 'Hashed passowrd length is < 50'
-    assert_no_match /\A[a-z]*\z$/, p, 'Hashed pass is all lowercase.'
-    assert_no_match /\A[A-Z]*\z$/, p, 'Hashed pass is all uppercase.'
-    assert_no_match /\A[0-9]*\z$/, p, 'Hashed pass is all numbers.'
+    assert_no_match(/\A[a-z]*\z$/, p, 'Hashed pass is all lowercase.')
+    assert_no_match(/\A[A-Z]*\z$/, p, 'Hashed pass is all uppercase.')
+    assert_no_match(/\A[0-9]*\z$/, p, 'Hashed pass is all numbers.')
   end
 
   test 'auth token and verification are generated' do
@@ -217,11 +219,14 @@ class UserTest < ActiveSupport::TestCase
     assert_equal User.reflect_on_association(:user_awards).macro, :has_many,
                  'User has many user awards is false.'
     assert_equal User.reflect_on_association(:temporary_markings).macro,
-                 :has_many, 'User has many temporary markings contests is false.'
+                 :has_many,
+                 'User has many temporary markings contests is false.'
     assert_equal User.reflect_on_association(:user_notifications).macro,
-                 :has_many, 'User has many user notifications contests is false.'
+                 :has_many,
+                 'User has many user notifications contests is false.'
     assert_equal User.reflect_on_association(:point_transactions).macro,
-                 :has_many, 'User has many point transactions contests is false.'
+                 :has_many,
+                 'User has many point transactions contests is false.'
   end
 
   test 'tries need to be >= 0' do

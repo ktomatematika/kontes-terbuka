@@ -40,7 +40,7 @@ module Mailgun
 
       RestClient.post URL, params
     else
-      Ajat.info 'mailgun|message=' + params
+      Ajat.info 'mailgun|message=' + params.to_s
     end
   end
 end

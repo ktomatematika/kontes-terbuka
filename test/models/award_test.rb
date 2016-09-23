@@ -7,6 +7,7 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
+# rubocop:enable Metrics/LineLength
 
 require 'test_helper'
 
