@@ -89,8 +89,8 @@ class ContestsController < ApplicationController
       UserContest.transaction do
         user_contest = UserContest.find_or_create_by(participate_params)
         contest.long_problems.each do |long_problem|
-          LongSubmission.create(user_contest: user_contest,
-                                long_problem: long_problem)
+          LongSubmission.find_or_create_by(user_contest: user_contest,
+                                           long_problem: long_problem)
         end
       end
     end
