@@ -11,7 +11,7 @@ class Ability
           id: Contest.where('start_time <= ? AND ? <= end_time',
                             Time.zone.now, Time.zone.now).pluck(:id)
       can [:download_pdf, :give_feedback, :feedback_submit], Contest,
-          user_contest: UserContest.where(user: user)
+          user_contests: UserContest.where(user: user)
       can [:submit, :destroy_submissions, :download], LongSubmission,
           user: user
 
