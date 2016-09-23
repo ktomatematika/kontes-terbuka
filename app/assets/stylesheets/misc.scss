@@ -10,14 +10,21 @@
 }
 
 #daftar-panitia {
+  display: flex;
+  flex-wrap: wrap;
   text-align: center;
 
   img {
     border-radius: 50%;
-    margin-top: 25px;
+    margin: 25px auto 0;
     max-height: 150px;
     max-width: 150px;
   }
+}
+
+.about-us-person {
+  display: flex;
+  flex-direction: column;
 }
 
 .about-us-person {
@@ -26,6 +33,10 @@
   margin-top: 0.5em;
   padding-bottom: 0.5em;
   transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: #fff;
+  }
 }
 
 .active-about-us {
@@ -36,25 +47,4 @@
   background-color: #fff;
   border-radius: 0 0 1.5em 1.5em;
   padding: 1em;
-}
-
-.faq {
-  border-radius: 5px;
-  padding: 0.5em 1em;
-
-  &.question {
-    cursor: pointer;
-  }
-}
-
-.question {
-  background-color: #f0f0dd;
-
-  &:hover {
-    background-color: #e0e0bb;
-  }
-}
-
-.answer {
-  background-color: #fff;
 }

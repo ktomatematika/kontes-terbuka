@@ -1,0 +1,39 @@
+.faq {
+  border-radius: 0.5em;
+  padding: 0.5em 1em;
+
+  &.question {
+    cursor: pointer;
+  }
+}
+
+.question {
+  background-color: #f0f0dd;
+
+  &:hover, &-active {
+    background-color: #e0e0bb;
+  }
+}
+
+.answer {
+  background-color: #fff;
+}
+
+#categories {
+  display: table;
+  width: 100%;
+}
+
+.faq-category {
+  background-color: #fff;
+  border-radius: 1em 1em 0 0;
+  cursor: pointer;
+  display: table-cell;
+  padding: 0.5em 1em;
+  text-align: center;
+  vertical-align: middle;
+
+  &:hover, &-active {
+    background-color: #f0f0dd;
+  }
+}
