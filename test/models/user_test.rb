@@ -280,4 +280,8 @@ class UserTest < ActiveSupport::TestCase
     assert_not u1.destroyed?
     assert u2.destroyed?
   end
+
+  test 'user becomes veteran if osn is checked' do
+    assert create(:user, osn: '1').has_role?(:veteran)
+  end
 end

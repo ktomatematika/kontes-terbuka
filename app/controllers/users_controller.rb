@@ -19,8 +19,6 @@ class UsersController < ApplicationController
       if !(user_params[:province_id].blank? ||
           user_params[:status_id].blank?) && verify_recaptcha(model: user) &&
          user.save
-        user.timezone = Province.find(user_params[:province_id]).timezone
-        user.add_role(:veteran) if user_params[:osn] == '1'
         user.send_verify_email
         redirect_to root_path, notice: 'User berhasil dibuat! ' \
           'Sekarang, lakukan verifikasi dengan membuka link yang telah ' \
@@ -64,11 +62,7 @@ class UsersController < ApplicationController
     user = User.find_by verification: params[:verification]
     if user
       if params[:new_password] == params[:confirm_new_password]
-        User.transaction do
-          user.password = params[:new_password]
-          user.verification = nil
-          user.save
-        end
+        user.update(password: params[:new_password], verification: nil)
         Ajat.info "user_reset_password|uid:#{user.id}"
         redirect_to login_path, notice: 'Password berhasil diubah! ' \
         'Silakan login.'
@@ -96,10 +90,7 @@ class UsersController < ApplicationController
     authorize! :process_change_password, user
     if user.authenticate(params[:old_password])
       if params[:new_password] == params[:confirm_new_password]
-        User.transaction do
-          user.password = params[:new_password]
-          user.save
-        end
+        user.update(password: params[:new_password])
         Ajat.info "user_change_password|uid:#{user.id}"
         redirect_to user_path(user), notice: 'Password Anda berhasil diubah!'
       else

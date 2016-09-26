@@ -49,8 +49,13 @@ class User < ActiveRecord::Base
     generate_token(:verification)
     self.timezone = province.nil? ? 'WIB' : province.timezone
   end
+
   before_validation do
     encrypt_password
+  end
+
+  before_save do
+    add_role(:veteran) if osn == '1'
   end
 
   after_save :clear_password
