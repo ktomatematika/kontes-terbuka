@@ -3,6 +3,8 @@
   - if can? :create, Contest
     = link_to 'Kontes Baru', new_contest_path, class: 'btn'
 
+  = link_to 'Magic button', coba_path, class: 'btn'
+
   - unless @long_problems.empty?
     %h2 Koreksian
     %ul

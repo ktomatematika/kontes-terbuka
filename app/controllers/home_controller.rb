@@ -49,4 +49,9 @@ class HomeController < ApplicationController
 
   def contact
   end
+
+  def coba
+    Ajat.info 'coba'
+    redirect_to home_admin_path
+  end
 end
