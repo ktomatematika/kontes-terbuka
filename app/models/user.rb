@@ -45,10 +45,12 @@ class User < ActiveRecord::Base
 
   # Callbacks
   before_validation(on: :create) do
-    encrypt_password
     generate_token(:auth_token)
     generate_token(:verification)
     self.timezone = province.nil? ? 'WIB' : province.timezone
+  end
+  before_validation do
+    encrypt_password
   end
 
   after_save :clear_password

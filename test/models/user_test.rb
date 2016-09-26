@@ -238,4 +238,46 @@ class UserTest < ActiveSupport::TestCase
     assert_not build(:user, terms_of_service: '0').save,
                'User that does not accept terms of service can be registered.'
   end
+
+  test 'user is displayed by its username' do
+    assert_equal create(:user, username: 'qwerty').to_s, 'qwerty'
+  end
+
+  test 'in params, user is shown as its ID followed by its username' do
+    u1 = create(:user, username: 'qwerty')
+    u2 = create(:user, username: 'ASDFGH')
+    u3 = create(:user, username: 'ZxCvBnM123')
+
+    assert_equal u1.to_param, "#{u1.id}-qwerty"
+    assert_equal u2.to_param, "#{u2.id}-asdfgh"
+    assert_equal u3.to_param, "#{u3.id}-zxcvbnm123"
+  end
+
+  test 'get_user function returns user from either username or email' do
+    create(:user, username: 'cobaaja', email: 'coba@aja.com')
+    assert_not_nil User.get_user('cobaaja')
+    assert_not_nil User.get_user('coba@aja.com')
+  end
+
+  test 'authenticate works' do
+    u = create(:user, password: 'halohalo', password_confirmation: 'halohalo')
+    assert u.authenticate('halohalo')
+  end
+
+  test 'reset password works' do
+    u = create(:user)
+    u.reset_password
+    assert_not_nil u.verification
+  end
+
+  test 'user is destroyed if not verified' do
+    u1 = create(:user, username: 'qwerqwer')
+    u1.enable
+    u2 = create(:user, username: 'zxcvzxcv')
+
+    u1.destroy_if_unverified
+    u2.destroy_if_unverified
+    assert_not u1.destroyed?
+    assert u2.destroyed?
+  end
 end

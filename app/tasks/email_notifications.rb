@@ -50,7 +50,7 @@ class EmailNotifications
       'Jika Anda belum beruntung, jangan berkecil hati karena masih ada ' \
       'kontes-kontes berikutnya.'
     notif = Notification.find_by(event: 'results_released')
-    emails = notif.users.join(:contests).where('contests.id = ?', @contest.id)
+    users = notif.users.join(:contests).where('contests.id = ?', @contest.id)
 
     Ajat.info "result_released|id:#{@contest.id}"
     send_emails(text: text, subject: subject, users: users)

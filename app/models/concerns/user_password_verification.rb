@@ -3,27 +3,11 @@ module UserPasswordVerification
   include Rails.application.routes.url_helpers
 
   MAX_TRIES = 10
-  VERIFY_TIME = 4.hours
-  VERIFY_TIME_INDO = '4 jam'.freeze
-
-  def encrypt_password
-    self.salt = BCrypt::Engine.generate_salt
-    self.hashed_password = BCrypt::Engine.hash_secret(password, salt)
-  end
+  VERIFY_TIME = 8.hours
+  VERIFY_TIME_INDO = '8 jam'.freeze
 
   def authenticate(password)
     hashed_password == BCrypt::Engine.hash_secret(password, salt)
-  end
-
-  def clear_password
-    self.password = nil
-  end
-
-  def generate_token(column)
-    loop do
-      self[column] = SecureRandom.urlsafe_base64
-      break unless User.exists?(column => self[column])
-    end
   end
 
   def reset_password
@@ -31,7 +15,7 @@ module UserPasswordVerification
     save
     text = 'Untuk melanjutkan process reset password user Anda, klik link ' \
       "ini: \n\n #{reset_password_url verification: verification}"
-    Mailgun.send_message to: user.email,
+    Mailgun.send_message to: email,
                          subject: 'Reset Password KTO Matematika',
                          text: text
   end
@@ -79,5 +63,23 @@ module UserPasswordVerification
                          'Jika Anda tidak meminta password Anda untuk ' \
                          'direset, acuhkan saja email ini.'
     Ajat.info "forgot_password_email_sent|uid:#{id}"
+  end
+
+  private
+
+  def encrypt_password
+    self.salt = BCrypt::Engine.generate_salt
+    self.hashed_password = BCrypt::Engine.hash_secret(password, salt)
+  end
+
+  def clear_password
+    self.password = nil
+  end
+
+  def generate_token(column)
+    loop do
+      self[column] = SecureRandom.urlsafe_base64
+      break unless User.exists?(column => self[column])
+    end
   end
 end

@@ -39,7 +39,7 @@ module Mailgun
       end
 
       RestClient.post URL, params
-    else
+    elsif Rails.env.development?
       Ajat.info 'mailgun|message=' + params.to_s
     end
   end

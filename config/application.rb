@@ -30,4 +30,6 @@ module KontesTerbuka
     config.autoload_paths.push("#{config.root}/lib")
     config.active_job.queue_adapter = :delayed_job
   end
+
+  Rails.application.routes.default_url_options[:host] = 'localhost:3000'
 end

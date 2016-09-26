@@ -66,7 +66,6 @@ class UsersController < ApplicationController
       if params[:new_password] == params[:confirm_new_password]
         User.transaction do
           user.password = params[:new_password]
-          user.encrypt_password
           user.verification = nil
           user.save
         end
@@ -99,7 +98,6 @@ class UsersController < ApplicationController
       if params[:new_password] == params[:confirm_new_password]
         User.transaction do
           user.password = params[:new_password]
-          user.encrypt_password
           user.save
         end
         Ajat.info "user_change_password|uid:#{user.id}"
