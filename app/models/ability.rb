@@ -4,6 +4,7 @@ class Ability
   # rubocop:disable AbcSize, MethodLength
   def initialize(user)
     unless user.nil?
+      # Contest related
       can [:show, :index, :show_rules,
            :accept_rules, :create_short_submissions], Contest
       can :download_results, Contest, result_released: true
@@ -14,14 +15,14 @@ class Ability
           id: UserContest.where(user: user).pluck(:contest_id)
       can [:submit, :destroy_submissions, :download], LongSubmission,
           user_contest_id: user.user_contests.pluck(:id)
+      can :stop_nag, UserContest, user: user
 
+      # User related
       can :show, User, enabled: true
       can :index, User
       can [:see_full, :mini_edit, :mini_update, :change_password,
            :process_change_password, :change_notifications,
            :process_change_notifications], User, id: user.id
-
-      can :stop_nag, UserContest, user: user
 
       if user.has_role? :marking_manager
         can [:assign_markers, :save_markers], Contest
@@ -41,9 +42,14 @@ class Ability
       if user.has_role? :panitia
         can [:preview, :summary], Contest
         can [:see_full_index, :see_full], User
-        can :destroy, User, enabled: false
         can [:admin, :profile], Application
       end
+
+      if user.has_role? :user_admin
+        can [:edit, :destroy], User
+      end
+
+      can [:edit, :destroy], User if user.has_role? :user_admin
 
       can :manage, :all if user.has_role? :admin
     end

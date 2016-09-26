@@ -40,7 +40,7 @@
 
 class User < ActiveRecord::Base
   include UserPasswordVerification
-  rolify
+  rolify before_add: :before_add_method
   has_paper_trail
 
   # Callbacks
@@ -59,6 +59,10 @@ class User < ActiveRecord::Base
   end
 
   after_save :clear_password
+
+  def before_add_method(role)
+    User.add_role :panitia if role == :user_admin
+  end
 
   # Associations
   belongs_to :province

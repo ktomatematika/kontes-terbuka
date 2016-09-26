@@ -52,6 +52,6 @@ class HomeController < ApplicationController
 
   def coba
     Ajat.info 'coba'
-    redirect_to home_admin_path
+    redirect_to admin_path, notice: 'coba'
   end
 end

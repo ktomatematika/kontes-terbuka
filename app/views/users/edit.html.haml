@@ -5,6 +5,9 @@
     .col-md-6
       = form_for :user, url: user_path(@user), method: :patch do |f|
         %p
+          %label{ for: 'user_username' } Username:
+          = f.text_field :username, class: 'form-control'
+        %p
           %label{ for: 'user_email' } Email:
           = f.text_field :email, class: 'form-control'
         %p
