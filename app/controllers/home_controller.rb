@@ -51,7 +51,7 @@ class HomeController < ApplicationController
   end
 
   def coba
-    authorize! :coba
+    authorize! :coba, Application
     Ajat.info 'coba'
     redirect_to admin_path, notice: 'coba'
   end
