@@ -45,10 +45,6 @@ class Ability
         can [:admin, :profile], Application
       end
 
-      if user.has_role? :user_admin
-        can [:edit, :destroy], User
-      end
-
       can [:edit, :destroy], User if user.has_role? :user_admin
 
       can :manage, :all if user.has_role? :admin
