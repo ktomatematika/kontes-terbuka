@@ -1,25 +1,15 @@
 class LineNag
   include Rails.application.routes.url_helpers
 
-  TARGET = [
-    { mid: 'ue0d1f2bc3d5d752478e0bbddd1e88040', nick: 'Ilhan' },
-    { mid: 'u1578096204db7e68e7e2b633c395fe44', nick: 'Afif' },
-    { mid: 'zxcv', nick: 'Cis' },
-    { mid: 'afaf', nick: 'Otto' },
-    { mid: 'afaf', nick: 'Ruben' },
-    { mid: 'afaf', nick: 'Farras' },
-    { mid: 'afaf', nick: 'Ricky' }
-  ].freeze
-
   attr_accessor :contest
   def initialize(ctst)
     @contest = ctst
   end
 
   def nag(text)
-    TARGET.each do |p|
-      text = "#{p.nick}, KTOM-Chan mau mengingatkan kamu bahwa #{text}"
-      client.send_text to_mid: p.mid, text: text
+    TARGETS.each do |k, v|
+      text = "#{k}, KTOM-Chan mau mengingatkan kamu bahwa #{text}"
+      LineClient.send_text to_mid: v, text: text
     end
   end
 

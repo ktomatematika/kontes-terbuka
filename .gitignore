@@ -16,6 +16,9 @@
 !/log/.keep
 /tmp
 *~
+.sass-cache/
+.byebug_history
+ubuntu-xenial-16.04-cloudimg-console.log
 
 # Ignore public
 /public/contest_files
@@ -24,9 +27,8 @@
 /config/database.yml
 /config/initializers/env.rb
 /app/views/contests/certificate.tex.haml
+config/initializers/line_targets.rb
 
+# Others
 .vagrant/
-.sass-cache/
-.byebug_history
-ubuntu-xenial-16.04-cloudimg-console.log
 import/

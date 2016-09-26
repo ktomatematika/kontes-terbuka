@@ -38,6 +38,16 @@ While waiting, these are files you need to set up on your own:
 - public/contest_files/certificates. Files you need in this directory to
 create certificates): barra.png, frame.jpg, ilhan.png, logo.png
 - app/views/contests/certificate.tex.haml
+- config/initializers/line_targets.rb. It contains the variable `TARGETS`
+assigned to a dictionary, in which the keys are nicknames and the values
+are MIDs. All users here will be nagged by a LINE client. For example:
+```ruby
+TARGETS = {
+  'Amir': 'u1284eee',
+  'Bayu': 'u92a3',
+  'Charlie': 'u004932'
+}.freeze
+```
 
 After everything is done, enter Vagrant: `vagrant ssh`
 
