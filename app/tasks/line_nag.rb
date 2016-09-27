@@ -16,12 +16,12 @@ class LineNag
   def result_and_next_contest
     n = Contest.next_contest
     nag "hasil #{@contest} sudah keluar! Linknya di\n\n" \
-      "#{contest_path @contest}\n\n#{n} juga diadakan " \
+      "#{contest_url @contest}\n\n#{n} juga diadakan " \
       "dari #{n.start_time} sampai #{n.end_time}, diupdate juga ya!"
   end
 
   def contest_started
-    nag "#{@contest} sudah dimulai! Linknya di\n\n#{contest_path @contest}"
+    nag "#{@contest} sudah dimulai! Linknya di\n\n#{contest_url @contest}"
   end
 
   def contest_starting(time_text)
