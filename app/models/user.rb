@@ -51,7 +51,7 @@ class User < ActiveRecord::Base
   end
 
   before_validation do
-    encrypt_password
+    encrypt_password unless password.nil?
   end
 
   before_save do
