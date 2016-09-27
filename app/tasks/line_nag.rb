@@ -6,9 +6,9 @@ class LineNag
     @contest = ctst
   end
 
-  def nag(text)
-    TARGETS.each do |k, v|
-      text = "#{k}, KTOM-Chan mau mengingatkan kamu bahwa #{text}"
+  def nag(ending)
+    LINE_TARGETS.each do |k, v|
+      text = "#{k}, KTOM-Chan mau mengingatkan kamu bahwa #{ending}"
       LineClient.send_text to_mid: v, text: text
     end
   end
