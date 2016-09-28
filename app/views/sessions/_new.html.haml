@@ -11,6 +11,7 @@
       .form-group.has-feedback
         = password_field_tag :password, params[:password],
           class: 'form-control', placeholder: 'Password'
+        = hidden_field_tag 'redirect', params[:redirect]
         %span.glyphicon.form-glyphicon.form-control-feedback.glyphicon-eye-open{ 'aria-hidden' => 'true' }
 
       %footer

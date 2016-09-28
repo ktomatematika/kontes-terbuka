@@ -5,9 +5,9 @@ class ApplicationController < ActionController::Base
   skip_before_action :require_login, only: :maintenance
 
   before_action :set_paper_trail_whodunnit, :require_login, :set_timezone,
-                :set_color
+                :set_color, :set_mini_profiler
 
-  before_action do
+  def set_mini_profiler
     Rack::MiniProfiler.authorize_request if can? :profile, Application
   end
 
@@ -32,23 +32,15 @@ class ApplicationController < ActionController::Base
              end
   end
 
-  def maintenance
-  end
-
   def current_user
-    if cookies[:auth_token]
-      begin
-        @current_user ||= User.find_by_auth_token!(cookies[:auth_token])
-      rescue ActiveRecord::RecordNotFound
-        @current_user = nil
-      end
-    end
+    @current_user ||= User.find_by(auth_token: cookies[:auth_token])
   end
   helper_method :current_user
 
   def require_login
     unless current_user
-      redirect_to login_path, notice: 'Anda perlu masuk terlebih dahulu.'
+      redirect_to login_path(redirect: request.original_fullpath),
+                  notice: 'Anda perlu masuk terlebih dahulu.'
     end
   end
 

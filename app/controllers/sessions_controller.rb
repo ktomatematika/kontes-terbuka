@@ -5,7 +5,7 @@ class SessionsController < ApplicationController
     if current_user
       redirect_to root_path
     else
-      redirect_to sign_path anchor: 'login'
+      redirect_to sign_path(redirect: params[:redirect], anchor: 'login')
     end
   end
 
@@ -50,7 +50,7 @@ class SessionsController < ApplicationController
 
     if flash[:alert].nil? && flash[:notice].nil?
       user.update(tries: 0)
-      redirect_to root_path
+      redirect_to params[:redirect] || root_path
     else
       redirect_to login_path
     end

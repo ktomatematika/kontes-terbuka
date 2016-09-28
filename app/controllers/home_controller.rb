@@ -23,15 +23,6 @@ class HomeController < ApplicationController
     @panitia = User.with_role(:panitia).order(:username)
   end
 
-  def faq
-  end
-
-  def book
-  end
-
-  def donate
-  end
-
   def about
     @photo_dictionary = Dir.glob('app/assets/images/panitia/*').map do |img|
       img_file = img.split('/').last
@@ -39,14 +30,5 @@ class HomeController < ApplicationController
       image_tag = ActionController::Base.helpers.image_tag(image_path)
       [img_file, image_tag.tr('"', "'")]
     end.to_h
-  end
-
-  def privacy
-  end
-
-  def terms
-  end
-
-  def contact
   end
 end
