@@ -49,25 +49,4 @@ class HomeController < ApplicationController
 
   def contact
   end
-
-  def coba
-    authorize! :coba, Application
-    Ajat.info 'coba'
-    redirect_to admin_path, notice: 'coba'
-  end
-  def coba2
-    authorize! :coba, Application
-    Ajat.info 'coba2'
-    head :ok
-  end
-  def coba3
-    authorize! :coba, Application
-    Ajat.info 'coba3'
-    redirect_to admin_path, notice: 'coba3'
-  end
-  def coba4
-    authorize! :coba, Application
-    Ajat.info 'coba4'
-    head :ok
-  end
 end

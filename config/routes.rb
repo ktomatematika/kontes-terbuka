@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   get '/register', to: 'users#new'
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'
-  get '/logout', to: 'sessions#destroy'
+  delete '/logout', to: 'sessions#destroy'
   post '/forgot', to: 'users#process_forgot_password'
 
   post '/check', to: 'users#check_unique'
@@ -36,9 +36,9 @@ Rails.application.routes.draw do
     get 'download-results', to: 'contests#download_results',
                             defaults: { format: 'pdf' }
     post 'copy-feedback-questions', to: 'feedback_questions#copy'
-    post 'destroy-short-probs', to: 'contests#destroy_short_probs'
-    post 'destroy-long-probs', to: 'contests#destroy_long_probs'
-    post 'destroy-feedback_qns', to: 'contests#destroy_feedback_qns'
+    delete 'destroy-short-probs', to: 'contests#destroy_short_probs'
+    delete 'destroy-long-probs', to: 'contests#destroy_long_probs'
+    delete 'destroy-feedback_qns', to: 'contests#destroy_feedback_qns'
 
     resources :short_problems, path: '/short-problems'
     post 'create-short-submissions', to: 'contests#create_short_submissions'
@@ -52,7 +52,7 @@ Rails.application.routes.draw do
 
     resources :feedback_questions, path: '/feedback-questions'
 
-    get 'give-points', to: 'contests#give_points'
+    post 'give-points', to: 'contests#give_points'
 
     get 'pdf', to: 'contests#download_pdf'
     get 'ms-pdf', to: 'contests#download_marking_scheme'
@@ -63,7 +63,7 @@ Rails.application.routes.draw do
 
   get '/download-submissions/:id', to: 'long_problems#download',
                                    as: 'download_submissions'
-  get '/autofill-marks/:id', to: 'long_problems#autofill', as: 'autofill_marks'
+  post '/autofill-marks/:id', to: 'long_problems#autofill', as: 'autofill_marks'
   post '/upload-report/:id', to: 'long_problems#upload_report',
                              as: 'upload_report'
   post '/stop-nag/:id', to: 'user_contests#stop_nag', as: 'stop_nag'
@@ -87,10 +87,6 @@ Rails.application.routes.draw do
   get '/terms', to: 'home#terms'
   get '/contact', to: 'home#contact'
   get '/penguasa', to: 'home#admin', as: :admin
-  get '/coba', to: 'home#coba'
-  get '/coba2', to: 'home#coba2'
-  post '/coba', to: 'home#coba3'
-  post '/coba2', to: 'home#coba4'
 
   get '/assign/:id', to: 'contests#assign_markers', as: :assign_markers
   post 'create-marker', to: 'roles#create_marker'
