@@ -21,10 +21,9 @@ class ContestsController < ApplicationController
 
   def create
     contest = Contest.new(contest_params)
-    authorize! :admin, contest
+    authorize! :create, contest
     if contest.save
       Ajat.info "contest_created|id:#{contest.id}"
-      contest.prepare_jobs
       redirect_to contest, notice: "#{contest} berhasil dibuat!"
     else
       Ajat.warn "contest_created_fail|#{contest.errors.full_messages}"
@@ -77,22 +76,16 @@ class ContestsController < ApplicationController
 
   def show_rules
     @contest = Contest.find(params[:contest_id])
-    @user_contest = UserContest.find_by(contest: @contest,
-                                        user: current_user) ||
-                    UserContest.new
+    @user_contest = UserContest.find_or_initialize_by(contest: @contest,
+                                                      user: current_user)
   end
 
   def accept_rules
     contest = Contest.find(participate_params[:contest_id])
 
     if contest.currently_in_contest?
-      UserContest.transaction do
-        user_contest = UserContest.find_or_create_by(participate_params)
-        contest.long_problems.each do |long_problem|
-          LongSubmission.find_or_create_by(user_contest: user_contest,
-                                           long_problem: long_problem)
-        end
-      end
+      user_contest = UserContest.find_or_create_by(participate_params)
+      user_contest.create_long_submissions
     end
 
     redirect_to contest
@@ -102,14 +95,8 @@ class ContestsController < ApplicationController
     contest_id = params['contest_id']
     contest = Contest.find(contest_id)
     authorize! :create_short_submissions, contest
-    submission_params.each_key do |prob_id|
-      answer = submission_params[prob_id]
-      next if answer == ''
-      user_contest = UserContest.find_by(user: current_user, contest: contest)
-      ShortSubmission.find_or_initialize_by(short_problem_id: prob_id,
-                                            user_contest: user_contest)
-                     .update(answer: answer)
-    end
+    UserContest.find_by(user: current_user, contest: contest)
+               .create_short_submissions(submission_params)
     redirect_to contest, notice: 'Jawaban bagian A berhasil dikirimkan!'
   end
 
@@ -123,13 +110,8 @@ class ContestsController < ApplicationController
   def feedback_submit
     contest = Contest.find(params[:contest_id])
     authorize! :feedback_submit, contest
-    user_contest = UserContest.find_by(user: current_user, contest: contest)
-    feedback_params.each do |q_id, answer|
-      next if answer == ''
-      FeedbackAnswer.find_or_initialize_by(feedback_question_id: q_id,
-                                           user_contest: user_contest)
-                    .update(answer: answer)
-    end
+    UserContest.find_by(user: current_user, contest: contest)
+               .create_feedback_answers(feedback_params)
     redirect_to contest, notice: 'Feedback berhasil dikirimkan! ' \
                                  'Jika nilai Anda minimal ' \
                                  "#{UserContest::CUTOFF_CERTIFICATE} " \
@@ -172,28 +154,6 @@ class ContestsController < ApplicationController
       end
     end
     Ajat.info "feedback_downloaded|contest_id:#{@contest.id}"
-  end
-
-  def send_certificates
-    contest = Contest.find params[:contest_id]
-    authorize! :send_certificates, contest
-
-    contest.full_feedback_user_contests.processed.eligible_score.each do |uc|
-      CertificateManager.new(uc).delay(queue: "contest_#{contest.id}_cert")
-                        .run
-    end
-    redirect_to contest, notice: 'Sertifikat sudah dikirim-kirim~'
-  end
-
-  def give_points
-    contest = Contest.find(params[:contest_id])
-    authorize! :give_points, contest
-    contest.user_contests.processed.each do |uc|
-      PointTransaction.create(user_id: uc.user_id, point: uc.contest_points,
-                              description: contest.to_s)
-    end
-    Ajat.info "point_given|contest_id:#{contest.id}"
-    redirect_to contest, notice: 'Point sudah dibagi-bagi~'
   end
 
   def read_problems

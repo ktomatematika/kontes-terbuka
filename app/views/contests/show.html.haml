@@ -18,8 +18,9 @@
         = render 'long_problems' unless @long_problems.empty?
 
       - if @contest.result_released
-        = render 'own_results' unless @user_contest.nil?
-        = render 'feedback' unless @contest.feedback_closed? || @user_contest.nil?
+        - unless @user_contest.nil?
+          = render 'own_results'
+          = render 'feedback' unless @contest.feedback_closed?
         = render 'results'
       - elsif @contest.ended? && can?(:preview, Contest)
         %h2 == HANYA PANITIA ==

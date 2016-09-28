@@ -16,7 +16,7 @@
       %th Provinsi
       %th Status
       %th Sekolah/Institusi
-      %th= 'Poin' if can? :see_full_index, User
+      %th= 'Kubus' if can? :see_full_index, User
 
     - @users.each do |u|
       %tr{ data: { link: user_path(u) }, class: row_classes(u, %w(users-index-row clickable-row)) }

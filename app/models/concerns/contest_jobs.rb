@@ -6,20 +6,19 @@ module ContestJobs
     purge_panitia.delay(run_at: end_time, queue: "contest_#{id}")
     prepare_emails
     prepare_line
-    jobs_on_result_released if changes['result_released'] == [false, true]
-    jobs_on_feedback_time_end
+    if changes['result_released'] == [false, true]
+      jobs_on_result_released.delay(queue: "contest_#{id}")
+    end
+    unless feedback_closed?
+      jobs_on_feedback_time_end.delay(run_at: feedback_time,
+                                      queue: "contest_#{id}")
+    end
   end
+
+  private
 
   def destroy_prepared_jobs
     Delayed::Job.where(queue: "contest_#{id}").destroy_all
-  end
-
-  def purge_panitia
-    ucs = user_contests.includes(:user)
-    User.with_any_role(:panitia, :admin).each do |u|
-      uc = ucs.find_by(user: u)
-      uc.destroy unless uc.nil?
-    end
   end
 
   def prepare_emails
@@ -58,33 +57,30 @@ module ContestJobs
   def prepare_line
     l = LineNag.new self
 
-    l.delay(run_at: start_time - 1.day, queue: "contest_#{id}")
-     .contest_starting('24 jam')
-    l.delay(run_at: start_time, queue: "contest_#{id}")
-     .contest_started
-    l.delay(run_at: end_time - 1.day, queue: "contest_#{id}")
-     .contest_ending('24 jam')
+    if Time.zone.now < start_time - 1.day
+      l.delay(run_at: start_time - 1.day, queue: "contest_#{id}")
+       .contest_starting('24 jam')
+    end
+
+    if Time.zone.now < start_time
+      l.delay(run_at: start_time, queue: "contest_#{id}")
+       .contest_started
+    end
+
+    if Time.zone.now < end_time - 1.day
+      l.delay(run_at: end_time - 1.day, queue: "contest_#{id}")
+       .contest_ending('24 jam')
+    end
   end
 
   def jobs_on_result_released
-    EmailNotifications.new(self).delay(queue: "contest_#{id}")
-                      .results_released
-    LineNag.new(self).delay(queue: "contest_#{id}").result_and_next_contest
+    EmailNotifications.results_released
+    LineNag.result_and_next_contest
   end
 
   def jobs_on_feedback_time_end
-    check_veteran.delay(run_at: feedback_time, queue: "contest_#{id}")
-    # award_points.delay(run_at: feedback_time, queue: "contest_#{id}")
-  end
-
-  def check_veteran
-    users.each do |u|
-      gold = 0
-      u.user_contests.include_marks.each do |uc|
-        gold += 1 if uc.total_mark >= uc.contest.gold_cutoff
-      end
-
-      u.add_role :veteran if gold >= 3
-    end
+    check_veteran
+    award_points
+    send_certificates
   end
 end
