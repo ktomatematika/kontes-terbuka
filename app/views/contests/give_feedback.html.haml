@@ -16,7 +16,7 @@
     - @feedback_questions.each do |q|
       - fba_object = FeedbackAnswer.find_by feedback_question: q,
         user_contest: @user_contest
-      - answer = fba_object && fba_object.answer
+      - answer = fba_object.answer
       %p.feedback-label= q
       = find_and_preserve do
         = f.text_area q.id, class: 'form-control feedback-input',

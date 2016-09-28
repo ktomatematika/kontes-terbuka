@@ -23,6 +23,11 @@
 class FeedbackAnswer < ActiveRecord::Base
   has_paper_trail
 
+  # Null object overrides
+  def self.find_by(args)
+    super || NullFeedbackAnswer.new
+  end
+
   # Associations
   belongs_to :feedback_question
   belongs_to :user_contest

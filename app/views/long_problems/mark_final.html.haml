@@ -24,8 +24,8 @@
             %td= s.user_contest.id
             - @markers.each do |m|
               - tm = TemporaryMarking.find_by(long_submission: s, user: m)
-              %td= tm && tm.mark
-              %td= tm && tm.tags
+              %td= tm.mark
+              %td= tm.tags
             %td= text_field_tag "marking[#{s.id}][score]", '',
               placeholder: LongSubmission::SCORE_HASH[s.score],
               class: 'form-control'

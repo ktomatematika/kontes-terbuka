@@ -24,6 +24,11 @@ class UserContest < ActiveRecord::Base
   include UserContestScope
   has_paper_trail
 
+  # Null object overrides
+  def self.find_by(args)
+    super || NullUserContest.new
+  end
+
   # Associations
   belongs_to :user
   belongs_to :contest

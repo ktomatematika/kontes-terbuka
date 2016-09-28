@@ -69,8 +69,7 @@ module ContestsHelper
   # Helper for contests#summary, so that one knows whether one can see the
   # scores summary or not.
   def can_see_summary?
-    @contest.result_released == true ||
-      !@long_problems.map { |lp| mask_score? lp }.any?
+    @contest.result_released || !@long_problems.map { |lp| mask_score? lp }.any?
   end
 
   # Helper for contests#summary. Determines the average mark of a problem
@@ -91,7 +90,7 @@ module ContestsHelper
 
   # Helper for contests#show, to show nag or not
   def show_nag
-    !@user_contest.nil? && @user_contest.donation_nag &&
+    @user_contest.donation_nag &&
       (@contest.currently_in_contest? || @contest.result_released)
   end
 

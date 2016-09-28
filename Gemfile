@@ -50,6 +50,8 @@ end
 
 ### UTILITIES
 
+# Null Object pattern
+gem 'naught'
 # Schema Validations: to maintin referential integrity in database and models
 gem 'schema_validations', group: [:development, :test] # production :(
 # Add time validations

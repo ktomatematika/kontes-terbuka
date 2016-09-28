@@ -25,6 +25,11 @@
 class TemporaryMarking < ActiveRecord::Base
   has_paper_trail
 
+  # Null object overrides
+  def self.find_by(args)
+    super || NullTemporaryMarking.new
+  end
+
   # Associations
   belongs_to :user
   belongs_to :long_submission

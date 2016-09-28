@@ -1,7 +1,10 @@
 require 'active_record'
 
 class ApplicationController < ActionController::Base
+  include Naught::Conversions
+  helper_method Naught::Conversions.instance_methods
   protect_from_forgery with: :exception
+
   skip_before_action :require_login, only: :maintenance
 
   before_action :set_paper_trail_whodunnit, :require_login, :set_timezone,
@@ -13,14 +16,11 @@ class ApplicationController < ActionController::Base
 
   def set_color
     defined?(Bullet) && (Bullet.enable = false)
-    color_data = if current_user.nil?
-                   'Sistem'
-                 else
-                   current_user.color.name
-                 end
+    color_data = current_user.color.name
     defined?(Bullet) && (Bullet.enable = true)
 
-    possible_colors = %w(Merah Hijau Biru Kuning)
+    not_possible_colors = %w(Sistem Acak)
+    possible_colors = Color.where.not(name: not_possible_colors).pluck(:name)
 
     @color = case color_data
              when 'Sistem'
@@ -38,26 +38,22 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
 
   def require_login
-    unless current_user
+    if current_user.nil?
       redirect_to login_path(redirect: request.original_fullpath),
                   notice: 'Anda perlu masuk terlebih dahulu.'
     end
   end
 
   def set_timezone
-    Time.zone = if current_user.nil?
-                  TZInfo::Timezone.get('Asia/Jakarta')
-                else
-                  case current_user.timezone
+    Time.zone = case current_user.timezone
                   when 'WIB' then TZInfo::Timezone.get('Asia/Jakarta')
                   when 'WITA' then TZInfo::Timezone.get('Asia/Makassar')
                   when 'WIT' then TZInfo::Timezone.get('Asia/Jayapura')
-                  end
                 end
   end
 
   rescue_from CanCan::AccessDenied do
-    Ajat.error "cannotah|uid=#{current_user && current_user.id}|" \
+    Ajat.error "cannotah|uid=#{current_user.id}|" \
                "#{request.env.extract!('PATH_INFO',
                                        'QUERY_STRING',
                                        'REMOTE_ADDR',

@@ -43,6 +43,11 @@ class User < ActiveRecord::Base
   rolify before_add: :before_add_method
   has_paper_trail
 
+  # Null object overrides
+  def self.find_by(args)
+    super || NullUser.new
+  end
+
   # Callbacks
   before_validation(on: :create) do
     generate_token(:auth_token)
@@ -128,7 +133,7 @@ class User < ActiveRecord::Base
   end
 
   def self.get_user(username_or_email)
-    User.find_by(username: username_or_email) ||
+    Actual(User.find_by(username: username_or_email)) ||
       User.find_by(email: username_or_email)
   end
 end
