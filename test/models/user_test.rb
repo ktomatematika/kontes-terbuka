@@ -190,6 +190,12 @@ class UserTest < ActiveSupport::TestCase
     assert_no_match(/\A[0-9]*\z$/, p, 'Hashed pass is all numbers.')
   end
 
+  test 'password is updated' do
+    u = create(:user)
+    u.update(password: 'qwerqwer234')
+    assert_equal u.password, 'qwerqwer234', 'Password is not updated.'
+  end
+
   test 'auth token and verification are generated' do
     u = create(:user)
     assert_not_empty u.auth_token, 'Auth token is empty.'

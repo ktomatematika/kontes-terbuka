@@ -4,7 +4,9 @@
     = link_to 'Kontes Baru', new_contest_path, class: 'btn'
 
   - if can? :coba, Application
-    = link_to 'Magic button', coba_path, class: 'btn'
+    = link_to 'Redirect', coba_path, class: 'btn'
+  - if can? :coba, Application
+    = link_to 'Head', coba2_path, class: 'btn'
 
   - unless @long_problems.empty?
     %h2 Koreksian

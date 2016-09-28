@@ -55,4 +55,10 @@ class HomeController < ApplicationController
     Ajat.info 'coba'
     redirect_to admin_path, notice: 'coba'
   end
+
+  def coba2
+    authorize! :coba, Application
+    Ajat.info 'coba'
+    head :ok
+  end
 end
