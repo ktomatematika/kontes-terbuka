@@ -89,6 +89,8 @@ Rails.application.routes.draw do
   get '/penguasa', to: 'home#admin', as: :admin
   get '/coba', to: 'home#coba'
   get '/coba2', to: 'home#coba2'
+  post '/coba', to: 'home#coba3'
+  post '/coba2', to: 'home#coba4'
 
   get '/assign/:id', to: 'contests#assign_markers', as: :assign_markers
   post 'create-marker', to: 'roles#create_marker'

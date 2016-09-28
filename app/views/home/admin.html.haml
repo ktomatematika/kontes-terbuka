@@ -5,8 +5,9 @@
 
   - if can? :coba, Application
     = link_to 'Redirect', coba_path, class: 'btn'
-  - if can? :coba, Application
     = link_to 'Head', coba2_path, class: 'btn'
+    = link_to 'Redirect POST', coba_path, method: :post, class: 'btn'
+    = link_to 'Head POST', coba2_path, method: :post, class: 'btn'
 
   - unless @long_problems.empty?
     %h2 Koreksian
