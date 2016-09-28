@@ -70,8 +70,8 @@ class DumpKtoHasil
       u.password = SecureRandom.base64(20)
       u.fullname = username
       u.school = username
-      u.province = Province.first
-      u.status = Status.first
+      u.province = Province.take
+      u.status = Status.take
     end
   end
 

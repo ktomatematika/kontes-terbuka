@@ -18,13 +18,12 @@
           %th Penghargaan
 
       %tbody
-        - no_short_problem = @short_problems.empty?
         - @user_contests.each do |uc|
           - user = uc.user
           %tr{ class: row_classes(user, ['clickable-row', uc.award.downcase]), data: { link: user_path(user) } }
             %td= uc.rank
             %td= user.username
-            - unless no_short_problem
+            - unless @no_short_probs
               %td= uc.short_mark
             - @long_problems.each do |lp|
               - if mask_score?(lp)

@@ -14,7 +14,7 @@ class CertificateManager
   end
 
   def run
-    @user_contest = UserContest.where(id: @user_contest.id).processed.first
+    @user_contest = UserContest.where(id: @user_contest.id).processed.take
     compile_to_pdf certificate_tex
     send_certificate @pdf_path
     clean_files
