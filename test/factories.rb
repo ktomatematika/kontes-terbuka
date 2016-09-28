@@ -47,4 +47,12 @@ FactoryGirl.define do
     school 'qwerty'
     terms_of_service '1'
   end
+
+  factory :contest do
+    name 'Kontes Coba'
+    start_time Time.zone.now
+    end_time Time.zone.now + 20.seconds
+    result_time Time.zone.now + 40.seconds
+    feedback_time Time.zone.now + 60.seconds
+  end
 end

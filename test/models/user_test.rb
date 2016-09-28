@@ -193,7 +193,7 @@ class UserTest < ActiveSupport::TestCase
   test 'password is updated' do
     u = create(:user)
     u.update(password: 'qwerqwer234')
-    assert_equal u.password, 'qwerqwer234', 'Password is not updated.'
+    assert u.authenticate('qwerqwer234'), 'Password is not updated.'
   end
 
   test 'auth token and verification are generated' do

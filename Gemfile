@@ -62,8 +62,6 @@ gem 'squeel'
 gem 'delayed_job_active_record'
 # Adds daemons for DelayedJob
 gem 'daemons'
-# Annotates model with schema
-gem 'annotate'
 # Do not generate digests for error pages
 gem 'non-stupid-digest-assets'
 # Add pagination
@@ -75,6 +73,8 @@ gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
 
 group :development do
+  # Annotates model with schema
+  gem 'annotate'
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
@@ -83,6 +83,11 @@ group :development do
   gem 'bullet'
   # ?
   gem 'table_flipper'
+  # Trace routes
+  gem 'traceroute'
+  # Boost!
+  gem 'rails-dev-boost', :github => 'thedarkone/rails-dev-boost'
+  gem 'rb-inotify'
 end
 
 group :development, :test do
@@ -123,6 +128,11 @@ gem 'recaptcha', require: 'recaptcha/rails'
 gem 'rack-protection'
 # Adds hashes for passwords.
 gem 'bcrypt'
+
+group :development do
+  # Security checkup
+  gem 'brakeman'
+end
 
 ### END SECURITY
 
