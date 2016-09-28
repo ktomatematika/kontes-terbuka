@@ -4,14 +4,12 @@ class RolesController < ApplicationController
   def create_marker
     long_problem = LongProblem.find(params[:long_problem_id])
     user = User.find_by(username: params[:username])
-    if user
-      if user.add_role(:marker, long_problem)
-        flash[:notice] = 'Korektor berhasil ditambahkan!'
-      else
-        flash[:alert] = 'Terdapat kegagalan!'
-      end
-    else
+    if user.nil?
       flash[:alert] = 'User tidak ditemukan!'
+    elsif user.add_role(:marker, long_problem)
+        flash[:notice] = 'Korektor berhasil ditambahkan!'
+    else
+      flash[:alert] = 'Terdapat kegagalan!'
     end
 
     Ajat.info "marker_created|lp_id:#{params[:long_problem_id]}|" \

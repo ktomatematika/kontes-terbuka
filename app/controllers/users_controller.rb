@@ -5,10 +5,10 @@ class UsersController < ApplicationController
   skip_before_action :require_login, only: guest_actions
 
   def new
-    if current_user
-      redirect_to root_path
-    else
+    if current_user.nil?
       redirect_to sign_path(anchor: 'register')
+    else
+      redirect_to root_path
     end
   end
 
@@ -55,28 +55,23 @@ class UsersController < ApplicationController
     end
   end
 
-  def reset_password
-  end
-
   def process_reset_password
     user = User.find_by verification: params[:verification]
-    if user
-      if params[:new_password] == params[:confirm_new_password]
-        user.update(password: params[:new_password], verification: nil)
-        Ajat.info "user_reset_password|uid:#{user.id}"
-        redirect_to login_path, notice: 'Password berhasil diubah! ' \
-        'Silakan login.'
-      else
-        Ajat.warn "user_reset_password_fail_user|user:#{user.inspect}|" \
-        "#{user.errors.full_messages}"
-        redirect_to reset_password_path(verification: params[:verification]),
-                    alert: 'Password baru tidak cocok! Coba lagi.'
-      end
-    else
+    if user.nil?
       Ajat.warn 'user_reset_password_fail_no_verification|' \
         "verification:#{params[:verification]}"
       redirect_to reset_password_path(verification: params[:verification]),
                   alert: 'Terdapat kesalahan! Coba lagi.'
+    elsif params[:new_password] == params[:confirm_new_password]
+      user.update(password: params[:new_password], verification: nil)
+      Ajat.info "user_reset_password|uid:#{user.id}"
+      redirect_to login_path, notice: 'Password berhasil diubah! ' \
+      'Silakan login.'
+    else
+      Ajat.warn "user_reset_password_fail_user|user:#{user.inspect}|" \
+      "#{user.errors.full_messages}"
+      redirect_to reset_password_path(verification: params[:verification]),
+                  alert: 'Password baru tidak cocok! Coba lagi.'
     end
   end
 
@@ -88,15 +83,13 @@ class UsersController < ApplicationController
   def process_change_password
     user = User.find params[:user_id]
     authorize! :process_change_password, user
-    if user.authenticate(params[:old_password])
-      if params[:new_password] == params[:confirm_new_password]
-        user.update(password: params[:new_password])
-        Ajat.info "user_change_password|uid:#{user.id}"
-        redirect_to user_path(user), notice: 'Password Anda berhasil diubah!'
-      else
-        redirect_to user_change_password_path(user), alert: 'Password baru ' \
-          'Anda tidak cocok!'
-      end
+    if params[:new_password] != params[:confirm_new_password]
+      redirect_to user_change_password_path(user), alert: 'Password baru ' \
+        'Anda tidak cocok!'
+    elsif user.authenticate(params[:old_password])
+      user.update(password: params[:new_password])
+      Ajat.info "user_change_password|uid:#{user.id}"
+      redirect_to user_path(user), notice: 'Password Anda berhasil diubah!'
     else
       Ajat.warn "user_change_password_wrong_old|uid:#{user.id}"
       redirect_to user_change_password_path(user), alert: 'Password lama ' \
@@ -105,10 +98,10 @@ class UsersController < ApplicationController
   end
 
   def forgot_password
-    if current_user
-      redirect_to root_path
-    else
+    if current_user.nil?
       redirect_to sign_path(anchor: 'forgot')
+    else
+      redirect_to root_path
     end
   end
 
@@ -172,7 +165,7 @@ class UsersController < ApplicationController
 
   def index
     authorize! :index, User
-    params[:search] = '' if params[:search].nil?
+    params[:search] ||= ''
     @users = User.where('username ILIKE ?', '%' + params[:search] + '%')
                  .paginate(page: params[:page], per_page: 50)
                  .order(:username)
