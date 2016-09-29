@@ -37,7 +37,7 @@ class EmailNotifications
       'Antisipasi segala kegagalan teknis. Ingat, kami hampir tidak pernah ' \
       'memberikan waktu tambahan.'
     notif = Notification.find_by(event: 'contest_ending', time_text: time_text)
-    users = notif.users.join(:contests).where('contests.id = ?', @contest.id)
+    users = notif.users.joins(:contests).where('contests.id = ?', @contest.id)
 
     Ajat.info "contest_ending|id:#{@contest.id}"
     send_emails(text: text, subject: subject, users: users)
@@ -50,7 +50,7 @@ class EmailNotifications
       'Jika Anda belum beruntung, jangan berkecil hati karena masih ada ' \
       'kontes-kontes berikutnya.'
     notif = Notification.find_by(event: 'results_released')
-    users = notif.users.join(:contests).where('contests.id = ?', @contest.id)
+    users = notif.users.joins(:contests).where('contests.id = ?', @contest.id)
 
     Ajat.info "result_released|id:#{@contest.id}"
     send_emails(text: text, subject: subject, users: users)
@@ -72,6 +72,9 @@ class EmailNotifications
         email_array.push(uc.user)
       end
     end
+
+    # TODO
+    users = User.none
 
     Ajat.info "feedback_ending|id:#{@contest.id}|time:#{time_text}"
     send_emails(text: text, subject: subject, users: users)

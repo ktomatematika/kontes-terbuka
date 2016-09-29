@@ -38,7 +38,6 @@
 # rubocop:enable Metrics/LineLength
 
 class Contest < ActiveRecord::Base
-  require 'csv'
   include ContestAttributes
   include ContestJobs
   has_paper_trail
@@ -83,15 +82,12 @@ class Contest < ActiveRecord::Base
                     path: ':rails_root/public/contest_files/problems/' \
                     ':id/ms.:extension'
 
-  # Other ActiveRecord
-  accepts_nested_attributes_for :long_problems
-  accepts_nested_attributes_for :long_submissions
-
+  # Validations
   validates_datetime :start_time, on_or_before: :end_time
   validates_datetime :end_time, on_or_before: :result_time
   validates_datetime :result_time, on_or_before: :feedback_time
-  validate :result_released_when_contest_ended
 
+  validate :result_released_when_contest_ended
   def result_released_when_contest_ended
     if result_released && end_time > Time.zone.now
       errors.add :result_released, 'after contest ended'

@@ -9,7 +9,9 @@ class LineNag
   def nag(ending)
     LINE_TARGETS.each do |k, v|
       text = "#{k}, KTOM-Chan mau mengingatkan kamu bahwa #{ending}"
-      LineClient.send_text to_mid: v, text: text
+      if Rails.env.production?
+        LineClient.send_text to_mid: v, text: text
+      end
     end
   end
 

@@ -24,21 +24,21 @@ FactoryGirl.define do
     email { (username || 'qwerqwer') + '@a.b' }
     fullname 'qwerqwer'
     province do
-      Province.first || (if username.nil? || username.empty?
+      Province.take || (if username.nil? || username.empty?
                            create :province, name: 'asdf'
                          else
                            create :province, name: username
                          end)
     end
     status do
-      Status.first || (if username.nil? || username.empty?
+      Status.take || (if username.nil? || username.empty?
                          create :status, name: 'asdf'
                        else
                          create :status, name: username
                        end)
     end
     color do
-      Color.first || (if username.nil? || username.empty?
+      Color.take || (if username.nil? || username.empty?
                         create :color, name: 'asdf'
                       else
                         create :color, name: username
@@ -49,10 +49,30 @@ FactoryGirl.define do
   end
 
   factory :contest do
+    transient do
+      start 0
+      ends 20
+      result 40
+      feedback 60
+    end
+
     name 'Kontes Coba'
-    start_time Time.zone.now
-    end_time Time.zone.now + 20.seconds
-    result_time Time.zone.now + 40.seconds
-    feedback_time Time.zone.now + 60.seconds
+    start_time { Time.zone.now + start.seconds }
+    end_time { Time.zone.now + ends.seconds }
+    result_time { Time.zone.now + result.seconds }
+    feedback_time { Time.zone.now + feedback.seconds }
+  end
+
+  factory :short_problem do
+    contest { Contest.take || create(:contest) }
+    problem_no 1
+    statement 'Isian'
+    answer 0
+  end
+
+  factory :long_problem do
+    contest { Contest.take || create(:contest) }
+    problem_no 1
+    statement 'Esai'
   end
 end

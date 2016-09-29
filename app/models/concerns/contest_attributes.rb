@@ -26,8 +26,7 @@ module ContestAttributes
   end
 
   def max_score
-    ShortProblem.where(contest: self).length +
-      LongProblem::MAX_MARK * LongProblem.where(contest: self).length
+    short_problems.length + LongProblem::MAX_MARK * long_problems.length
   end
 
   def scores(*includes)

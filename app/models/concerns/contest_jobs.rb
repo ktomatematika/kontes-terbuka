@@ -81,6 +81,6 @@ module ContestJobs
   def jobs_on_feedback_time_end
     check_veteran
     award_points
-    send_certificates
+    # send_certificates
   end
 end
