@@ -25,24 +25,24 @@ FactoryGirl.define do
     fullname 'qwerqwer'
     province do
       Province.take || (if username.nil? || username.empty?
-                           create :province, name: 'asdf'
-                         else
-                           create :province, name: username
-                         end)
+                          create :province, name: 'asdf'
+                        else
+                          create :province, name: username
+                        end)
     end
     status do
       Status.take || (if username.nil? || username.empty?
-                         create :status, name: 'asdf'
-                       else
-                         create :status, name: username
-                       end)
+                        create :status, name: 'asdf'
+                      else
+                        create :status, name: username
+                      end)
     end
     color do
       Color.take || (if username.nil? || username.empty?
-                        create :color, name: 'asdf'
-                      else
-                        create :color, name: username
-                      end)
+                       create :color, name: 'asdf'
+                     else
+                       create :color, name: username
+                     end)
     end
     school 'qwerty'
     terms_of_service '1'

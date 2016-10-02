@@ -1,5 +1,6 @@
 class LongProblemsController < ApplicationController
   load_and_authorize_resource
+  skip_authorize_resource only: :mark_solo
 
   def create
     contest = Contest.find(params[:contest_id])
@@ -43,10 +44,11 @@ class LongProblemsController < ApplicationController
   end
 
   def mark_solo
-    unless current_user.has_role?(:marker, @long_problem ||
-                                           @long_problem.start_mark_final)
+    if (!current_user.has_role?(:marker, @long_problem) ||
+        @long_problem.start_mark_final) && can?(:mark_final, @long_problem)
       redirect_to mark_final_path(@long_problem)
     end
+    authorize! :mark_solo, @long_problem
     mark
     @markers = @markers.where.not(id: current_user.id)
   end
