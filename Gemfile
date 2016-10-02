@@ -85,9 +85,6 @@ group :development do
   gem 'table_flipper'
   # Trace routes
   gem 'traceroute'
-  # Boost!
-  gem 'rails-dev-boost', :github => 'thedarkone/rails-dev-boost'
-  gem 'rb-inotify'
 end
 
 group :development, :test do

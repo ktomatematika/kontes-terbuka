@@ -33,6 +33,8 @@ class ApplicationController < ActionController::Base
   end
 
   def current_user
+    return unless cookies[:auth_token]
+    @current_user ||= User.find_by(username: session[:masq_username])
     @current_user ||= User.find_by(auth_token: cookies[:auth_token])
   end
   helper_method :current_user

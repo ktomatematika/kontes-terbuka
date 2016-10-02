@@ -50,6 +50,9 @@
 
         .collapse.navbar-collapse#top-navbar
           %ul.nav.navbar-nav.navbar-right
+            - if session[:masq_username]
+              %li= link_to 'Unmasq', unmasq_path, method: 'delete',
+                class: 'has-shade'
             - if can? :admin, Application
               %li= link_to 'Admin', admin_path, class: 'has-shade'
             %li= link_to 'Rumah', root_path, class: 'has-shade'

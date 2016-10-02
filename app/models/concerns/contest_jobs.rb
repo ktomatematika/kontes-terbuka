@@ -74,8 +74,8 @@ module ContestJobs
   end
 
   def jobs_on_result_released
-    EmailNotifications.results_released
-    LineNag.result_and_next_contest
+    EmailNotifications.new(self).results_released
+    LineNag.new(self).result_and_next_contest
   end
 
   def jobs_on_feedback_time_end

@@ -58,6 +58,7 @@ class SessionsController < ApplicationController
 
   def destroy
     cookies.delete(:auth_token)
+    reset_session
     redirect_to root_path, notice: 'Anda berhasil keluar.'
   end
 end

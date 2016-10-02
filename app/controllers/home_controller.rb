@@ -31,4 +31,19 @@ class HomeController < ApplicationController
       [img_file, image_tag.tr('"', "'")]
     end.to_h
   end
+
+  def masq
+    authorize! :masq, Application
+    if User.find_by(username: params[:username]).nil?
+      redirect_to admin_path, alert: 'Ga ketemu usernya :('
+    else
+      session[:masq_username] = params[:username]
+      redirect_to home_path, notice: 'Masq!'
+    end
+  end
+
+  def unmasq
+    session[:masq_username] = nil
+    redirect_to home_path, notice: 'Unmasq!'
+  end
 end
