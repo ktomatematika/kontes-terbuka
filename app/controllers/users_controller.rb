@@ -150,7 +150,7 @@ class UsersController < ApplicationController
     authorize! :show, @user
     @user_contests = Contest.where(result_released: true)
                             .order(id: :desc)
-                            .includes(:long_problems)
+                            .includes(:short_problems, :long_problems)
                             .map do |c|
                               c.results
                                .find { |u| u.user_id == @user.id }
@@ -160,7 +160,7 @@ class UsersController < ApplicationController
                                           .paginate(
                                             page: params[:page_transactions],
                                             per_page: 5
-                                          ) .order(created_at: :desc)
+                                          ).order(created_at: :desc)
   end
 
   def index

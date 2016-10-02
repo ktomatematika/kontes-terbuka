@@ -108,39 +108,4 @@ class Contest < ActiveRecord::Base
     return next_feedback if next_feedback.feedback_time < next_end.end_time
     next_end
   end
-
-  private
-
-  def award_points
-    user_contests.processed.each do |uc|
-      PointTransaction.create(point: UserContest.contest_points(uc),
-                              user_id: uc.user_id,
-                              description: uc.contest.to_s)
-    end
-  end
-
-  def purge_panitia
-    ucs = user_contests.includes(:user)
-    User.with_any_role(:panitia, :admin).each do |u|
-      uc = ucs.find_by(user: u)
-      uc.destroy unless uc.nil?
-    end
-  end
-
-  def check_veteran
-    users.each do |u|
-      gold = 0
-      u.user_contests.include_marks.each do |uc|
-        gold += 1 if uc.total_mark >= uc.contest.gold_cutoff
-      end
-
-      u.add_role :veteran if gold >= 3
-    end
-  end
-
-  def send_certificates
-    full_feedback_user_contests.processed.eligible_score.each do |uc|
-      CertificateManager.new(uc).run
-    end
-  end
 end
