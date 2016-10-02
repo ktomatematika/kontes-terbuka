@@ -65,6 +65,17 @@ module UserContestScope
         end
     }
 
+    # Given a feedback question ID, this shows table of user contest id
+    # + feedback answer for that feedback question. (INNER JOIN)
+    scope :include_feedback_answers, lambda { |feedback_question_id|
+      joins { feedback_answers }
+        .where { feedback_answers.feedback_question_id == feedback_question_id }
+        .select do
+          ['user_contests.id as id', 'feedback_answers.answer as ' \
+                     "feedback_question_no_#{feedback_question_id}"]
+        end
+    }
+
     CUTOFF_CERTIFICATE = 1
     # Add this scope to filter that has high enough score to get certificates
     scope :eligible_score, lambda {
