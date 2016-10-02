@@ -33,6 +33,7 @@ class ContestsController < ApplicationController
 
   def show
     @contest = Contest.find(params[:id])
+    @mask = false
 
     if @contest.currently_in_contest?
       @user_contest = @contest.user_contests.find_by(user: current_user)
