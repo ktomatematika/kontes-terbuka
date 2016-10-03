@@ -8,22 +8,19 @@ class ApplicationController < ActionController::Base
                 :set_color, :set_mini_profiler
 
   def set_mini_profiler
-    Rack::MiniProfiler.authorize_request if can? :profile, Application
+    return if cannot?(:profile, Application) && masq_username.nil?
+    Rack::MiniProfiler.authorize_request
   end
 
   def set_color
     defined?(Bullet) && (Bullet.enable = false)
-    color_data = if current_user.nil?
-                   'Sistem'
-                 else
-                   current_user.color.name
-                 end
+    color_data = current_user.nil? ? nil : current_user.color.name
     defined?(Bullet) && (Bullet.enable = true)
 
     possible_colors = %w(Merah Hijau Biru Kuning)
 
     @color = case color_data
-             when 'Sistem'
+             when nil, 'Sistem'
                possible_colors[Time.zone.now.month % possible_colors.length]
              when 'Acak'
                possible_colors[Time.zone.now.to_i % possible_colors.length]
@@ -32,18 +29,22 @@ class ApplicationController < ActionController::Base
              end
   end
 
+  def masq_username
+    session[:masq_username]
+  end
+  helper_method :masq_username
+
   def current_user
     return unless cookies[:auth_token]
-    @current_user ||= User.find_by(username: session[:masq_username])
+    @current_user ||= User.find_by(username: masq_username)
     @current_user ||= User.find_by(auth_token: cookies[:auth_token])
   end
   helper_method :current_user
 
   def require_login
-    unless current_user
-      redirect_to login_path(redirect: request.original_fullpath),
-                  notice: 'Anda perlu masuk terlebih dahulu.'
-    end
+    return if current_user
+    redirect_to login_path(redirect: request.original_fullpath),
+                notice: 'Anda perlu masuk terlebih dahulu.'
   end
 
   def set_timezone

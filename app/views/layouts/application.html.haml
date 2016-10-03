@@ -32,6 +32,7 @@
       ga('send', 'pageview', { "title": document.title });
 
     %meta{ name: 'google-site-verification', content: 'LhbNAf_v-2MgcX8S04Z8XyabspyseSMCvKOIliwT1aY' }
+    %meta{ name: 'wot-verification', content: '43dc6a37c0735728700d' }
 
     = render 'favicon'
 
@@ -50,7 +51,7 @@
 
         .collapse.navbar-collapse#top-navbar
           %ul.nav.navbar-nav.navbar-right
-            - if session[:masq_username]
+            - unless masq_username.nil?
               %li= link_to 'Unmasq', unmasq_path, method: 'delete',
                 class: 'has-shade'
             - if can? :admin, Application
