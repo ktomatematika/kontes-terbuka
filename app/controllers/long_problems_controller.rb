@@ -47,10 +47,11 @@ class LongProblemsController < ApplicationController
     if (!current_user.has_role?(:marker, @long_problem) ||
         @long_problem.start_mark_final) && can?(:mark_final, @long_problem)
       redirect_to mark_final_path(@long_problem)
+    else
+      authorize! :mark_solo, @long_problem
+      mark
+      @markers = @markers.where.not(id: current_user.id)
     end
-    authorize! :mark_solo, @long_problem
-    mark
-    @markers = @markers.where.not(id: current_user.id)
   end
 
   def download
