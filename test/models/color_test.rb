@@ -16,7 +16,18 @@
 require 'test_helper'
 
 class ColorTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  test 'color can be saved' do
+    assert build(:color).save, 'Color cannot be saved'
+  end
+
+  test 'color associations' do
+    assert_equal Color.reflect_on_association(:user).macro,
+                 :has_many,
+                 'Color relation is not has many users.'
+  end
+
+  test 'color to string' do
+    assert_equal create(:color, name: 'coba').to_s, 'coba',
+                 'Color to string is not equal to its name.'
+  end
 end

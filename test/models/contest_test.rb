@@ -41,7 +41,7 @@ require 'test_helper'
 
 class ContestTest < ActiveSupport::TestCase
   test 'contest can be saved' do
-    assert create(:contest), 'Contest cannot be saved'
+    assert build(:contest).save, 'Contest cannot be saved'
   end
 
   test 'default rule is from assets/default_rules.txt' do

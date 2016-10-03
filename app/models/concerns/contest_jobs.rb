@@ -21,56 +21,38 @@ module ContestJobs
     Delayed::Job.where(queue: "contest_#{id}").destroy_all
   end
 
+  def do_if_not_time(run_at, object, method, *args)
+    return if Time.zone.now >= run_at
+    object.delay(run_at: run_at, queue: "contest_#{id}").__send__(method, *args)
+  end
+
   def prepare_emails
     e = EmailNotifications.new self
 
     Notification.where(event: 'contest_starting').find_each do |n|
-      run_at = start_time - n.seconds
-      if Time.zone.now < run_at
-        e.delay(run_at: run_at, queue: "contest_#{id}")
-         .contest_starting(n.time_text)
-      end
+      do_if_not_time(start_time - n.seconds, e, :contest_starting, n.time_text)
     end
-    Notification.where(event: 'contest_started').find_each do |_n|
-      run_at = start_time
-      if Time.zone.now < run_at
-        e.delay(run_at: run_at, queue: "contest_#{id}")
-         .contest_started
-      end
+
+    Notification.where(event: 'contest_started').find_each do
+      do_if_not_time(start_time, e, :contest_started)
     end
+
     Notification.where(event: 'contest_ending').find_each do |n|
-      run_at = end_time - n.seconds
-      if Time.zone.now < run_at
-        e.delay(run_at: run_at, queue: "contest_#{id}")
-         .contest_ending(n.time_text)
-      end
+      do_if_not_time(end_time - n.seconds, e, :contest_ending, n.time_text)
     end
+
     Notification.where(event: 'feedback_ending').find_each do |n|
-      run_at = feedback_time - n.seconds
-      if Time.zone.now < run_at
-        e.delay(run_at: run_at, queue: "contest_#{id}")
-         .feedback_ending(n.time_text)
-      end
+      do_if_not_time(feedback_time - n.seconds, e, :feedback_ending,
+                     n.time_text)
     end
   end
 
   def prepare_line
     l = LineNag.new self
 
-    if Time.zone.now < start_time - 1.day
-      l.delay(run_at: start_time - 1.day, queue: "contest_#{id}")
-       .contest_starting('24 jam')
-    end
-
-    if Time.zone.now < start_time
-      l.delay(run_at: start_time, queue: "contest_#{id}")
-       .contest_started
-    end
-
-    if Time.zone.now < end_time - 1.day
-      l.delay(run_at: end_time - 1.day, queue: "contest_#{id}")
-       .contest_ending('24 jam')
-    end
+    do_if_not_time(start_time - 1.day, l, :contest_starting, '24 jam')
+    do_if_not_time(start_time, l, :contest_started)
+    do_if_not_time(end_time - 1.day, l, :contest_ending, '24 jam')
   end
 
   def jobs_on_result_released
@@ -81,7 +63,7 @@ module ContestJobs
   def jobs_on_feedback_time_end
     check_veteran
     award_points
-    # send_certificates
+    send_certificates
   end
 
   def award_points
@@ -92,11 +74,11 @@ module ContestJobs
   end
 
   def purge_panitia
-    ucs = user_contests.includes(:user)
-    User.with_any_role(:panitia, :admin).each do |u|
-      uc = ucs.find_by(user: u)
-      uc.destroy unless uc.nil?
+    panitia_roles = [:panitia, :admin]
+    panitia_ids = panitia_roles.inject([]) do |memo, item|
+      memo + User.with_role(item).pluck(:id)
     end
+    user_contests.where(user_id: panitia_ids).destroy_all
   end
 
   def check_veteran
@@ -111,7 +93,7 @@ module ContestJobs
   end
 
   def send_certificates
-    full_feedback_user_contests.processed.eligible_score.each do |uc|
+    full_feedback_user_contests.eligible_score.each do |uc|
       CertificateManager.new(uc).run
     end
   end

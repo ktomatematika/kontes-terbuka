@@ -75,4 +75,9 @@ FactoryGirl.define do
     problem_no 1
     statement 'Esai'
   end
+
+  factory :user_contest do
+    contest { Contest.take || create(:contest) }
+    user { User.take || create(:user) }
+  end
 end
