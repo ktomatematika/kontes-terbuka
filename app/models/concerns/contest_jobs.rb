@@ -3,15 +3,15 @@ module ContestJobs
 
   def prepare_jobs
     destroy_prepared_jobs
-    purge_panitia.delay(run_at: end_time, queue: "contest_#{id}")
+    delay(run_at: end_time, queue: "contest_#{id}").purge_panitia
     prepare_emails
     prepare_line
     if changes['result_released'] == [false, true]
-      jobs_on_result_released.delay(queue: "contest_#{id}")
+      delay(queue: "contest_#{id}").jobs_on_result_released
     end
     unless feedback_closed?
-      jobs_on_feedback_time_end.delay(run_at: feedback_time,
-                                      queue: "contest_#{id}")
+      delay(run_at: feedback_time,
+            queue: "contest_#{id}").jobs_on_feedback_time_end
     end
   end
 
