@@ -87,5 +87,6 @@ class EmailNotifications
       Mailgun.send_message contest: @contest, text: hash[:text],
                            subject: hash[:subject], bcc_array: arr
     end
+    Ajat.info "send_email|#{hash[:subject]}"
   end
 end

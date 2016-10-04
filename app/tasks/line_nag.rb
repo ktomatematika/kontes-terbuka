@@ -11,6 +11,7 @@ class LineNag
       text = "#{k}, KTOM-Chan mau mengingatkan kamu bahwa #{ending}"
       LineClient.send_text to_mid: v, text: text if Rails.env.production?
     end
+    Ajat.info "line_nag|#{ending}"
   end
 
   def result_and_next_contest

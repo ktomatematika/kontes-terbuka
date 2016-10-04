@@ -71,6 +71,7 @@ module ContestJobs
       PointTransaction.create(point: uc.contest_points, user_id: uc.user_id,
                               description: uc.contest.to_s)
     end
+    Ajat.info "award_points|id:#{id}"
   end
 
   def purge_panitia
@@ -79,6 +80,7 @@ module ContestJobs
       memo + User.with_role(item).pluck(:id)
     end
     user_contests.where(user_id: panitia_ids).destroy_all
+    Ajat.info "purge_panitia|id:#{id}"
   end
 
   def check_veteran
@@ -90,11 +92,13 @@ module ContestJobs
 
       u.add_role :veteran if gold >= 3
     end
+    Ajat.info "check_veteran|id:#{id}"
   end
 
   def send_certificates
     full_feedback_user_contests.eligible_score.each do |uc|
       CertificateManager.new(uc).run
     end
+    Ajat.info "send_certificates|id:#{id}"
   end
 end
