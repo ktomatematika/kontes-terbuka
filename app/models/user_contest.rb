@@ -77,8 +77,8 @@ class UserContest < ActiveRecord::Base
   end
 
   def create_feedback_answers(feedback_answers_hash)
-    feedback_answers_hash.each_key do |qn_id, answer|
-      next if (answer.nil? || answer.empty?)
+    feedback_answers_hash.each do |qn_id, answer|
+      next if answer.empty?
       FeedbackAnswer.find_or_create_by(feedback_question_id: qn_id,
                                        user_contest: self)
                     .update(answer: answer)

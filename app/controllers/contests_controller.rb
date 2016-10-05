@@ -117,12 +117,7 @@ class ContestsController < ApplicationController
     authorize! :feedback_submit, contest
     UserContest.find_by(user: current_user, contest: contest)
                .create_feedback_answers(feedback_params)
-    redirect_to contest, notice: 'Feedback berhasil dikirimkan! ' \
-                                 'Jika nilai Anda minimal ' \
-                                 "#{UserContest::CUTOFF_CERTIFICATE} " \
-                                 'poin, Anda ' \
-                                 'akan mendapatkan sertifikat setelah waktu ' \
-                                 'feedback ditutup.'
+    redirect_to contest, notice: 'Feedback berhasil dikirimkan!'
   end
 
   def assign_markers
