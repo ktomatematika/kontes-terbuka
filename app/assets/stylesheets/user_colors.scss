@@ -5,3 +5,12 @@
 .disabled {
   color: #00f;
 }
+
+tr.current {
+  background-color: #ffaf80;
+  font-weight: bolder;
+
+  &:hover {
+    background-color: #ffcfa0 !important;
+  }
+}

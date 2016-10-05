@@ -62,6 +62,7 @@ module ApplicationHelper
   def row_classes(user, starting_classes = [])
     starting_classes.push('disabled') unless user.enabled?
     starting_classes.push('veteran') if user.has_cached_role? :veteran
+    starting_classes.push('current') if user.id === current_user.id
     starting_classes
   end
 
