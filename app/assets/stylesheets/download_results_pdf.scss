@@ -15,8 +15,8 @@ body {
 
   * {
     border: 0.5px solid #000;
-    text-align: center !important;
     page-break-inside: avoid !important;
+    text-align: center !important;
   }
 
   caption {
@@ -24,4 +24,10 @@ body {
     font-size: 2.5em;
     margin-bottom: 10px;
   }
+}
+
+#results-img {
+  display: block;
+  height: 100px;
+  margin: 0 auto 10px;
 }

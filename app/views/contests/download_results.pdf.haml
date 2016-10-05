@@ -11,6 +11,7 @@
       try{Typekit.load({async:true});}catch(e){}
 
   %body
+    = image_tag wicked_pdf_asset_base64('logo-hires.png'), id: 'results-img'
     %table.table.table-bordered#contest-results-pdf
       %caption Hasil #{@contest}
       %thead
