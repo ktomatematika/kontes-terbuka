@@ -50,6 +50,8 @@ end
 
 ### UTILITIES
 
+# Environment variables for local machine
+gem 'dotenv', group: [:development, :test]
 # Schema Validations: to maintin referential integrity in database and models
 gem 'schema_validations', group: [:development, :test] # production :(
 # Add time validations

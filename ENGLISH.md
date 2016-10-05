@@ -33,7 +33,7 @@ scratch, such as downloading Ubuntu (!), setup database, Ruby, and Rails.
 Please wait. :3
 
 While waiting, these are files you need to set up on your own:
-- config/initializers/env.rb; copy from config/initializers/env.rb.default
+- .env; copy from .env.default
 - config/database.yml; copy from config/database.yml.default
 - public/contest_files/certificates. Files you need in this directory to
 create certificates): barra.png, frame.jpg, ilhan.png, logo.png

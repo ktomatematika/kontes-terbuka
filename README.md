@@ -33,7 +33,7 @@ dari awal, termasuk download Ubuntu (!), setup database, Ruby, dan Rails.
 Bersabarlah. :3
 
 Sambil menunggu, ini adalah file-file yang dibutuhkan:
-- config/initializers/env.rb, ambil dari config/initializers/env.rb.default
+- .env, ambil dari .env.default
 - config/database.yml, ambil dari config/database.yml.default
 - public/contest_files/certificates. File-file yang dibutuhkan (untuk membuat
 sertifikat): barra.png, frame.jpg, ilhan.png, logo.png

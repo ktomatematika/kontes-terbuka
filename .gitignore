@@ -25,7 +25,7 @@ ubuntu-xenial-16.04-cloudimg-console.log
 
 # Sensitive files
 /config/database.yml
-/config/initializers/env.rb
+.env
 /app/views/contests/certificate.tex.haml
 config/initializers/line_targets.rb
 
