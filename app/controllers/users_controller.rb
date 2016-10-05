@@ -170,7 +170,7 @@ class UsersController < ApplicationController
                  .paginate(page: params[:page], per_page: 50)
                  .order(:username)
                  .includes(:province, :status, :roles)
-    if !(can? :see_full_index, User) || (params[:disabled] == 'false')
+    if !(can? :see_full_index, User) || params[:hide_disabled]
       @users = @users.where(enabled: true)
     end
   end

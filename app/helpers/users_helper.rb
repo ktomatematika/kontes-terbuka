@@ -32,8 +32,11 @@ module UsersHelper
 
   # Helper to toggle disabled users in users#index.
   def toggle_disable
-    disabled = params[:disabled].nil? || params[:disabled] == 'true'
-    prms = params.merge(disabled: !disabled).permit(:start, :disabled)
+    if params[:hide_disabled]
+      prms = params.except(:hide_disabled)
+    else
+      prms = params.merge(hide_disabled: true)
+    end
     link_to 'Toggle disabled users', prms
   end
 end
