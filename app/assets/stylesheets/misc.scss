@@ -23,13 +23,10 @@
 }
 
 .about-us-person {
-  display: flex;
-  flex-direction: column;
-}
-
-.about-us-person {
   border-radius: 1.5em 1.5em 0 0;
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
   margin-top: 0.5em;
   padding-bottom: 0.5em;
   transition: background-color 0.2s ease;

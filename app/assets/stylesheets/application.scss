@@ -61,9 +61,9 @@ h5,
 
 @each $name, $color in $colors {
   .btn[data-shade="#{$name}"] {
-    color: inherit;
     background-color: lighten($color, 15);
     border-color: $color;
+    color: inherit;
 
     &:hover:not([disabled]) {
       background-color: lighten($color, 10);

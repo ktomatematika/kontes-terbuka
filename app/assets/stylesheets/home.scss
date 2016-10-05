@@ -33,6 +33,7 @@
 }
 
 #iklan-lomba {
+  cursor: pointer;
   padding-left: 2em;
   padding-right: 2em;
 }
@@ -41,8 +42,4 @@
   @media (max-width: 400px) {
     font-size: 1em;
   }
-}
-
-#iklan-lomba {
-  cursor: pointer;
 }
