@@ -1,5 +1,9 @@
 %section
   %h2 Esai
+  - if params[:lp]
+    = link_to 'Uglify', params.except(:lp), class: 'btn'
+  - else
+    = link_to 'Prettify', params.merge(lp: true), class: 'btn'
   %table.table
     %tr
       %th No
@@ -10,7 +14,10 @@
     - @long_problems.each do |lp|
       %tr
         %td= lp.problem_no
-        %td.text-justify= lp.statement
+        - if params[:lp]
+          = latex_and_markdown :td, lp.statement
+        - else
+          %td.text-justify= lp.statement
         %td= link_to 'Edit', [:edit, @contest, lp]
         %td= link_to 'Hapus', [@contest, lp], method: :delete,
           data: { confirm: 'Apakah Anda yakin?' }

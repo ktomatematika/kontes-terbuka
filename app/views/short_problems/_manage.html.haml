@@ -1,5 +1,9 @@
 %section
   %h2 Isian
+  - if params[:sp]
+    = link_to 'Uglify', params.except(:sp), class: 'btn'
+  - else
+    = link_to 'Prettify', params.merge(sp: true), class: 'btn'
   %table.table
     %tr
       %th No
@@ -11,7 +15,10 @@
     - @short_problems.each do |sp|
       %tr
         %td= sp.problem_no
-        %td.text-justify= sp.statement
+        - if params[:sp]
+          = latex_and_markdown :td, sp.statement
+        - else
+          %td.text-justify= sp.statement
         %td= sp.answer
         %td= link_to 'Edit', [:edit, @contest, sp]
         %td= link_to 'Hapus', [@contest, sp], method: :delete,
