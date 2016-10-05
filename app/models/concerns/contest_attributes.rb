@@ -118,23 +118,9 @@ module ContestAttributes
 
   # This method finds all user_contests who has at least one feedback question
   # not filled in that particular contest.
-  # TODO: Mulpin will fix this.
   def not_full_feedback_user_contests(*includes)
-    filtered_query = user_contests
-
-    feedback_questions.each do |fq|
-      filtered_query =
-        filtered_query
-        .joins do
-          UserContest.include_feedback_answers(fq.id)
-                     .as("feedback_answers_#{fq.id}")
-                     .on do
-                       id == __send__("feedback_answers_#{fq.id}").id
-                     end.outer
-        end.where do
-          __send__("feedback_answers_#{fq.id}").id == nil
-        end
+    full_feedback_user_contests.joins do
+      self.outer.as('all_uc').on { id == all_uc.id }
     end
-    filtered_query.includes(includes)
   end
 end

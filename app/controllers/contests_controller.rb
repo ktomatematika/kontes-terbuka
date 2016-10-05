@@ -41,6 +41,10 @@ class ContestsController < ApplicationController
     else
       @user_contests = @contest.results(user: :roles) # this is a big query
       @user_contest = @user_contests.find { |uc| uc.user == current_user }
+
+      if cannot? :view_all, @contest
+        @user_contests = @user_contests.reject { |uc| uc.award.empty? }
+      end
     end
 
     grab_problems

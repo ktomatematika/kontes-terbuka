@@ -41,7 +41,7 @@ class Ability
     end
 
     if user.has_role? :panitia
-      can [:preview, :summary], Contest
+      can [:preview, :summary, :view_all], Contest
       can [:see_full_index, :see_full], User
       can [:admin, :profile], Application
     end
