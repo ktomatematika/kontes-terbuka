@@ -4,7 +4,8 @@ module Mailgun
   KEY = ENV['MAILGUN_API_KEY']
   DOMAIN = 'ktom.tomi.or.id'.freeze
   URL = "https://api:#{KEY}@api.mailgun.net/v3/#{DOMAIN}/messages".freeze
-  FROM = "Kontes Terbuka Olimpiade Matematika <mail@#{DOMAIN}>".freeze
+  EMAIL = "mail@#{DOMAIN}".freeze
+  FROM = "Kontes Terbuka Olimpiade Matematika <#{EMAIL}>".freeze
   # Sends a message with Mailgun. Pass a hash of options.
   # Some options:
   # to: message recipient. Please only specify one recipient; if you want more,
@@ -16,7 +17,7 @@ module Mailgun
   # bcc_array: BCC params as an array.
   def send_message(**params)
     if Rails.env.production?
-      params[:to] = "mail@#{DOMAIN}" if params[:to].nil?
+      params[:to] = EMAIL if params[:to].nil?
 
       if (params[:to].include?(',') || params[:to].is_a?(Array)) &&
          !params[:force_to_many]
