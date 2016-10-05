@@ -69,7 +69,7 @@ class UserContest < ActiveRecord::Base
 
   def create_short_submissions(short_submissions_hash)
     short_submissions_hash.each do |prob_id, answer|
-      next if (answer.nil? || answer.empty?)
+      next if answer.nil? || answer.empty?
       ShortSubmission.find_or_create_by(short_problem_id: prob_id,
                                         user_contest: self)
                      .update(answer: answer)

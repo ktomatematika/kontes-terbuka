@@ -118,9 +118,9 @@ module ContestAttributes
 
   # This method finds all user_contests who has at least one feedback question
   # not filled in that particular contest.
-  def not_full_feedback_user_contests(*includes)
+  def not_full_feedback_user_contests(*_includes)
     full_feedback_user_contests.joins do
-      self.outer.as('all_uc').on { id == all_uc.id }
+      outer.as('all_uc').on { id == all_uc.id }
     end
   end
 end
