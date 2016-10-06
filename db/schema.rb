@@ -11,19 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160918044056) do
+ActiveRecord::Schema.define(version: 20161006012803) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "awards", force: :cascade do |t|
-    t.string   "name"
-    t.datetime "created_at", :null=>false
-    t.datetime "updated_at", :null=>false
-  end
-
   create_table "colors", force: :cascade do |t|
-    t.string   "name",       :null=>false
+    t.string   "name",       :null=>false, :index=>{:name=>"index_colors_on_name", :unique=>true, :using=>:btree}
     t.datetime "created_at", :null=>false
     t.datetime "updated_at", :null=>false
   end
@@ -124,6 +118,13 @@ ActiveRecord::Schema.define(version: 20160918044056) do
     t.datetime "updated_at",  :null=>false
   end
 
+  create_table "migration_validators", force: :cascade do |t|
+    t.string "table_name",      :null=>false, :index=>{:name=>"unique_idx_on_migration_validators", :with=>["column_name", "validation_type"], :using=>:btree}
+    t.string "column_name",     :null=>false
+    t.string "validation_type", :null=>false
+    t.string "options"
+  end
+
   create_table "notifications", force: :cascade do |t|
     t.string   "event",       :null=>false
     t.string   "time_text"
@@ -200,13 +201,6 @@ ActiveRecord::Schema.define(version: 20160918044056) do
     t.datetime "updated_at",         :null=>false
   end
 
-  create_table "user_awards", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "award_id"
-    t.datetime "created_at", :null=>false
-    t.datetime "updated_at", :null=>false
-  end
-
   create_table "user_contests", force: :cascade do |t|
     t.integer  "user_id",      :null=>false, :index=>{:name=>"index_user_contests_on_user_id_and_contest_id", :with=>["contest_id"], :unique=>true, :using=>:btree}
     t.integer  "contest_id",   :null=>false
@@ -277,8 +271,6 @@ ActiveRecord::Schema.define(version: 20160918044056) do
   add_foreign_key "submission_pages", "long_submissions", on_delete: :cascade
   add_foreign_key "temporary_markings", "long_submissions", on_delete: :cascade
   add_foreign_key "temporary_markings", "users", on_delete: :cascade
-  add_foreign_key "user_awards", "awards", on_delete: :cascade
-  add_foreign_key "user_awards", "users", on_delete: :cascade
   add_foreign_key "user_contests", "contests", on_delete: :cascade
   add_foreign_key "user_contests", "users", on_delete: :cascade
   add_foreign_key "user_notifications", "notifications", on_delete: :cascade
