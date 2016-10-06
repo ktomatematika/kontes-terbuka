@@ -20,3 +20,26 @@
 #  fk_rails_374404a088  (user_contest_id => user_contests.id) ON DELETE => cascade
 #
 # rubocop:enable Metrics/LineLength
+
+require 'test_helper'
+
+class FeedbackAnswerTest < ActiveSupport::TestCase
+  test 'feedback answer can be saved' do
+    assert build(:feedback_question).save, 'Feedback question cannot be saved'
+  end
+
+  test 'feedback question associations' do
+    assert_equal FeedbackAnswer.reflect_on_association(:feedback_question)
+      .macro,
+                 :belongs_to,
+                 'Feedback Answer is not belongs to feedback questions.'
+    assert_equal FeedbackAnswer.reflect_on_association(:user_contest).macro,
+                 :belongs_to,
+                 'Feedback Answer is not belongs to user contest.'
+  end
+
+  test 'feedback answer to string' do
+    assert_equal create(:feedback_answer, answer: 'Aku abcd').to_s, 'Aku abcd',
+                 'Feedback answer to string is not equal to its answer.'
+  end
+end

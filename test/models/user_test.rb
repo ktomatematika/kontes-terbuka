@@ -51,8 +51,8 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test 'username is unique' do
-    create(:user)
-    assert_not build(:user, email: 'other@a.com').save,
+    create(:user, username: 'asdfasdf')
+    assert_not build(:user, username: 'asdfasdf', email: 'other@a.com').save,
                'User with duplicate usernames can be saved'
   end
 
@@ -175,8 +175,8 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test 'salt actually works' do
-    u1 = create(:user, pass: 'qwerty')
-    u2 = create(:user, username: 'otheruser', pass: 'qwerty')
+    u1 = create(:user, password: 'qwerty')
+    u2 = create(:user, username: 'otheruser', password: 'qwerty')
     assert_not_equal u1.hashed_password, u2.hashed_password,
                      'Password can be rainbow tabled!'
   end
