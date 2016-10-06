@@ -71,8 +71,9 @@ class UserContest < ActiveRecord::Base
     short_submissions_hash.each do |prob_id, answer|
       next if answer.nil? || answer.empty?
       ShortSubmission.find_or_create_by(short_problem_id: prob_id,
-                                        user_contest: self)
-                     .update(answer: answer)
+                                        user_contest: self) do |ans|
+        ans.answer = answer
+      end
     end
   end
 
@@ -80,8 +81,9 @@ class UserContest < ActiveRecord::Base
     feedback_answers_hash.each do |qn_id, answer|
       next if answer.empty?
       FeedbackAnswer.find_or_create_by(feedback_question_id: qn_id,
-                                       user_contest: self)
-                    .update(answer: answer)
+                                       user_contest: self) do |ans|
+        ans.answer = answer
+      end
     end
   end
 end
