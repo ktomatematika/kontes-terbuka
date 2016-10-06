@@ -87,6 +87,8 @@ class User < ActiveRecord::Base
 
   has_many :point_transactions
 
+  has_many :market_orders
+
   # Validations
   validates :password, presence: true, confirmation: true, on: :create
   validates :username, length: { in: 6..20 },
