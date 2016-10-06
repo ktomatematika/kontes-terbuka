@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161006012803) do
+ActiveRecord::Schema.define(version: 20161006094536) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,7 +32,7 @@ ActiveRecord::Schema.define(version: 20161006012803) do
     t.string   "problem_pdf_content_type"
     t.integer  "problem_pdf_file_size"
     t.datetime "problem_pdf_updated_at"
-    t.text     "rule",                        :default=>""
+    t.text     "rule",                        :default=>"", :null=>false
     t.datetime "result_time",                 :null=>false, :index=>{:name=>"index_contests_on_result_time", :using=>:btree}
     t.datetime "feedback_time",               :null=>false, :index=>{:name=>"index_contests_on_feedback_time", :using=>:btree}
     t.integer  "gold_cutoff",                 :default=>0, :null=>false
@@ -72,7 +72,7 @@ ActiveRecord::Schema.define(version: 20161006012803) do
   end
 
   create_table "feedback_questions", force: :cascade do |t|
-    t.text     "question"
+    t.text     "question",   :null=>false
     t.datetime "created_at", :null=>false
     t.datetime "updated_at", :null=>false
     t.integer  "contest_id", :null=>false, :index=>{:name=>"index_feedback_questions_on_contest_id", :using=>:btree}
@@ -161,7 +161,7 @@ ActiveRecord::Schema.define(version: 20161006012803) do
   create_table "short_problems", force: :cascade do |t|
     t.integer  "contest_id", :null=>false, :index=>{:name=>"index_short_problems_on_contest_id_and_problem_no", :with=>["problem_no"], :unique=>true, :using=>:btree}
     t.integer  "problem_no", :null=>false
-    t.string   "statement"
+    t.string   "statement",  :default=>"", :null=>false
     t.string   "answer",     :null=>false
     t.datetime "created_at", :null=>false
     t.datetime "updated_at", :null=>false
