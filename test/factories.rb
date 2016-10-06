@@ -1,6 +1,9 @@
 require_relative 'support'
 
 FactoryGirl.define do
+  factory :market_order do
+    
+  end
   sequence :unique do |n|
     name = 'aaaaaaaa'
     n.times { name.succ! }
