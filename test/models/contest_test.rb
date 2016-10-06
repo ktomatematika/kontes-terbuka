@@ -66,9 +66,6 @@ class ContestTest < ActiveSupport::TestCase
   end
 
   test 'attachments' do
-    pdf = File.open(Rails.root.join('test', 'a.pdf'), 'r')
-    tex = File.open(Rails.root.join('test', 'a.tex'), 'r')
-
     c = build(:contest, problem_pdf: pdf)
     assert c.save, 'Contest with PDF problem cannot be created.'
     assert File.exist?(Rails.root.join('public', 'contest_files', 'problems',

@@ -9,3 +9,6 @@ module ActiveSupport
     include FactoryGirl::Syntax::Methods
   end
 end
+
+pdf = File.open(Rails.root.join('test', 'support', 'a.pdf'), 'r')
+tex = File.open(Rails.root.join('test', 'support', 'a.tex'), 'r')
