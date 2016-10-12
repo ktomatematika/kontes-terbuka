@@ -37,6 +37,6 @@ class FeedbackQuestionTest < ActiveSupport::TestCase
 
   test 'feedback question to string' do
     assert_equal create(:feedback_question, question: 'Aku abcd').to_s,
-      'Aku abcd', 'Feedback question to string is not equal to its question.'
+                 'Aku abcd', 'Feedback question to string is not equal to its question.'
   end
 end

@@ -1,4 +1,3 @@
-# rubocop:disable Metrics/LineLength
 # == Schema Information
 #
 # Table name: long_problems
@@ -46,7 +45,7 @@ class LongProblemTest < ActiveSupport::TestCase
     assert lp.save, 'Long Problem with report cannot be created.'
     assert File.exist?(Rails.root.join('public', 'contest_files', 'reports',
                                        "lap#{lp.contest_id}-#{lp.problem_no}" +
-    File.extname(lp)), 'Long Problem report is not uploaded.'
+    File.extname(lp))), 'Long Problem report is not uploaded.'
   end
 
   test 'problem no >= 1' do
@@ -54,10 +53,10 @@ class LongProblemTest < ActiveSupport::TestCase
       no = n - 7
       if no < 1
         assert_not build(:long_problem, problem_no: no).save,
-          'Long Problem with no < 1 can be saved.'
+                   'Long Problem with no < 1 can be saved.'
       else
         assert build(:long_problem, problem_no: no).save,
-          'Long Problem with no >= 1 cannot be saved.'
+               'Long Problem with no >= 1 cannot be saved.'
       end
     end
   end
@@ -65,7 +64,7 @@ class LongProblemTest < ActiveSupport::TestCase
   test 'to string' do
     lp = create(:long_problem)
     assert_equal lp.to_s, "#{lp.contest} no. #{lp.problem_no}",
-      'Long Problem to_s is not expected.'
+                 'Long Problem to_s is not expected.'
   end
 
   test 'max mark is 7' do

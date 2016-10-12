@@ -65,7 +65,7 @@ Rails.application.routes.draw do
                                    as: 'download_submissions'
   post '/autofill-marks/:id', to: 'long_problems#autofill', as: 'autofill_marks'
   post '/start-mark-final/:id', to: 'long_problems#start_mark_final',
-    as: 'start_mark_final'
+                                as: 'start_mark_final'
   post '/upload-report/:id', to: 'long_problems#upload_report',
                              as: 'upload_report'
   post '/stop-nag/:id', to: 'user_contests#stop_nag', as: 'stop_nag'

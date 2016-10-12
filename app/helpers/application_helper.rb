@@ -74,7 +74,7 @@ module ApplicationHelper
   # Helper for home#admin to display koreksian
   def list_of_problems(lp)
     text = lp.to_s
-    text += " (laporan sudah)" if lp.report?
+    text += ' (laporan sudah)' if lp.report?
     link_to text, mark_solo_path(lp)
   end
 end
