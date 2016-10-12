@@ -37,6 +37,7 @@
     = render 'favicon'
 
   - haml_tag "body #{yield :page_attributes}" do
+    = console if Rails.env.development? && params[:c]
     #essential-data{ data: { color: @color, timezone: Time.zone.now.zone } }
 
     %nav.navbar.navbar-default.navbar-fixed-top#top-navbar-container
