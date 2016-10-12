@@ -47,6 +47,7 @@ class LongProblemTest < ActiveSupport::TestCase
                                        lp.contest_id.to_s,
                                        "lap#{lp.contest_id}-#{lp.problem_no}" +
     File.extname(lp.report_file_name))), 'Long Problem report is not uploaded.'
+    File.delete(Rails.root.join('public', 'contest_files', 'reports'))
   end
 
   test 'problem no >= 1' do

@@ -86,6 +86,7 @@ class ContestTest < ActiveSupport::TestCase
            'TeX problem file is not uploaded.'
     assert_not build(:contest, problem_tex: PDF).save,
                'Contest with invalid problem PDF can be saved.'
+    File.delete(Rails.root.join('public', 'contest_files', 'problems'))
   end
 
   test 'name must exist' do
