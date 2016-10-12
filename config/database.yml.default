@@ -5,11 +5,11 @@ default: &default
   # http://guides.rubyonrails.org/configuring.html#database-pooling
   pool: 5
   host: localhost
+  database: kontes_terbuka
+  username: ubuntu
 
 development:
   <<: *default
-  database: kontes_terbuka
-  username: ubuntu
   password: password
 
 # Warning: The database defined as "test" will be erased and
@@ -17,9 +17,8 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: kontes_terbuka_test
-  username: ubuntu
-  password: password
+  database: travis_ci_test
+  username: postgres
 
 production:
   <<: *default
