@@ -7,6 +7,8 @@
     class: 'btn'
   %span Download ini memakan waktu. Sabar ya. :3
   = link_to 'Magic', autofill_marks_path, method: :post, class: 'btn'
+  - unless @long_problem.start_mark_final
+    = link_to 'Panic', start_mark_final_path, method: :post, class: 'btn'
 
   %div
     Catatan: Anda bisa menggunakan LaTeX (bungkus dengan $) dan Markdown.
