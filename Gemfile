@@ -6,8 +6,10 @@ source 'https://rubygems.org'
 ruby '2.3.1'
 # Rails version
 gem 'rails', '~> 4'
-# Use postgres as database.
+# Use postgres as database
 gem 'pg'
+# For Travis CI
+gem 'rake', group: :test
 
 ### END BASICS
 
@@ -50,26 +52,19 @@ end
 
 ### UTILITIES
 
-# Environment variables for local machine
-gem 'dotenv-rails', group: [:development, :test], require: 'dotenv/rails-now'
+
 # Schema Validations: to maintin referential integrity in database and models
 gem 'schema_validations', group: [:development, :test] # production :(
 # Add time validations
 gem 'validates_timeliness'
-# Email with Mailgun
-gem 'rest-client'
 # Allows more complex SQL queries
 gem 'squeel'
 # Adds delayed job queueing for jobs that are executed in the future
 gem 'delayed_job_active_record'
-# Adds daemons for DelayedJob
-gem 'daemons'
 # Do not generate digests for error pages
 gem 'non-stupid-digest-assets'
 # Add pagination
 gem 'will_paginate', github: 'jonatack/will_paginate'
-# API for LINE bot
-gem 'line-bot-api'
 # Generate PDF
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
@@ -79,7 +74,8 @@ group :development do
   gem 'annotate'
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console'
-  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
+  # Spring speeds up development by keeping your application running in the
+  # background. Read more: https://github.com/rails/spring
   gem 'spring'
   # Shoot those n+1 queries!
   gem 'bullet'
@@ -90,28 +86,45 @@ group :development do
 end
 
 group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  # Call 'byebug' anywhere in the code to stop execution and get a
+  # debugger console
   gem 'byebug'
   # Factory girl: factories for testing
   gem 'factory_girl_rails'
+  # Environment variables for local machine
+  gem 'dotenv-rails', require: 'dotenv/rails-now'
+end
+
+group :production do
+  # Adds daemons for DelayedJob
+  gem 'daemons'
+  # Email with Mailgun
+  gem 'rest-client'
+  # API for LINE bot
+  gem 'line-bot-api'
 end
 
 ### END UTILITIES
 
 ### MAINTENANCE
 
-# Model logging
-gem 'paper_trail'
-# Profiler
-gem 'newrelic_rpm'
-# Add browser info in logs
-gem 'browser_details'
-# Sitemap generator
-gem 'sitemap_generator'
-# Auto-email exceptions
-gem 'exception_notification'
-# Database profiler
-gem 'rack-mini-profiler', require: false
+group :development, :production do
+  # Database profiler
+  gem 'rack-mini-profiler', require: false
+  # Model logging
+  gem 'paper_trail'
+  # Profiler
+  gem 'newrelic_rpm'
+  # Auto-email exceptions
+  gem 'exception_notification'
+end
+
+group :production do
+  # Add browser info in logs
+  gem 'browser_details'
+  # Sitemap generator
+  gem 'sitemap_generator'
+end
 
 ### END MAINTENANCE
 

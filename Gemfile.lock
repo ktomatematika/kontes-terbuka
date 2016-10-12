@@ -351,6 +351,7 @@ DEPENDENCIES
   rack-protection
   rails (~> 4)
   rails_real_favicon
+  rake
   recaptcha
   redcarpet
   rest-client
