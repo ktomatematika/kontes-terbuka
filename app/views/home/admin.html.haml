@@ -16,7 +16,7 @@
     %h2 Koreksian
     %ul
       - @long_problems.each do |lp|
-        %li= link_to lp, mark_solo_path(lp)
+        %li= list_of_problems(lp)
 
   - if current_user.has_role? :panitia
     %h2 Fitur Panitia
