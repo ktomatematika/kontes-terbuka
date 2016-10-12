@@ -83,6 +83,7 @@ class LongProblemsController < ApplicationController
       redirect_to mark_solo_path(@long_problem)
     end
     mark
+    @long_submissions = @long_submissions.includes(:user_contest)
   end
 
   def submit_final_markings
