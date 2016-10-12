@@ -79,10 +79,10 @@ group :development do
   gem 'spring'
   # Shoot those n+1 queries!
   gem 'bullet'
-  # ?
-  gem 'table_flipper'
   # Trace routes
   gem 'traceroute'
+  # ?
+  gem 'table_flipper'
 end
 
 group :development, :test do
@@ -109,6 +109,8 @@ end
 ### MAINTENANCE
 
 group :development, :production do
+  # Add browser info in logs
+  gem 'browser_details'
   # Database profiler
   gem 'rack-mini-profiler', require: false
   # Model logging
@@ -120,8 +122,6 @@ group :development, :production do
 end
 
 group :production do
-  # Add browser info in logs
-  gem 'browser_details'
   # Sitemap generator
   gem 'sitemap_generator'
 end
@@ -130,16 +130,19 @@ end
 
 ### SECURITY
 
-# Authorization gem. Adds roles.
+# Adds roles
 gem 'rolify'
-# Another authorization gem; adds privileges.
+# Adds privileges
 gem 'cancancan'
-# A recaptcha helper gem.
-gem 'recaptcha', require: 'recaptcha/rails'
 # Adds various security stuff. You need protection!
 gem 'rack-protection'
 # Adds hashes for passwords.
 gem 'bcrypt'
+
+group :development, :production do
+  # A recaptcha helper gem.
+  gem 'recaptcha', require: 'recaptcha/rails'
+end
 
 group :development do
   # Security checkup
