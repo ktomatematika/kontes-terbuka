@@ -112,7 +112,7 @@ class ContestsController < ApplicationController
   end
 
   def create_short_submissions
-    contest_id = params['contest_id']
+    contest_id = params[:contest_id]
     contest = Contest.find(contest_id)
     authorize! :create_short_submissions, contest
     UserContest.find_by(user: current_user, contest: contest)
@@ -253,5 +253,9 @@ class ContestsController < ApplicationController
 
   def participate_params
     params.require(:user_contest).permit(:user_id, :contest_id)
+  end
+
+  def contest_from_params
+    Contest.find(params[:contest_id])
   end
 end

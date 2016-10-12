@@ -6,7 +6,7 @@ class UsersController < ApplicationController
 
   def new
     if current_user.nil?
-      redirect_to sign_path(anchor: 'register')
+      redirect_to sign_users_path(anchor: 'register')
     else
       redirect_to root_path
     end
@@ -26,7 +26,7 @@ class UsersController < ApplicationController
       else
         Ajat.warn "register_fail|#{user.errors.full_messages}|" \
           "user:#{user.inspect}"
-        redirect_to register_path, alert: 'Terdapat kesalahan dalam ' \
+        redirect_to register_users_path, alert: 'Terdapat kesalahan dalam ' \
         ' registrasi. Jika registrasi masih tidak bisa dilakukan, ' \
           "#{ActionController::Base.helpers.link_to 'kontak kami',
                                                     contact_path}."
@@ -48,10 +48,10 @@ class UsersController < ApplicationController
     elsif u.enabled
       # User is verified
       Ajat.info "enabled_user_verify|uid:#{u.id}"
-      redirect_to login_path, notice: 'Anda sudah terverifikasi!'
+      redirect_to login_users_path, notice: 'Anda sudah terverifikasi!'
     else
       u.enable
-      redirect_to login_path, notice: 'Verifikasi berhasil! Silakan login.'
+      redirect_to login_users_path, notice: 'Verifikasi berhasil! Silakan login.'
     end
   end
 
@@ -60,17 +60,17 @@ class UsersController < ApplicationController
     if user.nil?
       Ajat.warn 'user_reset_password_fail_no_verification|' \
         "verification:#{params[:verification]}"
-      redirect_to reset_password_path(verification: params[:verification]),
+      redirect_to reset_password_users_path(verification: params[:verification]),
                   alert: 'Terdapat kesalahan! Coba lagi.'
     elsif params[:new_password] == params[:confirm_new_password]
       user.update(password: params[:new_password], verification: nil)
       Ajat.info "user_reset_password|uid:#{user.id}"
-      redirect_to login_path, notice: 'Password berhasil diubah! ' \
+      redirect_to login_users_path, notice: 'Password berhasil diubah! ' \
       'Silakan login.'
     else
       Ajat.warn "user_reset_password_fail_user|user:#{user.inspect}|" \
       "#{user.errors.full_messages}"
-      redirect_to reset_password_path(verification: params[:verification]),
+      redirect_to reset_password_users_path(verification: params[:verification]),
                   alert: 'Password baru tidak cocok! Coba lagi.'
     end
   end
@@ -84,7 +84,7 @@ class UsersController < ApplicationController
     user = User.find params[:user_id]
     authorize! :process_change_password, user
     if params[:new_password] != params[:confirm_new_password]
-      redirect_to user_change_password_path(user), alert: 'Password baru ' \
+      redirect_to change_password_user_path(user), alert: 'Password baru ' \
         'Anda tidak cocok!'
     elsif user.authenticate(params[:old_password])
       user.update(password: params[:new_password])
@@ -92,14 +92,14 @@ class UsersController < ApplicationController
       redirect_to user_path(user), notice: 'Password Anda berhasil diubah!'
     else
       Ajat.warn "user_change_password_wrong_old|uid:#{user.id}"
-      redirect_to user_change_password_path(user), alert: 'Password lama ' \
+      redirect_to change_password_user_path(user), alert: 'Password lama ' \
         'Anda salah!'
     end
   end
 
   def forgot_password
     if current_user.nil?
-      redirect_to sign_path(anchor: 'forgot')
+      redirect_to sign_users_path(anchor: 'forgot')
     else
       redirect_to root_path
     end
@@ -110,15 +110,15 @@ class UsersController < ApplicationController
 
     if user.nil?
       Ajat.warn "forgot_password_no_user|uname:#{params[:username]}"
-      redirect_to login_path, alert: 'Kombinasi user dan email tidak ditemukan.'
+      redirect_to login_users_path, alert: 'Kombinasi user dan email tidak ditemukan.'
     elsif !user.enabled?
       Ajat.warn "forgot_password_not_enabled|uname:#{params[:username]}"
-      redirect_to login_path, alert: 'Kamu belum verifikasi! Cek email ' \
+      redirect_to login_users_path, alert: 'Kamu belum verifikasi! Cek email ' \
         'Anda untuk verifikasi.'
     else
       user.forgot_password_process
       Ajat.warn "forgot_password|uname:#{params[:username]}"
-      redirect_to login_path, notice: 'Cek email Anda untuk instruksi ' \
+      redirect_to login_users_path, notice: 'Cek email Anda untuk instruksi ' \
       'selanjutnya.'
     end
   end
