@@ -46,7 +46,14 @@ class Ability
       can [:admin, :profile], Application
     end
 
-    can [:edit, :destroy], User if user.has_role? :user_admin
+    can [:edit, :update, :destroy], User if user.has_role? :user_admin
+
+    if user.has_role? :problem_admin
+      can [:admin, :read_problems, :destroy_short_probs,
+           :destroy_long_probs, :upload_ms], Contest
+      can :manage, ShortProblem
+      can :manage, LongProblem
+    end
 
     can :manage, :all if user.has_role? :admin
   end

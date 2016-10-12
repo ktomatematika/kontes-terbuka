@@ -61,7 +61,7 @@ class User < ActiveRecord::Base
   after_save :clear_password
 
   def before_add_method(role)
-    User.add_role :panitia if role == :user_admin
+    User.add_role :panitia if role == :user_admin || :problem_admin
   end
 
   # Associations

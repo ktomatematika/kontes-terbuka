@@ -181,7 +181,7 @@ class UsersController < ApplicationController
 
   def update
     user = User.find(params[:id])
-    authorize! :edit, user
+    authorize! :update, user
     user.update(user_edit_params)
     Ajat.info "user_full_update|user:#{user.id}"
     redirect_to user_path(user), notice: 'User berhasil diupdate!'

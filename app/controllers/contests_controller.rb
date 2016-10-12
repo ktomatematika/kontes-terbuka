@@ -61,13 +61,24 @@ class ContestsController < ApplicationController
 
   def update
     contest = Contest.find(params[:id])
-    authorize! :update, contest
-    if contest.update(contest_params)
-      Ajat.info "contest_updated|id:#{contest.id}"
-      redirect_to contest, notice: "#{contest} berhasil diubah."
+    if can? :update, contest
+      if contest.update(contest_params)
+        Ajat.info "contest_updated|id:#{contest.id}"
+        redirect_to contest, notice: "#{contest} berhasil diubah."
+      else
+        Ajat.warn "contest_update_fail|#{contest.errors.full_messages}"
+        redirect_to contest, alert: "#{contest} gagal diubah!"
+      end
+    elsif can? :upload_ms, contest
+      if contest.update(marking_scheme_params)
+        Ajat.info "marking_scheme_uploaded|id:#{contest.id}"
+        redirect_to contest, notice: "#{contest} berhasil diubah."
+      else
+        Ajat.warn "marking_scheme_upload_fail|#{contest.errors.full_messages}"
+        redirect_to contest, alert: "#{contest} gagal diubah!"
+      end
     else
-      Ajat.warn "contest_update_fail|#{contest.errors.full_messages}"
-      redirect_to contest, alert: "#{contest} gagal diubah!"
+      raise CanCan::AccessDenied.new('Cannot update', :update, contest)
     end
   end
 
@@ -230,6 +241,10 @@ class ContestsController < ApplicationController
                                     :feedback_time, :problem_pdf, :gold_cutoff,
                                     :silver_cutoff, :bronze_cutoff,
                                     :result_released, :marking_scheme)
+  end
+
+  def marking_scheme_params
+    params.require(:contest).permit(:marking_scheme)
   end
 
   def participate_params
