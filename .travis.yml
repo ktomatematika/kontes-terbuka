@@ -7,5 +7,3 @@ services:
 before_script:
   - psql -c 'create database kontes_terbuka_test;' -U postgres
   - cp config/database.yml.default config/database.yml
-script:
-  - bin/rake
