@@ -1,6 +1,7 @@
 # kontes-terbuka: Indonesian Online Math Contest website
 ![Indonesian Online Math Contest Logo](https://github.com/donjar/kontes-terbuka/raw/production/app/assets/images/logo-hires.png)
 [Klik di sini untuk versi Bahasa Indonesia.](README.md)
+[![Build Status](https://travis-ci.org/donjar/kontes-terbuka.svg?branch=production)](https://travis-ci.org/donjar/kontes-terbuka)
 
 This repository contains code for Indonesian Online Math Contest's website
 which can be accessed in https://ktom.tomi.or.id. This website is made by

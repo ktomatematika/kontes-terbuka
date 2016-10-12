@@ -1,6 +1,7 @@
 # kontes-terbuka: Website Kontes Terbuka Olimpiade Matematika
 ![Logo Kontes Terbuka Olimpiade Matematika](https://github.com/donjar/kontes-terbuka/raw/production/app/assets/images/logo-hires.png)
 [Click here for English version.](ENGLISH.md)
+[![Build Status](https://travis-ci.org/donjar/kontes-terbuka.svg?branch=production)](https://travis-ci.org/donjar/kontes-terbuka)
 
 Repo ini berisi kode untuk website Kontes Terbuka Olimpiade Matematika yang
 bisa diakses di https://ktom.tomi.or.id. Website ini dibuat oleh dua anggota
