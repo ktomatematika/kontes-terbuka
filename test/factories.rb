@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  sequence :unique_string do |n|
+  sequence :unique do |n|
     name = 'aaaaaaaa'
     n.times { name.succ! }
     name
@@ -10,7 +10,7 @@ FactoryGirl.define do
   end
 
   factory :color do
-    name { generate(:unique_string) }
+    name { generate(:unique) }
   end
 
   factory :contest do
@@ -68,7 +68,7 @@ FactoryGirl.define do
   end
 
   factory :province do
-    name { generate(:unique_string) }
+    name { generate(:unique) }
     timezone 'WITA'
   end
 
@@ -85,7 +85,7 @@ FactoryGirl.define do
   end
 
   factory :status do
-    name { generate(:unique_string) }
+    name { generate(:unique) }
   end
 
   factory :submission_page do
@@ -104,10 +104,10 @@ FactoryGirl.define do
   end
 
   factory :user do
-    username { generate(:unique_string) }
+    username { generate(:unique) }
     password 'qwerqwerty'
     password_confirmation { password }
-    email { generate(:unique_string) + '@a.b' }
+    email { generate(:unique) + '@a.b' }
     fullname 'qwerqwer'
     province
     status
