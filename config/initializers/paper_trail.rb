@@ -1,1 +1,1 @@
-PaperTrail.config.track_associations = true unless Rails.env.test?
+PaperTrail.config.track_associations = true

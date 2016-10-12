@@ -41,11 +41,12 @@ class LongProblemTest < ActiveSupport::TestCase
   end
 
   test 'attachments' do
-    lp = build(:long_problem, report: pdf)
+    lp = build(:long_problem, report: PDF)
     assert lp.save, 'Long Problem with report cannot be created.'
     assert File.exist?(Rails.root.join('public', 'contest_files', 'reports',
+                                       lp.contest_id.to_s,
                                        "lap#{lp.contest_id}-#{lp.problem_no}" +
-    File.extname(lp))), 'Long Problem report is not uploaded.'
+    File.extname(lp.report_file_name))), 'Long Problem report is not uploaded.'
   end
 
   test 'problem no >= 1' do

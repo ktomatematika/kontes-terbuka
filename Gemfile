@@ -108,13 +108,15 @@ end
 
 ### MAINTENANCE
 
+# Model logging
+gem 'paper_trail'
+
 group :development, :production do
   # Add browser info in logs
   gem 'browser_details'
   # Database profiler
   gem 'rack-mini-profiler', require: false
-  # Model logging
-  gem 'paper_trail'
+
   # Profiler
   gem 'newrelic_rpm'
   # Auto-email exceptions

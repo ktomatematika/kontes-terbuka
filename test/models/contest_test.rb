@@ -66,25 +66,25 @@ class ContestTest < ActiveSupport::TestCase
   end
 
   test 'attachments' do
-    c = build(:contest, problem_pdf: pdf)
+    c = build(:contest, problem_pdf: PDF)
     assert c.save, 'Contest with PDF problem cannot be created.'
     assert File.exist?(Rails.root.join('public', 'contest_files', 'problems',
                                        c.id.to_s, 'soal.pdf')),
            'PDF problem file is not uploaded.'
-    assert_not build(:contest, problem_pdf: tex).save,
+    assert_not build(:contest, problem_pdf: TEX).save,
                'Contest with invalid problem PDF can be saved.'
 
-    c = build(:contest, marking_scheme: pdf)
+    c = build(:contest, marking_scheme: PDF)
     assert c.save, 'Contest with valid marking scheme cannot be created.'
     assert File.exist?(Rails.root.join('public', 'contest_files', 'problems',
                                        c.id.to_s, 'ms.pdf')),
            'Marking scheme is not uploaded.'
-    c = build(:contest, problem_tex: tex)
+    c = build(:contest, problem_tex: TEX)
     assert c.save, 'Contest with TeX problem cannot be created.'
     assert File.exist?(Rails.root.join('public', 'contest_files', 'problems',
                                        c.id.to_s, 'soal.tex')),
            'TeX problem file is not uploaded.'
-    assert_not build(:contest, problem_tex: pdf).save,
+    assert_not build(:contest, problem_tex: PDF).save,
                'Contest with invalid problem PDF can be saved.'
   end
 

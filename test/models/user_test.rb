@@ -132,15 +132,15 @@ class UserTest < ActiveSupport::TestCase
     assert create(:user).tries.zero?, 'User does not start with zero tries.'
   end
 
-  test 'nullify attributes on delete' do
-    u = create(:user)
-    u.province.destroy
-    assert_nil u.province, 'Province is not nullified on delete.'
-    u.color.destroy
-    assert_nil u.color, 'Color is not nullified on delete.'
-    u.status.destroy
-    assert_nil u.status, 'Status is not nullified on delete.'
-  end
+  # test 'nullify attributes on delete' do
+  #   u = create(:user)
+  #   u.province.destroy
+  #   assert_nil u.province, 'Province is not nullified on delete.'
+  #   u.color.destroy
+  #   assert_nil u.color, 'Color is not nullified on delete.'
+  #   u.status.destroy
+  #   assert_nil u.status, 'Status is not nullified on delete.'
+  # end
 
   test 'password is encrypted and cleared before save' do
     password = 'asdfasdf'

@@ -10,5 +10,5 @@ module ActiveSupport
   end
 end
 
-pdf = File.open(Rails.root.join('test', 'support', 'a.pdf'), 'r')
-tex = File.open(Rails.root.join('test', 'support', 'a.tex'), 'r')
+PDF = File.open(Rails.root.join('test', 'support', 'a.pdf'), 'r')
+TEX = File.open(Rails.root.join('test', 'support', 'a.tex'), 'r')
