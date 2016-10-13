@@ -4,7 +4,15 @@ rvm:
 bundler_args: --without production development
 services:
   - postgresql
+
 before_script:
   - psql -c 'create database kontes_terbuka_test;' -U postgres
   - cp config/database.yml.travis config/database.yml
   - cp config/initializers/line_targets.rb.default config/initializers/line_targets.rb
+script:
+  - bundle exec rake
+after_script:
+  - rubocop -D -f simple --except AbcSize,MethodLength
+  - haml-lint --exclude-linter LineLength app/views
+  - scss-lint app/assets/stylesheets
+  - eslint app/assets/javascripts

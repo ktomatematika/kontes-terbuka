@@ -3,7 +3,7 @@
 # Table name: feedback_questions
 #
 #  id         :integer          not null, primary key
-#  question   :text
+#  question   :text             not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  contest_id :integer          not null
@@ -37,6 +37,12 @@ class FeedbackQuestionTest < ActiveSupport::TestCase
 
   test 'feedback question to string' do
     assert_equal create(:feedback_question, question: 'Aku abcd').to_s,
-                 'Aku abcd', 'Feedback question to string is not equal to its question.'
+                 'Aku abcd',
+                 'Feedback question to string is not equal to its question.'
+  end
+
+  test 'feedback question needs a contest' do
+    assert_not build(:feedback_question, contest_id: nil).save,
+               'Feedback question can be saved with nil contest.'
   end
 end

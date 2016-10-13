@@ -68,25 +68,14 @@ class LongProblem < ActiveRecord::Base
     end
   end
 
-  def problems_location
-    Rails.root.join('public', 'contest_files', 'submissions',
-                    "kontes#{contest.id}", "no#{problem_no}").to_s.freeze
-  end
-
   def zip_location
-    (problems_location + '.zip').freeze
-  end
-
-  def delete_submission_zips
-    Dir.entries(problems_location).each do |f|
-      File.delete(problems_location + '/' + f) if File.extname(f) == '.zip'
-    end
+    (submissions_location + '.zip').freeze
   end
 
   def compress_submissions
     delete_submission_zips
     File.delete(zip_location) if File.file?(zip_location)
-    ZipFileGenerator.new(problems_location, zip_location).write
+    ZipFileGenerator.new(submissions_location, zip_location).write
   end
 
   def all_marked?
@@ -101,6 +90,19 @@ class LongProblem < ActiveRecord::Base
       if tm.reduce { |a, e| a && (e == tm[0] ? true : false) }
         ls.update(score: tm[0])
       end
+    end
+  end
+
+  private
+
+  def submissions_location
+    Rails.root.join('public', 'contest_files', 'submissions',
+                    "kontes#{contest.id}", "no#{problem_no}").to_s.freeze
+  end
+
+  def delete_submission_zips
+    Dir.entries(submissions_location).each do |f|
+      File.delete(submissions_location + '/' + f) if File.extname(f) == '.zip'
     end
   end
 end

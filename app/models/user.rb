@@ -62,7 +62,7 @@ class User < ActiveRecord::Base
 
   def before_add_method(role)
     if role.name.in?(%w(user_admin problem_admin admin)) &&
-      !(has_role? :panitia)
+       !(has_role? :panitia)
       raise 'User is not panitia!'
     end
   end

@@ -1,5 +1,5 @@
-/* exported faq_data */
-var categories = ['Tentang Kontes', 'Teknis Lomba', 'Hal-hal Lainnya']
+/* exported categories, faq_data */
+var categories = ['Tentang Kontes', 'Teknis Lomba', 'Hal-hal Lainnya'];
 var faq_data = [
 	{
 		question: 'KTOM itu apa ya?',

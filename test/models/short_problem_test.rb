@@ -6,7 +6,7 @@
 #  id         :integer          not null, primary key
 #  contest_id :integer          not null
 #  problem_no :integer          not null
-#  statement  :string
+#  statement  :string           default(""), not null
 #  answer     :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null

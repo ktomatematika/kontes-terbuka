@@ -30,4 +30,8 @@ class ColorTest < ActiveSupport::TestCase
     assert_equal create(:color, name: 'coba').to_s, 'coba',
                  'Color to string is not equal to its name.'
   end
+
+  test 'name cannot be blank' do
+    assert_not build(:color, name: nil).save, 'Name can be nil.'
+  end
 end

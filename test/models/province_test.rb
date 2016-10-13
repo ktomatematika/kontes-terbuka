@@ -17,11 +17,26 @@
 require 'test_helper'
 
 class ProvinceTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  test 'province can be saved' do
+    assert build(:province).save, 'Province cannot be saved'
+  end
 
-  # province must have name
-  # province must be one of the 34 provinces
-  # each user should have exactly one province
+  test 'province associations' do
+    assert_equal Province.reflect_on_association(:user).macro,
+                 :has_many,
+                 'Province relation is not has many users.'
+  end
+
+  test 'province to string' do
+    assert_equal create(:province, name: 'coba').to_s, 'coba',
+                 'Province to string is not equal to its name.'
+  end
+
+  test 'name cannot be blank' do
+    assert_not build(:province, name: nil).save, 'Name can be nil.'
+  end
+
+  test 'timezone cannot be blank' do
+    assert_not build(:province, timezone: nil).save, 'Timezone can be nil.'
+  end
 end

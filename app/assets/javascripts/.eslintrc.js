@@ -80,6 +80,7 @@ module.exports = {
 		'fill_contest_text': false,
 		'about_us_data': false,
 		'faq_data': false,
+		'categories': false,
 		'window_type': false,
 		'MONTHS_IN_A_YEAR': false,
 		'DAYS_IN_A_WEEK': false,

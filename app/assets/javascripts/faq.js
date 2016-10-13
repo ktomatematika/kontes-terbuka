@@ -14,8 +14,7 @@ $(document).ready(function() {
 		$('#categories').append('<div class="faq-category" data-category=' +
 				i + '>' + data + '</div>');
 	}
-	$('.faq-category').css('width', (100 / categories.length) + '%');
-
+	$('.faq-category').css('width', 100 / categories.length + '%');
 
 	$('.faq-container').hide();
 	$('.faq-category[data-category="0"]').addClass('faq-category-active');

@@ -1,7 +1,6 @@
 ENV['RAILS_ENV'] ||= 'test'
 
 require 'simplecov'
-SimpleCov.start 'rails'
 
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
@@ -13,5 +12,4 @@ module ActiveSupport
   end
 end
 
-PDF = File.open(Rails.root.join('test', 'support', 'a.pdf'), 'r')
-TEX = File.open(Rails.root.join('test', 'support', 'a.tex'), 'r')
+require_relative 'support'

@@ -6,9 +6,10 @@ linters:
     style: include_zero
 
   ColorVariable:
-    exclude:
-      - '_colors.scss'
-      - 'user_colors.scss'
+    enabled: false
+    #exclude:
+    #  - '_colors.scss'
+    #  - 'user_colors.scss'
 
   IdSelector:
     enabled: false

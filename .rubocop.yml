@@ -11,6 +11,9 @@ AllCops:
     - 'tmp/**/*'
     - '**/Gemfile'
 
+Rails:
+  Enabled: true
+
 Style/Documentation:
   Enabled: false
 
@@ -20,5 +23,10 @@ Style/BracesAroundHashParameters:
 Style/ModuleFunction:
   EnforcedStyle: extend_self
 
-Rails:
-  Enabled: true
+Metrics/ClassLength:
+  Exclude:
+    - 'test/**/*'
+
+Rails/HasAndBelongsToMany:
+  Exclude:
+    - 'app/models/role.rb'

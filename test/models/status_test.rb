@@ -16,11 +16,22 @@
 require 'test_helper'
 
 class StatusTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  test 'status can be saved' do
+    assert build(:status).save, 'Status cannot be saved'
+  end
 
-  # status should exist in a user
-  # it should have a name
-  # it needs to be one of the given
+  test 'status associations' do
+    assert_equal Status.reflect_on_association(:user).macro,
+                 :has_many,
+                 'Status relation is not has many users.'
+  end
+
+  test 'status to string' do
+    assert_equal create(:status, name: 'coba').to_s, 'coba',
+                 'Status to string is not equal to its name.'
+  end
+
+  test 'name cannot be blank' do
+    assert_not build(:status, name: nil).save, 'Name can be nil.'
+  end
 end

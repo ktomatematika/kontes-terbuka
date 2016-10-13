@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/LineLength
 # == Schema Information
 #
 # Table name: long_problems
@@ -72,5 +73,28 @@ class LongProblemTest < ActiveSupport::TestCase
 
   test 'max mark is 7' do
     assert_equal LongProblem::MAX_MARK, 7, 'Long Problem max mark is not 7'
+  end
+
+  test 'long problem needs a contest' do
+    assert_not build(:long_problem, contest: nil).save,
+               'Long Problem with no contest can be saved.'
+  end
+
+  test 'long problem needs a problem no' do
+    assert_not build(:long_problem, problem_no: nil).save,
+               'Long Problem with no problem number can be saved.'
+  end
+
+  test 'long problem has a unique (contest, problem no) pair' do
+    lp = create(:long_problem)
+    assert_not build(:long_problem, contest: lp.contest,
+                                    problem_no: lp.problem_no).save,
+               'Long Problem with duplicate contest and ' \
+               'problem no can be saved.'
+  end
+
+  test 'start mark final has default false' do
+    assert_not create(:long_problem).start_mark_final,
+               'Long Problem does not default to false start_mark_final.'
   end
 end

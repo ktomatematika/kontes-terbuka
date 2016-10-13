@@ -1,3 +1,5 @@
+require_relative 'support'
+
 FactoryGirl.define do
   sequence :unique do |n|
     name = 'aaaaaaaa'
@@ -65,6 +67,7 @@ FactoryGirl.define do
   factory :point_transaction do
     point 10
     description 'Kontes Bodoh'
+    user
   end
 
   factory :province do
@@ -89,6 +92,7 @@ FactoryGirl.define do
   end
 
   factory :submission_page do
+    submission PDF
     page_number { generate(:number) }
     long_submission
   end

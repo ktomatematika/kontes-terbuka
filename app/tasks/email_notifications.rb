@@ -73,9 +73,6 @@ class EmailNotifications
       end
     end
 
-    # TODO
-    users = User.none
-
     Ajat.info "feedback_ending|id:#{@contest.id}|time:#{time_text}"
     send_emails(text: text, subject: subject, users: users)
   end

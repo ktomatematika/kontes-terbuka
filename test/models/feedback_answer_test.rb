@@ -42,4 +42,26 @@ class FeedbackAnswerTest < ActiveSupport::TestCase
     assert_equal create(:feedback_answer, answer: 'Aku abcd').to_s, 'Aku abcd',
                  'Feedback answer to string is not equal to its answer.'
   end
+
+  test 'answer cannot be blank' do
+    assert_not build(:feedback_answer, answer: nil).save,
+               'Feedback answer answer can be nil.'
+  end
+
+  test 'answer needs a feedback question' do
+    assert_not build(:feedback_answer, feedback_question_id: nil).save,
+               'Feedback answer can have nil feedback question.'
+  end
+
+  test 'answer needs a user contest' do
+    assert_not build(:feedback_answer, user_contest_id: nil).save,
+               'Feedback answer can have nil user contest.'
+  end
+
+  test 'answer must have a unique feedback qn and user contest pair' do
+    fa = create(:feedback_answer)
+    assert_not build(:feedback_answer, feedback_question: fa.feedback_question,
+                                       user_contest: fa.user_contest).save,
+               'Feedback answer can have duplicate fq and uc pair.'
+  end
 end

@@ -28,9 +28,8 @@ module ContestsHelper
   # Helper for contests#own_results, to show award.
   def show_award
     award = @user_contest.award
-    unless award.empty?
-      content_tag :h3, "Anda mendapatkan penghargaan #{award.downcase}!"
-    end
+    return if award.empty?
+    content_tag :h3, "Anda mendapatkan penghargaan #{award.downcase}!"
   end
 
   # Helper for contests#assign_markers. This will create options for select

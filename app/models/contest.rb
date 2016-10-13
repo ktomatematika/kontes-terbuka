@@ -35,14 +35,13 @@
 #  index_contests_on_result_time    (result_time)
 #  index_contests_on_start_time     (start_time)
 #
+# rubocop:enable Metrics/LineLength
 
 class Contest < ActiveRecord::Base
   include ContestAttributes
   include ContestJobs
   has_paper_trail
-  unless Rails.env.production?
-    schema_validations except: :rule
-  end
+  schema_validations except: :rule unless Rails.env.production?
 
   # Callbacks
   before_create do
@@ -91,9 +90,8 @@ class Contest < ActiveRecord::Base
 
   validate :result_released_when_contest_ended
   def result_released_when_contest_ended
-    if result_released && end_time > Time.zone.now
-      errors.add :result_released, 'after contest ended'
-    end
+    return unless result_released && !contest.ended?
+    errors.add :result_released, 'after contest ended'
   end
 
   def self.next_contest

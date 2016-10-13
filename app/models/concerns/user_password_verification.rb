@@ -21,10 +21,9 @@ module UserPasswordVerification
   end
 
   def destroy_if_unverified
-    unless enabled
-      Ajat.warn "verification_expiry|uname:#{username}"
-      destroy
-    end
+    return if enabled
+    Ajat.warn "verification_expiry|uname:#{username}"
+    destroy
   end
   handle_asynchronously :destroy_if_unverified,
                         run_at: proc { VERIFY_TIME.from_now },

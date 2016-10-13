@@ -290,4 +290,17 @@ class UserTest < ActiveSupport::TestCase
   test 'user becomes veteran if osn is checked' do
     assert create(:user, osn: '1').has_role?(:veteran)
   end
+
+  test 'non-panitia user cannot be added admin' do
+    u = create(:user)
+    assert_raises(Exception) { u.add_role(:problem_admin) }
+    assert_raises(Exception) { u.add_role(:user_admin) }
+    assert_raises(Exception) { u.add_role(:admin) }
+  end
+
+  test 'points are sum of pointtransactions' do
+    u = create(:user)
+    (-10..10).each { |p| create(:point_transaction, user: u, point: p) }
+    assert_equal u.point, 0
+  end
 end

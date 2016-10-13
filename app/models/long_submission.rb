@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/LineLength
 # == Schema Information
 #
 # Table name: long_submissions
@@ -19,12 +20,11 @@
 #  fk_rails_ab0e9f9d12  (user_contest_id => user_contests.id) ON DELETE => cascade
 #  fk_rails_f4fee8fddd  (long_problem_id => long_problems.id) ON DELETE => cascade
 #
+# rubocop:enable Metrics/LineLength
 
 class LongSubmission < ActiveRecord::Base
   has_paper_trail
-  unless Rails.env.production?
-    schema_validations except: :feedback
-  end
+  schema_validations except: :feedback unless Rails.env.production?
 
   # Associations
   belongs_to :user_contest
@@ -53,13 +53,6 @@ class LongSubmission < ActiveRecord::Base
     !submission_pages.empty?
   end
 
-  def location
-    Rails.root.join('public', 'contest_files', 'submissions',
-                    "kontes#{long_problem.contest_id}",
-                    "no#{long_problem.problem_no}",
-                    "peserta#{user_contest.id}").to_s.freeze
-  end
-
   def zip_location
     (location + '.zip').freeze
   end
@@ -76,5 +69,14 @@ class LongSubmission < ActiveRecord::Base
         zipfile.add filename, "#{location}/#{filename}"
       end
     end
+  end
+
+  private
+
+  def location
+    Rails.root.join('public', 'contest_files', 'submissions',
+                    "kontes#{long_problem.contest_id}",
+                    "no#{long_problem.problem_no}",
+                    "peserta#{user_contest_id}").to_s.freeze
   end
 end
