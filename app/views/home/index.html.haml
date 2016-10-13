@@ -1,5 +1,5 @@
 = content_for :page_attributes do
-  data-no-turbolink="true"
+  data-no-turbolink='true'
 
 = content_tag 'div', '', id: 'home-contest-data', data: { name: @next_important_contest.name, start_time: @next_important_contest.start_time, end_time: @next_important_contest.end_time, result_time: @next_important_contest.result_time, feedback_time: @next_important_contest.feedback_time, results_released: @next_important_contest.result_released }
 
@@ -10,7 +10,7 @@
   var js, fjs = d.getElementsByTagName(s)[0];
   if (d.getElementById(id)) return;
   js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/id_ID/sdk.js#xfbml=1&version=v2.6";
+  js.src = '//connect.facebook.net/id_ID/sdk.js#xfbml=1&version=v2.6';
   fjs.parentNode.insertBefore(js, fjs);
   }(document, 'script', 'facebook-jssdk'));
 
@@ -36,14 +36,14 @@
                 kontes-kontes kami.
               %p
                 Soal-soal kontes sebelumnya bisa diperoleh dari
-                %a{ href: 'http://olimpiade.org/discussions/main-topic/13/', target: "_blank" }
+                %a{ href: 'http://olimpiade.org/discussions/main-topic/13/', target: '_blank' }
                   link ini.
               %p
                 Anda juga bisa #{link_to 'membeli buku kami', book_path}
                 yang berisi kumpulan soal, solusi, maupun tips dan trik
                 olimpiade matematika!
-              = image_tag 'buku/buku1.png', alt: "Buku KTOM 1",
-                class: "img-responsive center-block", id: "img-buku-ktom"
+              = image_tag 'buku/buku1.png', alt: 'Buku KTOM 1',
+                class: 'img-responsive center-block', id: 'img-buku-ktom'
 
           .col-md-6.col-md-pull-6
             %section.home-section#prev-contests
@@ -53,7 +53,7 @@
               %p= link_to 'Daftar kontes', contests_path
 
       .col-md-4
-        %section#fb-box.hidden-sm.hidden-xs
+        %section.hidden-sm.hidden-xs#fb-box
           .fb-page{ data: { 'small-header' => 'true', href: 'https://www.facebook.com/KTOMatematika/', 'adapt-container-width' => 'true' } }
             .fb-xfbml-parse-ignore
               %blockquote{ cite: 'https://www.facebook.com/KTOMatematika/' }

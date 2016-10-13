@@ -60,3 +60,39 @@ function fill_contest_text() {
 		$('#time-remaining').text(time_remaining);
 	}
 }
+
+$(document).ready(function() {
+	var show_all_problems = false;
+	var show_own_results = false;
+
+	$('#all-problems').hide();
+	$('#own-results').hide();
+
+	$('#show-all-problems').click(function() {
+		if (show_all_problems) {
+			$('#all-problems').slideUp('slow', function() {
+				$('#show-all-problems').text('Tampilkan');
+				show_all_problems = false;
+			});
+		} else {
+			$('#all-problems').slideDown('slow', function() {
+				$('#show-all-problems').text('Sembunyikan');
+				show_all_problems = true;
+			});
+		}
+	});
+
+	$('#show-own-results').click(function() {
+		if (show_own_results) {
+			$('#own-results').slideUp('slow', function() {
+				$('#show-own-results').text('Tampilkan');
+				show_own_results = false;
+			});
+		} else {
+			$('#own-results').slideDown('slow', function() {
+				$('#show-own-results').text('Sembunyikan');
+				show_own_results = true;
+			});
+		}
+	});
+});
