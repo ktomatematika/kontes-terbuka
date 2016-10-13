@@ -5,7 +5,6 @@ require 'rails/test_help'
 module ActiveSupport
   class TestCase
     require 'factory_girl'
-    FactoryGirl.find_definitions
     include FactoryGirl::Syntax::Methods
   end
 end

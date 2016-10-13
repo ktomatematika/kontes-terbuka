@@ -40,6 +40,9 @@ class Contest < ActiveRecord::Base
   include ContestAttributes
   include ContestJobs
   has_paper_trail
+  unless Rails.env.production?
+    schema_validations except: :rule
+  end
 
   # Callbacks
   before_create do
