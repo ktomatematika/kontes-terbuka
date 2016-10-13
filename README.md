@@ -39,16 +39,9 @@ Sambil menunggu, ini adalah file-file yang dibutuhkan:
 - public/contest_files/certificates. File-file yang dibutuhkan (untuk membuat
 sertifikat): barra.png, frame.jpg, ilhan.png, logo.png
 - app/views/contests/certificate.tex.haml
-- config/initializers/line_targets.rb. Isinya merupakan deklarasi dictionary ke
-variabel `LINE_TARGETS`, di mana key nya adalah nicknya dan valuenya adalah
-MIDnya. Semua user di sini akan diingatkan oleh LINE. Contohnya:
-```ruby
-TARGETS = {
-  'Amir': 'u1284eee',
-  'Bayu': 'u92a3',
-  'Charlie': 'u004932'
-}.freeze
-```
+- config/initializers/line_targets.rb, ambil dari
+config/initializers/line_targets.rb.default. Ini adalah dictionary yang
+memetakan nickname ke MID LINEnya.
 
 Setelah itu, masuk ke Vagrant: `vagrant ssh`
 

@@ -52,7 +52,6 @@ end
 
 ### UTILITIES
 
-
 # Schema Validations: to maintin referential integrity in database and models
 gem 'schema_validations', group: [:development, :test] # production :(
 # Add time validations
@@ -68,6 +67,8 @@ gem 'will_paginate', github: 'jonatack/will_paginate'
 # Generate PDF
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
+# Test coverage
+gem 'simplecov', require: false, group: :test
 
 group :development do
   # Annotates model with schema
@@ -116,7 +117,6 @@ group :development, :production do
   gem 'browser_details'
   # Database profiler
   gem 'rack-mini-profiler', require: false
-
   # Profiler
   gem 'newrelic_rpm'
   # Auto-email exceptions

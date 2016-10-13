@@ -32,3 +32,4 @@ config/initializers/line_targets.rb
 # Others
 .vagrant/
 import/
+coverage/

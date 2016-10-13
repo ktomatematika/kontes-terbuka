@@ -1,0 +1,6 @@
+LINE_TARGETS = {
+  'Nama1' => 'mid1',
+  'Nama2' => 'mid2',
+  'Nama3' => 'mid3',
+  'Nama4' => 'mid4',
+}.freeze

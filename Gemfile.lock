@@ -105,6 +105,7 @@ GEM
     delayed_job_active_record (4.1.1)
       activerecord (>= 3.0, < 5.1)
       delayed_job (>= 3.0, < 5)
+    docile (1.1.5)
     domain_name (0.5.20160826)
       unf (>= 0.0.5, < 1.0.0)
     dotenv (2.1.1)
@@ -259,6 +260,11 @@ GEM
       activerecord (~> 4.2, >= 4.2.1)
       schema_plus_columns
       valuable
+    simplecov (0.12.0)
+      docile (~> 1.1.0)
+      json (>= 1.8, < 3)
+      simplecov-html (~> 0.10.0)
+    simplecov-html (0.10.0)
     sitemap_generator (5.1.0)
       builder
     spring (1.7.2)
@@ -359,6 +365,7 @@ DEPENDENCIES
   rubyzip
   sass-rails
   schema_validations
+  simplecov
   sitemap_generator
   spring
   squeel
@@ -379,4 +386,4 @@ RUBY VERSION
    ruby 2.3.1p112
 
 BUNDLED WITH
-   1.13.1
+   1.13.3
