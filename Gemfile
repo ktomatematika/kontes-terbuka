@@ -24,7 +24,7 @@ gem 'uglifier'
 # Use jQuery
 gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
-gem 'turbolinks'
+gem 'turbolinks', '< 5'
 gem 'jquery-turbolinks'
 # Use Bootstrap, the CSS framework (getbootstrap.com)
 gem 'bootstrap-sass'
@@ -106,6 +106,17 @@ group :production do
 end
 
 ### END UTILITIES
+
+### QUALITY
+
+# Ruby linter
+gem 'rubocop'
+# HAML linter
+gem 'haml_lint'
+# SCSS linter
+gem 'scss_lint'
+
+### END QUALITY
 
 ### MAINTENANCE
 

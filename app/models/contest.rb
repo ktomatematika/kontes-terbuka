@@ -90,7 +90,7 @@ class Contest < ActiveRecord::Base
 
   validate :result_released_when_contest_ended
   def result_released_when_contest_ended
-    return unless result_released && !contest.ended?
+    return unless result_released && !ended?
     errors.add :result_released, 'after contest ended'
   end
 
