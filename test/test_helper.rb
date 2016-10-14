@@ -7,6 +7,8 @@ require 'rails/test_help'
 
 FileUtils.rm_rf(Rails.root.join('coverage'))
 
+Rails.application.load_seed
+
 module ActiveSupport
   class TestCase
     require 'factory_girl'

@@ -281,8 +281,8 @@ class UserTest < ActiveSupport::TestCase
     u1.enable
     u2 = create(:user, username: 'zxcvzxcv')
 
-    u1.destroy_if_unverified
-    u2.destroy_if_unverified
+    u1.destroy_if_unverified_without_delay
+    u2.destroy_if_unverified_without_delay
     assert_not u1.destroyed?
     assert u2.destroyed?
   end

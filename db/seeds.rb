@@ -26,10 +26,27 @@ end
 end
 
 # rubocop:disable LineLength
-Notification.find_or_create_by(event: 'contest_starting', seconds: 24 * 3600, time_text: '24 jam', description: '24 jam sebelum kontes dimulai')
-Notification.find_or_create_by(event: 'contest_starting', seconds: 24 * 3600, time_text: '3 jam', description: '3 jam sebelum kontes dimulai')
-Notification.find_or_create_by(event: 'contest_started', description: 'Ketika kontes dimulai')
-Notification.find_or_create_by(event: 'contest_ending', seconds: 24 * 3600, time_text: '24 jam', description: '24 jam sebelum kontes selesai')
-Notification.find_or_create_by(event: 'contest_ending', seconds: 24 * 3600, time_text: '3 jam', description: '3 jam sebelum kontes selesai')
-Notification.find_or_create_by(event: 'results_released', description: 'Ketika hasil kontes dikeluarkan')
-Notification.find_or_create_by(event: 'feedback_ending', seconds: 24 * 3600, time_text: '6 jam', description: '6 jam sebelum feedback dibagikan')
+Notification.find_or_create_by(event: 'contest_starting',
+                               seconds: 24 * 3600,
+                               time_text: '24 jam',
+                               description: '24 jam sebelum kontes dimulai')
+Notification.find_or_create_by(event: 'contest_starting',
+                               seconds: 24 * 3600,
+                               time_text: '3 jam',
+                               description: '3 jam sebelum kontes dimulai')
+Notification.find_or_create_by(event: 'contest_started',
+                               description: 'Ketika kontes dimulai')
+Notification.find_or_create_by(event: 'contest_ending',
+                               seconds: 24 * 3600,
+                               time_text: '24 jam',
+                               description: '24 jam sebelum kontes selesai')
+Notification.find_or_create_by(event: 'contest_ending',
+                               seconds: 24 * 3600,
+                               time_text: '3 jam',
+                               description: '3 jam sebelum kontes selesai')
+Notification.find_or_create_by(event: 'results_released',
+                               description: 'Ketika hasil kontes dikeluarkan')
+Notification.find_or_create_by(event: 'feedback_ending',
+                               seconds: 24 * 3600,
+                               time_text: '6 jam',
+                               description: '6 jam sebelum feedback dibagikan')

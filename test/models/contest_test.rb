@@ -283,8 +283,8 @@ class ContestTest < ActiveSupport::TestCase
 
   test 'contest complex methods' do
     c = create(:full_contest, short_problems: 1, long_problems: 1,
-                              gold_cutoff: 6, silver_cutoff: 4,
-                              bronze_cutoff: 2)
+                              users: 5, gold_cutoff: 6,
+                              silver_cutoff: 4, bronze_cutoff: 2)
     c.short_problems.take.update(answer: '23')
     ucs = UserContest.all
 
@@ -292,11 +292,13 @@ class ContestTest < ActiveSupport::TestCase
     ucs.second.short_submissions.take.update(answer: '23')
     ucs.third.short_submissions.take.update(answer: '3')
     ucs.fourth.short_submissions.take.update(answer: '3')
+    ucs.fifth.short_submissions.take.update(answer: '3')
 
     ucs.first.long_submissions.take.update(score: nil)
     ucs.second.long_submissions.take.update(score: 2)
     ucs.third.long_submissions.take.update(score: 4)
     ucs.fourth.long_submissions.take.update(score: 6)
+    ucs.fifth.long_submissions.take.update(score: 6)
 
     rucs = c.results
 
@@ -307,24 +309,122 @@ class ContestTest < ActiveSupport::TestCase
     assert_equal rucs.first.rank, 1
 
     assert_equal rucs.second.short_mark, 0
-    assert_equal rucs.second.long_mark, 4
-    assert_equal rucs.second.total_mark, 4
-    assert_equal rucs.second.award, 'Perak'
-    assert_equal rucs.second.rank, 2
+    assert_equal rucs.second.long_mark, 6
+    assert_equal rucs.second.total_mark, 6
+    assert_equal rucs.second.award, 'Emas'
+    assert_equal rucs.second.rank, 1
 
-    assert_equal rucs.third.short_mark, 1
-    assert_equal rucs.third.long_mark, 2
-    assert_equal rucs.third.total_mark, 3
-    assert_equal rucs.third.award, 'Perunggu'
+    assert_equal rucs.third.short_mark, 0
+    assert_equal rucs.third.long_mark, 4
+    assert_equal rucs.third.total_mark, 4
+    assert_equal rucs.third.award, 'Perak'
     assert_equal rucs.third.rank, 3
 
     assert_equal rucs.fourth.short_mark, 1
-    assert_equal rucs.fourth.long_mark, 0
-    assert_equal rucs.fourth.total_mark, 1
-    assert_equal rucs.fourth.award, ''
+    assert_equal rucs.fourth.long_mark, 2
+    assert_equal rucs.fourth.total_mark, 3
+    assert_equal rucs.fourth.award, 'Perunggu'
     assert_equal rucs.fourth.rank, 4
 
-    rucs.second.user.add_role :veteran
-    assert_equal c.array_of_scores, [0, 1, 0, 1, 0, 0, 1, 0, 0]
+    assert_equal rucs.fifth.short_mark, 1
+    assert_equal rucs.fifth.long_mark, 0
+    assert_equal rucs.fifth.total_mark, 1
+    assert_equal rucs.fifth.award, ''
+    assert_equal rucs.fifth.rank, 5
+
+    rucs.third.user.add_role :veteran
+    assert_equal c.array_of_scores, [0, 1, 0, 1, 0, 0, 2, 0, 0]
+  end
+
+  test 'contest jobs' do
+    c = build(:contest, start: 3 * 24 * 3600, ends: 6 * 24 * 3600,
+              result: 9 * 24 * 3600, feedback: 12 * 24 * 3600,
+              result_released: false)
+    10.times do
+      create(:contest).delay(queue: "contest_#{c.id}").reload # do nothing
+    end
+
+    c.save
+    jobs = Delayed::Job.where(queue: "contest_#{c.id}").map do |j|
+      handler = YAML.load(j.handler)
+      { class: handler.object.class.name, run_at: j.run_at,
+        method_name: handler.method_name, args: handler.args }
+    end
+
+    assert_equal jobs.select { |j| j[:method_name] == :reload }.count, 0,
+      'prepared jobs are not destroyed.'
+
+    purge = jobs.select { |j| j[:method_name] == :purge_panitia }
+    assert_equal purge.count, 1, 'panitia are not purged.'
+    assert_in_delta purge.first[:run_at], c.end_time, 5,
+      'purge panitia is not run at end time.'
+    assert_equal purge.first[:args].count, 0,
+      'purge panitia args are not correct.'
+
+    starting = jobs.select do |j|
+      j[:method_name] == :contest_starting && j[:class] == 'EmailNotifications'
+    end
+    starting.each do |j|
+      n = Notification.find_by event: 'contest_starting',
+        description: "#{j[:args].first} sebelum kontes dimulai"
+      assert_not_nil n
+      assert_in_delta n.seconds, c.start_time - j[:run_at], 5,
+        'email notifications are not working'
+    end
+
+    started = jobs.select do |j|
+      j[:method_name] == :contest_started && j[:class] == 'EmailNotifications'
+    end
+    started.each do |j|
+      n = Notification.find_by event: 'contest_started'
+      assert_not_nil n
+      assert_in_delta j[:run_at], c.start_time, 5,
+        'email notifications are not working'
+    end
+
+    ending = jobs.select do |j|
+      j[:method_name] == :contest_ending && j[:class] == 'EmailNotifications'
+    end
+    ending.each do |j|
+      n = Notification.find_by event: 'contest_ending',
+        description: "#{j[:args].first} sebelum kontes selesai"
+      assert_not_nil n
+      assert_in_delta n.seconds, c.end_time - j[:run_at], 5,
+        'email notifications are not working'
+    end
+
+    feedback = jobs.select do |j|
+      j[:method_name] == :feedback_ending && j[:class] == 'EmailNotifications'
+    end
+    feedback.each do |j|
+      n = Notification.find_by event: 'feedback_ending',
+        description: "#{j[:args].first} sebelum feedback dibagikan"
+      assert_not_nil n
+      assert_in_delta n.seconds, c.feedback_time - j[:run_at], 5,
+        'email notifications are not working'
+    end
+
+    line = jobs.select { |j| j[:class] == 'LineNag' }
+    assert_equal line.select { |j| j[:method_name] == :contest_starting }.count,
+      1
+    assert_equal line.select { |j| j[:method_name] == :contest_started }.count,
+      1
+    assert_equal line.select { |j| j[:method_name] == :contest_ending }.count, 1
+
+    job = jobs.select { |j| j[:method_name] == :jobs_on_feedback_time_end }
+    assert_equal job.count, 1
+    assert_in_delta job.first[:run_at], c.feedback_time, 5
+
+    c.update(start_time: Time.zone.now - 10.days,
+             end_time: Time.zone.now - 5.days,
+             result_released: true)
+    jobs = Delayed::Job.where(queue: "contest_#{c.id}").map do |j|
+      handler = YAML.load(j.handler)
+      { run_at: j.run_at, method_name: handler.method_name }
+    end
+
+    job = jobs.select { |j| j[:method_name] == :jobs_on_result_released }
+    assert_equal job.count, 1
+    assert_in_delta job.first[:run_at], Time.zone.now, 5
   end
 end
