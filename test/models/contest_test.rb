@@ -12,7 +12,7 @@
 #  problem_pdf_content_type    :string
 #  problem_pdf_file_size       :integer
 #  problem_pdf_updated_at      :datetime
-#  rule                        :text             default(""), not null
+#  rule                        :text             default("")
 #  result_time                 :datetime         not null
 #  feedback_time               :datetime         not null
 #  gold_cutoff                 :integer          default(0), not null
@@ -86,8 +86,6 @@ class ContestTest < ActiveSupport::TestCase
            'TeX problem file is not uploaded.'
     assert_not build(:contest, problem_tex: PDF).save,
                'Contest with invalid problem PDF can be saved.'
-
-    FileUtils.rm_rf(Rails.root.join('public', 'contest_files', 'problems'))
   end
 
   test 'name must exist' do
@@ -281,5 +279,52 @@ class ContestTest < ActiveSupport::TestCase
 
     assert_equal c1.max_score, 10 + LongProblem::MAX_MARK * 7
     assert_equal c2.max_score, 5 + LongProblem::MAX_MARK * 3
+  end
+
+  test 'contest complex methods' do
+    c = create(:full_contest, short_problems: 1, long_problems: 1,
+                              gold_cutoff: 6, silver_cutoff: 4,
+                              bronze_cutoff: 2)
+    c.short_problems.take.update(answer: '23')
+    ucs = UserContest.all
+
+    ucs.first.short_submissions.take.update(answer: '23')
+    ucs.second.short_submissions.take.update(answer: '23')
+    ucs.third.short_submissions.take.update(answer: '3')
+    ucs.fourth.short_submissions.take.update(answer: '3')
+
+    ucs.first.long_submissions.take.update(score: nil)
+    ucs.second.long_submissions.take.update(score: 2)
+    ucs.third.long_submissions.take.update(score: 4)
+    ucs.fourth.long_submissions.take.update(score: 6)
+
+    rucs = c.results
+
+    assert_equal rucs.first.short_mark, 0
+    assert_equal rucs.first.long_mark, 6
+    assert_equal rucs.first.total_mark, 6
+    assert_equal rucs.first.award, 'Emas'
+    assert_equal rucs.first.rank, 1
+
+    assert_equal rucs.second.short_mark, 0
+    assert_equal rucs.second.long_mark, 4
+    assert_equal rucs.second.total_mark, 4
+    assert_equal rucs.second.award, 'Perak'
+    assert_equal rucs.second.rank, 2
+
+    assert_equal rucs.third.short_mark, 1
+    assert_equal rucs.third.long_mark, 2
+    assert_equal rucs.third.total_mark, 3
+    assert_equal rucs.third.award, 'Perunggu'
+    assert_equal rucs.third.rank, 3
+
+    assert_equal rucs.fourth.short_mark, 1
+    assert_equal rucs.fourth.long_mark, 0
+    assert_equal rucs.fourth.total_mark, 1
+    assert_equal rucs.fourth.award, ''
+    assert_equal rucs.fourth.rank, 4
+
+    rucs.second.user.add_role :veteran
+    assert_equal c.array_of_scores, [0, 1, 0, 1, 0, 0, 1, 0, 0]
   end
 end

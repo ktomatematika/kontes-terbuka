@@ -24,7 +24,7 @@ module Mailgun
         raise 'You cannot send to many. Use BCC instead.'
       end
       params[:from] = FROM
-      params[:text] = "Salam sejahera,\n\n" + params[:text] +
+      params[:text] = "Salam sejahtera,\n\n" + params[:text] +
                       "\n\nSalam,\nTim KTO Matematika"
 
       unless params[:contest].nil?

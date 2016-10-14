@@ -66,17 +66,17 @@ class LongSubmissionTest < ActiveSupport::TestCase
   end
 
   test 'submitted method' do
-    ls0 = create(:long_submission)
-    ls1 = create(:long_submission)
-    ls2 = create(:long_submission)
+    c = create(:full_contest)
+    lp = c.long_problems.take
+    lp.submission_pages.each(&:destroy)
 
-    create(:submission_page, long_submission: ls1)
-    create(:submission_page, long_submission: ls2)
-    create(:submission_page, long_submission: ls2)
+    lp.long_submissions.each_with_index do |ls, i|
+      i.times do
+        create(:submission_page, long_submission: ls)
+      end
 
-    assert_not ls0.submitted?, 'Long Submission with 0 pages is submitted.'
-    assert ls1.submitted?, 'Long Submission with 1 page is not submitted.'
-    assert ls2.submitted?, 'Long Submission with 2 pages is not submitted.'
+      assert i.zero? ^ ls.submitted?, 'Submitted does not work.'
+    end
   end
 
   test 'zip location' do
@@ -128,16 +128,21 @@ class LongSubmissionTest < ActiveSupport::TestCase
   end
 
   test 'submitted scope' do
-    create(:long_submission)
-    ls1 = create(:long_submission)
-    ls2 = create(:long_submission)
+    c = create(:full_contest)
+    lp = c.long_problems.take
+    SubmissionPage.destroy_all
 
-    create(:submission_page, long_submission: ls1)
-    create(:submission_page, long_submission: ls2)
-    create(:submission_page, long_submission: ls2)
+    x = 0
+    lp.long_submissions.each_with_index do |ls, i|
+      i.times do
+        create(:submission_page, long_submission: ls)
+      end
+      x = ls.id if i.zero?
+    end
 
     assert_equal LongSubmission.submitted.order(:id).pluck(:id),
-                 [ls1.id, ls2.id].sort,
+                 lp.long_submissions.order(:id).pluck(:id)
+                   .reject { |n| n == x },
                  'Submitted long submission scope is not working.'
   end
 end

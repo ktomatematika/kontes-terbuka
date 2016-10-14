@@ -29,27 +29,6 @@ module ContestAttributes
     short_problems.length + LongProblem::MAX_MARK * long_problems.length
   end
 
-  def scores(*includes)
-    filtered_query = user_contests.processed
-
-    long_problems.each do |long_problem|
-      filtered_query =
-        filtered_query
-        .joins do
-          UserContest.include_long_problem_marks(long_problem.id)
-                     .as("long_problem_marks_#{long_problem.id}")
-                     .on do
-                       id == __send__('long_problem_marks_' \
-                                                     "#{long_problem.id}").id
-                     end
-        end.select do
-          __send__("long_problem_marks_#{long_problem.id}")
-            .__send__("problem_no_#{long_problem.id}")
-        end
-    end
-    filtered_query.includes(includes)
-  end
-
   def results(*includes)
     partcps = scores(includes)
     rank = 0
@@ -122,5 +101,28 @@ module ContestAttributes
     full_feedback_user_contests.joins do
       outer.as('all_uc').on { id == all_uc.id }
     end
+  end
+
+  private
+
+  def scores(*includes)
+    filtered_query = user_contests.processed
+
+    long_problems.each do |long_problem|
+      filtered_query =
+        filtered_query
+        .joins do
+          UserContest.include_long_problem_marks(long_problem.id)
+                     .as("long_problem_marks_#{long_problem.id}")
+                     .on do
+                       id == __send__('long_problem_marks_' \
+                                                     "#{long_problem.id}").id
+                     end
+        end.select do
+          __send__("long_problem_marks_#{long_problem.id}")
+            .__send__("problem_no_#{long_problem.id}")
+        end
+    end
+    filtered_query.includes(includes)
   end
 end

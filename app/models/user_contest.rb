@@ -70,20 +70,20 @@ class UserContest < ActiveRecord::Base
   def create_short_submissions(short_submissions_hash)
     short_submissions_hash.each do |prob_id, answer|
       next if answer.nil? || answer.empty?
-      ShortSubmission.find_or_create_by(short_problem_id: prob_id,
-                                        user_contest: self) do |ans|
-        ans.answer = answer
-      end
+      ss = ShortSubmission.find_or_initialize_by(short_problem_id: prob_id,
+                                                 user_contest: self)
+      ss.answer = answer
+      ss.save
     end
   end
 
   def create_feedback_answers(feedback_answers_hash)
     feedback_answers_hash.each do |qn_id, answer|
       next if answer.empty?
-      FeedbackAnswer.find_or_create_by(feedback_question_id: qn_id,
-                                       user_contest: self) do |ans|
-        ans.answer = answer
-      end
+      fa = FeedbackAnswer.find_or_initialize_by(feedback_question_id: qn_id,
+                                                user_contest: self)
+      fa.answer = answer
+      fa.save
     end
   end
 end

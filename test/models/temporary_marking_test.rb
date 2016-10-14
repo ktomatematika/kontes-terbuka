@@ -25,7 +25,39 @@
 require 'test_helper'
 
 class TemporaryMarkingTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  test 'temporary_marking can be saved' do
+    assert build(:temporary_marking).save, 'TemporaryMarking cannot be saved'
+  end
+
+  test 'temporary_marking associations' do
+    assert_equal TemporaryMarking.reflect_on_association(:user).macro,
+                 :belongs_to,
+                 'TemporaryMarking relation is not belongs to users.'
+    assert_equal TemporaryMarking.reflect_on_association(:long_submission)
+      .macro, :belongs_to,
+                 'TemporaryMarking relation is not belongs to long_submission.'
+  end
+
+  test 'user id cannot be blank' do
+    assert_not build(:temporary_marking, user_id: nil).save,
+               'User ID can be nil.'
+  end
+
+  test 'long submission id cannot be blank' do
+    assert_not build(:temporary_marking, long_submission_id: nil).save,
+               'Long Submission ID can be nil.'
+  end
+
+  test 'temporary marking mark must be nonnegative' do
+    15.times do |n|
+      no = n - 7
+      if no < 0
+        assert_not build(:temporary_marking, mark: no).save,
+                   'Temporary Marking with mark < 0 can be saved.'
+      else
+        assert build(:temporary_marking, mark: no).save,
+               'Temporary Marking with mark >= 0 cannot be saved.'
+      end
+    end
+  end
 end

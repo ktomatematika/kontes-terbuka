@@ -48,8 +48,6 @@ class LongProblemTest < ActiveSupport::TestCase
                                        lp.contest_id.to_s,
                                        "lap#{lp.contest_id}-#{lp.problem_no}" +
     File.extname(lp.report_file_name))), 'Long Problem report is not uploaded.'
-
-    FileUtils.rm_rf(Rails.root.join('public', 'contest_files', 'problems'))
   end
 
   test 'problem no >= 1' do
@@ -96,5 +94,76 @@ class LongProblemTest < ActiveSupport::TestCase
   test 'start mark final has default false' do
     assert_not create(:long_problem).start_mark_final,
                'Long Problem does not default to false start_mark_final.'
+  end
+
+  test 'zip location' do
+    lp = create(:long_problem)
+    assert_equal lp.zip_location,
+                 Rails.root.join('public', 'contest_files', 'submissions',
+                                 "kontes#{lp.contest_id}",
+                                 "no#{lp.problem_no}.zip").to_s,
+                 'Zip location is not correct'
+  end
+
+  test 'compress_submissions' do
+    c = create(:full_contest)
+    lp = c.long_problems.take
+    ls = lp.long_submissions
+
+    File.delete(lp.zip_location) if File.file?(lp.zip_location)
+    lp.compress_submissions
+
+    assert File.exist?(lp.zip_location), 'Zip file does not exist'
+
+    Zip::File.open(lp.zip_location) do |file|
+      assert_equal file.select { |f| f.ftype == :directory }.count,
+                   ls.count, 'Number of folders does not match!'
+
+      filenames = file.map(&:name)
+
+      ls.each do |l|
+        l.submission_pages.each do |p|
+          filename = "peserta#{p.long_submission.user_contest_id}/" \
+                     "kontes#{p.long_submission.long_problem.contest_id}_" \
+                     "no#{p.long_submission.long_problem.problem_no}_" \
+                     "peserta#{p.long_submission.user_contest_id}_" \
+                     "hal#{p.page_number}.pdf"
+          assert filenames.include?(filename), "#{filename} is not there!!"
+        end
+      end
+    end
+  end
+
+  test 'all_marked' do
+    c = create(:full_contest)
+
+    c.long_problems.each_with_index do |lp, idx|
+      if idx.zero?
+        lp.submission_pages.each(&:destroy)
+        lp.temporary_markings.each(&:destroy)
+        assert lp.all_marked?
+      elsif idx == 1
+        assert lp.all_marked?
+      elsif idx == 2
+        lp.temporary_markings.take.destroy
+        assert_not lp.all_marked?
+      end
+    end
+  end
+
+  test 'autofill' do
+    c = create(:full_contest)
+    lp = c.long_problems.take
+    ls = lp.long_submissions.first
+    ls2 = lp.long_submissions.second
+
+    ls.temporary_markings.update_all(mark: 7)
+    ls2.temporary_markings.each_with_index do |tm, i|
+      tm.update(mark: i)
+    end
+
+    lp.autofill
+    assert_equal ls.reload.score, 7, 'autofill is not working'
+    assert_nil ls2.reload.score, 'autofill is not working'
   end
 end

@@ -300,7 +300,17 @@ class UserTest < ActiveSupport::TestCase
 
   test 'points are sum of pointtransactions' do
     u = create(:user)
-    (-10..10).each { |p| create(:point_transaction, user: u, point: p) }
-    assert_equal u.point, 0
+    (-9..10).each { |p| create(:point_transaction, user: u, point: p) }
+    assert_equal u.point, 10
+  end
+
+  test 'forgot password process' do
+    u = create(:user)
+    u.enable
+    u.forgot_password_process
+
+    assert_not u.verification.nil?, 'On forgot password process,
+    user verification is nil'
+    assert u.enabled, 'On forgot password process, user is disabled'
   end
 end

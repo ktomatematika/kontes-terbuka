@@ -3,7 +3,7 @@
 # Table name: feedback_questions
 #
 #  id         :integer          not null, primary key
-#  question   :text             not null
+#  question   :text
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  contest_id :integer          not null

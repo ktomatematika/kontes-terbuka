@@ -30,7 +30,7 @@ class ShortProblem < ActiveRecord::Base
   has_many :short_submissions
   has_many :user_contests, through: :short_submissions
 
-  validates :problem_no, numericality: { greater_than_or_equal_to: 0 }
+  validates :problem_no, numericality: { greater_than_or_equal_to: 1 }
 
   # Methods
   def most_answer
@@ -44,7 +44,7 @@ class ShortProblem < ActiveRecord::Base
                               id, id]
   end
 
-  def correct
+  def correct_answers
     short_submissions.where(answer: answer).count
   end
 end

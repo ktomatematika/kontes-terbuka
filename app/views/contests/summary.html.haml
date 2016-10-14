@@ -30,8 +30,8 @@
           %td= sp.problem_no
           = latex_and_markdown :td, sp.statement
           %td= sp.answer
-          %td= sp.correct
-          %td= percentage average sp.correct
+          %td= sp.correct_answers
+          %td= percentage average sp.correct_answers
           %td= most.map(&:answer)
           %td= most.empty? ? 0 : most[0].count
           %td= percentage average(most.empty? ? 0 : most[0].count)

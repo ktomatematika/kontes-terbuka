@@ -24,10 +24,39 @@
 require 'test_helper'
 
 class ShortSubmissionTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  test 'short submission can be saved' do
+    assert build(:short_submission).save, 'Short submission cannot be saved'
+  end
 
-  # a short submission should belong to a user
-  # a short submission should belong to a short problem
+  test 'short submission associations' do
+    assert_equal ShortSubmission.reflect_on_association(:user_contest).macro,
+                 :belongs_to,
+                 'Short Submission relation is not belongs to user contest.'
+    assert_equal ShortSubmission.reflect_on_association(:short_problem).macro,
+                 :belongs_to,
+                 'Short Submission relation is not has many short problem.'
+  end
+
+  test 'user contest cannot be null' do
+    assert_not build(:short_submission, user_contest_id: nil).save,
+               'Short Submission with null user contest id can be saved.'
+  end
+
+  test 'short problem cannot be null' do
+    assert_not build(:short_submission, short_problem_id: nil).save,
+               'Short Submission with null short problem can be saved.'
+  end
+
+  test 'answer cannot be null' do
+    assert_not build(:short_submission, answer: nil).save,
+               'Short Submission with null answer can be saved.'
+  end
+
+  test 'user contest and short problem unique pair' do
+    ss = create(:short_submission)
+    assert_not build(:short_submission, user_contest: ss.user_contest,
+                                        short_problem: ss.short_problem).save,
+               'Short Submission with duplicate user contest and short ' \
+               'problem is saved.'
+  end
 end

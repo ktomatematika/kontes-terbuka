@@ -97,7 +97,7 @@ class LongProblem < ActiveRecord::Base
 
   def submissions_location
     Rails.root.join('public', 'contest_files', 'submissions',
-                    "kontes#{contest.id}", "no#{problem_no}").to_s.freeze
+                    "kontes#{contest_id}", "no#{problem_no}").to_s.freeze
   end
 
   def delete_submission_zips

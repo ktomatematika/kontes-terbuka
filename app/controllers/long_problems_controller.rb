@@ -5,8 +5,8 @@ class LongProblemsController < ApplicationController
   def create
     contest = Contest.find(params[:contest_id])
 
-    if contest.long_problems.find_by_problem_no(
-      long_problem_params[:problem_no]
+    if contest.long_problems.find_by(
+      problem_no: long_problem_params[:problem_no]
     ).nil?
       contest.long_problems.create(long_problem_params).fill_long_submissions
     end
