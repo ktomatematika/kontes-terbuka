@@ -97,7 +97,7 @@ Rails.application.routes.draw do
   delete 'remove-marker', to: 'roles#remove_marker'
 
   post '/line-bot', to: 'line#callback'
-  post '/travis', to: 'travis#process'
+  post '/travis', to: 'travis#pass'
 
   namespace :ktom do
     get 'soal', to: redirect('https://docs.google.com/document/d/' \

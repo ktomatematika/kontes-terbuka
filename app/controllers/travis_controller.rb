@@ -1,13 +1,14 @@
 class TravisController < ApplicationController
   skip_before_action :verify_authenticity_token, :require_login
 
-  def process
+  def pass
     return unless valid?
     payload = JSON.parse(params[:payload])
 
     RestClient.post url,
                     activity: payload[:status_message],
-                    title: "Commit '#{payload[:message]}' to branch '#{payload[:branch]}",
+                    title: "Commit '#{payload[:message]}' to " \
+                    "branch '#{payload[:branch]}",
                     body: "Committed by #{payload[:committer_name]}. " \
                       "[Link](#{payload[:build_url]})"
   end

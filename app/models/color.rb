@@ -7,7 +7,10 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
-# rubocop:enable Metrics/LineLength
+# Indexes
+#
+#  index_colors_on_name  (name) UNIQUE
+#
 
 class Color < ActiveRecord::Base
   has_paper_trail
