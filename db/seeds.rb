@@ -24,8 +24,6 @@ end
 %w(Sistem Acak Merah Hijau Biru Kuning).each do |color|
   Color.find_or_create_by(name: color)
 end
-
-# rubocop:disable LineLength
 Notification.find_or_create_by(event: 'contest_starting',
                                seconds: 24 * 3600,
                                time_text: '24 jam',

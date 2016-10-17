@@ -338,8 +338,8 @@ class ContestTest < ActiveSupport::TestCase
 
   test 'contest jobs' do
     c = build(:contest, start: 3 * 24 * 3600, ends: 6 * 24 * 3600,
-              result: 9 * 24 * 3600, feedback: 12 * 24 * 3600,
-              result_released: false)
+                        result: 9 * 24 * 3600, feedback: 12 * 24 * 3600,
+                        result_released: false)
     10.times do
       create(:contest).delay(queue: "contest_#{c.id}").reload # do nothing
     end
@@ -352,24 +352,24 @@ class ContestTest < ActiveSupport::TestCase
     end
 
     assert_equal jobs.select { |j| j[:method_name] == :reload }.count, 0,
-      'prepared jobs are not destroyed.'
+                 'prepared jobs are not destroyed.'
 
     purge = jobs.select { |j| j[:method_name] == :purge_panitia }
     assert_equal purge.count, 1, 'panitia are not purged.'
     assert_in_delta purge.first[:run_at], c.end_time, 5,
-      'purge panitia is not run at end time.'
+                    'purge panitia is not run at end time.'
     assert_equal purge.first[:args].count, 0,
-      'purge panitia args are not correct.'
+                 'purge panitia args are not correct.'
 
     starting = jobs.select do |j|
       j[:method_name] == :contest_starting && j[:class] == 'EmailNotifications'
     end
     starting.each do |j|
       n = Notification.find_by event: 'contest_starting',
-        description: "#{j[:args].first} sebelum kontes dimulai"
+                               description: "#{j[:args].first} sebelum kontes dimulai"
       assert_not_nil n
       assert_in_delta n.seconds, c.start_time - j[:run_at], 5,
-        'email notifications are not working'
+                      'email notifications are not working'
     end
 
     started = jobs.select do |j|
@@ -379,7 +379,7 @@ class ContestTest < ActiveSupport::TestCase
       n = Notification.find_by event: 'contest_started'
       assert_not_nil n
       assert_in_delta j[:run_at], c.start_time, 5,
-        'email notifications are not working'
+                      'email notifications are not working'
     end
 
     ending = jobs.select do |j|
@@ -387,10 +387,10 @@ class ContestTest < ActiveSupport::TestCase
     end
     ending.each do |j|
       n = Notification.find_by event: 'contest_ending',
-        description: "#{j[:args].first} sebelum kontes selesai"
+                               description: "#{j[:args].first} sebelum kontes selesai"
       assert_not_nil n
       assert_in_delta n.seconds, c.end_time - j[:run_at], 5,
-        'email notifications are not working'
+                      'email notifications are not working'
     end
 
     feedback = jobs.select do |j|
@@ -398,17 +398,17 @@ class ContestTest < ActiveSupport::TestCase
     end
     feedback.each do |j|
       n = Notification.find_by event: 'feedback_ending',
-        description: "#{j[:args].first} sebelum feedback dibagikan"
+                               description: "#{j[:args].first} sebelum feedback dibagikan"
       assert_not_nil n
       assert_in_delta n.seconds, c.feedback_time - j[:run_at], 5,
-        'email notifications are not working'
+                      'email notifications are not working'
     end
 
     line = jobs.select { |j| j[:class] == 'LineNag' }
     assert_equal line.select { |j| j[:method_name] == :contest_starting }.count,
-      1
+                 1
     assert_equal line.select { |j| j[:method_name] == :contest_started }.count,
-      1
+                 1
     assert_equal line.select { |j| j[:method_name] == :contest_ending }.count, 1
 
     job = jobs.select { |j| j[:method_name] == :jobs_on_feedback_time_end }
