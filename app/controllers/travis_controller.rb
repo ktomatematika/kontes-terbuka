@@ -6,11 +6,13 @@ class TravisController < ApplicationController
     payload = JSON.parse(params[:payload])
 
     RestClient.post url,
-                    activity: payload[:status_message],
-                    title: "Commit '#{payload[:message]}' to " \
-                    "branch '#{payload[:branch]}",
-                    body: "Committed by #{payload[:committer_name]}. " \
-                      "[Link](#{payload[:build_url]})"
+                    activity: "Commit #{payload['status_message']}!",
+                    title: "'#{payload['message']}' to " \
+                    "branch '#{payload['branch']}",
+                    body: "Committed by #{payload['committer_name']}. " \
+                      "[Link](#{payload['build_url']})"
+
+    head :ok
   end
 
   private
