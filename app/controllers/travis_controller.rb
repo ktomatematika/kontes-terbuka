@@ -8,7 +8,7 @@ class TravisController < ApplicationController
     RestClient.post url,
                     activity: "Commit #{payload['status_message']}!",
                     title: "'#{payload['message']}' to " \
-                    "branch '#{payload['branch']}",
+                    "branch '#{payload['branch']}'",
                     body: "Committed by #{payload['committer_name']}. " \
                       "[Link](#{payload['build_url']})"
 
