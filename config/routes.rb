@@ -68,7 +68,7 @@ Rails.application.routes.draw do
                              as: 'upload_report'
   post '/stop-nag/:id', to: 'user_contests#stop_nag', as: 'stop_nag'
 
-  # resources :market_items, path: '/market-items'
+  resources :market_items, path: '/market-items'
 
   get '/mark-solo/:id', to: 'long_problems#mark_solo', as: :mark_solo
   post '/submit-temporary-markings/:id',
