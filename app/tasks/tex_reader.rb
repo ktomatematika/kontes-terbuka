@@ -31,9 +31,13 @@ class TexReader
         File.dirname(tex_path) + '/logo.png'
       )
       Dir.chdir(File.dirname(tex_path)) do
-        cmd_log = `pdflatex -interaction=nonstopmode #{tex_path}`
+        cmd_log = ''
+        3.times do
+          cmd_log += `pdflatex -interaction=nonstopmode #{tex_path}`.to_s
+          cmd_log += "\n\n\n"
+        end
         Mailgun.send_message contest: @contest, subject: 'Log pdflatex',
-                             text: cmd_log.to_s, to: '7744han@gmail.com'
+                             text: cmd_log, to: '7744han@gmail.com'
         raise 'TexReader Error' unless $CHILD_STATUS.exitstatus.zero?
       end
       @contest.update(problem_pdf: File.open(tex_path[0...-3] + 'pdf', 'r'))
