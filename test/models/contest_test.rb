@@ -366,7 +366,8 @@ class ContestTest < ActiveSupport::TestCase
     end
     starting.each do |j|
       n = Notification.find_by event: 'contest_starting',
-                               description: "#{j[:args].first} sebelum kontes dimulai"
+                               description: j[:args].first +
+                                            ' sebelum kontes dimulai'
       assert_not_nil n
       assert_in_delta n.seconds, c.start_time - j[:run_at], 5,
                       'email notifications are not working'
@@ -387,7 +388,8 @@ class ContestTest < ActiveSupport::TestCase
     end
     ending.each do |j|
       n = Notification.find_by event: 'contest_ending',
-                               description: "#{j[:args].first} sebelum kontes selesai"
+                               description: j[:args].first +
+                                            ' sebelum kontes selesai'
       assert_not_nil n
       assert_in_delta n.seconds, c.end_time - j[:run_at], 5,
                       'email notifications are not working'
@@ -398,7 +400,8 @@ class ContestTest < ActiveSupport::TestCase
     end
     feedback.each do |j|
       n = Notification.find_by event: 'feedback_ending',
-                               description: "#{j[:args].first} sebelum feedback dibagikan"
+                               description: j[:args].first +
+                                            ' sebelum feedback dibagikan'
       assert_not_nil n
       assert_in_delta n.seconds, c.feedback_time - j[:run_at], 5,
                       'email notifications are not working'
