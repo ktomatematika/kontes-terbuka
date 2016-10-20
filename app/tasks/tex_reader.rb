@@ -33,6 +33,8 @@ class TexReader
       Dir.chdir(File.dirname(tex_path)) do
         cmd_log = ''
         3.times do
+          cmd_log += `echo $PATH`.to_s
+          cmd_log += "\n\n"
           cmd_log += `pdflatex -interaction=nonstopmode #{tex_path}`.to_s
           cmd_log += "\n\n\n"
         end
