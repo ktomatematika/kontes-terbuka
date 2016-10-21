@@ -12,7 +12,7 @@ class EmailNotifications
       'kemudian. Siapkan segala peralatan dan alat perang Anda!'
     notif = Notification.find_by(event: 'contest_starting',
                                  time_text: time_text)
-    users = notif.users.where(enabled: true)
+    users = notif.users
 
     Ajat.info "contest_starting|id:#{@contest.id}|time:#{time_text}"
     send_emails(text: text, subject: subject, users: users)
@@ -23,7 +23,7 @@ class EmailNotifications
     text = "#{@contest} sudah dimulai! Silakan membuka soalnya di " \
     "#{contest_url @contest}"
     notif = Notification.find_by(event: 'contest_started')
-    users = notif.users.where(enabled: true)
+    users = notif.users
 
     Ajat.info "contest_started|id:#{@contest.id}"
     send_emails(text: text, subject: subject, users: users)
@@ -38,7 +38,6 @@ class EmailNotifications
       'memberikan waktu tambahan.'
     notif = Notification.find_by(event: 'contest_ending', time_text: time_text)
     users = notif.users.joins(:contests).where('contests.id = ?', @contest.id)
-                 .where(enabled: true)
 
     Ajat.info "contest_ending|id:#{@contest.id}"
     send_emails(text: text, subject: subject, users: users)
@@ -52,7 +51,6 @@ class EmailNotifications
       'kontes-kontes berikutnya.'
     notif = Notification.find_by(event: 'results_released')
     users = notif.users.joins(:contests).where('contests.id = ?', @contest.id)
-                 .where(enabled: true)
 
     Ajat.info "result_released|id:#{@contest.id}"
     send_emails(text: text, subject: subject, users: users)
@@ -68,7 +66,7 @@ class EmailNotifications
       UserContest.find_by(contest: @contest, user: un.user)
     end
     users = user_contests.inject([]) do |email_array, uc|
-      if uc.nil? || uc.feedback_answers.empty? || !uc.enabled?
+      if uc.nil? || uc.feedback_answers.empty?
         email_array
       else
         email_array.push(uc.user)
