@@ -2,10 +2,10 @@
   no-nav
 
 = content_tag 'div', '', id: 'welcome-contest-data',
-  data: { name: @next_contest.name,
-  start_time: @next_contest.start_time,
-  end_time: @next_contest.end_time,
-  currently_in_contest: @next_contest.currently_in_contest? }
+  data: { name: @next_contest && @next_contest.name,
+  start_time: @next_contest && @next_contest.start_time,
+  end_time: @next_contest && @next_contest.end_time,
+  currently_in_contest: @next_contest && @next_contest.currently_in_contest? }
 
 %header.teaser
   .welcome-logo
