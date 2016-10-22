@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
 
   def set_mini_profiler
     return if cannot?(:profile, Application) && masq_username.nil?
-    Rack::MiniProfiler.authorize_request
+    Rack::MiniProfiler.authorize_request unless Rails.env.test?
   end
 
   def set_color
@@ -66,5 +66,6 @@ class ApplicationController < ActionController::Base
                                        'REMOTE_ADDR',
                                        'REMOTE_HOST')}"
     head 400
+    raise ActionController::RoutingError, "Access Denied: #{params[:path]}"
   end
 end

@@ -53,7 +53,7 @@
         .collapse.navbar-collapse#top-navbar
           %ul.nav.navbar-nav.navbar-right
             - unless masq_username.nil?
-              %li= link_to 'Unmasq', unmasq_path, method: 'delete',
+              %li= link_to 'Unmasq', masq_path, method: 'delete',
                 class: 'has-shade'
             - if can? :admin, Application
               %li= link_to 'Admin', admin_path, class: 'has-shade'

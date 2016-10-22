@@ -114,7 +114,7 @@ gem 'rubocop'
 # HAML linter
 gem 'haml_lint'
 # SCSS linter
-gem 'scss_lint'
+gem 'scss_lint', require: false
 
 ### END QUALITY
 
@@ -122,10 +122,10 @@ gem 'scss_lint'
 
 # Model logging
 gem 'paper_trail'
+# Add browser info in logs
+gem 'browser_details'
 
 group :development, :production do
-  # Add browser info in logs
-  gem 'browser_details'
   # Database profiler
   gem 'rack-mini-profiler', require: false
   # Profiler
