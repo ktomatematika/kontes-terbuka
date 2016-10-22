@@ -100,7 +100,11 @@ class ContestsController < ApplicationController
     contest = Contest.find(participate_params[:contest_id])
 
     if contest.currently_in_contest?
-      user_contest = UserContest.find_or_create_by(participate_params)
+      begin
+        user_contest = UserContest.find_or_create_by(participate_params)
+      rescue ActiveRecord::RecordNotUnique
+        retry
+      end
       user_contest.create_long_submissions
     end
 
