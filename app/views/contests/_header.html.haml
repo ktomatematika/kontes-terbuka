@@ -15,7 +15,7 @@
         class: 'btn btn-lg'
 
     - if can? :admin, @contest
-      = link_to 'Administrasi', contest_admin_path(contest_id: @contest),
+      = link_to 'Administrasi', admin_contest_path(contest_id: @contest),
         class: 'btn btn-lg'
 
     - if can? :assign_markers, @contest

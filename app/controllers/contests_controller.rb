@@ -90,57 +90,6 @@ class ContestsController < ApplicationController
     redirect_to contests_path, notice: 'Kontes berhasil dihilangkan!'
   end
 
-  def show_rules
-    @contest = Contest.find(params[:contest_id])
-    @user_contest = UserContest.find_or_initialize_by(contest: @contest,
-                                                      user: current_user)
-  end
-
-  def accept_rules
-    contest = Contest.find(participate_params[:contest_id])
-
-    if contest.currently_in_contest?
-      begin
-        user_contest = UserContest.find_or_create_by(participate_params)
-      rescue ActiveRecord::RecordNotUnique
-        retry
-      end
-      user_contest.create_long_submissions
-    end
-
-    redirect_to contest
-  end
-
-  def create_short_submissions
-    contest_id = params[:contest_id]
-    contest = Contest.find(contest_id)
-    authorize! :create_short_submissions, contest
-    UserContest.find_by(user: current_user, contest: contest)
-               .create_short_submissions(submission_params)
-    redirect_to contest, notice: 'Jawaban bagian A berhasil dikirimkan!'
-  end
-
-  def give_feedback
-    @contest = Contest.find(params[:contest_id])
-    authorize! :give_feedback, @contest
-    @feedback_questions = @contest.feedback_questions
-    @user_contest = UserContest.find_by contest: @contest, user: current_user
-  end
-
-  def feedback_submit
-    contest = Contest.find(params[:contest_id])
-    authorize! :feedback_submit, contest
-    UserContest.find_by(user: current_user, contest: contest)
-               .create_feedback_answers(feedback_params)
-    redirect_to contest, notice: 'Feedback berhasil dikirimkan!'
-  end
-
-  def assign_markers
-    @contest = Contest.find(params[:id])
-    authorize! :assign_markers, @contest
-    @long_problems = LongProblem.where(contest: @contest).order(:problem_no)
-  end
-
   def download_pdf
     contest = Contest.find(params[:contest_id])
     authorize! :download_pdf, contest
@@ -155,28 +104,12 @@ class ContestsController < ApplicationController
     send_file contest.marking_scheme.path
   end
 
-  def download_feedback
-    @contest = Contest.find(params[:contest_id])
-    authorize! :download_feedback, @contest
-    @feedback_questions = @contest.feedback_questions.order(:id)
-    @feedback_matrix = @contest.feedback_answers_matrix
-    respond_to do |format|
-      format.html
-      format.csv do
-        headers['Content-Disposition'] =
-          "attachment; filename=\"Feedback #{@contest}\".csv"
-        headers['Content-Type'] ||= 'text/csv'
-      end
-    end
-    Ajat.info "feedback_downloaded|contest_id:#{@contest.id}"
-  end
-
   def read_problems
     c = Contest.find(params[:contest_id])
     authorize! :read_problems, c
     c.update(problem_tex: params[:problem_tex])
     TexReader.new(c, params[:answers].split(',')).run
-    redirect_to contest_admin_path, notice: 'TeX berhasil dibaca!'
+    redirect_to admin_contest_path, notice: 'TeX berhasil dibaca!'
   end
 
   def summary
@@ -204,30 +137,6 @@ class ContestsController < ApplicationController
       format.html
       format.pdf { render pdf: "Hasil #{@contest}", orientation: 'Landscape' }
     end
-  end
-
-  def destroy_short_probs
-    @contest = Contest.find(params[:contest_id])
-    authorize! :destroy_short_probs, @contest
-
-    @contest.short_problems.destroy_all
-    redirect_to contest_admin_path, notice: 'Bagian A hancur!'
-  end
-
-  def destroy_long_probs
-    @contest = Contest.find(params[:contest_id])
-    authorize! :destroy_long_probs, @contest
-
-    @contest.long_problems.destroy_all
-    redirect_to contest_admin_path, notice: 'Bagian B hancur!'
-  end
-
-  def destroy_feedback_qns
-    @contest = Contest.find(params[:contest_id])
-    authorize! :destroy_feedback_qns, @contest
-
-    @contest.feedback_questions.destroy_all
-    redirect_to contest_admin_path, notice: 'Pertanyaan feedback hancur!'
   end
 
   private

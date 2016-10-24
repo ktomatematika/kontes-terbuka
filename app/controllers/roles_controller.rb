@@ -1,6 +1,12 @@
 class RolesController < ApplicationController
   authorize_resource
 
+  def assign_markers
+    @contest = Contest.find(params[:id])
+    authorize! :assign_markers, @contest
+    @long_problems = LongProblem.where(contest: @contest).order(:problem_no)
+  end
+
   def create_marker
     long_problem = LongProblem.find(params[:long_problem_id])
     user = User.find_by(username: params[:username])

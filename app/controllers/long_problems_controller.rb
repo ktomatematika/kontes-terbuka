@@ -10,7 +10,7 @@ class LongProblemsController < ApplicationController
     ).nil?
       contest.long_problems.create(long_problem_params).fill_long_submissions
     end
-    redirect_to contest_admin_path(id: contest.id)
+    redirect_to admin_contest_path(id: contest.id)
   end
 
   def edit
@@ -20,7 +20,7 @@ class LongProblemsController < ApplicationController
   def update
     @contest = Contest.find(params[:contest_id])
     if @long_problem.update(long_problem_params)
-      redirect_to contest_admin_path(id: @contest.id)
+      redirect_to admin_contest_path(id: @contest.id)
     else
       render 'edit', alert: 'Esai gagal diupdate!'
     end
@@ -33,7 +33,7 @@ class LongProblemsController < ApplicationController
     long_problem.destroy
     Ajat.info "long_prob_destroyed|contest:#{params[:contest_id]}|" \
     "id:#{params[:id]}"
-    redirect_to contest_admin_path(id: contest.id)
+    redirect_to admin_contest_path(id: contest.id)
   end
 
   def mark
@@ -43,38 +43,11 @@ class LongProblemsController < ApplicationController
     @markers = User.with_role(:marker, @long_problem)
   end
 
-  def mark_solo
-    if (!current_user.has_role?(:marker, @long_problem) ||
-        @long_problem.start_mark_final) && can?(:mark_final, @long_problem)
-      redirect_to mark_final_path(@long_problem)
-    else
-      authorize! :mark_solo, @long_problem
-      mark
-      @markers = @markers.where.not(id: current_user.id)
-    end
-  end
-
   def download
     loc = @long_problem.zip_location
     @long_problem.compress_submissions
 
     send_file loc
-  end
-
-  def submit_temporary_markings
-    params[:marking].each do |id, val|
-      mark = val[:mark]
-      tags = val[:tags]
-
-      update_hash = { mark: LongSubmission::SCORE_HASH.key(mark), tags: tags }
-      update_hash.delete(:mark) if mark.empty?
-      update_hash.delete(:tags) if tags.empty?
-
-      TemporaryMarking.find_or_initialize_by(long_submission_id: id,
-                                             user: current_user)
-                      .update(update_hash)
-    end
-    redirect_to mark_solo_path(params[:id]), notice: 'Nilai berhasil diupdate!'
   end
 
   def mark_final
@@ -117,6 +90,14 @@ class LongProblemsController < ApplicationController
       flash[:alert] = 'Laporan gagal diupload!'
     end
     redirect_to mark_final_path
+  end
+
+  def destroy_on_contest
+    @contest = Contest.find(params[:contest_id])
+    authorize! :destroy_long_probs, @contest
+
+    @contest.long_problems.destroy_all
+    redirect_to admin_contest_path, notice: 'Bagian B hancur!'
   end
 
   private

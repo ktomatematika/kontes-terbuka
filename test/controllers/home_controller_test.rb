@@ -6,16 +6,25 @@ class HomeControllerTest < ActionController::TestCase
     @request.cookies[:auth_token] = @user.auth_token
   end
 
-  test 'index' do
+  test 'routes' do
     assert_equal home_path, '/home'
+    assert_equal admin_path, '/penguasa'
+    assert_equal about_path, '/about'
+    assert_equal book_path, '/book'
+    assert_equal contact_path, '/contact'
+    assert_equal donate_path, '/donate'
+    assert_equal faq_path, '/faq'
+    assert_equal privacy_path, '/privacy'
+    assert_equal terms_path, '/terms'
+    assert_equal masq_path, '/masq'
+  end
 
+  test 'index' do
     get :index
     assert_response 200
   end
 
   test 'admin' do
-    assert_equal admin_path, '/penguasa'
-
     @user.add_role :panitia
     get :admin
     assert_response 200
@@ -26,57 +35,41 @@ class HomeControllerTest < ActionController::TestCase
   end
 
   test 'about' do
-    assert_equal about_path, '/about'
-
     get :about
     assert_response 200
   end
 
   test 'book' do
-    assert_equal book_path, '/book'
-
     get :book
     assert_response 200
   end
 
   test 'contact' do
-    assert_equal contact_path, '/contact'
-
     get :contact
     assert_response 200
   end
 
   test 'donate' do
-    assert_equal donate_path, '/donate'
-
     get :donate
     assert_response 200
   end
 
   test 'faq' do
-    assert_equal faq_path, '/faq'
-
     get :faq
     assert_response 200
   end
 
   test 'privacy' do
-    assert_equal privacy_path, '/privacy'
-
     get :privacy
     assert_response 200
   end
 
   test 'terms' do
-    assert_equal terms_path, '/terms'
-
     get :terms
     assert_response 200
   end
 
   test 'masq' do
-    assert_equal masq_path, '/masq'
-
     @user.add_role :panitia
     @user.add_role :admin
     new_user = create(:user)
