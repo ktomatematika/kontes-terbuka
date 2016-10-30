@@ -21,6 +21,6 @@ class MarketOrder < ActiveRecord::Base
   has_paper_trail
 
   # Associations
-  belongs_to :user
+  belongs_to :point_transaction
   belongs_to :market_item
 end
