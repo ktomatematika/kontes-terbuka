@@ -74,7 +74,7 @@ class HomeControllerTest < ActionController::TestCase
     @user.add_role :admin
     new_user = create(:user)
 
-    post :masq, { username: new_user.username }
+    post :masq, params: { username: new_user.username }
     assert_redirected_to home_path
     assert_equal session[:masq_username], new_user.username
     assert_equal flash[:notice], 'Masq!'
@@ -88,7 +88,7 @@ class HomeControllerTest < ActionController::TestCase
     @user.add_role :panitia
     @user.add_role :admin
 
-    post :masq, { username: 'asdf' }
+    post :masq, params: { username: 'asdf' }
     assert_redirected_to admin_path
     assert_equal session[:masq_username], nil
     assert_equal flash[:alert], 'Ga ketemu usernya :('

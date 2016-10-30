@@ -1,14 +1,11 @@
 Rails.application.routes.draw do
   root 'welcome#index'
 
-  resources :users do
+  resources :users, shallow: true do
     member do
       post 'mini-update', to: 'users#mini_update'
       get 'change-password', to: 'users#change_password'
       post 'change-password', to: 'users#process_change_password'
-      get 'change-notifications', to: 'users#change_notifications'
-      post 'change-notifications', to: 'users#process_change_notifications',
-                                   as: 'process_change_notifications'
     end
 
     collection do
@@ -28,64 +25,101 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :contests do
+  resources :user_notifications, only: [] do
+    member do
+      get '', to: 'user_notifications#new'
+      post '', to: 'user_notifications#flip'
+    end
+  end
+
+  resources :contests, shallow: true do
     member do
       get 'admin', to: 'contests#admin'
-      post 'copy-feedback-questions', to: 'feedback_questions#copy'
-      delete 'destroy-short-probs', to: 'contests#destroy_short_probs'
-      delete 'destroy-long-probs', to: 'contests#destroy_long_probs'
-      delete 'destroy-feedback_qns', to: 'contests#destroy_feedback_qns'
-
       get 'summary', to: 'contests#summary'
-
       post 'read-problems', to: 'contests#read_problems'
-      get 'assign', to: 'contests#assign_markers'
-
-      get 'rules', to: 'contests#show_rules'
-      post 'rules', to: 'contests#accept_rules'
-
-      get 'feedback', to: 'contests#give_feedback'
-      post 'feedback', to: 'contests#feedback_submit'
-      get 'download-feedback', to: 'contests#download_feedback',
-                               defaults: { format: 'csv' }
-
       get 'download-results', to: 'contests#download_results',
                               defaults: { format: 'pdf' }
-
-      post 'create-short-submissions', to: 'contests#create_short_submissions'
-
       get 'pdf', to: 'contests#download_pdf'
-      get 'ms-pdf', to: 'contests#download_marking_scheme'
+      get 'ms', to: 'contests#download_marking_scheme'
     end
 
-    resources :short_problems, path: '/short-problems'
-    resources :long_problems, path: '/long-problems' do
-      post 'marker', to: 'roles#create_marker'
-      delete 'marker', to: 'roles#remove_marker'
-      get 'download-submissions/:id', to: 'long_problems#download',
-                                       as: 'download_submissions'
-      post 'autofill-marks/:id', to: 'long_problems#autofill',
-        as: 'autofill_marks'
-      post 'upload-report/:id', to: 'long_problems#upload_report',
-                                 as: 'upload_report'
-      get 'mark-solo/:id', to: 'long_problems#mark_solo', as: :mark_solo
-      post 'submit-temporary-markings/:id',
-           to: 'long_problems#submit_temporary_markings',
-           as: :submit_temporary_markings
-      post 'submit-final-markings/:id',
-           to: 'long_problems#submit_final_markings', as: :submit_final_markings
-      get 'mark-final/:id', to: 'long_problems#mark_final', as: :mark_final
+    resources :short_problems, path: '/short-problems',
+                               except: [:index, :new, :show] do
+      collection do
+        delete 'destroy-on-contest', to: 'short_problems#destroy_on_contest'
+      end
     end
 
-    resources :long_submissions, path: '/long-submissions' do
-      post 'submit', to: 'long_submissions#submit'
-      delete 'destroy-subs', to: 'long_submissions#destroy_submissions'
-      get 'download', to: 'long_submissions#download'
+    resources :short_submissions, path: '/short-submissions', only: [] do
+      collection do
+        post '', to: 'short_submissions#create_on_contest'
+      end
     end
 
-    resources :feedback_questions, path: '/feedback-questions'
+    resources :long_problems, path: '/long-problems',
+                              except: [:index, :new, :show] do
+      member do
+        get 'marker', to: 'roles#assign_markers'
+        post 'marker', to: 'roles#create_marker'
+        delete 'marker', to: 'roles#remove_marker'
+        get 'download-submissions/:id', to: 'long_problems#download',
+                                        as: 'download_submissions'
+        post 'autofill-marks/:id', to: 'long_problems#autofill',
+                                   as: 'autofill_marks'
+        post 'upload-report/:id', to: 'long_problems#upload_report',
+                                  as: 'upload_report'
+        get 'start-mark-final/:id', to: 'long_problems#start_mark_final'
+      end
 
-    post '/stop-nag/:id', to: 'user_contests#stop_nag', as: 'stop_nag'
+      collection do
+        delete 'destroy-on-contest', to: 'long_problems#destroy_on_contest'
+      end
+
+      resources :temporary_markings, path: 'temporary-markings', only: [] do
+        collection do
+          get '', to: 'temporary_markings#new_on_long_problem'
+          post '', to: 'temporary_markings#create_on_long_problem'
+        end
+      end
+
+      resources :long_submissions, path: '/long-submissions', only: [] do
+        member do
+          post 'submit', to: 'long_submissions#submit'
+          delete 'destroy', to: 'long_submissions#destroy_submissions'
+          get 'download', to: 'long_submissions#download'
+        end
+
+        collection do
+          get '', to: 'long_submissions#mark'
+          post '', to: 'long_submissions#submit_mark'
+        end
+      end
+    end
+
+    resources :feedback_questions, path: '/feedback-questions',
+                                   except: [:index, :new, :show] do
+      member do
+        post 'copy', to: 'feedback_questions#copy_across_contests'
+      end
+
+      collection do
+        delete 'destroy-on-contest', to: 'feedback_questions#destroy_on_contest'
+      end
+    end
+
+    resources :feedback_answers, path: '/feedback-answers', only: [] do
+      collection do
+        get '', to: 'feedback_answers#new_on_contest'
+        post '', to: 'feedback_answers#create_on_contest'
+        get 'download', to: 'feedback_answers#download_on_contest'
+      end
+    end
+  end
+
+  resources :user_contests, only: [:new, :create] do
+    member do
+      post '/stop-nag/:id', to: 'user_contests#stop_nag', as: 'stop_nag'
+    end
   end
 
   # resources :market_items, path: '/market-items'

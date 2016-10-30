@@ -9,53 +9,68 @@ class FeedbackQuestionsControllerTest < ActionController::TestCase
   end
 
   test 'routes' do
-    assert_equal contest_feedback_questions_path(contest_id: @c.id),
-      '/contests/3/feedback-questions'
-    assert_equal new_contest_feedback_question_path(contest_id: @c.id),
-      '/contests/3/feedback-questions/new'
-    assert_equal edit_contest_feedback_question_path(contest_id: @c.id),
-      '/contests/3/feedback-questions/10/edit'
-    assert_equal contest_feedback_question_path(contest_id: @c.id, id: @fq.id),
-      '/contests/3/feedback-questions/10'
+    assert_equal contest_feedback_questions_path(@c),
+                 "/contests/#{@c.to_param}/feedback-questions"
+    assert_equal new_contest_feedback_question_path(@c),
+                 "/contests/#{@c.to_param}/feedback-questions/new"
+    assert_equal edit_contest_feedback_question_path(@c, @fq),
+                 "/contests/#{@c.to_param}/feedback-questions/#{@fq.id}/edit"
+    assert_equal contest_feedback_question_path(@c, @fq),
+                 "/contests/#{@c.to_param}/feedback-questions/#{@fq.id}"
   end
 
   test 'create' do
-    post :create, contest_id: @c.id,
-      feedback_question: { question: 'Hello there' }
-    assert_redirected_to admin_contest_path id: @c.id
-    assert_equal c.feedback_questions.where(question: 'Hello there').count, 1
+    @user.add_role :panitia
+    @user.add_role :admin
+
+    post :create, params: { contest_id: @c.id, feedback_question: { question: 'Hello there' } }
+    assert_redirected_to admin_contest_path @c
+    assert_equal @c.feedback_questions.where(question: 'Hello there').count, 1
   end
 
   test 'destroy' do
-    delete :destroy, contest_id: @c.id, id: @fq.id
-    assert_redirected_to admin_contest_path id: @c.id
+    @user.add_role :panitia
+    @user.add_role :admin
+
+    delete :destroy, params: { contest_id: @c.id, id: @fq.id }
+    assert_redirected_to admin_contest_path @c
     assert @fq.destroyed?
   end
 
   test 'edit' do
-    get :edit, contest_id: @c.id, id: @fq.id
+    @user.add_role :panitia
+    @user.add_role :admin
+
+    get :edit, params: { contest_id: @c.id, id: @fq.id }
     assert_response 200
   end
 
   test 'patch update' do
-    patch :update, contest_id: @c.id, id: @fq.id,
-      feedback_question: { question: 'asdf' }
-    assert_redirected_to admin_contest_path id: @c.id
+    @user.add_role :panitia
+    @user.add_role :admin
+
+    patch :update, params: { contest_id: @c.id, id: @fq.id, feedback_question: { question: 'asdf' } }
+    assert_redirected_to admin_contest_path @c
     assert_equal @fq.question, 'asdf'
   end
 
   test 'put update' do
-    put :update, contest_id: @c.id, id: @fq.id,
-      feedback_question: { question: 'asdf' }
-    assert_redirected_to admin_contest_path id: @c.id
+    @user.add_role :panitia
+    @user.add_role :admin
+
+    put :update, params: { contest_id: @c.id, id: @fq.id, feedback_question: { question: 'asdf' } }
+    assert_redirected_to admin_contest_path @c
     assert_equal @fq.question, 'asdf'
   end
 
-  test 'copy' do
-    other_c = create(:contest)        
+  test 'copy across contests' do
+    @user.add_role :panitia
+    @user.add_role :admin
+
+    other_c = create(:contest)
     create_list(:feedback_question, 5, contest: @c)
 
-    post :copy, id: other_c.id, other_contest_id: @c.id
+    post :copy_across_contests, params: { id: other_c.id, other_contest_id: @c.id }
     assert_redirected_to admin_contest_path
     assert_equal @flash[:notice], 'FQ berhasil dicopy!'
 

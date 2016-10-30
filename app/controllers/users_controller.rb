@@ -55,6 +55,9 @@ class UsersController < ApplicationController
     end
   end
 
+  def reset_password
+  end
+
   def process_reset_password
     user = User.find_by verification: params[:verification]
     if user.nil?
@@ -94,14 +97,6 @@ class UsersController < ApplicationController
       Ajat.warn "user_change_password_wrong_old|uid:#{user.id}"
       redirect_to change_password_user_path(user), alert: 'Password lama ' \
         'Anda salah!'
-    end
-  end
-
-  def forgot_password
-    if current_user.nil?
-      redirect_to sign_users_path(anchor: 'forgot')
-    else
-      redirect_to root_path
     end
   end
 

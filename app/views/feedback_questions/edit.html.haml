@@ -1,6 +1,6 @@
 .container
   %h1 Ganti feedback
-  = form_for [@contest, @feedback_question],
+  = form_for contest_feedback_questions_path @feedback_question,
     html: { class: 'form-horizontal' } do |f|
     .form-group
       = f.label :question, class: 'col-sm-2'

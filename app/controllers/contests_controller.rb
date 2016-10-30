@@ -1,10 +1,4 @@
 class ContestsController < ApplicationController
-  def grab_problems
-    @short_problems = @contest.short_problems.order('problem_no')
-    @long_problems = @contest.long_problems.order('problem_no')
-    @no_short_probs = @short_problems.empty?
-  end
-
   def admin
     @contest = Contest.find(params[:contest_id])
     authorize! :admin, @contest
@@ -166,5 +160,11 @@ class ContestsController < ApplicationController
 
   def contest_from_params
     Contest.find(params[:contest_id])
+  end
+
+  def grab_problems
+    @short_problems = @contest.short_problems.order('problem_no')
+    @long_problems = @contest.long_problems.order('problem_no')
+    @no_short_probs = @short_problems.empty?
   end
 end

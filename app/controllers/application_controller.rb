@@ -7,6 +7,8 @@ class ApplicationController < ActionController::Base
   before_action :set_paper_trail_whodunnit, :require_login, :set_timezone,
                 :set_color, :set_mini_profiler
 
+  private
+
   def set_mini_profiler
     return if cannot?(:profile, Application) && masq_username.nil?
     Rack::MiniProfiler.authorize_request unless Rails.env.test?

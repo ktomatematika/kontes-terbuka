@@ -32,6 +32,24 @@ class HomeController < ApplicationController
     end.to_h
   end
 
+  def faq
+  end
+
+  def book
+  end
+
+  def donate
+  end
+
+  def privacy
+  end
+
+  def terms
+  end
+
+  def contact
+  end
+
   def masq
     authorize! :masq, Application
     if User.find_by(username: params[:username]).nil?
