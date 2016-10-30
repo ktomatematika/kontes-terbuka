@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   root 'welcome#index'
 
-  resources :users, shallow: true do
+  resources :users do
     member do
       post 'mini-update', to: 'users#mini_update'
       get 'change-password', to: 'users#change_password'
@@ -17,17 +17,16 @@ Rails.application.routes.draw do
       post 'forgot', to: 'users#process_forgot_password'
 
       post 'check', to: 'users#check_unique'
-      get 'verify/:verification', to: 'users#verify', as: :verify
+      get 'verify/:verification', to: 'users#verify', as: 'verify'
       get 'reset-password/:verification', to: 'users#reset_password',
                                           as: 'reset_password'
-      post 'reset-password', to: 'users#process_reset_password',
-                             as: 'process_reset_password'
+      post 'reset-password/:verification', to: 'users#process_reset_password'
     end
   end
 
   resources :user_notifications, only: [] do
     member do
-      get '', to: 'user_notifications#new'
+      get '', to: 'user_notifications#new', as: ''
       post '', to: 'user_notifications#flip'
     end
   end
@@ -52,7 +51,7 @@ Rails.application.routes.draw do
 
     resources :short_submissions, path: '/short-submissions', only: [] do
       collection do
-        post '', to: 'short_submissions#create_on_contest'
+        post '', to: 'short_submissions#create_on_contest', as: ''
       end
     end
 
@@ -62,13 +61,12 @@ Rails.application.routes.draw do
         get 'marker', to: 'roles#assign_markers'
         post 'marker', to: 'roles#create_marker'
         delete 'marker', to: 'roles#remove_marker'
-        get 'download-submissions/:id', to: 'long_problems#download',
-                                        as: 'download_submissions'
-        post 'autofill-marks/:id', to: 'long_problems#autofill',
-                                   as: 'autofill_marks'
+        get 'download/:id', to: 'long_problems#download', as: 'download'
+        post 'autofill/:id', to: 'long_problems#autofill', as: 'autofill'
         post 'upload-report/:id', to: 'long_problems#upload_report',
                                   as: 'upload_report'
-        get 'start-mark-final/:id', to: 'long_problems#start_mark_final'
+        get 'start-mark-final/:id', to: 'long_problems#start_mark_final',
+                                    as: 'start_mark_final'
       end
 
       collection do
@@ -77,20 +75,20 @@ Rails.application.routes.draw do
 
       resources :temporary_markings, path: 'temporary-markings', only: [] do
         collection do
-          get '', to: 'temporary_markings#new_on_long_problem'
+          get '', to: 'temporary_markings#new_on_long_problem', as: ''
           post '', to: 'temporary_markings#create_on_long_problem'
         end
       end
 
       resources :long_submissions, path: '/long-submissions', only: [] do
         member do
-          post 'submit', to: 'long_submissions#submit'
-          delete 'destroy', to: 'long_submissions#destroy_submissions'
-          get 'download', to: 'long_submissions#download'
+          get '', to: 'long_submissions#download', as: ''
+          post '', to: 'long_submissions#submit'
+          delete '', to: 'long_submissions#destroy_submissions'
         end
 
         collection do
-          get '', to: 'long_submissions#mark'
+          get '', to: 'long_submissions#mark', as: ''
           post '', to: 'long_submissions#submit_mark'
         end
       end
@@ -109,9 +107,9 @@ Rails.application.routes.draw do
 
     resources :feedback_answers, path: '/feedback-answers', only: [] do
       collection do
-        get '', to: 'feedback_answers#new_on_contest'
+        get 'new', to: 'feedback_answers#new_on_contest', as: 'new'
+        get '', to: 'feedback_answers#download_on_contest', as: ''
         post '', to: 'feedback_answers#create_on_contest'
-        get 'download', to: 'feedback_answers#download_on_contest'
       end
     end
   end
