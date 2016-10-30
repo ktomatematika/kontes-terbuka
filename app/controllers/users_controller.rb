@@ -51,7 +51,8 @@ class UsersController < ApplicationController
       redirect_to login_users_path, notice: 'Anda sudah terverifikasi!'
     else
       u.enable
-      redirect_to login_users_path, notice: 'Verifikasi berhasil! Silakan login.'
+      redirect_to login_users_path,
+                  notice: 'Verifikasi berhasil! Silakan login.'
     end
   end
 
@@ -63,7 +64,8 @@ class UsersController < ApplicationController
     if user.nil?
       Ajat.warn 'user_reset_password_fail_no_verification|' \
         "verification:#{params[:verification]}"
-      redirect_to reset_password_users_path(verification: params[:verification]),
+      redirect_to reset_password_users_path(verification:
+                                            params[:verification]),
                   alert: 'Terdapat kesalahan! Coba lagi.'
     elsif params[:new_password] == params[:confirm_new_password]
       user.update(password: params[:new_password], verification: nil)
@@ -73,7 +75,8 @@ class UsersController < ApplicationController
     else
       Ajat.warn "user_reset_password_fail_user|user:#{user.inspect}|" \
       "#{user.errors.full_messages}"
-      redirect_to reset_password_users_path(verification: params[:verification]),
+      redirect_to reset_password_users_path(verification:
+                                            params[:verification]),
                   alert: 'Password baru tidak cocok! Coba lagi.'
     end
   end
@@ -105,7 +108,8 @@ class UsersController < ApplicationController
 
     if user.nil?
       Ajat.warn "forgot_password_no_user|uname:#{params[:username]}"
-      redirect_to login_users_path, alert: 'Kombinasi user dan email tidak ditemukan.'
+      redirect_to login_users_path,
+                  alert: 'Kombinasi user dan email tidak ditemukan.'
     elsif !user.enabled?
       Ajat.warn "forgot_password_not_enabled|uname:#{params[:username]}"
       redirect_to login_users_path, alert: 'Kamu belum verifikasi! Cek email ' \

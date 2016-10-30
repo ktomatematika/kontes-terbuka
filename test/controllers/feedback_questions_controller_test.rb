@@ -23,7 +23,8 @@ class FeedbackQuestionsControllerTest < ActionController::TestCase
     @user.add_role :panitia
     @user.add_role :admin
 
-    post :create, params: { contest_id: @c.id, feedback_question: { question: 'Hello there' } }
+    post :create, params: { contest_id: @c.id,
+                            feedback_question: { question: 'Hello there' } }
     assert_redirected_to admin_contest_path @c
     assert_equal @c.feedback_questions.where(question: 'Hello there').count, 1
   end
@@ -49,7 +50,8 @@ class FeedbackQuestionsControllerTest < ActionController::TestCase
     @user.add_role :panitia
     @user.add_role :admin
 
-    patch :update, params: { contest_id: @c.id, id: @fq.id, feedback_question: { question: 'asdf' } }
+    patch :update, params: { contest_id: @c.id, id: @fq.id,
+                             feedback_question: { question: 'asdf' } }
     assert_redirected_to admin_contest_path @c
     assert_equal @fq.question, 'asdf'
   end
@@ -58,7 +60,8 @@ class FeedbackQuestionsControllerTest < ActionController::TestCase
     @user.add_role :panitia
     @user.add_role :admin
 
-    put :update, params: { contest_id: @c.id, id: @fq.id, feedback_question: { question: 'asdf' } }
+    put :update, params: { contest_id: @c.id, id: @fq.id,
+                           feedback_question: { question: 'asdf' } }
     assert_redirected_to admin_contest_path @c
     assert_equal @fq.question, 'asdf'
   end
@@ -70,7 +73,8 @@ class FeedbackQuestionsControllerTest < ActionController::TestCase
     other_c = create(:contest)
     create_list(:feedback_question, 5, contest: @c)
 
-    post :copy_across_contests, params: { id: other_c.id, other_contest_id: @c.id }
+    post :copy_across_contests, params: { id: other_c.id,
+                                          other_contest_id: @c.id }
     assert_redirected_to admin_contest_path
     assert_equal @flash[:notice], 'FQ berhasil dicopy!'
 

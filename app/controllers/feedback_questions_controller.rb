@@ -36,7 +36,8 @@ class FeedbackQuestionsController < ApplicationController
 
   def destroy_on_contest
     @contest.feedback_questions.destroy_all
-    redirect_to admin_contest_path @contest, notice: 'Pertanyaan feedback hancur!'
+    redirect_to admin_contest_path @contest,
+                                   notice: 'Pertanyaan feedback hancur!'
   end
 
   private
