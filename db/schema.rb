@@ -17,7 +17,7 @@ ActiveRecord::Schema.define(version: 20161006192548) do
   enable_extension "plpgsql"
 
   create_table "colors", force: :cascade do |t|
-    t.string   "name",       :null=>false, :index=>{:name=>"index_colors_on_name", :unique=>true, :using=>:btree}
+    t.string   "name",       :null=>false
     t.datetime "created_at", :null=>false
     t.datetime "updated_at", :null=>false
   end
@@ -120,20 +120,16 @@ ActiveRecord::Schema.define(version: 20161006192548) do
   end
 
   create_table "market_orders", force: :cascade do |t|
-    t.integer  "user_id",        :index=>{:name=>"index_market_orders_on_user_id", :using=>:btree}
-    t.integer  "market_item_id", :index=>{:name=>"index_market_orders_on_market_item_id", :using=>:btree}
+    t.integer  "point_transaction_id", :index=>{:name=>"index_market_orders_on_point_transaction_id", :using=>:btree}
+    t.integer  "market_item_id",       :index=>{:name=>"index_market_orders_on_market_item_id", :using=>:btree}
     t.integer  "quantity"
-    t.text     "memo"
+    t.string   "email"
+    t.string   "phone"
+    t.text     "user_memo"
+    t.text     "internal_memo"
     t.integer  "status"
-    t.datetime "created_at",     :null=>false
-    t.datetime "updated_at",     :null=>false
-  end
-
-  create_table "migration_validators", force: :cascade do |t|
-    t.string "table_name",      :null=>false, :index=>{:name=>"unique_idx_on_migration_validators", :with=>["column_name", "validation_type"], :using=>:btree}
-    t.string "column_name",     :null=>false
-    t.string "validation_type", :null=>false
-    t.string "options"
+    t.datetime "created_at",           :null=>false
+    t.datetime "updated_at",           :null=>false
   end
 
   create_table "notifications", force: :cascade do |t|
