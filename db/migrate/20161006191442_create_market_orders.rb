@@ -1,10 +1,13 @@
 class CreateMarketOrders < ActiveRecord::Migration
   def change
     create_table :market_orders do |t|
-      t.belongs_to :user
+      t.belongs_to :point_transaction
       t.belongs_to :market_item
       t.integer :quantity
-      t.text :memo
+      t.string :email
+      t.string :phone
+      t.text :user_memo
+      t.text :internal_memo
       t.integer :status
       t.timestamps null: false
     end
