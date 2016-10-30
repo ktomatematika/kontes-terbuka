@@ -102,7 +102,7 @@ group :production do
   # Email with Mailgun
   gem 'rest-client'
   # API for LINE bot
-  gem 'line-bot-api'
+  gem 'line-bot-api', '< 1'
 end
 
 ### END UTILITIES
