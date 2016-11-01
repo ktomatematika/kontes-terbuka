@@ -8,9 +8,7 @@
 #  quantity             :integer
 #  email                :string
 #  phone                :string
-#  user_memo            :text
-#  internal_memo        :text
-#  status               :integer
+#  address              :string
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
 #
