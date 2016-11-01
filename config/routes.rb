@@ -97,12 +97,9 @@ Rails.application.routes.draw do
 
     resources :feedback_questions, path: '/feedback-questions',
                                    except: [:index, :new, :show] do
-      member do
-        post 'copy', to: 'feedback_questions#copy_across_contests'
-      end
-
       collection do
-        delete 'destroy-on-contest', to: 'feedback_questions#destroy_on_contest'
+        post 'copy', to: 'feedback_questions#copy_across_contests'
+        delete '', to: 'feedback_questions#destroy_on_contest'
       end
     end
 
