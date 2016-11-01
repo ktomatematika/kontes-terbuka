@@ -6,9 +6,11 @@ class CreateMarketOrders < ActiveRecord::Migration
       t.integer :quantity
       t.string :email
       t.string :phone
-      t.text :user_memo
-      t.text :internal_memo
-      t.integer :status
+      t.string :address
+      ## Possible in the future
+      # t.text :user_memo
+      # t.text :internal_memo
+      # t.integer :status
       t.timestamps null: false
     end
   end
