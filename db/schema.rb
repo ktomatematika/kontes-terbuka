@@ -125,9 +125,7 @@ ActiveRecord::Schema.define(version: 20161014091434) do
     t.integer  "quantity"
     t.string   "email"
     t.string   "phone"
-    t.text     "user_memo"
-    t.text     "internal_memo"
-    t.integer  "status"
+    t.string   "address"
     t.datetime "created_at",           :null=>false
     t.datetime "updated_at",           :null=>false
   end
