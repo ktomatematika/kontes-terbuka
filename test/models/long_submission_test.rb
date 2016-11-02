@@ -95,8 +95,8 @@ class LongSubmissionTest < ActiveSupport::TestCase
     assert File.file?(ls.zip_location), 'Zip file does not exist.'
 
     Zip::File.open(ls.zip_location) do |file|
-      assert_equal file.count, 5, 'Number of files does not match long
-      submission pages!'
+      assert_equal file.count, ls.submission_pages.count,
+                   'Number of files does not match long submission pages!'
     end
   end
 

@@ -118,6 +118,10 @@ FactoryGirl.define do
       score 6
       feedback 'Jangan lupa dimasukin balik jawaban fungsinya, bodoh'
     end
+
+    after(:create) do |ls|
+      create(:submission_page, long_submission: ls)
+    end
   end
 
   factory :notification do

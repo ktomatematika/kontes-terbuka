@@ -1,6 +1,6 @@
 .container
   %h1 Edit
-  = form_for [@contest, @long_problem], html: { class: 'form-horizontal' } do |f|
+  = form_for @long_problem, html: { class: 'form-horizontal' } do |f|
     .form-group
       = f.label :problem_no, class: 'col-sm-2'
       .col-sm-4

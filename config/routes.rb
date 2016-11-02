@@ -62,12 +62,12 @@ Rails.application.routes.draw do
         get 'marker', to: 'roles#assign_markers'
         post 'marker', to: 'roles#create_marker'
         delete 'marker', to: 'roles#remove_marker'
-        get 'download/:id', to: 'long_problems#download', as: 'download'
-        post 'autofill/:id', to: 'long_problems#autofill', as: 'autofill'
-        post 'upload-report/:id', to: 'long_problems#upload_report',
-                                  as: 'upload_report'
-        get 'start-mark-final/:id', to: 'long_problems#start_mark_final',
-                                    as: 'start_mark_final'
+        get 'download', to: 'long_problems#download', as: 'download'
+        patch 'autofill', to: 'long_problems#autofill', as: 'autofill'
+        post 'upload-report', to: 'long_problems#upload_report',
+                              as: 'upload_report'
+        patch 'start-mark-final', to: 'long_problems#start_mark_final',
+                                  as: 'start_mark_final'
       end
 
       collection do

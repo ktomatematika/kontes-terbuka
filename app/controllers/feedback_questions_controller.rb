@@ -6,8 +6,7 @@ class FeedbackQuestionsController < ApplicationController
   before_action :load_contest_from_contest_params, only: contest_actions
 
   def create
-    FeedbackQuestion.create(contest_id: @contest.id,
-                            question: feedback_question_params[:question])
+    FeedbackQuestion.create(feedback_question_params)
     redirect_to admin_contest_path @contest
   end
 
@@ -45,7 +44,13 @@ class FeedbackQuestionsController < ApplicationController
   private
 
   def feedback_question_params
-    params.require(:feedback_question).permit(:question)
+    result = params.require(:feedback_question).permit(:question)
+    result[:contest_id] = if @contest
+                            @contest.id
+                          else
+                            params[:contest_id]
+                          end
+    result
   end
 
   def load_contest

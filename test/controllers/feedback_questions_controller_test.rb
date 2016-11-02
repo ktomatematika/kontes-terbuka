@@ -34,7 +34,7 @@ class FeedbackQuestionsControllerTest < ActionController::TestCase
   test 'destroy' do
     delete :destroy, id: @fq.id
     assert_redirected_to admin_contest_path @c
-    assert_nil Contest.find_by id: @fq.id
+    assert_nil FeedbackQuestion.find_by id: @fq.id
   end
 
   test 'edit' do
@@ -44,16 +44,14 @@ class FeedbackQuestionsControllerTest < ActionController::TestCase
 
   test 'patch update' do
     patch :update, id: @fq.id, feedback_question: { question: 'asdf' }
-    @fq.reload
     assert_redirected_to admin_contest_path @c
-    assert_equal @fq.question, 'asdf'
+    assert_equal @fq.reload.question, 'asdf'
   end
 
   test 'put update' do
     put :update, id: @fq.id, feedback_question: { question: 'asdf' }
-    @fq.reload
     assert_redirected_to admin_contest_path @c
-    assert_equal @fq.question, 'asdf'
+    assert_equal @fq.reload.question, 'asdf'
   end
 
   test 'copy across contests' do
