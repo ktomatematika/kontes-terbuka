@@ -7,6 +7,22 @@ class LongProblemsControllerTest < ActionController::TestCase
   end
 
   test 'routes' do
+    assert_equal contest_long_problems_path(@c),
+                 "/contests/#{@c.to_param}/long-problems"
+    assert_equal edit_long_problem_path(@lp),
+                 "/long-problems/#{@lp.id}/edit"
+    assert_equal long_problem_path(@lp),
+                 "/long-problems/#{@lp.id}"
+    assert_equal destroy_on_contest_contest_long_problems_path(@c),
+                 "/contests/#{@c.to_param}/long-problems/destroy-on-contest"
+    assert_equal download_long_problem_path(@lp),
+                 "/long-problems/#{@lp.id}/download"
+    assert_equal autofill_long_problem_path(@lp),
+                 "/long-problems/#{@lp.id}/autofill"
+    assert_equal upload_report_long_problem_path(@lp),
+                 "/long-problems/#{@lp.id}/upload-report"
+    assert_equal start_mark_final_long_problem_path(@lp),
+                 "/long-problems/#{@lp.id}/start-mark-final"
   end
 
   test 'no permissions' do

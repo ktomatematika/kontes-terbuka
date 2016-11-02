@@ -9,7 +9,7 @@ class LongProblemsController < ApplicationController
     if @contest.long_problems.find_by(
       problem_no: long_problem_params[:problem_no]
     ).nil?
-      LongProblem.create(long_problem_params).fill_long_submissions
+      @contest.long_problems.create(long_problem_params).fill_long_submissions
     end
     redirect_to admin_contest_path(@contest), notice: 'Long Problem terbuat!'
   end
@@ -68,12 +68,6 @@ class LongProblemsController < ApplicationController
   def long_problem_params
     result = params.require(:long_problem).permit(:problem_no,
                                                   :statement, :answer)
-    result[:contest_id] = if @contest
-                            @contest.id
-                          else
-                            params[:contest_id]
-                          end
-    result
   end
 
   def report_params
