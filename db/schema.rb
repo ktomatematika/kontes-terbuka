@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161006192548) do
+ActiveRecord::Schema.define(version: 20161102163917) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -221,23 +221,30 @@ ActiveRecord::Schema.define(version: 20161006192548) do
     t.datetime "updated_at",      :null=>false
   end
 
+  create_table "user_referrers", force: :cascade do |t|
+    t.string   "name",       :null=>false
+    t.datetime "created_at", :null=>false
+    t.datetime "updated_at", :null=>false
+  end
+
   create_table "users", force: :cascade do |t|
-    t.string   "username",        :null=>false, :index=>{:name=>"index_users_on_username", :unique=>true, :using=>:btree}
-    t.string   "email",           :null=>false, :index=>{:name=>"index_users_on_email", :unique=>true, :using=>:btree}
-    t.string   "hashed_password", :null=>false
-    t.string   "fullname",        :null=>false
-    t.string   "school",          :null=>false
-    t.datetime "created_at",      :null=>false
-    t.datetime "updated_at",      :null=>false
-    t.string   "salt",            :null=>false
-    t.string   "auth_token",      :null=>false, :index=>{:name=>"index_users_on_auth_token", :unique=>true, :using=>:btree}
-    t.integer  "province_id",     :index=>{:name=>"index_users_on_province_id", :using=>:btree}
-    t.integer  "status_id",       :index=>{:name=>"index_users_on_status_id", :using=>:btree}
-    t.integer  "color_id",        :default=>1, :null=>false, :index=>{:name=>"index_users_on_color_id", :using=>:btree}
-    t.string   "timezone",        :default=>"WIB", :null=>false
-    t.string   "verification",    :index=>{:name=>"index_users_on_verification", :unique=>true, :using=>:btree}
-    t.boolean  "enabled",         :default=>false, :null=>false
-    t.integer  "tries",           :default=>0, :null=>false
+    t.string   "username",         :null=>false, :index=>{:name=>"index_users_on_username", :unique=>true, :using=>:btree}
+    t.string   "email",            :null=>false, :index=>{:name=>"index_users_on_email", :unique=>true, :using=>:btree}
+    t.string   "hashed_password",  :null=>false
+    t.string   "fullname",         :null=>false
+    t.string   "school",           :null=>false
+    t.datetime "created_at",       :null=>false
+    t.datetime "updated_at",       :null=>false
+    t.string   "salt",             :null=>false
+    t.string   "auth_token",       :null=>false, :index=>{:name=>"index_users_on_auth_token", :unique=>true, :using=>:btree}
+    t.integer  "province_id",      :index=>{:name=>"index_users_on_province_id", :using=>:btree}
+    t.integer  "status_id",        :index=>{:name=>"index_users_on_status_id", :using=>:btree}
+    t.integer  "color_id",         :default=>1, :null=>false, :index=>{:name=>"index_users_on_color_id", :using=>:btree}
+    t.string   "timezone",         :default=>"WIB", :null=>false
+    t.string   "verification",     :index=>{:name=>"index_users_on_verification", :unique=>true, :using=>:btree}
+    t.boolean  "enabled",          :default=>false, :null=>false
+    t.integer  "tries",            :default=>0, :null=>false
+    t.integer  "user_referrer_id", :index=>{:name=>"index_users_on_user_referrer_id", :using=>:btree}
   end
 
   create_table "users_roles", id: false, force: :cascade do |t|
