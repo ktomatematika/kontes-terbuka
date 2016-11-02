@@ -1,4 +1,7 @@
 FactoryGirl.define do
+  factory :user_referrer do
+    
+  end
   factory :market_order do
     
   end
