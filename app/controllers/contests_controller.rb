@@ -139,10 +139,6 @@ class ContestsController < ApplicationController
     params.require(:short_answer)
   end
 
-  def feedback_params
-    params.require(:feedback_answer)
-  end
-
   def contest_params
     params.require(:contest).permit(:name, :start_time, :end_time, :result_time,
                                     :feedback_time, :problem_pdf, :gold_cutoff,

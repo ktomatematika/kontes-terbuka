@@ -44,7 +44,7 @@ class FeedbackQuestionsController < ApplicationController
   private
 
   def feedback_question_params
-    result = params.require(:feedback_question).permit(:question)
+    params.require(:feedback_question).permit(:question)
   end
 
   def load_contest

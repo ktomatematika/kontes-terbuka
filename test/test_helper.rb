@@ -17,6 +17,20 @@ module ActiveSupport
     def teardown
       FileUtils.rm_rf(Rails.root.join('public', 'contest_files'))
     end
+
+    protected
+
+    def login
+      @user = create(:user)
+      @request.cookies[:auth_token] = @user.auth_token
+    end
+
+    def promote(*roles)
+      roles.each { |r| @user.add_role r }
+    rescue StandardError
+      @user.add_role :panitia
+      retry
+    end
   end
 end
 

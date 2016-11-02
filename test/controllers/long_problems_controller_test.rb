@@ -1,9 +1,11 @@
 require 'test_helper'
 
 class LongProblemsControllerTest < ActionController::TestCase
-  setup :login_and_create_contest
+  setup :login, :create_items
   setup do |action|
-    be_admin unless %w(test_routes test_no_permissions).include? action.name
+    unless %w(test_routes test_no_permissions).include? action.name
+      promote(:admin)
+    end
   end
 
   test 'routes' do
@@ -117,15 +119,8 @@ class LongProblemsControllerTest < ActionController::TestCase
 
   private
 
-  def login_and_create_contest
-    @user = create(:user)
-    @request.cookies[:auth_token] = @user.auth_token
+  def create_items
     @lp = create(:long_problem)
     @c = @lp.contest
-  end
-
-  def be_admin
-    @user.add_role :panitia
-    @user.add_role :admin
   end
 end

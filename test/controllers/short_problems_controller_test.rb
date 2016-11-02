@@ -1,9 +1,11 @@
 require 'test_helper'
 
 class ShortProblemsControllerTest < ActionController::TestCase
-  setup :login_and_create_contest
+  setup :login, :create_items
   setup do |action|
-    be_admin unless %w(test_routes test_no_permissions).include? action.name
+    unless %w(test_routes test_no_permissions).include? action.name
+      promote(:admin)
+    end
   end
 
   test 'routes' do
@@ -22,7 +24,7 @@ class ShortProblemsControllerTest < ActionController::TestCase
       post :create, contest_id: @c.id,
                     short_problem: { statement: 'Hello there',
                                      problem_no: 5,
-                                     answer: 3}
+                                     answer: 3 }
     end
   end
 
@@ -30,7 +32,7 @@ class ShortProblemsControllerTest < ActionController::TestCase
     post :create, contest_id: @c.id,
                   short_problem: { statement: 'Hello there',
                                    problem_no: 5,
-                                   answer: 3}
+                                   answer: 3 }
     assert_redirected_to admin_contest_path @c
     assert_equal @c.short_problems.where(statement: 'Hello there').count, 1
     assert_equal flash[:notice], 'Short Problem terbuat!'
@@ -72,15 +74,8 @@ class ShortProblemsControllerTest < ActionController::TestCase
 
   private
 
-  def login_and_create_contest
-    @user = create(:user)
-    @request.cookies[:auth_token] = @user.auth_token
+  def create_items
     @sp = create(:short_problem)
     @c = @sp.contest
-  end
-
-  def be_admin
-    @user.add_role :panitia
-    @user.add_role :admin
   end
 end

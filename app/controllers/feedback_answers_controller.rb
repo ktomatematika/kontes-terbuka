@@ -1,22 +1,19 @@
 class FeedbackAnswersController < ApplicationController
+  load_and_authorize_resource
+  before_action :load_contest
+
   def new_on_contest
-    @contest = Contest.find(params[:contest_id])
-    authorize! :give_feedback, @contest
     @feedback_questions = @contest.feedback_questions
     @user_contest = UserContest.find_by contest: @contest, user: current_user
   end
 
   def create_on_contest
-    contest = Contest.find(params[:contest_id])
-    authorize! :feedback_submit, contest
-    UserContest.find_by(user: current_user, contest: contest)
+    UserContest.find_by(user: current_user, contest: @contest)
                .create_feedback_answers(feedback_params)
-    redirect_to contest, notice: 'Feedback berhasil dikirimkan!'
+    redirect_to @contest, notice: 'Feedback berhasil dikirimkan!'
   end
 
   def download_on_contest
-    @contest = Contest.find(params[:contest_id])
-    authorize! :download_feedback, @contest
     @feedback_questions = @contest.feedback_questions.order(:id)
     @feedback_matrix = @contest.feedback_answers_matrix
     respond_to do |format|
@@ -28,5 +25,15 @@ class FeedbackAnswersController < ApplicationController
       end
     end
     Ajat.info "feedback_downloaded|contest_id:#{@contest.id}"
+  end
+
+  private
+
+  def load_contest
+    @contest = Contest.find params[:contest_id]
+  end
+
+  def feedback_params
+    params.require(:feedback_answer)
   end
 end

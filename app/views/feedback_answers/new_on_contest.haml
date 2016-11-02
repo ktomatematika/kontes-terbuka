@@ -12,7 +12,8 @@
     Feedback ini akan dikirim secara anonim. Dengan kata lain, kami tidak akan
     mengetahui siapa yang mengisi jawaban yang Anda berikan.
 
-  = form_for :feedback_answer, url: contest_feedback_path do |f|
+  = form_for :feedback_answer,
+    url: contest_feedback_answers_path(@contest) do |f|
     - @feedback_questions.each do |q|
       - fba_object = FeedbackAnswer.find_by feedback_question: q,
         user_contest: @user_contest

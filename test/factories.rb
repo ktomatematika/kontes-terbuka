@@ -97,6 +97,10 @@ FactoryGirl.define do
     answer 'Saya baik!'
     feedback_question
     user_contest
+
+    after(:create) do |fa|
+      fa.user_contest.update(contest: fa.feedback_question.contest)
+    end
   end
 
   factory :feedback_question do
@@ -121,6 +125,7 @@ FactoryGirl.define do
 
     after(:create) do |ls|
       create(:submission_page, long_submission: ls)
+      ls.user_contest.update(contest: ls.long_problem.contest)
     end
   end
 
@@ -153,6 +158,10 @@ FactoryGirl.define do
     short_problem
     user_contest
     answer '3'
+
+    after(:create) do |ss|
+      ss.user_contest.update(contest: ss.short_problem.contest)
+    end
   end
 
   factory :status do

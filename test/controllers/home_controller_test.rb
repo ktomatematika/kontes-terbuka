@@ -1,10 +1,7 @@
 require 'test_helper'
 
 class HomeControllerTest < ActionController::TestCase
-  def setup
-    @user = create(:user)
-    @request.cookies[:auth_token] = @user.auth_token
-  end
+  setup :login
 
   test 'routes' do
     assert_equal home_path, '/home'
