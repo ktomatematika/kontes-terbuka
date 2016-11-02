@@ -2,33 +2,35 @@
 #
 # Table name: users
 #
-#  id              :integer          not null, primary key
-#  username        :string           not null
-#  email           :string           not null
-#  hashed_password :string           not null
-#  fullname        :string           not null
-#  school          :string           not null
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
-#  salt            :string           not null
-#  auth_token      :string           not null
-#  province_id     :integer
-#  status_id       :integer
-#  color_id        :integer          default(1), not null
-#  timezone        :string           default("WIB"), not null
-#  verification    :string
-#  enabled         :boolean          default(FALSE), not null
-#  tries           :integer          default(0), not null
+#  id               :integer          not null, primary key
+#  username         :string           not null
+#  email            :string           not null
+#  hashed_password  :string           not null
+#  fullname         :string           not null
+#  school           :string           not null
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  salt             :string           not null
+#  auth_token       :string           not null
+#  province_id      :integer
+#  status_id        :integer
+#  color_id         :integer          default(1), not null
+#  timezone         :string           default("WIB"), not null
+#  verification     :string
+#  enabled          :boolean          default(FALSE), not null
+#  tries            :integer          default(0), not null
+#  user_referrer_id :integer
 #
 # Indexes
 #
-#  index_users_on_auth_token    (auth_token) UNIQUE
-#  index_users_on_color_id      (color_id)
-#  index_users_on_email         (email) UNIQUE
-#  index_users_on_province_id   (province_id)
-#  index_users_on_status_id     (status_id)
-#  index_users_on_username      (username) UNIQUE
-#  index_users_on_verification  (verification) UNIQUE
+#  index_users_on_auth_token        (auth_token) UNIQUE
+#  index_users_on_color_id          (color_id)
+#  index_users_on_email             (email) UNIQUE
+#  index_users_on_province_id       (province_id)
+#  index_users_on_status_id         (status_id)
+#  index_users_on_user_referrer_id  (user_referrer_id)
+#  index_users_on_username          (username) UNIQUE
+#  index_users_on_verification      (verification) UNIQUE
 #
 # Foreign Keys
 #
@@ -36,7 +38,6 @@
 #  fk_rails_87f75b7957  (color_id => colors.id) ON DELETE => nullify
 #  fk_rails_ce4a327a04  (status_id => statuses.id) ON DELETE => nullify
 #
-# rubocop:enable Metrics/LineLength
 
 class User < ActiveRecord::Base
   include UserPasswordVerification
@@ -68,6 +69,7 @@ class User < ActiveRecord::Base
   belongs_to :province
   belongs_to :status
   belongs_to :color
+  belongs_to :user_referrer
 
   has_many :user_contests
   has_many :long_submissions, through: :user_contests
