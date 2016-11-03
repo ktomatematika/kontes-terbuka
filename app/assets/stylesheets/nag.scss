@@ -1,4 +1,4 @@
-#nag-overlay {
+.nag-overlay {
   align-items: center;
   background-color: rgba(0, 0, 0, 0.2);
   display: flex;
@@ -8,9 +8,10 @@
   position: fixed;
   top: 0;
   width: 100%;
+  z-index: 100;
 }
 
-#nag-container {
+.nag-container {
   background-color: rgba(255, 255, 255, 0.92);
   border: 1px solid #000;
   border-radius: 0.5em;
@@ -19,6 +20,7 @@
   max-width: 80%;
   overflow: auto;
   padding: 2em;
+  z-index: 102;
 
   h1 {
     margin-top: 0;

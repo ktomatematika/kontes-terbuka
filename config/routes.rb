@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     get 'change-password', to: 'users#change_password'
     post 'change-password', to: 'users#process_change_password'
     get 'change-notifications', to: 'users#change_notifications'
+    patch 'referrer-update', to: 'users#referrer_update'
     post 'change-notifications', to: 'users#process_change_notifications',
                                  as: 'process_change_notifications'
   end
