@@ -6,8 +6,7 @@ class Ability
     return if user.nil?
 
     # Contest related
-    can [:show, :index, :show_rules,
-         :accept_rules, :create_short_submissions], Contest
+    can [:show, :index], Contest
     can :download_results, Contest, result_released: true
     can [:show_rules, :accept_rules], Contest,
         id: Contest.where('start_time <= ? AND ? <= end_time',
@@ -17,6 +16,7 @@ class Ability
     can [:submit, :destroy_submissions, :download], LongSubmission,
         user_contest_id: user.user_contests.pluck(:id)
     can :stop_nag, UserContest, user: user
+    can [:new_on_contest, :create_on_contest], FeedbackAnswer
 
     # User related
     can :show, User, enabled: true
@@ -27,22 +27,22 @@ class Ability
 
     if user.has_role? :marking_manager
       can [:assign_markers, :save_markers], Contest
-      can :mark_final, LongProblem
+      can [:mark_final, :start_mark_final], LongProblem
       can [:create_marker, :remove_marker], Role
     end
 
     if user.has_role? :marker, :any
-      can [:mark_solo, :mark_final, :download, :submit_temporary_markings,
-           :submit_final_markings, :autofill, :upload_report], LongProblem,
-          id: LongProblem.with_role(:marker, user).pluck(:id)
+      can [:download, :submit_temporary_markings, :autofill, :upload_report],
+        LongProblem, id: LongProblem.with_role(:marker, user).pluck(:id)
       can :download_marking_scheme, Contest,
           id: LongProblem.with_role(:marker, user).pluck(:contest_id)
       can :admin, Application
     end
 
     if user.has_role? :panitia
-      can [:preview, :summary, :view_all], Contest
+      can [:preview, :summary, :view_all, :admin], Contest
       can [:see_full_index, :see_full], User
+      can :download_on_contest, FeedbackAnswer
       can [:admin, :profile], Application
     end
 
@@ -52,7 +52,7 @@ class Ability
       can [:admin, :read_problems, :destroy_short_probs,
            :destroy_long_probs, :upload_ms], Contest
       can :manage, ShortProblem
-      can :manage, LongProblem
+      can [:create, :edit, :update, :destroy, :destroy_on_contest], LongProblem
     end
 
     can :manage, :all if user.has_role? :admin
