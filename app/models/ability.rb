@@ -27,13 +27,13 @@ class Ability
 
     if user.has_role? :marking_manager
       can [:assign_markers, :save_markers], Contest
-      can [:mark_final, :start_mark_final], LongProblem
+      can [:mark_final, :start_mark_final, :download], LongProblem
       can [:create_marker, :remove_marker], Role
     end
 
     if user.has_role? :marker, :any
       can [:download, :submit_temporary_markings, :autofill, :upload_report],
-        LongProblem, id: LongProblem.with_role(:marker, user).pluck(:id)
+          LongProblem, id: LongProblem.with_role(:marker, user).pluck(:id)
       can :download_marking_scheme, Contest,
           id: LongProblem.with_role(:marker, user).pluck(:contest_id)
       can :admin, Application

@@ -3,7 +3,7 @@ class LongProblemsController < ApplicationController
 
   contest_actions = [:create, :destroy_on_contest]
   before_action :load_contest, except: contest_actions
-  before_action :load_contest_from_contest_params, only: [:create, :destroy_on_contest]
+  before_action :load_contest_from_contest_params, only: contest_actions
 
   def create
     if @contest.long_problems.find_by(

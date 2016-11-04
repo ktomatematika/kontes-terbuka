@@ -1,42 +1,38 @@
 class LongSubmissionsController < ApplicationController
+  load_and_authorize_resource
+
+  before_action :load_contest_from_contest_params
+
   def submit
-    long_submission = LongSubmission.find(params[:long_submission_id])
-    authorize! :submit, long_submission
     LongSubmission.transaction do
-      long_submission.submission_pages.destroy_all
-      long_submission.update!(submission_params)
+      @long_submission.submission_pages.destroy_all
+      @long_submission.update!(submission_params)
     end
-    redirect_to Contest.find(params[:contest_id]),
-                notice: 'Jawaban bagian B berhasil diupload!'
+    redirect_to @contest, notice: 'Jawaban bagian B berhasil diupload!'
   rescue ActiveRecord::ActiveRecordError
-    redirect_to Contest.find(params[:contest_id]),
+    redirect_to @contest,
                 alert: 'Jawaban bagian B gagal dikirim! Jika ini berlanjut, ' \
                 "#{ActionController::Base.helpers.link_to 'kontak kami',
                                                           contact_path}."
   end
 
   def destroy_submissions
-    long_submission = LongSubmission.find(params[:long_submission_id])
-    authorize! :destroy_submissions, long_submission
-    if long_submission.submission_pages.destroy_all
+    if @long_submission.submission_pages.destroy_all
       flash[:notice] = 'Jawaban Anda berhasil dibuang!'
     else
       flash[:alert] = 'Jawaban Anda gagal dibuang! Jika ini terjadi terus, ' \
                       "#{ActionController::Base.helpers.link_to 'kontak kami',
                                                                 contact_path}."
     end
-    redirect_to Contest.find(params[:contest_id])
+    redirect_to @contest
   end
 
   def download
-    long_submission = LongSubmission.find(params[:long_submission_id])
-    authorize! :download, long_submission
-    long_submission.compress
-
-    send_file long_submission.zip_location
+    @long_submission.compress
+    send_file @long_submission.zip_location
   rescue Errno::ENOENT
-    redirect_to Contest.find(params[:contest_id]), alert: 'Jawaban Anda ' \
-      'tidak ditemukan! Mohon buang dan upload ulang.'
+    redirect_to @contest, alert: 'Jawaban Anda tidak ditemukan! ' \
+    'Mohon buang dan upload ulang.'
   end
 
   def mark
@@ -44,8 +40,9 @@ class LongSubmissionsController < ApplicationController
        current_user.has_role?(:marker, @long_problem)
       redirect_to mark_solo_path(@long_problem)
     end
-    mark
-    @long_submissions = @long_submissions.includes(:user_contest)
+    @long_submissions = @long_problem.long_submissions
+                                     .submitted.includes(:user_contest)
+    @markers = User.with_role :marker, @long_problem
   end
 
   def submit_mark
@@ -59,7 +56,8 @@ class LongSubmissionsController < ApplicationController
 
       LongSubmission.find(id).update(update_hash)
     end
-    redirect_to mark_final_path(params[:id]), notice: 'Nilai berhasil diupdate!'
+    redirect_to long_problem_long_submissions_path(@long_problem),
+                notice: 'Nilai berhasil diupdate!'
   end
 
   private
@@ -68,5 +66,9 @@ class LongSubmissionsController < ApplicationController
     params.require(:long_submission).permit(
       submission_pages_attributes: [:page_number, :submission, :_destroy, :id]
     )
+  end
+
+  def load_contest_from_contest_params
+    @contest = Contest.find params[:contest_id]
   end
 end

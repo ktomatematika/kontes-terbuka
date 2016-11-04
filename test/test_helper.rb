@@ -20,16 +20,28 @@ module ActiveSupport
 
     protected
 
-    def login
+    def login_and_be_admin
       @user = create(:user)
+      @user.add_role :panitia
+      @user.add_role :admin
       @request.cookies[:auth_token] = @user.auth_token
     end
 
-    def promote(*roles)
-      roles.each { |r| @user.add_role r }
-    rescue StandardError
-      @user.add_role :panitia
-      retry
+    def test_abilities(model_object, method, bad_roles, good_roles)
+      user = create(:user)
+      good_roles.each do |r|
+        user = create(:user, role: r)
+        ability = Ability.new user
+        assert ability.can?(method, model_object),
+               "#{r} cannot #{method} on #{model_object}."
+      end
+
+      bad_roles.each do |r|
+        user = create(:user, role: r)
+        ability = Ability.new user
+        assert ability.cannot?(method, model_object),
+               "#{r} can #{method} on #{model_object}."
+      end
     end
   end
 end

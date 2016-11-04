@@ -1,12 +1,7 @@
 require 'test_helper'
 
 class FeedbackQuestionsControllerTest < ActionController::TestCase
-  setup :login, :create_items
-  setup do |action|
-    unless %w(test_routes test_no_permissions).include? action.name
-      promote(:admin)
-    end
-  end
+  setup :login_and_be_admin, :create_items
 
   test 'routes' do
     assert_equal contest_feedback_questions_path(@c),
@@ -19,14 +14,8 @@ class FeedbackQuestionsControllerTest < ActionController::TestCase
                  "/contests/#{@c.to_param}/feedback-questions/copy"
   end
 
-  test 'no permissions' do
-    assert_raise ActionController::RoutingError do
-      post :create, contest_id: @c.id,
-                    feedback_question: { question: 'Hello there' }
-    end
-  end
-
   test 'create' do
+    test_abilities @fq, :create, [nil, :panitia], [:admin]
     post :create, contest_id: @c.id,
                   feedback_question: { question: 'Hello there' }
     assert_redirected_to admin_contest_path @c
@@ -34,17 +23,20 @@ class FeedbackQuestionsControllerTest < ActionController::TestCase
   end
 
   test 'destroy' do
+    test_abilities @fq, :destroy, [nil, :panitia], [:admin]
     delete :destroy, id: @fq.id
     assert_redirected_to admin_contest_path @c
     assert_nil FeedbackQuestion.find_by id: @fq.id
   end
 
   test 'edit' do
+    test_abilities @fq, :edit, [nil, :panitia], [:admin]
     get :edit, id: @fq.id
     assert_response 200
   end
 
   test 'patch update' do
+    test_abilities @fq, :update, [nil, :panitia], [:admin]
     patch :update, id: @fq.id, feedback_question: { question: 'asdf' }
     assert_redirected_to admin_contest_path @c
     assert_equal @fq.reload.question, 'asdf'
@@ -61,6 +53,7 @@ class FeedbackQuestionsControllerTest < ActionController::TestCase
     5.times { |i| create(:feedback_question, contest: other_c, question: i) }
     @c.feedback_questions.destroy_all
 
+    test_abilities @fq, :update, [nil, :panitia], [:admin]
     post :copy_across_contests, contest_id: @c.id, other_contest_id: other_c.id
     assert_redirected_to admin_contest_path @c
     assert_equal flash[:notice], 'FQ berhasil dicopy!'
@@ -74,6 +67,8 @@ class FeedbackQuestionsControllerTest < ActionController::TestCase
 
   test 'destroy_on_contest' do
     create_list(:feedback_question, 5, contest: @c)
+
+    test_abilities @fq, :destroy_on_contest, [nil, :panitia], [:admin]
     delete :destroy_on_contest, contest_id: @c.id
 
     assert_redirected_to admin_contest_path @c

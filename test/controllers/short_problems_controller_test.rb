@@ -1,12 +1,7 @@
 require 'test_helper'
 
 class ShortProblemsControllerTest < ActionController::TestCase
-  setup :login, :create_items
-  setup do |action|
-    unless %w(test_routes test_no_permissions).include? action.name
-      promote(:admin)
-    end
-  end
+  setup :login_and_be_admin, :create_items
 
   test 'routes' do
     assert_equal contest_short_problems_path(@c),
@@ -19,16 +14,8 @@ class ShortProblemsControllerTest < ActionController::TestCase
                  "/contests/#{@c.to_param}/short-problems/destroy-on-contest"
   end
 
-  test 'no permissions' do
-    assert_raise ActionController::RoutingError do
-      post :create, contest_id: @c.id,
-                    short_problem: { statement: 'Hello there',
-                                     problem_no: 5,
-                                     answer: 3 }
-    end
-  end
-
   test 'create' do
+    test_abilities @sp, :create, [nil, :panitia], [:problem_admin, :admin]
     post :create, contest_id: @c.id,
                   short_problem: { statement: 'Hello there',
                                    problem_no: 5,
@@ -39,11 +26,13 @@ class ShortProblemsControllerTest < ActionController::TestCase
   end
 
   test 'edit' do
+    test_abilities @sp, :edit, [nil, :panitia], [:problem_admin, :admin]
     get :edit, id: @sp.id
     assert_response 200
   end
 
   test 'patch update' do
+    test_abilities @sp, :update, [nil, :panitia], [:problem_admin, :admin]
     patch :update, id: @sp.id, short_problem: { statement: 'asdf' }
     assert_redirected_to admin_contest_path @c
     assert_equal @sp.reload.statement, 'asdf'
@@ -58,6 +47,7 @@ class ShortProblemsControllerTest < ActionController::TestCase
   end
 
   test 'destroy' do
+    test_abilities @sp, :destroy, [nil, :panitia], [:problem_admin, :admin]
     delete :destroy, id: @sp.id
     assert_redirected_to admin_contest_path @c
     assert_nil ShortProblem.find_by id: @sp.id
@@ -66,6 +56,8 @@ class ShortProblemsControllerTest < ActionController::TestCase
 
   test 'destroy_on_contest' do
     create_list(:short_problem, 5, contest: @c)
+    test_abilities @sp, :destroy_on_contest, [nil, :panitia],
+                   [:problem_admin, :admin]
     delete :destroy_on_contest, contest_id: @c.id
     assert_redirected_to admin_contest_path @c
     assert_equal flash[:notice], 'Bagian A hancur!'

@@ -195,6 +195,21 @@ FactoryGirl.define do
     color
     school 'qwerty'
     terms_of_service '1'
+
+    transient do
+      role nil
+    end
+
+    after(:create) do |user, evaluator|
+      unless evaluator.role.nil?
+        begin
+          user.add_role(*evaluator.role)
+        rescue StandardError
+          user.add_role :panitia
+          retry
+        end
+      end
+    end
   end
 
   factory :user_contest do

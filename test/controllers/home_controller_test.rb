@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class HomeControllerTest < ActionController::TestCase
-  setup :login
+  setup :login_and_be_admin
 
   test 'routes' do
     assert_equal home_path, '/home'
@@ -22,13 +22,9 @@ class HomeControllerTest < ActionController::TestCase
   end
 
   test 'admin' do
-    @user.add_role :panitia
+    test_abilities Application, :admin, [nil], [:marker, :panitia, :admin]
     get :admin
     assert_response 200
-  end
-
-  test 'admin without permissions' do
-    assert_raises(ActionController::RoutingError) { get :admin }
   end
 
   test 'about' do
@@ -67,8 +63,8 @@ class HomeControllerTest < ActionController::TestCase
   end
 
   test 'masq' do
-    @user.add_role :panitia
-    @user.add_role :admin
+    test_abilities Application, :masq, [nil, :panitia], [:admin]
+
     new_user = create(:user)
 
     post :masq, username: new_user.username
@@ -77,14 +73,7 @@ class HomeControllerTest < ActionController::TestCase
     assert_equal flash[:notice], 'Masq!'
   end
 
-  test 'masq without permissions' do
-    assert_raises(ActionController::RoutingError) { post :masq }
-  end
-
   test 'masq username not found' do
-    @user.add_role :panitia
-    @user.add_role :admin
-
     post :masq, username: 'asdf'
     assert_redirected_to admin_path
     assert_equal session[:masq_username], nil
@@ -92,6 +81,7 @@ class HomeControllerTest < ActionController::TestCase
   end
 
   test 'unmasq' do
+    test_abilities Application, :unmasq, [nil, :marker, :panitia], [:admin]
     session[:masq_username] = create(:user).username
 
     delete :unmasq
