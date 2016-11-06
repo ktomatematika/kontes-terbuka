@@ -155,6 +155,13 @@ class ContestsController < ApplicationController
     send_file contest.marking_scheme.path
   end
 
+  def download_reports
+    contest = Contest.find(params[:contest_id])
+    authorize! :download_reports, contest
+
+    send_file contest.report_zip_location
+  end
+
   def download_feedback
     @contest = Contest.find(params[:contest_id])
     authorize! :download_feedback, @contest

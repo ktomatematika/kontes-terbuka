@@ -44,6 +44,7 @@ class Ability
       can [:preview, :summary, :view_all], Contest
       can [:see_full_index, :see_full], User
       can [:admin, :profile], Application
+      can [:download_pdf, :download_marking_scheme, :download_reports], Contest
     end
 
     can [:edit, :update, :destroy], User if user.has_role? :user_admin
