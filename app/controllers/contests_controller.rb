@@ -159,6 +159,7 @@ class ContestsController < ApplicationController
     contest = Contest.find(params[:contest_id])
     authorize! :download_reports, contest
 
+    contest.compress_reports
     send_file contest.report_zip_location
   end
 
