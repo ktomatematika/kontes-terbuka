@@ -1,8 +1,8 @@
 class ContestsController < ApplicationController
-  def admin
-    @contest = Contest.find(params[:contest_id])
-    authorize! :admin, @contest
+  load_and_authorize_resource
+  skip_authorize_resource only: :update
 
+  def admin
     grab_problems
     @feedback_questions = @contest.feedback_questions
     Ajat.info "admin|uid:#{current_user.id}|uname:#{current_user}|" \
@@ -10,23 +10,19 @@ class ContestsController < ApplicationController
   end
 
   def new
-    @contest = Contest.new
   end
 
   def create
-    contest = Contest.new(contest_params)
-    authorize! :create, contest
-    if contest.save
-      Ajat.info "contest_created|id:#{contest.id}"
-      redirect_to contest, notice: "#{contest} berhasil dibuat!"
+    if @contest.save
+      Ajat.info "contest_created|id:#{@contest.id}"
+      redirect_to @contest, notice: "#{@contest} berhasil dibuat!"
     else
-      Ajat.warn "contest_created_fail|#{contest.errors.full_messages}"
+      Ajat.warn "contest_created_fail|#{@contest.errors.full_messages}"
       render 'new', alert: 'Kontes gagal dibuat!'
     end
   end
 
   def show
-    @contest = Contest.find(params[:id])
     @mask = false
 
     if @contest.currently_in_contest?
@@ -45,71 +41,54 @@ class ContestsController < ApplicationController
   end
 
   def index
-    @contests = Contest.all
   end
 
   def edit
-    @contest = Contest.find(params[:id])
-    authorize! :edit, @contest
   end
 
   def update
-    contest = Contest.find(params[:id])
-    if can? :update, contest
-      if contest.update(contest_params)
-        Ajat.info "contest_updated|id:#{contest.id}"
-        redirect_to contest, notice: "#{contest} berhasil diubah."
+    if can? :update, @contest
+      if @contest.update(contest_params)
+        Ajat.info "contest_updated|id:#{@contest.id}"
+        redirect_to @contest, notice: "#{@contest} berhasil diubah."
       else
-        Ajat.warn "contest_update_fail|#{contest.errors.full_messages}"
-        redirect_to contest, alert: "#{contest} gagal diubah!"
+        Ajat.warn "contest_update_fail|#{@contest.errors.full_messages}"
+        redirect_to @contest, alert: "#{@contest} gagal diubah!"
       end
-    elsif can? :upload_ms, contest
-      if contest.update(marking_scheme_params)
-        Ajat.info "marking_scheme_uploaded|id:#{contest.id}"
-        redirect_to contest, notice: "#{contest} berhasil diubah."
+    elsif can? :upload_ms, @contest
+      if @contest.update(marking_scheme_params)
+        Ajat.info "marking_scheme_uploaded|id:#{@contest.id}"
+        redirect_to @contest, notice: "#{@contest} berhasil diubah."
       else
-        Ajat.warn "marking_scheme_upload_fail|#{contest.errors.full_messages}"
-        redirect_to contest, alert: "#{contest} gagal diubah!"
+        Ajat.warn "marking_scheme_upload_fail|#{@contest.errors.full_messages}"
+        redirect_to @contest, alert: "#{@contest} gagal diubah!"
       end
     else
-      raise CanCan::AccessDenied.new('Cannot update', :update, contest)
+      raise CanCan::AccessDenied.new('Cannot update', :update, @contest)
     end
   end
 
   def destroy
-    contest = Contest.find(params[:id])
-    authorize! :destroy, contest
-    contest.destroy
-    Ajat.warn "contest_destroyed|#{contest}"
+    @contest.destroy
+    Ajat.warn "contest_destroyed|#{@contest}"
     redirect_to contests_path, notice: 'Kontes berhasil dihilangkan!'
   end
 
   def download_pdf
-    contest = Contest.find(params[:contest_id])
-    authorize! :download_pdf, contest
-
-    send_file contest.problem_pdf.path
+    send_file @contest.problem_pdf.path
   end
 
   def download_marking_scheme
-    contest = Contest.find(params[:contest_id])
-    authorize! :download_marking_scheme, contest
-
-    send_file contest.marking_scheme.path
+    send_file @contest.marking_scheme.path
   end
 
   def read_problems
-    c = Contest.find(params[:contest_id])
-    authorize! :read_problems, c
-    c.update(problem_tex: params[:problem_tex])
-    TexReader.new(c, params[:answers].split(',')).run
-    redirect_to admin_contest_path, notice: 'TeX berhasil dibaca!'
+    @contest.update(problem_tex: params[:problem_tex])
+    TexReader.new(@contest, params[:answers].split(',')).run
+    redirect_to admin_contest_path(@contest), notice: 'TeX berhasil dibaca!'
   end
 
   def summary
-    @contest = Contest.find(params[:contest_id])
-    authorize! :summary, @contest
-
     @scores = @contest.array_of_scores
     @count = @scores.inject(&:+)
     redirect_to contest_path(@contest), notice: 'Tidak ada data' if @count.zero?
@@ -118,13 +97,7 @@ class ContestsController < ApplicationController
   end
 
   def download_results
-    @contest = Contest.find(params[:contest_id])
-    authorize! :download_results, @contest
-
-    if @contest.result_released?
-      @user_contests = @contest.results(user: :roles) # this is a big query
-    end
-
+    @user_contests = @contest.results(user: :roles)
     grab_problems
 
     respond_to do |format|
@@ -135,10 +108,6 @@ class ContestsController < ApplicationController
 
   private
 
-  def submission_params
-    params.require(:short_answer)
-  end
-
   def contest_params
     params.require(:contest).permit(:name, :start_time, :end_time, :result_time,
                                     :feedback_time, :problem_pdf, :gold_cutoff,
@@ -148,14 +117,6 @@ class ContestsController < ApplicationController
 
   def marking_scheme_params
     params.require(:contest).permit(:marking_scheme)
-  end
-
-  def participate_params
-    params.require(:user_contest).permit(:user_id, :contest_id)
-  end
-
-  def contest_from_params
-    Contest.find(params[:contest_id])
   end
 
   def grab_problems

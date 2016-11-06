@@ -1,6 +1,5 @@
 class FeedbackAnswersController < ApplicationController
   load_and_authorize_resource
-  before_action :load_contest
 
   def new_on_contest
     @feedback_questions = @contest.feedback_questions
@@ -28,10 +27,6 @@ class FeedbackAnswersController < ApplicationController
   end
 
   private
-
-  def load_contest
-    @contest = Contest.find params[:contest_id]
-  end
 
   def feedback_params
     params.require(:feedback_answer)

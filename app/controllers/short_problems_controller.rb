@@ -3,7 +3,6 @@ class ShortProblemsController < ApplicationController
 
   contest_actions = [:create, :destroy_on_contest]
   before_action :load_contest, except: contest_actions
-  before_action :load_contest_from_contest_params, only: contest_actions
 
   def create
     @contest.short_problems.create(short_problem_params)
@@ -41,9 +40,5 @@ class ShortProblemsController < ApplicationController
 
   def load_contest
     @contest = @short_problem.contest
-  end
-
-  def load_contest_from_contest_params
-    @contest = Contest.find params[:contest_id]
   end
 end

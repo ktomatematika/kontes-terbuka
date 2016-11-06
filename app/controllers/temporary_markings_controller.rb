@@ -25,4 +25,10 @@ class TemporaryMarkingsController < ApplicationController
     end
     redirect_to mark_solo_path(params[:id]), notice: 'Nilai berhasil diupdate!'
   end
+
+  private
+
+  def load_long_problem
+    @long_problem = LongProblem.find params[:long_problem_id]
+  end
 end

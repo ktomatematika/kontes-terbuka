@@ -5,7 +5,8 @@ class ApplicationController < ActionController::Base
   skip_before_action :require_login, only: :maintenance
 
   before_action :set_paper_trail_whodunnit, :require_login, :set_timezone,
-                :set_color, :set_mini_profiler
+                :set_color, :set_mini_profiler,
+                :load_contest_from_contest_params
 
   private
 
@@ -69,5 +70,9 @@ class ApplicationController < ActionController::Base
                                        'REMOTE_HOST')}"
     head 400
     raise ActionController::RoutingError, "Access Denied: #{params[:path]}"
+  end
+
+  def load_contest_from_contest_params
+    @contest ||= Contest.find params[:contest_id]
   end
 end

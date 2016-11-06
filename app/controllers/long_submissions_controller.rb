@@ -1,8 +1,6 @@
 class LongSubmissionsController < ApplicationController
   load_and_authorize_resource
 
-  before_action :load_contest_from_contest_params
-
   def submit
     LongSubmission.transaction do
       @long_submission.submission_pages.destroy_all
@@ -66,9 +64,5 @@ class LongSubmissionsController < ApplicationController
     params.require(:long_submission).permit(
       submission_pages_attributes: [:page_number, :submission, :_destroy, :id]
     )
-  end
-
-  def load_contest_from_contest_params
-    @contest = Contest.find params[:contest_id]
   end
 end

@@ -3,7 +3,6 @@ class FeedbackQuestionsController < ApplicationController
 
   contest_actions = [:create, :destroy_on_contest, :copy_across_contests]
   before_action :load_contest, except: contest_actions
-  before_action :load_contest_from_contest_params, only: contest_actions
 
   def create
     @contest.feedback_questions.create(feedback_question_params)
@@ -49,9 +48,5 @@ class FeedbackQuestionsController < ApplicationController
 
   def load_contest
     @contest = @feedback_question.contest
-  end
-
-  def load_contest_from_contest_params
-    @contest = Contest.find params[:contest_id]
   end
 end

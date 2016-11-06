@@ -18,7 +18,7 @@ module ActiveSupport
       FileUtils.rm_rf(Rails.root.join('public', 'contest_files'))
     end
 
-    protected
+    private
 
     def login_and_be_admin
       @user = create(:user)
