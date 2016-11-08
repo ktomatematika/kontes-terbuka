@@ -87,6 +87,24 @@ var problem_array = [
 	['Carilah jumlah semua akar real dari persamaan \\[ x + ' +
 	'\\frac{x}{\\sqrt{x^2 - 1}} = 2016. \\]',
 	'KTO Matematika April 2016'],
+	['Diberikan sebuah barisan aritmetika tak berhingga $a_1, a_2, a_3, ' +
+  '\\ldots$. Misalkan beberapa (bisa jadi tak berhingga banyaknya) ' +
+  'suku dibuang dari barisan ini sehingga diperoleh barisan geometri ' +
+  'tak berhingga $1, r, r^2, \\ldots$ untuk suatu bilangan real ' +
+  'positif $r$. Tentukan semua nilai yang mungkin untuk $r$.',
+	'KTO Matematika Mei 2016'],
+  ['Adakah dua bilangan prima $p$ dan $q$ yang memenuhi \\[p^2 + q^2 ' +
+  '= p^5 - q\\]?',
+	'KTO Matematika Mei 2016'],
+  ['Dua buah lingkaran dengan jari-jari 4 dan 7 terletak pada satu ' +
+  'bidang. Diketahui bahwa kedua lingkaran tersebut memiliki tepat ' +
+  'tiga buah garis singgung persekutuan. Tentukan jarak kedua pusat ' +
+  'lingkaran tersebut.',
+	'KTO Matematika Juni 2016'],
+  ['Misalkan $\\angle ABC = \\angle ACB = 70^{\\circ}$. Titik $P$ ' +
+  'terletak di dalam segitiga $ABC$ sedemikian sehingga $\\angle PCA ' +
+  '= 40^{\\circ}$ dan $AP = BC$. Tentukan besar $\\angle PAB$.',
+	'KTO Matematika Juni 2016'],
 ];
 
 function get_rand() {

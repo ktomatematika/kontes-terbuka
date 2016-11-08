@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
-  root 'welcome#index'
+  #root 'welcome#index'
+
+  # Uncomment root and comment these to enter maintenance mode:
+  root 'application#maintenance'
+  match '*path', to: 'application#maintenance', via: :all
 
   resources :users do
     post 'mini-update', to: 'users#mini_update'
