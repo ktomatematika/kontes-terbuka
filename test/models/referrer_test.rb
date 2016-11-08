@@ -21,7 +21,7 @@ class ReferrerTest < ActiveSupport::TestCase
     assert build(:referrer).save, 'Referrer cannot be saved'
   end
 
-  test 'color associations' do
+  test 'referrer associations' do
     assert_equal Referrer.reflect_on_association(:user).macro,
                  :has_many,
                  'Referrer relation is not has many users.'
@@ -30,5 +30,15 @@ class ReferrerTest < ActiveSupport::TestCase
   test 'referrer to string' do
     assert_equal create(:referrer, name: 'coba').to_s, 'coba',
                  'Referrer to string is not equal to its name.'
+  end
+
+  test 'name cannot be blank' do
+    assert_not build(:referrer, name: nil).save, 'Name can be nil.'
+  end
+  
+  test 'name is unique' do
+    create(:referrer, name: 'asdf')
+    assert_not build(:referrer, name: 'asdf').save,
+               'Referrer with duplicate names can be saved'
   end
 end

@@ -34,4 +34,10 @@ class StatusTest < ActiveSupport::TestCase
   test 'name cannot be blank' do
     assert_not build(:status, name: nil).save, 'Name can be nil.'
   end
+  
+  test 'name is unique' do
+    create(:status, name: 'asdf')
+    assert_not build(:status, name: 'asdf').save,
+               'Status with duplicate names can be saved'
+  end
 end
