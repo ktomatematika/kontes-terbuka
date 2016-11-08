@@ -182,6 +182,11 @@ textarea {
   display: inline-block;
 }
 
+.heading-with-btn > *:first-child {
+  display: inline-block;
+  margin-right: 0.3em;
+}
+
 // scss-lint:disable PlaceholderInExtend
 .table {
   @extend table;

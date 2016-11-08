@@ -18,6 +18,7 @@
         = render 'long_problems' unless @long_problems.empty?
 
       - if @contest.result_released
+        = render 'show_problems'
         - unless @user_contest.nil?
           = render 'own_results'
           = render 'feedback' unless @contest.feedback_closed?
