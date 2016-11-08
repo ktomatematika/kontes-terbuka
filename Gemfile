@@ -23,7 +23,8 @@ gem 'sass-rails'
 gem 'uglifier'
 # Use jQuery
 gem 'jquery-rails'
-# Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
+# Turbolinks makes following links in your web application faster. Read more:
+# https://github.com/rails/turbolinks
 gem 'turbolinks', '< 5'
 gem 'jquery-turbolinks'
 # Use Bootstrap, the CSS framework (getbootstrap.com)
@@ -53,7 +54,7 @@ end
 ### UTILITIES
 
 # Schema Validations: to maintin referential integrity in database and models
-gem 'schema_validations'
+gem 'schema_validations', github: 'donjar/schema_validations'
 # Add time validations
 gem 'validates_timeliness'
 # Allows more complex SQL queries
