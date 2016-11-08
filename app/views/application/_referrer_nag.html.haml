@@ -1,0 +1,9 @@
+.nag-overlay
+  .nag-container
+    %h1 Bantu kami!
+    = form_for :user, url: user_referrer_update_path(current_user),
+      method: :patch do |f|
+      = f.collection_select :referrer_id, Referrer.all, :id, :name,
+        { prompt: 'Dari manakah Anda mengetahui KTO Matematika?' },
+        { class: 'form-control' }
+      = f.submit 'Submit', class: 'btn btn-lg sign-btn'

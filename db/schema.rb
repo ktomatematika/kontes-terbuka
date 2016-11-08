@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161014091434) do
+ActiveRecord::Schema.define(version: 20161103011624) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -116,6 +116,18 @@ ActiveRecord::Schema.define(version: 20161014091434) do
     t.integer  "price",       :null=>false
     t.datetime "created_at",  :null=>false
     t.datetime "updated_at",  :null=>false
+    t.integer  "quantity"
+  end
+
+  create_table "market_orders", force: :cascade do |t|
+    t.integer  "point_transaction_id", :index=>{:name=>"index_market_orders_on_point_transaction_id", :using=>:btree}
+    t.integer  "market_item_id",       :index=>{:name=>"index_market_orders_on_market_item_id", :using=>:btree}
+    t.integer  "quantity"
+    t.string   "email"
+    t.string   "phone"
+    t.string   "address"
+    t.datetime "created_at",           :null=>false
+    t.datetime "updated_at",           :null=>false
   end
 
   create_table "migration_validators", force: :cascade do |t|
@@ -147,6 +159,12 @@ ActiveRecord::Schema.define(version: 20161014091434) do
     t.datetime "created_at", :null=>false
     t.datetime "updated_at", :null=>false
     t.string   "timezone",   :null=>false
+  end
+
+  create_table "referrers", force: :cascade do |t|
+    t.string   "name",       :null=>false, :index=>{:name=>"index_referrers_on_name", :unique=>true, :using=>:btree}
+    t.datetime "created_at", :null=>false
+    t.datetime "updated_at", :null=>false
   end
 
   create_table "roles", force: :cascade do |t|
@@ -233,6 +251,7 @@ ActiveRecord::Schema.define(version: 20161014091434) do
     t.string   "verification",    :index=>{:name=>"index_users_on_verification", :unique=>true, :using=>:btree}
     t.boolean  "enabled",         :default=>false, :null=>false
     t.integer  "tries",           :default=>0, :null=>false
+    t.integer  "referrer_id",     :index=>{:name=>"index_users_on_referrer_id", :using=>:btree}
   end
 
   create_table "users_roles", id: false, force: :cascade do |t|

@@ -19,6 +19,7 @@
 #  verification    :string
 #  enabled         :boolean          default(FALSE), not null
 #  tries           :integer          default(0), not null
+#  referrer_id     :integer
 #
 # Indexes
 #
@@ -26,6 +27,7 @@
 #  index_users_on_color_id      (color_id)
 #  index_users_on_email         (email) UNIQUE
 #  index_users_on_province_id   (province_id)
+#  index_users_on_referrer_id   (referrer_id)
 #  index_users_on_status_id     (status_id)
 #  index_users_on_username      (username) UNIQUE
 #  index_users_on_verification  (verification) UNIQUE
@@ -36,7 +38,6 @@
 #  fk_rails_87f75b7957  (color_id => colors.id) ON DELETE => nullify
 #  fk_rails_ce4a327a04  (status_id => statuses.id) ON DELETE => nullify
 #
-# rubocop:enable Metrics/LineLength
 
 class User < ActiveRecord::Base
   include UserPasswordVerification
@@ -71,6 +72,7 @@ class User < ActiveRecord::Base
   belongs_to :province
   belongs_to :status
   belongs_to :color
+  belongs_to :referrer
 
   has_many :user_contests
   has_many :long_submissions, through: :user_contests
@@ -89,6 +91,8 @@ class User < ActiveRecord::Base
   has_many :notifications, through: :user_notifications
 
   has_many :point_transactions
+
+  has_many :market_orders
 
   # Validations
   validates :password, presence: true, confirmation: true, on: :create

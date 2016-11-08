@@ -137,6 +137,10 @@ FactoryGirl.define do
     timezone 'WITA'
   end
 
+  factory :referrer do
+    name { generate(:unique) }
+  end
+
   factory :short_problem do
     contest
     problem_no { generate(:number) }

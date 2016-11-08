@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     get 'change-password', to: 'users#change_password'
     post 'change-password', to: 'users#process_change_password'
     get 'change-notifications', to: 'users#change_notifications'
+    patch 'referrer-update', to: 'users#referrer_update'
     post 'change-notifications', to: 'users#process_change_notifications',
                                  as: 'process_change_notifications'
   end
@@ -75,7 +76,7 @@ Rails.application.routes.draw do
                              as: 'upload_report'
   post '/stop-nag/:id', to: 'user_contests#stop_nag', as: 'stop_nag'
 
-  # resources :market_items, path: '/market-items'
+  resources :market_items, path: '/market-items'
 
   get '/mark-solo/:id', to: 'long_problems#mark_solo', as: :mark_solo
   post '/submit-temporary-markings/:id',
