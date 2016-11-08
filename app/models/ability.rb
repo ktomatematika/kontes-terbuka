@@ -41,10 +41,10 @@ class Ability
     end
 
     if user.has_role? :panitia
-      can [:preview, :summary, :view_all], Contest
+      can [:preview, :summary, :view_all, :admin, :download_feedback,
+           :download_marking_scheme, :download_reports, :download_pdf], Contest
       can [:see_full_index, :see_full], User
       can [:admin, :profile], Application
-      can [:download_pdf, :download_marking_scheme, :download_reports], Contest
     end
 
     can [:edit, :update, :destroy], User if user.has_role? :user_admin

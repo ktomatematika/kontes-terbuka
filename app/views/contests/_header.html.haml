@@ -20,15 +20,3 @@
     - if can? :assign_markers, @contest
       = link_to 'Bagi koreksian', assign_markers_path(id: @contest.id),
         class: 'btn btn-lg'
-
-    - if can? :download_pdf, @contest
-      = link_to 'Download soal', @contest.problem_pdf.url(:original, false),
-        class: 'btn btn-lg'
-
-    - if can? :download_marking_scheme, @contest
-      = link_to 'Download Marking Scheme',
-        @contest.marking_scheme.url(:original, false), class: 'btn btn-lg'
-
-    - if can? :download_reports, @contest
-      = link_to 'Download laporan',
-        contest_reports_path(contest_id: @contest.id), class: 'btn btn-lg'
