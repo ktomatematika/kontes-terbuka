@@ -225,7 +225,7 @@ class UsersController < ApplicationController
     params.require(:user).permit(:username, :email, :password,
                                  :password_confirmation, :fullname,
                                  :province_id, :status_id, :color_id,
-                                 :school, :referrer_id, :terms_of_service, :profile_picture,
+                                 :school, :referrer_id, :terms_of_service,
                                  :osn)
   end
 
