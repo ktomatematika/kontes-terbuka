@@ -1,4 +1,3 @@
-# rubocop:disable Metrics/LineLength
 # == Schema Information
 #
 # Table name: referrers
@@ -35,7 +34,7 @@ class ReferrerTest < ActiveSupport::TestCase
   test 'name cannot be blank' do
     assert_not build(:referrer, name: nil).save, 'Name can be nil.'
   end
-  
+
   test 'name is unique' do
     create(:referrer, name: 'asdf')
     assert_not build(:referrer, name: 'asdf').save,
