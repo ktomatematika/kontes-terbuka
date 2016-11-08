@@ -108,7 +108,7 @@ var problem_array = [
 ];
 
 function get_rand() {
-	return (new Date).getSeconds() % (3 * problem_array.length);
+	return (new Date).getSeconds() % problem_array.length;
 }
 
 function show_prob(item) {
