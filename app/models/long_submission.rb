@@ -24,7 +24,7 @@
 
 class LongSubmission < ActiveRecord::Base
   has_paper_trail
-  schema_validations except: :feedback unless Rails.env.production?
+  schema_validations except: :feedback
 
   # Associations
   belongs_to :user_contest
