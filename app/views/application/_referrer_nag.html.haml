@@ -4,6 +4,6 @@
     = form_for :user, url: referrer_update_user_path(current_user),
       method: :patch do |f|
       = f.collection_select :referrer_id, Referrer.all, :id, :name,
-        { prompt: 'Dari manakah Anda mengetahui KTO Matematika?' },
+        { prompt: 'Dari manakah Anda awalnya mengetahui tentang KTO Matematika?' },
         { class: 'form-control' }
       = f.submit 'Submit', class: 'btn btn-lg sign-btn'
