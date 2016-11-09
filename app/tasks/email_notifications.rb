@@ -62,16 +62,11 @@ class EmailNotifications
       "ditutup #{time_text} lagi. Ingat, salah satu syarat mendapatkan " \
       'sertifikat adalah mengisi feedback ini.'
     notif = Notification.find_by(event: 'feedback_ending', time_text: time_text)
-    user_contests = notif.user_notifications.map do |un|
-      UserContest.find_by(contest: @contest, user: un.user)
-    end
-    users = user_contests.inject([]) do |email_array, uc|
-      if uc.nil? || uc.feedback_answers.empty?
-        email_array
-      else
-        email_array.push(uc.user)
-      end
-    end
+    users = User.where(id: @contest.not_full_feedback_user_contests
+                       .joins(user: :user_notifications)
+                       .where('user_notifications.notification_id = ?',
+                              notif.id)
+                       .pluck(:user_id))
 
     Ajat.info "feedback_ending|id:#{@contest.id}|time:#{time_text}"
     send_emails(text: text, subject: subject, users: users)
