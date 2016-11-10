@@ -25,7 +25,7 @@ class RolesController < ApplicationController
     User.find(params[:user_id]).remove_role :marker, @long_problem
     Ajat.info "marker_removed|lp_id:#{params[:long_problem_id]}|" \
     "uid:#{params[:user_id]}"
-    redirect_to assign_markers_path(@contest)
+    redirect_to assign_markers_path(@contest),
                 notice: 'Korektor berhasil dibuang!'
   end
 

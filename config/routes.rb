@@ -25,9 +25,9 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :user_notifications, only: [] do
-    member do
-      get '', to: 'user_notifications#new', as: ''
+  resources :user_notifications, path: '/user-notifications', only: [] do
+    collection do
+      get '', to: 'user_notifications#edit_on_user', as: ''
       post '', to: 'user_notifications#flip'
     end
   end
@@ -112,7 +112,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :user_contests, only: [:new, :create] do
+  resources :user_contests, path: '/user-contests', only: [:new, :create] do
     member do
       post '/stop-nag/:id', to: 'user_contests#stop_nag', as: 'stop_nag'
     end

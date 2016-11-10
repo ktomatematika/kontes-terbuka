@@ -18,6 +18,7 @@ class Ability
     can :create_on_contest, ShortSubmission
     can :stop_nag, UserContest, user: user
     can [:new_on_contest, :create_on_contest], FeedbackAnswer
+    can [:edit_on_user, :flip], UserNotification
 
     # User related
     can :show, User, enabled: true
