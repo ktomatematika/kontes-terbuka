@@ -9,7 +9,7 @@
       jawaban yang salah atau dikosongkan. Jawaban soal-soal bagian A
       dipastikan merupakan bilangan bulat.
 
-  = form_for :short_answer,
+  = form_for :short_submission,
     url: contest_create_short_submissions_path(contest_id: params[:id]) do |f|
     - @short_problems.each do |prob|
       %h5.problem_no No. #{prob.problem_no}

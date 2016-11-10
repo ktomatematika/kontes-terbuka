@@ -15,6 +15,7 @@ class Ability
         id: UserContest.where(user: user).pluck(:contest_id)
     can [:submit, :destroy_submissions, :download], LongSubmission,
         user_contest_id: user.user_contests.pluck(:id)
+    can :create_on_contest, ShortSubmission
     can :stop_nag, UserContest, user: user
     can [:new_on_contest, :create_on_contest], FeedbackAnswer
 

@@ -10,8 +10,10 @@ class ShortSubmissionsControllerTest < ActionController::TestCase
 
   test 'create_on_contest' do
     test_abilities ShortSubmission, :create_on_contest, [], [nil]
-    create_list(:short_submission, 5, contest: @c)
-    ss_hash = Hash[@c.short_problem.map { |s| [s.id, s.id] }]
+    create_list(:short_problem, 5, contest: @c).each do |sp|
+      create(:short_submission, short_problem: sp, user_contest: @uc)
+    end
+    ss_hash = Hash[@c.short_problems.map { |s| [s.id, s.id] }]
     post :create_on_contest, contest_id: @c.id, short_submission: ss_hash
     assert_redirected_to @c
 
@@ -24,8 +26,8 @@ class ShortSubmissionsControllerTest < ActionController::TestCase
   private
 
   def create_items
-    @ss = create(:short_submission)
-    @uc = @ss.user_contest
+    @uc = create(:user_contest, user: @user)
+    @ss = create(:short_submission, user_contest: @uc)
     @c = @uc.contest
   end
 end

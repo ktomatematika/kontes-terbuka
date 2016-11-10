@@ -46,6 +46,11 @@ class ShortProblemsControllerTest < ActionController::TestCase
     assert_equal flash[:notice], 'Short Problem terubah!'
   end
 
+  test 'update fail' do
+    patch :update, id: @sp.id, short_problem: { statement: '' }
+    assert_template :edit
+  end
+
   test 'destroy' do
     test_abilities @sp, :destroy, [nil, :panitia], [:problem_admin, :admin]
     delete :destroy, id: @sp.id

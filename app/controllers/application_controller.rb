@@ -73,6 +73,6 @@ class ApplicationController < ActionController::Base
   end
 
   def load_contest_from_contest_params
-    @contest ||= Contest.find params[:contest_id]
+    @contest ||= Contest.find_by id: params[:contest_id]
   end
 end

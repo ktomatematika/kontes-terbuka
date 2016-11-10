@@ -152,11 +152,8 @@ gem 'cancancan'
 gem 'rack-protection'
 # Adds hashes for passwords.
 gem 'bcrypt'
-
-group :development, :production do
-  # A recaptcha helper gem.
-  gem 'recaptcha', require: 'recaptcha/rails'
-end
+# A recaptcha helper gem.
+gem 'recaptcha', require: 'recaptcha/rails'
 
 group :development do
   # Security checkup

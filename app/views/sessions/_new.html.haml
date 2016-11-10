@@ -3,7 +3,7 @@
     = render 'users/sign_header', title: 'Masuk',
       subtitle: 'Belum punya akun?', link: 'Daftar.', anchor: '#register'
 
-    = form_tag login_path do
+    = form_tag login_users_path do
       .form-group.has-feedback
         = text_field_tag :username, params[:email], class: 'form-control',
           placeholder: 'Username/Email', autofocus: true
