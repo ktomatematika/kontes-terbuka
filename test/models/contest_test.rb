@@ -414,6 +414,14 @@ class ContestTest < ActiveSupport::TestCase
                  1
     assert_equal line.select { |j| j[:method_name] == :contest_ending }.count, 1
 
+    facebook = jobs.select { |j| j[:class] == 'FacebookPost' }
+    assert_equal facebook.select { |j| j[:method_name] == :contest_starting }.count,
+                 1
+    assert_equal facebook.select { |j| j[:method_name] == :contest_started }.count,
+                 1
+    assert_equal facebook.select { |j| j[:method_name] == :contest_ending }.count, 1
+    assert_equal facebook.select { |j| j[:method_name] == :feedback_ending }.count, 1
+
     job = jobs.select { |j| j[:method_name] == :jobs_on_feedback_time_end }
     assert_equal job.count, 1
     assert_in_delta job.first[:run_at], c.feedback_time, 5

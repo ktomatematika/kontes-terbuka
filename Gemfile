@@ -70,6 +70,8 @@ gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
 # Test coverage
 gem 'simplecov', require: false, group: :test
+# Facebook Graph API
+gem 'koala'
 
 group :development do
   # Annotates model with schema

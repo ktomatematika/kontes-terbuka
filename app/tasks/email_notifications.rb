@@ -21,7 +21,7 @@ class EmailNotifications
   def contest_started
     subject = 'Kontes sudah dimulai!'
     text = "#{@contest} sudah dimulai! Silakan membuka soalnya di " \
-    "#{contest_url @contest}"
+    "#{contest_url @contest}\n\nSelamat mengerjakan!"
     notif = Notification.find_by(event: 'contest_started')
     users = notif.users
 
@@ -63,7 +63,8 @@ class EmailNotifications
   def feedback_ending(time_text)
     subject = "Feedback kontes ditutup dalam waktu #{time_text}"
     text = "Hanya mengingatkan saja, waktu pengisian feedback #{@contest} " \
-      "ditutup #{time_text} lagi. Ingat, salah satu syarat mendapatkan " \
+      "ditutup #{time_text} lagi. Anda bisa mengisi feedback di " \
+      "#{contest_url @contest}\n\nIngat, salah satu syarat mendapatkan " \
       'sertifikat adalah mengisi feedback ini.'
     notif = Notification.find_by(event: 'feedback_ending', time_text: time_text)
     users = User.where(id: @contest.not_full_feedback_user_contests
