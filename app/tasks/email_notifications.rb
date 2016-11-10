@@ -48,7 +48,11 @@ class EmailNotifications
     text = "Hasil #{@contest} sudah keluar! Silakan cek di:\n " \
       "#{contest_url @contest}\n\nSelamat bagi yang mendapatkan penghargaan! " \
       'Jika Anda belum beruntung, jangan berkecil hati karena masih ada ' \
-      'kontes-kontes berikutnya.'
+      "kontes-kontes berikutnya.\n\nMengenai sertifikat, Anda perlu mengisi " \
+      'feedback kontes untuk mendapatkannya. Feedback ini bisa diisi di ' \
+      'halaman yang sama dengan hasil kontes. Anda perlu mendapatkan ' \
+      "setidaknya #{UserContest::CUTOFF_CERTIFICATE} poin untuk " \
+      'mendapatkan sertifikat.'
     notif = Notification.find_by(event: 'results_released')
     users = notif.users.joins(:contests).where('contests.id = ?', @contest.id)
 
