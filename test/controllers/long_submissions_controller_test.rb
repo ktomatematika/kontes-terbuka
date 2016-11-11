@@ -1,5 +1,5 @@
 require 'test_helper'
 
 class LongSubmissionsControllerTest < ActionController::TestCase
-  #TODO
+  # TODO
 end

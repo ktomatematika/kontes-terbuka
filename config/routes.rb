@@ -41,6 +41,13 @@ Rails.application.routes.draw do
                               defaults: { format: 'pdf' }
       get 'pdf', to: 'contests#download_pdf'
       get 'ms', to: 'contests#download_marking_scheme'
+      get 'marker', to: 'roles#assign_markers'
+    end
+
+    resources :user_contests, path: '/user-contests', only: [:new, :create] do
+      member do
+        post 'stop-nag', to: 'user_contests#stop_nag', as: 'stop_nag'
+      end
     end
 
     resources :short_problems, path: '/short-problems',
@@ -59,7 +66,6 @@ Rails.application.routes.draw do
     resources :long_problems, path: '/long-problems',
                               except: [:index, :new, :show] do
       member do
-        get 'marker', to: 'roles#assign_markers'
         post 'marker', to: 'roles#create_marker'
         delete 'marker', to: 'roles#remove_marker'
         get 'download', to: 'long_problems#download', as: 'download'
@@ -109,12 +115,6 @@ Rails.application.routes.draw do
         get '', to: 'feedback_answers#download_on_contest', as: ''
         post '', to: 'feedback_answers#create_on_contest'
       end
-    end
-  end
-
-  resources :user_contests, path: '/user-contests', only: [:new, :create] do
-    member do
-      post '/stop-nag/:id', to: 'user_contests#stop_nag', as: 'stop_nag'
     end
   end
 

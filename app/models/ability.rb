@@ -16,7 +16,7 @@ class Ability
     can [:submit, :destroy_submissions, :download], LongSubmission,
         user_contest_id: user.user_contests.pluck(:id)
     can :create_on_contest, ShortSubmission
-    can :stop_nag, UserContest, user: user
+    can [:new, :create, :stop_nag], UserContest, user: user
     can [:new_on_contest, :create_on_contest], FeedbackAnswer
     can [:edit_on_user, :flip], UserNotification
 
@@ -28,9 +28,8 @@ class Ability
          :process_change_notifications], User, id: user.id
 
     if user.has_role? :marking_manager
-      can [:assign_markers, :save_markers], Contest
       can [:mark_final, :start_mark_final, :download], LongProblem
-      can [:create_marker, :remove_marker], Role
+      can [:assign_markers, :create_marker, :remove_marker], Role
     end
 
     if user.has_role? :marker, :any

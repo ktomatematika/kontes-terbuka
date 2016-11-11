@@ -17,6 +17,7 @@ before_script:
   - psql -c 'create database kontes_terbuka_test;' -U postgres
   - cp config/database.yml.travis config/database.yml
   - cp config/initializers/line_targets.rb.default config/initializers/line_targets.rb
+  - cp .env.default .env
 script:
   - bundle exec rake
 after_script:
