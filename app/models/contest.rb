@@ -114,13 +114,27 @@ class Contest < ActiveRecord::Base
     ZipFileGenerator.new(reports_location, report_zip_location).write
   end
 
+  def compress_submissions
+    File.delete(submissions_zip_location) if File.file?(report_zip_location)
+    ZipFileGenerator.new(submissions_location, submissions_zip_location).write
+  end
+
   def report_zip_location
     reports_location + '.zip'
+  end
+
+  def submissions_zip_location
+    submissions_location + '.zip'
   end
 
   private
 
   def reports_location
     Rails.root.join('public', 'contest_files', 'reports', id.to_s).to_s
+  end
+
+  def submissions_location
+    Rails.root.join('public', 'contest_files', 'submissions',
+                    "kontes#{id}").to_s
   end
 end

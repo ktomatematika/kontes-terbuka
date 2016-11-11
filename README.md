@@ -63,8 +63,8 @@ ke `split`)
 Untuk import database dari daily dump yang sudah ada, masukkan file-file
 yang mau diimport ke folder `import` di rootterlebih dahulu. Kemudian:
 ```bash
-chmod u+x import.sh
-./import.sh
+chmod u+x scripts/import.sh
+./scripts/import.sh
 ```
 
 ## Install LaTeX di Vagrant
@@ -72,8 +72,8 @@ LaTeX diinstall oleh TeX Live dengan profile yang sudah disediakan. Installasi
 ini seminimal mungkin untuk menjalankan berbagai fungsi LaTeX yang diperlukan.
 Jalankan:
 ```bash
-chmod u+x tex.sh
-./tex.sh
+chmod u+x scripts/tex.sh
+./scripts/tex.sh
 ```
 
 ## Kontribusi

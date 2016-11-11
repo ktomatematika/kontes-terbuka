@@ -22,11 +22,6 @@ module ContestJobs
     Delayed::Job.where(queue: "contest_#{id}").destroy_all
   end
 
-  def do_if_not_time(run_at, object, method, *args)
-    return if Time.zone.now >= run_at
-    object.delay(run_at: run_at, queue: "contest_#{id}").__send__(method, *args)
-  end
-
   def prepare_emails
     e = EmailNotifications.new self
 
@@ -112,5 +107,10 @@ module ContestJobs
       CertificateManager.new(uc).run
     end
     Ajat.info "send_certificates|id:#{id}"
+  end
+
+  def do_if_not_time(run_at, object, method, *args)
+    return if Time.zone.now >= run_at
+    object.delay(run_at: run_at, queue: "contest_#{id}").__send__(method, *args)
   end
 end
