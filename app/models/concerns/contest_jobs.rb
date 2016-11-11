@@ -14,6 +14,7 @@ module ContestJobs
       delay(run_at: feedback_time,
             queue: "contest_#{id}").jobs_on_feedback_time_end
     end
+    backup_files
   end
 
   private
@@ -71,6 +72,10 @@ module ContestJobs
     award_points
     send_certificates
     FacebookPost.new(self).certificate_sent
+
+    c = ContestFileBackup.new
+    c.backup_misc 1
+    c.backup_submissions self, 1
   end
 
   def award_points
@@ -107,6 +112,23 @@ module ContestJobs
       CertificateManager.new(uc).run
     end
     Ajat.info "send_certificates|id:#{id}"
+  end
+
+  def backup_files
+    # Backup on end_time - 0, 2, 4, 6, 8, 10, 12 hours
+    7.times do |i|
+      do_if_not_time(end_time - (2 * i).hours, ContestFileBackup,
+                     backup_submissions, self)
+    end
+
+    # Backup on end_time - 1, 2, ... days until contest starts
+    day = 1
+    loop do
+      do_if_not_time(end_time - day.days, ContestFileBackup,
+                     backup_submissions, self)
+      day += 1
+      break if end_time - day.days <= start_time
+    end
   end
 
   def do_if_not_time(run_at, object, method, *args)
