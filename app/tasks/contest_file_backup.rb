@@ -1,25 +1,26 @@
 class ContestFileBackup
-  def backup_submissions(contest)
-    backup "submissions/kontes#{contest.id}", "kontes#{contest.id}/#{now}"
-    trim_submissions contest
+  def backup_submissions(contest, keep = 5)
+    backup "submissions/kontes#{contest.id}",
+      "submissions/kontes#{contest.id}/#{now}"
+    trim_submissions contest, keep
   end
 
-  def backup_misc
+  def backup_misc(keep = 3)
     folder = "misc/#{now}"
     backup 'reports', folder
     backup 'problems', folder
-    trim_misc
+    trim_misc keep
+  end
+
+  def trim_submissions(contest, number)
+    trim number, "gs://ktom-backup/files_backup/submissions/kontes#{contest.id}"
+  end
+
+  def trim_misc number
+    trim number, 'gs://ktom-backup/files_backup/misc/'
   end
 
   private
-
-  def trim_submissions(contest)
-    trim 30, "gs://ktom-backup/files_backup/submissions/kontes#{contest.id}"
-  end
-
-  def trim_misc
-    trim 3, 'gs://ktom-backup/files_backup/misc/'
-  end
 
   def backup(location, bucket_link)
     location = '/home/ktom/kontes-terbuka/shared/public/' \
