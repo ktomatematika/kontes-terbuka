@@ -1,7 +1,7 @@
 class ContestFileBackup
   def backup_submissions(contest, keep = 5)
     backup "submissions/kontes#{contest.id}",
-      "submissions/kontes#{contest.id}/#{now}"
+           "submissions/kontes#{contest.id}/#{now}"
     trim_submissions contest, keep
   end
 
@@ -16,7 +16,7 @@ class ContestFileBackup
     trim number, "gs://ktom-backup/files_backup/submissions/kontes#{contest.id}"
   end
 
-  def trim_misc number
+  def trim_misc(number)
     trim number, 'gs://ktom-backup/files_backup/misc/'
   end
 
