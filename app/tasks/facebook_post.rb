@@ -5,7 +5,7 @@ class FacebookPost
   def initialize(ctst)
     @contest = ctst
     @graph = Koala::Facebook::API.new ENV['FACEBOOK_ACCESS_TOKEN'],
-      ENV['FACEBOOK_SECRET']
+                                      ENV['FACEBOOK_SECRET']
   end
 
   def contest_starting(time_text)
@@ -55,7 +55,7 @@ class FacebookPost
 
   private
 
-  def post_to_facebook message
+  def post_to_facebook(message)
     message = "Salam sejahtera,\n\n#{message}"
     @graph.put_object ENV['FACEBOOK_PAGE_ID'], 'feed', message: message
   end
