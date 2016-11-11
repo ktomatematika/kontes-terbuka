@@ -115,17 +115,17 @@ module ContestJobs
   end
 
   def backup_files
+    c = ContestFileBackup.new
+
     # Backup on end_time - 0, 2, 4, 6, 8, 10, 12 hours
     7.times do |i|
-      do_if_not_time(end_time - (2 * i).hours, ContestFileBackup,
-                     backup_submissions, self)
+      do_if_not_time(end_time - (2 * i).hours, c, :backup_submissions, self)
     end
 
     # Backup on end_time - 1, 2, ... days until contest starts
     day = 1
     loop do
-      do_if_not_time(end_time - day.days, ContestFileBackup,
-                     backup_submissions, self)
+      do_if_not_time(end_time - day.days, c, :backup_submissions, self)
       day += 1
       break if end_time - day.days <= start_time
     end
