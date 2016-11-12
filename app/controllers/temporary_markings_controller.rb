@@ -1,16 +1,21 @@
 class TemporaryMarkingsController < ApplicationController
+  load_and_authorize_resource :long_problem
+
   def new_on_long_problem
-    if (!current_user.has_role?(:marker, @long_problem) ||
-        @long_problem.start_mark_final) && can?(:mark_final, @long_problem)
-      redirect_to mark_final_path(@long_problem)
+    if !current_user.has_role?(:marker, @long_problem) ||
+       @long_problem.start_mark_final
+      redirect_to long_problem_temporary_markings_path(
+        long_problem_id: @long_problem.id
+      )
     else
-      authorize! :mark_solo, @long_problem
-      mark
-      @markers = @markers.where.not(id: current_user.id)
+      @contest = @long_problem.contest
+      @long_submissions = @long_problem.long_submissions
+      @markers = User.with_role(:marker, @long_problem)
+                     .where.not(id: current_user.id)
     end
   end
 
-  def create_on_long_problem
+  def modify_on_long_problem
     params[:marking].each do |id, val|
       mark = val[:mark]
       tags = val[:tags]
@@ -23,12 +28,8 @@ class TemporaryMarkingsController < ApplicationController
                                              user: current_user)
                       .update(update_hash)
     end
-    redirect_to mark_solo_path(params[:id]), notice: 'Nilai berhasil diupdate!'
-  end
-
-  private
-
-  def load_long_problem
-    @long_problem = LongProblem.find params[:long_problem_id]
+    redirect_to long_problem_temporary_markings_path(
+      long_problem_id: @long_problem.id
+    ), notice: 'Nilai berhasil diupdate!'
   end
 end

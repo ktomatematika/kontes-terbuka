@@ -12,8 +12,8 @@ class LongProblemsControllerTest < ActionController::TestCase
                  "/long-problems/#{@lp.id}"
     assert_equal destroy_on_contest_contest_long_problems_path(@c),
                  "/contests/#{@c.to_param}/long-problems/destroy-on-contest"
-    assert_equal download_long_problem_path(@lp),
-                 "/long-problems/#{@lp.id}/download"
+    assert_equal download_submissions_long_problem_path(@lp),
+                 "/long-problems/#{@lp.id}/download-submissions"
     assert_equal autofill_long_problem_path(@lp),
                  "/long-problems/#{@lp.id}/autofill"
     assert_equal upload_report_long_problem_path(@lp),
@@ -57,14 +57,14 @@ class LongProblemsControllerTest < ActionController::TestCase
     assert_nil LongProblem.find_by id: @lp.id
   end
 
-  test 'download' do
+  test 'download_submissions' do
     create(:long_submission, long_problem: @lp)
 
     test_abilities @lp, :download,
                    [nil, :panitia, :problem_admin,
                     [:marker, create(:long_problem)]],
                    [[:marker, @lp], :marking_manager, :admin]
-    get :download, id: @lp.id
+    get :download_submissions, id: @lp.id
     assert_response 200
     assert_equal @response.content_type, 'application/zip'
     assert @response.header['Content-Disposition'].include?(

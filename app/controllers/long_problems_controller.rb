@@ -31,7 +31,7 @@ class LongProblemsController < ApplicationController
     redirect_to admin_contest_path(@contest)
   end
 
-  def download
+  def download_submissions
     @long_problem.compress_submissions
     send_file @long_problem.zip_location
   end

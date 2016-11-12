@@ -1,4 +1,6 @@
 class ShortSubmissionsController < ApplicationController
+  authorize_resource
+
   def create_on_contest
     UserContest.find_by(user: current_user, contest: @contest)
                .create_short_submissions(short_submission_params)

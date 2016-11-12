@@ -68,12 +68,10 @@ Rails.application.routes.draw do
       member do
         post 'marker', to: 'roles#create_marker'
         delete 'marker', to: 'roles#remove_marker'
-        get 'download', to: 'long_problems#download', as: 'download'
-        patch 'autofill', to: 'long_problems#autofill', as: 'autofill'
-        post 'upload-report', to: 'long_problems#upload_report',
-                              as: 'upload_report'
-        patch 'start-mark-final', to: 'long_problems#start_mark_final',
-                                  as: 'start_mark_final'
+        get 'download-submissions', to: 'long_problems#download_submissions'
+        patch 'autofill', to: 'long_problems#autofill'
+        post 'upload-report', to: 'long_problems#upload_report'
+        patch 'start-mark-final', to: 'long_problems#start_mark_final'
       end
 
       collection do
@@ -83,7 +81,7 @@ Rails.application.routes.draw do
       resources :temporary_markings, path: 'temporary-markings', only: [] do
         collection do
           get '', to: 'temporary_markings#new_on_long_problem', as: ''
-          post '', to: 'temporary_markings#create_on_long_problem'
+          post '', to: 'temporary_markings#modify_on_long_problem'
         end
       end
 

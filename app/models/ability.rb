@@ -33,7 +33,8 @@ class Ability
     end
 
     if user.has_role? :marker, :any
-      can [:download, :submit_temporary_markings, :autofill, :upload_report],
+      can [:download, :autofill, :upload_report, :new_on_long_problem,
+           :modify_on_long_problem, :mark],
           LongProblem, id: LongProblem.with_role(:marker, user).pluck(:id)
       can :download_marking_scheme, Contest,
           id: LongProblem.with_role(:marker, user).pluck(:contest_id)
