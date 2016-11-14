@@ -11,7 +11,7 @@ class Ability
     can [:show_rules, :accept_rules], Contest,
         id: Contest.where('start_time <= ? AND ? <= end_time',
                           Time.zone.now, Time.zone.now).pluck(:id)
-    can [:download_pdf, :give_feedback, :feedback_submit], Contest,
+    can [:download_problem_pdf, :give_feedback, :feedback_submit], Contest,
         id: UserContest.where(user: user).pluck(:contest_id)
     can [:submit, :destroy_submissions, :download], LongSubmission,
         user_contest_id: user.user_contests.pluck(:id)
@@ -42,7 +42,8 @@ class Ability
     end
 
     if user.has_role? :panitia
-      can [:preview, :summary, :view_all, :admin], Contest
+      can [:preview, :summary, :view_all, :admin, :download_marking_scheme,
+           :download_problem_pdf, :download_results], Contest
       can [:see_full_index, :see_full], User
       can :download_on_contest, FeedbackAnswer
       can [:admin, :profile], Application

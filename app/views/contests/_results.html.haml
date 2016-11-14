@@ -2,7 +2,7 @@
   %h2 Leaderboard
   - if can? :download_results, @contest
     = link_to 'Download Hasil Lengkap',
-      contest_download_results_path(@contest),
+      results_contest_path(@contest),
       class: 'btn btn-lg'
   .table-responsive
     %table.table.table-hover.table-bordered.contest-results

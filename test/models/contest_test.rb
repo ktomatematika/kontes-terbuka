@@ -38,7 +38,6 @@
 # rubocop:enable Metrics/LineLength
 
 require 'test_helper'
-# rubocop:disable Metrics/BlockLength
 
 class ContestTest < ActiveSupport::TestCase
   test 'contest can be saved' do

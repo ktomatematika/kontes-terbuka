@@ -1,4 +1,3 @@
-# rubocop:disable Metrics/BlockLength
 require_relative 'support'
 
 FactoryGirl.define do

@@ -1,5 +1,6 @@
 class ContestsController < ApplicationController
-  load_and_authorize_resource
+  load_resource
+  authorize_resource except: :update
 
   def admin
     grab_problems
@@ -42,25 +43,25 @@ class ContestsController < ApplicationController
   def index
   end
 
-  def edit
-  end
-
   def update
     if can? :update, @contest
       if @contest.update(contest_params)
         Ajat.info "contest_updated|id:#{@contest.id}"
-        redirect_to @contest, notice: "#{@contest} berhasil diubah."
+        redirect_to contest_path(@contest), notice: "#{@contest} berhasil diubah."
       else
         Ajat.warn "contest_update_fail|#{@contest.errors.full_messages}"
-        redirect_to @contest, alert: "#{@contest} gagal diubah!"
+        redirect_to admin_contest_path(@contest),
+                    alert: "#{@contest} gagal diubah!"
       end
     elsif can? :upload_ms, @contest
       if @contest.update(marking_scheme_params)
         Ajat.info "marking_scheme_uploaded|id:#{@contest.id}"
-        redirect_to @contest, notice: "#{@contest} berhasil diubah."
+        redirect_to contest_path(@contest),
+                    notice: "#{@contest} berhasil diubah."
       else
         Ajat.warn "marking_scheme_upload_fail|#{@contest.errors.full_messages}"
-        redirect_to @contest, alert: "#{@contest} gagal diubah!"
+        redirect_to admin_contest_path(@contest),
+                    alert: "#{@contest} gagal diubah!"
       end
     else
       raise CanCan::AccessDenied.new('Cannot update', :update, @contest)
@@ -103,20 +104,6 @@ class ContestsController < ApplicationController
       format.html
       format.pdf { render pdf: "Hasil #{@contest}", orientation: 'Landscape' }
     end
-  end
-
-  def download_feedback
-    @feedback_questions = @contest.feedback_questions.order(:id)
-    @feedback_matrix = @contest.feedback_answers_matrix
-    respond_to do |format|
-      format.html
-      format.csv do
-        headers['Content-Disposition'] =
-          "attachment; filename=\"Feedback #{@contest}\".csv"
-        headers['Content-Type'] ||= 'text/csv'
-      end
-    end
-    Ajat.info "feedback_downloaded|contest_id:#{@contest.id}"
   end
 
   private
