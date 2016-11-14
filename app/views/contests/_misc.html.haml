@@ -1,10 +1,10 @@
 %h2 Macam-macam
-= link_to 'Download feedback', contest_download_feedback_path,
+= link_to 'Download feedback', feedback_contest_path,
   class: 'btn' if can? :download_feedback, Contest
 
 - if can? :read_problems, Contest
   %h3 Masukkan Problems
-  = form_tag contest_read_problems_path, multipart: true,
+  = form_tag read_problems_contest_path, multipart: true,
     class: 'form-horizontal' do
     .form-group
       = label_tag :problem_tex, 'Soal TeX', class: 'col-sm-4'

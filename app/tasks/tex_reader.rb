@@ -6,9 +6,10 @@ class TexReader
 
   attr_accessor :contest
   attr_accessor :answers
-  def initialize(ctst, answers)
+  def initialize(ctst, answers, tex)
     @contest = ctst
     @answers = answers
+    @contest.update(problem_tex: tex)
   end
 
   def run

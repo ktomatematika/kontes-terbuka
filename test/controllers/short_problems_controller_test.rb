@@ -10,8 +10,8 @@ class ShortProblemsControllerTest < ActionController::TestCase
                  "/short-problems/#{@sp.id}/edit"
     assert_equal short_problem_path(@sp),
                  "/short-problems/#{@sp.id}"
-    assert_equal destroy_on_contest_contest_short_problems_path(@c),
-                 "/contests/#{@c.to_param}/short-problems/destroy-on-contest"
+    assert_equal contest_short_problems_path(@c),
+                 "/contests/#{@c.to_param}/short-problems"
   end
 
   test 'create' do

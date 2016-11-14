@@ -19,18 +19,15 @@
         klik 'buang' di bawah dan lakukan pengunggahan ulang.
         %div
           = link_to 'Lihat',
-            contest_long_submission_download_path(contest_id: @contest.id,
-            long_submission_id: ls.id), class: 'btn'
+            contest_long_submission_download_path(@contest, ls), class: 'btn'
           = link_to 'Buang',
-            contest_long_submission_destroy_subs_path(contest_id: @contest.id,
-            long_submission_id: ls.id),
+            contest_long_submission_destroy_subs_path(@contest, ls),
             method: :delete, class: 'btn',
             data: { confirm: 'Anda yakin ingin membuang jawaban?' }
 
     - else
       = nested_form_for ls,
-        url: contest_long_submission_submit_path(contest_id: @contest.id,
-        long_submission_id: ls.id),
+        url: contest_long_submission_submit_path(@contest, ls),
         html: { multipart: true }, method: :post do |f|
         = hidden_field_tag 'contest_id', @contest.id
         = f.fields_for :submission_pages do |page_form|

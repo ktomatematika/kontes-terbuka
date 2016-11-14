@@ -10,10 +10,10 @@ class LongProblemsControllerTest < ActionController::TestCase
                  "/long-problems/#{@lp.id}/edit"
     assert_equal long_problem_path(@lp),
                  "/long-problems/#{@lp.id}"
-    assert_equal destroy_on_contest_contest_long_problems_path(@c),
-                 "/contests/#{@c.to_param}/long-problems/destroy-on-contest"
-    assert_equal download_submissions_long_problem_path(@lp),
-                 "/long-problems/#{@lp.id}/download-submissions"
+    assert_equal contest_long_problems_path(@c),
+                 "/contests/#{@c.to_param}/long-problems"
+    assert_equal submissions_long_problem_path(@lp),
+                 "/long-problems/#{@lp.id}/submissions"
     assert_equal autofill_long_problem_path(@lp),
                  "/long-problems/#{@lp.id}/autofill"
     assert_equal upload_report_long_problem_path(@lp),

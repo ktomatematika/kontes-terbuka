@@ -1,6 +1,5 @@
 class ContestsController < ApplicationController
   load_and_authorize_resource
-  skip_authorize_resource only: :update
 
   def admin
     grab_problems
@@ -15,7 +14,7 @@ class ContestsController < ApplicationController
   def create
     if @contest.save
       Ajat.info "contest_created|id:#{@contest.id}"
-      redirect_to @contest, notice: "#{@contest} berhasil dibuat!"
+      redirect_to contest_path(@contest), notice: "#{@contest} berhasil dibuat!"
     else
       Ajat.warn "contest_created_fail|#{@contest.errors.full_messages}"
       render 'new', alert: 'Kontes gagal dibuat!'
@@ -23,12 +22,12 @@ class ContestsController < ApplicationController
   end
 
   def show
-    @mask = false
-
     if @contest.currently_in_contest?
-      @user_contest = @contest.user_contests.find_by(user: current_user)
-      redirect_to contest_rules_path(params[:id]) if @user_contest.nil?
+      @user_contest = UserContest.find_by(contest: @contest, user: current_user)
+      redirect_to new_contest_user_contest_path(@contest) if @user_contest.nil?
     else
+      @mask = false # agak gimanaaa gitu
+
       @user_contests = @contest.results(user: :roles) # this is a big query
       @user_contest = @user_contests.find { |uc| uc.user == current_user }
 
@@ -74,7 +73,7 @@ class ContestsController < ApplicationController
     redirect_to contests_path, notice: 'Kontes berhasil dihilangkan!'
   end
 
-  def download_pdf
+  def download_problem_pdf
     send_file @contest.problem_pdf.path
   end
 
@@ -83,8 +82,8 @@ class ContestsController < ApplicationController
   end
 
   def read_problems
-    @contest.update(problem_tex: params[:problem_tex])
-    TexReader.new(@contest, params[:answers].split(',')).run
+    TexReader.new(@contest, params[:answers].split(','),
+                  params[:problem_tex]).run
     redirect_to admin_contest_path(@contest), notice: 'TeX berhasil dibaca!'
   end
 
@@ -104,6 +103,20 @@ class ContestsController < ApplicationController
       format.html
       format.pdf { render pdf: "Hasil #{@contest}", orientation: 'Landscape' }
     end
+  end
+
+  def download_feedback
+    @feedback_questions = @contest.feedback_questions.order(:id)
+    @feedback_matrix = @contest.feedback_answers_matrix
+    respond_to do |format|
+      format.html
+      format.csv do
+        headers['Content-Disposition'] =
+          "attachment; filename=\"Feedback #{@contest}\".csv"
+        headers['Content-Type'] ||= 'text/csv'
+      end
+    end
+    Ajat.info "feedback_downloaded|contest_id:#{@contest.id}"
   end
 
   private

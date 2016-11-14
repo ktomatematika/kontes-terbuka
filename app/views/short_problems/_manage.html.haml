@@ -23,7 +23,8 @@
         %td= link_to 'Edit', [:edit, @contest, sp]
         %td= link_to 'Hapus', [@contest, sp], method: :delete,
           data: { confirm: 'Apakah Anda yakin?' }
-  = link_to 'Hapus semua', contest_destroy_short_probs_path,
+  = link_to 'Hapus semua',
+    contest_short_problems_path(@contest),
     data: { confirm: 'Apakah Anda yakin?' }, method: :delete, class: 'btn'
 
 %section

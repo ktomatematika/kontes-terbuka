@@ -37,23 +37,24 @@ Rails.application.routes.draw do
       get 'admin', to: 'contests#admin'
       get 'summary', to: 'contests#summary'
       post 'read-problems', to: 'contests#read_problems'
-      get 'download-results', to: 'contests#download_results',
-                              defaults: { format: 'pdf' }
-      get 'pdf', to: 'contests#download_pdf'
+      get 'results', to: 'contests#download_results',
+                     defaults: { format: 'pdf' }
+      get 'problem-pdf', to: 'contests#download_problem_pdf'
       get 'ms', to: 'contests#download_marking_scheme'
+      get 'feedback', to: 'contests#download_feedback'
       get 'marker', to: 'roles#assign_markers'
     end
 
     resources :user_contests, path: '/user-contests', only: [:new, :create] do
       member do
-        post 'stop-nag', to: 'user_contests#stop_nag', as: 'stop_nag'
+        post 'stop-nag', to: 'user_contests#stop_nag'
       end
     end
 
     resources :short_problems, path: '/short-problems',
                                except: [:index, :new, :show] do
       collection do
-        delete 'destroy-on-contest', to: 'short_problems#destroy_on_contest'
+        delete '', to: 'short_problems#destroy_on_contest', as: ''
       end
     end
 
@@ -68,14 +69,14 @@ Rails.application.routes.draw do
       member do
         post 'marker', to: 'roles#create_marker'
         delete 'marker', to: 'roles#remove_marker'
-        get 'download-submissions', to: 'long_problems#download_submissions'
+        get 'submissions', to: 'long_problems#download_submissions'
         patch 'autofill', to: 'long_problems#autofill'
         post 'upload-report', to: 'long_problems#upload_report'
         patch 'start-mark-final', to: 'long_problems#start_mark_final'
       end
 
       collection do
-        delete 'destroy-on-contest', to: 'long_problems#destroy_on_contest'
+        delete '', to: 'long_problems#destroy_on_contest', as: ''
       end
 
       resources :temporary_markings, path: 'temporary-markings', only: [] do
@@ -103,7 +104,7 @@ Rails.application.routes.draw do
                                    except: [:index, :new, :show] do
       collection do
         post 'copy', to: 'feedback_questions#copy_across_contests'
-        delete '', to: 'feedback_questions#destroy_on_contest'
+        delete '', to: 'feedback_questions#destroy_on_contest', as: ''
       end
     end
 
@@ -132,15 +133,6 @@ Rails.application.routes.draw do
 
   post '/line-bot', to: 'line#callback'
   post '/travis', to: 'travis#pass'
-
-  namespace :ktom do
-    get 'soal', to: redirect('https://docs.google.com/document/d/' \
-    '15jvs6JbssVYYcEVWi1W_p6teR1AJ5op-0R6qg1Ir-lQ')
-    get 'prod', to: redirect('https://docs.google.com/document/d/' \
-    '1gmxPLbdkTdUtR6I5dKhadZ8lGTdzwx9qvUEn49JQAug')
-    get 'produksi', to: redirect('https://docs.google.com/document/d/' \
-    '1gmxPLbdkTdUtR6I5dKhadZ8lGTdzwx9qvUEn49JQAug')
-  end
 
   match '*path', to: 'errors#error_4xx', via: :all
 end
