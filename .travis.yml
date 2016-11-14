@@ -14,6 +14,7 @@ notifications:
     on_start: always
 
 before_script:
+  - ./tex.sh
   - psql -c 'create database kontes_terbuka_test;' -U postgres
   - cp config/database.yml.travis config/database.yml
   - cp config/initializers/line_targets.rb.default config/initializers/line_targets.rb
