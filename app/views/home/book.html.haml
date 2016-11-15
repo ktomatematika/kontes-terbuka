@@ -1,4 +1,4 @@
-.container
+.container.text-justify
   %h1 Buku Kontes Terbuka Olimpiade Matematika
   %p
     Mau belajar olimpiade matematika tapi ga tau mau mulai dari mana?
@@ -22,12 +22,22 @@
   %p Jadi, tunggu apa lagi? Ayok beli buku kami!
 
   .row#buku-buku
-    %a.col-sm-4{ href: 'http://bit.ly/ktom-buku-1' }
-      = image_tag 'buku/buku1.png', alt: 'Buku KTOM 1',
-        class: 'img-responsive center-block', id: 'img-buku-ktom'
-      Buku KTO Matematika 1<br>
-      Soal dan Solusi Juni - Desember 2015
+    %a.col-sm-4.book-col{ href: 'http://bit.ly/ktom-buku-1', target: '_blank' }
+      .book-container
+        = image_tag 'buku/buku1.png', alt: 'Buku KTOM 1',
+          class: 'img-responsive center-block img-buku-ktom'
+        Buku KTO Matematika 1<br>
+        Soal dan Solusi Juni - Desember 2015
+    %a.col-sm-4.book-col{ href: 'http://bit.ly/ktom-buku-2', target: '_blank' }
+      .book-container
+        = image_tag 'buku/buku2.png', alt: 'Buku KTOM 2',
+          class: 'img-responsive center-block img-buku-ktom'
+        Buku KTO Matematika 2<br>
+        Soal dan Solusi Januari - Juni 2016<br>
+        Beserta Soal dan Solusi OSK, OSP, OSN SMA 2016
 
   %p
-    Anda juga bisa SMS ke Satria Stanza Pramayoga di +6281335482377
-    untuk memesan buku kami.
+    Anda juga bisa menghubungi Satria Stanza Pramayoga dengan:
+    %ul
+      %li SMS ke +6281335482377
+      %li Whatsapp/LINE ke +628884803447
