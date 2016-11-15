@@ -86,14 +86,15 @@ Rails.application.routes.draw do
        to: 'long_problems#submit_final_markings', as: :submit_final_markings
   get '/mark-final/:id', to: 'long_problems#mark_final', as: :mark_final
 
-  get '/home', to: 'home#index'
-  get '/faq', to: 'home#faq'
-  get '/book', to: 'home#book'
-  get '/donate', to: 'home#donate'
-  get '/about', to: 'home#about'
-  get '/privacy', to: 'home#privacy'
-  get '/terms', to: 'home#terms'
-  get '/contact', to: 'home#contact'
+  %w(home rumah utama).each { |r| get "/#{r}", to: 'home#index' }
+  %w(faq faqs pertanyaan).each { |r| get "/#{r}", to: 'home#faq' }
+  %w(book books buku).each { |r| get "/#{r}", to: 'home#book' }
+  %w(donate donasi sumbang).each { |r| get "/#{r}", to: 'home#donate' }
+  %w(about tentang).each { |r| get "/#{r}", to: 'home#about' }
+  %w(privacy privasi).each { |r| get "/#{r}", to: 'home#privacy' }
+  %w(terms syarat ketentuan).each { |r| get "/#{r}", to: 'home#terms' }
+  %w(contact kontak hubungi).each { |r| get "/#{r}", to: 'home#contact' }
+
   get '/penguasa', to: 'home#admin', as: :admin
   post '/masq', to: 'home#masq'
   delete '/masq', to: 'home#unmasq'
