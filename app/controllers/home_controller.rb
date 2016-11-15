@@ -21,6 +21,8 @@ class HomeController < ApplicationController
     end
 
     @panitia = User.with_role(:panitia).order(:username)
+
+    @referrers = Referrer.all
   end
 
   def about
