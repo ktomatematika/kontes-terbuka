@@ -29,19 +29,16 @@
                 #{link_to 'FAQ', faq_path} kami berisi banyak informasi mengenai
                 kontes-kontes kami.
               %p
-                Soal-soal kontes sebelumnya bisa diperoleh dari
-                %a{ href: 'http://olimpiade.org/discussions/main-topic/13/', target: '_blank' }
-                  link ini.
-              %p
                 Anda juga bisa #{link_to 'membeli buku kami', book_path}
                 yang berisi kumpulan soal, solusi, maupun tips dan trik
                 olimpiade matematika!
-              = image_tag 'buku/buku1.png', alt: 'Buku KTOM 1',
-                class: 'img-responsive center-block', id: 'img-buku-ktom'
+              = image_tag 'buku/buku2.png', alt: 'Buku KTOM 2',
+                class: 'img-buku-ktom img-responsive center-block'
 
           .col-md-6.col-md-pull-6
             %section.home-section#prev-contests
               %h2 Kontes-kontes sebelumnya
+              Soal-soal kontes sebelumnya bisa diperoleh di sini!
               - @prev_contests.each do |c|
                 %h5= link_to c.name, c
               %p= link_to 'Daftar kontes', contests_path
@@ -57,6 +54,6 @@
           %section.home-section#iklan-lomba
             %h2 Kontes Tersponsori
             %h3#judul-iklan
-            = image_tag 'sponsor.png', alt: 'OSN',
+            = image_tag 'sponsor.png',
               class: 'img-responsive center-block', id: 'img-promo-kontes'
             %span#desc-iklan

@@ -25,6 +25,8 @@ end
   Color.find_or_create_by(name: color)
 end
 
+Referrer.find_or_create_by(name: 'Lainnya')
+
 ['Facebook Page KTO Matematika (fb.com/KTOMatematika)',
  'Grup Facebook OSN MATEMATIKA', 'OA LINE KTO Matematika (@ktom)',
  'OA LINE Q&A Math', 'Forum olimpiade.org', 'Teman', 'Guru sekolah',
