@@ -10,10 +10,13 @@
         %tr
           %th Peringkat
           %th Username
-          - unless @short_problems.empty?
+          - unless @short_problems.empty? || @long_problems.empty?
             %th Bagian A
           - @long_problems.each do |lp|
-            %th Bagian B no. #{lp.problem_no}
+            - if @short_problems.empty?
+              %th No. #{lp.problem_no}
+            - else
+              %th Bagian B no. #{lp.problem_no}
           %th Total
           %th Penghargaan
 
