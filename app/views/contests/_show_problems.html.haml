@@ -3,10 +3,12 @@
   .btn#show-all-problems Tampilkan
 
 #all-problems
+  %h4 Bagian A: Isian
   - @short_problems.each do |prob|
     %h5.problem_no No. #{prob.problem_no}
     = latex_and_markdown :div, prob.statement
 
+  %h4 Bagian B: Esai
   - @long_problems.each do |prob|
     %h5.problem_no No. #{prob.problem_no}
     = latex_and_markdown :div, prob.statement
