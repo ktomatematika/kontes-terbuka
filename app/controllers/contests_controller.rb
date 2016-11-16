@@ -146,6 +146,9 @@ class ContestsController < ApplicationController
     authorize! :download_pdf, contest
 
     send_file contest.problem_pdf.path
+  rescue Errno::ENOENT
+    redirect_to Contest.find(params[:contest_id]), alert: 'File kontes PDF ' \
+      'tidak ada! Kontak admin.'
   end
 
   def download_marking_scheme
@@ -153,6 +156,9 @@ class ContestsController < ApplicationController
     authorize! :download_marking_scheme, contest
 
     send_file contest.marking_scheme.path
+  rescue Errno::ENOENT
+    redirect_to Contest.find(params[:contest_id]), alert: 'Marking Scheme ' \
+      'tidak ada! Kontak admin.'
   end
 
   def download_reports
@@ -161,6 +167,9 @@ class ContestsController < ApplicationController
 
     contest.compress_reports
     send_file contest.report_zip_location
+  rescue Errno::ENOENT
+    redirect_to Contest.find(params[:contest_id]), alert: 'Laporan tidak ' \
+      'bisa didownload! Kontak admin.'
   end
 
   def download_feedback
