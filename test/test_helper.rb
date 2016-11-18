@@ -28,7 +28,6 @@ module ActiveSupport
     end
 
     def test_abilities(model_object, method, bad_roles, good_roles)
-      user = create(:user)
       good_roles.each do |r|
         user = create(:user, role: r)
         ability = Ability.new user

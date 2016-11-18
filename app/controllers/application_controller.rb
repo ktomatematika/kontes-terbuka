@@ -46,7 +46,7 @@ class ApplicationController < ActionController::Base
 
   def require_login
     return if current_user
-    redirect_to login_path(redirect: request.original_fullpath),
+    redirect_to login_users_path(redirect: request.original_fullpath),
                 notice: 'Anda perlu masuk terlebih dahulu.'
   end
 
