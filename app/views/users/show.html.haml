@@ -5,4 +5,4 @@
       = render 'show_user_info'
     .col-sm-7
       = render 'show_history'
-      = render 'show_transactions' if can? :see_full, @user
+      = render 'show_transactions' if can? :show_full, @user

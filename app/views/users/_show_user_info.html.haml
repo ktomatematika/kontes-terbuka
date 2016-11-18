@@ -1,6 +1,6 @@
 %h2 Info
-%p= "Nama lengkap: #{@user.fullname}" if can? :see_full, @user
-%p= "Email: #{@user.email}" if can? :see_full, @user
+%p= "Nama lengkap: #{@user.fullname}" if can? :show_full, @user
+%p= "Email: #{@user.email}" if can? :show_full, @user
 %p Provinsi: #{@user.province}
 %p Status: #{@user.status}
 %p Sekolah/institusi: #{@user.school}
@@ -10,6 +10,6 @@
 - elsif can? :mini_edit, @user
   = render 'mini_edit'
 
-- if can? :see_full, @user
+- if can? :show_full, @user
   %p #{@user.point} #{point_image}
   /= link_to 'Pasar', market_items_path, class: 'btn'

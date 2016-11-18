@@ -47,7 +47,8 @@ class ContestsController < ApplicationController
     if can? :update, @contest
       if @contest.update(contest_params)
         Ajat.info "contest_updated|id:#{@contest.id}"
-        redirect_to contest_path(@contest), notice: "#{@contest} berhasil diubah."
+        redirect_to contest_path(@contest), notice: "#{@contest} berhasil " \
+          'diubah.'
       else
         Ajat.warn "contest_update_fail|#{@contest.errors.full_messages}"
         redirect_to admin_contest_path(@contest),

@@ -52,6 +52,14 @@ class User < ActiveRecord::Base
 
   before_validation do
     encrypt_password unless password.nil?
+
+    # Rollback if province/status is nil.
+    # Province/status can only be nil if the corresponding object is deleted
+    if province_id.nil? || status_id.nil?
+      errors.add(:province, 'cannot be nil on create') if province_id.nil?
+      errors.add(:status, 'cannot be nil on create') if status_id.nil?
+      false
+    end
   end
 
   before_save do

@@ -23,7 +23,7 @@ class Ability
     # User related
     can :show, User, enabled: true
     can :index, User
-    can [:see_full, :mini_edit, :mini_update, :change_password,
+    can [:show_full, :mini_edit, :mini_update, :change_password,
          :process_change_password, :change_notifications,
          :process_change_notifications], User, id: user.id
 
@@ -44,12 +44,14 @@ class Ability
     if user.has_role? :panitia
       can [:preview, :summary, :view_all, :admin, :download_marking_scheme,
            :download_problem_pdf, :download_results], Contest
-      can [:see_full_index, :see_full], User
+      can [:index_full, :show_full, :show], User
       can :download_on_contest, FeedbackAnswer
       can [:admin, :profile], Application
     end
 
-    can [:edit, :update, :destroy], User if user.has_role? :user_admin
+    if user.has_role? :user_admin
+      can [:edit, :update, :destroy, :mini_edit, :mini_update], User
+    end
 
     if user.has_role? :problem_admin
       can [:admin, :read_problems, :destroy_short_probs,
