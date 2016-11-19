@@ -13,17 +13,21 @@ class SessionsController < ApplicationController
     user = User.get_user params[:username]
     if user.nil?
       # Wrong username/email
-      flash[:alert] = 'Username atau email Anda salah.'
+      flash.now[:alert] = 'Username atau email Anda salah.'
       Ajat.info "no_username|user:#{params[:username]}"
+    elsif user.tries >= User::MAX_TRIES
+      flash.now[:alert] = 'Anda sudah terlalu banyak mencoba ' \
+        'dan perlu mereset password. Silakan cek link di email Anda.'
+      Ajat.warn "too_many_tries|tries:#{user.tries}|user:#{params[:username]}"
     elsif !user.enabled
       # User is not verified
-      flash[:alert] = 'Anda perlu melakukan verifikasi terlebih dahulu. ' \
+      flash.now[:alert] = 'Anda perlu melakukan verifikasi terlebih dahulu. ' \
         'Cek email Anda untuk linknya.'
       Ajat.info "not_enabled_login|user:#{params[:username]}"
     elsif !user.verification.nil?
       # User is in the process of reseting password
-      flash[:alert] = 'Anda perlu mereset password Anda. Cek link di email ' \
-        'Anda.'
+      flash.now[:alert] = 'Anda perlu mereset password Anda. Cek link di ' \
+        'email Anda.'
       Ajat.info "reset_pass_login|user:#{params[:username]}"
     elsif !user.authenticate(params[:password])
       # Wrong password
@@ -33,11 +37,11 @@ class SessionsController < ApplicationController
       if user.tries >= User::MAX_TRIES
         # Too many tries
         user.forgot_password_process
-        flash[:notice] = 'Anda sudah terlalu banyak mencoba ' \
+        flash.now[:alert] = 'Anda sudah terlalu banyak mencoba ' \
           'dan perlu mereset password. Silakan cek link di email Anda.'
         Ajat.warn "too_many_tries|tries:#{user.tries}|user:#{params[:username]}"
       else
-        flash[:alert] = 'Password Anda salah. Ini percobaan ' \
+        flash.now[:alert] = 'Password Anda salah. Ini percobaan ' \
           "ke-#{user.tries} dari #{User::MAX_TRIES} Anda. Setelah itu, Anda " \
           'perlu mereset password.'
         Ajat.info "wrong_pass|tries:#{user.tries}|user:#{params[:username]}"
@@ -48,11 +52,11 @@ class SessionsController < ApplicationController
       cookies[:auth_token] = user.auth_token
     end
 
-    if flash[:alert].nil? && flash[:notice].nil?
+    if flash[:alert].nil?
       user.update(tries: 0)
       redirect_to params[:redirect] || root_path
     else
-      redirect_to login_Gsers_path
+      render 'welcome/sign'
     end
   end
 
