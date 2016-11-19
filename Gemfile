@@ -95,6 +95,8 @@ group :development, :test do
   gem 'factory_girl_rails'
   # Environment variables for local machine
   gem 'dotenv-rails', require: 'dotenv/rails-now'
+  # Capybara: acceptance tests
+  gem 'capybara'
 end
 
 group :production do

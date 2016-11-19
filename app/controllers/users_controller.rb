@@ -20,7 +20,7 @@ class UsersController < ApplicationController
 
     if verify_recaptcha(model: user) && user.save
       user.send_verify_email
-      redirect_to root_path, notice: 'User berhasil dibuat! ' \
+      redirect_to root_path, notice: 'Registrasi berhasil! ' \
         'Sekarang, lakukan verifikasi dengan membuka link yang telah ' \
         'kami berikan di email Anda.'
     else
