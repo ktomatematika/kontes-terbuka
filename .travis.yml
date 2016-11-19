@@ -4,14 +4,7 @@ rvm:
 bundler_args: --without production development
 services:
   - postgresql
-
-notifications:
-  webhooks:
-    urls:
-      - https://ktom.tomi.or.id/travis
-    on_success: always
-    on_failure: always
-    on_start: always
+sudo: required
 
 before_script:
   - ./tex.sh
