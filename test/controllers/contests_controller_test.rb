@@ -20,8 +20,6 @@ class ContestsControllerTest < ActionController::TestCase
                  '/contests'
     assert_equal new_contest_path,
                  '/contests/new'
-    assert_equal edit_contest_path(@c),
-                 "/contests/#{@c.to_param}/edit"
     assert_equal contest_path(@c),
                  "/contests/#{@c.to_param}"
   end

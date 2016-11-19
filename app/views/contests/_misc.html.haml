@@ -1,6 +1,7 @@
 %h2 Macam-macam
-= link_to 'Download feedback', feedback_contest_path,
-  class: 'btn' if can? :download_feedback, Contest
+= link_to 'Download feedback',
+  contest_feedback_answers_path(contest_id: @contest.id),
+  class: 'btn' if can? :download_on_contest, FeedbackAnswer
 
 - if can? :read_problems, Contest
   %h3 Masukkan Problems
