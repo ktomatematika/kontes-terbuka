@@ -32,7 +32,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :contests, shallow: true do
+  resources :contests, except: [:edit], shallow: true do
     member do
       get 'admin', to: 'contests#admin'
       get 'summary', to: 'contests#summary'
@@ -41,7 +41,6 @@ Rails.application.routes.draw do
                      defaults: { format: 'pdf' }
       get 'problem-pdf', to: 'contests#download_problem_pdf'
       get 'ms', to: 'contests#download_marking_scheme'
-      get 'feedback', to: 'contests#download_feedback'
       get 'marker', to: 'roles#assign_markers'
     end
 
