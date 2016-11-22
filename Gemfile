@@ -72,6 +72,8 @@ gem 'wkhtmltopdf-binary'
 gem 'simplecov', require: false, group: :test
 # Facebook Graph API
 gem 'koala'
+# Environment variables
+gem 'dotenv-rails', require: 'dotenv/rails-now'
 
 group :development do
   # Annotates model with schema
@@ -95,8 +97,6 @@ group :development, :test do
   gem 'byebug'
   # Factory girl: factories for testing
   gem 'factory_girl_rails'
-  # Environment variables for local machine
-  gem 'dotenv-rails', require: 'dotenv/rails-now'
 end
 
 group :production do
