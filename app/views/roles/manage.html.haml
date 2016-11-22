@@ -1,0 +1,25 @@
+.container
+  %h1 Roles
+
+  - @role_names.each do |r|
+    - role = Role.find_by(name: r)
+    %h2 #{role}
+
+    %table.table
+      %thead
+        %tr
+          %th Username
+          %th
+
+      %tbody
+        - role.users.order(:username).each do |user|
+          %tr
+            %td= user
+            %td= link_to 'Hapus', role_path(id: role.id, user_id: user.id),
+              method: :delete, data: { confirm: 'Yakin?' }
+
+    = form_tag roles_path, class: 'form-inline' do
+      = text_field_tag 'username', nil,
+        placeholder: 'Username', class: 'form-control'
+      = hidden_field_tag :role_name, r
+      = submit_tag "Tambah #{role}", class: 'btn'

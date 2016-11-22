@@ -29,6 +29,12 @@ Rails.application.routes.draw do
   post 'reset-password', to: 'users#process_reset_password',
                          as: 'process_reset_password'
 
+  resources :roles, only: [:create, :destroy] do
+    collection do
+      get '', to: 'roles#manage', as: ''
+    end
+  end
+
   resources :contests do
     get 'admin', to: 'contests#admin'
     get 'rules', to: 'contests#show_rules'
