@@ -27,13 +27,16 @@ class TexReader
       end
 
       tex_path = @contest.problem_tex.path
+
+      # Copy logo to be included in the PDF file
       FileUtils.cp(
         Rails.root.join('app', 'assets', 'images', 'logo-hires.png').to_s,
         File.dirname(tex_path) + '/logo.png'
       )
+
       Dir.chdir(File.dirname(tex_path)) do
         cmd_log = ''
-        3.times do
+        3.times do # compile 3 times to get references in pdflatex right
           cmd_log += `echo $PATH`.to_s
           cmd_log += "\n\n"
           cmd_log += `pdflatex -interaction=nonstopmode #{tex_path}`.to_s
@@ -50,24 +53,19 @@ class TexReader
   private
 
   def sp_process
-    tex_file = Paperclip.io_adapters.for(@contest.problem_tex).read
-    sp_start_index = tex_file.index(SP_START_SEPARATOR) +
-                     SP_START_SEPARATOR.length
-    sp_end_index = tex_file.index(SP_END_SEPARATOR)
-
-    tex_file_process tex_file[sp_start_index...sp_end_index]
+    tex_file_process SP_START_SEPARATOR, SP_END_SEPARATOR
   end
 
   def lp_process
-    tex_file = Paperclip.io_adapters.for(@contest.problem_tex).read
-    lp_start_index = tex_file.index(LP_START_SEPARATOR) +
-                     LP_START_SEPARATOR.length
-    lp_end_index = tex_file.index(LP_END_SEPARATOR)
-
-    tex_file_process tex_file[lp_start_index...lp_end_index]
+    tex_file_process LP_START_SEPARATOR, LP_END_SEPARATOR
   end
 
-  def tex_file_process(tex_string)
+  def tex_file_process(start_separator, end_separator)
+    tex_file = Paperclip.io_adapters.for(@contest.problem_tex).read
+    start_index = tex_file.index(start_separator) + start_separator.length
+    end_index = tex_file.index(end_separator)
+    tex_string = tex_file[start_index...end_index]
+
     preprocessed = tex_string.delete("\n").delete("\t").split('\item')
 
     nest_level = 0

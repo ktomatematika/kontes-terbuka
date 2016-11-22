@@ -70,6 +70,8 @@ gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
 # Facebook Graph API
 gem 'koala'
+# Environment variables
+gem 'dotenv-rails', require: 'dotenv/rails-now'
 
 group :test do
   # Test coverage
@@ -104,8 +106,6 @@ group :development, :test do
   gem 'byebug'
   # Factory girl: factories for testing
   gem 'factory_girl_rails'
-  # Environment variables for local machine
-  gem 'dotenv-rails', require: 'dotenv/rails-now'
 end
 
 group :production do
