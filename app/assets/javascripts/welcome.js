@@ -12,9 +12,11 @@ $(document).ready(function() {
 
 			if (next_contest.data('currently-in-contest')) {
 				contest_text = 'Kontes berikutnya: ' + name +
-					'(KONTES SUDAH DIMULAI!)';
+					' (KONTES SUDAH DIMULAI!)';
 			} else {
-				contest_text = 'Kontes berikutnya: ' + name + ' (' + start.format_indo() + '\u2013' + end.format_indo() + ')';
+				contest_text = 'Kontes berikutnya: ' + name + ' (' +
+						start.format_indo() + '\u2013' +
+						end.format_indo() + ')';
 			}
 		}
 		$('#welcome-next-contest').text(contest_text);
