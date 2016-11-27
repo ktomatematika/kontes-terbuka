@@ -9,12 +9,14 @@
       %thead
         %tr
           %th Username
+          %th Fullname
           %th
 
       %tbody
         - role.users.order(:username).each do |user|
           %tr
-            %td= user
+            %td= user.username
+            %td= user.fullname
             %td= link_to 'Hapus', role_path(id: role.id, user_id: user.id),
               method: :delete, data: { confirm: 'Yakin?' }
 
