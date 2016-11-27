@@ -3,7 +3,7 @@ module ContestJobs
 
   def prepare_jobs
     destroy_prepared_jobs
-    delay(run_at: end_time, queue: "contest_#{id}").purge_panitia
+    do_if_not_time(end_time, self, :jobs_on_contest_end)
     prepare_emails
     prepare_line
     prepare_facebook
@@ -15,6 +15,11 @@ module ContestJobs
             queue: "contest_#{id}").jobs_on_feedback_time_end
     end
     backup_files
+  end
+
+  def jobs_on_contest_end
+    purge_panitia
+    send_most_answers
   end
 
   private
@@ -93,6 +98,17 @@ module ContestJobs
     end
     user_contests.where(user_id: panitia_ids).destroy_all
     Ajat.info "purge_panitia|id:#{id}"
+  end
+
+  def send_most_answers
+    answers = self.short_problems.order(:problem_no).map do |sp|
+      "No. #{sp.problem_no}: #{sp.most_answer.map { |s| s.answer }}"
+    end.join("\n")
+    Mailgun.send_message to: User.with_role(:problem_admin).pluck(:email),
+      force_to_many: true, contest: self,
+      subject: 'Jawaban Terbanyak',
+      text: 'Berikut ini jawaban terbanyak di kontes ini, mohon ' \
+      "dibandingkan dan dicek ulang bila jawaban aslinya beda.\n#{answers}"
   end
 
   def check_veteran
