@@ -192,7 +192,10 @@ class ContestsController < ApplicationController
     c = Contest.find(params[:contest_id])
     authorize! :read_problems, c
     c.update(problem_tex: params[:problem_tex])
-    TexReader.new(c, params[:answers].split(',')).run
+
+    t = TexReader.new(c, params[:answers].split(','))
+    params[:compile_only] ? t.compile_tex : t.run
+
     redirect_to contest_admin_path, notice: 'TeX berhasil dibaca!'
   end
 
