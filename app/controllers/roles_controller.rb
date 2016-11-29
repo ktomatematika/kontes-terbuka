@@ -28,11 +28,11 @@ class RolesController < ApplicationController
 
   def manage
     @role_names = Role.where(resource_id: nil, resource_type: nil)
-    .joins(:users)
-    .group(:name)
-    .order('count_user_id asc')
-    .count(:user_id)
-    .map { |arr| arr.first  }
+                      .joins(:users)
+                      .group(:name)
+                      .order('count_user_id asc')
+                      .count(:user_id)
+                      .map(&:first)
   end
 
   def destroy

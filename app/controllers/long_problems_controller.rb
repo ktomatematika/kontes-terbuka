@@ -39,6 +39,7 @@ class LongProblemsController < ApplicationController
   def mark
     @contest = @long_problem.contest
     @long_submissions = @long_problem.long_submissions.submitted
+                                     .order(:user_contest_id)
 
     @markers = User.with_role(:marker, @long_problem)
   end
