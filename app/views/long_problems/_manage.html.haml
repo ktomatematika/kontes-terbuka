@@ -18,8 +18,8 @@
           = latex_and_markdown :td, lp.statement
         - else
           %td.text-justify= lp.statement
-        %td= link_to 'Edit', [:edit, @contest, lp]
-        %td= link_to 'Hapus', [@contest, lp], method: :delete,
+        %td= link_to 'Edit', [:edit, lp]
+        %td= link_to 'Hapus', lp, method: :delete,
           data: { confirm: 'Apakah Anda yakin?' }
   = link_to 'Hapus semua',
     contest_long_problems_path(@contest),

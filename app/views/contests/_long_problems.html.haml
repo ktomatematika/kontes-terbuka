@@ -27,7 +27,7 @@
 
     - else
       = nested_form_for ls,
-        url: contest_long_submission_submit_path(@contest, ls),
+        url: long_submission_path(ls),
         html: { multipart: true }, method: :post do |f|
         = hidden_field_tag 'contest_id', @contest.id
         = f.fields_for :submission_pages do |page_form|

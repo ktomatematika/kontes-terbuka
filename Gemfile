@@ -68,8 +68,17 @@ gem 'will_paginate', github: 'jonatack/will_paginate'
 # Generate PDF
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
-# Test coverage
-gem 'simplecov', require: false, group: :test
+
+group :test do
+  # Test coverage
+  gem 'simplecov', require: false, group: :test
+  # Acceptance testing
+  gem 'capybara'
+  # Driver for Capybara to allow JS stuff
+  gem 'selenium-webdriver'
+  # Allow transcations with Capybara and Selenius
+  gem 'transactional_capybara'
+end
 
 group :development do
   # Annotates model with schema
@@ -95,8 +104,6 @@ group :development, :test do
   gem 'factory_girl_rails'
   # Environment variables for local machine
   gem 'dotenv-rails', require: 'dotenv/rails-now'
-  # Capybara: acceptance tests
-  gem 'capybara'
 end
 
 group :production do

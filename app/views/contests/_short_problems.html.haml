@@ -10,7 +10,7 @@
       dipastikan merupakan bilangan bulat.
 
   = form_for :short_submission,
-    url: contest_create_short_submissions_path(Contest.find(params[:id])) do |f|
+    url: contest_short_submissions_path(Contest.find(params[:id])) do |f|
     - @short_problems.each do |prob|
       %h5.problem_no No. #{prob.problem_no}
       = latex_and_markdown :div, prob.statement

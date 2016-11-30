@@ -42,7 +42,7 @@ class UsersControllerTest < ActionController::TestCase
   test 'create' do
     post :create, user: build(:user).attributes.merge(password: 'asdfasdf')
     assert_redirected_to root_path
-    assert_equal flash[:notice], 'User berhasil dibuat! ' \
+    assert_equal flash[:notice], 'Registrasi berhasil! ' \
       'Sekarang, lakukan verifikasi dengan membuka link yang telah ' \
       'kami berikan di email Anda.'
   end

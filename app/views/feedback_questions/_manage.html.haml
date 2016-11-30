@@ -8,8 +8,8 @@
       - @feedback_questions.each do |fq|
         %tr
           %td.text-justify= fq.question
-          %td= link_to 'Edit', [:edit, @contest, fq]
-          %td= link_to 'Hapus', [@contest, fq], method: :delete,
+          %td= link_to 'Edit', [:edit, fq]
+          %td= link_to 'Hapus', fq, method: :delete,
             data: { confirm: 'Apakah Anda yakin?' }
   = link_to 'Hapus semua',
     contest_feedback_questions_path(@contest),

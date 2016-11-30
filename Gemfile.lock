@@ -96,6 +96,8 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
+    childprocess (0.5.9)
+      ffi (~> 1.0, >= 1.0.11)
     climate_control (0.0.3)
       activesupport (>= 3.0)
     cocaine (0.5.8)
@@ -132,6 +134,7 @@ GEM
     factory_girl_rails (4.7.0)
       factory_girl (~> 4.7.0)
       railties (>= 3.0.0)
+    ffi (1.9.14)
     get_process_mem (0.2.1)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
@@ -288,6 +291,10 @@ GEM
     scss_lint (0.50.2)
       rake (>= 0.9, < 12)
       sass (~> 3.4.20)
+    selenium-webdriver (3.0.1)
+      childprocess (~> 0.5)
+      rubyzip (~> 1.0)
+      websocket (~> 1.0)
     simplecov (0.12.0)
       docile (~> 1.1.0)
       json (>= 1.8, < 3)
@@ -322,6 +329,8 @@ GEM
     timeliness (0.3.8)
     traceroute (0.5.0)
       rails (>= 3.0.0)
+    transactional_capybara (0.1.0)
+      capybara
     turbolinks (2.5.3)
       coffee-rails
     tzinfo (1.2.2)
@@ -347,6 +356,7 @@ GEM
       activemodel (>= 4.2)
       debug_inspector
       railties (>= 4.2)
+    websocket (1.2.3)
     wicked_pdf (1.1.0)
     wkhtmltopdf-binary (0.12.3)
     xpath (2.0.0)
@@ -402,6 +412,7 @@ DEPENDENCIES
   sass-rails
   schema_validations
   scss_lint
+  selenium-webdriver
   simplecov
   sitemap_generator
   spring
@@ -409,6 +420,7 @@ DEPENDENCIES
   table_flipper
   therubyracer
   traceroute
+  transactional_capybara
   turbolinks (< 5)
   uglifier
   unicorn

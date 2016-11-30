@@ -17,7 +17,7 @@ ActiveRecord::Schema.define(version: 20161014091434) do
   enable_extension "plpgsql"
 
   create_table "colors", force: :cascade do |t|
-    t.string   "name",       :null=>false, :index=>{:name=>"index_colors_on_name", :unique=>true, :using=>:btree}
+    t.string   "name",       :null=>false
     t.datetime "created_at", :null=>false
     t.datetime "updated_at", :null=>false
   end
@@ -116,13 +116,6 @@ ActiveRecord::Schema.define(version: 20161014091434) do
     t.integer  "price",       :null=>false
     t.datetime "created_at",  :null=>false
     t.datetime "updated_at",  :null=>false
-  end
-
-  create_table "migration_validators", force: :cascade do |t|
-    t.string "table_name",      :null=>false, :index=>{:name=>"unique_idx_on_migration_validators", :with=>["column_name", "validation_type"], :using=>:btree}
-    t.string "column_name",     :null=>false
-    t.string "validation_type", :null=>false
-    t.string "options"
   end
 
   create_table "notifications", force: :cascade do |t|
