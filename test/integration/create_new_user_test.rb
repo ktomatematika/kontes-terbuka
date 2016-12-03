@@ -59,7 +59,7 @@ class CreateNewUserTest < ActionDispatch::IntegrationTest
     visit "/users/verify/#{u.verification}"
     assert page.has_current_path?('/users/sign')
 
-    within ('#login') do
+    within('#login') do
       fill_in 'username', with: 'cobaasalaja'
       fill_in 'password', with: 'cobaasal'
       click_on 'Masuk', class: 'btn'

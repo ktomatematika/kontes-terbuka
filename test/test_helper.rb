@@ -1,6 +1,19 @@
 ENV['RAILS_ENV'] ||= 'test'
 
 require 'simplecov'
+require 'coveralls'
+SimpleCov.formatter = Coveralls::SimpleCov::Formatter
+SimpleCov.start 'rails' do
+  add_filter do |source_file|
+    source_file.lines.count < 5
+  end
+
+  # The dev is too lazy to test these legacy stuff
+  add_filter '/app/controllers/line_controller.rb'
+  add_filter '/app/controllers/travis_controller.rb'
+  add_filter '/app/tasks/dump_kto_hasil.rb'
+  add_filter 'app/tasks/line_nag.rb'
+end
 
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
@@ -52,7 +65,13 @@ module ActionDispatch
   class IntegrationTest
     # Make the Capybara DSL available in all integration tests
     include Capybara::DSL
-    Capybara.default_driver = :selenium
+
+    url = "#{ENV['SAUCE_USERNAME']}:#{ENV['SAUCE_ACCESS_KEY']}" \
+    '@localhost:4445/wd/hub'
+    Capybara.register_driver :sauce do |app|
+      Capybara::Selenium::Driver.new(app, browser: :remote, url: url)
+    end
+    Capybara.default_driver = ENV['TRAVIS'] ? :capybara : :sauce
 
     # Reset sessions and driver between tests
     # Use super wherever this method is redefined in your

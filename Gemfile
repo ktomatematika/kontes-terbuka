@@ -71,7 +71,7 @@ gem 'wkhtmltopdf-binary'
 
 group :test do
   # Test coverage
-  gem 'simplecov', require: false, group: :test
+  gem 'coveralls', require: false
   # Acceptance testing
   gem 'capybara'
   # Driver for Capybara to allow JS stuff
