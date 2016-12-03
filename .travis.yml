@@ -1,10 +1,14 @@
 language: ruby
+cache: bundler
 rvm:
   - 2.3.1
 bundler_args: --without production development
 services:
   - postgresql
 sudo: required
+env:
+  - TEST_SUITE=units
+  - TEST_SUITE=integration
 
 before_script:
   - ./tex.sh
@@ -12,8 +16,10 @@ before_script:
   - cp config/database.yml.travis config/database.yml
   - cp config/initializers/line_targets.rb.default config/initializers/line_targets.rb
   - cp .env.default .env
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
 script:
-  - bundle exec rake
+  - bundle exec rake test:$TEST_SUITE
 after_script:
   - rubocop -D -f simple --except AbcSize,MethodLength
   - haml-lint --exclude-linter LineLength app/views
