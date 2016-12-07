@@ -483,10 +483,14 @@ class ContestTest < ActiveSupport::TestCase
                  1
     assert_equal facebook.select { |j| j[:method_name] == :contest_ending }.count, 1
     assert_equal facebook.select { |j| j[:method_name] == :feedback_ending }.count, 1
+    assert_equal facebook.select { |j| j[:method_name] == :certificate_sent }.count, 1
 
-    job = jobs.select { |j| j[:method_name] == :jobs_on_feedback_time_end }
-    assert_equal job.count, 1
-    assert_in_delta job.first[:run_at], c.feedback_time, 5
+    [:check_veteran, :award_points, :send_certificates].each do |m|
+      job = jobs.select { |j| j[:method_name] == m }
+      assert_equal job.count, 1
+      assert_in_delta job.first[:run_at], c.feedback_time, 5
+      assert_equal job.class, 'Contest'
+    end
 
     c.update(start_time: Time.zone.now - 10.days,
              end_time: Time.zone.now - 5.days,
@@ -495,10 +499,6 @@ class ContestTest < ActiveSupport::TestCase
       handler = YAML.load(j.handler)
       { run_at: j.run_at, method_name: handler.method_name }
     end
-
-    job = jobs.select { |j| j[:method_name] == :jobs_on_result_released }
-    assert_equal job.count, 1
-    assert_in_delta job.first[:run_at], Time.zone.now, 5
   end
 
   test 'feedback and user contests finder methods' do

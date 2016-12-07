@@ -3,29 +3,24 @@ module ContestJobs
 
   def prepare_jobs
     destroy_prepared_jobs
-    do_if_not_time(end_time, self, :jobs_on_contest_end)
+    jobs_on_contest_end
     prepare_emails
     prepare_line
     prepare_facebook
-    if changes['result_released'] == [false, true]
-      delay(queue: "contest_#{id}").jobs_on_result_released
-    end
-    unless feedback_closed?
-      delay(run_at: feedback_time,
-            queue: "contest_#{id}").jobs_on_feedback_time_end
-    end
+    jobs_on_result_released if changes['result_released'] == [false, true]
+    jobs_on_feedback_time_end unless feedback_closed?
     backup_files
-  end
-
-  def jobs_on_contest_end
-    purge_panitia
-    send_most_answers
   end
 
   private
 
   def destroy_prepared_jobs
     Delayed::Job.where(queue: "contest_#{id}").destroy_all
+  end
+
+  def jobs_on_contest_end
+    do_if_not_time(end_time, self, :purge_panitia)
+    do_if_not_time(end_time, self, :send_most_answers)
   end
 
   def prepare_emails
@@ -67,20 +62,20 @@ module ContestJobs
   end
 
   def jobs_on_result_released
-    EmailNotifications.new(self).results_released
-    LineNag.new(self).result_and_next_contest
-    FacebookPost.new(self).results_released
+    EmailNotifications.new(self).delay(queue: "contest_#{id}").results_released
+    LineNag.new(self).delay(queue: "contest_#{id}").result_and_next_contest
+    FacebookPost.new(self).delay(queue: "contest_#{id}").results_released
   end
 
   def jobs_on_feedback_time_end
-    check_veteran
-    award_points
-    send_certificates
-    FacebookPost.new(self).certificate_sent
+    do_if_not_time(feedback_time, self, :check_veteran)
+    do_if_not_time(feedback_time, self, :award_points)
+    do_if_not_time(feedback_time, self, :send_certificates)
+    do_if_not_time(feedback_time, FacebookPost.new(self), :certificate_sent)
 
     c = ContestFileBackup.new
-    c.backup_misc 1
-    c.backup_submissions self, 1
+    do_if_not_time(feedback_time, c, :backup_misc, 1)
+    do_if_not_time(feedback_time, c, :backup_submissions, self, 1)
   end
 
   def award_points
@@ -107,8 +102,9 @@ module ContestJobs
     Mailgun.send_message to: User.with_role(:problem_admin).pluck(:email),
                          force_to_many: true, contest: self,
                          subject: 'Jawaban Terbanyak',
-                         text: 'Berikut ini jawaban terbanyak di kontes ini, mohon ' \
-      "dibandingkan dan dicek ulang bila jawaban aslinya beda.\n#{answers}"
+                         text: 'Berikut ini jawaban terbanyak di kontes ' \
+                         'ini, mohon dibandingkan dan dicek ulang ' \
+                         "bila jawaban aslinya beda.\n#{answers}"
   end
 
   def check_veteran
