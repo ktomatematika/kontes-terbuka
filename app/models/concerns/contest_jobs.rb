@@ -69,7 +69,7 @@ module ContestJobs
   def jobs_on_result_released
     EmailNotifications.new(self).results_released
     LineNag.new(self).result_and_next_contest
-    FacebookPost.new(self).result_released
+    FacebookPost.new(self).results_released
   end
 
   def jobs_on_feedback_time_end
