@@ -68,10 +68,10 @@ module ContestJobs
   end
 
   def jobs_on_feedback_time_end
-    do_if_not_time(feeedback_time, self, :check_veteran)
-    do_if_not_time(feeedback_time, self, :award_points)
-    do_if_not_time(feeedback_time, self, :send_ceritificates)
-    do_if_not_time(feeedback_time, FacebookPost.new(self), :certificate_sent)
+    do_if_not_time(feedback_time, self, :check_veteran)
+    do_if_not_time(feedback_time, self, :award_points)
+    do_if_not_time(feedback_time, self, :send_certificates)
+    do_if_not_time(feedback_time, FacebookPost.new(self), :certificate_sent)
 
     c = ContestFileBackup.new
     do_if_not_time(feedback_time, c, :backup_misc, 1)
