@@ -38,9 +38,6 @@ class UserContest < ActiveRecord::Base
   has_many :feedback_answers
   has_many :feedback_questions, through: :feedback_answers
 
-  # Other ActiveRecord
-  attr_accessor :rank
-
   # Other methods
   def contest_points
     points = 0

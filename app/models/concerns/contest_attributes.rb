@@ -30,18 +30,8 @@ module ContestAttributes
   end
 
   def results(*includes)
-    partcps = scores(includes)
-    rank = 0
-    current_total = max_score + 1
-    partcps.each_with_index do |uc, idx|
-      new_total = uc.total_mark
-      if new_total == current_total
-        uc.rank = rank # carryover rank
-      else
-        current_total = new_total
-        uc.rank = idx + 1
-        rank = uc.rank
-      end
+    scores(includes).select do
+      'rank() over(order by marks.total_mark DESC) as rank'
     end
   end
 
