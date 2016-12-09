@@ -489,7 +489,7 @@ class ContestTest < ActiveSupport::TestCase
       job = jobs.select { |j| j[:method_name] == m }
       assert_equal job.count, 1
       assert_in_delta job.first[:run_at], c.feedback_time, 5
-      assert_equal job.class, 'Contest'
+      assert_equal job.first[:class], 'Contest'
     end
 
     c.update(start_time: Time.zone.now - 10.days,
