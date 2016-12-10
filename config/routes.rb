@@ -36,6 +36,9 @@ Rails.application.routes.draw do
   end
 
   resources :contests do
+    member do
+      post 'refresh', to: 'contests#refresh'
+    end
     get 'admin', to: 'contests#admin'
     get 'rules', to: 'contests#show_rules'
     post 'rules', to: 'contests#accept_rules'

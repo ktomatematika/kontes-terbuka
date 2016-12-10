@@ -134,7 +134,7 @@ class Contest < ActiveRecord::Base
   end
 
   def refresh
-    delay(queue: "contest_#{id}").refresh_results_pdf if result_released
+    delay(queue: "contest_#{id}").refresh_results_pdf
   end
 
   def refresh_results_pdf

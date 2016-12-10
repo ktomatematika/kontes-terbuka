@@ -3,6 +3,7 @@
   = link_to 'Kembali', contest_path(id: @contest.id), class: 'btn'
 
   = render 'edit' if can?(:edit, Contest) || can?(:upload_ms, Contest)
+  = render 'downloads'
   = render 'misc'
   = render 'short_problems/manage' if can? :manage, ShortProblem
   = render 'long_problems/manage' if can? :manage, LongProblem

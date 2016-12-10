@@ -244,6 +244,14 @@ class ContestsController < ApplicationController
     redirect_to contest_admin_path, notice: 'Pertanyaan feedback hancur!'
   end
 
+  def refresh
+    @contest = Contest.find(params[:id])
+    authorize! :refresh, @contest
+    @contest.refresh
+    redirect_to contest_admin_path(contest_id: @contest.id),
+                notice: 'Refreshed!'
+  end
+
   private
 
   def submission_params
