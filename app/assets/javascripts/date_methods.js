@@ -10,7 +10,7 @@ var long_days = ['Minggu', 'Senin', 'Selasa', 'Rabu',
 var MONTHS_IN_A_YEAR = 12;
 var DAYS_IN_A_WEEK = 7;
 
-// erb_to_date: converts date given by IRB in content_tags to JS Date.
+// erb_to_date: converts date given by ERB in content_tags to JS Date.
 function erb_to_date(erb_string) {
 	return new Date(erb_string.slice(1, -1));
 }

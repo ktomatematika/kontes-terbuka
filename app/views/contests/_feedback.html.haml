@@ -6,5 +6,10 @@
     Perhatikan bahwa Anda perlu mengisi survei ini dan juga mendapatkan minimal
     nilai #{UserContest::CUTOFF_CERTIFICATE} untuk mendapatkan sertifikat
     partisipasi ataupun sertifikat pemenang.
+  %p
+    %b
+      Sertifikat dikirim pada
+      %span.feedback-time= @contest.feedback_time
+      %span> .
   = link_to 'Isi Feedback', contest_feedback_path(contest_id: params[:id]),
     class: 'btn'
