@@ -24,6 +24,9 @@
 class ShortSubmission < ActiveRecord::Base
   has_paper_trail
 
+  # Callbacks
+  after_save { short_problem.contest.refresh }
+
   # Associations
   belongs_to :user_contest
   belongs_to :short_problem

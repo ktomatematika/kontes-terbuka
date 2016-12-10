@@ -214,16 +214,10 @@ class ContestsController < ApplicationController
     @contest = Contest.find(params[:contest_id])
     authorize! :download_results, @contest
 
-    if @contest.result_released?
-      @user_contests = @contest.results(user: :roles) # this is a big query
-    end
-
-    grab_problems
-
-    respond_to do |format|
-      format.html
-      format.pdf { render pdf: "Hasil #{@contest}", orientation: 'Landscape' }
-    end
+    send_file @contest.results_location, disposition: :inline
+  rescue ActionController::MissingFile
+    @contest.refresh_results_pdf
+    retry
   end
 
   def destroy_short_probs

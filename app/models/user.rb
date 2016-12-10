@@ -45,6 +45,7 @@ class User < ActiveRecord::Base
   has_paper_trail
 
   # Callbacks
+  after_save { user_contests.each { |uc| uc.contest.refresh } }
   before_validation(on: :create) do
     generate_token(:auth_token)
     generate_token(:verification)

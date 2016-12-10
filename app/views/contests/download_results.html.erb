@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<% user_contests = contest.results(user: :roles) %>
+<% long_problems = contest.long_problems.order('problem_no') %>
+<% no_short_probs = contest.short_problems.empty? %>
+
+<html>
+  <head>
+    <title>Hasil <%= contest %></title>
+    <link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" rel="stylesheet"></link>
+    <%= stylesheet_link_tag(wicked_pdf_asset_base64('download_results_pdf')) %>
+    <%# Adobe Typekit %>
+    <script src="https://use.typekit.net/ieu7ith.js"></script>
+    <script>try{Typekit.load({async:true});}catch(e){}</script>
+  </head>
+
+  <body>
+    <%= image_tag(wicked_pdf_asset_base64('logo-hires.png'), id: 'results-img') %>
+    <table class="table table-bordered" id="contest-results-pdf">
+      <caption>Hasil <%= contest %></caption>
+      <thead>
+        <tr>
+          <th>Peringkat</th>
+          <th>Username</th>
+          <% unless no_short_probs %>
+            <th>Bagian A</th>
+          <% end %>
+          <% long_problems.each do |lp| %>
+            <th>Bagian B no. <%= lp.problem_no %></th>
+          <% end %>
+          <th>Total</th>
+          <th>Penghargaan</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% user_contests.each do |uc| %>
+          <% user = uc.user %>
+          <tr class="<%= row_classes(user, [uc.award.downcase]).join(' ') %>">
+            <td><%= uc.rank %></td>
+            <td><%= user.username %></td>
+            <% unless no_short_probs %>
+              <td><%= uc.short_mark %></td>
+            <% end %>
+            <% long_problems.each do |lp| %>
+              <td><%= score(uc, lp) %></td>
+            <% end %>
+            <td><%= uc.total_mark %></td>
+            <td><%= uc.award %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </body>
+</html>

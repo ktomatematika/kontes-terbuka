@@ -39,6 +39,9 @@ class LongSubmission < ActiveRecord::Base
   validates :score,
             numericality: { allow_nil: true, greater_than_or_equal_to: 0 }
 
+  # Callbacks
+  after_save { long_problem.contest.refresh }
+
   # Scopes
   scope :submitted, -> { joins(:submission_pages).group(:id) }
 
