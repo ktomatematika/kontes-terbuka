@@ -1,6 +1,8 @@
-#indiv-result
+.heading-with-btn
   %h2 Hasil dan Umpan Balik
+  .btn#show-own-results Tampilkan
 
+#own-results
   - unless @short_problems.empty?
     %h3 Bagian A: #{@user_contest.short_mark}/#{@short_problems.length} poin
 

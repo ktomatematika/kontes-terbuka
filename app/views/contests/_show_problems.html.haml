@@ -1,0 +1,12 @@
+.heading-with-btn
+  %h2 Soal-soal
+  .btn#show-all-problems Tampilkan
+
+#all-problems
+  - @short_problems.each do |prob|
+    %h5.problem_no No. #{prob.problem_no}
+    = latex_and_markdown :div, prob.statement
+
+  - @long_problems.each do |prob|
+    %h5.problem_no No. #{prob.problem_no}
+    = latex_and_markdown :div, prob.statement
