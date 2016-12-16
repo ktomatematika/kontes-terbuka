@@ -120,7 +120,7 @@ Rails.application.routes.draw do
     end
   end
 
-  # resources :market_items, path: '/market-items'
+  resources :market_items, path: '/market-items'
 
   get '/home', to: 'home#index'
   get '/faq', to: 'home#faq'
