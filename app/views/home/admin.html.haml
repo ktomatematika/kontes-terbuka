@@ -40,5 +40,4 @@
       %tbody
         - @panitia.each do |p|
           = create_data_row([p.username, p.fullname], 'td',
-                            { class: 'clickable-row',
-                              'data-link' => user_path(p) })
+                            class: 'clickable-row', 'data-link' => user_path(p))
