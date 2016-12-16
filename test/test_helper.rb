@@ -71,7 +71,7 @@ module ActionDispatch
     Capybara.register_driver :sauce do |app|
       Capybara::Selenium::Driver.new(app, browser: :remote, url: url)
     end
-    Capybara.default_driver = ENV['TRAVIS'] ? :capybara : :sauce
+    Capybara.default_driver = ENV['TRAVIS'] ? :sauce : :selenium
 
     # Reset sessions and driver between tests
     # Use super wherever this method is redefined in your
