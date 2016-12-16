@@ -47,6 +47,7 @@ class Ability
       can [:index_full, :show_full, :show], User
       can :download_on_contest, FeedbackAnswer
       can [:admin, :profile], Application
+      can [:download_pdf, :download_marking_scheme, :download_reports], Contest
     end
 
     if user.has_role? :user_admin

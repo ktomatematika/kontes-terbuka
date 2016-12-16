@@ -40,8 +40,9 @@ Rails.application.routes.draw do
       get 'results', to: 'contests#download_results',
                      defaults: { format: 'pdf' }
       get 'problem-pdf', to: 'contests#download_problem_pdf'
-      get 'ms', to: 'contests#download_marking_scheme'
       get 'marker', to: 'roles#assign_markers'
+      get 'ms-pdf', to: 'contests#download_marking_scheme'
+      get 'reports', to: 'contests#download_reports'
     end
 
     resources :user_contests, path: '/user-contests', only: [:new, :create] do

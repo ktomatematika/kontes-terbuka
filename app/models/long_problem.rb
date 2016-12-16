@@ -69,7 +69,7 @@ class LongProblem < ActiveRecord::Base
   end
 
   def zip_location
-    (submissions_location + '.zip').freeze
+    submissions_location + '.zip'
   end
 
   def compress_submissions
@@ -97,7 +97,7 @@ class LongProblem < ActiveRecord::Base
 
   def submissions_location
     Rails.root.join('public', 'contest_files', 'submissions',
-                    "kontes#{contest_id}", "no#{problem_no}").to_s.freeze
+                    "kontes#{contest_id}", "no#{problem_no}").to_s
   end
 
   def delete_submission_zips

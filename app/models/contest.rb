@@ -108,4 +108,19 @@ class Contest < ActiveRecord::Base
     return next_feedback if next_feedback.feedback_time < next_end.end_time
     next_end
   end
+
+  def compress_reports
+    File.delete(report_zip_location) if File.file?(report_zip_location)
+    ZipFileGenerator.new(reports_location, report_zip_location).write
+  end
+
+  def report_zip_location
+    reports_location + '.zip'
+  end
+
+  private
+
+  def reports_location
+    Rails.root.join('public', 'contest_files', 'reports', id.to_s).to_s
+  end
 end

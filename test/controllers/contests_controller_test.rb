@@ -14,8 +14,10 @@ class ContestsControllerTest < ActionController::TestCase
                  "/contests/#{@c.to_param}/results"
     assert_equal problem_pdf_contest_path(@c),
                  "/contests/#{@c.to_param}/problem-pdf"
-    assert_equal ms_contest_path(@c),
-                 "/contests/#{@c.to_param}/ms"
+    assert_equal ms_pdf_contest_path(@c),
+                 "/contests/#{@c.to_param}/ms-pdf"
+    assert_equal reports_contest_path(@c),
+                 "/contests/#{@c.to_param}/reports"
     assert_equal contests_path,
                  '/contests'
     assert_equal new_contest_path,
@@ -154,6 +156,21 @@ class ContestsControllerTest < ActionController::TestCase
 
     assert_response 200
     assert_equal IO.binread(@c.marking_scheme.path), @response.body
+  end
+
+  test 'download_reports' do
+    test_abilities @c, :download_reports, [nil], [:panitia]
+
+    lp = create(:long_problem, contest: @c, report: PDF)
+    @c.compress_reports
+
+    get :download_reports, id: @c.id
+    assert_response 200
+
+    Zip::File.open(@c.report_zip_location) do |file|
+      assert_equal file.count, 1
+      assert_equal file.first.size, lp.report.size
+    end
   end
 
   test 'read_problems' do

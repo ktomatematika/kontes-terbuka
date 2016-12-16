@@ -281,6 +281,32 @@ class ContestTest < ActiveSupport::TestCase
     assert_equal c2.max_score, 5 + LongProblem::MAX_MARK * 3
   end
 
+  test 'compress_reports' do
+    c = create(:full_contest)
+    c.long_problems.each { |lp| lp.update(report: PDF) }
+    c.compress_reports
+    assert File.file?(c.report_zip_location), 'Zip file does not exist.'
+
+    Zip::File.open(c.report_zip_location) do |file|
+      assert_equal file.count, c.long_problems.count,
+                   'Number of files does not match long problems!'
+
+      file.each do |f|
+        assert_equal f.size, PDF.size, 'Report is tampered!'
+      end
+    end
+  end
+
+  test 'report_zip_location' do
+    c = create(:contest)
+    create(:long_problem, contest: c, report: PDF)
+    c.compress_reports
+    assert_equal c.report_zip_location,
+                 Rails.root.join('public', 'contest_files',
+                                 'reports', "#{c.id}.zip").to_s,
+                 'Report zip location is not correct.'
+  end
+
   test 'contest complex methods' do
     c = create(:full_contest, short_problems: 1, long_problems: 1,
                               users: 5, gold_cutoff: 6,
