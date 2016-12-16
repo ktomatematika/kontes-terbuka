@@ -1,6 +1,9 @@
 # rubocop:disable Metrics/BlockLength
 Rails.application.routes.draw do
   root 'welcome#index'
+  # Comment root above and uncomment these to enter maintenance mode:
+  # root 'application#maintenance'
+  # match '*path', to: 'application#maintenance', via: :all
 
   resources :users do
     member do
