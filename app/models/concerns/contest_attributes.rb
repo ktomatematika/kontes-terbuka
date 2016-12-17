@@ -101,7 +101,7 @@ module ContestAttributes
     full = full_feedback_user_contests.pluck(:id)
     all = user_contests.pluck(:id)
     remaining = all - full
-    UserContest.find(remaining)
+    UserContest.where(id: remaining).includes(includes)
   end
 
   private
