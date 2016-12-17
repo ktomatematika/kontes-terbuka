@@ -72,7 +72,8 @@
         .text-right
           %button.btn#close-flash Tutup
 
-    = render 'referrer_nag' if current_user && current_user.referrer_id.nil?
+    - if current_user && current_user.referrer_id.nil? && yield(:maintenance_mode).blank?
+      = render 'referrer_nag'
 
     = yield
 

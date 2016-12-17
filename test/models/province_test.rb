@@ -39,4 +39,10 @@ class ProvinceTest < ActiveSupport::TestCase
   test 'timezone cannot be blank' do
     assert_not build(:province, timezone: nil).save, 'Timezone can be nil.'
   end
+
+  test 'name is unique' do
+    create(:province, name: 'asdf')
+    assert_not build(:province, name: 'asdf').save,
+               'Province with duplicate names can be saved'
+  end
 end

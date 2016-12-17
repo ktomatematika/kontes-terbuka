@@ -3,7 +3,7 @@ ENV['RAILS_ENV'] ||= 'test'
 require 'simplecov'
 require 'coveralls'
 SimpleCov.formatters = [Coveralls::SimpleCov::Formatter,
-                       SimpleCov::Formatter::HTMLFormatter]
+                        SimpleCov::Formatter::HTMLFormatter]
 SimpleCov.start 'rails' do
   add_filter do |source_file|
     source_file.lines.count < 5
