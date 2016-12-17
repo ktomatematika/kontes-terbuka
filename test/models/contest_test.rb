@@ -440,6 +440,14 @@ class ContestTest < ActiveSupport::TestCase
                  1
     assert_equal line.select { |j| j[:method_name] == :contest_ending }.count, 1
 
+    facebook = jobs.select { |j| j[:class] == 'FacebookPost' }
+    assert_equal facebook.select { |j| j[:method_name] == :contest_starting }.count,
+                 1
+    assert_equal facebook.select { |j| j[:method_name] == :contest_started }.count,
+                 1
+    assert_equal facebook.select { |j| j[:method_name] == :contest_ending }.count, 1
+    assert_equal facebook.select { |j| j[:method_name] == :feedback_ending }.count, 1
+
     job = jobs.select { |j| j[:method_name] == :jobs_on_feedback_time_end }
     assert_equal job.count, 1
     assert_in_delta job.first[:run_at], c.feedback_time, 5
@@ -471,7 +479,7 @@ class ContestTest < ActiveSupport::TestCase
     assert_equal c.full_feedback_user_contests.pluck(:id), [ucs.first.id],
                  'Full feedback user contests is not working!'
 
-    assert_equal c.not_full_feedback_user_contests.sort(:id).pluck(:id),
+    assert_equal c.not_full_feedback_user_contests.order(:id).pluck(:id),
                  [ucs.second.id, ucs.third.id].sort,
                  'Not full feedback user contests is not working!'
   end

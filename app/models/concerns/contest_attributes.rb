@@ -97,7 +97,7 @@ module ContestAttributes
 
   # This method finds all user_contests who has at least one feedback question
   # not filled in that particular contest.
-  def not_full_feedback_user_contests
+  def not_full_feedback_user_contests(*includes)
     full = full_feedback_user_contests.pluck(:id)
     all = user_contests.pluck(:id)
     remaining = all - full

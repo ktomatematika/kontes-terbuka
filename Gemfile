@@ -68,6 +68,8 @@ gem 'will_paginate', github: 'jonatack/will_paginate'
 # Generate PDF
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
+# Facebook Graph API
+gem 'koala'
 
 group :test do
   # Test coverage

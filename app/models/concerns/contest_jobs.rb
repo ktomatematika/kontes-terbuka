@@ -6,6 +6,7 @@ module ContestJobs
     delay(run_at: end_time, queue: "contest_#{id}").purge_panitia
     prepare_emails
     prepare_line
+    prepare_facebook
     if changes['result_released'] == [false, true]
       delay(queue: "contest_#{id}").jobs_on_result_released
     end
@@ -55,15 +56,26 @@ module ContestJobs
     do_if_not_time(end_time - 1.day, l, :contest_ending, '24 jam')
   end
 
+  def prepare_facebook
+    f = FacebookPost.new self
+
+    do_if_not_time(start_time - 1.day, f, :contest_starting, '24 jam')
+    do_if_not_time(start_time, f, :contest_started)
+    do_if_not_time(end_time - 1.day, f, :contest_ending, '24 jam')
+    do_if_not_time(feedback_time - 6.hours, f, :feedback_ending, '6 jam')
+  end
+
   def jobs_on_result_released
     EmailNotifications.new(self).results_released
     LineNag.new(self).result_and_next_contest
+    FacebookPost.new(self).result_released
   end
 
   def jobs_on_feedback_time_end
     check_veteran
     award_points
     send_certificates
+    FacebookPost.new(self).certificate_sent
   end
 
   def award_points
