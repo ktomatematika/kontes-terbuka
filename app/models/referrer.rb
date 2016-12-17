@@ -13,8 +13,12 @@
 #
 
 class Referrer < ActiveRecord::Base
+  has_paper_trail
+
+  # Associations
   has_many :users
 
+  # Display methods
   def to_s
     name
   end
