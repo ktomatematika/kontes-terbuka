@@ -48,6 +48,12 @@
           placeholder: 'Sekolah/institusi'
         %span.glyphicon.form-glyphicon.form-control-feedback{ 'aria-hidden' => 'true' }
 
+      .form-group.has-feedback
+        = f.collection_select :referrer_id, Referrer.all, :id, :name,
+          { prompt: 'Dari manakah Anda mengetahui KTO Matematika?' },
+          { class: 'form-control' }
+        %span.glyphicon.form-glyphicon.form-control-feedback{ 'aria-hidden' => 'true' }
+
       .checkbox
         %label
           = f.check_box :osn

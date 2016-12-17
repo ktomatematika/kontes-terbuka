@@ -19,6 +19,7 @@
 #  verification    :string
 #  enabled         :boolean          default(FALSE), not null
 #  tries           :integer          default(0), not null
+#  referrer_id     :integer
 #
 # Indexes
 #
@@ -26,6 +27,7 @@
 #  index_users_on_color_id      (color_id)
 #  index_users_on_email         (email) UNIQUE
 #  index_users_on_province_id   (province_id)
+#  index_users_on_referrer_id   (referrer_id)
 #  index_users_on_status_id     (status_id)
 #  index_users_on_username      (username) UNIQUE
 #  index_users_on_verification  (verification) UNIQUE
@@ -36,7 +38,6 @@
 #  fk_rails_87f75b7957  (color_id => colors.id) ON DELETE => nullify
 #  fk_rails_ce4a327a04  (status_id => statuses.id) ON DELETE => nullify
 #
-# rubocop:enable Metrics/LineLength
 
 require 'test_helper'
 
@@ -215,6 +216,8 @@ class UserTest < ActiveSupport::TestCase
                  'User does not belong to color.'
     assert_equal User.reflect_on_association(:status).macro, :belongs_to,
                  'User does not belong to status.'
+    assert_equal User.reflect_on_association(:referrer).macro, :belongs_to,
+                 'User does not belong to referrer.'
     assert_equal User.reflect_on_association(:user_contests).macro, :has_many,
                  'User has many user contests is false.'
     assert_equal User.reflect_on_association(:user_awards).macro, :has_many,

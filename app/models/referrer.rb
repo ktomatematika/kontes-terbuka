@@ -1,14 +1,21 @@
-# rubocop:disable Metrics/LineLength
 # == Schema Information
 #
-# Table name: user_referrers
+# Table name: referrers
 #
 #  id         :integer          not null, primary key
 #  name       :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
-# rubocop:enable Metrics/LineLength
+# Indexes
+#
+#  index_referrers_on_name  (name) UNIQUE
+#
 
-class UserReferrer < ActiveRecord::Base
+class Referrer < ActiveRecord::Base
+  has_many :users
+
+  def to_s
+    name
+  end
 end

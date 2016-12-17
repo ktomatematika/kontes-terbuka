@@ -6,7 +6,7 @@ class ParticipateInContestFromNotificationLinkTest <
     contest = create(:full_contest, start: -1000,
                                     ends: 3000, result: 5000,
                                     feedback: 7000)
-    user = create(:user, password: 'asdfasdf')
+    user = create(:user, password: 'asdfasdf', referrer: Referrer.take)
     user.enable
 
     visit contest_path(contest)

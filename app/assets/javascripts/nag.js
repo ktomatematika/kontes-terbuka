@@ -1,6 +1,6 @@
 $(document).ready(function() {
 	$('#close-nag').click(function() {
-		$('#nag-overlay').fadeOut();
+		$(this).parents('.nag-overlay').fadeOut();
 		$.post($(this).data('href'));
 	});
 

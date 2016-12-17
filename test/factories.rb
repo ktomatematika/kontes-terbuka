@@ -1,9 +1,6 @@
 require_relative 'support'
 
 FactoryGirl.define do
-  factory :market_order do
-    
-  end
   sequence :unique do |n|
     name = 'aaaaaaaa'
     n.times { name.succ! }
@@ -147,6 +144,10 @@ FactoryGirl.define do
   factory :province do
     name { generate(:unique) }
     timezone 'WITA'
+  end
+
+  factory :referrer do
+    name { generate(:unique) }
   end
 
   factory :short_problem do

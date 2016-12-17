@@ -154,6 +154,12 @@ class UsersController < ApplicationController
     end
   end
 
+  def referrer_update
+    user = User.find(params[:user_id])
+    user.update(referrer_id: params[:user][:referrer_id])
+    redirect_to :back, notice: 'Terima kasih sudah mengisi!'
+  end
+
   def mini_update
     if @user.update(user_mini_edit_params)
       redirect_to user_path(@user), notice: 'User berhasil diupdate!'
@@ -186,14 +192,14 @@ class UsersController < ApplicationController
     params.require(:user).permit(:username, :email, :password,
                                  :password_confirmation, :fullname,
                                  :province_id, :status_id, :color_id,
-                                 :school, :terms_of_service, :profile_picture,
+                                 :school, :referrer_id, :terms_of_service, :profile_picture,
                                  :osn)
   end
 
   def user_edit_params
     params.require(:user).permit(:username, :email, :timezone,
                                  :fullname, :province_id, :status_id, :color_id,
-                                 :school, :profile_picture)
+                                 :school)
   end
 
   def user_mini_edit_params
