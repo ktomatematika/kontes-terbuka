@@ -7,6 +7,15 @@ GIT
       sshkit (~> 1.2)
 
 GIT
+  remote: git://github.com/donjar/schema_validations.git
+  revision: 2bc3d1a21404f9cb5a3d99fb386b99e48ca20a74
+  specs:
+    schema_validations (2.1.1)
+      activerecord (~> 4.2, >= 4.2.1)
+      schema_plus_columns
+      valuable
+
+GIT
   remote: git://github.com/jonatack/will_paginate.git
   revision: 3c861498bdbc643638c1f25bdbe67f93d03be79b
   specs:
@@ -290,10 +299,6 @@ GEM
       activerecord (>= 4.2, < 5.1)
       its-it (~> 1.2)
       schema_plus_core
-    schema_validations (2.1.1)
-      activerecord (~> 4.2, >= 4.2.1)
-      schema_plus_columns
-      valuable
     scss_lint (0.50.2)
       rake (>= 0.9, < 12)
       sass (~> 3.4.20)
@@ -420,7 +425,7 @@ DEPENDENCIES
   rubocop
   rubyzip
   sass-rails
-  schema_validations
+  schema_validations!
   scss_lint
   selenium-webdriver
   sitemap_generator
