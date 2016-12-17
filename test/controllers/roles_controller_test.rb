@@ -8,6 +8,10 @@ class RolesControllerTest < ActionController::TestCase
                  "/long-problems/#{@lp.id}/marker"
     assert_equal marker_contest_path(@c),
                  "/contests/#{@c.to_param}/marker"
+    assert_equal roles_path, '/roles'
+
+    r = Role.create
+    assert_equal role_path(r), "/roles/#{r.id}"
   end
 
   test 'assign_markers' do
@@ -45,6 +49,39 @@ class RolesControllerTest < ActionController::TestCase
     assert_equal flash[:notice], 'Korektor berhasil dibuang!'
     assert_redirected_to marker_contest_path(@c)
     assert_not marker.has_role? :marker, @lp
+  end
+
+  test 'manage' do
+    test_abilities Role, :manage, [nil, :panitia], [:admin]
+
+    get :manage
+    assert_response 200
+  end
+
+  test 'create' do
+    test_abilities Role, :create, [nil, :panitia], [:admin]
+
+    post :create, username: @user.username, role_name: :panitia
+    assert_redirected_to roles_path
+    assert_equal flash[:notice], 'Role berhasil ditambahkan!'
+
+    assert @user.has_role? :panitia
+  end
+
+  test 'create without username' do
+    post :create, username: 'asdf', role_name: :panitia
+    assert_redirected_to roles_path
+    assert_equal flash[:alert], 'Role gagal ditambahkan!'
+  end
+
+  test 'destroy' do
+    test_abilities Role, :destroy, [nil, :panitia], [:admin]
+
+    delete :destroy, user_id: @user.id, id: @user.roles.find_by(name: 'admin')
+    assert_redirected_to roles_path
+    assert_equal flash[:notice], 'Role berhasil dibuang!'
+
+    assert_not @user.has_role? :admin
   end
 
   private

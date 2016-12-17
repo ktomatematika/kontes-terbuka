@@ -3,6 +3,9 @@
   - if can? :create, Contest
     = link_to 'Kontes Baru', new_contest_path, class: 'btn'
 
+  - if can? :manage, Role
+    = link_to 'Manage Roles', roles_path, class: 'btn'
+
   - if can? :masq, Application
     = form_tag masq_path, html: { class: 'form-horizontal' } do
       .form-group

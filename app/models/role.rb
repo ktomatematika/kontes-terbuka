@@ -31,4 +31,8 @@ class Role < ActiveRecord::Base
   validates :resource_type,
             inclusion: { in: Rolify.resource_types },
             allow_nil: true
+
+  def to_s
+    name.humanize.titleize
+  end
 end

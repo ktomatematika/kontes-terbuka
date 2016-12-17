@@ -34,4 +34,30 @@ class RolesController < ApplicationController
     redirect_to marker_contest_path(@contest),
                 notice: 'Korektor berhasil dibuang!'
   end
+
+  def manage
+    @role_names = Role.where(resource_id: nil, resource_type: nil)
+                      .joins(:users)
+                      .group(:name)
+                      .order('count_user_id asc')
+                      .count(:user_id)
+                      .map(&:first)
+  end
+
+  def destroy
+    if User.find(params[:user_id]).remove_role(Role.find(params[:id]).name)
+      redirect_to roles_path, notice: 'Role berhasil dibuang!'
+    else
+      redirect_to roles_path, alert: 'Role gagal dibuang!'
+    end
+  end
+
+  def create
+    user = User.find_by(username: params[:username])
+    if user && user.add_role(params[:role_name])
+      redirect_to roles_path, notice: 'Role berhasil ditambahkan!'
+    else
+      redirect_to roles_path, alert: 'Role gagal ditambahkan!'
+    end
+  end
 end

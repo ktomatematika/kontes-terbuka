@@ -36,6 +36,12 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :roles, only: [:create, :destroy] do
+    collection do
+      get '', to: 'roles#manage', as: ''
+    end
+  end
+
   resources :contests, except: [:edit], shallow: true do
     member do
       get 'admin', to: 'contests#admin'
