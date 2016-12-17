@@ -64,8 +64,8 @@ sudo apt dist-upgrade
 To import database from the provided daily dumps, copy them to `import` folder
 in root. Then, run:
 ```bash
-chmod u+x import.sh
-./import.sh
+chmod u+x scripts/import.sh
+./scripts/import.sh
 ```
 
 ## Install LaTeX in Vagrant
@@ -73,8 +73,8 @@ LaTeX is installed by TeX Live with the provided profile. The installation
 provided is enough to run the LaTeX things this app needs without making it
 too bloated. Run:
 ```bash
-chmod u+x tex.sh
-./tex.sh
+chmod u+x scripts/tex.sh
+./scripts/tex.sh
 ```
 
 ## Contribute
