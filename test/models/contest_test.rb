@@ -456,4 +456,23 @@ class ContestTest < ActiveSupport::TestCase
     assert_equal job.count, 1
     assert_in_delta job.first[:run_at], Time.zone.now, 5
   end
+
+  test 'feedback and user contests finder methods' do
+    c = create(:contest)
+    ucs = create_list(:user_contest, 3, contest: c)
+    fqs = create_list(:feedback_question, 3, contest: c)
+
+    create(:feedback_answer, feedback_question: fqs.first,
+                             user_contest: ucs.third)
+    fqs.each do |fq|
+      create(:feedback_answer, feedback_question: fq, user_contest: ucs.first)
+    end
+
+    assert_equal c.full_feedback_user_contests.pluck(:id), [ucs.first.id],
+                 'Full feedback user contests is not working!'
+
+    assert_equal c.not_full_feedback_user_contests.sort(:id).pluck(:id),
+                 [ucs.second.id, ucs.third.id].sort,
+                 'Not full feedback user contests is not working!'
+  end
 end
