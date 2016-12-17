@@ -43,11 +43,11 @@ class Ability
 
     if user.has_role? :panitia
       can [:preview, :summary, :view_all, :admin, :download_marking_scheme,
-           :download_problem_pdf, :download_results], Contest
+           :download_problem_pdf, :download_results,
+           :download_results], Contest
       can [:index_full, :show_full, :show], User
       can :download_on_contest, FeedbackAnswer
       can [:admin, :profile], Application
-      can [:download_pdf, :download_marking_scheme, :download_reports], Contest
     end
 
     if user.has_role? :user_admin
