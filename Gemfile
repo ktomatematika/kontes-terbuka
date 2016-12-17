@@ -54,7 +54,7 @@ end
 ### UTILITIES
 
 # Schema Validations: to maintin referential integrity in database and models
-gem 'schema_validations', group: [:development, :test] # production :(
+gem 'schema_validations'
 # Add time validations
 gem 'validates_timeliness'
 # Allows more complex SQL queries
