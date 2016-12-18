@@ -343,6 +343,35 @@ class ContestTest < ActiveSupport::TestCase
                  'Submission zip location is not correct.'
   end
 
+  test 'refresh contest' do
+    c = create(:contest)
+    c.refresh
+
+    jobs = Delayed::Job.where(queue: "contest_#{c.id}").select do |j|
+      handler = YAML.load(j.handler)
+      handler.method_name == :refresh_results_pdf
+    end
+    assert_equal jobs.count, 1, 'Jobs created after refresh is not 1.'
+
+    handler = YAML.load(jobs.first.handler)
+    assert_equal handler.method_name, :refresh_results_pdf,
+                 'Calling refresh does not call refresh results pdf.'
+    assert_in_delta Time.zone.now, jobs.first.run_at, 5,
+                    'Calling refresh does not refresh immediately.'
+  end
+
+  test 'refresh_results_pdf' do
+    c = create(:full_contest)
+    c.refresh_results_pdf
+
+    assert_equal c.results_location,
+                 Rails.root.join('public', 'contest_files',
+                                 'results', "#{c.id}.pdf").to_s,
+                 'Contest results location is not correct.'
+    assert File.file?(c.results_location),
+           'Calling refresh results pdf does not create the pdf.'
+  end
+
   test 'contest complex methods' do
     c = create(:full_contest, short_problems: 1, long_problems: 1,
                               users: 5, gold_cutoff: 6,
@@ -502,7 +531,6 @@ class ContestTest < ActiveSupport::TestCase
         j[:method_name] == method && (c.feedback_time - j[:run_at]).abs <= 5
       end
       assert_equal job.count, 1
->>>>>>> f965b6e... update for new tests
     end
 
     c.update(start_time: Time.zone.now - 10.days,
@@ -514,6 +542,15 @@ class ContestTest < ActiveSupport::TestCase
       handler = YAML.load(j.handler)
       { class: handler.object.class.name, run_at: j.run_at,
         method_name: handler.method_name, args: handler.args }
+    end
+    [['EmailNotifications', :results_released],
+     ['LineNag', :result_and_next_contest],
+     ['FacebookPost', :results_released]].each do |arr|
+      job = jobs.select do |j|
+        j[:class] == arr[0] && j[:method_name] == arr[1] &&
+          (update_time - j[:run_at]).abs <= 5
+      end
+      assert_equal job.count, 1
     end
   end
 
@@ -531,20 +568,8 @@ class ContestTest < ActiveSupport::TestCase
     assert_equal c.full_feedback_user_contests.pluck(:id), [ucs.first.id],
                  'Full feedback user contests is not working!'
 
-<<<<<<< HEAD
     assert_equal c.not_full_feedback_user_contests.order(:id).pluck(:id),
                  [ucs.second.id, ucs.third.id].sort,
                  'Not full feedback user contests is not working!'
-=======
-    [['EmailNotifications', :results_released],
-     ['LineNag', :result_and_next_contest],
-     ['FacebookPost', :results_released]].each do |arr|
-      job = jobs.select do |j|
-        j[:class] == arr[0] && j[:method_name] == arr[1] &&
-          (update_time - j[:run_at]).abs <= 5
-      end
-      assert_equal job.count, 1
-    end
->>>>>>> f965b6e... update for new tests
   end
 end

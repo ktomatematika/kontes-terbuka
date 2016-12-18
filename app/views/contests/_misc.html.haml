@@ -1,16 +1,4 @@
 %h2 Macam-macam
-= link_to 'Download feedback',
-  contest_feedback_answers_path(contest_id: @contest.id),
-  class: 'btn' if can? :download_on_contest, FeedbackAnswer
-= link_to 'Download soal',
-  @contest.problem_pdf.url(:original, false),
-  class: 'btn btn-lg' if can? :download_pdf, @contest
-= link_to 'Download Marking Scheme',
-  @contest.marking_scheme.url(:original, false),
-  class: 'btn btn-lg' if can? :download_marking_scheme, @contest
-= link_to 'Download laporan',
-  reports_contest_path(@contest),
-  class: 'btn btn-lg' if can? :download_reports, @contest
 
 - if can? :read_problems, Contest
   %h3 Masukkan Problems
@@ -30,3 +18,8 @@
       .col-sm-8
         = check_box_tag :compile_only
     = submit_tag 'Submit', class: 'btn'
+
+- if can? :refresh, @contest
+  %h3 Refresh
+  = link_to 'Refresh', refresh_contest_path(@contest), method: :post,
+    class: 'btn'

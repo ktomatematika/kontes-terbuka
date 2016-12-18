@@ -10,6 +10,7 @@
 #  updated_at  :datetime         not null
 #  quantity    :integer
 #
+# rubocop:enable Metrics/LineLength
 
 class MarketItem < ActiveRecord::Base
   has_paper_trail

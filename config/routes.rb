@@ -53,6 +53,7 @@ Rails.application.routes.draw do
       get 'marker', to: 'roles#assign_markers'
       get 'ms-pdf', to: 'contests#download_marking_scheme'
       get 'reports', to: 'contests#download_reports'
+      post 'refresh', to: 'contests#refresh'
     end
 
     resources :user_contests, path: '/user-contests', only: [:new, :create] do

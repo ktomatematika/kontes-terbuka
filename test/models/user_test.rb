@@ -38,6 +38,7 @@
 #  fk_rails_87f75b7957  (color_id => colors.id) ON DELETE => nullify
 #  fk_rails_ce4a327a04  (status_id => statuses.id) ON DELETE => nullify
 #
+# rubocop:enable Metrics/LineLength
 
 require 'test_helper'
 

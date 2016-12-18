@@ -65,6 +65,7 @@ module ContestJobs
     EmailNotifications.new(self).delay(queue: "contest_#{id}").results_released
     LineNag.new(self).delay(queue: "contest_#{id}").result_and_next_contest
     FacebookPost.new(self).delay(queue: "contest_#{id}").results_released
+    delay(queue: "contest_#{id}").refresh
   end
 
   def jobs_on_feedback_time_end
@@ -76,6 +77,8 @@ module ContestJobs
     c = ContestFileBackup.new
     do_if_not_time(feedback_time, c, :backup_misc, 1)
     do_if_not_time(feedback_time, c, :backup_submissions, self, 1)
+
+    do_if_not_time(feedback_time, self, :refresh)
   end
 
   def award_points

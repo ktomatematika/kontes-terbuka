@@ -24,6 +24,8 @@ class ContestsControllerTest < ActionController::TestCase
                  '/contests/new'
     assert_equal contest_path(@c),
                  "/contests/#{@c.to_param}"
+    assert_equal refresh_contest_path(@c),
+                 "/contests/#{@c.to_param}/refresh"
   end
 
   test 'admin' do
@@ -191,7 +193,7 @@ class ContestsControllerTest < ActionController::TestCase
   test 'read_problems with compile_only' do
     post :read_problems, id: @c.id, answers: '0,1,2', problem_tex:
       Rack::Test::UploadedFile.new(File.path(TEX), 'application/x-tex'),
-      compile_only: true
+                         compile_only: true
 
     @c.reload
     assert_equal Paperclip.io_adapters.for(@c.problem_tex).read, File.read(TEX)
@@ -219,12 +221,33 @@ class ContestsControllerTest < ActionController::TestCase
     test_abilities create(:contest, start: -5, ends: -3,
                                     result_released: true),
                    :download_results, [], [nil, :panitia, :admin]
-    get :download_results, id: @c.id, format: :pdf
+    get :download_results, id: @c.id
 
     assert_response 200
     assert @response.header['Content-Disposition']
       .include?("filename=\"Hasil #{@c}.pdf\"")
     assert_equal @response.content_type, 'application/pdf'
+    assert_equal @response.body, IO.binread(@c.results_location)
+  end
+
+  test 'refresh' do
+    test_abilities @c, :refresh, [nil, :panitia], [:admin]
+
+    post :refresh, id: @c.id
+    assert_redirected_to contest_path(@c)
+    assert_equal flash[:notice], 'Refreshed!'
+
+    jobs = Delayed::Job.where(queue: "contest_#{@c.id}").select do |j|
+      handler = YAML.load(j.handler)
+      handler.method_name == :refresh_results_pdf
+    end
+    assert_equal jobs.count, 1, 'Jobs created after refresh is not 1.'
+
+    handler = YAML.load(jobs.first.handler)
+    assert_equal handler.method_name, :refresh_results_pdf,
+                 'Calling refresh does not call refresh results pdf.'
+    assert_in_delta Time.zone.now, jobs.first.run_at, 5,
+                    'Calling refresh does not refresh immediately.'
   end
 
   private

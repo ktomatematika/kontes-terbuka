@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/LineLength
 # == Schema Information
 #
 # Table name: short_problems
@@ -18,6 +19,7 @@
 #
 #  fk_rails_60f1de2193  (contest_id => contests.id) ON DELETE => cascade
 #
+# rubocop:enable Metrics/LineLength
 
 class ShortProblem < ActiveRecord::Base
   has_paper_trail
@@ -29,9 +31,6 @@ class ShortProblem < ActiveRecord::Base
   has_many :user_contests, through: :short_submissions
 
   validates :problem_no, numericality: { greater_than_or_equal_to: 1 }
-
-  # Callbacks
-  after_save { contest.refresh }
 
   # Methods
   def most_answer

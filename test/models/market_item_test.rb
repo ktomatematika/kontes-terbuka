@@ -1,4 +1,3 @@
-
 # == Schema Information
 #
 # Table name: market_items
@@ -11,3 +10,4 @@
 #  updated_at  :datetime         not null
 #  quantity    :integer
 #
+# rubocop:enable Metrics/LineLength

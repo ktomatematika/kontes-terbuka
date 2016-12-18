@@ -29,9 +29,6 @@ class LongProblem < ActiveRecord::Base
   has_paper_trail
   resourcify
 
-  # Callbacks
-  after_save { contest.refresh }
-
   # Associations
   belongs_to :contest
 

@@ -110,10 +110,16 @@ class ContestsController < ApplicationController
   end
 
   def download_results
-    send_file @contest.results_location, disposition: :inline
+    send_file @contest.results_location, disposition: :inline,
+                                         filename: "Hasil #{@contest}.pdf"
   rescue ActionController::MissingFile
     @contest.refresh_results_pdf
     retry
+  end
+
+  def refresh
+    @contest.refresh
+    redirect_to contest_path(@contest), notice: 'Refreshed!'
   end
 
   private

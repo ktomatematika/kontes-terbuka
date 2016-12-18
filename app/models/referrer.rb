@@ -11,6 +11,7 @@
 #
 #  index_referrers_on_name  (name) UNIQUE
 #
+# rubocop:enable Metrics/LineLength
 
 class Referrer < ActiveRecord::Base
   has_paper_trail

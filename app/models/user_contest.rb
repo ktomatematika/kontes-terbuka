@@ -24,9 +24,6 @@ class UserContest < ActiveRecord::Base
   include UserContestScope
   has_paper_trail
 
-  # Callbacks
-  after_save { contest.refresh }
-
   # Associations
   belongs_to :user
   belongs_to :contest
