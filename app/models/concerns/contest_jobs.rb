@@ -5,7 +5,6 @@ module ContestJobs
     destroy_prepared_jobs
     jobs_on_contest_end
     prepare_emails
-    prepare_line
     prepare_facebook
     jobs_on_result_released if changes['result_released'] == [false, true]
     jobs_on_feedback_time_end unless feedback_closed?
@@ -44,14 +43,6 @@ module ContestJobs
     end
   end
 
-  def prepare_line
-    l = LineNag.new self
-
-    do_if_not_time(start_time - 1.day, l, :contest_starting, '24 jam')
-    do_if_not_time(start_time, l, :contest_started)
-    do_if_not_time(end_time - 1.day, l, :contest_ending, '24 jam')
-  end
-
   def prepare_facebook
     f = FacebookPost.new self
 
@@ -63,7 +54,6 @@ module ContestJobs
 
   def jobs_on_result_released
     EmailNotifications.new(self).delay(queue: "contest_#{id}").results_released
-    LineNag.new(self).delay(queue: "contest_#{id}").result_and_next_contest
     FacebookPost.new(self).delay(queue: "contest_#{id}").results_released
     delay(queue: "contest_#{id}").refresh
   end

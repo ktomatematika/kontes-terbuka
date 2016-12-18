@@ -55,11 +55,6 @@ class UserContestTest < ActiveSupport::TestCase
     'User Contest with nil contest id can be saved.'
   end
 
-  test 'donation_nag cannot be blank' do
-    assert_not build(:user_contest, donation_nag: nil).save
-    'User Contest with nil donation nag can be saved.'
-  end
-
   test 'contest points' do
     c = create(:full_contest, short_problems: 1, long_problems: 1,
                               bronze_cutoff: 1, silver_cutoff: 5,

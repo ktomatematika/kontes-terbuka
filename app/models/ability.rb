@@ -16,7 +16,7 @@ class Ability
     can [:submit, :destroy_submissions, :download], LongSubmission,
         user_contest_id: user.user_contests.pluck(:id)
     can :create_on_contest, ShortSubmission
-    can [:new, :create, :stop_nag], UserContest, user: user
+    can [:new, :create], UserContest, user: user
     can [:new_on_contest, :create_on_contest], FeedbackAnswer
     can [:edit_on_user, :flip], UserNotification
 
