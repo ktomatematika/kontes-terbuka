@@ -39,7 +39,8 @@ class LongSubmissionsController < ApplicationController
       redirect_to mark_solo_path(@long_problem)
     end
     @long_submissions = @long_problem.long_submissions
-                                     .submitted.includes(:user_contest)
+                                     .submitted.order(:user_contest_id)
+                                     .includes(:user_contest)
     @markers = User.with_role :marker, @long_problem
   end
 

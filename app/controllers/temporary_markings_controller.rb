@@ -9,7 +9,7 @@ class TemporaryMarkingsController < ApplicationController
       )
     else
       @contest = @long_problem.contest
-      @long_submissions = @long_problem.long_submissions
+      @long_submissions = @long_problem.long_submissions.order(:user_contest_id)
       @markers = User.with_role(:marker, @long_problem)
                      .where.not(id: current_user.id)
     end

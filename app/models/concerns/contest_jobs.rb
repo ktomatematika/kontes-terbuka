@@ -101,13 +101,13 @@ module ContestJobs
   end
 
   def send_most_answers
-    answers = self.short_problems.order(:problem_no).map do |sp|
-      "No. #{sp.problem_no}: #{sp.most_answer.map { |s| s.answer }}"
+    answers = short_problems.order(:problem_no).map do |sp|
+      "No. #{sp.problem_no}: #{sp.most_answer.map(&:answer)}"
     end.join("\n")
     Mailgun.send_message to: User.with_role(:problem_admin).pluck(:email),
-      force_to_many: true, contest: self,
-      subject: 'Jawaban Terbanyak',
-      text: 'Berikut ini jawaban terbanyak di kontes ini, mohon ' \
+                         force_to_many: true, contest: self,
+                         subject: 'Jawaban Terbanyak',
+                         text: 'Berikut ini jawaban terbanyak di kontes ini, mohon ' \
       "dibandingkan dan dicek ulang bila jawaban aslinya beda.\n#{answers}"
   end
 
