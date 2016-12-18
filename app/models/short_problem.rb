@@ -30,6 +30,9 @@ class ShortProblem < ActiveRecord::Base
 
   validates :problem_no, numericality: { greater_than_or_equal_to: 1 }
 
+  # Callbacks
+  after_save { contest.refresh }
+
   # Methods
   def most_answer
     ShortProblem.find_by_sql ['SELECT answer, COUNT(*) AS count ' \

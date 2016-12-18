@@ -110,13 +110,10 @@ class ContestsController < ApplicationController
   end
 
   def download_results
-    @user_contests = @contest.results(user: :roles)
-    grab_problems
-
-    respond_to do |format|
-      format.html
-      format.pdf { render pdf: "Hasil #{@contest}", orientation: 'Landscape' }
-    end
+    send_file @contest.results_location, disposition: :inline
+  rescue ActionController::MissingFile
+    @contest.refresh_results_pdf
+    retry
   end
 
   private
