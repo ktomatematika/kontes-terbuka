@@ -175,8 +175,28 @@ class ContestsControllerTest < ActionController::TestCase
 
   test 'read_problems' do
     test_abilities @c, :read_problems, [nil, :marker], [:problem_admin, :admin]
-    get :read_problems, id: @c.id, answers: '3,5,7', problem_tex:
+    post :read_problems, id: @c.id, answers: '0,1,2', problem_tex:
       Rack::Test::UploadedFile.new(File.path(TEX), 'application/x-tex')
+
+    @c.reload
+    assert_equal Paperclip.io_adapters.for(@c.problem_tex).read, File.read(TEX)
+    assert_equal @c.short_problems.count, 14
+    assert_equal @c.long_problems.count, 4
+    3.times do |i|
+      assert_equal ShortProblem.find_by(contest: @c,
+                                        problem_no: (i + 1)).answer, i.to_s
+    end
+  end
+
+  test 'read_problems with compile_only' do
+    post :read_problems, id: @c.id, answers: '0,1,2', problem_tex:
+      Rack::Test::UploadedFile.new(File.path(TEX), 'application/x-tex'),
+      compile_only: true
+
+    @c.reload
+    assert_equal Paperclip.io_adapters.for(@c.problem_tex).read, File.read(TEX)
+    assert_equal @c.short_problems.count, 0
+    assert_equal @c.long_problems.count, 0
   end
 
   test 'summary' do

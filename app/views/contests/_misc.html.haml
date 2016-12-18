@@ -24,4 +24,9 @@
       = label_tag :answers, 'Jawaban (comma separated)', class: 'col-sm-4'
       .col-sm-8
         = text_field_tag :answers, '', class: 'form-control'
+    .form-group
+      = label_tag :compile_only, 'Update file saja (tidak update sistem)',
+        class: 'col-sm-4'
+      .col-sm-8
+        = check_box_tag :compile_only
     = submit_tag 'Submit', class: 'btn'

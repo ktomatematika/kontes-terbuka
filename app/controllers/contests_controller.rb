@@ -95,8 +95,9 @@ class ContestsController < ApplicationController
   end
 
   def read_problems
-    TexReader.new(@contest, params[:answers].split(','),
-                  params[:problem_tex]).run
+    t = TexReader.new(@contest, params[:answers].split(','),
+                      params[:problem_tex])
+    params[:compile_only] ? t.compile_tex : t.run
     redirect_to admin_contest_path(@contest), notice: 'TeX berhasil dibaca!'
   end
 

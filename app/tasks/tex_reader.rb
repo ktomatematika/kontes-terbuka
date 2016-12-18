@@ -14,40 +14,47 @@ class TexReader
 
   def run
     Contest.transaction do
-      sp_process.each_with_index do |sp, index|
-        ans = answers[index]
-        ans = 0 if ans.nil?
-        ShortProblem.create(contest: @contest, problem_no: (index + 1),
-                            statement: sp, answer: ans)
-      end
-
-      lp_process.each_with_index do |lp, index|
-        LongProblem.create(contest: @contest, problem_no: (index + 1),
-                           statement: lp)
-      end
-
-      tex_path = @contest.problem_tex.path
-
-      # Copy logo to be included in the PDF file
-      FileUtils.cp(
-        Rails.root.join('app', 'assets', 'images', 'logo-hires.png').to_s,
-        File.dirname(tex_path) + '/logo.png'
-      )
-
-      Dir.chdir(File.dirname(tex_path)) do
-        cmd_log = ''
-        3.times do # compile 3 times to get references in pdflatex right
-          cmd_log += `echo $PATH`.to_s
-          cmd_log += "\n\n"
-          cmd_log += `pdflatex -interaction=nonstopmode #{tex_path}`.to_s
-          cmd_log += "\n\n\n"
-        end
-        Mailgun.send_message contest: @contest, subject: 'Log pdflatex',
-                             text: cmd_log, to: '7744han@gmail.com'
-        raise 'TexReader Error' unless $CHILD_STATUS.exitstatus.zero?
-      end
-      @contest.update(problem_pdf: File.open(tex_path[0...-3] + 'pdf', 'r'))
+      insert_problems
+      compile_tex
     end
+  end
+
+  def insert_problems
+    sp_process.each_with_index do |sp, index|
+      ans = answers[index]
+      ans = 0 if ans.nil?
+      ShortProblem.create(contest: @contest, problem_no: (index + 1),
+                          statement: sp, answer: ans)
+    end
+
+    lp_process.each_with_index do |lp, index|
+      LongProblem.create(contest: @contest, problem_no: (index + 1),
+                         statement: lp)
+    end
+  end
+
+  def compile_tex
+    tex_path = @contest.problem_tex.path
+
+    # Copy logo to be included in the PDF file
+    FileUtils.cp(
+      Rails.root.join('app', 'assets', 'images', 'logo-hires.png').to_s,
+      File.dirname(tex_path) + '/logo.png'
+    )
+
+    Dir.chdir(File.dirname(tex_path)) do
+      cmd_log = ''
+      3.times do # compile 3 times to get references in pdflatex right
+        cmd_log += `echo $PATH`.to_s
+        cmd_log += "\n\n"
+        cmd_log += `pdflatex -interaction=nonstopmode #{tex_path}`.to_s
+        cmd_log += "\n\n\n"
+      end
+      Mailgun.send_message contest: @contest, subject: 'Log pdflatex',
+                           text: cmd_log, to: '7744han@gmail.com'
+      raise 'TexReader Error' unless $CHILD_STATUS.exitstatus.zero?
+    end
+    @contest.update(problem_pdf: File.open(tex_path[0...-3] + 'pdf', 'r'))
   end
 
   private
