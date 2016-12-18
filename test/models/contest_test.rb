@@ -477,27 +477,43 @@ class ContestTest < ActiveSupport::TestCase
     assert_equal line.select { |j| j[:method_name] == :contest_ending }.count, 1
 
     facebook = jobs.select { |j| j[:class] == 'FacebookPost' }
-    assert_equal facebook.select { |j| j[:method_name] == :contest_starting }.count,
-                 1
-    assert_equal facebook.select { |j| j[:method_name] == :contest_started }.count,
-                 1
-    assert_equal facebook.select { |j| j[:method_name] == :contest_ending }.count, 1
-    assert_equal facebook.select { |j| j[:method_name] == :feedback_ending }.count, 1
-    assert_equal facebook.select { |j| j[:method_name] == :certificate_sent }.count, 1
+    assert_equal(facebook.select do |j|
+      j[:method_name] == :contest_starting
+    end.count, 1)
+    assert_equal(facebook.select do |j|
+      j[:method_name] == :contest_started
+    end.count, 1)
+    assert_equal(facebook.select do |j|
+      j[:method_name] == :contest_ending
+    end.count, 1)
+    assert_equal(facebook.select do |j|
+      j[:method_name] == :feedback_ending
+    end.count, 1)
 
-    [:check_veteran, :award_points, :send_certificates].each do |m|
-      job = jobs.select { |j| j[:method_name] == m }
+    [:check_veteran, :award_points, :send_certificates,
+     :certificate_sent].each do |method|
+      job = jobs.select { |j| j[:method_name] == method }
       assert_equal job.count, 1
       assert_in_delta job.first[:run_at], c.feedback_time, 5
-      assert_equal job.first[:class], 'Contest'
+    end
+
+    [:backup_misc, :backup_submissions].each do |method|
+      job = jobs.select do |j|
+        j[:method_name] == method && (c.feedback_time - j[:run_at]).abs <= 5
+      end
+      assert_equal job.count, 1
+>>>>>>> f965b6e... update for new tests
     end
 
     c.update(start_time: Time.zone.now - 10.days,
              end_time: Time.zone.now - 5.days,
              result_released: true)
+    update_time = Time.zone.now
+
     jobs = Delayed::Job.where(queue: "contest_#{c.id}").map do |j|
       handler = YAML.load(j.handler)
-      { run_at: j.run_at, method_name: handler.method_name }
+      { class: handler.object.class.name, run_at: j.run_at,
+        method_name: handler.method_name, args: handler.args }
     end
   end
 
@@ -515,8 +531,20 @@ class ContestTest < ActiveSupport::TestCase
     assert_equal c.full_feedback_user_contests.pluck(:id), [ucs.first.id],
                  'Full feedback user contests is not working!'
 
+<<<<<<< HEAD
     assert_equal c.not_full_feedback_user_contests.order(:id).pluck(:id),
                  [ucs.second.id, ucs.third.id].sort,
                  'Not full feedback user contests is not working!'
+=======
+    [['EmailNotifications', :results_released],
+     ['LineNag', :result_and_next_contest],
+     ['FacebookPost', :results_released]].each do |arr|
+      job = jobs.select do |j|
+        j[:class] == arr[0] && j[:method_name] == arr[1] &&
+          (update_time - j[:run_at]).abs <= 5
+      end
+      assert_equal job.count, 1
+    end
+>>>>>>> f965b6e... update for new tests
   end
 end
