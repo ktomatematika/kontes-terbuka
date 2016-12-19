@@ -113,8 +113,6 @@ group :production do
   gem 'daemons'
   # Email with Mailgun
   gem 'rest-client'
-  # API for LINE bot
-  gem 'line-bot-api', '< 1'
 end
 
 ### END UTILITIES
