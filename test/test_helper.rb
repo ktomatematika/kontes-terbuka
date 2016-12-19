@@ -1,20 +1,6 @@
 ENV['RAILS_ENV'] ||= 'test'
 
 require 'simplecov'
-require 'coveralls'
-SimpleCov.formatters = [Coveralls::SimpleCov::Formatter,
-                        SimpleCov::Formatter::HTMLFormatter]
-SimpleCov.start 'rails' do
-  add_filter do |source_file|
-    source_file.lines.count < 5
-  end
-
-  # The dev is too lazy to test these legacy stuff
-  add_filter '/app/controllers/line_controller.rb'
-  add_filter '/app/controllers/travis_controller.rb'
-  add_filter '/app/tasks/dump_kto_hasil.rb'
-  add_filter 'app/tasks/line_nag.rb'
-end
 
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
