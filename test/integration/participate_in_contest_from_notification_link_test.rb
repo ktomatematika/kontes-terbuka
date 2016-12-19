@@ -33,11 +33,6 @@ class ParticipateInContestFromNotificationLinkTest <
     user_contest = UserContest.find_by(contest: contest, user: user)
     assert_not_nil user_contest, 'User Contest is not created.'
 
-    assert page.has_content?('Tunggu sebentar'), 'Nag is not displayed.'
-    sleep(4)
-
-    find('#close-nag').click
-
     contest.short_problems.each do |sp|
       fill_in "short_submission_#{sp.id}", with: sp.id
     end
