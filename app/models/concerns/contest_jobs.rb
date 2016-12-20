@@ -7,7 +7,7 @@ module ContestJobs
     prepare_emails
     prepare_facebook
     jobs_on_result_released if changes['result_released'] == [false, true]
-    jobs_on_feedback_time_end unless feedback_closed?
+    jobs_on_feedback_time_end
     backup_files
   end
 
@@ -63,12 +63,11 @@ module ContestJobs
     do_if_not_time(feedback_time, self, :award_points)
     do_if_not_time(feedback_time, self, :send_certificates)
     do_if_not_time(feedback_time, FacebookPost.new(self), :certificate_sent)
+    do_if_not_time(feedback_time, self, :refresh)
 
     c = ContestFileBackup.new
     do_if_not_time(feedback_time, c, :backup_misc, 1)
     do_if_not_time(feedback_time, c, :backup_submissions, self, 1)
-
-    do_if_not_time(feedback_time, self, :refresh)
   end
 
   def award_points
