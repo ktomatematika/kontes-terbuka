@@ -34,23 +34,17 @@ class HomeController < ApplicationController
     end.to_h
   end
 
-  def faq
-  end
+  def faq; end
 
-  def book
-  end
+  def book; end
 
-  def donate
-  end
+  def donate; end
 
-  def privacy
-  end
+  def privacy; end
 
-  def terms
-  end
+  def terms; end
 
-  def contact
-  end
+  def contact; end
 
   def masq
     authorize! :masq, Application

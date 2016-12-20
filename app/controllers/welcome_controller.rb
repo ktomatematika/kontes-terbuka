@@ -6,6 +6,5 @@ class WelcomeController < ApplicationController
     @next_contest = Contest.next_contest
   end
 
-  def sign
-  end
+  def sign; end
 end

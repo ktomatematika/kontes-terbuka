@@ -1,8 +1,7 @@
 class UserNotificationsController < ApplicationController
   load_and_authorize_resource
 
-  def edit_on_user
-  end
+  def edit_on_user; end
 
   def flip
     notif_id = params[:notification_id]

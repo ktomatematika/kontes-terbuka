@@ -9,8 +9,7 @@ class ShortProblemsController < ApplicationController
     redirect_to admin_contest_path(@contest), notice: 'Short Problem terbuat!'
   end
 
-  def edit
-  end
+  def edit; end
 
   def update
     if @short_problem.update(short_problem_params)

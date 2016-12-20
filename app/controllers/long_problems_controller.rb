@@ -13,8 +13,7 @@ class LongProblemsController < ApplicationController
     redirect_to admin_contest_path(@contest), notice: 'Long Problem terbuat!'
   end
 
-  def edit
-  end
+  def edit; end
 
   def update
     if @long_problem.update(long_problem_params)

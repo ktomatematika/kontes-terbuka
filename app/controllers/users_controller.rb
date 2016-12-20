@@ -56,8 +56,7 @@ class UsersController < ApplicationController
     end
   end
 
-  def reset_password
-  end
+  def reset_password; end
 
   def process_reset_password
     user = User.find_by verification: params[:verification]
@@ -79,8 +78,7 @@ class UsersController < ApplicationController
     end
   end
 
-  def change_password
-  end
+  def change_password; end
 
   def process_change_password
     if params[:new_password] != params[:confirm_new_password]
@@ -141,8 +139,7 @@ class UsersController < ApplicationController
     @users = @users.where(enabled: true)
   end
 
-  def edit
-  end
+  def edit; end
 
   def update
     if @user.update(user_edit_params)

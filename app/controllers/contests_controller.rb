@@ -9,8 +9,7 @@ class ContestsController < ApplicationController
     "contest_id:#{params[:contest_id]}"
   end
 
-  def new
-  end
+  def new; end
 
   def create
     if @contest.save
@@ -40,8 +39,7 @@ class ContestsController < ApplicationController
     grab_problems
   end
 
-  def index
-  end
+  def index; end
 
   def update
     if can? :update, @contest

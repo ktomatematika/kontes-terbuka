@@ -15,8 +15,7 @@ class FeedbackQuestionsController < ApplicationController
     redirect_to admin_contest_path @contest
   end
 
-  def edit
-  end
+  def edit; end
 
   def update
     if @feedback_question.update(feedback_question_params)

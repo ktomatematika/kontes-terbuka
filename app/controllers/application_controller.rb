@@ -8,8 +8,7 @@ class ApplicationController < ActionController::Base
                 :load_contest_from_contest_params
   skip_before_action :require_login, only: :maintenance
 
-  def maintenance
-  end
+  def maintenance; end
 
   private
 
