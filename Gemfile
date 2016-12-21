@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 ### BASICS
 
 # Ruby version
-ruby '2.3.1'
+ruby '2.3.3'
 # Rails version
 gem 'rails', '~> 4'
 # Use postgres as database
