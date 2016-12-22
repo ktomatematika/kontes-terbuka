@@ -1,14 +1,13 @@
 language: ruby
-cache: bundler
 rvm: 2.3.3
 bundler_args: "--without production development"
 services: postgresql
-sudo: required
 
 matrix:
   include:
     - env: "TEST_SUITE=units"
     - env: "TEST_SUITE=functionals"
+      sudo: required
       install: scripts/tex.sh
     - env: "TEST_SUITE=integration"
       install: scripts/integration.sh
