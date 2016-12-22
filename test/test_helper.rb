@@ -53,12 +53,7 @@ module ActionDispatch
     # Make the Capybara DSL available in all integration tests
     include Capybara::DSL
 
-    url = "#{ENV['SAUCE_USERNAME']}:#{ENV['SAUCE_ACCESS_KEY']}" \
-    '@localhost:4445/wd/hub'
-    Capybara.register_driver :sauce do |app|
-      Capybara::Selenium::Driver.new(app, browser: :remote, url: url)
-    end
-    Capybara.default_driver = ENV['TRAVIS'] ? :sauce : :selenium
+    Capybara.default_driver = :selenium
 
     # Reset sessions and driver between tests
     # Use super wherever this method is redefined in your
