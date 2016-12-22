@@ -18,6 +18,8 @@ before_script:
 - psql -c 'create database kontes_terbuka_test;' -U postgres
 - cp config/database.yml.travis config/database.yml
 - cp .env.default .env
+- if [ "$TEST_SUITE" = "functionals" ]; then scripts/tex.sh; fi
+- if [ "$TEST_SUITE" = "integration" ]; then scripts/integration.sh; fi
 script: "bundle exec rake test:$TEST_SUITE"
 after_script:
 - rubocop -D -f simple --except AbcSize,MethodLength
