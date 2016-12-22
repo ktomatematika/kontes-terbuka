@@ -1,0 +1,15 @@
+.heading-with-btn
+  %h2 Info Kontes
+  .btn#show-contest-about Tampilkan
+
+#contest-about
+  %ul
+    %li Mulai: #{@contest.start_time}
+    %li Selesai: #{@contest.end_time}
+    %li Deadline koreksi: #{@contest.result_time}
+    %li Deadline laporan, feedback peserta: #{@contest.feedback_time}
+  %span Banyak peserta: #{@contest.user_contests.count}
+  %ul
+    - @contest.long_problems.order(:problem_no).each do |lp|
+      - count = lp.long_submissions.submitted.length
+      %li Koreksian no. #{lp.problem_no}: #{count}

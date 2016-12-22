@@ -64,9 +64,11 @@ function fill_contest_text() {
 $(document).ready(function() {
 	var show_all_problems = false;
 	var show_own_results = false;
+	var show_contest_about = false;
 
 	$('#all-problems').hide();
 	$('#own-results').hide();
+	$('#contest-about').hide();
 
 	$('#show-all-problems').click(function() {
 		if (show_all_problems) {
@@ -92,6 +94,20 @@ $(document).ready(function() {
 			$('#own-results').slideDown('slow', function() {
 				$('#show-own-results').text('Sembunyikan');
 				show_own_results = true;
+			});
+		}
+	});
+
+	$('#show-contest-about').click(function() {
+		if (show_contest_about) {
+			$('#contest-about').slideUp('slow', function() {
+				$('#show-contest-about').text('Tampilkan');
+				show_contest_about = false;
+			});
+		} else {
+			$('#contest-about').slideDown('slow', function() {
+				$('#show-contest-about').text('Sembunyikan');
+				show_contest_about = true;
 			});
 		}
 	});

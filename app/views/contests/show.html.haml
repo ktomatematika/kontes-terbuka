@@ -10,7 +10,10 @@
   .row
     %section
       = render 'header'
-      - if can?(:preview, Contest) && !@contest.started?
+      - if can?(:contest_about, @contest)
+        = render 'contest_about'
+
+      - if can?(:preview, @contest) && !@contest.started?
         = render 'contest_preview'
 
       - if @contest.currently_in_contest?
