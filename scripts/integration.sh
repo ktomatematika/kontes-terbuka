@@ -5,3 +5,4 @@ sh -e /etc/init.d/xvfb start
 
 wget https://github.com/mozilla/geckodriver/releases/download/${GECKODRIVER_VERSION}/geckodriver-${GECKODRIVER_VERSION}-linux64.tar.gz
 tar -xf geckodriver-${GECKODRIVER_VERSION}-linux64.tar.gz
+export PATH=$PWD:$PATH
