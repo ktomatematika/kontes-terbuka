@@ -14,6 +14,8 @@ matrix:
           packages: texlive-latex-base
     - env: "TEST_SUITE=integration"
       before_install: scripts/integration.sh
+      addons:
+        firefox: latest
 
 before_script:
 - psql -c 'create database kontes_terbuka_test;' -U postgres
