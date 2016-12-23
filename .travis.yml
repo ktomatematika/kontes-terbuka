@@ -8,9 +8,9 @@ matrix:
     - env: "TEST_SUITE=units"
     - env: "TEST_SUITE=functionals"
       sudo: required
-      install: scripts/tex.sh
+      before_install: scripts/tex.sh
     - env: "TEST_SUITE=integration"
-      install: scripts/integration.sh
+      before_install: scripts/integration.sh
       addons:
         sauce_connect:
           username: sayacvwo
