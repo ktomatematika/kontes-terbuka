@@ -9,8 +9,9 @@ env: # workaround
 matrix:
   include:
     - env: "TEST_SUITE=functionals"
-      sudo: required
-      before_install: scripts/tex.sh
+      before_install:
+        - sudo apt-get update -qq
+        - sudo apt-get install -y texlive-latex-base
     - env: "TEST_SUITE=integration"
       before_install: scripts/integration.sh
       addons:
