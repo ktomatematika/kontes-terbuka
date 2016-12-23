@@ -64,7 +64,9 @@ module ActionDispatch
     # Use super wherever this method is redefined in your
     # individual test classes
     def teardown
-      TransactionalCapybara::AjaxHelpers.wait_for_ajax(page)
+      unless ENV['TRAVIS']
+        TransactionalCapybara::AjaxHelpers.wait_for_ajax(page)
+      end
       Capybara.reset_sessions!
       Capybara.use_default_driver
     end
