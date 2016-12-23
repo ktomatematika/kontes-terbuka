@@ -54,7 +54,7 @@ module ActionDispatch
     include Capybara::DSL
 
     url = "#{ENV['SAUCE_USERNAME']}:#{ENV['SAUCE_ACCESS_KEY']}" \
-    '@localhost:4445/wd/hub'
+    '@localhost:9292/wd/hub'
     Capybara.register_driver :sauce do |app|
       Capybara::Selenium::Driver.new(app, browser: :remote, url: url)
     end
@@ -64,9 +64,7 @@ module ActionDispatch
     # Use super wherever this method is redefined in your
     # individual test classes
     def teardown
-      unless ENV['TRAVIS']
-        TransactionalCapybara::AjaxHelpers.wait_for_ajax(page)
-      end
+      TransactionalCapybara::AjaxHelpers.wait_for_ajax(page)
       Capybara.reset_sessions!
       Capybara.use_default_driver
     end
