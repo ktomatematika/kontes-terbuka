@@ -13,7 +13,7 @@ class Ability
                           Time.zone.now, Time.zone.now).pluck(:id)
     can [:download_problem_pdf, :give_feedback, :feedback_submit], Contest,
         id: UserContest.where(user: user).pluck(:contest_id)
-    can [:submit, :destroy_submissions, :download], LongSubmission,
+    can [:submit, :destroy, :download], LongSubmission,
         user_contest_id: user.user_contests.pluck(:id)
     can :create_on_contest, ShortSubmission
     can [:new, :create], UserContest, user: user
@@ -28,14 +28,16 @@ class Ability
          :process_change_notifications], User, id: user.id
 
     if user.has_role? :marking_manager
-      can [:mark_final, :start_mark_final, :download], LongProblem
+      can [:start_mark_final, :download], LongProblem
       can [:assign_markers, :create_marker, :remove_marker], Role
     end
 
     if user.has_role? :marker, :any
       can [:download, :autofill, :upload_report, :new_on_long_problem,
-           :modify_on_long_problem, :mark],
+           :modify_on_long_problem],
           LongProblem, id: LongProblem.with_role(:marker, user).pluck(:id)
+      can [:mark, :submit_mark], LongSubmission, long_problem_id:
+        LongProblem.with_role(:marker, user).pluck(:id)
       can :download_marking_scheme, Contest,
           id: LongProblem.with_role(:marker, user).pluck(:contest_id)
       can :admin, Application

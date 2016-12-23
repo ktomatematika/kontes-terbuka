@@ -1,36 +1,44 @@
 class LongSubmissionsController < ApplicationController
-  load_and_authorize_resource
+  load_resource :long_problem
+  load_and_authorize_resource :long_submission
 
-  def submit
-    LongSubmission.transaction do
-      @long_submission.submission_pages.destroy_all
-      @long_submission.update!(submission_params)
+  def create
+    contest = @long_problem.contest
+    @long_submission.long_problem = @long_problem
+    @long_submission.user_contest_id = params[:user_contest_id]
+    @long_submission.submission_pages.each do |sp|
+      sp.long_submission = @long_submission
     end
-    redirect_to @contest, notice: 'Jawaban bagian B berhasil diupload!'
-  rescue ActiveRecord::ActiveRecordError
-    redirect_to @contest,
-                alert: 'Jawaban bagian B gagal dikirim! Jika ini berlanjut, ' \
-                "#{ActionController::Base.helpers.link_to 'kontak kami',
-                                                          contact_path}."
+
+    if @long_submission.save
+      redirect_to contest, notice: 'Jawaban bagian B berhasil diupload!'
+    else
+      redirect_to contest,
+                  alert: 'Jawaban bagian B gagal dikirim! ' \
+                  'Jika ini berlanjut, ' \
+                  "#{ActionController::Base.helpers.link_to 'kontak kami',
+                                                            contact_path}."
+    end
   end
 
-  def destroy_submissions
-    if @long_submission.submission_pages.destroy_all
+  def destroy
+    if @long_submission.destroy
       flash[:notice] = 'Jawaban Anda berhasil dibuang!'
     else
       flash[:alert] = 'Jawaban Anda gagal dibuang! Jika ini terjadi terus, ' \
                       "#{ActionController::Base.helpers.link_to 'kontak kami',
                                                                 contact_path}."
     end
-    redirect_to @contest
+    redirect_to contest_path(@long_submission.long_problem.contest)
   end
 
   def download
     @long_submission.compress
     send_file @long_submission.zip_location
   rescue Errno::ENOENT
-    redirect_to @contest, alert: 'Jawaban Anda tidak ditemukan! ' \
-    'Mohon buang dan upload ulang.'
+    redirect_to contest_path(@long_submission.long_problem.contest),
+                alert: 'Jawaban Anda tidak ditemukan! Mohon buang ' \
+                'dan upload ulang.'
   end
 
   def mark
@@ -42,6 +50,7 @@ class LongSubmissionsController < ApplicationController
                                      .submitted.order(:user_contest_id)
                                      .includes(:user_contest)
     @markers = User.with_role :marker, @long_problem
+    @contest = @long_problem.contest
   end
 
   def submit_mark
@@ -61,7 +70,7 @@ class LongSubmissionsController < ApplicationController
 
   private
 
-  def submission_params
+  def long_submission_params
     params.require(:long_submission).permit(
       submission_pages_attributes: [:page_number, :submission, :_destroy, :id]
     )

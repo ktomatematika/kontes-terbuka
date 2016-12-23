@@ -4,7 +4,7 @@ class TemporaryMarkingsController < ApplicationController
   def new_on_long_problem
     if !current_user.has_role?(:marker, @long_problem) ||
        @long_problem.start_mark_final
-      redirect_to long_problem_temporary_markings_path(
+      redirect_to long_problem_long_submissions_path(
         long_problem_id: @long_problem.id
       )
     else

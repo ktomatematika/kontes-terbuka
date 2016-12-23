@@ -11,6 +11,7 @@ Rails.application.routes.draw do
       get 'change-password', to: 'users#change_password'
       post 'change-password', to: 'users#process_change_password'
       patch 'referrer-update', to: 'users#referrer_update'
+      put 'referrer-update', to: 'users#referrer_update'
     end
 
     collection do
@@ -56,11 +57,7 @@ Rails.application.routes.draw do
       post 'refresh', to: 'contests#refresh'
     end
 
-    resources :user_contests, path: '/user-contests', only: [:new, :create] do
-      member do
-        post 'stop-nag', to: 'user_contests#stop_nag'
-      end
-    end
+    resources :user_contests, path: '/user-contests', only: [:new, :create]
 
     resources :short_problems, path: '/short-problems',
                                except: [:index, :new, :show] do
@@ -82,8 +79,10 @@ Rails.application.routes.draw do
         delete 'marker', to: 'roles#remove_marker'
         get 'submissions', to: 'long_problems#download_submissions'
         patch 'autofill', to: 'long_problems#autofill'
+        put 'autofill', to: 'long_problems#autofill'
         post 'upload-report', to: 'long_problems#upload_report'
         patch 'start-mark-final', to: 'long_problems#start_mark_final'
+        put 'start-mark-final', to: 'long_problems#start_mark_final'
       end
 
       collection do
@@ -97,16 +96,16 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :long_submissions, path: '/long-submissions', only: [] do
+      resources :long_submissions, path: '/long-submissions',
+                                   only: [:create, :destroy] do
         member do
           get '', to: 'long_submissions#download', as: ''
-          post '', to: 'long_submissions#submit'
-          delete '', to: 'long_submissions#destroy_submissions'
         end
 
         collection do
           get '', to: 'long_submissions#mark', as: ''
-          post '', to: 'long_submissions#submit_mark'
+          patch '', to: 'long_submissions#submit_mark'
+          put '', to: 'long_submissions#submit_mark'
         end
       end
     end
@@ -143,7 +142,6 @@ Rails.application.routes.draw do
   post '/masq', to: 'home#masq'
   delete '/masq', to: 'home#unmasq'
 
-  post '/line-bot', to: 'line#callback'
   post '/travis', to: 'travis#pass'
 
   match '*path', to: 'errors#error_4xx', via: :all

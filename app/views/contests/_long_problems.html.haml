@@ -11,25 +11,14 @@
   - @long_problems.each do |prob|
     %h5.problem_no No. #{prob.problem_no}
     = latex_and_markdown :div, prob.statement
-    - ls = @user_contest.long_submissions.find_by(long_problem: prob)
+    - ls = LongSubmission.find_or_initialize_by(user_contest: @user_contest,
+      long_problem: prob)
 
-    - if ls.submitted?
-      %p.text-warning.text-justify
-        Anda sudah mengunggah jawaban. Jika Anda ingin mengubah jawaban Anda,
-        klik 'buang' di bawah dan lakukan pengunggahan ulang.
-        %div
-          = link_to 'Lihat',
-            contest_long_submission_download_path(@contest, ls), class: 'btn'
-          = link_to 'Buang',
-            contest_long_submission_destroy_subs_path(@contest, ls),
-            method: :delete, class: 'btn',
-            data: { confirm: 'Anda yakin ingin membuang jawaban?' }
-
-    - else
+    - if ls.new_record?
       = nested_form_for ls,
-        url: long_submission_path(ls),
+        url: long_problem_long_submissions_path(prob, ls),
         html: { multipart: true }, method: :post do |f|
-        = hidden_field_tag 'contest_id', @contest.id
+        = hidden_field_tag :user_contest_id, @user_contest.id
         = f.fields_for :submission_pages do |page_form|
           .form-group
             = page_form.text_field :page_number,
@@ -41,3 +30,15 @@
         = f.link_to_add 'Tambah halaman', :submission_pages,
           class: 'long-problem-file'
         = f.submit 'Jawab', class: 'btn'
+
+    - else
+      %p.text-warning.text-justify
+        Anda sudah mengunggah jawaban. Jika Anda ingin mengubah jawaban Anda,
+        klik 'buang' di bawah dan lakukan pengunggahan ulang.
+        %div
+          = link_to 'Lihat',
+            long_submission_path(ls), class: 'btn'
+          = link_to 'Buang',
+            long_submission_path(ls), class: 'btn',
+            method: :delete,
+            data: { confirm: 'Anda yakin ingin membuang jawaban?' }

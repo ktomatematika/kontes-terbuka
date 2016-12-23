@@ -23,7 +23,7 @@ class TemporaryMarkingsControllerTest < ActionController::TestCase
                    [nil, :panitia, [:marker, create(:long_problem)]],
                    [[:marker, @lp], :admin]
     get :new_on_long_problem, long_problem_id: @lp.id
-    assert_redirected_to long_problem_temporary_markings_path(
+    assert_redirected_to long_problem_long_submissions_path(
       long_problem_id: @lp.id
     )
   end
@@ -35,7 +35,7 @@ class TemporaryMarkingsControllerTest < ActionController::TestCase
     @lp.update(start_mark_final: true)
     @user.add_role :marker, @lp
     get :new_on_long_problem, long_problem_id: @lp.id
-    assert_redirected_to long_problem_temporary_markings_path(
+    assert_redirected_to long_problem_long_submissions_path(
       long_problem_id: @lp.id
     )
   end

@@ -77,6 +77,6 @@ module ApplicationHelper
   def list_of_problems(lp)
     text = lp.to_s
     text += ' (laporan sudah)' if lp.report?
-    link_to text, mark_solo_path(lp)
+    link_to text, long_problem_temporary_markings_path(long_problem_id: lp.id)
   end
 end

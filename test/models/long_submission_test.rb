@@ -145,4 +145,14 @@ class LongSubmissionTest < ActiveSupport::TestCase
                    .reject { |n| n == x },
                  'Submitted long submission scope is not working.'
   end
+
+  test 'long submission on destroy makes submission pages destroyed' do
+    sp = create(:submission_page)
+    sp.long_submission.destroy
+    assert_nil SubmissionPage.find_by(id: sp.id),
+               'When long submission is destroyed, ' \
+               'submission page is not destroyed'
+    assert File.file?(sp.submission.path), 'When long submission is ' \
+      'destroyed, submission page attachment remains.'
+  end
 end

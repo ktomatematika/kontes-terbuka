@@ -37,16 +37,16 @@ class SubmissionPage < ActiveRecord::Base
                     'kontes:cid_no:pno_peserta:ucid_hal:page_number.:extension'
   validates_with AttachmentPresenceValidator, attributes: :submission
   validates_attachment_content_type :submission,
-                                    content_type: ['application/pdf',
+                                    content_type: ['application/pdf', # .pdf
                                                    'application/vnd.' \
                                                    'openxmlformats-' \
                                                    'officedocument.' \
                                                    'wordprocessingml.' \
-                                                   'document',
-                                                   'application/msword',
-                                                   'image/png',
-                                                   'image/jpeg',
-                                                   'application/zip']
+                                                   'document', # .docx
+                                                   'application/msword', # .doc
+                                                   'image/png', # .png
+                                                   'image/jpeg', # .jpg/.jpeg
+                                                   'application/zip'] # .zip
 
   # Paperclip interpolations
   Paperclip.interpolates :cid do |attachment, _style|

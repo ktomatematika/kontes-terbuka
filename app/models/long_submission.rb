@@ -29,7 +29,7 @@ class LongSubmission < ActiveRecord::Base
   # Associations
   belongs_to :user_contest
   belongs_to :long_problem
-  has_many :submission_pages
+  has_many :submission_pages, dependent: :destroy
   has_many :temporary_markings
 
   # Other ActiveRecord
