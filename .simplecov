@@ -14,3 +14,8 @@ SimpleCov.start do
   add_filter 'db'
   add_filter 'test'
 end
+
+SimpleCov.at_exit do
+  SimpleCov.minimum_coverage 90
+  SimpleCov.result.format!
+end
