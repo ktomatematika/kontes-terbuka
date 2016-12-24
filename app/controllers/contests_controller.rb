@@ -33,9 +33,17 @@ class ContestsController < ApplicationController
     else
       @mask = false # agak gimanaaa gitu
 
-      @user_contests = @contest.results(user: :roles) # this is a big query
+      # This is a big query
+      @user_contests = @contest.results(user: [:roles, :province])
       @user_contest = @user_contests.find { |uc| uc.user == current_user }
+      if @user_contest
+        @long_submissions = @user_contest.long_submissions
+                                         .includes(:long_problem)
+      end
 
+      @same_province_ucs = @user_contests.select do |uc|
+        uc.user.province_id == current_user.province_id
+      end
       if cannot? :view_all, @contest
         @user_contests = @user_contests.reject { |uc| uc.award.empty? }
       end

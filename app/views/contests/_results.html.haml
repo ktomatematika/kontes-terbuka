@@ -1,15 +1,56 @@
 %article#all-result
-  %h2 Leaderboard
+  %h2 Hasil Kontes
   - if can? :download_results, @contest
     = link_to 'Download Hasil Lengkap',
       results_contest_path(@contest),
       class: 'btn btn-lg'
+
+  %ul.nav.nav-tabs.contest-result-tabs
+    %li.active{ role: 'presentation' }
+      %a{ href: '#', data: { tab: 'same_province' } } Provinsiku (#{current_user.province})
+    %li{ role: 'presentation' }
+      %a{ href: '#', data: { tab: 'medallists' } } Semua medalis
+
   .table-responsive
-    %table.table.table-hover.table-bordered.contest-results
+    %table.table.table-hover.table-bordered.same-province.contest-results
       %thead
         %tr
           %th Peringkat
           %th Username
+          - unless @short_problems.empty? || @long_problems.empty?
+            %th Bagian A
+          - @long_problems.each do |lp|
+            - if @short_problems.empty?
+              %th No. #{lp.problem_no}
+            - else
+              %th Bagian B no. #{lp.problem_no}
+          %th Total
+          %th Penghargaan
+
+      %tbody
+        - @same_province_ucs.each do |uc|
+          - user = uc.user
+          %tr{ class: row_classes(user, ['clickable-row', uc.award.downcase]), data: { link: user_path(user) } }
+            %td= uc.rank
+            %td= user.username
+            - unless @no_short_probs
+              %td= uc.short_mark
+            - @long_problems.each do |lp|
+              - if mask_score?(lp)
+                - @mask = true
+                %td ?
+              - else
+                %td= score(uc, lp)
+            %td= @mask ? '?' : uc.total_mark
+            %td= uc.award
+
+  .table-responsive
+    %table.table.table-hover.table-bordered.medallists.contest-results
+      %thead
+        %tr
+          %th Peringkat
+          %th Username
+          %th Provinsi
           - unless @short_problems.empty? || @long_problems.empty?
             %th Bagian A
           - @long_problems.each do |lp|
@@ -26,6 +67,7 @@
           %tr{ class: row_classes(user, ['clickable-row', uc.award.downcase]), data: { link: user_path(user) } }
             %td= uc.rank
             %td= user.username
+            %td= user.province
             - unless @no_short_probs
               %td= uc.short_mark
             - @long_problems.each do |lp|

@@ -9,7 +9,7 @@
   - unless @long_problems.empty?
     %h3 Bagian B
     - @long_problems.each do |prob|
-      - ls = prob.long_submissions.find_by user_contest: @user_contest
+      - ls = @long_submissions.find { |l| l.long_problem == prob }
 
       %h4
         No. #{prob.problem_no}: #{score_out_of_total prob}
@@ -19,7 +19,7 @@
           = latex_and_markdown :div, prob.statement
         .col-sm-5
           %h5 Umpan Balik
-          = latex_and_markdown :div, ls.feedback
+          = latex_and_markdown :div, ls && ls.feedback
 
   %h3 Total: #{@user_contest.total_mark}/#{@contest.max_score} poin
   = show_award
