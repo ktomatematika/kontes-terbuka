@@ -142,7 +142,5 @@ Rails.application.routes.draw do
   post '/masq', to: 'home#masq'
   delete '/masq', to: 'home#unmasq'
 
-  post '/travis', to: 'travis#pass'
-
   match '*path', to: 'errors#error_4xx', via: :all
 end
