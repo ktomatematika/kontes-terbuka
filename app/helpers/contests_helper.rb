@@ -99,4 +99,12 @@ module ContestsHelper
       'Anda belum menjawab semua pertanyaan di bawah ini.'
     end
   end
+
+  # Helper for contests#long_problems, similar to find_or_initialize_by
+  # while avoiding the n + 1 query.
+  def long_submission_find_or_initialize_by(long_problem)
+    @long_submissions.find { |ls| ls.long_problem == long_problem } ||
+      LongSubmission.new(user_contest: @user_contest,
+                         long_problem: long_problem)
+  end
 end

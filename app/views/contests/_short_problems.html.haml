@@ -14,10 +14,9 @@
     - @short_problems.each do |prob|
       %h5.problem_no No. #{prob.problem_no}
       = latex_and_markdown :div, prob.statement
-      - submission = @user_contest.short_submissions.find_by short_problem: prob
+      - submission = @short_submissions.find { |ss| ss.short_problem == prob }
       - prev_answer = submission.nil? ? '' : submission.answer
       .form-group
         = f.text_field prob.id, class: 'form-control answer-input',
           placeholder: prev_answer, autocomplete: 'off'
-    = hidden_field_tag 'contest_id', @contest.id
     = f.submit 'Jawab', class: 'btn'

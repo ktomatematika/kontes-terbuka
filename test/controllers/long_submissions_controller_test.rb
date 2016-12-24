@@ -6,13 +6,13 @@ class LongSubmissionsControllerTest < ActionController::TestCase
   test 'routes' do
     ls = create(:long_submission)
     assert_equal long_submission_path(ls),
-      "/long-submissions/#{ls.id}"
+                 "/long-submissions/#{ls.id}"
     assert_equal long_problem_long_submissions_path(@lp),
-      "/long-problems/#{@lp.id}/long-submissions"
+                 "/long-problems/#{@lp.id}/long-submissions"
   end
 
   # TODO. Dev too lazy
-  test 'create' do; end
+  test 'create' {}
 
   test 'destroy' do
     test_abilities @ls, :destroy, [nil], [:admin]
@@ -47,7 +47,7 @@ class LongSubmissionsControllerTest < ActionController::TestCase
   end
 
   # TODO. Dev too lazy
-  test 'submit_mark' do; end
+  test 'submit_mark' {}
 
   private
 

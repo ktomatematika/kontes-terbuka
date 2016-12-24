@@ -24,7 +24,12 @@ class ContestsController < ApplicationController
   def show
     if @contest.currently_in_contest?
       @user_contest = UserContest.find_by(contest: @contest, user: current_user)
-      redirect_to new_contest_user_contest_path(@contest) if @user_contest.nil?
+      if @user_contest.nil?
+        redirect_to new_contest_user_contest_path(@contest)
+      else
+        @short_submissions = @user_contest.short_submissions
+        @long_submissions = @user_contest.long_submissions
+      end
     else
       @mask = false # agak gimanaaa gitu
 

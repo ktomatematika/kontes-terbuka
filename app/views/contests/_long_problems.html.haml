@@ -11,8 +11,7 @@
   - @long_problems.each do |prob|
     %h5.problem_no No. #{prob.problem_no}
     = latex_and_markdown :div, prob.statement
-    - ls = LongSubmission.find_or_initialize_by(user_contest: @user_contest,
-      long_problem: prob)
+    - ls = long_submission_find_or_initialize_by(prob)
 
     - if ls.new_record?
       = nested_form_for ls,
