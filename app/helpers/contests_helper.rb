@@ -107,4 +107,12 @@ module ContestsHelper
       LongSubmission.new(user_contest: @user_contest,
                          long_problem: long_problem)
   end
+
+  # Helper for contests#_own_results to show green or red depending on
+  # whether the short submission is correct or wrong.
+  def status(ss)
+    return '' if ss.nil?
+    return 'text-success' if ss.answer == ss.short_problem.answer
+    'text-danger'
+  end
 end

@@ -39,6 +39,8 @@ class ContestsController < ApplicationController
       if @user_contest
         @long_submissions = @user_contest.long_submissions
                                          .includes(:long_problem)
+        @short_submissions = @user_contest.short_submissions
+                                          .includes(:short_problem)
       end
 
       @same_province_ucs = @user_contests.select do |uc|
