@@ -117,12 +117,15 @@ class UsersController < ApplicationController
     @user_contests = Contest.where(id: @user.user_contests.pluck(:contest_id),
                                    result_released: true)
                             .order(id: :desc)
-                            .includes(:short_problems, :long_problems)
-                            .map do |c|
-                              c.results
-                               .find { |u| u.user_id == @user.id }
-                            end.paginate(page: params[:page_history],
-                                         per_page: 5)
+                            .includes(:long_problems)
+    if can? :show_full, @user
+      @user_contests = @user_contests.includes(:short_problems)
+    end
+    @user_contests = @user_contests.map do |c|
+      c.results
+       .find { |u| u.user_id == @user.id }
+    end.paginate(page: params[:page_history],
+                 per_page: 5)
     @point_transactions = PointTransaction.where(user: @user)
                                           .paginate(
                                             page: params[:page_transactions],
