@@ -134,10 +134,8 @@ class ContestsController < ApplicationController
   end
 
   def refresh
-    @contest = Contest.find(params[:id])
-    authorize! :refresh, @contest
     @contest.refresh
-    redirect_to contest_admin_path(contest_id: @contest.id),
+    redirect_to admin_contest_path(@contest)
                 notice: 'Refreshed!'
   end
 
