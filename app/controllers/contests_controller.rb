@@ -30,11 +30,16 @@ class ContestsController < ApplicationController
         @short_submissions = @user_contest.short_submissions
         @long_submissions = @user_contest.long_submissions
       end
-    else
+    elsif @contest.result_released || can?(:preview, @contest)
       @mask = false # agak gimanaaa gitu
 
       # This is a big query
       @user_contests = @contest.results(user: [:roles, :province])
+      @same_province_ucs = @user_contests.select do |uc|
+        uc.user.province_id == current_user.province_id
+      end
+      @user_contests = @user_contests.where('marks.total_mark >= bronze_cutoff')
+
       @user_contest = @user_contests.find { |uc| uc.user == current_user }
       if @user_contest
         @long_submissions = @user_contest.long_submissions
@@ -43,15 +48,8 @@ class ContestsController < ApplicationController
                                           .includes(:short_problem)
       end
 
-      @same_province_ucs = @user_contests.select do |uc|
-        uc.user.province_id == current_user.province_id
-      end
-      if cannot? :view_all, @contest
-        @user_contests = @user_contests.reject { |uc| uc.award.empty? }
-      end
+      grab_problems
     end
-
-    grab_problems
   end
 
   def index; end

@@ -11,5 +11,5 @@
   %span Banyak peserta: #{@contest.user_contests.count}
   %ul
     - @contest.long_problems.order(:problem_no).each do |lp|
-      - count = lp.long_submissions.submitted.length
+      - count = lp.long_submissions.count
       %li Koreksian no. #{lp.problem_no}: #{count}

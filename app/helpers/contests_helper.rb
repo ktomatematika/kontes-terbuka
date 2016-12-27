@@ -62,7 +62,8 @@ module ContestsHelper
 
   # Helper for contests#_results.
   def mask_score?(long_problem)
-    !@contest.result_released && current_user.has_role?(:marker, long_problem)
+    !@contest.result_released && current_user.has_cached_role?(:marker,
+                                                               long_problem)
   end
 
   # Helper for contests#summary, so that one knows whether one can see the

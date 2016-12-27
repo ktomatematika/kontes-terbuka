@@ -39,19 +39,10 @@ class LongSubmission < ActiveRecord::Base
   validates :score,
             numericality: { allow_nil: true, greater_than_or_equal_to: 0 }
 
-  # Scopes
-  scope :submitted, -> { joins(:submission_pages).group(:id) }
-
-  # TODO: Refactor several of the methods to concerns.
-
   SCORE_HASH = [*0..LongProblem::MAX_MARK].each_with_object({}) do |item, memo|
     memo[item] = item.to_s
   end
   SCORE_HASH[nil] = '-'
-
-  def submitted?
-    !submission_pages.empty?
-  end
 
   def zip_location
     (location + '.zip').freeze
