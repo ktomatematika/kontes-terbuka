@@ -258,9 +258,10 @@ class UserTest < ActiveSupport::TestCase
     assert_equal u3.to_param, "#{u3.id}-zxcvbnm123"
   end
 
-  test 'get_user function returns user from either username or email' do
+  test 'get_user function returns user from lowercase username or email' do
     create(:user, username: 'cobaaja', email: 'coba@aja.com')
     assert_not_nil User.get_user('cobaaja')
+    assert_not_nil User.get_user('cobaAja')
     assert_not_nil User.get_user('coba@aja.com')
   end
 
@@ -336,5 +337,10 @@ class UserTest < ActiveSupport::TestCase
     assert u.wrong_password_process,
            'wrong_password_process returns true with few tries'
     assert_not_nil u.verification, 'verification is not generated.'
+  end
+
+  test 'user is saved lowercase' do
+    u = create(:user, username: 'ASDFGH')
+    assert_equal u.username, 'asdfgh', 'User is not saved lowercase.'
   end
 end

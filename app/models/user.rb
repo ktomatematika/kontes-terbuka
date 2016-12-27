@@ -55,6 +55,11 @@ class User < ActiveRecord::Base
 
   before_validation do
     encrypt_password unless password.nil?
+    if username
+      username.downcase!
+    else
+      false
+    end
 
     # Rollback if province/status is nil.
     # Province/status can only be nil if the corresponding object is deleted
@@ -67,7 +72,6 @@ class User < ActiveRecord::Base
 
   before_save do
     add_role(:veteran) if osn == '1'
-    username = username.lowercase
   end
 
   after_save :clear_password
@@ -146,7 +150,7 @@ class User < ActiveRecord::Base
   end
 
   def self.get_user(username_or_email)
-    User.find_by('username ILIKE username_or_email') ||
-      User.find_by(email: username_or_email)
+    User.find_by("username ILIKE '#{username_or_email}' " \
+                 "OR email = '#{username_or_email}'")
   end
 end

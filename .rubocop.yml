@@ -10,6 +10,7 @@ AllCops:
     - 'log/**/*'
     - 'tmp/**/*'
     - '**/Gemfile'
+    - 'vendor/**/*'
 
 Rails:
   Enabled: true

@@ -302,6 +302,12 @@ class UsersControllerTest < ActionController::TestCase
     assert_equal @response.body, 'false'
   end
 
+  test 'check_unique not unique username different case' do
+    create(:user, username: 'asdfgh')
+    post :check_unique, username: 'ASdfGH'
+    assert_equal @response.body, 'false'
+  end
+
   test 'check_unique not unique email' do
     u = create(:user)
     post :check_unique, email: u.email
