@@ -48,6 +48,14 @@ module ActiveSupport
   end
 end
 
+module ActionController
+  class TestCase
+    def setup
+      request.env['HTTP_REFERER'] ||= root_url if request
+    end
+  end
+end
+
 module ActionDispatch
   class IntegrationTest
     # Make the Capybara DSL available in all integration tests

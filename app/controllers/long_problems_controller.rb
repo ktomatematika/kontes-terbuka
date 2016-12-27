@@ -19,7 +19,8 @@ class LongProblemsController < ApplicationController
     if @long_problem.update(long_problem_params)
       redirect_to admin_contest_path(@contest)
     else
-      render 'edit', alert: 'Esai gagal diupdate!'
+      flash.now[:alert] = 'Esai gagal diupdate!'
+      render 'edit'
     end
   end
 
