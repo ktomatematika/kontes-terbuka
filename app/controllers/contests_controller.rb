@@ -130,13 +130,7 @@ class ContestsController < ApplicationController
 
   def refresh
     @contest.refresh
-    redirect_to contest_path(@contest), notice: 'Refreshed!'
-  end
-
-  def refresh
-    @contest.refresh
-    redirect_to admin_contest_path(@contest)
-                notice: 'Refreshed!'
+    redirect_to admin_contest_path(@contest), notice: 'Refreshed!'
   end
 
   private
