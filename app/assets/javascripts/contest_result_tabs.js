@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	$('.contest-results').hide();
+	$('.result-tables .contest-results').hide();
 	$('.same-province').show();
 
 	var links = $('.contest-result-tabs a');

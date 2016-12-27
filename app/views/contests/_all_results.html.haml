@@ -1,0 +1,34 @@
+.table-responsive
+  %table.table.table-hover.table-bordered.medallists.contest-results
+    %thead
+      %tr
+        %th Peringkat
+        %th Username
+        %th Provinsi
+        - unless @short_problems.empty? || @long_problems.empty?
+          %th Bagian A
+        - @long_problems.each do |lp|
+          - if @short_problems.empty?
+            %th No. #{lp.problem_no}
+          - else
+            %th Bagian B no. #{lp.problem_no}
+        %th Total
+        %th Penghargaan
+
+    %tbody
+      - @user_contests.each do |uc|
+        - user = uc.user
+        %tr{ class: row_classes(user, ['clickable-row', uc.award.downcase]), data: { link: user_path(user) } }
+          %td= uc.rank
+          %td= user.username
+          %td= user.province
+          - unless @no_short_probs
+            %td= uc.short_mark
+          - @long_problems.each do |lp|
+            - if mask_score?(lp)
+              - @mask = true
+              %td ?
+            - else
+              %td= score(uc, lp)
+          %td= @mask ? '?' : uc.total_mark
+          %td= uc.award

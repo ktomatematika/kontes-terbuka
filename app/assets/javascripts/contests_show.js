@@ -62,11 +62,27 @@ function fill_contest_text() {
 }
 
 $(document).ready(function() {
+	var show_contest_about = false;
 	var show_all_problems = false;
 	var show_own_results = false;
 
+	$('#contest-about').hide();
 	$('#all-problems').hide();
 	$('#own-results').hide();
+
+	$('#show-contest-about').click(function() {
+		if (show_contest_about) {
+			$('#contest-about').slideUp('slow', function() {
+				$('#show-contest-about').text('Tampilkan');
+				show_contest_about = false;
+			});
+		} else {
+			$('#contest-about').slideDown('slow', function() {
+				$('#show-contest-about').text('Sembunyikan');
+				show_contest_about = true;
+			});
+		}
+	});
 
 	$('#show-all-problems').click(function() {
 		if (show_all_problems) {

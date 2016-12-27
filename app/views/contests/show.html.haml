@@ -27,8 +27,8 @@
           = render 'own_results'
           = render 'feedback' unless @contest.feedback_closed?
         = render 'results'
-      - elsif @contest.ended? && can?(:preview, Contest)
+      - elsif @contest.ended? && can?(:preview, @contest)
         %h2 == HANYA PANITIA ==
-        = render 'results'
+        = render 'all_results'
 
     = render 'contest_aside_info' if @contest.currently_in_contest?
