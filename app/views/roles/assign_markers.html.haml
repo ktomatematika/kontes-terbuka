@@ -10,14 +10,13 @@
           %th
 
       %tbody
-        - User.with_role(:marker, lp).each do |u|
+        - User.with_role(:marker, lp).each do |user|
           %tr
-            %td= u
-            %td= link_to 'Hapus',
-              remove_marker_path(long_problem_id: lp, user_id: u),
+            %td= user
+            %td= link_to 'Hapus', marker_long_problem_path(user_id: user),
               method: :delete
 
-    = form_tag create_marker_path, method: :post, class: 'form-inline' do
+    = form_tag marker_long_problem_path(lp), method: :post,
+      class: 'form-inline' do
       = select_tag 'username', panitia_options(lp), class: 'form-control'
-      = hidden_field_tag :long_problem_id, lp.id
       = submit_tag 'Tambah korektor', class: 'btn'

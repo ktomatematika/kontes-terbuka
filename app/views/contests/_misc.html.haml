@@ -1,7 +1,8 @@
 %h2 Macam-macam
+
 - if can? :read_problems, Contest
   %h3 Masukkan Problems
-  = form_tag contest_read_problems_path, multipart: true,
+  = form_tag read_problems_contest_path, multipart: true,
     class: 'form-horizontal' do
     .form-group
       = label_tag :problem_tex, 'Soal TeX', class: 'col-sm-4'

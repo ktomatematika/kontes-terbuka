@@ -11,12 +11,9 @@
   %h1 Petunjuk Kontes
 
   - if @user_contest.id.nil?
-    = form_for @user_contest, url: contest_rules_path do |f|
+    = form_for @user_contest, url: contest_user_contests_path do |f|
       #rules-text
         = markdown_render @contest.rule
-
-      = f.hidden_field :user_id, value: current_user.id
-      = f.hidden_field :contest_id, value: @contest.id
       .btn-center-container
         = f.button 'Saya sudah membaca dan menyetujui',
           class: 'btn', id: 'rules-agree-btn'

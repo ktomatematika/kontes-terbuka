@@ -95,8 +95,8 @@ class LongSubmissionTest < ActiveSupport::TestCase
     assert File.file?(ls.zip_location), 'Zip file does not exist.'
 
     Zip::File.open(ls.zip_location) do |file|
-      assert_equal file.count, 5, 'Number of files does not match long
-      submission pages!'
+      assert_equal file.count, ls.submission_pages.count,
+                   'Number of files does not match long submission pages!'
     end
   end
 
@@ -144,5 +144,15 @@ class LongSubmissionTest < ActiveSupport::TestCase
                  lp.long_submissions.order(:id).pluck(:id)
                    .reject { |n| n == x },
                  'Submitted long submission scope is not working.'
+  end
+
+  test 'long submission on destroy makes submission pages destroyed' do
+    sp = create(:submission_page)
+    sp.long_submission.destroy
+    assert_nil SubmissionPage.find_by(id: sp.id),
+               'When long submission is destroyed, ' \
+               'submission page is not destroyed'
+    assert File.file?(sp.submission.path), 'When long submission is ' \
+      'destroyed, submission page attachment remains.'
   end
 end

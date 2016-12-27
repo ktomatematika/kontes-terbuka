@@ -23,8 +23,8 @@ gem 'sass-rails'
 gem 'uglifier'
 # Use jQuery
 gem 'jquery-rails'
-# Turbolinks makes following links in your web application faster. Read more:
-# https://github.com/rails/turbolinks
+# Turbolinks makes following links in your web application faster.
+# Read more: https://github.com/rails/turbolinks
 gem 'turbolinks', '< 5'
 gem 'jquery-turbolinks'
 # Use Bootstrap, the CSS framework (getbootstrap.com)
@@ -68,12 +68,21 @@ gem 'will_paginate', github: 'jonatack/will_paginate'
 # Generate PDF
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
-# Test coverage
-gem 'simplecov', require: false, group: :test
 # Facebook Graph API
 gem 'koala'
 # Environment variables
 gem 'dotenv-rails', require: 'dotenv/rails-now'
+
+group :test do
+  # Test coverage
+  gem 'coveralls', require: false
+  # Acceptance testing
+  gem 'capybara'
+  # Driver for Capybara to allow JS stuff
+  gem 'selenium-webdriver'
+  # Allow transcations with Capybara and Selenius
+  gem 'transactional_capybara'
+end
 
 group :development do
   # Annotates model with schema
@@ -104,8 +113,6 @@ group :production do
   gem 'daemons'
   # Email with Mailgun
   gem 'rest-client'
-  # API for LINE bot
-  gem 'line-bot-api'
 end
 
 ### END UTILITIES
@@ -154,11 +161,8 @@ gem 'cancancan'
 gem 'rack-protection'
 # Adds hashes for passwords.
 gem 'bcrypt'
-
-group :development, :production do
-  # A recaptcha helper gem.
-  gem 'recaptcha', require: 'recaptcha/rails'
-end
+# A recaptcha helper gem.
+gem 'recaptcha', require: 'recaptcha/rails'
 
 group :development do
   # Security checkup

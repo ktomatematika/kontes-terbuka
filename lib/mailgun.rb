@@ -44,6 +44,8 @@ module Mailgun
       RestClient.post URL, params
     elsif Rails.env.development?
       Ajat.info 'mailgun|message=' + params.to_s
+    elsif Rails.env.test?
+      params
     end
   end
 end

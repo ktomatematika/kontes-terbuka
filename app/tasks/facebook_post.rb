@@ -29,13 +29,13 @@ class FacebookPost
 
   def results_released
     post_to_facebook "Hasil #{@contest} sudah keluar! Silakan cek di:\n " \
-      "#{contest_url @contest}.\n\nSelamat bagi yang mendapatkan penghargaan! " \
-      'Jika Anda belum beruntung, jangan berkecil hati karena masih ada ' \
-      "kontes-kontes berikutnya.\n\nMengenai sertifikat, Anda perlu mengisi " \
-      'feedback kontes untuk mendapatkannya. Feedback ini bisa diisi di ' \
-      'halaman yang sama dengan hasil kontes. Anda perlu mendapatkan ' \
-      "setidaknya #{UserContest::CUTOFF_CERTIFICATE} poin untuk " \
-      'mendapatkan sertifikat.'
+      "#{contest_url @contest}.\n\nSelamat bagi yang mendapatkan " \
+      'penghargaan! Jika Anda belum beruntung, jangan berkecil hati karena ' \
+      "masih ada kontes-kontes berikutnya.\n\nMengenai sertifikat, Anda " \
+      'perlu mengisi feedback kontes untuk mendapatkannya. Feedback ini bisa ' \
+      'diisi di halaman yang sama dengan hasil kontes, yaitu ' \
+      "#{contest_url @contest}. Anda perlu mendapatkan setidaknya " \
+      "#{UserContest::CUTOFF_CERTIFICATE} poin untuk mendapatkan sertifikat."
   end
 
   def feedback_ending(time_text)
@@ -46,7 +46,7 @@ class FacebookPost
   end
 
   def certificate_sent
-    post_to_facebook "Sertifikat untuk #{@contest} sudah dikirim. Coba "\
+    post_to_facebook "Sertifikat untuk #{@contest} sudah dikirim. Coba " \
       'cek email Anda! Jika Anda tidak mendapatkannya, berarti Anda tidak ' \
       'memenuhi syarat mendapatkan sertifikat, yakni ' \
       "minimal #{UserContest::CUTOFF_CERTIFICATE} poin di kontes dan " \
@@ -57,6 +57,10 @@ class FacebookPost
 
   def post_to_facebook(message)
     message = "Salam sejahtera,\n\n#{message}"
-    @graph.put_object ENV['FACEBOOK_PAGE_ID'], 'feed', message: message
+    if Rails.env.test?
+      message # make the methods testable
+    else
+      @graph.put_object ENV['FACEBOOK_PAGE_ID'], 'feed', message: message
+    end
   end
 end

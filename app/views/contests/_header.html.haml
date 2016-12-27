@@ -6,17 +6,18 @@
     #contest-buttons
       = link_to 'Download soal', @contest.problem_pdf.url(:original, false),
         class: 'btn btn-lg'
-      = link_to 'Lihat ulang aturan', contest_rules_path(@contest),
+      = link_to 'Lihat ulang aturan', new_contest_user_contest_path(@contest),
         class: 'btn btn-lg'
 
   %div
-    = link_to 'Ringkasan', contest_summary_path(contest_id: @contest),
-      class: 'btn btn-lg' if can? :summary, @contest
+    - if can? :summary, @contest
+      = link_to 'Ringkasan', summary_contest_path(@contest),
+        class: 'btn btn-lg'
 
     - if can? :admin, @contest
-      = link_to 'Administrasi', contest_admin_path(contest_id: @contest),
+      = link_to 'Administrasi', admin_contest_path(@contest),
         class: 'btn btn-lg'
 
     - if can? :assign_markers, @contest
-      = link_to 'Bagi koreksian', assign_markers_path(id: @contest.id),
+      = link_to 'Bagi koreksian', marker_contest_path(@contest),
         class: 'btn btn-lg'

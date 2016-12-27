@@ -21,8 +21,9 @@
         = render 'long_problems' unless @long_problems.empty?
 
       - if @contest.result_released
-        = render 'show_problems'
-        - unless @user_contest.nil?
+        - if @user_contest.nil?
+          = render 'show_problems'
+        - else
           = render 'own_results'
           = render 'feedback' unless @contest.feedback_closed?
         = render 'results'
@@ -31,5 +32,3 @@
         = render 'results'
 
     = render 'contest_aside_info' if @contest.currently_in_contest?
-
-= render 'nag' if show_nag

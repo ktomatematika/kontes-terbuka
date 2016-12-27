@@ -11,12 +11,13 @@
 #
 #  index_referrers_on_name  (name) UNIQUE
 #
+# rubocop:enable Metrics/LineLength
 
 class Referrer < ActiveRecord::Base
   has_paper_trail
 
   # Associations
-  has_many :user
+  has_many :users
 
   # Display methods
   def to_s

@@ -88,12 +88,6 @@ module ContestsHelper
     score(@user_contest, lp).to_s + '/' + LongProblem::MAX_MARK.to_s + ' poin'
   end
 
-  # Helper for contests#show, to show nag or not
-  def show_nag
-    !@user_contest.nil? && @user_contest.donation_nag &&
-      (@contest.currently_in_contest? || @contest.result_released)
-  end
-
   # helper for contests#give_feedback, where it shows the message when
   # a criteria is unfulfilled.
   def certificate_criteria_unfulfilled_message
@@ -104,5 +98,21 @@ module ContestsHelper
                   .find_by(id: @user_contest.id).nil?
       'Anda belum menjawab semua pertanyaan di bawah ini.'
     end
+  end
+
+  # Helper for contests#long_problems, similar to find_or_initialize_by
+  # while avoiding the n + 1 query.
+  def long_submission_find_or_initialize_by(long_problem)
+    @long_submissions.find { |ls| ls.long_problem == long_problem } ||
+      LongSubmission.new(user_contest: @user_contest,
+                         long_problem: long_problem)
+  end
+
+  # Helper for contests#_own_results to show green or red depending on
+  # whether the short submission is correct or wrong.
+  def status(ss)
+    return '' if ss.nil?
+    return 'text-success' if ss.answer == ss.short_problem.answer
+    'text-danger'
   end
 end

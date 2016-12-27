@@ -4,6 +4,6 @@
   .table-responsive
     %table.table.table-hover.has-shade.table-bordered#contest-history
       %thead
-        = can?(:see_full, @user) ? full_header_contents : public_header_contents
+        = can?(:show_full, @user) ? full_header_contents : public_header_contents
       %tbody
-        = can?(:see_full, @user) ? full_data_contents : public_data_contents
+        = can?(:show_full, @user) ? full_data_contents : public_data_contents

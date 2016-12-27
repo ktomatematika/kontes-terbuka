@@ -3,21 +3,23 @@ cache: bundler
 rvm: 2.3.3
 bundler_args: "--without production development"
 services: postgresql
-sudo: required
-addons:
-  sauce_connect:
-    username: sayacvwo
-    access_key:
-      secure: VnVG29rdBlZ1pvs5SB69l/fdQUyLu4acCK4z0ne9KmfBzK6m6+vevJhIfFZPaNFjXCZP80b1Vf/hFahRnUlC3X+fH2igqcDExQGyuhAcvBNkIvPMJdwXFHmlz8nqruc1cZcztrCSJk92OIGH1WtVESy/t8n8iiKushtv2ACXp+z6ZnLGXUVSI7/g8Bt/c692nUuC4N6ZURl1auzBco87GE6AbPh69/yQeV4eoBkP1X5jia70dzVBhRCdJQuigw9IEeHwmlKrjMRTPligPBxsCGMQGbbyg6T4YlUTnTihWmDyWa84FKRRB1AX5W9Cq5Uq/jcKQZypjNf45DakA8Ezv+AMMLoExInKPXMUZuqhuZVCPhPi8WyGBfgQFCU837JSYmwnfTXoh2DmIG3IZnEMmwLZFjJnmyVnSBIMr/DOJsHymm3WIga5xuNhykmX0Lgp0G8YQDn7C2tIOoOXplJn+Pqa9jatIORvlt8hguofPuRi0Wu99KAuVD6YP0p2Na7Pn6gXzG7ncr0U3s0bJRKmaQl/+VAWi4TKT0jK2wCdc1HJvgPolApzNPgV14UKKTP+OfVxhIg3wso1GwIr/29GjIF45u8jBnrLVHXde5jQ9N8k8MLaYdDcs6SZ73ywQaa23FVqe4Cs9b8ehklH8ClFjF95b6YNjiBgS6dcrAusYds=
+
+env: # workaround
+  - "TEST_SUITE=units"
+matrix:
+  include:
+    - env: "TEST_SUITE=functionals"
+      addons:
+        apt:
+          packages: texlive-latex-base
 
 before_script:
-  - psql -c 'create database kontes_terbuka_test;' -U postgres
-  - cp config/database.yml.travis config/database.yml
-  - cp config/initializers/line_targets.rb.default config/initializers/line_targets.rb
-script:
-  - bundle exec rake
+- psql -c 'create database kontes_terbuka_test;' -U postgres
+- cp config/database.yml.travis config/database.yml
+- cp .env.default .env
+script: "bundle exec rake test:$TEST_SUITE"
 after_script:
-  - rubocop -D -f simple --except AbcSize,MethodLength
-  - haml-lint --exclude-linter LineLength app/views
-  - scss-lint app/assets/stylesheets
-  - eslint app/assets/javascripts
+- rubocop -D -f simple --except AbcSize,MethodLength
+- haml-lint --exclude-linter LineLength app/views
+- scss-lint app/assets/stylesheets
+- eslint app/assets/javascripts

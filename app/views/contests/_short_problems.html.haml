@@ -9,15 +9,14 @@
       jawaban yang salah atau dikosongkan. Jawaban soal-soal bagian A
       dipastikan merupakan bilangan bulat.
 
-  = form_for :short_answer,
-    url: contest_create_short_submissions_path(contest_id: params[:id]) do |f|
+  = form_for :short_submission,
+    url: contest_short_submissions_path(Contest.find(params[:id])) do |f|
     - @short_problems.each do |prob|
       %h5.problem_no No. #{prob.problem_no}
       = latex_and_markdown :div, prob.statement
-      - submission = @user_contest.short_submissions.find_by short_problem: prob
+      - submission = @short_submissions.find { |ss| ss.short_problem == prob }
       - prev_answer = submission.nil? ? '' : submission.answer
       .form-group
         = f.text_field prob.id, class: 'form-control answer-input',
           placeholder: prev_answer, autocomplete: 'off'
-    = hidden_field_tag 'contest_id', @contest.id
     = f.submit 'Jawab', class: 'btn'

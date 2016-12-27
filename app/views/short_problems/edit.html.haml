@@ -1,6 +1,6 @@
 .container
   %h1 Buat isian
-  = form_for [@contest, @short_problem], html: { class: 'form-horizontal' } do |f|
+  = form_for @short_problem, html: { class: 'form-horizontal' } do |f|
     .form-group
       = f.label :problem_no, class: 'col-sm-2'
       .col-sm-4

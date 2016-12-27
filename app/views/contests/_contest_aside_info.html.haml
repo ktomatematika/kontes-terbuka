@@ -7,8 +7,7 @@
         %h4 Bagian A
 
       - @short_problems.each do |prob|
-        - submission = ShortSubmission.find_by short_problem_id: prob.id,
-          user_contest: @user_contest
+        - submission = @short_submissions.find { |ss| ss.short_problem == prob }
         - if submission.nil?
           = aside_display_unanswered(prob.problem_no)
         - else
@@ -19,8 +18,7 @@
         %h4 Bagian B
 
       - @long_problems.each do |prob|
-        - submission = LongSubmission.find_by long_problem: prob,
-          user_contest: @user_contest
+        - submission = @long_submissions.find { |ls| ls.long_problem == prob }
         - if SubmissionPage.where(long_submission: submission).empty?
           = aside_display_unanswered(prob.problem_no)
         - else

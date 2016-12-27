@@ -1,7 +1,6 @@
 module ExceptionNotifier
   class MailgunNotifier
-    def initialize(_)
-    end
+    def initialize(_); end
 
     def call(exception, _ = {})
       Mailgun.delay(queue: 'exception_notifier')

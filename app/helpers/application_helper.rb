@@ -31,16 +31,16 @@ module ApplicationHelper
     split_text = text.split(/(\$|\\\[|\\\])/)
 
     render = true
-    safe_join(split_text.map do |t|
-      if t == '$' || t == '\[' || t == '\]'
+    safe_join(split_text.map do |txt|
+      if txt == '$' || txt == '\[' || txt == '\]'
         render = !render
-        t
+        txt
       elsif !render
-        t
-      elsif /[[:punct:]]/.match(t[0]).nil? # does not start with punct
-        sanitize(' ' + markdown.render(t)) # add some spacing to tex
+        txt
+      elsif /[[:punct:]]/.match(txt[0]).nil? # does not start with punct
+        sanitize(' ' + markdown.render(txt)) # add some spacing to tex
       else
-        sanitize(markdown.render(t))
+        sanitize(markdown.render(txt))
       end
     end)
   end
@@ -77,6 +77,6 @@ module ApplicationHelper
   def list_of_problems(lp)
     text = lp.to_s
     text += ' (laporan sudah)' if lp.report?
-    link_to text, mark_solo_path(lp)
+    link_to text, long_problem_temporary_markings_path(long_problem_id: lp.id)
   end
 end

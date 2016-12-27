@@ -281,6 +281,97 @@ class ContestTest < ActiveSupport::TestCase
     assert_equal c2.max_score, 5 + LongProblem::MAX_MARK * 3
   end
 
+  test 'compress_reports' do
+    c = create(:full_contest)
+    c.long_problems.each { |lp| lp.update(report: PDF) }
+    c.compress_reports
+    assert File.file?(c.report_zip_location), 'Zip file does not exist.'
+
+    Zip::File.open(c.report_zip_location) do |file|
+      assert_equal file.count, c.long_problems.count,
+                   'Number of files does not match long problems!'
+
+      file.each do |f|
+        assert_equal f.size, PDF.size, 'Report is tampered!'
+      end
+    end
+  end
+
+  test 'report_zip_location' do
+    c = create(:contest)
+    create(:long_problem, contest: c, report: PDF)
+    c.compress_reports
+    assert_equal c.report_zip_location,
+                 Rails.root.join('public', 'contest_files',
+                                 'reports', "#{c.id}.zip").to_s,
+                 'Report zip location is not correct.'
+  end
+
+  test 'compress_submissions' do
+    c = create(:full_contest, long_problems: 1)
+
+    count = 0
+    c.long_problems.each do |lp|
+      lp.long_submissions.each do |ls|
+        ls.submission_pages.each do |pg|
+          pg.update(submission: PDF)
+          count += 1
+        end
+      end
+    end
+    c.compress_submissions
+    assert File.file?(c.submissions_zip_location), 'Zip file does not exist.'
+
+    Zip::File.open(c.submissions_zip_location) do |file|
+      assert_equal file.select(&:file?).count, count,
+                   'Number of files does not match submission pages'
+
+      file.each do |f|
+        assert_equal(f.size, PDF.size, 'Submission is tampered!') if f.file?
+      end
+    end
+  end
+
+  test 'submission_zip_location' do
+    c = create(:full_contest)
+    c.long_problems.take.long_submissions.take.submission_pages.take
+     .update(submission: PDF)
+    c.compress_submissions
+    assert_equal c.submissions_zip_location,
+                 Rails.root.join('public', 'contest_files',
+                                 'submissions', "kontes#{c.id}.zip").to_s,
+                 'Submission zip location is not correct.'
+  end
+
+  test 'refresh contest' do
+    c = create(:contest)
+    c.refresh
+
+    jobs = Delayed::Job.where(queue: "contest_#{c.id}").select do |j|
+      handler = YAML.load(j.handler)
+      handler.method_name == :refresh_results_pdf
+    end
+    assert_equal jobs.count, 1, 'Jobs created after refresh is not 1.'
+
+    handler = YAML.load(jobs.first.handler)
+    assert_equal handler.method_name, :refresh_results_pdf,
+                 'Calling refresh does not call refresh results pdf.'
+    assert_in_delta Time.zone.now, jobs.first.run_at, 5,
+                    'Calling refresh does not refresh immediately.'
+  end
+
+  test 'refresh_results_pdf' do
+    c = create(:full_contest)
+    c.refresh_results_pdf
+
+    assert_equal c.results_location,
+                 Rails.root.join('public', 'contest_files',
+                                 'results', "#{c.id}.pdf").to_s,
+                 'Contest results location is not correct.'
+    assert File.file?(c.results_location),
+           'Calling refresh results pdf does not create the pdf.'
+  end
+
   test 'contest complex methods' do
     c = create(:full_contest, short_problems: 1, long_problems: 1,
                               users: 5, gold_cutoff: 6,
@@ -336,131 +427,22 @@ class ContestTest < ActiveSupport::TestCase
     assert_equal c.array_of_scores, [0, 1, 0, 1, 0, 0, 2, 0, 0]
   end
 
-  test 'contest jobs' do
-    c = build(:contest, start: 3 * 24 * 3600, ends: 6 * 24 * 3600,
-                        result: 9 * 24 * 3600, feedback: 12 * 24 * 3600,
-                        result_released: false)
-    10.times do
-      create(:contest).delay(queue: "contest_#{c.id}").reload # do nothing
+  test 'feedback and user contests finder methods' do
+    c = create(:contest)
+    ucs = create_list(:user_contest, 3, contest: c)
+    fqs = create_list(:feedback_question, 3, contest: c)
+
+    create(:feedback_answer, feedback_question: fqs.first,
+                             user_contest: ucs.third)
+    fqs.each do |fq|
+      create(:feedback_answer, feedback_question: fq, user_contest: ucs.first)
     end
 
-    c.save
-    jobs = Delayed::Job.where(queue: "contest_#{c.id}").map do |j|
-      handler = YAML.load(j.handler)
-      { class: handler.object.class.name, run_at: j.run_at,
-        method_name: handler.method_name, args: handler.args }
-    end
+    assert_equal c.full_feedback_user_contests.pluck(:id), [ucs.first.id],
+                 'Full feedback user contests is not working!'
 
-    assert_equal jobs.select { |j| j[:method_name] == :reload }.count, 0,
-                 'prepared jobs are not destroyed.'
-
-    purge = jobs.select { |j| j[:method_name] == :purge_panitia }
-    assert_equal purge.count, 1, 'panitia are not purged.'
-    assert_in_delta purge.first[:run_at], c.end_time, 5,
-                    'purge panitia is not run at end time.'
-    assert_equal purge.first[:args].count, 0,
-                 'purge panitia args are not correct.'
-
-    starting = jobs.select do |j|
-      j[:method_name] == :contest_starting && j[:class] == 'EmailNotifications'
-    end
-    starting.each do |j|
-      n = Notification.find_by event: 'contest_starting',
-                               description: j[:args].first +
-                                            ' sebelum kontes dimulai'
-      assert_not_nil n
-      assert_in_delta n.seconds, c.start_time - j[:run_at], 5,
-                      'email notifications are not working'
-    end
-
-    started = jobs.select do |j|
-      j[:method_name] == :contest_started && j[:class] == 'EmailNotifications'
-    end
-    started.each do |j|
-      n = Notification.find_by event: 'contest_started'
-      assert_not_nil n
-      assert_in_delta j[:run_at], c.start_time, 5,
-                      'email notifications are not working'
-    end
-
-    ending = jobs.select do |j|
-      j[:method_name] == :contest_ending && j[:class] == 'EmailNotifications'
-    end
-    ending.each do |j|
-      n = Notification.find_by event: 'contest_ending',
-                               description: j[:args].first +
-                                            ' sebelum kontes selesai'
-      assert_not_nil n
-      assert_in_delta n.seconds, c.end_time - j[:run_at], 5,
-                      'email notifications are not working'
-    end
-
-    feedback = jobs.select do |j|
-      j[:method_name] == :feedback_ending && j[:class] == 'EmailNotifications'
-    end
-    feedback.each do |j|
-      n = Notification.find_by event: 'feedback_ending',
-                               description: j[:args].first +
-                                            ' sebelum feedback dibagikan'
-      assert_not_nil n
-      assert_in_delta n.seconds, c.feedback_time - j[:run_at], 5,
-                      'email notifications are not working'
-    end
-
-    line = jobs.select { |j| j[:class] == 'LineNag' }
-    assert_equal line.select { |j| j[:method_name] == :contest_starting }.count,
-                 1
-    assert_equal line.select { |j| j[:method_name] == :contest_started }.count,
-                 1
-    assert_equal line.select { |j| j[:method_name] == :contest_ending }.count, 1
-
-    facebook = jobs.select { |j| j[:class] == 'FacebookPost' }
-    assert_equal(facebook.select do |j|
-      j[:method_name] == :contest_starting
-    end.count, 1)
-    assert_equal(facebook.select do |j|
-      j[:method_name] == :contest_started
-    end.count, 1)
-    assert_equal(facebook.select do |j|
-      j[:method_name] == :contest_ending
-    end.count, 1)
-    assert_equal(facebook.select do |j|
-      j[:method_name] == :feedback_ending
-    end.count, 1)
-
-    [:check_veteran, :award_points, :send_certificates,
-     :certificate_sent].each do |method|
-      job = jobs.select { |j| j[:method_name] == method }
-      assert_equal job.count, 1
-      assert_in_delta job.first[:run_at], c.feedback_time, 5
-    end
-
-    [:backup_misc, :backup_submissions].each do |method|
-      job = jobs.select do |j|
-        j[:method_name] == method && (c.feedback_time - j[:run_at]).abs <= 5
-      end
-      assert_equal job.count, 1
-    end
-
-    c.update(start_time: Time.zone.now - 10.days,
-             end_time: Time.zone.now - 5.days,
-             result_released: true)
-    update_time = Time.zone.now
-
-    jobs = Delayed::Job.where(queue: "contest_#{c.id}").map do |j|
-      handler = YAML.load(j.handler)
-      { class: handler.object.class.name, run_at: j.run_at,
-        method_name: handler.method_name, args: handler.args }
-    end
-
-    [['EmailNotifications', :results_released],
-     ['LineNag', :result_and_next_contest],
-     ['FacebookPost', :results_released]].each do |arr|
-      job = jobs.select do |j|
-        j[:class] == arr[0] && j[:method_name] == arr[1] &&
-          (update_time - j[:run_at]).abs <= 5
-      end
-      assert_equal job.count, 1
-    end
+    assert_equal c.not_full_feedback_user_contests.order(:id).pluck(:id),
+                 [ucs.second.id, ucs.third.id].sort,
+                 'Not full feedback user contests is not working!'
   end
 end

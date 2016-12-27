@@ -5,4 +5,6 @@ class WelcomeController < ApplicationController
     redirect_to home_path if current_user
     @next_contest = Contest.next_contest
   end
+
+  def sign; end
 end

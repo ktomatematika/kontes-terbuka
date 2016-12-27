@@ -1,11 +1,13 @@
 %h2 Download
-= link_to 'Download feedback', contest_download_feedback_path,
-  class: 'btn' if can? :download_feedback, Contest
-= link_to 'Download soal', @contest.problem_pdf.url(:original, false),
-  class: 'btn' if can? :download_pdf, @contest
+= link_to 'Download feedback',
+  contest_feedback_answers_path(contest_id: @contest.id),
+  class: 'btn' if can? :download_on_contest, FeedbackAnswer
+= link_to 'Download soal',
+  @contest.problem_pdf.url(:original, false),
+  class: 'btn btn-lg' if can? :download_pdf, @contest
 = link_to 'Download Marking Scheme',
   @contest.marking_scheme.url(:original, false),
-  class: 'btn' if can? :download_pdf, @contest
+  class: 'btn btn-lg' if can? :download_marking_scheme, @contest
 = link_to 'Download laporan',
-  contest_reports_path(contest_id: @contest.id),
-  class: 'btn' if can? :download_reports, @contest
+  reports_contest_path(@contest),
+  class: 'btn btn-lg' if can? :download_reports, @contest

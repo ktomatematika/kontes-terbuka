@@ -2,6 +2,8 @@
 ![Logo Kontes Terbuka Olimpiade Matematika](https://github.com/donjar/kontes-terbuka/raw/production/app/assets/images/logo-hires.png)
 [Click here for English version.](ENGLISH.md)
 [![Build Status](https://travis-ci.org/donjar/kontes-terbuka.svg?branch=production)](https://travis-ci.org/donjar/kontes-terbuka)
+[![Coverage Status](https://coveralls.io/repos/github/donjar/kontes-terbuka/badge.svg?branch=production)](https://coveralls.io/github/donjar/kontes-terbuka?branch=production)
+Refactoring coverage: [![Coverage Status](https://coveralls.io/repos/github/donjar/kontes-terbuka/badge.svg?branch=controller-routes-refactor)](https://coveralls.io/github/donjar/kontes-terbuka?branch=controller-routes-refactor)
 
 Repo ini berisi kode untuk website Kontes Terbuka Olimpiade Matematika yang
 bisa diakses di https://ktom.tomi.or.id. Website ini dibuat oleh dua anggota

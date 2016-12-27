@@ -16,9 +16,9 @@
       Sebuah kontes matematika yang dipersembahkan oleh Tim Olimpiade
       Matematika Indonesia.
     %h2 Untuk bangsa, untuk negara.
-    = link_to 'Daftar', register_path, role: 'button',
+    = link_to 'Daftar', register_users_path, role: 'button',
       class: 'btn btn-lg text-uppercase'
-    = link_to 'Masuk', login_path, role: 'button',
+    = link_to 'Masuk', login_users_path, role: 'button',
       class: 'btn btn-lg text-uppercase'
     %h4#welcome-next-contest
 
@@ -95,7 +95,7 @@
 %section.main-section#teaser
   .container-fluid
     %h1 Jadi, tunggu apa lagi?
-    = link_to 'Daftar', register_path, role: 'button',
+    = link_to 'Daftar', register_users_path, role: 'button',
       class: 'btn btn-lg text-uppercase'
-    = link_to 'Masuk', login_path, role: 'button',
+    = link_to 'Masuk', login_users_path, role: 'button',
       class: 'btn btn-lg text-uppercase'

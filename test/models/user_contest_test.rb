@@ -2,12 +2,11 @@
 #
 # Table name: user_contests
 #
-#  id           :integer          not null, primary key
-#  user_id      :integer          not null
-#  contest_id   :integer          not null
-#  created_at   :datetime         not null
-#  updated_at   :datetime         not null
-#  donation_nag :boolean          default(TRUE), not null
+#  id         :integer          not null, primary key
+#  user_id    :integer          not null
+#  contest_id :integer          not null
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
 #
 # Indexes
 #
@@ -53,11 +52,6 @@ class UserContestTest < ActiveSupport::TestCase
   test 'contest_id cannot be blank' do
     assert_not build(:user_contest, contest_id: nil).save
     'User Contest with nil contest id can be saved.'
-  end
-
-  test 'donation_nag cannot be blank' do
-    assert_not build(:user_contest, donation_nag: nil).save
-    'User Contest with nil donation nag can be saved.'
   end
 
   test 'contest points' do

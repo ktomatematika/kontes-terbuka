@@ -21,7 +21,7 @@ class ReferrerTest < ActiveSupport::TestCase
   end
 
   test 'referrer associations' do
-    assert_equal Referrer.reflect_on_association(:user).macro,
+    assert_equal Referrer.reflect_on_association(:users).macro,
                  :has_many,
                  'Referrer relation is not has many users.'
   end

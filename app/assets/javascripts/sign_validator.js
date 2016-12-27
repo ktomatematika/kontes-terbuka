@@ -19,7 +19,7 @@ $(document).ready(function() {
 				// JSON 'true' when username/email has not been taken and
 				// JSON 'false' otherwise.
 				remote: {
-					url: '/check/',
+					url: '/users/check/',
 					type: 'post',
 					data: {
 						username: function() {
@@ -33,7 +33,7 @@ $(document).ready(function() {
 				email: true,
 				// Same as above; sends post data.
 				remote: {
-					url: '/check/',
+					url: '/users/check/',
 					type: 'post',
 					data: {
 						email: function() {

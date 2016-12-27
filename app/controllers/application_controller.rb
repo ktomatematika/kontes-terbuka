@@ -4,11 +4,13 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   before_action :set_paper_trail_whodunnit, :require_login, :set_timezone,
-                :set_color, :set_mini_profiler
+                :set_color, :set_mini_profiler,
+                :load_contest_from_contest_params
   skip_before_action :require_login, only: :maintenance
 
-  def maintenance
-  end
+  def maintenance; end
+
+  private
 
   def set_mini_profiler
     return if cannot?(:profile, Application) && masq_username.nil?
@@ -46,7 +48,7 @@ class ApplicationController < ActionController::Base
 
   def require_login
     return if current_user
-    redirect_to login_path(redirect: request.original_fullpath),
+    redirect_to login_users_path(redirect: request.original_fullpath),
                 notice: 'Anda perlu masuk terlebih dahulu.'
   end
 
@@ -70,5 +72,9 @@ class ApplicationController < ActionController::Base
                                        'REMOTE_HOST')}"
     head 400
     raise ActionController::RoutingError, "Access Denied: #{params[:path]}"
+  end
+
+  def load_contest_from_contest_params
+    @contest ||= Contest.find_by id: params[:contest_id]
   end
 end

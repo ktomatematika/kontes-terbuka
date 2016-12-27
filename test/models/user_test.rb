@@ -120,11 +120,6 @@ class UserTest < ActiveSupport::TestCase
                  'User timezone is not defaulted to the province.'
   end
 
-  test 'timezone defaults to WIB when province is nil' do
-    assert_equal create(:user, province: nil).timezone, 'WIB',
-                 'User timezone default is not WIB on nil province.'
-  end
-
   test 'user is not enabled by default' do
     assert_not create(:user).enabled, 'User is enabled on creation.'
   end
@@ -133,15 +128,15 @@ class UserTest < ActiveSupport::TestCase
     assert create(:user).tries.zero?, 'User does not start with zero tries.'
   end
 
-  # test 'nullify attributes on delete' do
-  #   u = create(:user)
-  #   u.province.destroy
-  #   assert_nil u.province, 'Province is not nullified on delete.'
-  #   u.color.destroy
-  #   assert_nil u.color, 'Color is not nullified on delete.'
-  #   u.status.destroy
-  #   assert_nil u.status, 'Status is not nullified on delete.'
-  # end
+  test 'nullify attributes on delete' do
+    u = create(:user)
+    u.province.destroy
+    assert_nil u.reload.province, 'Province is not nullified on delete.'
+    u.color.destroy
+    assert_equal u.reload.color_id, 1, 'Color is not default on delete.'
+    u.status.destroy
+    assert_nil u.reload.status, 'Status is not nullified on delete.'
+  end
 
   test 'password is encrypted and cleared before save' do
     password = 'asdfasdf'
@@ -315,5 +310,15 @@ class UserTest < ActiveSupport::TestCase
     assert_not u.verification.nil?, 'On forgot password process,
     user verification is nil'
     assert u.enabled, 'On forgot password process, user is disabled'
+  end
+
+  test 'status cannot be nil when saved' do
+    assert_not build(:user, status_id: nil).save,
+               'User with nil status can be saved.'
+  end
+
+  test 'province cannot be nil when saved' do
+    assert_not build(:user, province_id: nil).save,
+               'User with nil province can be saved.'
   end
 end

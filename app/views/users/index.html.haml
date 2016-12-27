@@ -1,6 +1,6 @@
 .container
   %h1 Daftar User
-  - if can? :see_full_index, User
+  - if can? :index_full, User
     = toggle_disable
   .row
     .col-sm-3.form-group.has-feedback#users-search
@@ -11,19 +11,19 @@
   %table.table.table-condensed.table-responsive.small-table
     %tr
       %th Username
-      %th= 'Email' if can? :see_full_index, User
-      %th= 'Nama Lengkap' if can? :see_full_index, User
+      %th= 'Email' if can? :index_full, User
+      %th= 'Nama Lengkap' if can? :index_full, User
       %th Provinsi
       %th Status
       %th Sekolah/Institusi
-      %th= 'Kubus' if can? :see_full_index, User
+      %th= 'Kubus' if can? :index_full, User
 
     - @users.each do |u|
       %tr{ data: { link: user_path(u) }, class: row_classes(u, %w(users-index-row clickable-row)) }
         %td= u.username
-        %td= u.email if can? :see_full_index, User
-        %td= u.fullname if can? :see_full_index, User
+        %td= u.email if can? :index_full, User
+        %td= u.fullname if can? :index_full, User
         %td= u.province
         %td= u.status
         %td= u.school
-        %td= u.point if can? :see_full_index, User
+        %td= u.point if can? :index_full, User

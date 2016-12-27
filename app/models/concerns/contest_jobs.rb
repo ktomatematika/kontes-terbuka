@@ -5,10 +5,9 @@ module ContestJobs
     destroy_prepared_jobs
     jobs_on_contest_end
     prepare_emails
-    prepare_line
     prepare_facebook
     jobs_on_result_released if changes['result_released'] == [false, true]
-    jobs_on_feedback_time_end unless feedback_closed?
+    jobs_on_feedback_time_end
     backup_files
   end
 
@@ -44,12 +43,13 @@ module ContestJobs
     end
   end
 
-  def prepare_line
-    l = LineNag.new self
+  def prepare_facebook
+    f = FacebookPost.new self
 
-    do_if_not_time(start_time - 1.day, l, :contest_starting, '24 jam')
-    do_if_not_time(start_time, l, :contest_started)
-    do_if_not_time(end_time - 1.day, l, :contest_ending, '24 jam')
+    do_if_not_time(start_time - 1.day, f, :contest_starting, '24 jam')
+    do_if_not_time(start_time, f, :contest_started)
+    do_if_not_time(end_time - 1.day, f, :contest_ending, '24 jam')
+    do_if_not_time(feedback_time - 6.hours, f, :feedback_ending, '6 jam')
   end
 
   def prepare_facebook
@@ -63,7 +63,6 @@ module ContestJobs
 
   def jobs_on_result_released
     EmailNotifications.new(self).delay(queue: "contest_#{id}").results_released
-    LineNag.new(self).delay(queue: "contest_#{id}").result_and_next_contest
     FacebookPost.new(self).delay(queue: "contest_#{id}").results_released
     delay(queue: "contest_#{id}").refresh
   end
@@ -73,12 +72,11 @@ module ContestJobs
     do_if_not_time(feedback_time, self, :award_points)
     do_if_not_time(feedback_time, self, :send_certificates)
     do_if_not_time(feedback_time, FacebookPost.new(self), :certificate_sent)
+    do_if_not_time(feedback_time, self, :refresh)
 
     c = ContestFileBackup.new
     do_if_not_time(feedback_time, c, :backup_misc, 1)
     do_if_not_time(feedback_time, c, :backup_submissions, self, 1)
-
-    do_if_not_time(feedback_time, self, :refresh)
   end
 
   def award_points

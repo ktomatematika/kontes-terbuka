@@ -1,7 +1,7 @@
 .nag-overlay
   .nag-container
     %h1 Bantu kami!
-    = form_for :user, url: user_referrer_update_path(current_user),
+    = form_for :user, url: referrer_update_user_path(current_user),
       method: :patch do |f|
       = f.collection_select :referrer_id, Referrer.all, :id, :name,
         { prompt: 'Dari manakah Anda awalnya mengetahui tentang KTO Matematika?' },

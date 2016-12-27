@@ -67,6 +67,6 @@
           #{link_to 'syarat dan ketentuan', terms_path} website ini.
 
       %footer
-        = recaptcha_tags hl: 'id'
+        = recaptcha_tags hl: 'id' unless Rails.env.test?
         %input{ type: 'hidden', name: 'recaptcha' }
         = f.submit 'Daftar', class: 'btn btn-lg sign-btn'

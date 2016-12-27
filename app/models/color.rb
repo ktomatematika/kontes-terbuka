@@ -11,11 +11,17 @@
 #
 #  index_colors_on_name  (name) UNIQUE
 #
+# rubocop:enable Metrics/LineLength
 
 class Color < ActiveRecord::Base
   has_paper_trail
   # Associations
   has_many :user
+
+  before_destroy do
+    # Set user's color to default value before destroying color
+    User.where(color: self).update_all(color_id: 1)
+  end
 
   # Display methods
   def to_s

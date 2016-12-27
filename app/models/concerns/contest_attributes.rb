@@ -108,7 +108,7 @@ module ContestAttributes
                      .on do
                        id == __send__('long_problem_marks_' \
                                                      "#{long_problem.id}").id
-                     end
+                     end.outer
         end.select do
           __send__("long_problem_marks_#{long_problem.id}")
             .__send__("problem_no_#{long_problem.id}")

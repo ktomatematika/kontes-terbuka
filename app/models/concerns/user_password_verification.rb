@@ -14,7 +14,7 @@ module UserPasswordVerification
     generate_token(:verification)
     save
     text = 'Untuk melanjutkan process reset password user Anda, klik link ' \
-      "ini: \n\n #{reset_password_url verification: verification}"
+      "ini: \n\n #{reset_password_users_url verification: verification}"
     Mailgun.send_message to: email,
                          subject: 'Reset Password KTO Matematika',
                          text: text
@@ -54,7 +54,7 @@ module UserPasswordVerification
   def forgot_password_process
     generate_token(:verification)
     save
-    link = reset_password_url verification: verification
+    link = reset_password_users_url verification: verification
     Mailgun.send_message to: email,
                          subject: 'Reset Password KTO Matematika',
                          text: 'Klik link ini untuk mengreset password ' \

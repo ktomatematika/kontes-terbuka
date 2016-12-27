@@ -1,8 +1,13 @@
 class UserContestsController < ApplicationController
   load_and_authorize_resource
 
-  def stop_nag
-    @user_contest.update(donation_nag: false)
-    head 200
+  def new
+    @user_contest = UserContest.find_or_initialize_by(contest: @contest,
+                                                      user: current_user)
+  end
+
+  def create
+    UserContest.create(user: current_user, contest: @contest)
+    redirect_to contest_path(@contest)
   end
 end

@@ -96,6 +96,10 @@ FactoryGirl.define do
     answer 'Saya baik!'
     feedback_question
     user_contest
+
+    after(:create) do |fa|
+      fa.user_contest.update(contest: fa.feedback_question.contest)
+    end
   end
 
   factory :feedback_question do
@@ -116,6 +120,11 @@ FactoryGirl.define do
     trait :marked do
       score 6
       feedback 'Jangan lupa dimasukin balik jawaban fungsinya, bodoh'
+    end
+
+    after(:create) do |ls|
+      create(:submission_page, long_submission: ls)
+      ls.user_contest.update(contest: ls.long_problem.contest)
     end
   end
 
@@ -152,6 +161,10 @@ FactoryGirl.define do
     short_problem
     user_contest
     answer '3'
+
+    after(:create) do |ss|
+      ss.user_contest.update(contest: ss.short_problem.contest)
+    end
   end
 
   factory :status do
@@ -185,6 +198,21 @@ FactoryGirl.define do
     color
     school 'qwerty'
     terms_of_service '1'
+
+    transient do
+      role nil
+    end
+
+    after(:create) do |user, evaluator|
+      unless evaluator.role.nil?
+        begin
+          user.add_role(*evaluator.role)
+        rescue StandardError
+          user.add_role :panitia
+          retry
+        end
+      end
+    end
   end
 
   factory :user_contest do
