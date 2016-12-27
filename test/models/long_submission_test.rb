@@ -65,20 +65,6 @@ class LongSubmissionTest < ActiveSupport::TestCase
     assert_equal hash[nil], '-', 'SCORE_HASH[nil] is not -.'
   end
 
-  test 'submitted method' do
-    c = create(:full_contest)
-    lp = c.long_problems.take
-    lp.submission_pages.each(&:destroy)
-
-    lp.long_submissions.each_with_index do |ls, i|
-      i.times do
-        create(:submission_page, long_submission: ls)
-      end
-
-      assert i.zero? ^ ls.submitted?, 'Submitted does not work.'
-    end
-  end
-
   test 'zip location' do
     ls = create(:long_submission)
     assert ls.zip_location,
@@ -125,25 +111,6 @@ class LongSubmissionTest < ActiveSupport::TestCase
            'Long Submission with score 7 can be saved.'
     assert_not build(:long_submission, score: -3).save,
                'Long Submission with score -3 can be saved.'
-  end
-
-  test 'submitted scope' do
-    c = create(:full_contest)
-    lp = c.long_problems.take
-    SubmissionPage.destroy_all
-
-    x = 0
-    lp.long_submissions.each_with_index do |ls, i|
-      i.times do
-        create(:submission_page, long_submission: ls)
-      end
-      x = ls.id if i.zero?
-    end
-
-    assert_equal LongSubmission.submitted.order(:id).pluck(:id),
-                 lp.long_submissions.order(:id).pluck(:id)
-                   .reject { |n| n == x },
-                 'Submitted long submission scope is not working.'
   end
 
   test 'long submission on destroy makes submission pages destroyed' do

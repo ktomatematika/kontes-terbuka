@@ -81,11 +81,11 @@ class LongProblem < ActiveRecord::Base
   def all_marked?
     markers_count = User.with_role(:marker, self).count
     temporary_count = temporary_markings.count
-    long_submissions.submitted.length * markers_count == temporary_count
+    long_submissions.length * markers_count == temporary_count
   end
 
   def autofill
-    long_submissions.submitted.each do |ls|
+    long_submissions.each do |ls|
       tm = ls.temporary_markings.pluck(:mark)
       if tm.reduce { |acc, elem| acc && (elem == tm[0] ? true : false) }
         ls.update(score: tm[0])
