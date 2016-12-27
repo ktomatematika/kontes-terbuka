@@ -1,0 +1,13 @@
+.container
+  %h1 Pasar
+  %h3 Tukarkan kubus yang telah Anda dapatkan dengan barang-barang menarik ini!
+  - @market_items.each do |i|
+    %a.market-item-container{ href: market_item_path(i) }
+      .row
+        .col-md-8
+          %h2= i
+          %p= i.description
+          %h4 Harga: #{i.price} #{point_image}
+        .col-md-4
+          - i.market_item_pictures.each do |p|
+            = image_tag p.picture

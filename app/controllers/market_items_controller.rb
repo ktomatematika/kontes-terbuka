@@ -1,15 +1,11 @@
 class MarketItemsController < ApplicationController
-  after_action do
-    authorize! params[:action].to_sym, @market_item || MarketItem
-  end
+  load_and_authorize_resource
 
-  def index
-    @market_items = MarketItem.all
-  end
+  def index; end
 
-  def new
-    @market_item = MarketItem.new
-  end
+  def new; end
+
+  def show; end
 
   def create
     MarketItem.create(item_params)

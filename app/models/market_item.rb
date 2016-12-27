@@ -18,4 +18,12 @@ class MarketItem < ActiveRecord::Base
   # Associations
   has_many :market_item_pictures
   has_many :market_orders
+
+  def to_s
+    name
+  end
+
+  def to_param
+    "#{id}-#{name.downcase.gsub(/[^0-9A-Za-z ]/, '').tr(' ', '-')}"
+  end
 end
