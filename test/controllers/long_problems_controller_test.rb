@@ -50,6 +50,13 @@ class LongProblemsControllerTest < ActionController::TestCase
     assert_equal @lp.reload.statement, 'asdf'
   end
 
+  test 'update fail' do
+    create(:long_problem, problem_no: 7, contest: @c)
+    put :update, id: @lp.id, long_problem: { problem_no: 7 }
+    assert_template :edit
+    assert_equal flash[:alert], 'Esai gagal diupdate!'
+  end
+
   test 'destroy' do
     test_abilities @lp, :destroy, [nil, :panitia], [:problem_admin, :admin]
     delete :destroy, id: @lp.id

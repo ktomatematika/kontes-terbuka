@@ -62,12 +62,6 @@ class LongProblem < ActiveRecord::Base
 
   MAX_MARK = 7
 
-  def fill_long_submissions
-    UserContest.where(contest: contest).find_each do |uc|
-      LongSubmission.create(user_contest: uc, long_problem: self)
-    end
-  end
-
   def zip_location
     submissions_location + '.zip'
   end

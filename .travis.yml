@@ -4,8 +4,9 @@ rvm: 2.3.3
 bundler_args: "--without production development"
 services: postgresql
 
-env: # workaround
+env:
   - "TEST_SUITE=units"
+  - "TEST_SUITE=others"
 matrix:
   include:
     - env: "TEST_SUITE=functionals"

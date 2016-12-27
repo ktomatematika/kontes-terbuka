@@ -44,7 +44,7 @@ class LongSubmissionsController < ApplicationController
   def mark
     if !@long_problem.start_mark_final && !@long_problem.all_marked? &&
        current_user.has_role?(:marker, @long_problem)
-      redirect_to mark_solo_path(@long_problem)
+      redirect_to long_problem_temporary_markings_path(@long_problem)
     end
     @long_submissions = @long_problem.long_submissions
                                      .order(:user_contest_id)

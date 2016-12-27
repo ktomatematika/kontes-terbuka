@@ -5,12 +5,12 @@ class LongProblemsController < ApplicationController
   before_action :load_contest, except: contest_actions
 
   def create
-    if @contest.long_problems.find_by(
-      problem_no: long_problem_params[:problem_no]
-    ).nil?
-      @contest.long_problems.create(long_problem_params).fill_long_submissions
+    if @contest.long_problems.create(long_problem_params)
+      flash[:notice] = 'Long Problem terbuat!'
+    else
+      flash[:alert] = 'Long Problem gagal terbuat!'
     end
-    redirect_to admin_contest_path(@contest), notice: 'Long Problem terbuat!'
+    redirect_to admin_contest_path(@contest)
   end
 
   def edit; end

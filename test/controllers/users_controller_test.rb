@@ -318,4 +318,14 @@ class UsersControllerTest < ActionController::TestCase
     post :check_unique, email: 'coba@gmail.coba'
     assert_equal @response.body, 'true'
   end
+
+  test 'referrer_update' do
+    login_and_be_admin
+    r = create(:referrer)
+    patch :referrer_update, user: { referrer_id: r.id }
+    assert_redirected_to :back
+    assert_equal flash[:notice], 'Terima kasih sudah mengisi!'
+
+    assert_equal @user.reload.referrer, r
+  end
 end

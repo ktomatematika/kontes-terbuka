@@ -13,10 +13,9 @@ class RolesController < ApplicationController
     user = User.find_by(username: params[:username])
     if user.nil?
       flash[:alert] = 'User tidak ditemukan!'
-    elsif user.add_role(:marker, @long_problem)
-      flash[:notice] = 'Korektor berhasil ditambahkan!'
     else
-      flash[:alert] = 'Terdapat kegagalan!'
+      user.add_role(:marker, @long_problem)
+      flash[:notice] = 'Korektor berhasil ditambahkan!'
     end
 
     Ajat.info "marker_created|lp_id:#{params[:long_problem_id]}|" \
@@ -45,11 +44,8 @@ class RolesController < ApplicationController
   end
 
   def destroy
-    if User.find(params[:user_id]).remove_role(Role.find(params[:id]).name)
-      redirect_to roles_path, notice: 'Role berhasil dibuang!'
-    else
-      redirect_to roles_path, alert: 'Role gagal dibuang!'
-    end
+    User.find(params[:user_id]).remove_role(Role.find(params[:id]).name)
+    redirect_to roles_path, notice: 'Role berhasil dibuang!'
   end
 
   def create
