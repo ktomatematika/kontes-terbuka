@@ -100,19 +100,18 @@ module ContestAttributes
     filtered_query = user_contests.processed
 
     long_problems.each do |long_problem|
-      filtered_query =
-        filtered_query
-        .joins do
-          UserContest.include_long_problem_marks(long_problem.id)
-                     .as("long_problem_marks_#{long_problem.id}")
-                     .on do
-                       id == __send__('long_problem_marks_' \
-                                                     "#{long_problem.id}").id
-                     end.outer
-        end.select do
-          __send__("long_problem_marks_#{long_problem.id}")
-            .__send__("problem_no_#{long_problem.id}")
-        end
+      joined = filtered_query.joins do
+        UserContest.include_long_problem_marks(long_problem.id)
+                   .as("long_problem_marks_#{long_problem.id}")
+                   .on do
+                     id == __send__('long_problem_marks_' \
+                                                   "#{long_problem.id}").id
+                   end.outer
+      end
+      filtered_query = joined.select do
+        __send__("long_problem_marks_#{long_problem.id}")
+          .__send__("problem_no_#{long_problem.id}")
+      end
     end
     filtered_query.includes(includes)
   end

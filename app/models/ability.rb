@@ -1,7 +1,7 @@
 class Ability
   include CanCan::Ability
 
-  # rubocop:disable AbcSize, MethodLength, CyclomaticComplexity
+  # rubocop:disable AbcSize, MethodLength
   def initialize(user)
     return if user.nil?
 

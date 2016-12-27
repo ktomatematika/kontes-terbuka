@@ -9,6 +9,8 @@ class SessionsController < ApplicationController
     end
   end
 
+  # Life is hard...
+  # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
   def create
     user = User.get_user params[:username]
     if user.nil?
@@ -31,12 +33,7 @@ class SessionsController < ApplicationController
       Ajat.info "reset_pass_login|user:#{params[:username]}"
     elsif !user.authenticate(params[:password])
       # Wrong password
-      user.tries += 1
-      user.save
-
-      if user.tries >= User::MAX_TRIES
-        # Too many tries
-        user.forgot_password_process
+      if user.wrong_password_process # true iff too many tries
         flash.now[:alert] = 'Anda sudah terlalu banyak mencoba ' \
           'dan perlu mereset password. Silakan cek link di email Anda.'
         Ajat.warn "too_many_tries|tries:#{user.tries}|user:#{params[:username]}"
@@ -59,6 +56,7 @@ class SessionsController < ApplicationController
       render 'welcome/sign'
     end
   end
+  # rubocop:enable Metrics/AbcSize,Metrics/MethodLength
 
   def destroy
     cookies.delete(:auth_token)

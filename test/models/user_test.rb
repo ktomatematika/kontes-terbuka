@@ -322,4 +322,19 @@ class UserTest < ActiveSupport::TestCase
     assert_not build(:user, province_id: nil).save,
                'User with nil province can be saved.'
   end
+
+  test 'wrong_password_process method returns false with minimal tries' do
+    u = create(:user, tries: 3)
+    assert_not u.wrong_password_process,
+               'wrong_password_process returns true with few tries'
+    assert_equal u.tries, 4,
+                 'wrong_password_process does not increment tries'
+  end
+
+  test 'wrong_password_process method returns true when too many tries' do
+    u = create(:user, tries: 9)
+    assert u.wrong_password_process,
+           'wrong_password_process returns true with few tries'
+    assert_not_nil u.verification, 'verification is not generated.'
+  end
 end

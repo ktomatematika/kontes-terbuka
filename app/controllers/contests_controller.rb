@@ -24,12 +24,7 @@ class ContestsController < ApplicationController
   def show
     if @contest.currently_in_contest?
       @user_contest = UserContest.find_by(contest: @contest, user: current_user)
-      if @user_contest.nil?
-        redirect_to new_contest_user_contest_path(@contest)
-      else
-        @short_submissions = @user_contest.short_submissions
-        @long_submissions = @user_contest.long_submissions
-      end
+      redirect_to new_contest_user_contest_path(@contest) if @user_contest.nil?
     elsif @contest.result_released || can?(:preview, @contest)
       @mask = false # agak gimanaaa gitu
 
@@ -38,17 +33,14 @@ class ContestsController < ApplicationController
       @same_province_ucs = @user_contests.select do |uc|
         uc.user.province_id == current_user.province_id
       end
+      # Keep medallists only
       @user_contests = @user_contests.where('marks.total_mark >= bronze_cutoff')
 
-      @user_contest = @user_contests.find { |uc| uc.user == current_user }
-      if @user_contest
-        @long_submissions = @user_contest.long_submissions
-                                         .includes(:long_problem)
-        @short_submissions = @user_contest.short_submissions
-                                          .includes(:short_problem)
-      end
+      @user_contest = @user_contests.find_by('user_contests.user_id' =>
+                                             current_user.id)
     end
 
+    grab_submissions if @user_contest
     grab_problems
   end
 
@@ -56,6 +48,7 @@ class ContestsController < ApplicationController
     sp = Contest.count_sql(:short_problems)
     lp = Contest.count_sql(:long_problems)
     uc = Contest.count_sql(:user_contests)
+
     @contests = Contest.where('start_time < ?', Time.zone.now + 3.months)
                        .joins("INNER JOIN (#{sp}) sp ON contests.id = sp.id")
                        .joins("INNER JOIN (#{lp}) lp ON contests.id = lp.id")
@@ -71,26 +64,23 @@ class ContestsController < ApplicationController
     if can? :update, @contest
       if @contest.update(contest_params)
         Ajat.info "contest_updated|id:#{@contest.id}"
-        redirect_to contest_path(@contest), notice: "#{@contest} berhasil " \
-          'diubah.'
+        flash[:notice] = "#{@contest} berhasil diubah."
       else
         Ajat.warn "contest_update_fail|#{@contest.errors.full_messages}"
-        redirect_to admin_contest_path(@contest),
-                    alert: "#{@contest} gagal diubah!"
+        flash[:alert] = "#{@contest} gagal diubah!"
       end
     elsif can? :upload_ms, @contest
       if @contest.update(marking_scheme_params)
         Ajat.info "marking_scheme_uploaded|id:#{@contest.id}"
-        redirect_to contest_path(@contest),
-                    notice: "#{@contest} berhasil diubah."
+        flash[:notice] = "#{@contest} berhasil diubah."
       else
         Ajat.warn "marking_scheme_upload_fail|#{@contest.errors.full_messages}"
-        redirect_to admin_contest_path(@contest),
-                    alert: "#{@contest} gagal diubah!"
+        flash[:alert] = "#{@contest} gagal diubah!"
       end
     else
       raise CanCan::AccessDenied.new('Cannot update', :update, @contest)
     end
+    redirect_to contest_path(@contest)
   end
 
   def destroy
@@ -163,5 +153,10 @@ class ContestsController < ApplicationController
     @short_problems = @contest.short_problems.order('problem_no')
     @long_problems = @contest.long_problems.order('problem_no')
     @no_short_probs = @short_problems.empty?
+  end
+
+  def grab_submissions
+    @short_submissions = @user_contest.short_submissions
+    @long_submissions = @user_contest.long_submissions
   end
 end

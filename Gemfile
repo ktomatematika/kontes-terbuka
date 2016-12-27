@@ -64,7 +64,7 @@ gem 'delayed_job_active_record'
 # Do not generate digests for error pages
 gem 'non-stupid-digest-assets'
 # Add pagination
-gem 'will_paginate', github: 'jonatack/will_paginate'
+gem 'will_paginate'
 # Generate PDF
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'

@@ -24,12 +24,27 @@ Style/ModuleFunction:
   EnforcedStyle: extend_self
 
 Metrics/ClassLength:
+  Max: 150
   Exclude:
     - 'test/**/*'
+
+Metrics/CyclomaticComplexity:
+  Max: 10
+
+Metrics/MethodLength:
+  Max: 20
+
+Metrics/PerceivedComplexity:
+  Max: 13
+
+Metrics/AbcSize:
+  Max: 30
 
 Metrics/BlockLength:
   Exclude:
     - 'test/**/*'
+    - 'app/models/concerns/*'
+    - 'app/controllers/concerns/*'
 
 Rails/HasAndBelongsToMany:
   Exclude:

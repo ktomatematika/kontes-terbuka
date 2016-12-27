@@ -29,9 +29,13 @@ module UserContestScope
 
     # Show both short marks and long marks. Short and long marks
     scope :include_marks, lambda {
-      joins { UserContest.short_marks.as(short_marks).on { id == short_marks.id } }
-        .joins { UserContest.long_marks.as(long_marks).on { id == long_marks.id } }
-        .select do
+      sm = joins do
+        UserContest.short_marks.as(short_marks).on { id == short_marks.id }
+      end
+      short_and_long_marks = sm.joins do
+        UserContest.long_marks.as(long_marks).on { id == long_marks.id }
+      end
+      short_and_long_marks.select do
         ['user_contests.*', 'short_marks.short_mark',
          'long_marks.long_mark', '(short_marks.short_mark + ' \
                    'long_marks.long_mark) as total_mark']
@@ -40,9 +44,11 @@ module UserContestScope
 
     # Show marks + award (emas/perak/perunggu)
     scope :processed, lambda {
-      joins { UserContest.include_marks.as(marks).on { id == marks.id } }
-        .joins { contest }
-        .select do
+      included = joins do
+        UserContest.include_marks.as(marks).on { id == marks.id }
+      end
+      unordered = included.joins { contest }
+                          .select do
         ['user_contests.*',
          'marks.short_mark',
          'marks.long_mark',
@@ -51,7 +57,8 @@ module UserContestScope
                when marks.total_mark >= silver_cutoff then 'Perak'
                when marks.total_mark >= bronze_cutoff then 'Perunggu'
                else '' end as award"]
-      end.order { marks.total_mark.desc }
+      end
+      unordered.order { marks.total_mark.desc }
     }
 
     # Given a long problem ID, this shows table of user contest id

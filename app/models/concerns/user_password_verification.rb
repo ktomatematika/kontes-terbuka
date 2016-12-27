@@ -64,6 +64,17 @@ module UserPasswordVerification
     Ajat.info "forgot_password_email_sent|uid:#{id}"
   end
 
+  def wrong_password_process
+    update(tries: tries + 1)
+
+    if tries >= MAX_TRIES
+      forgot_password_process
+      true
+    else
+      false
+    end
+  end
+
   private
 
   def encrypt_password

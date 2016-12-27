@@ -145,7 +145,7 @@ class LongProblemTest < ActiveSupport::TestCase
         lp.temporary_markings.take.destroy
         assert_not lp.all_marked?
       elsif idx == 2
-        lp.temporary_markings.destroy_all
+        lp.temporary_markings.each(&:destroy)
         assert_not lp.all_marked?
       end
     end

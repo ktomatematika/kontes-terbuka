@@ -97,7 +97,7 @@ class ContestsControllerTest < ActionController::TestCase
     post :update, id: @c.id, contest: { start_time: Time.zone.now + 5.seconds,
                                         end_time: Time.zone.now - 5.seconds }
 
-    assert_redirected_to admin_contest_path(@c)
+    assert_redirected_to contest_path(@c)
     assert_equal flash[:alert], "#{@c} gagal diubah!"
   end
 

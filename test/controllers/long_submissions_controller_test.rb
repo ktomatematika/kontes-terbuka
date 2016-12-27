@@ -12,7 +12,8 @@ class LongSubmissionsControllerTest < ActionController::TestCase
   end
 
   # TODO. Dev too lazy
-  test 'create' do; end
+  test 'create' do
+  end
 
   test 'destroy' do
     test_abilities @ls, :destroy, [nil], [:admin]
@@ -47,7 +48,8 @@ class LongSubmissionsControllerTest < ActionController::TestCase
   end
 
   # TODO. Dev too lazy
-  test 'submit_mark' do; end
+  test 'submit_mark' do
+  end
 
   private
 
