@@ -1,9 +1,8 @@
-/* exported now short_days MONTHS_IN_A_YEAR DAYS_IN_A_WEEK erb_to_date */
+/* exported now MONTHS_IN_A_YEAR DAYS_IN_A_WEEK erb_to_date */
 
 var now = new Date();
 var months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli',
 	'Agustus', 'September', 'Oktober', 'November', 'Desember'];
-var short_days = ['M', 'S', 'S', 'R', 'K', 'J', 'S'];
 var long_days = ['Minggu', 'Senin', 'Selasa', 'Rabu',
 	'Kamis', 'Jumat', 'Sabtu'];
 

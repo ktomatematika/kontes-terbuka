@@ -25,8 +25,8 @@ module ContestAttributes
     started? && !ended?
   end
 
-  def max_score
-    short_problems.length + LongProblem::MAX_MARK * long_problems.length
+  def max_score(sp_count = short_problems.count, lp_count = long_problems.count)
+    sp_count + LongProblem::MAX_MARK * lp_count
   end
 
   def results(*includes)

@@ -115,6 +115,11 @@ class Contest < ActiveRecord::Base
     next_end
   end
 
+  def self.count_sql(table)
+    Contest.joins(table).group('contests.id')
+           .select("contests.id, count(#{table}) AS #{table}_count").to_sql
+  end
+
   def compress_reports
     File.delete(report_zip_location) if File.file?(report_zip_location)
     ZipFileGenerator.new(reports_location, report_zip_location).write

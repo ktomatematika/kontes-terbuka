@@ -1,16 +1,17 @@
-= content_tag 'div', '', id: 'contests-data', data: contests_info_hash
 .container#all-contests-container
   %header
     %h1 Kontes-kontes
     %h4 Catatan: tanggal kontes-kontes berikutnya masih bisa berubah kapanpun.
 
-  %section#contests-container
-    %article.three-container
+  = paginate @contests, 'offset'
+  - @contests.each do |c|
+    %a.contest-index-details{ href: contest_path(c) }
+      %h3= c.name
+      %h5 #{c.start_time.to_indo} sampai #{c.end_time.to_indo}
       %div
-        %a#prev-time{ href: '#' }
-      %div
-        %span#this-time
-      %div
-        %a#next-time{ href: '#' }
-
-    %article#calendar
+        Banyak soal: #{c.short_problems_count} isian dan
+        #{c.long_problems_count} uraian (nilai maksimal:
+        #{c.max_score(c.short_problems_count, c.long_problems_count)})
+      %div Cutoff: #{c.bronze_cutoff}/#{c.silver_cutoff}/#{c.gold_cutoff}
+      - if c.result_released || can?(:preview, c)
+        %div Jumlah peserta: #{c.user_contests_count} peserta

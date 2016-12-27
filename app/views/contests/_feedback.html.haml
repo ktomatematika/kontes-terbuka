@@ -7,9 +7,6 @@
     nilai #{UserContest::CUTOFF_CERTIFICATE} untuk mendapatkan sertifikat
     partisipasi ataupun sertifikat pemenang.
   %p
-    %b
-      Sertifikat dikirim pada
-      %span.feedback-time= @contest.feedback_time
-      %span> .
+    %b Sertifikat dikirim pada #{@contest.feedback_time.to_indo}.
   = link_to 'Isi Feedback', contest_feedback_path(contest_id: params[:id]),
     class: 'btn'

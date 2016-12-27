@@ -78,3 +78,21 @@
 .contest-result-tabs {
   margin-top: 1em;
 }
+
+.contest-index-details {
+  background-color: #fff;
+  border: 1px solid #000;
+  border-radius: 1em;
+  color: inherit;
+  display: block;
+  margin: 1em;
+  padding: 1em;
+
+  h3 {
+    margin-top: 0;
+  }
+
+  &:hover {
+    text-decoration: none;
+  }
+}

@@ -47,12 +47,25 @@ class ContestsController < ApplicationController
         @short_submissions = @user_contest.short_submissions
                                           .includes(:short_problem)
       end
-
-      grab_problems
     end
+
+    grab_problems
   end
 
-  def index; end
+  def index
+    sp = Contest.count_sql(:short_problems)
+    lp = Contest.count_sql(:long_problems)
+    uc = Contest.count_sql(:user_contests)
+    @contests = Contest.where('start_time < ?', Time.zone.now + 3.months)
+                       .joins("INNER JOIN (#{sp}) sp ON contests.id = sp.id")
+                       .joins("INNER JOIN (#{lp}) lp ON contests.id = lp.id")
+                       .joins("INNER JOIN (#{uc}) uc ON contests.id = uc.id")
+                       .select('contests.*, sp.short_problems_count, ' \
+                               'lp.long_problems_count, ' \
+                               'uc.user_contests_count')
+                       .order(start_time: :desc)
+                       .paginate(page: params[:offset], per_page: 10)
+  end
 
   def update
     if can? :update, @contest
