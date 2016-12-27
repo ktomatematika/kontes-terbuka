@@ -119,12 +119,14 @@ end
 
 ### QUALITY
 
-# Ruby linter
-gem 'rubocop'
-# HAML linter
-gem 'haml_lint'
-# SCSS linter
-gem 'scss_lint', require: false
+group :development, :test do
+  # Ruby linter
+  gem 'rubocop'
+  # HAML linter
+  gem 'haml_lint'
+  # SCSS linter
+  gem 'scss_lint', require: false
+end
 
 ### END QUALITY
 

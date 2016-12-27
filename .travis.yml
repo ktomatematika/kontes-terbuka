@@ -19,7 +19,7 @@ before_script:
 - cp .env.default .env
 script:
   - "bundle exec rake test:$TEST_SUITE"
-  - rubocop -D -f simple
+  - bundle exec rubocop -D -f simple
 after_script:
 - haml-lint --exclude-linter LineLength app/views
 - scss-lint app/assets/stylesheets
