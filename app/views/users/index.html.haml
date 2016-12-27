@@ -16,7 +16,6 @@
       %th Provinsi
       %th Status
       %th Sekolah/Institusi
-      %th= 'Kubus' if can? :index_full, User
 
     - @users.each do |u|
       %tr{ data: { link: user_path(u) }, class: row_classes(u, %w(users-index-row clickable-row)) }
@@ -26,4 +25,3 @@
         %td= u.province
         %td= u.status
         %td= u.school
-        %td= u.point if can? :index_full, User

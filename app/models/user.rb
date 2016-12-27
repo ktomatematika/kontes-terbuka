@@ -30,6 +30,7 @@
 #  index_users_on_referrer_id   (referrer_id)
 #  index_users_on_status_id     (status_id)
 #  index_users_on_username      (username) UNIQUE
+#  index_users_on_username_gin  (username)
 #  index_users_on_verification  (verification) UNIQUE
 #
 # Foreign Keys
@@ -38,7 +39,6 @@
 #  fk_rails_87f75b7957  (color_id => colors.id) ON DELETE => nullify
 #  fk_rails_ce4a327a04  (status_id => statuses.id) ON DELETE => nullify
 #
-# rubocop:enable Metrics/LineLength
 
 class User < ActiveRecord::Base
   include UserPasswordVerification
@@ -67,6 +67,7 @@ class User < ActiveRecord::Base
 
   before_save do
     add_role(:veteran) if osn == '1'
+    username = username.lowercase
   end
 
   after_save :clear_password
@@ -145,7 +146,7 @@ class User < ActiveRecord::Base
   end
 
   def self.get_user(username_or_email)
-    User.find_by(username: username_or_email) ||
+    User.find_by('username ILIKE username_or_email') ||
       User.find_by(email: username_or_email)
   end
 end

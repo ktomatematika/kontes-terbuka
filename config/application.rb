@@ -29,6 +29,7 @@ module KontesTerbuka
     config.middleware.use Rack::Protection
     config.autoload_paths.push("#{config.root}/lib")
     config.active_job.queue_adapter = :delayed_job
+    config.active_record.schema_format = :sql
   end
 
   Rails.application.routes.default_url_options[:host] = 'localhost:3000'

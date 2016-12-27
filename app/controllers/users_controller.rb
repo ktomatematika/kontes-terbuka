@@ -104,7 +104,7 @@ class UsersController < ApplicationController
 
   def check_unique
     users = User.all
-    params[:username] && users = users.where(username: params[:username])
+    params[:username] && users = users.where('username ILIKE params[:username]')
     params[:email] && users = users.where(email: params[:email])
     render json: !users.present?
   end
