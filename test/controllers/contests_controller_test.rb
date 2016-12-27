@@ -234,7 +234,7 @@ class ContestsControllerTest < ActionController::TestCase
     test_abilities @c, :refresh, [nil, :panitia], [:admin]
 
     post :refresh, id: @c.id
-    assert_redirected_to contest_path(@c)
+    assert_redirected_to admin_contest_path(@c)
     assert_equal flash[:notice], 'Refreshed!'
 
     jobs = Delayed::Job.where(queue: "contest_#{@c.id}").select do |j|

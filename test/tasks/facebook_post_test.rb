@@ -70,9 +70,8 @@ class FacebookPostTest < ActiveSupport::TestCase
                    'cek email Anda! Jika Anda tidak mendapatkannya, ' \
                    'berarti Anda tidak ' \
                    'memenuhi syarat mendapatkan sertifikat, yakni ' \
-                   "minimal #{UserContest::CUTOFF_CERTIFICATE} poin di ' \
-                   'kontes dan " \
-                   'mengisi semua feedback.',
+                   "minimal #{UserContest::CUTOFF_CERTIFICATE} poin di " \
+                   'kontes dan mengisi semua feedback.',
                  'FacebookPost certificate_sent text is not accurate.'
   end
 end

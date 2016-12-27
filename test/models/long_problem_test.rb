@@ -140,12 +140,12 @@ class LongProblemTest < ActiveSupport::TestCase
     c.long_problems.each_with_index do |lp, idx|
       if idx.zero?
         lp.submission_pages.each(&:destroy)
-        lp.temporary_markings.each(&:destroy)
         assert lp.all_marked?
       elsif idx == 1
-        assert lp.all_marked?
-      elsif idx == 2
         lp.temporary_markings.take.destroy
+        assert_not lp.all_marked?
+      elsif idx == 2
+        lp.temporary_markings.destroy_all
         assert_not lp.all_marked?
       end
     end

@@ -156,14 +156,7 @@ class UsersController < ApplicationController
   end
 
   def referrer_update
-    user = User.find(params[:user_id])
-    user.update(referrer_id: params[:user][:referrer_id])
-    redirect_to :back, notice: 'Terima kasih sudah mengisi!'
-  end
-
-  def referrer_update
-    user = User.find(params[:user_id])
-    user.update(referrer_id: params[:user][:referrer_id])
+    @user.update(referrer_id: params[:user][:referrer_id])
     redirect_to :back, notice: 'Terima kasih sudah mengisi!'
   end
 

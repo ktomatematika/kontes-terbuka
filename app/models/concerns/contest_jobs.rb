@@ -52,15 +52,6 @@ module ContestJobs
     do_if_not_time(feedback_time - 6.hours, f, :feedback_ending, '6 jam')
   end
 
-  def prepare_facebook
-    f = FacebookPost.new self
-
-    do_if_not_time(start_time - 1.day, f, :contest_starting, '24 jam')
-    do_if_not_time(start_time, f, :contest_started)
-    do_if_not_time(end_time - 1.day, f, :contest_ending, '24 jam')
-    do_if_not_time(feedback_time - 6.hours, f, :feedback_ending, '6 jam')
-  end
-
   def jobs_on_result_released
     EmailNotifications.new(self).delay(queue: "contest_#{id}").results_released
     FacebookPost.new(self).delay(queue: "contest_#{id}").results_released
