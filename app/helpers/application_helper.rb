@@ -36,7 +36,7 @@ module ApplicationHelper
       elsif !render
         txt
       else # add space if text does not start with punctuation
-        sanitize((txt[0] =~ /[[:punct:]]/ ? '' : ' ') + markdown.render(text))
+        sanitize((txt[0] =~ /[[:punct:]]/ ? '' : ' ') + markdown.render(txt))
       end
     end)
   end
@@ -80,7 +80,8 @@ module ApplicationHelper
 
   # Split text, while leaving delimiters intact.
   def latex_split(text, delimiters)
-    regex = Regexp.new delimiters.map { |i| Regexp.escape(i) }.join('|')
+    regex_string = '(' + delimiters.map { |i| Regexp.escape(i) }.join('|') + ')'
+    regex = Regexp.new regex_string
     text.split regex
   end
 end
