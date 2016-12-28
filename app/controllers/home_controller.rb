@@ -17,7 +17,7 @@ class HomeController < ApplicationController
       [contest.result_time.desc, problem_no.asc]
     end
     @long_problems = @all_lp.includes(:contest).select do |lp|
-      can? :mark_final, lp
+      can? :mark, lp
     end
 
     @panitia = User.with_role(:panitia).order(:username)

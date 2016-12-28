@@ -42,13 +42,12 @@ class Ability
   end
 
   def marker_abilities(user)
-    can [:download, :autofill, :upload_report, :new_on_long_problem,
-         :modify_on_long_problem],
-        LongProblem, id: LongProblem.with_role(:marker, user).pluck(:id)
-    can [:mark, :submit_mark], LongSubmission, long_problem_id:
-      LongProblem.with_role(:marker, user).pluck(:id)
-    can :download_marking_scheme, Contest,
-        id: LongProblem.with_role(:marker, user).pluck(:contest_id)
+    long_problems = LongProblem.with_role(:marker, user)
+    can [:download, :autofill, :upload_report, :mark],
+        LongProblem, id: long_problems.pluck(:id)
+    can [:mark, :submit_mark], LongSubmission,
+      long_problem_id: long_problems.pluck(:id)
+    can :download_marking_scheme, Contest, id: long_problems.pluck(:contest_id)
     can :admin, Application
   end
 

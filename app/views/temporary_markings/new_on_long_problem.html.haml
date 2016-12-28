@@ -18,7 +18,7 @@
         - @long_submissions.each do |s|
           - tm = TemporaryMarking.find_by(long_submission: s,
             user: current_user)
-          = create_data_row([s.user_contest.id,
+          = create_data_row([s.user_contest_id,
                              text_field_tag("marking[#{s.id}][mark]",
                              tm.nil? ? '' : LongSubmission::SCORE_HASH[tm.mark],
                              class: 'form-control'),

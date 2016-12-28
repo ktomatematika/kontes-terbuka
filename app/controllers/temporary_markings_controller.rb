@@ -1,5 +1,6 @@
 class TemporaryMarkingsController < ApplicationController
-  load_and_authorize_resource :long_problem
+  load_resource :long_problem
+  before_action { authorize! :mark, @long_problem }
 
   def new_on_long_problem
     if !current_user.has_role?(:marker, @long_problem) ||
