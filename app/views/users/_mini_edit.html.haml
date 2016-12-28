@@ -1,8 +1,8 @@
-= link_to 'Ganti Password', user_change_password_path(@user),
+= link_to 'Ganti Password', change_password_user_path(@user),
   class: 'btn', type: 'button'
-= link_to 'Ganti Notifikasi', user_change_notifications_path(@user),
+= link_to 'Ganti Notifikasi', user_notifications_path,
   class: 'btn', type: 'button'
-= form_for :user, url: user_mini_update_path(@user) do |f|
+= form_for :user, url: mini_update_user_path(@user) do |f|
   %p
     %label{ for: 'user_timezone' } Zona waktu:
     %select.form-control#user_timezone{ name: 'user[timezone]' }
