@@ -99,18 +99,14 @@ module ContestAttributes
   def scores(*includes)
     filtered_query = user_contests.processed
 
-    long_problems.each do |long_problem|
+    long_problems.each do |l|
       joined = filtered_query.joins do
-        UserContest.include_long_problem_marks(long_problem.id)
-                   .as("long_problem_marks_#{long_problem.id}")
-                   .on do
-                     id == __send__('long_problem_marks_' \
-                                                   "#{long_problem.id}").id
-                   end.outer
+        UserContest.include_long_problem_marks(l.id)
+                   .as("long_problem_marks_#{l.id}")
+                   .on { id == __send__("long_problem_marks_#{l.id}").id }.outer
       end
       filtered_query = joined.select do
-        __send__("long_problem_marks_#{long_problem.id}")
-          .__send__("problem_no_#{long_problem.id}")
+        __send__("long_problem_marks_#{l.id}").__send__("problem_no_#{l.id}")
       end
     end
     filtered_query.includes(includes)

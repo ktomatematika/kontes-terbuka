@@ -18,14 +18,14 @@ class ContestJobsTest < ActiveSupport::TestCase
     c.save
 
     assert_job_not_exists({ queue: "contest_#{c.id}", run_at: Time.zone.now },
-                          c, :reload, [], 'prepared jobs are not destroyed.')
+                          c, :reload, nil, 'prepared jobs are not destroyed.')
   end
 
   test 'proper jobs are created on contest end' do
     assert_job_exists({ queue: "contest_#{@c.id}", run_at: @c.end_time },
-                      @c, :purge_panitia, [], 'purge_panitia does not exist.')
+                      @c, :purge_panitia, nil, 'purge_panitia does not exist.')
     assert_job_exists({ queue: "contest_#{@c.id}", run_at: @c.end_time },
-                      @c, :send_most_answers, [],
+                      @c, :send_most_answers, nil,
                       'send_most_answers does not exist.')
   end
 
@@ -35,13 +35,14 @@ class ContestJobsTest < ActiveSupport::TestCase
     Notification.where(event: 'contest_starting').find_each do |n|
       assert_job_exists({ queue: "contest_#{@c.id}",
                           run_at: @c.start_time - n.seconds },
-                        e, :contest_starting, [n.time_text],
+                        e, :contest_starting, n.time_text,
                         'contest_starting email job does not exist.')
     end
 
-    Notification.where(event: 'contest_started').find_each do
-      assert_job_exists({ queue: "contest_#{@c.id}", run_at: @c.start_time },
-                        e, :contest_started, [],
+    Notification.where(event: 'contest_started').find_each do |_n|
+      assert_job_exists({ queue: "contest_#{@c.id}",
+                          run_at: @c.start_time },
+                        e, :contest_started, nil,
                         'contest_started email job does not exist.')
     end
 
@@ -65,19 +66,19 @@ class ContestJobsTest < ActiveSupport::TestCase
 
     assert_job_exists({ queue: "contest_#{@c.id}",
                         run_at: @c.start_time - 1.day },
-                      f, :contest_starting, ['24 jam'],
+                      f, :contest_starting, '24 jam',
                       'contest_starting Facebook job does not exist.')
     assert_job_exists({ queue: "contest_#{@c.id}",
                         run_at: @c.start_time },
-                      f, :contest_started, [],
+                      f, :contest_started, nil,
                       'contest_started Facebook job does not exist.')
     assert_job_exists({ queue: "contest_#{@c.id}",
                         run_at: @c.end_time - 1.day },
-                      f, :contest_ending, ['24 jam'],
+                      f, :contest_ending, '24 jam',
                       'contest_starting Facebook job does not exist.')
     assert_job_exists({ queue: "contest_#{@c.id}",
-                        run_at: @c.start_time - 1.day },
-                      f, :feedback_ending, ['6 jam'],
+                        run_at: @c.feedback_time - 6.hours },
+                      f, :feedback_ending, '6 jam',
                       'feedback_ending Facebook job does not exist.')
   end
 
@@ -104,27 +105,27 @@ class ContestJobsTest < ActiveSupport::TestCase
   test 'contest jobs on feedback time end' do
     assert_job_exists({ queue: "contest_#{@c.id}",
                         run_at: @c.feedback_time },
-                      @c, :check_veteran, [],
+                      @c, :check_veteran, nil,
                       'check_veteran job does not exist.')
     assert_job_exists({ queue: "contest_#{@c.id}",
                         run_at: @c.feedback_time },
-                      @c, :award_points, [],
+                      @c, :award_points, nil,
                       'award_points job does not exist.')
     assert_job_exists({ queue: "contest_#{@c.id}",
                         run_at: @c.feedback_time },
-                      @c, :send_certificates, [],
+                      @c, :send_certificates, nil,
                       'send_certificates job does not exist.')
     assert_job_exists({ queue: "contest_#{@c.id}",
                         run_at: @c.feedback_time },
-                      FacebookPost.new(@c), :certificates_sent, [],
-                      'certificates_sent Facebook job does not exist.')
+                      FacebookPost.new(@c), :certificate_sent, nil,
+                      'certificate_sent Facebook job does not exist.')
     assert_job_exists({ queue: "contest_#{@c.id}",
                         run_at: @c.feedback_time },
-                      @c, :refresh, [],
+                      @c, :refresh, nil,
                       'refresh job on feedback time end does not exist.')
     assert_job_exists({ queue: "contest_#{@c.id}",
                         run_at: @c.feedback_time },
-                      ContestFileBackup.new, :backup_misc, [1],
+                      ContestFileBackup.new, :backup_misc, 1,
                       'backup_misc job does not exist.')
     assert_job_exists({ queue: "contest_#{@c.id}",
                         run_at: @c.feedback_time },
@@ -139,7 +140,7 @@ class ContestJobsTest < ActiveSupport::TestCase
     7.times do |i|
       assert_job_exists({ queue: "contest_#{@c.id}",
                           run_at: @c.end_time - (2 * i).hours },
-                        c, :backup_submissions, [self],
+                        c, :backup_submissions, c,
                         "Submissions are not backuped at #{2 * i} hours " \
                         'before end time.')
     end
@@ -149,7 +150,7 @@ class ContestJobsTest < ActiveSupport::TestCase
     loop do
       assert_job_exists({ queue: "contest_#{@c.id}",
                           run_at: @c.end_time - day.days },
-                        c, :backup_submissions, [self],
+                        c, :backup_submissions, c,
                         "Submissions are not backuped at #{day} days " \
                         'before end time.')
       day += 1
@@ -160,40 +161,32 @@ class ContestJobsTest < ActiveSupport::TestCase
   private
 
   def assert_job_exists(dj_hash, object, method, args, message = '')
-    jobs = Delayed::Job.all
-    jobs = jobs.where(queue: dj_hash[:queue]) if dj_hash.include? :queue
-    jobs = jobs.where(queue: dj_hash[:priority]) if dj_hash.include? :priority
-    if dj_hash.include? :run_at
-      jobs = jobs.where('? < run_at AND run_at < ?',
-                        dj_hash[:run_at] - 1.second,
-                        dj_hash[:run_at] + 1.second)
-    end
-
-    assert_not_empty(jobs.select do |job|
-      handler = YAML.load(job.handler)
-      return false unless object == handler.object
-      return false unless method == handler.method_name
-      return false unless args == handler.args
-      true
-    end, message)
+    args = [] if args.nil?
+    args = [args] unless args.class == Array
+    assert jobs_any?(jobs_from_hash(dj_hash), object, method, args), message
   end
 
   def assert_job_not_exists(dj_hash, object, method, args, message = '')
-    jobs = Delayed::Job.all
-    jobs = jobs.where(queue: dj_hash[:queue]) if dj_hash.include? :queue
-    jobs = jobs.where(queue: dj_hash[:priority]) if dj_hash.include? :priority
+    args = [] if args.nil?
+    args = [args] unless args.class == Array
+    assert_not jobs_any?(jobs_from_hash(dj_hash), object, method, args), message
+  end
+
+  def jobs_any?(jobs, object, method, args)
+    jobs.any? do |job|
+      handler = YAML.load(job.handler)
+      object == handler.object && method == handler.method_name &&
+        args == handler.args
+    end
+  end
+
+  def jobs_from_hash(dj_hash)
+    jobs = Delayed::Job.all.where(dj_hash.slice(:queue, :priority))
     if dj_hash.include? :run_at
       jobs = jobs.where('? < run_at AND run_at < ?',
                         dj_hash[:run_at] - 1.second,
                         dj_hash[:run_at] + 1.second)
     end
-
-    assert_empty(jobs.select do |job|
-      handler = YAML.load(job.handler)
-      return false unless object == handler.object
-      return false unless method == handler.method_name
-      return false unless args == handler.args
-      true
-    end, message)
+    jobs
   end
 end

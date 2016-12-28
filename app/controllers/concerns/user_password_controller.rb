@@ -5,13 +5,7 @@ module UserPasswordController
     u = User.find_by(verification: params[:verification])
     if u.nil?
       Ajat.warn "verify_fail|verification:#{params[:verification]}"
-      redirect_to root_path, alert: 'Terjadi kegagalan dalam verifikasi ' \
-      'atau reset password. Ini kemungkinan berarti Anda sudah ' \
-      'terverifikasi atau password Anda sudah terreset, ataupun batas ' \
-      'waktu verifikasi sudah lewat. Coba login; coba juga cek ulang link ' \
-      'yang diberikan dalam email Anda. Jika masih tidak bisa juga, coba ' \
-      'buat ulang user Anda, atau ' \
-      "#{ActionController::Base.helpers.link_to 'kontak kami', contact_path}."
+      redirect_to root_path, alert: verify_fail_alert
     elsif u.enabled
       # User is verified
       Ajat.info "enabled_user_verify|uid:#{u.id}"
@@ -28,20 +22,16 @@ module UserPasswordController
   def process_reset_password
     user = User.find_by verification: params[:verification]
     if user.nil?
-      Ajat.warn 'user_reset_password_fail_no_verification|' \
-        "verification:#{params[:verification]}"
-      flash.now[:alert] = 'Terdapat kesalahan! Coba lagi.'
-      render :reset_password
+      reset_password_fail reset_password_no_verification_log,
+                          'Terdapat kesalahan! Coba lagi.'
     elsif params[:new_password] == params[:confirm_new_password]
       user.update(password: params[:new_password], verification: nil)
       Ajat.info "user_reset_password|uid:#{user.id}"
       redirect_to login_users_path, notice: 'Password berhasil diubah! ' \
       'Silakan login.'
     else
-      Ajat.warn "user_reset_password_fail_user|user:#{user.inspect}|" \
-      "#{user.errors.full_messages}"
-      flash.now[:alert] = 'Password baru tidak cocok! Coba lagi.'
-      render :reset_password
+      reset_password_fail reset_password_fail_log(user),
+                          'Password baru tidak cocok! Coba lagi.'
     end
   end
 
@@ -78,5 +68,33 @@ module UserPasswordController
       flash.now[:notice] = 'Cek email Anda untuk instruksi selanjutnya.'
     end
     render 'welcome/sign'
+  end
+
+  private
+
+  def verify_fail_alert
+    'Terjadi kegagalan dalam verifikasi ' \
+    'atau reset password. Ini kemungkinan berarti Anda sudah ' \
+    'terverifikasi atau password Anda sudah terreset, ataupun batas ' \
+    'waktu verifikasi sudah lewat. Coba login; coba juga cek ulang link ' \
+    'yang diberikan dalam email Anda. Jika masih tidak bisa juga, coba ' \
+    'buat ulang user Anda, atau ' \
+    "#{ActionController::Base.helpers.link_to 'kontak kami', contact_path}."
+  end
+
+  def reset_password_no_verification_log
+    'user_reset_password_fail_no_verification|' \
+      "verification:#{params[:verification]}"
+  end
+
+  def reset_password_fail_log(user)
+    "user_reset_password_fail_user|user:#{user.inspect}|" \
+      "#{user.errors.full_messages}"
+  end
+
+  def reset_password_fail(log, alert)
+    Ajat.warn log
+    flash.now[:alert] = alert
+    render :reset_password
   end
 end

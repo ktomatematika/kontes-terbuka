@@ -6,6 +6,10 @@ class EmailNotifications
     @contest = ctst
   end
 
+  def ==(other)
+    other.class == EmailNotifications && @contest == other.contest
+  end
+
   def contest_starting(time_text)
     subject = "Kontes dimulai dalam waktu #{time_text}"
     text = "Hanya mengingatkan saja, #{@contest} akan dimulai #{time_text} " \

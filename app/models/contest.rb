@@ -118,9 +118,13 @@ class Contest < ActiveRecord::Base
   end
 
   def self.count_sql(table)
-    Contest.joins(table).group('contests.id')
+    Contest.joins(table.to_sym).group('contests.id')
            .select("contests.id, count(#{table}) AS #{table}_count").to_sql
   end
+
+  scope :currently_in_contest, lambda {
+    where('start_time <= ? AND ? <= end_time', Time.zone.now, Time.zone.now)
+  }
 
   def refresh
     delay(queue: "contest_#{id}").refresh_results_pdf

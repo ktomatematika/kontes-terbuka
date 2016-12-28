@@ -21,7 +21,8 @@ class ShortProblemsControllerTest < ActionController::TestCase
                                    problem_no: 5,
                                    answer: 3 }
     assert_redirected_to admin_contest_path @c
-    assert_equal @c.short_problems.where(statement: 'Hello there').count, 1
+    assert_equal @c.reload.short_problems.where(statement: 'Hello there')
+      .count, 1
     assert_equal flash[:notice], 'Short Problem terbuat!'
   end
 

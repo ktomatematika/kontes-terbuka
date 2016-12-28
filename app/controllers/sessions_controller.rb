@@ -11,6 +11,7 @@ class SessionsController < ApplicationController
 
   # Life is hard...
   # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
+  # rubocop:disable Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
   def create
     user = User.get_user params[:username]
     if user.nil?
@@ -57,6 +58,7 @@ class SessionsController < ApplicationController
     end
   end
   # rubocop:enable Metrics/AbcSize,Metrics/MethodLength
+  # rubocop:enable Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
 
   def destroy
     cookies.delete(:auth_token)

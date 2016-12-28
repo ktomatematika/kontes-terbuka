@@ -16,6 +16,8 @@ class TexReader
     Contest.transaction do
       insert_problems
       compile_tex
+      @contest.update(problem_pdf:
+                      File.open(@contest.problem_tex.path[0...-3] + 'pdf', 'r'))
     end
   end
 
@@ -44,20 +46,21 @@ class TexReader
 
     Dir.chdir(File.dirname(tex_path)) do
       cmd_log = ''
-      3.times do # compile 3 times to get references in pdflatex right
-        cmd_log += `echo $PATH`.to_s
-        cmd_log += "\n\n"
-        cmd_log += `pdflatex -interaction=nonstopmode #{tex_path}`.to_s
-        cmd_log += "\n\n\n"
-      end
+      # compile 3 times to get references in pdflatex right
+      3.times { cmd_log += compile_and_create_log }
       Mailgun.send_message contest: @contest, subject: 'Log pdflatex',
                            text: cmd_log, to: '7744han@gmail.com'
       raise 'TexReader Error' unless $CHILD_STATUS.exitstatus.zero?
     end
-    @contest.update(problem_pdf: File.open(tex_path[0...-3] + 'pdf', 'r'))
   end
 
   private
+
+  def compile_and_create_log
+    "#{`echo $PATH`}\n\n" \
+      "#{`pdflatex -interaction=nonstopmode #{@contest.problem_tex.path}`}" \
+      "\n\n\n"
+  end
 
   def sp_process
     tex_file_process SP_START_SEPARATOR, SP_END_SEPARATOR

@@ -25,21 +25,16 @@ module ContestJobs
   def prepare_emails
     e = EmailNotifications.new self
 
-    Notification.where(event: 'contest_starting').find_each do |n|
-      do_if_not_time(start_time - n.seconds, e, :contest_starting, n.time_text)
+    [['contest_starting', start_time], ['contest_ending', end_time],
+     ['feedback_ending', feedback_time]].each do |event|
+      Notification.where(event: event.first).find_each do |n|
+        do_if_not_time(event.second - n.seconds, e, event.first.to_sym,
+                       n.time_text)
+      end
     end
 
     Notification.where(event: 'contest_started').find_each do
       do_if_not_time(start_time, e, :contest_started)
-    end
-
-    Notification.where(event: 'contest_ending').find_each do |n|
-      do_if_not_time(end_time - n.seconds, e, :contest_ending, n.time_text)
-    end
-
-    Notification.where(event: 'feedback_ending').find_each do |n|
-      do_if_not_time(feedback_time - n.seconds, e, :feedback_ending,
-                     n.time_text)
     end
   end
 

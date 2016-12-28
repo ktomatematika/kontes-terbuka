@@ -58,6 +58,138 @@ class UsersControllerTest < ActionController::TestCase
                                                 contact_path}."
   end
 
+  test 'show' do
+    login_and_be_admin
+    @user.enable
+
+    user = create(:user)
+    user.enable
+    disabled = create(:user)
+    panitia = create(:user)
+    panitia.add_role :panitia
+    assert Ability.new(user).can?(:show, user)
+    assert Ability.new(user).can?(:show, @user)
+    assert Ability.new(user).cannot?(:show, disabled)
+    assert Ability.new(panitia).can?(:show, @user)
+    assert Ability.new(panitia).can?(:show, disabled)
+    assert Ability.new(user).can?(:show_full, user)
+    assert Ability.new(user).cannot?(:show_full, @user)
+    assert Ability.new(panitia).can?(:show_full, @user)
+
+    get :show, id: @user.id
+    assert_response 200
+  end
+
+  test 'index' do
+    test_abilities User, :index, [], [nil]
+    test_abilities User, :index_full, [nil], [:panitia, :admin]
+
+    login_and_be_admin
+    get :index
+    assert_response 200
+  end
+
+  test 'edit' do
+    test_abilities User, :edit, [nil, :panitia], [:user_admin, :admin]
+
+    login_and_be_admin
+    get :edit, id: @user.id
+    assert_response 200
+  end
+
+  test 'update' do
+    test_abilities User, :update, [nil, :panitia], [:user_admin, :admin]
+
+    login_and_be_admin
+    put :update, id: @user.id, user: { fullname: 'Coba halo' }
+    assert_redirected_to user_path(@user)
+    assert_equal flash[:notice], 'User berhasil diupdate!'
+    assert_equal @user.reload.fullname, 'Coba halo'
+  end
+
+  test 'update fail' do
+    test_abilities User, :update, [nil, :panitia], [:user_admin, :admin]
+
+    login_and_be_admin
+    get :update, id: @user.id, user: { color_id: nil }
+    assert_template :edit
+    assert_equal flash[:alert], 'Terdapat kesalahan!'
+  end
+
+  test 'mini_update' do
+    login_and_be_admin
+
+    u = create(:user)
+    p = create(:user)
+    p.add_role :panitia
+    a = create(:user)
+    a.add_role :panitia
+    a.add_role :user_admin
+    assert Ability.new(u).can?(:mini_edit, u)
+    assert Ability.new(u).cannot?(:mini_edit, @user)
+    assert Ability.new(p).cannot?(:mini_edit, @user)
+    assert Ability.new(a).can?(:mini_edit, @user)
+    assert Ability.new(u).can?(:mini_update, u)
+    assert Ability.new(u).cannot?(:mini_update, @user)
+    assert Ability.new(p).cannot?(:mini_update, @user)
+    assert Ability.new(a).can?(:mini_update, @user)
+
+    put :mini_update, id: @user.id, user: { timezone: 'WITA' }
+    assert_redirected_to user_path(@user)
+    assert_equal flash[:notice], 'User berhasil diupdate!'
+    assert_equal @user.reload.timezone, 'WITA'
+  end
+
+  test 'mini_update fail' do
+    login_and_be_admin
+
+    put :mini_update, id: @user.id, user: { timezone: 'BODOH' }
+    assert_redirected_to user_path(@user)
+    assert_equal flash[:alert], 'Terdapat kesalahan dalam mengupdate User!'
+  end
+
+  test 'destroy' do
+    test_abilities User, :destroy, [nil, :panitia], [:user_admin, :admin]
+
+    login_and_be_admin
+    delete :destroy, id: @user.id
+    assert_equal User.where(id: @user.id).count, 0
+  end
+
+  test 'check_unique not unique username' do
+    u = create(:user)
+    post :check_unique, username: u.username
+    assert_equal @response.body, 'false'
+  end
+
+  test 'check_unique not unique username different case' do
+    create(:user, username: 'asdfgh')
+    post :check_unique, username: 'ASdfGH'
+    assert_equal @response.body, 'false'
+  end
+
+  test 'check_unique not unique email' do
+    u = create(:user)
+    post :check_unique, email: u.email
+    assert_equal @response.body, 'false'
+  end
+
+  test 'check_unique is unique' do
+    post :check_unique, email: 'coba@gmail.coba'
+    assert_equal @response.body, 'true'
+  end
+
+  test 'referrer_update' do
+    test_abilities User, :referrer_update, [], [nil]
+    login_and_be_admin
+    r = create(:referrer)
+    patch :referrer_update, id: @user.id, user: { referrer_id: r.id }
+    assert_redirected_to root_url
+    assert_equal flash[:notice], 'Terima kasih sudah mengisi!'
+
+    assert_equal @user.reload.referrer, r
+  end
+
   test 'verify' do
     u = create(:user)
     get :verify, verification: u.verification
@@ -196,136 +328,5 @@ class UsersControllerTest < ActionController::TestCase
     assert_template 'welcome/sign'
     assert_equal flash[:alert], 'Kamu belum verifikasi! ' \
     'Cek email Anda untuk verifikasi.'
-  end
-
-  test 'show' do
-    login_and_be_admin
-    @user.enable
-
-    user = create(:user)
-    user.enable
-    disabled = create(:user)
-    panitia = create(:user)
-    panitia.add_role :panitia
-    assert Ability.new(user).can?(:show, user)
-    assert Ability.new(user).can?(:show, @user)
-    assert Ability.new(user).cannot?(:show, disabled)
-    assert Ability.new(panitia).can?(:show, @user)
-    assert Ability.new(panitia).can?(:show, disabled)
-    assert Ability.new(user).can?(:show_full, user)
-    assert Ability.new(user).cannot?(:show_full, @user)
-    assert Ability.new(panitia).can?(:show_full, @user)
-
-    get :show, id: @user.id
-    assert_response 200
-  end
-
-  test 'index' do
-    test_abilities User, :index, [], [nil]
-    test_abilities User, :index_full, [nil], [:panitia, :admin]
-
-    login_and_be_admin
-    get :index
-    assert_response 200
-  end
-
-  test 'edit' do
-    test_abilities User, :edit, [nil, :panitia], [:user_admin, :admin]
-
-    login_and_be_admin
-    get :edit, id: @user.id
-    assert_response 200
-  end
-
-  test 'update' do
-    test_abilities User, :update, [nil, :panitia], [:user_admin, :admin]
-
-    login_and_be_admin
-    put :update, id: @user.id, user: { fullname: 'Coba halo' }
-    assert_redirected_to user_path(@user)
-    assert_equal flash[:notice], 'User berhasil diupdate!'
-    assert_equal @user.reload.fullname, 'Coba halo'
-  end
-
-  test 'update fail' do
-    test_abilities User, :update, [nil, :panitia], [:user_admin, :admin]
-
-    login_and_be_admin
-    get :update, id: @user.id, user: { color_id: nil }
-    assert_template :edit
-    assert_equal flash[:alert], 'Terdapat kesalahan!'
-  end
-
-  test 'mini_update' do
-    login_and_be_admin
-
-    u = create(:user)
-    p = create(:user)
-    p.add_role :panitia
-    a = create(:user)
-    a.add_role :panitia
-    a.add_role :user_admin
-    assert Ability.new(u).can?(:mini_edit, u)
-    assert Ability.new(u).cannot?(:mini_edit, @user)
-    assert Ability.new(p).cannot?(:mini_edit, @user)
-    assert Ability.new(a).can?(:mini_edit, @user)
-    assert Ability.new(u).can?(:mini_update, u)
-    assert Ability.new(u).cannot?(:mini_update, @user)
-    assert Ability.new(p).cannot?(:mini_update, @user)
-    assert Ability.new(a).can?(:mini_update, @user)
-
-    put :mini_update, id: @user.id, user: { timezone: 'WITA' }
-    assert_redirected_to user_path(@user)
-    assert_equal flash[:notice], 'User berhasil diupdate!'
-    assert_equal @user.reload.timezone, 'WITA'
-  end
-
-  test 'mini_update fail' do
-    login_and_be_admin
-
-    put :mini_update, id: @user.id, user: { timezone: 'BODOH' }
-    assert_redirected_to user_path(@user)
-    assert_equal flash[:alert], 'Terdapat kesalahan dalam mengupdate User!'
-  end
-
-  test 'destroy' do
-    test_abilities User, :destroy, [nil, :panitia], [:user_admin, :admin]
-
-    login_and_be_admin
-    delete :destroy, id: @user.id
-    assert_equal User.where(id: @user.id).count, 0
-  end
-
-  test 'check_unique not unique username' do
-    u = create(:user)
-    post :check_unique, username: u.username
-    assert_equal @response.body, 'false'
-  end
-
-  test 'check_unique not unique username different case' do
-    create(:user, username: 'asdfgh')
-    post :check_unique, username: 'ASdfGH'
-    assert_equal @response.body, 'false'
-  end
-
-  test 'check_unique not unique email' do
-    u = create(:user)
-    post :check_unique, email: u.email
-    assert_equal @response.body, 'false'
-  end
-
-  test 'check_unique is unique' do
-    post :check_unique, email: 'coba@gmail.coba'
-    assert_equal @response.body, 'true'
-  end
-
-  test 'referrer_update' do
-    login_and_be_admin
-    r = create(:referrer)
-    patch :referrer_update, id: @user.id, user: { referrer_id: r.id }
-    assert_redirected_to root_url
-    assert_equal flash[:notice], 'Terima kasih sudah mengisi!'
-
-    assert_equal @user.reload.referrer, r
   end
 end

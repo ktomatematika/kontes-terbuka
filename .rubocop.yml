@@ -12,8 +12,19 @@ AllCops:
     - '**/Gemfile'
     - 'vendor/**/*'
 
+# Rails
+
 Rails:
   Enabled: true
+
+Rails/HasAndBelongsToMany:
+  Exclude:
+    - 'app/models/role.rb'
+
+Rails/HttpPositionalArguments:
+  Enabled: false
+
+# Style
 
 Style/Documentation:
   Enabled: false
@@ -24,22 +35,12 @@ Style/BracesAroundHashParameters:
 Style/ModuleFunction:
   EnforcedStyle: extend_self
 
+# Metrics
+
 Metrics/ClassLength:
-  Max: 150
+  Max: 140
   Exclude:
     - 'test/**/*'
-
-Metrics/CyclomaticComplexity:
-  Max: 10
-
-Metrics/MethodLength:
-  Max: 20
-
-Metrics/PerceivedComplexity:
-  Max: 13
-
-Metrics/AbcSize:
-  Max: 30
 
 Metrics/BlockLength:
   Exclude:
@@ -47,9 +48,8 @@ Metrics/BlockLength:
     - 'app/models/concerns/*'
     - 'app/controllers/concerns/*'
 
-Rails/HasAndBelongsToMany:
-  Exclude:
-    - 'app/models/role.rb'
+Metrics/MethodLength:
+  Max: 15
 
-Rails/HttpPositionalArguments:
-  Enabled: false
+Metrics/AbcSize:
+  Max: 24

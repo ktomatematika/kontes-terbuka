@@ -13,6 +13,10 @@ class CertificateManager
     @pdf_path = @path + '.pdf'
   end
 
+  def ==(other)
+    other.class == CertificateManager && @user_contest == other.user_contest
+  end
+
   def run
     compile_to_pdf certificate_tex
     send_certificate @pdf_path

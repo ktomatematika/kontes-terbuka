@@ -16,46 +16,42 @@ module Mailgun
   # contest: specify a contest to put contest tag
   # bcc_array: BCC params as an array.
   def send_message(**params)
-    params[:to] = EMAIL if params[:to].nil?
-    params[:from] = FROM
+    make_valid!(params)
     params[:text] = "Salam sejahtera,\n\n" + params[:text] +
                     "\n\nSalam,\nTim KTO Matematika"
 
-    params = check_force_to_many(params)
-    params = add_contest(params) if params[:contest]
-    params = convert_bcc(params) if params[:bcc_array]
+    check_force_to_many!(params)
+    add_contest!(params) if params[:contest]
+    convert_bcc!(params) if params[:bcc_array]
 
-    if Rails.env.production?
-      RestClient.post URL, params
-    elsif Rails.env.development?
-      Ajat.info 'mailgun|message=' + params.to_s
-    elsif Rails.env.test?
-      params
-    end
+    RestClient.post URL, params if Rails.env.production?
+    Ajat.info "mailgun|message=#{params}" if Rails.env.development?
+    params if Rails.env.test?
   end
 
   private
 
-  def check_force_to_many(params)
+  def make_valid!(params)
+    params[:to] ||= EMAIL
+    params[:from] ||= FROM
+  end
+
+  def check_force_to_many!(params)
     if (params[:to].include?(',') || params[:to].is_a?(Array)) &&
        !params[:force_to_many]
       raise 'You cannot send to many. Use BCC instead.'
     end
     params.delete(:force_to_many)
-    params
   end
 
-  def add_contest(params)
+  def add_contest!(params)
     params[:subject] = "#{params[:contest]}: #{params[:subject]}"
     params.delete(:contest)
-    params
   end
 
-  def convert_bcc(params)
-    params[:bcc] = '' if params[:bcc].nil?
-    params[:bcc] += ',' unless params[:bcc].empty?
+  def convert_bcc!(params)
+    params[:bcc].nil? ? params[:bcc] = '' : params[:bcc] += ','
     params[:bcc] += params[:bcc_array].join(',')
     params.delete(:bcc_array)
-    params
   end
 end

@@ -27,20 +27,16 @@ module ApplicationHelper
     # as delimiter, then we alternately render. This is needed,
     # since if not, $a_2$ will make the 2 become italic by render rules.
 
-    # Split text, while leaving $, \[, \] intact.
-    split_text = text.split(/(\$|\\\[|\\\])/)
-
+    delimiters = %w($ \[ \])
     render = true
-    safe_join(split_text.map do |txt|
-      if txt == '$' || txt == '\[' || txt == '\]'
+    safe_join(latex_split(text, delimiters).map do |txt|
+      if delimiters.include? txt
         render = !render
         txt
       elsif !render
         txt
-      elsif /[[:punct:]]/.match(txt[0]).nil? # does not start with punct
-        sanitize(' ' + markdown.render(txt)) # add some spacing to tex
-      else
-        sanitize(markdown.render(txt))
+      else # add space if text does not start with punctuation
+        sanitize((txt[0] =~ /[[:punct:]]/ ? '' : ' ') + markdown.render(text))
       end
     end)
   end
@@ -78,5 +74,13 @@ module ApplicationHelper
     text = lp.to_s
     text += ' (laporan sudah)' if lp.report?
     link_to text, long_problem_temporary_markings_path(long_problem_id: lp.id)
+  end
+
+  private
+
+  # Split text, while leaving delimiters intact.
+  def latex_split(text, delimiters)
+    regex = Regexp.new delimiters.map { |i| Regexp.escape(i) }.join('|')
+    text.split regex
   end
 end

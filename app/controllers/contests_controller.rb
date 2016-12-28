@@ -45,38 +45,25 @@ class ContestsController < ApplicationController
   end
 
   def index
-    sp = Contest.count_sql(:short_problems)
-    lp = Contest.count_sql(:long_problems)
-    uc = Contest.count_sql(:user_contests)
-
     @contests = Contest.where('start_time < ?', Time.zone.now + 3.months)
-                       .joins("INNER JOIN (#{sp}) sp ON contests.id = sp.id")
-                       .joins("INNER JOIN (#{lp}) lp ON contests.id = lp.id")
-                       .joins("INNER JOIN (#{uc}) uc ON contests.id = uc.id")
-                       .select('contests.*, sp.short_problems_count, ' \
-                               'lp.long_problems_count, ' \
-                               'uc.user_contests_count')
-                       .order(start_time: :desc)
-                       .paginate(page: params[:offset], per_page: 10)
+    %w(short_problems long_problems user_contests).each do |table|
+      subquery = Contest.count_sql(table)
+      @contests = @contests.joins("INNER JOIN (#{subquery}) #{table} " \
+                                  "ON contests.id = #{table}.id")
+    end
+    @contests = @contests.select('contests.*, ' \
+                                 'short_problems.short_problems_count, ' \
+                                 'long_problems.long_problems_count, ' \
+                                 'user_contests.user_contests_count')
+                         .order(start_time: :desc)
+                         .paginate(page: params[:offset], per_page: 10)
   end
 
   def update
     if can? :update, @contest
-      if @contest.update(contest_params)
-        Ajat.info "contest_updated|id:#{@contest.id}"
-        flash[:notice] = "#{@contest} berhasil diubah."
-      else
-        Ajat.warn "contest_update_fail|#{@contest.errors.full_messages}"
-        flash[:alert] = "#{@contest} gagal diubah!"
-      end
+      update_contest
     elsif can? :upload_ms, @contest
-      if @contest.update(marking_scheme_params)
-        Ajat.info "marking_scheme_uploaded|id:#{@contest.id}"
-        flash[:notice] = "#{@contest} berhasil diubah."
-      else
-        Ajat.warn "marking_scheme_upload_fail|#{@contest.errors.full_messages}"
-        flash[:alert] = "#{@contest} gagal diubah!"
-      end
+      update_marking_scheme
     else
       raise CanCan::AccessDenied.new('Cannot update', :update, @contest)
     end
@@ -158,5 +145,25 @@ class ContestsController < ApplicationController
   def grab_submissions
     @short_submissions = @user_contest.short_submissions
     @long_submissions = @user_contest.long_submissions
+  end
+
+  def update_contest
+    if @contest.update(contest_params)
+      Ajat.info "contest_updated|id:#{@contest.id}"
+      flash[:notice] = "#{@contest} berhasil diubah."
+    else
+      Ajat.warn "contest_update_fail|#{@contest.errors.full_messages}"
+      flash[:alert] = "#{@contest} gagal diubah!"
+    end
+  end
+
+  def update_marking_scheme
+    if @contest.update(marking_scheme_params)
+      Ajat.info "marking_scheme_uploaded|id:#{@contest.id}"
+      flash[:notice] = "#{@contest} berhasil diubah."
+    else
+      Ajat.warn "marking_scheme_upload_fail|#{@contest.errors.full_messages}"
+      flash[:alert] = "#{@contest} gagal diubah!"
+    end
   end
 end

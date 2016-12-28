@@ -8,6 +8,10 @@ class FacebookPost
                                       ENV['FACEBOOK_SECRET']
   end
 
+  def ==(other)
+    other.class == FacebookPost && @contest == other.contest
+  end
+
   def contest_starting(time_text)
     post_to_facebook "#{@contest} akan dimulai dalam waktu #{time_text}. " \
       'Ayok segera daftar di website kami di https://ktom.tomi.or.id jika ' \
