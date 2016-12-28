@@ -46,7 +46,7 @@ class Ability
     can [:download, :autofill, :upload_report, :mark],
         LongProblem, id: long_problems.pluck(:id)
     can [:mark, :submit_mark], LongSubmission,
-      long_problem_id: long_problems.pluck(:id)
+        long_problem_id: long_problems.pluck(:id)
     can :download_marking_scheme, Contest, id: long_problems.pluck(:contest_id)
     can :admin, Application
   end
