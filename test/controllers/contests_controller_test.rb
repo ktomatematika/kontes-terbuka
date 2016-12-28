@@ -217,7 +217,7 @@ class ContestsControllerTest < ActionController::TestCase
 
   test 'download_results' do
     c = create(:contest, result_released: false)
-    test_abilities c, :download_results, [nil], [:panitia, :admin]
+    test_abilities c, :download_results, [nil, :panitia], [:admin]
     test_abilities create(:contest, start: -5, ends: -3,
                                     result_released: true),
                    :download_results, [], [nil, :panitia, :admin]

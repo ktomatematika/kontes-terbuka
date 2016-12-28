@@ -18,6 +18,6 @@
       = link_to 'Administrasi', admin_contest_path(@contest),
         class: 'btn btn-lg'
 
-    - if can? :assign_markers, @contest
+    - if can? :assign_markers, Role
       = link_to 'Bagi koreksian', marker_contest_path(@contest),
         class: 'btn btn-lg'

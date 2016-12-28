@@ -13,7 +13,7 @@
         - User.with_role(:marker, lp).each do |user|
           %tr
             %td= user
-            %td= link_to 'Hapus', marker_long_problem_path(user_id: user),
+            %td= link_to 'Hapus', marker_long_problem_path(lp, user_id: user),
               method: :delete
 
     = form_tag marker_long_problem_path(lp), method: :post,
