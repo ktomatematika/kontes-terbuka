@@ -43,7 +43,7 @@ class Ability
 
   def marker_abilities(user)
     long_problems = LongProblem.with_role(:marker, user)
-    can [:download, :autofill, :upload_report, :mark],
+    can [:download_submissions, :autofill, :upload_report, :mark],
         LongProblem, id: long_problems.pluck(:id)
     can [:mark, :submit_mark], LongSubmission,
         long_problem_id: long_problems.pluck(:id)

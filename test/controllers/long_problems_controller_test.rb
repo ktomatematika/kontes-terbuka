@@ -67,7 +67,7 @@ class LongProblemsControllerTest < ActionController::TestCase
   test 'download_submissions' do
     create(:long_submission, long_problem: @lp)
 
-    test_abilities @lp, :download,
+    test_abilities @lp, :download_submissions,
                    [nil, :panitia, :problem_admin,
                     [:marker, create(:long_problem)]],
                    [[:marker, @lp], :marking_manager, :admin]
