@@ -60,7 +60,7 @@ class Ability
   end
 
   def marking_manager_abilities(_user)
-    can [:start_mark_final, :download], LongProblem
+    can [:start_mark_final, :download_submissions], LongProblem
     can [:assign_markers, :create_marker, :remove_marker], Role
   end
 

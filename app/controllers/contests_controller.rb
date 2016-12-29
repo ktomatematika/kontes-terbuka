@@ -33,11 +33,11 @@ class ContestsController < ApplicationController
       @same_province_ucs = @user_contests.select do |uc|
         uc.user.province_id == current_user.province_id
       end
-      # Keep medallists only
-      @user_contests = @user_contests.where('marks.total_mark >= bronze_cutoff')
-
       @user_contest = @user_contests.find_by('user_contests.user_id' =>
                                              current_user.id)
+
+      # Keep medallists only
+      @user_contests = @user_contests.where('marks.total_mark >= bronze_cutoff')
     end
 
     grab_submissions if @user_contest
