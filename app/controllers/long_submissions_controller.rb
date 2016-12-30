@@ -35,7 +35,7 @@ class LongSubmissionsController < ApplicationController
   def download
     @long_submission.compress
     send_file @long_submission.zip_location
-  rescue Errno::ENOENT
+  rescue Errno::ENOENT, ActionController::MissingFile
     redirect_to contest_path(@long_submission.long_problem.contest),
                 alert: 'Jawaban Anda tidak ditemukan! Mohon buang ' \
                 'dan upload ulang.'
