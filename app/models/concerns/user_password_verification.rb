@@ -30,7 +30,7 @@ module UserPasswordVerification
                         queue: 'destroy_if_unverified'
 
   def send_verify_email
-    link = verify_url verification: verification
+    link = verify_users_url verification: verification
     text = 'User berhasil dibuat! Sekarang, buka link ini untuk ' \
       "memverifikasikan email Anda:\n\n#{link}\n\n" \
       "Anda hanya memiliki waktu #{VERIFY_TIME_INDO} untuk mengverifikasi. " \
