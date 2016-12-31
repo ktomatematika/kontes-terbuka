@@ -9,7 +9,9 @@
       %th No
       %th Statement
       %th Edit
-      %th Delete
+      - if can? :destroy, LongProblem
+        %th Delete
+      %th Link?
 
     - @long_problems.each do |lp|
       %tr
@@ -19,25 +21,29 @@
         - else
           %td.text-justify= lp.statement
         %td= link_to 'Edit', [:edit, lp]
-        %td= link_to 'Hapus', lp, method: :delete,
-          data: { confirm: 'Apakah Anda yakin?' }
-  = link_to 'Hapus semua',
-    contest_long_problems_path(@contest),
-    data: { confirm: 'Apakah Anda yakin?' }, method: :delete, class: 'btn'
+        - if can? :destroy, LongProblem
+          %td= link_to 'Hapus', lp, method: :delete,
+            data: { confirm: 'Apakah Anda yakin?' }
+        %td= 'Ada' unless lp.forum_link.nil? || lp.forum_link.empty?
+  - if can? :destroy, LongProblem
+    = link_to 'Hapus semua',
+      contest_long_problems_path(@contest),
+      data: { confirm: 'Apakah Anda yakin?' }, method: :delete, class: 'btn'
 
-%section
-  %h3 Buat soal
-  = form_for [@contest, @contest.long_problems.build],
-    html: { class: 'form-horizontal' } do |f|
-    .form-group
-      = f.label :problem_no, class: 'col-sm-2'
-      .col-sm-4
-        = f.text_field :problem_no, class: 'form-control', autocomplete: 'off'
-    .form-group
-      = f.label :statement, class: 'col-sm-2'
-      .col-sm-10
-        = find_and_preserve do
-          = f.text_area :statement, class: 'form-control'
-    .form-group
-      .col-sm-offset-2.col-sm-4
-        = f.submit 'Buat soal', class: 'btn'
+- if can? :create, LongProblem
+  %section
+    %h3 Buat soal
+    = form_for [@contest, @contest.long_problems.build],
+      html: { class: 'form-horizontal' } do |f|
+      .form-group
+        = f.label :problem_no, class: 'col-sm-2'
+        .col-sm-4
+          = f.text_field :problem_no, class: 'form-control', autocomplete: 'off'
+      .form-group
+        = f.label :statement, class: 'col-sm-2'
+        .col-sm-10
+          = find_and_preserve do
+            = f.text_area :statement, class: 'form-control'
+      .form-group
+        .col-sm-offset-2.col-sm-4
+          = f.submit 'Buat soal', class: 'btn'

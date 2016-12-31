@@ -103,7 +103,9 @@ CREATE TABLE contests (
     marking_scheme_file_name character varying,
     marking_scheme_content_type character varying,
     marking_scheme_file_size integer,
-    marking_scheme_updated_at timestamp without time zone
+    marking_scheme_updated_at timestamp without time zone,
+    book_promo character varying,
+    forum_link character varying
 );
 
 
@@ -245,7 +247,8 @@ CREATE TABLE long_problems (
     report_content_type character varying,
     report_file_size integer,
     report_updated_at timestamp without time zone,
-    start_mark_final boolean DEFAULT false
+    start_mark_final boolean DEFAULT false,
+    forum_link character varying
 );
 
 
@@ -348,7 +351,8 @@ CREATE TABLE market_items (
     price integer NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    quantity integer
+    quantity integer,
+    featured_picture_id integer
 );
 
 
@@ -1724,6 +1728,14 @@ ALTER TABLE ONLY users
 
 
 --
+-- Name: fk_rails_60024a9d60; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY market_items
+    ADD CONSTRAINT fk_rails_60024a9d60 FOREIGN KEY (featured_picture_id) REFERENCES market_item_pictures(id);
+
+
+--
 -- Name: fk_rails_60f1de2193; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2026,4 +2038,10 @@ INSERT INTO schema_migrations (version) VALUES ('20161218180745');
 INSERT INTO schema_migrations (version) VALUES ('20161227160540');
 
 INSERT INTO schema_migrations (version) VALUES ('20161227164831');
+
+INSERT INTO schema_migrations (version) VALUES ('20161227192738');
+
+INSERT INTO schema_migrations (version) VALUES ('20161231035149');
+
+INSERT INTO schema_migrations (version) VALUES ('20161231043448');
 

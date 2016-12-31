@@ -29,10 +29,10 @@ class ContestsController < ApplicationController
       @mask = false # agak gimanaaa gitu
 
       # This is a big query
-      @user_contests = @contest.results(user: [:roles, :province])
-      @same_province_ucs = @user_contests.select do |uc|
-        uc.user.province_id == current_user.province_id
-      end
+      @user_contests = @contest.results.includes(user: [:roles, :province])
+      @same_province_ucs = @user_contests.joins(:user)
+                                         .where('users.province_id' =>
+                                                current_user.province_id)
       @user_contest = @user_contests.find_by('user_contests.user_id' =>
                                              current_user.id)
 
@@ -60,12 +60,12 @@ class ContestsController < ApplicationController
   end
 
   def update
-    if can? :update, @contest
-      update_contest
-    elsif can? :upload_ms, @contest
-      update_marking_scheme
+    if @contest.update(contest_params)
+      Ajat.info "contest_updated|id:#{@contest.id}"
+      flash[:notice] = "#{@contest} berhasil diubah."
     else
-      raise CanCan::AccessDenied.new('Cannot update', :update, @contest)
+      Ajat.warn "contest_update_fail|#{@contest.errors.full_messages}"
+      flash[:alert] = "#{@contest} gagal diubah!"
     end
     redirect_to contest_path(@contest)
   end
@@ -126,14 +126,20 @@ class ContestsController < ApplicationController
   private
 
   def contest_params
-    params.require(:contest).permit(:name, :start_time, :end_time, :result_time,
-                                    :feedback_time, :problem_pdf, :gold_cutoff,
-                                    :silver_cutoff, :bronze_cutoff,
-                                    :result_released, :marking_scheme)
-  end
-
-  def marking_scheme_params
-    params.require(:contest).permit(:marking_scheme)
+    permit_array = if can? :update, @contest
+                     [:name, :start_time, :end_time, :result_time,
+                      :feedback_time, :problem_pdf, :gold_cutoff,
+                      :silver_cutoff, :bronze_cutoff, :result_released,
+                      :marking_scheme, :forum_link, :book_promo]
+                   elsif can? :update_marking_scheme, @contest
+                     :marking_scheme
+                   elsif can? :update_forum_link, @contest
+                     :forum_link
+                   else
+                     raise CanCan::AccessDenied.new('Cannot update',
+                                                    :update, @contest)
+                   end
+    params.require(:contest).permit(permit_array)
   end
 
   def grab_problems
@@ -145,25 +151,5 @@ class ContestsController < ApplicationController
   def grab_submissions
     @short_submissions = @user_contest.short_submissions
     @long_submissions = @user_contest.long_submissions
-  end
-
-  def update_contest
-    if @contest.update(contest_params)
-      Ajat.info "contest_updated|id:#{@contest.id}"
-      flash[:notice] = "#{@contest} berhasil diubah."
-    else
-      Ajat.warn "contest_update_fail|#{@contest.errors.full_messages}"
-      flash[:alert] = "#{@contest} gagal diubah!"
-    end
-  end
-
-  def update_marking_scheme
-    if @contest.update(marking_scheme_params)
-      Ajat.info "marking_scheme_uploaded|id:#{@contest.id}"
-      flash[:notice] = "#{@contest} berhasil diubah."
-    else
-      Ajat.warn "marking_scheme_upload_fail|#{@contest.errors.full_messages}"
-      flash[:alert] = "#{@contest} gagal diubah!"
-    end
   end
 end

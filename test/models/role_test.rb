@@ -25,4 +25,9 @@ class RoleTest < ActiveSupport::TestCase
     assert_equal Role.create(name: 'coba_aja').to_s, 'Coba Aja',
                  'Referrer to string is not equal to its name title+humanized.'
   end
+
+  test 'role admins' do
+    assert_equal Role.admins,
+                 %w(marking_manager user_admin problem_admin forum_admin admin)
+  end
 end

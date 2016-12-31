@@ -18,9 +18,7 @@ class ApplicationController < ActionController::Base
   end
 
   def set_color
-    defined?(Bullet) && (Bullet.enable = false)
     color_data = current_user.nil? ? nil : current_user.color.name
-    defined?(Bullet) && (Bullet.enable = true)
 
     possible_colors = %w(Merah Hijau Biru Kuning)
 
@@ -42,7 +40,7 @@ class ApplicationController < ActionController::Base
   def current_user
     return unless cookies[:auth_token]
     @current_user ||= begin
-                        users = User.includes(:roles)
+                        users = User.includes(:roles, :color)
                         users.find_by(username: masq_username) ||
                           users.find_by(auth_token: cookies[:auth_token])
                       end

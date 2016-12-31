@@ -111,9 +111,9 @@ module ContestsHelper
 
   # Helper for contests#_own_results to show green or red depending on
   # whether the short submission is correct or wrong.
-  def status(ss)
+  def status(ss, sp)
     return '' if ss.nil?
-    return 'text-success' if ss.answer == ss.short_problem.answer
+    return 'text-success' if ss.answer == sp.answer
     'text-danger'
   end
 end

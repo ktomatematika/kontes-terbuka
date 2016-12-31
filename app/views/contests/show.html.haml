@@ -4,7 +4,8 @@
   end_time: @contest.end_time,
   result_time: @contest.result_time,
   feedback_time: @contest.feedback_time,
-  result_released: @contest.result_released }
+  result_released: @contest.result_released,
+  book_promo: @contest.book_promo || '' }
 
 .container
   .row
@@ -14,7 +15,8 @@
         = render 'contest_about'
 
       - if can?(:preview, @contest) && !@contest.started?
-        = render 'contest_preview'
+        %h2 == HANYA PANITIA ==
+        = render 'show_problems'
 
       - if @contest.currently_in_contest?
         = render 'short_problems' unless @short_problems.empty?
@@ -27,8 +29,13 @@
           = render 'own_results'
           = render 'feedback' unless @contest.feedback_closed?
         = render 'results'
-      - elsif @contest.ended? && can?(:preview, @contest)
-        %h2 == HANYA PANITIA ==
-        = render 'all_results'
+      - else
+        Sambil menunggu, cek <a href="http://olimpiade.org/discussions/main-topic/42/">olimpiade.org</a>
+        untuk pembahasan soal-soal ini! Klik juga berbagai link di soal-soal di
+        bawah ini untuk langsung membuka pembahasannya!
+        = render 'show_problems'
+        - if @contest.ended? && can?(:preview, @contest)
+          %h2 == HANYA PANITIA ==
+          = render 'all_results'
 
     = render 'contest_aside_info' if @contest.currently_in_contest?

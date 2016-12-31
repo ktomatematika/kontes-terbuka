@@ -14,6 +14,7 @@
 #  report_file_size    :integer
 #  report_updated_at   :datetime
 #  start_mark_final    :boolean          default(FALSE)
+#  forum_link          :string
 #
 # Indexes
 #
@@ -23,7 +24,6 @@
 #
 #  fk_rails_116a6ecec7  (contest_id => contests.id) ON DELETE => cascade
 #
-# rubocop:enable Metrics/LineLength
 
 class LongProblem < ActiveRecord::Base
   has_paper_trail

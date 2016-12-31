@@ -5,7 +5,7 @@ class Ability
     return if user.nil?
     user_abilities(user)
 
-    %w(marker panitia marking_manager user_admin problem_admin).each do |role|
+    (%w(marker panitia) + Role.admins - ['admin']).each do |role|
       send("#{role}_abilities", user) if user.has_cached_role? role, :any
     end
 
@@ -70,8 +70,13 @@ class Ability
 
   def problem_admin_abilities(_user)
     can [:admin, :read_problems, :destroy_short_probs,
-         :destroy_long_probs, :upload_ms], Contest
+         :destroy_long_probs, :update_marking_scheme], Contest
     can :manage, ShortProblem
     can [:create, :edit, :update, :destroy, :destroy_on_contest], LongProblem
+  end
+
+  def forum_admin_abilities(_user)
+    can [:admin, :update_forum_link], Contest
+    can :update_forum_link, LongProblem
   end
 end

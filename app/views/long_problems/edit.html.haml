@@ -4,12 +4,18 @@
     .form-group
       = f.label :problem_no, class: 'col-sm-2'
       .col-sm-4
-        = f.text_field :problem_no, class: 'form-control', autocomplete: 'off'
+        = f.text_field :problem_no, class: 'form-control', autocomplete: 'off',
+          disabled: cannot?(:update, @long_problem)
     .form-group
       = f.label :statement, class: 'col-sm-2'
       .col-sm-10
         = find_and_preserve do
-          = f.text_area :statement, class: 'form-control'
+          = f.text_area :statement, class: 'form-control',
+          disabled: cannot?(:update, @long_problem)
+    .form-group
+      = f.label :forum_link, class: 'col-sm-2'
+      .col-sm-4
+        = f.text_field :forum_link, class: 'form-control', autocomplete: 'off'
     .form-group
       .col-sm-offset-2.col-sm-4
         = f.submit 'Edit soal', class: 'btn'

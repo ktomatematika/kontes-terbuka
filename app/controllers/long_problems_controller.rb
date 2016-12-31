@@ -1,5 +1,6 @@
 class LongProblemsController < ApplicationController
-  load_and_authorize_resource
+  load_resource
+  authorize_resource except: [:edit, :update]
 
   contest_actions = [:create, :destroy_on_contest]
   before_action :load_contest, except: contest_actions
@@ -13,9 +14,18 @@ class LongProblemsController < ApplicationController
     redirect_to admin_contest_path(@contest)
   end
 
-  def edit; end
+  def edit
+    if cannot?(:update_forum_link, @long_problem) &&
+       cannot?(:edit, @long_problem)
+      raise CanCan::AccessDenied.new('Cannot edit', :edit, LongProblem)
+    end
+  end
 
   def update
+    if cannot?(:update_forum_link, @long_problem) &&
+       cannot?(:update, @long_problem)
+      raise CanCan::AccessDenied.new('Cannot update', :update, @long_problem)
+    end
     if @long_problem.update(long_problem_params)
       redirect_to admin_contest_path(@contest)
     else
@@ -65,7 +75,11 @@ class LongProblemsController < ApplicationController
   private
 
   def long_problem_params
-    params.require(:long_problem).permit(:problem_no, :statement)
+    if can? :edit, @long_problem
+      params.require(:long_problem).permit(:problem_no, :statement, :forum_link)
+    elsif can? :update_forum_link, @long_problem
+      params.require(:long_problem).permit(:forum_link)
+    end
   end
 
   def report_params

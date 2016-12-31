@@ -77,10 +77,8 @@ class User < ActiveRecord::Base
   after_save :clear_password
 
   def before_add_method(role)
-    if role.name.in?(%w(user_admin problem_admin admin)) &&
-       !(has_role? :panitia)
-      raise 'User is not panitia!'
-    end
+    return if !Role.admins.include?(role.name) || has_role?(:panitia)
+    raise 'User is not panitia!'
   end
 
   # Associations

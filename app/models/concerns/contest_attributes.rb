@@ -29,8 +29,8 @@ module ContestAttributes
     sp_count + LongProblem::MAX_MARK * lp_count
   end
 
-  def results(*includes)
-    scores(includes).select do
+  def results
+    scores.select do
       'rank() over(order by marks.total_mark DESC) as rank'
     end
   end
@@ -39,7 +39,7 @@ module ContestAttributes
   # a certain total score, excluding veterans.
   def array_of_scores
     res = Array.new(max_score + 1).fill(0)
-    scores(user: :roles).each do |uc|
+    scores.includes(user: :roles).each do |uc|
       res[uc.total_mark] += 1 unless uc.user.has_cached_role?(:veteran)
     end
     res
@@ -68,7 +68,7 @@ module ContestAttributes
 
   # This method finds all user_contests who fills
   # all feedback questions in that particular contest.
-  def full_feedback_user_contests(*includes)
+  def full_feedback_user_contests
     filtered_query = user_contests.processed
 
     feedback_questions.each do |fq|
@@ -82,21 +82,21 @@ module ContestAttributes
                      end
         end
     end
-    filtered_query.includes(includes)
+    filtered_query
   end
 
   # This method finds all user_contests who has at least one feedback question
   # not filled in that particular contest.
-  def not_full_feedback_user_contests(*includes)
+  def not_full_feedback_user_contests
     full = full_feedback_user_contests.pluck(:id)
     all = user_contests.pluck(:id)
     remaining = all - full
-    UserContest.where(id: remaining).includes(includes)
+    UserContest.where(id: remaining)
   end
 
   private
 
-  def scores(*includes)
+  def scores
     filtered_query = user_contests.processed
 
     long_problems.each do |l|
@@ -109,6 +109,6 @@ module ContestAttributes
         __send__("long_problem_marks_#{l.id}").__send__("problem_no_#{l.id}")
       end
     end
-    filtered_query.includes(includes)
+    filtered_query
   end
 end

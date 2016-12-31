@@ -32,13 +32,15 @@ class LongProblemsControllerTest < ActionController::TestCase
   end
 
   test 'edit' do
-    test_abilities @lp, :edit, [nil, :panitia], [:problem_admin, :admin]
+    test_abilities @lp, :edit, [nil, :panitia, :forum_admin],
+                   [:problem_admin, :admin]
     get :edit, id: @lp.id
     assert_response 200
   end
 
   test 'patch update' do
-    test_abilities @lp, :update, [nil, :panitia], [:problem_admin, :admin]
+    test_abilities @lp, :update, [nil, :panitia, :forum_admin],
+                   [:problem_admin, :admin]
     patch :update, id: @lp.id, long_problem: { statement: 'asdf' }
     assert_redirected_to admin_contest_path @c
     assert_equal @lp.reload.statement, 'asdf'
@@ -55,6 +57,23 @@ class LongProblemsControllerTest < ActionController::TestCase
     put :update, id: @lp.id, long_problem: { problem_no: 7 }
     assert_template :edit
     assert_equal flash[:alert], 'Esai gagal diupdate!'
+  end
+
+  test 'edit forum link' do
+    test_abilities @lp, :update_forum_link, [nil, :panitia, :problem_admin],
+                   [:forum_admin, :admin]
+    @user.remove_role :admin
+    @user.add_role :forum_admin
+    get :edit, id: @lp.id
+    assert_response 200
+  end
+
+  test 'update forum link' do
+    @user.remove_role :admin
+    @user.add_role :forum_admin
+    put :update, id: @lp.id, long_problem: { forum_link: 'http://google.com' }
+    assert_redirected_to admin_contest_path @c
+    assert_equal @lp.reload.forum_link, 'http://google.com'
   end
 
   test 'destroy' do

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<% user_contests = contest.results(user: :roles) %>
+<% user_contests = contest.results.includes(user: :roles) %>
 <% long_problems = contest.long_problems.order('problem_no') %>
 <% no_short_probs = contest.short_problems.empty? %>
 

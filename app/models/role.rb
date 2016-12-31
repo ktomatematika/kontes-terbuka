@@ -35,4 +35,8 @@ class Role < ActiveRecord::Base
   def to_s
     name.humanize.titleize
   end
+
+  def self.admins
+    %w(marking_manager user_admin problem_admin forum_admin admin)
+  end
 end

@@ -102,7 +102,7 @@ class ContestsControllerTest < ActionController::TestCase
   end
 
   test 'update upload ms' do
-    test_abilities @c, :upload_ms, [nil, :panitia, :marker],
+    test_abilities @c, :update_marking_scheme, [nil, :panitia, :marker],
                    [:problem_admin, :admin]
     @user.remove_role :admin
     @user.add_role :problem_admin
@@ -115,6 +115,19 @@ class ContestsControllerTest < ActionController::TestCase
     assert_redirected_to contest_path(@c)
     assert_equal flash[:notice], "#{@c} berhasil diubah."
     assert @c.reload.marking_scheme.exists?
+  end
+
+  test 'update forum link' do
+    test_abilities @c, :update_forum_link, [nil, :panitia, :marker],
+                   [:forum_admin, :admin]
+    @user.remove_role :admin
+    @user.add_role :forum_admin
+
+    post :update, id: @c.id, contest: { forum_link: 'https://olimpiade.org' }
+
+    assert_redirected_to contest_path(@c)
+    assert_equal flash[:notice], "#{@c} berhasil diubah."
+    assert_equal @c.reload.forum_link, 'https://olimpiade.org'
   end
 
   test 'update not allowed' do

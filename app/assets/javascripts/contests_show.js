@@ -32,12 +32,21 @@ function fill_contest_text() {
 		} else if (current_contest.data('result-released')) {
 			$('.row > section').removeClass('col-sm-8');
 
+			var oo_text = 'Anda bisa melihat pembahasan kontes ini di ' +
+							'<a href="http://olimpiade.org/discussions/' +
+							'main-topic/42/">olimpiade.org</a>. Klik link ' +
+							'soal-soal di bawah ini untuk langsung pergi ke ' +
+							'pembahasannya!';
+
 			if (current < current_feedback_time) {
 				subtitle = 'Hasil kontes sudah keluar! Jangan lupa, Anda ' +
 					'bisa memberikan feedback ke kami paling lambat ' +
-					current_feedback_time.format_indo() + '!';
+					current_feedback_time.format_indo() + '!<br>' + oo_text;
 				time_remaining = '(' + current.indo_go_to(current_feedback_time)
 					+ ')';
+			} else {
+				subtitle = oo_text + '<br>' + current_contest.data('book-promo');
+				time_remaining = '';
 			}
 		} else if (current < current_result_time) {
 			// Results has not been released
@@ -56,8 +65,8 @@ function fill_contest_text() {
 			time_remaining = '';
 		}
 
-		$('#subtitle').text(subtitle);
-		$('#time-remaining').text(time_remaining);
+		$('#subtitle').html(subtitle);
+		$('#time-remaining').html(time_remaining);
 	}
 }
 
