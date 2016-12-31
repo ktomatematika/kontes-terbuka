@@ -77,13 +77,13 @@ class ContestsController < ApplicationController
   end
 
   def download_problem_pdf
-    send_file @contest.problem_pdf.path
+    send_file @contest.problem_pdf.path.to_s
   rescue Errno::ENOENT, ActionController::MissingFile
     redirect_to @contest, alert: 'File belum ada!'
   end
 
   def download_marking_scheme
-    send_file @contest.marking_scheme.path
+    send_file @contest.marking_scheme.path.to_s
   rescue Errno::ENOENT, ActionController::MissingFile
     redirect_to admin_contest_path(@contest), alert: 'File belum ada!'
   end

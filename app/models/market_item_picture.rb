@@ -29,7 +29,6 @@ class MarketItemPicture < ActiveRecord::Base
 
   # Attachments
   has_attached_file :picture,
-                    url: '/market/pictures/:id/:basename.:extension',
                     path: ':rails_root/public/market/pictures/' \
                     ':id/:basename.:extension'
 

@@ -74,7 +74,6 @@ class Contest < ActiveRecord::Base
 
   # Attachments
   has_attached_file :problem_pdf,
-                    url: '/contests/:id/pdf',
                     path: ':rails_root/public/contest_files/problems/' \
                     ':id/soal.:extension'
   validates_attachment_content_type :problem_pdf,
@@ -87,7 +86,6 @@ class Contest < ActiveRecord::Base
                                     content_type: ['text/x-tex']
 
   has_attached_file :marking_scheme,
-                    url: '/contests/:id/ms-pdf',
                     path: ':rails_root/public/contest_files/problems/' \
                     ':id/ms.:extension'
 

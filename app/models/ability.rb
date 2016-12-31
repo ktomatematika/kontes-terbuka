@@ -6,10 +6,10 @@ class Ability
     user_abilities(user)
 
     %w(marker panitia marking_manager user_admin problem_admin).each do |role|
-      send("#{role}_abilities", user) if user.has_role? role, :any
+      send("#{role}_abilities", user) if user.has_cached_role? role, :any
     end
 
-    can :manage, :all if user.has_role? :admin
+    can :manage, :all if user.has_cached_role? :admin
   end
 
   private
@@ -42,12 +42,12 @@ class Ability
   end
 
   def marker_abilities(user)
-    long_problems = LongProblem.with_role(:marker, user)
+    long_problems = LongProblem.with_role(:marker, user).pluck(:id, :contest_id)
     can [:download_submissions, :autofill, :upload_report, :mark],
-        LongProblem, id: long_problems.pluck(:id)
+        LongProblem, id: long_problems.map(&:first)
     can [:mark, :submit_mark], LongSubmission,
-        long_problem_id: long_problems.pluck(:id)
-    can :download_marking_scheme, Contest, id: long_problems.pluck(:contest_id)
+        long_problem_id: long_problems.map(&:first)
+    can :download_marking_scheme, Contest, id: long_problems.map(&:second)
     can :admin, Application
   end
 

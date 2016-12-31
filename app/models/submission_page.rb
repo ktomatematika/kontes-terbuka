@@ -31,7 +31,6 @@ class SubmissionPage < ActiveRecord::Base
 
   # Attachments
   has_attached_file :submission,
-                    url: '/contests/:contest_id/submissions/:id',
                     path: ':rails_root/public/contest_files/submissions/' \
                     'kontes:cid/no:pno/peserta:ucid/' \
                     'kontes:cid_no:pno_peserta:ucid_hal:page_number.:extension'
