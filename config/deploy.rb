@@ -22,7 +22,7 @@ set :deploy_to, '/home/ktom/kontes-terbuka'
 
 # Default value for :linked_files is []
 set :linked_files, fetch(:linked_files, [])
-  .push('config/database.yml', 'config/secrets.yml',
+  .push('config/database.yml', 'config/secrets.yml', 'config/unicorn.rb',
         'config/initializers/line_targets.rb', '.env',
         'app/views/contests/certificate.tex.haml')
 
