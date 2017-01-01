@@ -9,9 +9,9 @@
       %h3= c.name
       %h5 #{c.start_time.to_indo} sampai #{c.end_time.to_indo}
       %div
-        Banyak soal: #{c.short_problems_count} isian dan
-        #{c.long_problems_count} uraian (nilai maksimal:
+        Banyak soal: #{c.short_problems_count || 0} isian dan
+        #{c.long_problems_count || 0} uraian (nilai maksimal:
         #{c.max_score(c.short_problems_count, c.long_problems_count)})
       %div Cutoff: #{c.bronze_cutoff}/#{c.silver_cutoff}/#{c.gold_cutoff}
       - if c.result_released || can?(:preview, c)
-        %div Jumlah peserta: #{c.user_contests_count} peserta
+        %div Jumlah peserta: #{c.user_contests_count || 0} peserta

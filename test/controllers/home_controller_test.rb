@@ -76,7 +76,7 @@ class HomeControllerTest < ActionController::TestCase
   test 'masq username not found' do
     post :masq, username: 'asdf'
     assert_redirected_to admin_path
-    assert_equal session[:masq_username], nil
+    assert_nil session[:masq_username]
     assert_equal flash[:alert], 'Ga ketemu usernya :('
   end
 

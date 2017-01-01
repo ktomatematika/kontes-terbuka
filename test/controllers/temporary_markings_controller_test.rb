@@ -61,12 +61,12 @@ class TemporaryMarkingsControllerTest < ActionController::TestCase
     tm4 = TemporaryMarking.find_by(long_submission: lss.fourth, user: @user)
     assert_equal tm1.mark, 3
     assert_equal tm1.tags, 'asdf'
-    assert_equal tm2.mark, nil
+    assert_nil tm2.mark
     assert_equal tm2.tags, 'halo'
     assert_equal tm3.mark, 7
     assert_equal tm3.tags, 'wer'
-    assert_equal tm4.mark, nil
-    assert_equal tm4.tags, nil
+    assert_nil tm4.mark
+    assert_nil tm4.tags
   end
 
   private

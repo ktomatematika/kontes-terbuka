@@ -48,7 +48,7 @@ class ContestsController < ApplicationController
     @contests = Contest.where('start_time < ?', Time.zone.now + 3.months)
     %w(short_problems long_problems user_contests).each do |table|
       subquery = Contest.count_sql(table)
-      @contests = @contests.joins("INNER JOIN (#{subquery}) #{table} " \
+      @contests = @contests.joins("LEFT OUTER JOIN (#{subquery}) #{table} " \
                                   "ON contests.id = #{table}.id")
     end
     @contests = @contests.select('contests.*, ' \

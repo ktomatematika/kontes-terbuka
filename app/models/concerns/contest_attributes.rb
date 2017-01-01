@@ -26,6 +26,8 @@ module ContestAttributes
   end
 
   def max_score(sp_count = short_problems.count, lp_count = long_problems.count)
+    sp_count ||= short_problems.count
+    lp_count ||= long_problems.count
     sp_count + LongProblem::MAX_MARK * lp_count
   end
 

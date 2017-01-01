@@ -235,7 +235,7 @@ class UsersControllerTest < ActionController::TestCase
     assert_equal flash[:notice], 'Password berhasil diubah! Silakan login.'
 
     u.reload
-    assert_equal u.verification, nil
+    assert_nil u.verification
     assert u.authenticate('asdfcoba')
   end
 

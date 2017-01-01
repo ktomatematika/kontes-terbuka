@@ -140,7 +140,7 @@ class SessionsControllerTest < ActionController::TestCase
     login_and_be_admin
     delete :destroy
 
-    assert_equal cookies[:auth_token], nil
+    assert_nil cookies[:auth_token]
     assert_redirected_to root_path
     assert_equal flash[:notice], 'Anda berhasil keluar.'
     assert_equal session.to_h.except('flash'), {}
