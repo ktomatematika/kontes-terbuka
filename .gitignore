@@ -21,6 +21,7 @@ ubuntu-xenial-16.04-cloudimg-console.log
 
 # Ignore public
 /public/contest_files
+/public/market
 
 # Sensitive files
 /config/database.yml
