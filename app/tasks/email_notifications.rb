@@ -1,9 +1,10 @@
 class EmailNotifications
   include Rails.application.routes.url_helpers
+  attr_reader :contest
 
-  attr_accessor :contest
   def initialize(ctst)
     @contest = ctst
+    @data = Social.email_notifications
   end
 
   def ==(other)
@@ -11,9 +12,8 @@ class EmailNotifications
   end
 
   def contest_starting(time_text)
-    subject = "Kontes dimulai dalam waktu #{time_text}"
-    text = "Hanya mengingatkan saja, #{@contest} akan dimulai #{time_text} " \
-      'kemudian. Siapkan segala peralatan dan alat perang Anda!'
+    subject = @data.contest_starting.subject.get binding
+    text = @data.contest_starting.text.get binding
     notif = Notification.find_by(event: 'contest_starting',
                                  time_text: time_text)
     users = notif.users
@@ -23,9 +23,8 @@ class EmailNotifications
   end
 
   def contest_started
-    subject = 'Kontes sudah dimulai!'
-    text = "#{@contest} sudah dimulai! Silakan membuka soalnya di " \
-    "#{contest_url @contest}\n\nSelamat mengerjakan!"
+    subject = @data.contest_started.subject.get binding
+    text = @data.contest_started.text.get binding
     notif = Notification.find_by(event: 'contest_started')
     users = notif.users
 
@@ -34,12 +33,8 @@ class EmailNotifications
   end
 
   def contest_ending(time_text)
-    subject = "Kontes berakhir dalam waktu #{time_text}"
-    text = "Hanya mengingatkan saja, #{@contest} akan berakhir dalam waktu " \
-      "#{time_text}.\nSiap-siap mengumpulkan segala pekerjaan Anda " \
-        "di #{contest_url @contest}\n\n" \
-      'Antisipasi segala kegagalan teknis. Ingat, kami hampir tidak pernah ' \
-      'memberikan waktu tambahan.'
+    subject = @data.contest_ending.subject.get binding
+    text = @data.contest_ending.text.get binding
     notif = Notification.find_by(event: 'contest_ending', time_text: time_text)
     users = notif.users.joins(:contests).where('contests.id = ?', @contest.id)
 
@@ -48,15 +43,8 @@ class EmailNotifications
   end
 
   def results_released
-    subject = 'Hasil sudah keluar!'
-    text = "Hasil #{@contest} sudah keluar! Silakan cek di:\n " \
-      "#{contest_url @contest}\n\nSelamat bagi yang mendapatkan penghargaan! " \
-      'Jika Anda belum beruntung, jangan berkecil hati karena masih ada ' \
-      "kontes-kontes berikutnya.\n\nMengenai sertifikat, Anda perlu mengisi " \
-      'feedback kontes untuk mendapatkannya. Feedback ini bisa diisi di ' \
-      'halaman yang sama dengan hasil kontes. Anda perlu mendapatkan ' \
-      "setidaknya #{UserContest::CUTOFF_CERTIFICATE} poin untuk " \
-      'mendapatkan sertifikat.'
+    subject = @data.results_released.subject.get binding
+    text = @data.results_released.text.get binding
     notif = Notification.find_by(event: 'results_released')
     users = notif.users.joins(:contests).where('contests.id = ?', @contest.id)
 
@@ -65,11 +53,8 @@ class EmailNotifications
   end
 
   def feedback_ending(time_text)
-    subject = "Feedback kontes ditutup dalam waktu #{time_text}"
-    text = "Hanya mengingatkan saja, waktu pengisian feedback #{@contest} " \
-      "ditutup #{time_text} lagi. Anda bisa mengisi feedback di " \
-      "#{contest_url @contest}\n\nIngat, salah satu syarat mendapatkan " \
-      'sertifikat adalah mengisi feedback ini.'
+    subject = @data.feedback_ending.subject.get binding
+    text = @data.feedback_ending.text.get binding
     notif = Notification.find_by(event: 'feedback_ending', time_text: time_text)
     users = User.where(id: @contest.not_full_feedback_user_contests
                        .joins(user: :user_notifications)

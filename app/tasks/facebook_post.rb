@@ -1,11 +1,12 @@
 class FacebookPost
   include Rails.application.routes.url_helpers
+  attr_reader :contest
 
-  attr_accessor :contest, :graph
   def initialize(ctst)
     @contest = ctst
     @graph = Koala::Facebook::API.new ENV['FACEBOOK_ACCESS_TOKEN'],
                                       ENV['FACEBOOK_SECRET']
+    @data = Social.facebook_post
   end
 
   def ==(other)
@@ -13,48 +14,27 @@ class FacebookPost
   end
 
   def contest_starting(time_text)
-    post_to_facebook "#{@contest} akan dimulai dalam waktu #{time_text}. " \
-      'Ayok segera daftar di website kami di https://ktom.tomi.or.id jika ' \
-      'Anda belum!'
+    post_to_facebook @data.contest_starting.get binding
   end
 
   def contest_started
-    post_to_facebook "#{@contest} sudah dimulai! Silakan membuka soalnya di " \
-      "#{contest_url @contest}. Selamat mengerjakan! :D"
+    post_to_facebook @data.contest_started.get binding
   end
 
   def contest_ending(time_text)
-    post_to_facebook "Hanya mengingatkan saja, #{@contest} akan berakhir " \
-      "dalam waktu #{time_text}.\nSiap-siap mengumpulkan segala " \
-      "pekerjaan Anda di #{contest_url @contest}.\n\n" \
-      'Antisipasi segala kegagalan teknis. Ingat, kami hampir tidak pernah ' \
-      'memberikan waktu tambahan.'
+    post_to_facebook @data.contest_ending.get binding
   end
 
   def results_released
-    post_to_facebook "Hasil #{@contest} sudah keluar! Silakan cek di:\n " \
-      "#{contest_url @contest}.\n\nSelamat bagi yang mendapatkan " \
-      'penghargaan! Jika Anda belum beruntung, jangan berkecil hati karena ' \
-      "masih ada kontes-kontes berikutnya.\n\nMengenai sertifikat, Anda " \
-      'perlu mengisi feedback kontes untuk mendapatkannya. Feedback ini bisa ' \
-      'diisi di halaman yang sama dengan hasil kontes, yaitu ' \
-      "#{contest_url @contest}. Anda perlu mendapatkan setidaknya " \
-      "#{UserContest::CUTOFF_CERTIFICATE} poin untuk mendapatkan sertifikat."
+    post_to_facebook @data.results_released.get binding
   end
 
   def feedback_ending(time_text)
-    post_to_facebook 'Hanya mengingatkan saja, waktu pengisian ' \
-      "feedback #{@contest} ditutup #{time_text} lagi. Anda bisa mengisi " \
-      "feedback di #{contest_url @contest}. Ingat, salah satu syarat " \
-      'mendapatkan sertifikat adalah mengisi feedback ini.'
+    post_to_facebook @data.feedback_ending.get binding
   end
 
   def certificate_sent
-    post_to_facebook "Sertifikat untuk #{@contest} sudah dikirim. Coba " \
-      'cek email Anda! Jika Anda tidak mendapatkannya, berarti Anda tidak ' \
-      'memenuhi syarat mendapatkan sertifikat, yakni ' \
-      "minimal #{UserContest::CUTOFF_CERTIFICATE} poin di kontes dan " \
-      'mengisi semua feedback.'
+    post_to_facebook @data.certificate_sent.get binding
   end
 
   private

@@ -18,8 +18,9 @@ module ContestJobs
   end
 
   def jobs_on_contest_end
-    do_if_not_time(end_time, self, :purge_panitia)
-    do_if_not_time(end_time, self, :send_most_answers)
+    [:purge_panitia, :send_most_answers, :check_submissions].each do |m|
+      do_if_not_time(end_time, self, m)
+    end
   end
 
   def prepare_emails

@@ -62,8 +62,6 @@ class LongSubmission < ActiveRecord::Base
     end
   end
 
-  private
-
   def location
     Rails.root.join('public', 'contest_files', 'submissions',
                     "kontes#{long_problem.contest_id}",

@@ -31,6 +31,16 @@ module ContestJobSpecifics
                          "bila jawaban aslinya beda.\n#{answers}"
   end
 
+  def check_submissions
+    long_submissions.joins(:submission_pages).each do |ls|
+      next if ls.submission_pages.all? { |sp| sp.submission.exists? }
+      data = Social.contest_job_specifics.check_submissions
+      Mailgun.send_message to: ls.user_contest.user.email,
+                           contest: self, subject: data.subject.get(binding),
+                           text: data.text.get(binding)
+    end
+  end
+
   def check_veteran
     users.each do |u|
       gold = 0
@@ -38,7 +48,11 @@ module ContestJobSpecifics
         gold += 1 if uc.total_mark >= uc.contest.gold_cutoff
       end
 
-      u.add_role :veteran if gold >= 3
+      next unless gold >= 3 && !u.has_role?(:veteran)
+      u.add_role :veteran
+      data = Social.contest_job_specifics.check_veteran
+      Mailgun.send_message to: u.email, subject: data.subject.get(binding),
+                           text: data.text.get(binding)
     end
     Ajat.info "check_veteran|id:#{id}"
   end

@@ -1,7 +1,7 @@
 class CertificateManager
-  attr_accessor :user_contest, :contest, :user, :tex_path, :pdf_path
   TEMPLATE = File.read(Rails.root.join('app', 'views', 'contests',
                                        'certificate.tex.haml'))
+  attr_reader :user_contest
 
   def initialize(uc)
     @user_contest = uc
@@ -41,12 +41,11 @@ class CertificateManager
   end
 
   def send_certificate(pdf_file)
-    text = "Terlampir adalah sertifikat untuk #{@contest}. " \
-           'Sekali lagi, terima kasih atas partisipasinya!'
+    data = Social.certificate_manager.send_certifiicate
     Mailgun.send_message to: @user.email,
                          contest: @contest,
-                         subject: 'Sertifikat Kontes',
-                         text: text,
+                         subject: data.subject.get(binding),
+                         text: data.text.get(binding),
                          attachment: File.new(pdf_file, 'r')
   end
 

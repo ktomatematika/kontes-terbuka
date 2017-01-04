@@ -1,0 +1,60 @@
+{
+	"email_template": "Salam sejahtera,\n\n#{text}\n\nSalam,\nTim KTO Matematika",
+	"default_rules": "1. Solusi %name dimasukkan paling lambat %end_time. Solusi yang terlambat dikirim ataupun tidak terbaca tidak akan dinilai. Kami sangat memohon kerja sama Anda dalam memperhatikan peraturan ini.\n2. Tulis nomor soal dan halaman soal saja pada lembar jawaban Anda. Anda tidak diperkenankan untuk menulis nama, username, ataupun apapun yang bisa membuat para juri mengidentifikasi Anda.\n3. Setiap lembar hanya dapat digunakan untuk menuliskan solusi untuk satu soal. Dengan kata lain, Anda boleh menggunakan dua atau lebih halaman untuk satu soal; namun, Anda tidak boleh menuliskan 2 (dua) atau lebih soal di satu halaman. Untuk mendapatkan pemahaman yang lebih jelas, perhatikan gambar di bawah ini:\n%1hal1soal\n4. Solusi bagian B disimpan dengan format gambar, Microsoft Word, atau PDF. Anda hanya bisa mengupload file-file dengan *extension* doc, docx, pdf, jpg, jpeg, png, dan zip.\n5. Soal diunggah di forum [olimpiade.org](olimpiade.org) paling cepat pada satu hari setelahnya untuk diskusi.\n6. Hasil kontes akan diunggah paling lambat pada %result_time.\n7. Kami tidak menerima pertanyaan mengenai deskripsi soal. Jika ada soal yang kurang jelas, Anda dipersilakan untuk menuliskan dengan sejelas-jelasnya asumsi Anda pada lembar jawaban. Juri akan menentukan secara sepihak apakah asumsi yang Anda ambil diterima atau tidak.\n8. Anda tidak diperbolehkan untuk mendiskusikan soal-soal kontes ini dengan siapapun selama kontes sedang berlangsung. Anda juga tidak diperbolehkan untuk menggunakan kalkulator dan alat elektronik lainnya; namun, kami tentunya tidak bisa menjaga terpatuhinya peraturan ini. Kami hanya bisa mengingatkan bahwa kontes ini dirancang agar Anda bisa berlatih menyelesaikan permasalahan matematika. Jadi, jelas tidak ada faedahnya bila Anda memenangkan kontes ini tetapi tidak berlatih apa pun.\n9. Pelanggaran terhadap petunjuk teknis ini dapat menyebabkan diskualifikasi pada kontes ini atau bahkan pada kontes-kontes berikutnya.",
+	"certificate_manager": {
+		"send_certificate": {
+			"subject": "Sertifikat Kontes",
+			"text": "Terlampir adalah sertifikat untuk #{@contest}. Sekali lagi, terima kasih atas partisipasinya!"
+		}
+	},
+	"email_notifications": {
+		"contest_starting": {
+			"subject": "Kontes dimulai dalam waktu #{time_text}",
+			"text": "Hanya mengingatkan saja, #{@contest} akan dimulai #{time_text} kemudian. Siapkan segala peralatan dan alat perang Anda!"
+		},
+		"contest_started": {
+			"subject": "Kontes sudah dimulai!",
+			"text": "#{@contest} sudah dimulai! Silakan membuka soalnya di #{contest_url @contest}\n\nSelamat mengerjakan!"
+		},
+		"contest_ending": {
+			"subject": "Kontes berakhir dalam waktu #{time_text}",
+			"text": "Hanya mengingatkan saja, #{@contest} akan berakhir dalam waktu #{time_text}.\nSiap-siap mengumpulkan segala pekerjaan Anda di #{contest_url @contest}\n\nAntisipasi segala kegagalan teknis. Ingat, kami hampir tidak pernah memberikan waktu tambahan."
+		},
+		"results_released": {
+			"subject": "Hasil sudah keluar!",
+			"text": "Hasil #{@contest} sudah keluar! Silakan cek di:\n #{contest_url @contest}\n\nSelamat bagi yang mendapatkan penghargaan! Jika Anda belum beruntung, jangan berkecil hati karena masih ada kontes-kontes berikutnya.\n\nMengenai sertifikat, Anda perlu mengisi feedback kontes untuk mendapatkannya. Feedback ini bisa diisi di halaman yang sama dengan hasil kontes. Anda perlu mendapatkan setidaknya #{UserContest::CUTOFF_CERTIFICATE} poin untuk mendapatkan sertifikat."
+		},
+		"feedback_ending": {
+			"subject": "Feedback kontes ditutup dalam waktu #{time_text}",
+			"text": "Hanya mengingatkan saja, waktu pengisian feedback #{@contest} ditutup #{time_text} lagi. Anda bisa mengisi feedback di #{contest_url @contest}\n\nIngat, salah satu syarat mendapatkan sertifikat adalah mengisi feedback ini."
+		}
+	},
+	"facebook_post": {
+		"contest_starting": "#{@contest} akan dimulai dalam waktu #{time_text}. Ayok segera daftar di website kami di https://ktom.tomi.or.id jika Anda belum!",
+		"contest_started": "#{@contest} sudah dimulai! Silakan membuka soalnya di #{contest_url @contest}. Selamat mengerjakan! :D",
+		"contest_ending": "Hanya mengingatkan saja, #{@contest} akan berakhir dalam waktu #{time_text}.\nSiap-siap mengumpulkan segala pekerjaan Anda di #{contest_url @contest}.\n\nAntisipasi segala kegagalan teknis. Ingat, kami hampir tidak pernah memberikan waktu tambahan.",
+		"results_released": "Hasil #{@contest} sudah keluar! Silakan cek di:\n #{contest_url @contest}.\n\nSelamat bagi yang mendapatkan penghargaan! Jika Anda belum beruntung, jangan berkecil hati karena masih ada kontes-kontes berikutnya.\n\nMengenai sertifikat, Anda perlu mengisi feedback kontes untuk mendapatkannya. Feedback ini bisa diisi di halaman yang sama dengan hasil kontes, yaitu #{contest_url @contest}. Anda perlu mendapatkan setidaknya #{UserContest::CUTOFF_CERTIFICATE} poin untuk mendapatkan sertifikat.",
+		"feedback_ending": "Hanya mengingatkan saja, waktu pengisian feedback #{@contest} ditutup #{time_text} lagi. Anda bisa mengisi feedback di #{contest_url @contest}. Ingat, salah satu syarat mendapatkan sertifikat adalah mengisi feedback ini.",
+		"certificate_sent": "Sertifikat untuk #{@contest} sudah dikirim. Coba cek email Anda! Jika Anda tidak mendapatkannya, berarti Anda tidak memenuhi syarat mendapatkan sertifikat, yakni minimal #{UserContest::CUTOFF_CERTIFICATE} poin di kontes dan mengisi semua feedback."
+	},
+	"user_password_verification": {
+		"reset_password": {
+			"subject": "Reset Password KTO Matematika",
+			"text": "Klik link ini untuk mengreset password Anda:\n#{link}\n\nJika Anda tidak meminta password Anda untuk direset, acuhkan saja email ini."
+		},
+		"send_verify_email": {
+			"subject": "Konfirmasi Pendaftaran Kontes Terbuka Olimpiade Matematika",
+			"text": "User berhasil dibuat! Sekarang, buka link ini untuk memverifikasikan email Anda:\n\n#{link}\n\nAnda hanya memiliki waktu #{VERIFY_TIME_INDO} untuk mengverifikasi. Jika Anda tidak mendaftar ke Kontes Terbuka Olimpiade Matematika, Anda boleh mengacuhkan email ini."
+		}
+	},
+	"contest_job_specifics": {
+		"check_submissions": {
+			"subject": "Bagian B Tidak Ditemukan",
+			"text": "Di #{self}, data kami menyatakan bahwa Anda sudah mengirim jawaban bagian B no. #{ls.long_problem.problem_no}. Namun, kami tidak dapat menemukan file Anda. Mohon balas email ini dengan submisi Anda di soal tersebut, paling telat #{(end_time + 1.day).to_indo}. Mohon maaf atas ketidaknyamanannya."
+		},
+		"check_veteran": {
+			"subject": "Anda telah menjadi veteran!",
+			"text": "Dengan ini kami menyatakan bahwa Anda sudah mencapai status \"veteran\". Selamat!\n\nStatus ini didapatkan jika Anda mengisi kotak yang menandakan Anda sudah pernah mendapatkan medali di OSN SMA saat registrasi, ataupun bila Anda sudah mendapatkan 3 medali emas. Data kami menyatakan bahwa Anda sudah mendapatkan 3 medali emas. Nama Anda juga sekarang sudah menjadi berwarna hijau. Keren!\n\nBerangkat dari prestasi Anda, kami sarankan Anda untuk mencari soal-soal yang lebih susah dari KTO Matematika. Anda bisa menemukan soal-soal tersebut di berbagai sumber; kami merekomendasikan forum olimpiade.org sebagai salah satu sumber soal-soal. Anda juga bisa menemukan soal-soal di mathlinks.ro, walaupun berbahasa Inggris. Terus berlatih dan raih prestasi!"
+		}
+	}
+}

@@ -4,8 +4,6 @@ class TexReader
   LP_START_SEPARATOR = '%%% START Bagian B'.freeze
   LP_END_SEPARATOR = '%%% END Bagian B'.freeze
 
-  attr_accessor :contest
-  attr_accessor :answers
   def initialize(ctst, answers, tex)
     @contest = ctst
     @answers = answers
@@ -23,7 +21,7 @@ class TexReader
 
   def insert_problems
     sp_process.each_with_index do |sp, index|
-      ans = answers[index]
+      ans = @answers[index]
       ans = 0 if ans.nil?
       ShortProblem.create(contest: @contest, problem_no: (index + 1),
                           statement: sp, answer: ans)

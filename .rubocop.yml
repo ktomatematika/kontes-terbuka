@@ -38,7 +38,7 @@ Style/ModuleFunction:
 # Metrics
 
 Metrics/ClassLength:
-  Max: 140
+  Max: 130
   Exclude:
     - 'test/**/*'
 

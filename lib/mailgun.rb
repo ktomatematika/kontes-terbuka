@@ -17,8 +17,8 @@ module Mailgun
   # bcc_array: BCC params as an array.
   def send_message(**params)
     make_valid!(params)
-    params[:text] = "Salam sejahtera,\n\n" + params[:text] +
-                    "\n\nSalam,\nTim KTO Matematika"
+    text = params[:text]
+    params[:text] = Social.email_template.get binding
 
     check_force_to_many!(params)
     add_contest!(params) if params[:contest]

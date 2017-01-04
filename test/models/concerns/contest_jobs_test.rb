@@ -27,6 +27,9 @@ class ContestJobsTest < ActiveSupport::TestCase
     assert_job_exists({ queue: "contest_#{@c.id}", run_at: @c.end_time },
                       @c, :send_most_answers, nil,
                       'send_most_answers does not exist.')
+    assert_job_exists({ queue: "contest_#{@c.id}", run_at: @c.end_time },
+                      @c, :check_submissions, nil,
+                      'check_submissions does not exist.')
   end
 
   test 'proper jobs related to emails are created' do

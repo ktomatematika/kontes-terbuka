@@ -54,7 +54,7 @@ class Contest < ActiveRecord::Base
 
   # Callbacks
   before_create do
-    self.rule = File.open('app/assets/default_rules.txt', 'r').read
+    self.rule = Social.default_rules.get binding
   end
 
   after_save :prepare_jobs
@@ -126,6 +126,7 @@ class Contest < ActiveRecord::Base
   }
 
   def refresh
+    prepare_jobs
     delay(queue: "contest_#{id}").refresh_results_pdf
   end
 end

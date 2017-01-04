@@ -204,10 +204,10 @@ class UserTest < ActiveSupport::TestCase
     assert_equal u.point, 10
   end
 
-  test 'forgot password process' do
+  test 'reset password' do
     u = create(:user)
     u.enable
-    u.forgot_password_process
+    u.reset_password
 
     assert_not u.verification.nil?, 'On forgot password process,
     user verification is nil'

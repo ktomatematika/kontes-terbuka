@@ -44,10 +44,9 @@ class ContestTest < ActiveSupport::TestCase
     assert build(:contest).save, 'Contest cannot be saved'
   end
 
-  test 'default rule is from assets/default_rules.txt' do
-    assert_equal create(:contest).rule,
-                 File.open('app/assets/default_rules.txt', 'r').read,
-                 'Contest cannot be saved'
+  test 'default rule is from Social' do
+    assert_equal create(:contest).rule, Social.default_rules,
+                 'Contest rule default is not good.'
   end
 
   test 'contest associations' do
@@ -201,11 +200,7 @@ class ContestTest < ActiveSupport::TestCase
       handler = YAML.load(j.handler)
       handler.method_name == :refresh_results_pdf
     end
-    assert_equal jobs.count, 1, 'Jobs created after refresh is not 1.'
-
-    handler = YAML.load(jobs.first.handler)
-    assert_equal handler.method_name, :refresh_results_pdf,
-                 'Calling refresh does not call refresh results pdf.'
+    assert_equal jobs.count, 1, 'Refresh results pdf not created.'
     assert_in_delta Time.zone.now, jobs.first.run_at, 5,
                     'Calling refresh does not refresh immediately.'
   end

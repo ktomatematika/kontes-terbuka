@@ -63,7 +63,7 @@ module UserPasswordController
       flash.now[:alert] = 'Kamu belum verifikasi! Cek email Anda untuk ' \
         'verifikasi.'
     else
-      user.forgot_password_process
+      user.reset_password
       Ajat.warn "forgot_password|uname:#{params[:username]}"
       flash.now[:notice] = 'Cek email Anda untuk instruksi selanjutnya.'
     end
