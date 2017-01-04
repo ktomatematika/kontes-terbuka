@@ -48,7 +48,7 @@ module UserContestScope
         UserContest.include_marks.as(marks).on { id == marks.id }
       end
       included.joins { contest }
-                          .select do
+              .select do
         ['user_contests.*',
          'marks.short_mark',
          'marks.long_mark',

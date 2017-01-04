@@ -99,7 +99,7 @@ module ContestAttributes
   private
 
   def scores
-    filtered_query = user_contests.processed.order{ marks.total_mark.desc }
+    filtered_query = user_contests.processed.order { marks.total_mark.desc }
 
     long_problems.each do |l|
       joined = filtered_query.joins do
