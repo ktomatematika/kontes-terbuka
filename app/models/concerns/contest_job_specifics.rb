@@ -24,9 +24,8 @@ module ContestJobSpecifics
     answers = short_problems.order(:problem_no).map do |sp|
       "No. #{sp.problem_no}: #{sp.most_answer.map(&:answer)}"
     end.join("\n")
-    Mailgun.send_message to: User.with_role(:problem_admin).pluck(:email),
-                         force_to_many: true, contest: self,
-                         subject: 'Jawaban Terbanyak',
+    Mailgun.send_message bcc: User.with_role(:problem_admin).pluck(:email),
+                         contest: self, subject: 'Jawaban Terbanyak',
                          text: 'Berikut ini jawaban terbanyak di kontes ' \
                          'ini, mohon dibandingkan dan dicek ulang ' \
                          "bila jawaban aslinya beda.\n#{answers}"
