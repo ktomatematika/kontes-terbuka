@@ -25,19 +25,16 @@ class ContestsController < ApplicationController
     if @contest.currently_in_contest?
       @user_contest = UserContest.find_by(contest: @contest, user: current_user)
       redirect_to new_contest_user_contest_path(@contest) if @user_contest.nil?
-    elsif @contest.result_released || can?(:preview, @contest)
-      @mask = false # agak gimanaaa gitu
-
-      # This is a big query
-      @user_contests = @contest.results.includes(user: [:roles, :province])
-      @same_province_ucs = @user_contests.joins(:user)
-                                         .where('users.province_id' =>
-                                                current_user.province_id)
+    elsif can?(:preview, @contest) || @contest.result_released
+      @user_contests = @contest.results.includes(user: :roles)
+      @province_ucs = @user_contests.joins(:user).where('users.province_id' =>
+                                                       current_user.province_id)
       @user_contest = @user_contests.find_by('user_contests.user_id' =>
                                              current_user.id)
 
       # Keep medallists only
-      @user_contests = @user_contests.where('marks.total_mark >= bronze_cutoff')
+      @user_contests = @user_contests.includes(user: :province)
+                                     .where('marks.total_mark >= bronze_cutoff')
     end
 
     grab_submissions if @user_contest

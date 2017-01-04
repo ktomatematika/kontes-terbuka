@@ -57,12 +57,6 @@ class UserContest < ActiveRecord::Base
     points
   end
 
-  def create_long_submissions
-    contest.long_problems.each do |lp|
-      LongSubmission.find_or_create_by(user_contest: self, long_problem: lp)
-    end
-  end
-
   def create_short_submissions(short_submissions_hash)
     short_submissions_hash.each do |prob_id, answer|
       next if answer.nil? || answer.empty?

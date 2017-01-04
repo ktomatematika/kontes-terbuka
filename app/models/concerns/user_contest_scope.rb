@@ -47,7 +47,7 @@ module UserContestScope
       included = joins do
         UserContest.include_marks.as(marks).on { id == marks.id }
       end
-      unordered = included.joins { contest }
+      included.joins { contest }
                           .select do
         ['user_contests.*',
          'marks.short_mark',
@@ -58,7 +58,6 @@ module UserContestScope
                when marks.total_mark >= bronze_cutoff then 'Perunggu'
                else '' end as award"]
       end
-      unordered.order { marks.total_mark.desc }
     }
 
     # Given a long problem ID, this shows table of user contest id

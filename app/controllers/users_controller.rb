@@ -37,26 +37,24 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user_contests = Contest.where(id: @user.user_contests.pluck(:contest_id),
-                                   result_released: true)
-                            .order(id: :desc)
-                            .includes(:long_problems)
+    @user_contests = UserContest.processed
+                                .joins(:contest).order(contest_id: :desc)
+                                .where(contest: { result_released: true },
+                                       user: @user)
+                                .paginate(page: params[:page_history])
+                                .to_a
     if can? :show_full, @user
-      @user_contests = @user_contests.includes(:short_problems)
+      @point_transactions = PointTransaction.where(user: @user)
+                                            .paginate(
+                                              page: params[:page_transactions]
+                                            ).order(created_at: :desc)
     end
-    @user_contests = @user_contests.map do |c|
-      c.results.find { |u| u.user_id == @user.id }
-    end.paginate(page: params[:page_history], per_page: 5)
-    @point_transactions = PointTransaction.where(user: @user)
-                                          .paginate(
-                                            page: params[:page_transactions],
-                                            per_page: 5
-                                          ).order(created_at: :desc)
   end
 
   def index
     params[:search] ||= ''
-    @users = User.where('username ILIKE ?', '%' + params[:search] + '%')
+    @users = User.where('username LIKE \'%\' || ? || \'%\'',
+                        params[:search].downcase)
                  .paginate(page: params[:page], per_page: 50)
                  .order(:username)
                  .includes(:province, :status, :roles)

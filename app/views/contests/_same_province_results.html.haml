@@ -15,7 +15,7 @@
         %th Penghargaan
 
     %tbody
-      - @same_province_ucs.each do |uc|
+      - @province_ucs.each do |uc|
         - user = uc.user
         %tr{ class: row_classes(user, ['clickable-row', uc.award.downcase]), data: { link: user_path(user) } }
           %td= uc.rank
@@ -23,10 +23,6 @@
           - unless @no_short_probs
             %td= uc.short_mark
           - @long_problems.each do |lp|
-            - if mask_score?(lp)
-              - @mask = true
-              %td ?
-            - else
-              %td= score(uc, lp)
-          %td= @mask ? '?' : uc.total_mark
+            %td= score(uc, lp)
+          %td= uc.total_mark
           %td= uc.award

@@ -16,6 +16,7 @@
         %th Penghargaan
 
     %tbody
+      - mask = false
       - @user_contests.each do |uc|
         - user = uc.user
         %tr{ class: row_classes(user, ['clickable-row', uc.award.downcase]), data: { link: user_path(user) } }
@@ -26,9 +27,9 @@
             %td= uc.short_mark
           - @long_problems.each do |lp|
             - if mask_score?(lp)
-              - @mask = true
+              - mask = true
               %td ?
             - else
               %td= score(uc, lp)
-          %td= @mask ? '?' : uc.total_mark
+          %td= mask ? '?' : uc.total_mark
           %td= uc.award

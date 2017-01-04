@@ -14,15 +14,13 @@ module UsersHelper
   end
 
   def full_header_contents
-    create_data_row %w(Kontes Nilai Peringkat Penghargaan), 'th'
+    create_data_row %w(Kontes Nilai Penghargaan), 'th'
   end
 
   def full_data_contents
     safe_join(@user_contests.map do |uc|
       create_data_row([uc.contest,
                        uc.total_mark.to_s + '/' + uc.contest.max_score.to_s,
-                       uc.rank.to_s + '/' +
-                       UserContest.where(contest: uc.contest).length.to_s,
                        uc.award], 'td',
                       { class: 'clickable-row',
                         'data-link' => contest_path(uc.contest) },
