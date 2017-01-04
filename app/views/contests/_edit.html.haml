@@ -10,19 +10,19 @@ html: { class: 'form-horizontal' } do |f|
     .form-group
       = f.label :start_time, 'Waktu mulai kontes', class: 'col-sm-3'
       .col-sm-9
-        = f.datetime_field :start_time, class: 'form-control'
+        = f.datetime_local_field :start_time, class: 'form-control'
     .form-group
       = f.label :end_time, 'Waktu selesai kontes', class: 'col-sm-3'
       .col-sm-9
-        = f.datetime_field :end_time, class: 'form-control'
+        = f.datetime_local_field :end_time, class: 'form-control'
     .form-group
       = f.label :result_time, 'Hasil kontes diumumkan', class: 'col-sm-3'
       .col-sm-9
-        = f.datetime_field :result_time, class: 'form-control'
+        = f.datetime_local_field :result_time, class: 'form-control'
     .form-group
       = f.label :feedback_time, 'Terakhir kumpul feedback', class: 'col-sm-3'
       .col-sm-9
-        = f.datetime_field :feedback_time, class: 'form-control'
+        = f.datetime_local_field :feedback_time, class: 'form-control'
   - if can?(:edit, @contest) || can?(:update_marking_scheme, @contest)
     .form-group
       = f.label :marking_scheme, 'Marking Scheme', class: 'col-sm-3'

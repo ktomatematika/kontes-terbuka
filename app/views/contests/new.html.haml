@@ -10,20 +10,18 @@
     .form-group
       = f.label :start_time, class: 'col-sm-2'
       .col-sm-4
-        = f.datetime_field :start_time, class: 'form-control'
+        = f.datetime_local_field :start_time, class: 'form-control'
     .form-group
       = f.label :end_time, class: 'col-sm-2'
       .col-sm-4
-        = f.datetime_field :end_time, class: 'form-control'
+        = f.datetime_local_field :end_time, class: 'form-control'
     .form-group
       = f.label :result_time, class: 'col-sm-2'
       .col-sm-4
-        = f.datetime_field :result_time, class: 'form-control'
+        = f.datetime_local_field :result_time, class: 'form-control'
     .form-group
       = f.label :feedback_time, class: 'col-sm-2'
       .col-sm-4
-        = f.datetime_field :feedback_time, class: 'form-control'
+        = f.datetime_local_field :feedback_time, class: 'form-control'
 
-    %p Contoh format: 23 May 2016 13:42:15
-    %p Jam selalu dalam UTC.
     = f.submit 'Submit', class: 'btn'
