@@ -148,7 +148,7 @@ class User < ActiveRecord::Base
   end
 
   def self.get_user(username_or_email)
-    User.find_by("username ILIKE '#{username_or_email}' " \
-                 "OR email = '#{username_or_email}'")
+    User.find_by("username ILIKE ? OR email = ?", username_or_email,
+                 username_or_email)
   end
 end
