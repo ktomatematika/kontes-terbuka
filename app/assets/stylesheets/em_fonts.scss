@@ -17,13 +17,10 @@ blockquote {
   font-size: 1.2em;
 }
 
-[type=text],
-[type=password],
-[type=email],
-[type=datetime],
+input:not([type="checkbox"]),
 select {
   font-size: 1em !important;
-  height: 2em !important;
+  min-height: 2em !important;
 }
 
 textarea {
