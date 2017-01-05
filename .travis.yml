@@ -22,6 +22,6 @@ script:
   - "bundle exec rake test:$TEST_SUITE"
   - "bundle exec rubocop -D -f simple"
 after_script:
-- haml-lint --exclude-linter LineLength app/views
-- scss-lint app/assets/stylesheets
-- eslint app/assets/javascripts
+- bundle exec haml-lint --exclude-linter LineLength app/views
+- bundle exec scss-lint app/assets/stylesheets
+- bundle exec eslint app/assets/javascripts

@@ -3,7 +3,6 @@ class LongSubmissionsController < ApplicationController
   load_and_authorize_resource :long_submission
 
   def create
-    contest = @long_problem.contest
     @long_submission.long_problem = @long_problem
     @long_submission.user_contest_id = params[:user_contest_id]
     @long_submission.submission_pages.each do |sp|
@@ -70,13 +69,13 @@ class LongSubmissionsController < ApplicationController
   def new
     @long_problem = LongProblem.find_by(contest_id: params[:contest_id],
                                         problem_no: params[:problem_no])
-    if @long_problem
-      user = User.find_by(username: params[:username])
-      contest = Contest.find(params[:contest_id])
-      @user_contest = UserContest.find_by(user: user, contest: contest)
-      @long_submission = LongSubmission.find_or_initialize_by(
-        user_contest: @user_contest, long_problem: @long_problem)
-    end
+    return unless @long_problem
+    user = User.find_by(username: params[:username])
+    contest = Contest.find(params[:contest_id])
+    @user_contest = UserContest.find_by(user: user, contest: contest)
+    @long_submission = LongSubmission.find_or_initialize_by(
+      user_contest: @user_contest, long_problem: @long_problem
+    )
   end
 
   private

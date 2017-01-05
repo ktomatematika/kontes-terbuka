@@ -53,7 +53,7 @@ class LongSubmissionsControllerTest < ActionController::TestCase
 
   test 'new' do
     test_abilities @ls, :new, [nil, :panitia, :problem_admin, :user_admin],
-      [:admin]
+                   [:admin]
     get :new
     assert_response 200
   end
