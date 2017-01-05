@@ -8,8 +8,8 @@
     .form-group
       = label_tag :contest_id, 'Kontes'
       = select_tag :contest_id,
-        options_for_select(Contest.order(id: :desc).pluck(:name, :id)),
-        class: 'form-control', selected: params[:contest_id]
+        options_for_select(Contest.order(id: :desc).pluck(:name, :id), params[:contest_id]),
+        class: 'form-control'
     .form-group
       = label_tag :problem_no, 'Problem no.'
       = text_field_tag :problem_no, params[:problem_no], class: 'form-control'
@@ -30,6 +30,9 @@
         uc: @user_contest
 
     - else
-      %p.text-danger
-        LongSubmission ditemukan. Anda perlu membuang ini terlebih dahulu.
+      %p.text-warning
+        LongSubmission ditemukan. Cek jika file ini ada atau tidak.
+        Anda perlu membuang ini terlebih dahulu jika Anda ingin upload ulang.
+      %p.text-success
+        Nilai: #{LongSubmission::SCORE_HASH[@long_submission.score]}, komentar: "#{@long_submission.feedback}"
       = render 'manage', ls: @long_submission
