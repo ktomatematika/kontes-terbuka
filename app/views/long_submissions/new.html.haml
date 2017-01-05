@@ -1,0 +1,35 @@
+.container
+  %h2 New LongSubmission
+
+  = form_tag(request.original_url, method: :get) do
+    .form-group
+      = label_tag :username, 'Username'
+      = text_field_tag :username, params[:username], class: 'form-control'
+    .form-group
+      = label_tag :contest_id, 'Kontes'
+      = select_tag :contest_id,
+        options_for_select(Contest.order(id: :desc).pluck(:name, :id)),
+        class: 'form-control', selected: params[:contest_id]
+    .form-group
+      = label_tag :problem_no, 'Problem no.'
+      = text_field_tag :problem_no, params[:problem_no], class: 'form-control'
+    = submit_tag 'Submit', class: 'btn'
+
+  - if @long_problem
+    %h3 Statement
+    = latex_and_markdown :div, @long_problem.statement
+
+    - if @user_contest.nil?
+      %p.text-danger
+        UserContest tidak ditemukan. Apakah user #{params[:username]} sudah
+        mengikuti kontes (#{Contest.find params[:contest_id]})?
+
+    - elsif @long_submission.new_record?
+      %h3 Upload untuk #{params[:username]}
+      = render 'upload', ls: @long_submission, lp: @long_problem,
+        uc: @user_contest
+
+    - else
+      %p.text-danger
+        LongSubmission ditemukan. Anda perlu membuang ini terlebih dahulu.
+      = render 'manage', ls: @long_submission

@@ -141,6 +141,7 @@ Rails.application.routes.draw do
   get '/penguasa', to: 'home#admin', as: :admin
   post '/masq', to: 'home#masq'
   delete '/masq', to: 'home#unmasq'
+  resources :long_submissions, only: :new
 
   match '*path', to: 'errors#error_4xx', via: :all
 end

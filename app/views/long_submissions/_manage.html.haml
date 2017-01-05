@@ -1,0 +1,7 @@
+%div
+  = link_to 'Lihat',
+    long_submission_path(ls), class: 'btn'
+  = link_to 'Buang',
+    long_submission_path(ls), class: 'btn',
+    method: :delete,
+    data: { confirm: 'Anda yakin ingin membuang jawaban?' }

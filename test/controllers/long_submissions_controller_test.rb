@@ -20,7 +20,7 @@ class LongSubmissionsControllerTest < ActionController::TestCase
     assert Ability.new(@ls.user_contest.user).can?(:destroy, @ls)
 
     delete :destroy, id: @ls.id
-    assert_redirected_to contest_path(@c)
+    assert_redirected_to root_path
     assert_nil LongSubmission.find_by(id: @ls.id)
   end
 
@@ -36,7 +36,7 @@ class LongSubmissionsControllerTest < ActionController::TestCase
     FileUtils.rm_r @ls.__send__(:location)
 
     get :download, id: @ls.id
-    assert_redirected_to contest_path(@c)
+    assert_redirected_to root_path
     assert_equal flash[:alert], 'Jawaban Anda tidak ditemukan! Mohon buang ' \
       'dan upload ulang.'
   end
@@ -49,6 +49,13 @@ class LongSubmissionsControllerTest < ActionController::TestCase
 
   # TODO. Dev too lazy
   test 'submit_mark' do
+  end
+
+  test 'new' do
+    test_abilities @ls, :new, [nil, :panitia, :problem_admin, :user_admin],
+      [:admin]
+    get :new
+    assert_response 200
   end
 
   private

@@ -11,9 +11,9 @@ class LongSubmissionsController < ApplicationController
     end
 
     if @long_submission.save
-      redirect_to contest, notice: 'Jawaban bagian B berhasil diupload!'
+      redirect_to :back, notice: 'Jawaban bagian B berhasil diupload!'
     else
-      redirect_to contest,
+      redirect_to :back,
                   alert: 'Jawaban bagian B gagal dikirim! ' \
                   'Jika ini berlanjut, ' \
                   "#{ActionController::Base.helpers.link_to 'kontak kami',
@@ -29,15 +29,14 @@ class LongSubmissionsController < ApplicationController
                       "#{ActionController::Base.helpers.link_to 'kontak kami',
                                                                 contact_path}."
     end
-    redirect_to contest_path(@long_submission.long_problem.contest)
+    redirect_to :back
   end
 
   def download
     @long_submission.compress
     send_file @long_submission.zip_location
   rescue Errno::ENOENT, ActionController::MissingFile
-    redirect_to contest_path(@long_submission.long_problem.contest),
-                alert: 'Jawaban Anda tidak ditemukan! Mohon buang ' \
+    redirect_to :back, alert: 'Jawaban Anda tidak ditemukan! Mohon buang ' \
                 'dan upload ulang.'
   end
 
@@ -66,6 +65,18 @@ class LongSubmissionsController < ApplicationController
     end
     redirect_to long_problem_long_submissions_path(@long_problem),
                 notice: 'Nilai berhasil diupdate!'
+  end
+
+  def new
+    @long_problem = LongProblem.find_by(contest_id: params[:contest_id],
+                                        problem_no: params[:problem_no])
+    if @long_problem
+      user = User.find_by(username: params[:username])
+      contest = Contest.find(params[:contest_id])
+      @user_contest = UserContest.find_by(user: user, contest: contest)
+      @long_submission = LongSubmission.find_or_initialize_by(
+        user_contest: @user_contest, long_problem: @long_problem)
+    end
   end
 
   private

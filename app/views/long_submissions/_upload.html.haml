@@ -1,0 +1,15 @@
+= nested_form_for ls,
+  url: long_problem_long_submissions_path(lp, ls),
+  html: { multipart: true }, method: :post do |f|
+  = hidden_field_tag :user_contest_id, uc.id
+  = f.fields_for :submission_pages do |page_form|
+    .form-group
+      = page_form.text_field :page_number,
+        class: 'form-control answer-input', placeholder: 'No. halaman'
+      = page_form.link_to_remove do
+        %span.glyphicon.glyphicon-trash{ 'aria-hidden' => 'true' }
+      = page_form.file_field :submission, class: 'long-problem-file'
+
+  = f.link_to_add 'Tambah halaman', :submission_pages,
+    class: 'long-problem-file'
+  = f.submit 'Jawab', class: 'btn'

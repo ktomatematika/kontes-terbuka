@@ -54,7 +54,7 @@ class SessionsControllerTest < ActionController::TestCase
   test 'create with no user' do
     post :create, username: 'asalaja', password: 'asdfasdf'
 
-    assert_template 'welcome/sign'
+    assert_redirected_to sign_users_path anchor: :login
     assert_equal flash[:alert], 'Username atau email Anda salah.'
   end
 
@@ -62,7 +62,7 @@ class SessionsControllerTest < ActionController::TestCase
     u = create(:user, password: 'asdfasdf')
     post :create, username: u.username, password: 'asdfasdf'
 
-    assert_template 'welcome/sign'
+    assert_redirected_to sign_users_path anchor: :login
     assert_equal flash[:alert], 'Anda perlu melakukan verifikasi terlebih ' \
       'dahulu. Cek email Anda untuk linknya.'
   end
@@ -71,7 +71,7 @@ class SessionsControllerTest < ActionController::TestCase
     u = create(:user, password: 'asdfasdf', enabled: true, verification: 'asdf')
     post :create, username: u.username, password: 'asdfasdf'
 
-    assert_template 'welcome/sign'
+    assert_redirected_to sign_users_path anchor: :login
     assert_equal flash[:alert], 'Anda perlu mereset password Anda. Cek link ' \
       'di email Anda.'
   end
@@ -81,7 +81,7 @@ class SessionsControllerTest < ActionController::TestCase
     u.enable
     post :create, username: u.username, password: 'asdfasdf2'
 
-    assert_template 'welcome/sign'
+    assert_redirected_to sign_users_path anchor: :login
     assert_equal flash[:alert], 'Password Anda salah. Ini percobaan ke-1 ' \
       'dari 10 Anda. Setelah itu, Anda perlu mereset password.'
   end
@@ -91,7 +91,7 @@ class SessionsControllerTest < ActionController::TestCase
     u.enable
     post :create, username: u.username, password: 'asdfasdf2'
 
-    assert_template 'welcome/sign'
+    assert_redirected_to sign_users_path anchor: :login
     assert_equal flash[:alert], 'Password Anda salah. Ini percobaan ke-4 ' \
       'dari 10 Anda. Setelah itu, Anda perlu mereset password.'
   end
@@ -101,7 +101,7 @@ class SessionsControllerTest < ActionController::TestCase
     u.enable
     post :create, username: u.username, password: 'asdfasdf2'
 
-    assert_template 'welcome/sign'
+    assert_redirected_to sign_users_path anchor: :login
     assert_equal flash[:alert], 'Anda sudah terlalu banyak mencoba ' \
       'dan perlu mereset password. Silakan cek link di email Anda.'
   end
@@ -111,7 +111,7 @@ class SessionsControllerTest < ActionController::TestCase
     u.enable
     post :create, username: u.username, password: 'asdfasdf2'
 
-    assert_template 'welcome/sign'
+    assert_redirected_to sign_users_path anchor: :login
     assert_equal flash[:alert], 'Anda sudah terlalu banyak mencoba ' \
       'dan perlu mereset password. Silakan cek link di email Anda.'
   end
@@ -121,7 +121,7 @@ class SessionsControllerTest < ActionController::TestCase
     u.enable
     post :create, username: u.username, password: 'asdfasdf'
 
-    assert_template 'welcome/sign'
+    assert_redirected_to sign_users_path anchor: :login
     assert_equal flash[:alert], 'Anda sudah terlalu banyak mencoba ' \
       'dan perlu mereset password. Silakan cek link di email Anda.'
   end
