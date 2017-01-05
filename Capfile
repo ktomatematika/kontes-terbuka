@@ -1,3 +1,4 @@
+# vi: set ft=ruby :
 # Load DSL and set up stages
 require 'capistrano/setup'
 
@@ -13,6 +14,9 @@ set :rvm_type, :user
 require 'capistrano/sitemap_generator'
 
 require 'capistrano/delayed_job'
+
+require 'capistrano/scm/git'
+install_plugin Capistrano::SCM::Git
 
 # Load custom tasks from `lib/capistrano/tasks` if you have any defined
 Dir.glob('lib/capistrano/tasks/*.rake').each { |r| import r }
