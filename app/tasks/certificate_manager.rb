@@ -41,7 +41,7 @@ class CertificateManager
   end
 
   def send_certificate(pdf_file)
-    data = Social.certificate_manager.send_certifiicate
+    data = Social.certificate_manager.send_certificate
     Mailgun.send_message to: @user.email,
                          contest: @contest,
                          subject: data.subject.get(binding),
