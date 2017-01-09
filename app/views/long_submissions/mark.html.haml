@@ -47,6 +47,7 @@
     = submit_tag 'Input nilai', class: 'btn', method: :patch
 
   %h2 Upload Laporan
-  = form_for upload_report_long_problem_path(@long_problem) do |f|
+  = form_for :long_problem,
+    url: upload_report_long_problem_path(@long_problem) do |f|
     = f.file_field :report
     = f.submit 'Upload', class: 'btn'
