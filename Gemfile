@@ -31,7 +31,7 @@ gem 'jquery-turbolinks'
 gem 'bootstrap-sass'
 # Javascript interpreter
 gem 'therubyracer', platforms: :ruby
-# Adds attachments, in the form of long submissions
+# Adds attachments
 gem 'paperclip'
 # Adds nested forms
 gem 'nested_form'
