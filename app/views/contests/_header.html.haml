@@ -4,7 +4,7 @@
   %h3.update-regularly#time-remaining
   - if @contest.currently_in_contest?
     #contest-buttons
-      = link_to 'Download soal', @contest.problem_pdf.url(:original, false),
+      = link_to 'Download soal', problem_pdf_contest_path,
         class: 'btn btn-lg'
       = link_to 'Lihat ulang aturan', new_contest_user_contest_path(@contest),
         class: 'btn btn-lg'
