@@ -26,7 +26,7 @@ class Ability
         id: Contest.currently_in_contest.pluck(:id)
     can [:download_problem_pdf, :give_feedback, :feedback_submit], Contest,
         id: user.user_contests.pluck(:contest_id)
-    can [:submit, :destroy, :download], LongSubmission,
+    can [:create, :destroy, :download], LongSubmission,
         user_contest_id: user.user_contests.pluck(:id)
     can :create_on_contest, ShortSubmission
     can [:new, :create], UserContest, user: user

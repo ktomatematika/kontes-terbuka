@@ -1,6 +1,7 @@
 class LongSubmissionsController < ApplicationController
   load_resource :long_problem
-  load_and_authorize_resource :long_submission
+  load_resource :long_submission
+  authorize_resource :long_submission, except: :create
 
   def create
     @long_submission.long_problem = @long_problem
@@ -8,6 +9,8 @@ class LongSubmissionsController < ApplicationController
     @long_submission.submission_pages.each do |sp|
       sp.long_submission = @long_submission
     end
+
+    authorize! :create, @long_submission
 
     if @long_submission.save
       redirect_to :back, notice: 'Jawaban bagian B berhasil diupload!'
