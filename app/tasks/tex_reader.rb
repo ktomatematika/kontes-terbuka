@@ -79,12 +79,15 @@ class TexReader
     end_index = tex_file.index(end_separator)
 
     return nil if start_index.nil? || end_index.nil?
-    [start_index, end_index]
+    { start: start_index, end: end_index }
   end
 
   def tex_file_process(start_separator, end_separator)
     boundaries = get_boundaries_from_separator(start_separator, end_separator)
     return if boundaries.nil?
+
+    start_index = boundaries[:start]
+    end_index = boundaries[:end]
 
     tex_file = Paperclip.io_adapters.for(@contest.problem_tex).read
     tex_string = tex_file[(start_index + start_separator.length)...end_index]
