@@ -20,16 +20,21 @@ class TexReader
   end
 
   def insert_problems
-    sp_process.each_with_index do |sp, index|
-      ans = @answers[index]
-      ans = 0 if ans.nil?
-      ShortProblem.create(contest: @contest, problem_no: (index + 1),
-                          statement: sp, answer: ans)
+    # rubocop:disable Style/GuardClause
+    if sp_process
+      sp_process.each_with_index do |sp, index|
+        ans = @answers[index]
+        ans = 0 if ans.nil?
+        ShortProblem.create(contest: @contest, problem_no: (index + 1),
+                            statement: sp, answer: ans)
+      end
     end
 
-    lp_process.each_with_index do |lp, index|
-      LongProblem.create(contest: @contest, problem_no: (index + 1),
-                         statement: lp)
+    if lp_process
+      lp_process.each_with_index do |lp, index|
+        LongProblem.create(contest: @contest, problem_no: (index + 1),
+                           statement: lp)
+      end
     end
   end
 
@@ -68,12 +73,21 @@ class TexReader
     tex_file_process LP_START_SEPARATOR, LP_END_SEPARATOR
   end
 
-  def tex_file_process(start_separator, end_separator)
+  def get_boundaries_from_separator(start_separator, end_separator)
     tex_file = Paperclip.io_adapters.for(@contest.problem_tex).read
-    start_index = tex_file.index(start_separator) + start_separator.length
+    start_index = tex_file.index(start_separator)
     end_index = tex_file.index(end_separator)
-    tex_string = tex_file[start_index...end_index]
 
+    return nil if start_index.nil? || end_index.nil?
+    [start_index, end_index]
+  end
+
+  def tex_file_process(start_separator, end_separator)
+    boundaries = get_boundaries_from_separator(start_separator, end_separator)
+    return if boundaries.nil?
+
+    tex_file = Paperclip.io_adapters.for(@contest.problem_tex).read
+    tex_string = tex_file[(start_index + start_separator.length)...end_index]
     preprocessed = tex_string.delete("\n").delete("\t").split('\item')
 
     nest_level = 0

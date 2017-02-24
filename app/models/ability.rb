@@ -72,7 +72,7 @@ class Ability
     can [:admin, :read_problems, :destroy_short_probs,
          :destroy_long_probs, :update_marking_scheme], Contest
     can :manage, ShortProblem
-    can :manage, LongProblem
+    can [:create, :edit, :update, :destroy, :destroy_on_contest], LongProblem
   end
 
   def forum_admin_abilities(_user)
