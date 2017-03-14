@@ -177,7 +177,7 @@ class ContestJobsTest < ActiveSupport::TestCase
 
   def jobs_any?(jobs, object, method, args)
     jobs.any? do |job|
-      handler = YAML.safe_load(job.handler)
+      handler = YAML.load(job.handler, [Delayed::PerformableMethod])
       object == handler.object && method == handler.method_name &&
         args == handler.args
     end

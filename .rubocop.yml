@@ -38,6 +38,9 @@ Style/BracesAroundHashParameters:
 Style/ModuleFunction:
   EnforcedStyle: extend_self
 
+Security/YAMLLoad:
+  Enabled: false
+
 # Metrics
 
 Metrics/ClassLength:

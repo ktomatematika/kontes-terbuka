@@ -251,12 +251,12 @@ class ContestsControllerTest < ActionController::TestCase
     assert_equal flash[:notice], 'Refreshed!'
 
     jobs = Delayed::Job.where(queue: "contest_#{@c.id}").select do |j|
-      handler = YAML.safe_load(j.handler)
+      handler = YAML.load(j.handler)
       handler.method_name == :refresh_results_pdf
     end
     assert_equal jobs.count, 1, 'Jobs created after refresh is not 1.'
 
-    handler = YAML.safe_load(jobs.first.handler)
+    handler = YAML.load(jobs.first.handler)
     assert_equal handler.method_name, :refresh_results_pdf,
                  'Calling refresh does not call refresh results pdf.'
     assert_in_delta Time.zone.now, jobs.first.run_at, 5,
