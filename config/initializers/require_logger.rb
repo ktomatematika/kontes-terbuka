@@ -1,2 +1,2 @@
-require "#{Rails.root}/lib/detailed_logger.rb"
+require Rails.root.join('lib', 'detailed_logger.rb')
 Ajat = DetailedLogger.new(STDOUT)

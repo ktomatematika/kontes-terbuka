@@ -150,8 +150,6 @@ GEM
       activesupport (>= 4.1.0)
     haml (4.0.7)
       tilt
-    haml_lint (0.21.0)
-      haml (~> 4.0)
     haml_lint (0.23.1)
       haml (>= 4.0, < 5.1)
       rainbow
@@ -450,4 +448,4 @@ RUBY VERSION
    ruby 2.3.3p222
 
 BUNDLED WITH
-   1.13.6
+   1.13.7

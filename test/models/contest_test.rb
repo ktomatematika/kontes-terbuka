@@ -197,7 +197,7 @@ class ContestTest < ActiveSupport::TestCase
     c.refresh
 
     jobs = Delayed::Job.where(queue: "contest_#{c.id}").select do |j|
-      handler = YAML.load(j.handler)
+      handler = YAML.safe_load(j.handler)
       handler.method_name == :refresh_results_pdf
     end
     assert_equal jobs.count, 1, 'Refresh results pdf not created.'

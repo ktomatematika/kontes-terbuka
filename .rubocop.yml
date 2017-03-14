@@ -24,6 +24,9 @@ Rails/HasAndBelongsToMany:
 Rails/HttpPositionalArguments:
   Enabled: false
 
+Rails/SkipsModelValidations:
+  Enabled: false
+
 # Style
 
 Style/Documentation:
