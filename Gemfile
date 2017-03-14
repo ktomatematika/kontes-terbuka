@@ -38,7 +38,7 @@ gem 'nested_form'
 # Markdown parser
 gem 'redcarpet'
 # Zip submissions
-gem 'rubyzip'
+gem 'rubyzip', '>= 1.2.1'
 # Autoprefixer for SCSS
 gem 'autoprefixer-rails'
 # Inline SVG
@@ -46,7 +46,7 @@ gem 'inline_svg'
 
 group :development do
   # Favicon set
-  gem 'rails_real_favicon'
+  gem 'rails_real_favicon', '>= 0.0.7'
 end
 
 ### END ASSETS
@@ -79,7 +79,7 @@ group :test do
   # Acceptance testing
   gem 'capybara'
   # Driver for Capybara to allow JS stuff
-  gem 'selenium-webdriver'
+  gem 'selenium-webdriver', '>= 3.0.5'
   # Allow transcations with Capybara and Selenius
   gem 'transactional_capybara'
 end
