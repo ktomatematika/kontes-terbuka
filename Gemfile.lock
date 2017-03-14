@@ -152,6 +152,9 @@ GEM
       tilt
     haml_lint (0.21.0)
       haml (~> 4.0)
+    haml_lint (0.23.1)
+      haml (>= 4.0, < 5.1)
+      rainbow
       rake (>= 10, < 13)
       rubocop (>= 0.47.0)
       sysexits (~> 1.1)
