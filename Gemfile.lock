@@ -61,7 +61,7 @@ GEM
       rake (>= 10.4, < 12.0)
     arel (6.0.4)
     ast (2.3.0)
-    autoprefixer-rails (6.7.6)
+    autoprefixer-rails (6.7.7)
       execjs
     bcrypt (3.1.11)
     bootstrap-sass (3.3.7)
@@ -76,16 +76,14 @@ GEM
       uniform_notifier (~> 1.10.0)
     byebug (9.0.6)
     cancancan (1.16.0)
-    capistrano (3.7.2)
+    capistrano (3.8.0)
       airbrussh (>= 1.0.0)
-      capistrano-harrow
       i18n
       rake (>= 10.0.0)
       sshkit (>= 1.9.0)
     capistrano-bundler (1.2.0)
       capistrano (~> 3.1)
       sshkit (~> 1.2)
-    capistrano-harrow (0.5.3)
     capistrano-rails (1.2.3)
       capistrano (~> 3.1)
       capistrano-bundler (~> 1.1)
@@ -177,7 +175,7 @@ GEM
     koala (2.5.0)
       addressable
       faraday
-    libv8 (3.16.14.17)
+    libv8 (3.16.14.19)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
     mail (2.6.4)
@@ -212,7 +210,7 @@ GEM
       mimemagic (~> 0.3.0)
     parser (2.4.0.0)
       ast (~> 2.2)
-    pg (0.19.0)
+    pg (0.20.0)
     polyamorous (1.1.0)
       activerecord (>= 3.0)
     powerpack (0.1.1)
@@ -300,7 +298,7 @@ GEM
     scss_lint (0.52.0)
       rake (>= 0.9, < 13)
       sass (~> 3.4.20)
-    selenium-webdriver (3.2.2)
+    selenium-webdriver (3.3.0)
       childprocess (~> 0.5)
       rubyzip (~> 1.0)
       websocket (~> 1.0)
@@ -347,7 +345,7 @@ GEM
       coffee-rails
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
-    uglifier (3.1.4)
+    uglifier (3.1.7)
       execjs (>= 0.3.0, < 3)
     unf (0.1.4)
       unf_ext

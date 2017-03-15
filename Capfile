@@ -1,4 +1,5 @@
 # vi: set ft=ruby :
+
 # Load DSL and set up stages
 require 'capistrano/setup'
 

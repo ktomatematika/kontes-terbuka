@@ -1,5 +1,5 @@
 # config valid only for current version of Capistrano
-lock '3.7.2'
+lock '3.8.0'
 
 set :application, 'kontes-terbuka'
 set :repo_url, 'git@github.com:donjar/kontes-terbuka.git'
@@ -54,5 +54,5 @@ namespace :deploy do
 
   after :publishing, 'deploy:restart'
   after :finishing, 'deploy:cleanup'
-  after :finishing, 'deploy:sitemap:refresh'
+  after :finishing, 'sitemap:refresh'
 end
