@@ -5,11 +5,9 @@ class Ability
     return if user.nil?
     user_abilities(user)
 
-    (%w(marker panitia) + Role.admins - ['admin']).each do |role|
+    (%w(marker panitia) + Role.admins).each do |role|
       send("#{role}_abilities", user) if user.has_cached_role? role, :any
     end
-
-    can :manage, :all if user.has_cached_role? :admin
   end
 
   private
@@ -53,7 +51,8 @@ class Ability
 
   def panitia_abilities(_user)
     can [:preview, :summary, :admin, :download_marking_scheme,
-         :download_problem_pdf, :download_reports], Contest
+         :download_problem_pdf, :download_reports,
+         :download_certificates_data], Contest
     can [:index_full, :show_full, :show], User
     can :download_on_contest, FeedbackAnswer
     can [:admin, :profile, :see_referrers], Application
@@ -78,5 +77,9 @@ class Ability
   def forum_admin_abilities(_user)
     can [:admin, :update_forum_link], Contest
     can :update_forum_link, LongProblem
+  end
+
+  def admin_abilities(_user)
+    can :manage, :all
   end
 end

@@ -10,3 +10,6 @@
 = link_to 'Download laporan',
   reports_contest_path(@contest),
   class: 'btn btn-lg' if can? :download_reports, @contest
+= link_to 'Download certificates data',
+  download_certificates_data_contest_user_contests_path(@contest, format: :csv),
+  class: 'btn btn-lg' if can? :download_certificates_data, @contest

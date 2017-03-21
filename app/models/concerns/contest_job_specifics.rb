@@ -64,6 +64,7 @@ module ContestJobSpecifics
   def send_certificates
     full_feedback_user_contests.eligible_score.each do |uc|
       CertificateManager.new(uc).run
+      uc.update(certificate_sent: true)
 
       dj_log uc: uc.id
     end

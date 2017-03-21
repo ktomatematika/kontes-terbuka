@@ -2,11 +2,12 @@
 #
 # Table name: user_contests
 #
-#  id         :integer          not null, primary key
-#  user_id    :integer          not null
-#  contest_id :integer          not null
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id               :integer          not null, primary key
+#  user_id          :integer          not null
+#  contest_id       :integer          not null
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  certificate_sent :boolean          default(FALSE), not null
 #
 # Indexes
 #
@@ -17,7 +18,6 @@
 #  fk_rails_418fd0bbd0  (contest_id => contests.id) ON DELETE => cascade
 #  fk_rails_ee078c9177  (user_id => users.id) ON DELETE => cascade
 #
-# rubocop:enable Metrics/LineLength
 
 class UserContest < ActiveRecord::Base
   include UserContestScope

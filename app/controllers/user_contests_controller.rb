@@ -10,4 +10,16 @@ class UserContestsController < ApplicationController
     UserContest.create(user: current_user, contest: @contest)
     redirect_to contest_path(@contest)
   end
+
+  def download_certificates_data
+    @user_contests = @contest.results.includes(:user)
+    respond_to do |format|
+      format.html
+      format.csv do
+        headers['Content-Disposition'] =
+          "attachment; filename=\"Data Sertifikat #{@contest}\".csv"
+        headers['Content-Type'] ||= 'text/csv'
+      end
+    end
+  end
 end

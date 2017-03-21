@@ -57,7 +57,13 @@ Rails.application.routes.draw do
       post 'refresh', to: 'contests#refresh'
     end
 
-    resources :user_contests, path: '/user-contests', only: [:new, :create]
+    resources :user_contests, path: '/user-contests', only: [:new, :create] do
+      collection do
+        get 'download-certificates-data',
+            to: 'user_contests#download_certificates_data',
+            as: 'download_certificates_data'
+      end
+    end
 
     resources :short_problems, path: '/short-problems',
                                except: [:index, :new, :show] do

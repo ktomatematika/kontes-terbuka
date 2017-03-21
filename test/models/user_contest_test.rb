@@ -45,13 +45,18 @@ class UserContestTest < ActiveSupport::TestCase
   end
 
   test 'user_id cannot be blank' do
-    assert_not build(:user_contest, user_id: nil).save
-    'User Contest with nil user id can be saved.'
+    assert_not build(:user_contest, user_id: nil).save,
+               'User Contest with nil user id can be saved.'
   end
 
   test 'contest_id cannot be blank' do
-    assert_not build(:user_contest, contest_id: nil).save
-    'User Contest with nil contest id can be saved.'
+    assert_not build(:user_contest, contest_id: nil).save,
+               'User Contest with nil contest id can be saved.'
+  end
+
+  test 'certificate_sent cannot be blank' do
+    assert_not build(:user_contest, certificate_sent: nil).save,
+               'User Contest with nil certificate sent can be saved.'
   end
 
   test 'contest points' do
