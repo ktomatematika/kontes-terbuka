@@ -24,6 +24,16 @@ class UserContestsControllerTest < ActionController::TestCase
     assert_not_nil UserContest.find_by contest: @c, user: @user
   end
 
+  test 'download_certificates_data' do
+    test_abilities UserContest, :download_certificates_data, [nil], [:panitia]
+    get :download_ceritificates_data, contest_id: @c.id, format: :csv
+
+    assert @response.header['Content-Disposition']
+      .include?("filename=\"Data Sertifikat #{@c}\".csv")
+    assert_response 200
+    assert_equal @response.content_type, 'text/csv'
+  end
+
   private
 
   def create_items
