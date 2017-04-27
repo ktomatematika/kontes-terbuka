@@ -82,7 +82,7 @@ class UsersControllerTest < ActionController::TestCase
 
   test 'index' do
     test_abilities User, :index, [], [nil]
-    test_abilities User, :index_full, [nil], [:panitia, :admin]
+    test_abilities User, :index_full, [nil], %i[panitia admin]
 
     login_and_be_admin
     get :index
@@ -90,7 +90,7 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test 'edit' do
-    test_abilities User, :edit, [nil, :panitia], [:user_admin, :admin]
+    test_abilities User, :edit, [nil, :panitia], %i[user_admin admin]
 
     login_and_be_admin
     get :edit, id: @user.id
@@ -98,7 +98,7 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test 'update' do
-    test_abilities User, :update, [nil, :panitia], [:user_admin, :admin]
+    test_abilities User, :update, [nil, :panitia], %i[user_admin admin]
 
     login_and_be_admin
     put :update, id: @user.id, user: { fullname: 'Coba halo' }
@@ -108,7 +108,7 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test 'update fail' do
-    test_abilities User, :update, [nil, :panitia], [:user_admin, :admin]
+    test_abilities User, :update, [nil, :panitia], %i[user_admin admin]
 
     login_and_be_admin
     get :update, id: @user.id, user: { color_id: nil }
@@ -149,7 +149,7 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test 'destroy' do
-    test_abilities User, :destroy, [nil, :panitia], [:user_admin, :admin]
+    test_abilities User, :destroy, [nil, :panitia], %i[user_admin admin]
 
     login_and_be_admin
     delete :destroy, id: @user.id

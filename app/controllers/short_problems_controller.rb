@@ -1,7 +1,7 @@
 class ShortProblemsController < ApplicationController
   load_and_authorize_resource
 
-  contest_actions = [:create, :destroy_on_contest]
+  contest_actions = %i[create destroy_on_contest]
   before_action :load_contest, except: contest_actions
 
   def create

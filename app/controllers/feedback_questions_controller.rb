@@ -1,7 +1,7 @@
 class FeedbackQuestionsController < ApplicationController
   load_and_authorize_resource
 
-  contest_actions = [:create, :destroy_on_contest, :copy_across_contests]
+  contest_actions = %i[create destroy_on_contest copy_across_contests]
   before_action :load_contest, except: contest_actions
 
   def create

@@ -119,7 +119,7 @@ class User < ActiveRecord::Base
 
   # NOTE: This needs to come before the validation.
   def self.time_zone_set
-    %w(WIB WITA WIT)
+    %w[WIB WITA WIT]
   end
 
   validates :timezone, presence: true,

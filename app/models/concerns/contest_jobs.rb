@@ -18,7 +18,7 @@ module ContestJobs
   end
 
   def jobs_on_contest_end
-    [:purge_panitia, :send_most_answers, :check_submissions].each do |m|
+    %i[purge_panitia send_most_answers check_submissions].each do |m|
       do_if_not_time(end_time, self, m)
     end
   end
@@ -55,7 +55,7 @@ module ContestJobs
   end
 
   def jobs_on_feedback_time_end
-    [:check_veteran, :award_points, :send_certificates, :refresh].each do |m|
+    %i[check_veteran award_points send_certificates refresh].each do |m|
       do_if_not_time(feedback_time, self, m)
     end
     do_if_not_time(feedback_time, FacebookPost.new(self), :certificate_sent)

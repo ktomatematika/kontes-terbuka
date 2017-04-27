@@ -43,7 +43,7 @@ class ContestsController < ApplicationController
 
   def index
     @contests = Contest.where('start_time < ?', Time.zone.now + 3.months)
-    %w(short_problems long_problems user_contests).each do |table|
+    %w[short_problems long_problems user_contests].each do |table|
       subquery = Contest.count_sql(table)
       @contests = @contests.joins("LEFT OUTER JOIN (#{subquery}) #{table} " \
                                   "ON contests.id = #{table}.id")
@@ -124,10 +124,10 @@ class ContestsController < ApplicationController
 
   def contest_params
     permit_array = if can? :update, @contest
-                     [:name, :start_time, :end_time, :result_time,
-                      :feedback_time, :problem_pdf, :gold_cutoff,
-                      :silver_cutoff, :bronze_cutoff, :result_released,
-                      :marking_scheme, :forum_link, :book_promo]
+                     %i[name start_time end_time result_time
+                        feedback_time problem_pdf gold_cutoff
+                        silver_cutoff bronze_cutoff result_released
+                        marking_scheme forum_link book_promo]
                    elsif can? :update_marking_scheme, @contest
                      :marking_scheme
                    elsif can? :update_forum_link, @contest

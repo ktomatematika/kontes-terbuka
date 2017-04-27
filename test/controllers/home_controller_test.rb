@@ -22,7 +22,7 @@ class HomeControllerTest < ActionController::TestCase
   end
 
   test 'admin' do
-    test_abilities Application, :admin, [nil], [:marker, :panitia, :admin]
+    test_abilities Application, :admin, [nil], %i[marker panitia admin]
     get :admin
     assert_response 200
   end

@@ -37,6 +37,6 @@ class Role < ActiveRecord::Base
   end
 
   def self.admins
-    %w(marking_manager user_admin problem_admin forum_admin admin)
+    %w[marking_manager user_admin problem_admin forum_admin admin]
   end
 end

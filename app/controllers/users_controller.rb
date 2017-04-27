@@ -3,9 +3,9 @@ class UsersController < ApplicationController
 
   load_resource
 
-  guest_actions = [:new, :check_unique, :create, :forgot_password,
-                   :process_forgot_password, :reset_password,
-                   :process_reset_password, :verify]
+  guest_actions = %i[new check_unique create forgot_password
+                     process_forgot_password reset_password
+                     process_reset_password verify]
   skip_before_action :require_login, only: guest_actions
   authorize_resource except: guest_actions
 
@@ -104,7 +104,7 @@ class UsersController < ApplicationController
       users = users.where('username ILIKE ?', params[:username])
     end
     users = users.where(email: params[:email]) if params[:email]
-    render json: !users.present?
+    render json: users.blank?
   end
 
   private

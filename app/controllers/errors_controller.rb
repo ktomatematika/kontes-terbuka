@@ -2,7 +2,7 @@ class ErrorsController < ApplicationController
   skip_before_action :require_login
 
   def error_4xx
-    whitelist = %w(mini-profiler apple-touch-icon)
+    whitelist = %w[mini-profiler apple-touch-icon]
     regex_string = '(' + whitelist.map { |i| Regexp.escape(i) }.join('|') + ')'
     regex = Regexp.new regex_string
 

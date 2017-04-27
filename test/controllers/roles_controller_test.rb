@@ -16,14 +16,14 @@ class RolesControllerTest < ActionController::TestCase
 
   test 'assign_markers' do
     test_abilities Role, :assign_markers, [nil, :panitia, :marker],
-                   [:marking_manager, :admin]
+                   %i[marking_manager admin]
     get :assign_markers, id: @c.id
     assert_response 200
   end
 
   test 'create_marker' do
     test_abilities Role, :create_marker, [nil, :panitia, :marker],
-                   [:marking_manager, :admin]
+                   %i[marking_manager admin]
     marker = create(:user)
     post :create_marker, id: @lp.id, username: marker.username
     assert_equal flash[:notice], 'Korektor berhasil ditambahkan!'
@@ -33,7 +33,7 @@ class RolesControllerTest < ActionController::TestCase
 
   test 'create_marker with no username' do
     test_abilities Role, :create_marker, [nil, :panitia, :marker],
-                   [:marking_manager, :admin]
+                   %i[marking_manager admin]
     marker = create(:user)
     post :create_marker, id: @lp.id, username: (marker.username + 'a')
     assert_equal flash[:alert], 'User tidak ditemukan!'
@@ -42,7 +42,7 @@ class RolesControllerTest < ActionController::TestCase
 
   test 'remove_marker' do
     test_abilities Role, :remove_marker, [nil, :panitia, :marker],
-                   [:marking_manager, :admin]
+                   %i[marking_manager admin]
     marker = create(:user)
     marker.add_role :marker, @lp
     delete :remove_marker, id: @lp.id, user_id: marker.id

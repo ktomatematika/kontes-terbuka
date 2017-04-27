@@ -27,7 +27,6 @@ class MarketItemsController < ApplicationController
     end
 
     redirect_to root_path
-
   rescue ActiveRecord::ActiveRecordError
     respond_to do |format|
       format.html do

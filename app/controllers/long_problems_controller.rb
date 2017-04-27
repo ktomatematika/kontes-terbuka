@@ -1,8 +1,8 @@
 class LongProblemsController < ApplicationController
   load_resource
-  authorize_resource except: [:edit, :update]
+  authorize_resource except: %i[edit update]
 
-  contest_actions = [:create, :destroy_on_contest]
+  contest_actions = %i[create destroy_on_contest]
   before_action :load_contest, except: contest_actions
 
   def create

@@ -121,9 +121,9 @@ class Contest < ActiveRecord::Base
            .select("contests.id, count(#{table}) AS #{table}_count").to_sql
   end
 
-  scope :currently_in_contest, lambda {
+  scope(:currently_in_contest, lambda {
     where('start_time <= ? AND ? <= end_time', Time.zone.now, Time.zone.now)
-  }
+  })
 
   def refresh
     prepare_jobs

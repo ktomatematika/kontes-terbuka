@@ -12,7 +12,7 @@ module ContestJobSpecifics
   end
 
   def purge_panitia
-    panitia_roles = [:panitia, :admin]
+    panitia_roles = %i[panitia admin]
 
     user_contests.where(user_id: User.joins(:roles)
                                      .where('roles.name' => panitia_roles))

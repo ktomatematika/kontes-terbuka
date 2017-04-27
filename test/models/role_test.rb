@@ -28,6 +28,6 @@ class RoleTest < ActiveSupport::TestCase
 
   test 'role admins' do
     assert_equal Role.admins,
-                 %w(marking_manager user_admin problem_admin forum_admin admin)
+                 %w[marking_manager user_admin problem_admin forum_admin admin]
   end
 end

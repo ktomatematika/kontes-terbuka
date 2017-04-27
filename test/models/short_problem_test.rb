@@ -79,7 +79,7 @@ class ShortProblemTest < ActiveSupport::TestCase
 
   test 'most answer' do
     sp = create(:short_problem)
-    %w(2 2 2 2 3 3 4 4 4 5).each do |ans|
+    %w[2 2 2 2 3 3 4 4 4 5].each do |ans|
       create(:short_submission, short_problem: sp, answer: ans)
     end
 
@@ -87,11 +87,11 @@ class ShortProblemTest < ActiveSupport::TestCase
                  'ShortProblem most answer is not working'
 
     sp2 = create(:short_problem)
-    %w(2 2 2 3 3 3 4 4 4 5).each do |ans|
+    %w[2 2 2 3 3 3 4 4 4 5].each do |ans|
       create(:short_submission, short_problem: sp2, answer: ans)
     end
 
-    assert_equal sp2.most_answer.map(&:answer).sort, %w(2 3 4),
+    assert_equal sp2.most_answer.map(&:answer).sort, %w[2 3 4],
                  'ShortProblem most answer is not working'
   end
 

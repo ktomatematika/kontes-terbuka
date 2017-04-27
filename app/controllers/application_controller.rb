@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
   def set_color
     color_data = current_user.nil? ? nil : current_user.color.name
 
-    possible_colors = %w(Merah Hijau Biru Kuning)
+    possible_colors = %w[Merah Hijau Biru Kuning]
 
     @color = case color_data
              when nil, 'Sistem'

@@ -85,7 +85,7 @@ class LongSubmissionsController < ApplicationController
 
   def long_submission_params
     params.require(:long_submission).permit(
-      submission_pages_attributes: [:page_number, :submission, :_destroy, :id]
+      submission_pages_attributes: %i[page_number submission _destroy id]
     )
   end
 end

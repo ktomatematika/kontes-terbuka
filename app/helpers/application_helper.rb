@@ -79,7 +79,7 @@ module ApplicationHelper
   # Helper to add link to olimpiade.org if it exists.
   def link_if_exists(link, text,
                      additional_text = '(klik untuk diskusi di olimpiade.org!)')
-    if link.nil? || link.empty?
+    if link.blank?
       text
     else
       content_tag(:a, href: link) { "#{text} #{additional_text}" }

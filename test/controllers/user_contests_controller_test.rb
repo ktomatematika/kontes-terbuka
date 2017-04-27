@@ -8,6 +8,9 @@ class UserContestsControllerTest < ActionController::TestCase
                  "/contests/#{@c.id}/user-contests"
     assert_equal new_contest_user_contest_path(contest_id: @c.id),
                  "/contests/#{@c.id}/user-contests/new"
+    assert_equal download_certificates_data_contest_user_contests_path(
+      contest_id: @c.id
+    ), "/contests/#{@c.id}/user-contests/download-certificates-data"
   end
 
   test 'new' do
@@ -26,7 +29,7 @@ class UserContestsControllerTest < ActionController::TestCase
 
   test 'download_certificates_data' do
     test_abilities UserContest, :download_certificates_data, [nil], [:panitia]
-    get :download_ceritificates_data, contest_id: @c.id, format: :csv
+    get :download_certificates_data, contest_id: @c.id, format: :csv
 
     assert @response.header['Content-Disposition']
       .include?("filename=\"Data Sertifikat #{@c}\".csv")

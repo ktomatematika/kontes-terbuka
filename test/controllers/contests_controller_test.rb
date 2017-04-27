@@ -29,7 +29,7 @@ class ContestsControllerTest < ActionController::TestCase
   end
 
   test 'admin' do
-    test_abilities @c, :admin, [nil, :marker], [:panitia, :admin]
+    test_abilities @c, :admin, [nil, :marker], %i[panitia admin]
     get :admin, id: @c.id
     assert_response 200
   end
@@ -103,7 +103,7 @@ class ContestsControllerTest < ActionController::TestCase
 
   test 'update upload ms' do
     test_abilities @c, :update_marking_scheme, [nil, :panitia, :marker],
-                   [:problem_admin, :admin]
+                   %i[problem_admin admin]
     @user.remove_role :admin
     @user.add_role :problem_admin
 
@@ -119,7 +119,7 @@ class ContestsControllerTest < ActionController::TestCase
 
   test 'update forum link' do
     test_abilities @c, :update_forum_link, [nil, :panitia, :marker],
-                   [:forum_admin, :admin]
+                   %i[forum_admin admin]
     @user.remove_role :admin
     @user.add_role :forum_admin
 
@@ -144,13 +144,13 @@ class ContestsControllerTest < ActionController::TestCase
   end
 
   test 'download_problem_pdf' do
-    test_abilities @c, :download_problem_pdf, [nil], [:panitia, :admin]
+    test_abilities @c, :download_problem_pdf, [nil], %i[panitia admin]
 
     uc = create(:user_contest)
     assert Ability.new(uc.user).can?(:download_problem_pdf, uc.contest)
 
     test_abilities create(:contest, start: 5, ends: 10),
-                   :download_problem_pdf, [nil, :marker], [:panitia, :admin]
+                   :download_problem_pdf, [nil, :marker], %i[panitia admin]
 
     @c.update(problem_pdf: PDF)
     @c.reload
@@ -189,7 +189,7 @@ class ContestsControllerTest < ActionController::TestCase
   end
 
   test 'read_problems' do
-    test_abilities @c, :read_problems, [nil, :marker], [:problem_admin, :admin]
+    test_abilities @c, :read_problems, [nil, :marker], %i[problem_admin admin]
     post :read_problems, id: @c.id, answers: '0,1,2', problem_tex:
       Rack::Test::UploadedFile.new(File.path(TEX), 'application/x-tex')
 

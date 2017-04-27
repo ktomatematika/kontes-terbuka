@@ -37,7 +37,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :roles, only: [:create, :destroy] do
+  resources :roles, only: %i[create destroy] do
     collection do
       get '', to: 'roles#manage', as: ''
     end
@@ -57,7 +57,7 @@ Rails.application.routes.draw do
       post 'refresh', to: 'contests#refresh'
     end
 
-    resources :user_contests, path: '/user-contests', only: [:new, :create] do
+    resources :user_contests, path: '/user-contests', only: %i[new create] do
       collection do
         get 'download-certificates-data',
             to: 'user_contests#download_certificates_data',
@@ -66,7 +66,7 @@ Rails.application.routes.draw do
     end
 
     resources :short_problems, path: '/short-problems',
-                               except: [:index, :new, :show] do
+                               except: %i[index new show] do
       collection do
         delete '', to: 'short_problems#destroy_on_contest', as: ''
       end
@@ -79,7 +79,7 @@ Rails.application.routes.draw do
     end
 
     resources :long_problems, path: '/long-problems',
-                              except: [:index, :new, :show] do
+                              except: %i[index new show] do
       member do
         post 'marker', to: 'roles#create_marker'
         delete 'marker', to: 'roles#remove_marker'
@@ -103,7 +103,7 @@ Rails.application.routes.draw do
       end
 
       resources :long_submissions, path: '/long-submissions',
-                                   only: [:create, :destroy] do
+                                   only: %i[create destroy] do
         member do
           get '', to: 'long_submissions#download', as: ''
         end
@@ -117,7 +117,7 @@ Rails.application.routes.draw do
     end
 
     resources :feedback_questions, path: '/feedback-questions',
-                                   except: [:index, :new, :show] do
+                                   except: %i[index new show] do
       collection do
         post 'copy', to: 'feedback_questions#copy_across_contests'
         delete '', to: 'feedback_questions#destroy_on_contest', as: ''
@@ -135,14 +135,14 @@ Rails.application.routes.draw do
 
   resources :market_items, path: '/market-items'
 
-  %w(home rumah utama).each { |r| get "/#{r}", to: 'home#index' }
-  %w(faq faqs pertanyaan).each { |r| get "/#{r}", to: 'home#faq' }
-  %w(book books buku).each { |r| get "/#{r}", to: 'home#book' }
-  %w(donate donasi sumbang).each { |r| get "/#{r}", to: 'home#donate' }
-  %w(about tentang).each { |r| get "/#{r}", to: 'home#about' }
-  %w(privacy privasi).each { |r| get "/#{r}", to: 'home#privacy' }
-  %w(terms syarat ketentuan).each { |r| get "/#{r}", to: 'home#terms' }
-  %w(contact kontak hubungi).each { |r| get "/#{r}", to: 'home#contact' }
+  %w[home rumah utama].each { |r| get "/#{r}", to: 'home#index' }
+  %w[faq faqs pertanyaan].each { |r| get "/#{r}", to: 'home#faq' }
+  %w[book books buku].each { |r| get "/#{r}", to: 'home#book' }
+  %w[donate donasi sumbang].each { |r| get "/#{r}", to: 'home#donate' }
+  %w[about tentang].each { |r| get "/#{r}", to: 'home#about' }
+  %w[privacy privasi].each { |r| get "/#{r}", to: 'home#privacy' }
+  %w[terms syarat ketentuan].each { |r| get "/#{r}", to: 'home#terms' }
+  %w[contact kontak hubungi].each { |r| get "/#{r}", to: 'home#contact' }
 
   get '/penguasa', to: 'home#admin', as: :admin
   post '/masq', to: 'home#masq'

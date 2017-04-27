@@ -38,8 +38,8 @@ module ContestsHelper
     users = User.with_role(:panitia)
                 .where.not(id: User.with_role(:marker, long_problem).pluck(:id))
                 .order(:username)
-    options_for_select users.pluck(:username, :fullname)
-                            .map { |u| ["#{u[0]} (#{u[1]})", u[0]] }
+    options_for_select(users.pluck(:username, :fullname)
+                            .map { |u| ["#{u[0]} (#{u[1]})", u[0]] })
   end
 
   # Helper for contests#summary.
@@ -70,7 +70,7 @@ module ContestsHelper
   # scores summary or not.
   def can_see_summary?
     @contest.result_released == true ||
-      !@long_problems.map { |lp| mask_score? lp }.any?
+      @long_problems.map { |lp| mask_score? lp }.none?
   end
 
   # Helper for contests#summary. Determines the average mark of a problem
