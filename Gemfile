@@ -16,7 +16,7 @@ gem 'rake', group: :test
 ### VIEWS, ASSETS, FRONTEND STUFF
 
 # HAML makes your life easier
-gem 'haml'
+gem 'haml', '>= 5.0.0'
 # Use SCSS for stylesheets
 gem 'sass-rails'
 # Use Uglifier as compressor for JavaScript assets
@@ -123,7 +123,7 @@ group :development, :test do
   # Ruby linter
   gem 'rubocop'
   # HAML linter
-  gem 'haml_lint'
+  gem 'haml_lint', '>= 0.24.0'
   # SCSS linter
   gem 'scss_lint', require: false
 end
