@@ -7,8 +7,20 @@ class FeedbackAnswersController < ApplicationController
   end
 
   def create_on_contest
-    UserContest.find_by(user: current_user, contest: @contest)
-               .create_feedback_answers(feedback_params)
+    uc = UserContest.find_by(user: current_user, contest: @contest)
+                    .create_feedback_answers(feedback_params)
+
+    feedback_params.each do |qn_id, answer|
+      next if answer.empty?
+      begin
+        fa = FeedbackAnswer.find_or_initialize_by(feedback_question_id: qn_id,
+                                                  user_contest: uc)
+        fa.update(answer: answer)
+      rescue ActiveRecord::RecordNotUnique
+        retry
+      end
+    end
+
     redirect_to @contest, notice: 'Feedback berhasil dikirimkan!'
   end
 

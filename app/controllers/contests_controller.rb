@@ -22,8 +22,12 @@ class ContestsController < ApplicationController
   end
 
   def show
+    grab_problems
+
     if @contest.currently_in_contest?
       @user_contest = UserContest.find_by(contest: @contest, user: current_user)
+      @short_problems = @short_problems.in_time
+      @long_problems = @long_problems.in_time
       redirect_to new_contest_user_contest_path(@contest) if @user_contest.nil?
     elsif can?(:preview, @contest) || @contest.result_released
       @user_contests = @contest.results.includes(user: :roles)
@@ -38,7 +42,6 @@ class ContestsController < ApplicationController
     end
 
     grab_submissions if @user_contest
-    grab_problems
   end
 
   def index

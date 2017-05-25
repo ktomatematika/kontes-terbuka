@@ -63,6 +63,56 @@ class LongProblemTest < ActiveSupport::TestCase
     end
   end
 
+  test 'times must be between contest times' do
+    c = create(:contest, start_time: Time.zone.now + 100.seconds,
+               end_time: Time.zone.now + 200.seconds)
+    assert build(:long_problem, contest: c,
+                 start_time: Time.zone.now + 50.seconds).save,
+                 'Long Problem with start time < contest start time cant save.'
+    assert build(:long_problem, contest: c,
+                 start_time: c.start_time).save,
+                 'Long Problem with start time = contest start time cant save.'
+    assert build(:long_problem, contest: c,
+                 start_time: nil).save,
+                 'Long Problem with start time nil cant save.'
+    assert_not build(:long_problem, contest: c,
+                     start_time: Time.zone.now + 150.seconds).save,
+                    'Problem with start time >= contest start time can save.'
+
+    assert build(:long_problem, contest: c,
+                 end_time: Time.zone.now + 150.seconds).save,
+                 'Long Problem with start time < contest start time cant save.'
+    assert build(:long_problem, contest: c,
+                 end_time: c.end_time).save,
+                 'Long Problem with start time = contest start time cant save.'
+    assert build(:long_problem, contest: c,
+                 end_time: nil).save,
+                 'Long Problem with start time nil cant save.'
+    assert_not build(:long_problem, contest: c,
+                     end_time: Time.zone.now + 50.seconds).save,
+                     'Problem with end time <= contest end time can save.'
+
+    assert_not build(:long_problem, contest: c,
+                     start_time: Time.zone.now + 160.seconds,
+                     end_time: Time.zone.now + 140.seconds).save,
+                     'Problem with start time > end time can save.'
+  end
+
+  test 'in_time' do
+    c = create(:contest, start_time: Time.zone.now - 100.seconds,
+               end_time: Time.zone.now + 100.seconds)
+
+    lp1 = create(:long_problem, start_time: Time.zone.now - 80.seconds,
+                 end_time: Time.zone.now - 40.seconds)
+    lp2 = create(:long_problem, start_time: Time.zone.now - 20.seconds,
+                 end_time: Time.zone.now + 20.seconds)
+    lp3 = create(:long_problem, start_time: Time.zone.now + 40.seconds,
+                 end_time: Time.zone.now + 80.seconds)
+
+    assert_equal c.long_problems.in_time, [lp2],
+                 'Got problem in the in_time method'
+  end
+
   test 'to string' do
     lp = create(:long_problem)
     assert_equal lp.to_s, "#{lp.contest} no. #{lp.problem_no}",

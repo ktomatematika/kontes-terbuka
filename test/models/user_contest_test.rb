@@ -88,36 +88,4 @@ class UserContestTest < ActiveSupport::TestCase
     assert_equal pucs.find(silver.id).contest_points, 5
     assert_equal pucs.find(gold.id).contest_points, 7
   end
-
-  test 'create short submissions' do
-    uc = create(:user_contest)
-    3.times { create(:short_problem, contest: uc.contest) }
-    sp = uc.contest.short_problems.order(:id)
-
-    h = { sp.first.id => '7', sp.second.id => '', sp.third.id => '10' }
-    uc.create_short_submissions h
-
-    ss = uc.contest.short_problems.order(:id).map do |s|
-      s.short_submissions.take
-    end
-    assert_equal ss.first.answer, '7'
-    assert_nil ss.second
-    assert_equal ss.third.answer, '10'
-  end
-
-  test 'create feedback answers' do
-    uc = create(:user_contest)
-    3.times { create(:feedback_question, contest: uc.contest) }
-    fq = uc.contest.feedback_questions.order(:id)
-
-    h = { fq.first.id => 'asdf', fq.second.id => '', fq.third.id => '3' }
-    uc.create_feedback_answers h
-
-    fa = uc.contest.feedback_questions.order(:id).map do |f|
-      f.feedback_answers.take
-    end
-    assert_equal fa.first.answer, 'asdf'
-    assert_nil fa.second
-    assert_equal fa.third.answer, '3'
-  end
 end

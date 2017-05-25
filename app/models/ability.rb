@@ -25,8 +25,10 @@ class Ability
     can %i[download_problem_pdf give_feedback feedback_submit], Contest,
         id: user.user_contests.pluck(:contest_id)
     can %i[create destroy download], LongSubmission,
-        user_contest_id: user.user_contests.pluck(:id)
-    can :create_on_contest, ShortSubmission
+        user_contest_id: user.user_contests.pluck(:id),
+        long_problem_id: LongProblem.in_time.pluck(:id)
+    can :create_on_contest, ShortSubmission,
+        short_problem_id: ShortProblem.in_time.pluck(:id)
     can %i[new create], UserContest, user: user
     can %i[new_on_contest create_on_contest], FeedbackAnswer
   end

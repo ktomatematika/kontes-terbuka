@@ -10,6 +10,8 @@
 #  answer     :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  start_time :datetime
+#  end_time   :datetime
 #
 # Indexes
 #
@@ -32,6 +34,19 @@ class ShortProblem < ActiveRecord::Base
 
   validates :problem_no, numericality: { greater_than_or_equal_to: 1 }
 
+  validate :time_between_contest_times
+  def time_between_contest_times
+    if !start_time.nil? && start_time < contest.start_time
+      errors.add :start_time, 'must be >= contest start time'
+    end
+    if !end_time.nil? && end_time > contest.end_time
+      errors.add :end_time, 'must be <= contest end time'
+    end
+    if !start_time.nil? && !end_time.nil? && start_time >= end_time
+      errors.add :start_time, 'must be < end time'
+    end
+  end
+
   # Methods
   def most_answer
     ShortProblem.find_by_sql ['SELECT answer, COUNT(*) AS count ' \
@@ -43,6 +58,11 @@ class ShortProblem < ActiveRecord::Base
                               'GROUP BY answer ORDER BY COUNT(*) DESC LIMIT 1)',
                               id, id]
   end
+
+  scope(:in_time, lambda {
+    where('start_time IS NULL OR start_time >= ?', Time.zone.now)
+    .where('end_time IS NULL OR end_time <= ?', Time.zone.now)
+  })
 
   def correct_answers
     short_submissions.where(answer: answer).count
