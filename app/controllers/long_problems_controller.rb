@@ -26,6 +26,18 @@ class LongProblemsController < ApplicationController
        cannot?(:update, @long_problem)
       raise CanCan::AccessDenied.new('Cannot update', :update, @long_problem)
     end
+    if params[:long_problem][:start_time_is_nil] == 1
+      @long_problem.update(start_time: nil)
+    else
+      @long_problem.update(start_time: params[:long_problem][:start_time])
+    end
+
+    if params[:long_problem][:end_time_is_nil] == 1
+      @long_problem.update(end_time: nil)
+    else
+      @long_problem.update(end_time: params[:long_problem][:end_time])
+    end
+
     if @long_problem.update(long_problem_params)
       redirect_to admin_contest_path(@contest)
     else

@@ -17,5 +17,21 @@
       .col-sm-4
         = f.text_field :forum_link, class: 'form-control', autocomplete: 'off'
     .form-group
+      = f.label :start_time_is_nil, class: 'col-sm-2'
+      .col-sm-4
+        = f.check_box :start_time_is_nil
+    .form-group
+      = f.label :start_time, class: 'col-sm-2'
+      .col-sm-4
+        = f.datetime_local_field :start_time, class: 'form-control', autocomplete: 'off'
+    .form-group
+      = f.label :end_time_is_nil, class: 'col-sm-2'
+      .col-sm-4
+        = f.check_box :end_time_is_nil
+    .form-group
+      = f.label :end_time, class: 'col-sm-2'
+      .col-sm-4
+        = f.datetime_local_field :end_time, class: 'form-control', autocomplete: 'off'
+    .form-group
       .col-sm-offset-2.col-sm-4
         = f.submit 'Edit soal', class: 'btn'

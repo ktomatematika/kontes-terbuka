@@ -2,17 +2,12 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 9.6.1
--- Dumped by pg_dump version 9.6.1
-
 SET statement_timeout = 0;
 SET lock_timeout = 0;
-SET idle_in_transaction_session_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
-SET row_security = off;
 
 --
 -- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: -
@@ -49,7 +44,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: colors; Type: TABLE; Schema: public; Owner: -
+-- Name: colors; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE colors (
@@ -80,7 +75,7 @@ ALTER SEQUENCE colors_id_seq OWNED BY colors.id;
 
 
 --
--- Name: contests; Type: TABLE; Schema: public; Owner: -
+-- Name: contests; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE contests (
@@ -134,7 +129,7 @@ ALTER SEQUENCE contests_id_seq OWNED BY contests.id;
 
 
 --
--- Name: delayed_jobs; Type: TABLE; Schema: public; Owner: -
+-- Name: delayed_jobs; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE delayed_jobs (
@@ -173,7 +168,7 @@ ALTER SEQUENCE delayed_jobs_id_seq OWNED BY delayed_jobs.id;
 
 
 --
--- Name: feedback_answers; Type: TABLE; Schema: public; Owner: -
+-- Name: feedback_answers; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE feedback_answers (
@@ -206,7 +201,7 @@ ALTER SEQUENCE feedback_answers_id_seq OWNED BY feedback_answers.id;
 
 
 --
--- Name: feedback_questions; Type: TABLE; Schema: public; Owner: -
+-- Name: feedback_questions; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE feedback_questions (
@@ -238,7 +233,7 @@ ALTER SEQUENCE feedback_questions_id_seq OWNED BY feedback_questions.id;
 
 
 --
--- Name: long_problems; Type: TABLE; Schema: public; Owner: -
+-- Name: long_problems; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE long_problems (
@@ -253,7 +248,9 @@ CREATE TABLE long_problems (
     report_file_size integer,
     report_updated_at timestamp without time zone,
     start_mark_final boolean DEFAULT false,
-    forum_link character varying
+    forum_link character varying,
+    start_time timestamp without time zone,
+    end_time timestamp without time zone
 );
 
 
@@ -277,7 +274,7 @@ ALTER SEQUENCE long_problems_id_seq OWNED BY long_problems.id;
 
 
 --
--- Name: long_submissions; Type: TABLE; Schema: public; Owner: -
+-- Name: long_submissions; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE long_submissions (
@@ -311,7 +308,7 @@ ALTER SEQUENCE long_submissions_id_seq OWNED BY long_submissions.id;
 
 
 --
--- Name: market_item_pictures; Type: TABLE; Schema: public; Owner: -
+-- Name: market_item_pictures; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE market_item_pictures (
@@ -346,7 +343,7 @@ ALTER SEQUENCE market_item_pictures_id_seq OWNED BY market_item_pictures.id;
 
 
 --
--- Name: market_items; Type: TABLE; Schema: public; Owner: -
+-- Name: market_items; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE market_items (
@@ -356,7 +353,11 @@ CREATE TABLE market_items (
     price integer NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    quantity integer
+    featured_picture_id integer NOT NULL,
+    enabled boolean DEFAULT true NOT NULL,
+    additional_price integer DEFAULT 0 NOT NULL,
+    weight integer DEFAULT 0 NOT NULL,
+    free_shipping boolean DEFAULT false NOT NULL
 );
 
 
@@ -380,19 +381,19 @@ ALTER SEQUENCE market_items_id_seq OWNED BY market_items.id;
 
 
 --
--- Name: market_orders; Type: TABLE; Schema: public; Owner: -
+-- Name: market_orders; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE market_orders (
     id integer NOT NULL,
-    point_transaction_id integer,
-    market_item_id integer,
-    quantity integer,
+    point_transaction_id integer NOT NULL,
+    market_item_id integer NOT NULL,
     email character varying,
     phone character varying,
     address character varying,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    quantity integer DEFAULT 1 NOT NULL
 );
 
 
@@ -416,7 +417,7 @@ ALTER SEQUENCE market_orders_id_seq OWNED BY market_orders.id;
 
 
 --
--- Name: migration_validators; Type: TABLE; Schema: public; Owner: -
+-- Name: migration_validators; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE migration_validators (
@@ -448,7 +449,7 @@ ALTER SEQUENCE migration_validators_id_seq OWNED BY migration_validators.id;
 
 
 --
--- Name: notifications; Type: TABLE; Schema: public; Owner: -
+-- Name: notifications; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE notifications (
@@ -482,7 +483,7 @@ ALTER SEQUENCE notifications_id_seq OWNED BY notifications.id;
 
 
 --
--- Name: point_transactions; Type: TABLE; Schema: public; Owner: -
+-- Name: point_transactions; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE point_transactions (
@@ -515,7 +516,7 @@ ALTER SEQUENCE point_transactions_id_seq OWNED BY point_transactions.id;
 
 
 --
--- Name: provinces; Type: TABLE; Schema: public; Owner: -
+-- Name: provinces; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE provinces (
@@ -547,7 +548,7 @@ ALTER SEQUENCE provinces_id_seq OWNED BY provinces.id;
 
 
 --
--- Name: referrers; Type: TABLE; Schema: public; Owner: -
+-- Name: referrers; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE referrers (
@@ -578,7 +579,7 @@ ALTER SEQUENCE referrers_id_seq OWNED BY referrers.id;
 
 
 --
--- Name: roles; Type: TABLE; Schema: public; Owner: -
+-- Name: roles; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE roles (
@@ -611,7 +612,7 @@ ALTER SEQUENCE roles_id_seq OWNED BY roles.id;
 
 
 --
--- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -
+-- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE schema_migrations (
@@ -620,7 +621,7 @@ CREATE TABLE schema_migrations (
 
 
 --
--- Name: short_problems; Type: TABLE; Schema: public; Owner: -
+-- Name: short_problems; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE short_problems (
@@ -630,7 +631,9 @@ CREATE TABLE short_problems (
     statement character varying DEFAULT ''::character varying NOT NULL,
     answer character varying NOT NULL,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    start_time timestamp without time zone,
+    end_time timestamp without time zone
 );
 
 
@@ -654,7 +657,7 @@ ALTER SEQUENCE short_problems_id_seq OWNED BY short_problems.id;
 
 
 --
--- Name: short_submissions; Type: TABLE; Schema: public; Owner: -
+-- Name: short_submissions; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE short_submissions (
@@ -687,7 +690,7 @@ ALTER SEQUENCE short_submissions_id_seq OWNED BY short_submissions.id;
 
 
 --
--- Name: statuses; Type: TABLE; Schema: public; Owner: -
+-- Name: statuses; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE statuses (
@@ -719,7 +722,7 @@ ALTER SEQUENCE statuses_id_seq OWNED BY statuses.id;
 
 
 --
--- Name: submission_pages; Type: TABLE; Schema: public; Owner: -
+-- Name: submission_pages; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE submission_pages (
@@ -755,7 +758,7 @@ ALTER SEQUENCE submission_pages_id_seq OWNED BY submission_pages.id;
 
 
 --
--- Name: temporary_markings; Type: TABLE; Schema: public; Owner: -
+-- Name: temporary_markings; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE temporary_markings (
@@ -789,7 +792,7 @@ ALTER SEQUENCE temporary_markings_id_seq OWNED BY temporary_markings.id;
 
 
 --
--- Name: user_contests; Type: TABLE; Schema: public; Owner: -
+-- Name: user_contests; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE user_contests (
@@ -822,7 +825,7 @@ ALTER SEQUENCE user_contests_id_seq OWNED BY user_contests.id;
 
 
 --
--- Name: user_notifications; Type: TABLE; Schema: public; Owner: -
+-- Name: user_notifications; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE user_notifications (
@@ -854,7 +857,7 @@ ALTER SEQUENCE user_notifications_id_seq OWNED BY user_notifications.id;
 
 
 --
--- Name: users; Type: TABLE; Schema: public; Owner: -
+-- Name: users; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE users (
@@ -900,7 +903,7 @@ ALTER SEQUENCE users_id_seq OWNED BY users.id;
 
 
 --
--- Name: users_roles; Type: TABLE; Schema: public; Owner: -
+-- Name: users_roles; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE users_roles (
@@ -910,7 +913,7 @@ CREATE TABLE users_roles (
 
 
 --
--- Name: version_associations; Type: TABLE; Schema: public; Owner: -
+-- Name: version_associations; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE version_associations (
@@ -941,7 +944,7 @@ ALTER SEQUENCE version_associations_id_seq OWNED BY version_associations.id;
 
 
 --
--- Name: versions; Type: TABLE; Schema: public; Owner: -
+-- Name: versions; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE versions (
@@ -977,189 +980,189 @@ ALTER SEQUENCE versions_id_seq OWNED BY versions.id;
 
 
 --
--- Name: colors id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY colors ALTER COLUMN id SET DEFAULT nextval('colors_id_seq'::regclass);
 
 
 --
--- Name: contests id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY contests ALTER COLUMN id SET DEFAULT nextval('contests_id_seq'::regclass);
 
 
 --
--- Name: delayed_jobs id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY delayed_jobs ALTER COLUMN id SET DEFAULT nextval('delayed_jobs_id_seq'::regclass);
 
 
 --
--- Name: feedback_answers id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY feedback_answers ALTER COLUMN id SET DEFAULT nextval('feedback_answers_id_seq'::regclass);
 
 
 --
--- Name: feedback_questions id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY feedback_questions ALTER COLUMN id SET DEFAULT nextval('feedback_questions_id_seq'::regclass);
 
 
 --
--- Name: long_problems id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY long_problems ALTER COLUMN id SET DEFAULT nextval('long_problems_id_seq'::regclass);
 
 
 --
--- Name: long_submissions id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY long_submissions ALTER COLUMN id SET DEFAULT nextval('long_submissions_id_seq'::regclass);
 
 
 --
--- Name: market_item_pictures id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY market_item_pictures ALTER COLUMN id SET DEFAULT nextval('market_item_pictures_id_seq'::regclass);
 
 
 --
--- Name: market_items id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY market_items ALTER COLUMN id SET DEFAULT nextval('market_items_id_seq'::regclass);
 
 
 --
--- Name: market_orders id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY market_orders ALTER COLUMN id SET DEFAULT nextval('market_orders_id_seq'::regclass);
 
 
 --
--- Name: migration_validators id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY migration_validators ALTER COLUMN id SET DEFAULT nextval('migration_validators_id_seq'::regclass);
 
 
 --
--- Name: notifications id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY notifications ALTER COLUMN id SET DEFAULT nextval('notifications_id_seq'::regclass);
 
 
 --
--- Name: point_transactions id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY point_transactions ALTER COLUMN id SET DEFAULT nextval('point_transactions_id_seq'::regclass);
 
 
 --
--- Name: provinces id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY provinces ALTER COLUMN id SET DEFAULT nextval('provinces_id_seq'::regclass);
 
 
 --
--- Name: referrers id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY referrers ALTER COLUMN id SET DEFAULT nextval('referrers_id_seq'::regclass);
 
 
 --
--- Name: roles id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY roles ALTER COLUMN id SET DEFAULT nextval('roles_id_seq'::regclass);
 
 
 --
--- Name: short_problems id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY short_problems ALTER COLUMN id SET DEFAULT nextval('short_problems_id_seq'::regclass);
 
 
 --
--- Name: short_submissions id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY short_submissions ALTER COLUMN id SET DEFAULT nextval('short_submissions_id_seq'::regclass);
 
 
 --
--- Name: statuses id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY statuses ALTER COLUMN id SET DEFAULT nextval('statuses_id_seq'::regclass);
 
 
 --
--- Name: submission_pages id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY submission_pages ALTER COLUMN id SET DEFAULT nextval('submission_pages_id_seq'::regclass);
 
 
 --
--- Name: temporary_markings id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY temporary_markings ALTER COLUMN id SET DEFAULT nextval('temporary_markings_id_seq'::regclass);
 
 
 --
--- Name: user_contests id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY user_contests ALTER COLUMN id SET DEFAULT nextval('user_contests_id_seq'::regclass);
 
 
 --
--- Name: user_notifications id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY user_notifications ALTER COLUMN id SET DEFAULT nextval('user_notifications_id_seq'::regclass);
 
 
 --
--- Name: users id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regclass);
 
 
 --
--- Name: version_associations id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY version_associations ALTER COLUMN id SET DEFAULT nextval('version_associations_id_seq'::regclass);
 
 
 --
--- Name: versions id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY versions ALTER COLUMN id SET DEFAULT nextval('versions_id_seq'::regclass);
 
 
 --
--- Name: colors colors_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: colors_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY colors
@@ -1167,7 +1170,7 @@ ALTER TABLE ONLY colors
 
 
 --
--- Name: contests contests_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: contests_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY contests
@@ -1175,7 +1178,7 @@ ALTER TABLE ONLY contests
 
 
 --
--- Name: delayed_jobs delayed_jobs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: delayed_jobs_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY delayed_jobs
@@ -1183,7 +1186,7 @@ ALTER TABLE ONLY delayed_jobs
 
 
 --
--- Name: feedback_answers feedback_answers_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: feedback_answers_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY feedback_answers
@@ -1191,7 +1194,7 @@ ALTER TABLE ONLY feedback_answers
 
 
 --
--- Name: feedback_questions feedback_questions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: feedback_questions_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY feedback_questions
@@ -1199,7 +1202,7 @@ ALTER TABLE ONLY feedback_questions
 
 
 --
--- Name: long_problems long_problems_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: long_problems_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY long_problems
@@ -1207,7 +1210,7 @@ ALTER TABLE ONLY long_problems
 
 
 --
--- Name: long_submissions long_submissions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: long_submissions_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY long_submissions
@@ -1215,7 +1218,7 @@ ALTER TABLE ONLY long_submissions
 
 
 --
--- Name: market_item_pictures market_item_pictures_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: market_item_pictures_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY market_item_pictures
@@ -1223,7 +1226,7 @@ ALTER TABLE ONLY market_item_pictures
 
 
 --
--- Name: market_items market_items_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: market_items_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY market_items
@@ -1231,7 +1234,7 @@ ALTER TABLE ONLY market_items
 
 
 --
--- Name: market_orders market_orders_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: market_orders_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY market_orders
@@ -1239,7 +1242,7 @@ ALTER TABLE ONLY market_orders
 
 
 --
--- Name: migration_validators migration_validators_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: migration_validators_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY migration_validators
@@ -1247,7 +1250,7 @@ ALTER TABLE ONLY migration_validators
 
 
 --
--- Name: notifications notifications_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: notifications_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY notifications
@@ -1255,7 +1258,7 @@ ALTER TABLE ONLY notifications
 
 
 --
--- Name: point_transactions point_transactions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: point_transactions_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY point_transactions
@@ -1263,7 +1266,7 @@ ALTER TABLE ONLY point_transactions
 
 
 --
--- Name: provinces provinces_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: provinces_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY provinces
@@ -1271,7 +1274,7 @@ ALTER TABLE ONLY provinces
 
 
 --
--- Name: referrers referrers_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: referrers_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY referrers
@@ -1279,7 +1282,7 @@ ALTER TABLE ONLY referrers
 
 
 --
--- Name: roles roles_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: roles_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY roles
@@ -1287,7 +1290,7 @@ ALTER TABLE ONLY roles
 
 
 --
--- Name: short_problems short_problems_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: short_problems_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY short_problems
@@ -1295,7 +1298,7 @@ ALTER TABLE ONLY short_problems
 
 
 --
--- Name: short_submissions short_submissions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: short_submissions_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY short_submissions
@@ -1303,7 +1306,7 @@ ALTER TABLE ONLY short_submissions
 
 
 --
--- Name: statuses statuses_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: statuses_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY statuses
@@ -1311,7 +1314,7 @@ ALTER TABLE ONLY statuses
 
 
 --
--- Name: submission_pages submission_pages_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: submission_pages_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY submission_pages
@@ -1319,7 +1322,7 @@ ALTER TABLE ONLY submission_pages
 
 
 --
--- Name: temporary_markings temporary_markings_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: temporary_markings_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY temporary_markings
@@ -1327,7 +1330,7 @@ ALTER TABLE ONLY temporary_markings
 
 
 --
--- Name: user_contests user_contests_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: user_contests_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY user_contests
@@ -1335,7 +1338,7 @@ ALTER TABLE ONLY user_contests
 
 
 --
--- Name: user_notifications user_notifications_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: user_notifications_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY user_notifications
@@ -1343,7 +1346,7 @@ ALTER TABLE ONLY user_notifications
 
 
 --
--- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY users
@@ -1351,7 +1354,7 @@ ALTER TABLE ONLY users
 
 
 --
--- Name: version_associations version_associations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: version_associations_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY version_associations
@@ -1359,7 +1362,7 @@ ALTER TABLE ONLY version_associations
 
 
 --
--- Name: versions versions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: versions_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY versions
@@ -1367,301 +1370,308 @@ ALTER TABLE ONLY versions
 
 
 --
--- Name: delayed_jobs_priority; Type: INDEX; Schema: public; Owner: -
+-- Name: delayed_jobs_priority; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX delayed_jobs_priority ON delayed_jobs USING btree (priority, run_at);
 
 
 --
--- Name: feedback_question_and_user_contest_unique_pair; Type: INDEX; Schema: public; Owner: -
+-- Name: feedback_question_and_user_contest_unique_pair; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE UNIQUE INDEX feedback_question_and_user_contest_unique_pair ON feedback_answers USING btree (feedback_question_id, user_contest_id);
 
 
 --
--- Name: index_colors_on_name; Type: INDEX; Schema: public; Owner: -
+-- Name: index_colors_on_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE UNIQUE INDEX index_colors_on_name ON colors USING btree (name);
 
 
 --
--- Name: index_contests_on_end_time; Type: INDEX; Schema: public; Owner: -
+-- Name: index_contests_on_end_time; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX index_contests_on_end_time ON contests USING btree (end_time);
 
 
 --
--- Name: index_contests_on_feedback_time; Type: INDEX; Schema: public; Owner: -
+-- Name: index_contests_on_feedback_time; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX index_contests_on_feedback_time ON contests USING btree (feedback_time);
 
 
 --
--- Name: index_contests_on_result_time; Type: INDEX; Schema: public; Owner: -
+-- Name: index_contests_on_result_time; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX index_contests_on_result_time ON contests USING btree (result_time);
 
 
 --
--- Name: index_contests_on_start_time; Type: INDEX; Schema: public; Owner: -
+-- Name: index_contests_on_start_time; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX index_contests_on_start_time ON contests USING btree (start_time);
 
 
 --
--- Name: index_feedback_questions_on_contest_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_feedback_questions_on_contest_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX index_feedback_questions_on_contest_id ON feedback_questions USING btree (contest_id);
 
 
 --
--- Name: index_long_problems_on_contest_id_and_problem_no; Type: INDEX; Schema: public; Owner: -
+-- Name: index_long_problems_on_contest_id_and_problem_no; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE UNIQUE INDEX index_long_problems_on_contest_id_and_problem_no ON long_problems USING btree (contest_id, problem_no);
 
 
 --
--- Name: index_long_submissions_on_long_problem_id_and_user_contest_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_long_submissions_on_long_problem_id_and_user_contest_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE UNIQUE INDEX index_long_submissions_on_long_problem_id_and_user_contest_id ON long_submissions USING btree (long_problem_id, user_contest_id);
 
 
 --
--- Name: index_market_item_pictures_on_market_item_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_market_item_pictures_on_market_item_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX index_market_item_pictures_on_market_item_id ON market_item_pictures USING btree (market_item_id);
 
 
 --
--- Name: index_market_orders_on_market_item_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_market_items_on_featured_picture_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_market_items_on_featured_picture_id ON market_items USING btree (featured_picture_id);
+
+
+--
+-- Name: index_market_orders_on_market_item_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX index_market_orders_on_market_item_id ON market_orders USING btree (market_item_id);
 
 
 --
--- Name: index_market_orders_on_point_transaction_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_market_orders_on_point_transaction_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX index_market_orders_on_point_transaction_id ON market_orders USING btree (point_transaction_id);
 
 
 --
--- Name: index_point_transactions_on_user_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_point_transactions_on_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX index_point_transactions_on_user_id ON point_transactions USING btree (user_id);
 
 
 --
--- Name: index_provinces_on_name; Type: INDEX; Schema: public; Owner: -
+-- Name: index_provinces_on_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE UNIQUE INDEX index_provinces_on_name ON provinces USING btree (name);
 
 
 --
--- Name: index_referrers_on_name; Type: INDEX; Schema: public; Owner: -
+-- Name: index_referrers_on_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE UNIQUE INDEX index_referrers_on_name ON referrers USING btree (name);
 
 
 --
--- Name: index_roles_on_name; Type: INDEX; Schema: public; Owner: -
+-- Name: index_roles_on_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX index_roles_on_name ON roles USING btree (name);
 
 
 --
--- Name: index_roles_on_name_and_resource_type_and_resource_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_roles_on_name_and_resource_type_and_resource_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX index_roles_on_name_and_resource_type_and_resource_id ON roles USING btree (name, resource_type, resource_id);
 
 
 --
--- Name: index_roles_on_resource_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_roles_on_resource_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX index_roles_on_resource_id ON roles USING btree (resource_id);
 
 
 --
--- Name: index_short_problems_on_contest_id_and_problem_no; Type: INDEX; Schema: public; Owner: -
+-- Name: index_short_problems_on_contest_id_and_problem_no; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE UNIQUE INDEX index_short_problems_on_contest_id_and_problem_no ON short_problems USING btree (contest_id, problem_no);
 
 
 --
--- Name: index_short_submissions_on_short_problem_id_and_user_contest_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_short_submissions_on_short_problem_id_and_user_contest_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE UNIQUE INDEX index_short_submissions_on_short_problem_id_and_user_contest_id ON short_submissions USING btree (short_problem_id, user_contest_id);
 
 
 --
--- Name: index_statuses_on_name; Type: INDEX; Schema: public; Owner: -
+-- Name: index_statuses_on_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE UNIQUE INDEX index_statuses_on_name ON statuses USING btree (name);
 
 
 --
--- Name: index_submission_pages_on_page_number_and_long_submission_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_submission_pages_on_page_number_and_long_submission_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE UNIQUE INDEX index_submission_pages_on_page_number_and_long_submission_id ON submission_pages USING btree (page_number, long_submission_id);
 
 
 --
--- Name: index_temporary_markings_on_user_id_and_long_submission_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_temporary_markings_on_user_id_and_long_submission_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE UNIQUE INDEX index_temporary_markings_on_user_id_and_long_submission_id ON temporary_markings USING btree (user_id, long_submission_id);
 
 
 --
--- Name: index_user_contests_on_user_id_and_contest_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_user_contests_on_user_id_and_contest_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE UNIQUE INDEX index_user_contests_on_user_id_and_contest_id ON user_contests USING btree (user_id, contest_id);
 
 
 --
--- Name: index_user_notifications_on_user_id_and_notification_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_user_notifications_on_user_id_and_notification_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE UNIQUE INDEX index_user_notifications_on_user_id_and_notification_id ON user_notifications USING btree (user_id, notification_id);
 
 
 --
--- Name: index_users_on_auth_token; Type: INDEX; Schema: public; Owner: -
+-- Name: index_users_on_auth_token; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE UNIQUE INDEX index_users_on_auth_token ON users USING btree (auth_token);
 
 
 --
--- Name: index_users_on_color_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_users_on_color_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX index_users_on_color_id ON users USING btree (color_id);
 
 
 --
--- Name: index_users_on_email; Type: INDEX; Schema: public; Owner: -
+-- Name: index_users_on_email; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE UNIQUE INDEX index_users_on_email ON users USING btree (email);
 
 
 --
--- Name: index_users_on_province_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_users_on_province_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX index_users_on_province_id ON users USING btree (province_id);
 
 
 --
--- Name: index_users_on_referrer_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_users_on_referrer_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX index_users_on_referrer_id ON users USING btree (referrer_id);
 
 
 --
--- Name: index_users_on_status_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_users_on_status_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX index_users_on_status_id ON users USING btree (status_id);
 
 
 --
--- Name: index_users_on_username; Type: INDEX; Schema: public; Owner: -
+-- Name: index_users_on_username; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE UNIQUE INDEX index_users_on_username ON users USING btree (username);
 
 
 --
--- Name: index_users_on_username_gin; Type: INDEX; Schema: public; Owner: -
+-- Name: index_users_on_username_gin; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX index_users_on_username_gin ON users USING gin (username gin_trgm_ops);
 
 
 --
--- Name: index_users_on_verification; Type: INDEX; Schema: public; Owner: -
+-- Name: index_users_on_verification; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE UNIQUE INDEX index_users_on_verification ON users USING btree (verification);
 
 
 --
--- Name: index_users_roles_on_user_id_and_role_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_users_roles_on_user_id_and_role_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX index_users_roles_on_user_id_and_role_id ON users_roles USING btree (user_id, role_id);
 
 
 --
--- Name: index_version_associations_on_foreign_key; Type: INDEX; Schema: public; Owner: -
+-- Name: index_version_associations_on_foreign_key; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX index_version_associations_on_foreign_key ON version_associations USING btree (foreign_key_name, foreign_key_id);
 
 
 --
--- Name: index_version_associations_on_version_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_version_associations_on_version_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX index_version_associations_on_version_id ON version_associations USING btree (version_id);
 
 
 --
--- Name: index_versions_on_item_type_and_item_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_versions_on_item_type_and_item_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX index_versions_on_item_type_and_item_id ON versions USING btree (item_type, item_id);
 
 
 --
--- Name: index_versions_on_transaction_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_versions_on_transaction_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX index_versions_on_transaction_id ON versions USING btree (transaction_id);
 
 
 --
--- Name: unique_idx_on_migration_validators; Type: INDEX; Schema: public; Owner: -
+-- Name: unique_idx_on_migration_validators; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX unique_idx_on_migration_validators ON migration_validators USING btree (table_name, column_name, validation_type);
 
 
 --
--- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: -
+-- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (version);
 
 
 --
--- Name: feedback_answers fk_rails_0615442e63; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_rails_0615442e63; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY feedback_answers
@@ -1669,7 +1679,15 @@ ALTER TABLE ONLY feedback_answers
 
 
 --
--- Name: long_problems fk_rails_116a6ecec7; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_rails_0779c5bbd6; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY market_orders
+    ADD CONSTRAINT fk_rails_0779c5bbd6 FOREIGN KEY (point_transaction_id) REFERENCES point_transactions(id);
+
+
+--
+-- Name: fk_rails_116a6ecec7; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY long_problems
@@ -1677,7 +1695,7 @@ ALTER TABLE ONLY long_problems
 
 
 --
--- Name: short_submissions fk_rails_117485e784; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_rails_117485e784; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY short_submissions
@@ -1685,7 +1703,7 @@ ALTER TABLE ONLY short_submissions
 
 
 --
--- Name: short_submissions fk_rails_1467c5d84d; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_rails_1467c5d84d; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY short_submissions
@@ -1693,7 +1711,7 @@ ALTER TABLE ONLY short_submissions
 
 
 --
--- Name: temporary_markings fk_rails_349a6ecb7e; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_rails_349a6ecb7e; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY temporary_markings
@@ -1701,7 +1719,7 @@ ALTER TABLE ONLY temporary_markings
 
 
 --
--- Name: feedback_answers fk_rails_374404a088; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_rails_374404a088; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY feedback_answers
@@ -1709,7 +1727,7 @@ ALTER TABLE ONLY feedback_answers
 
 
 --
--- Name: feedback_questions fk_rails_38d13509cf; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_rails_38d13509cf; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY feedback_questions
@@ -1717,7 +1735,7 @@ ALTER TABLE ONLY feedback_questions
 
 
 --
--- Name: user_contests fk_rails_418fd0bbd0; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_rails_418fd0bbd0; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY user_contests
@@ -1725,7 +1743,7 @@ ALTER TABLE ONLY user_contests
 
 
 --
--- Name: users fk_rails_560da4bd54; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_rails_560da4bd54; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY users
@@ -1733,7 +1751,15 @@ ALTER TABLE ONLY users
 
 
 --
--- Name: short_problems fk_rails_60f1de2193; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_rails_60024a9d60; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY market_items
+    ADD CONSTRAINT fk_rails_60024a9d60 FOREIGN KEY (featured_picture_id) REFERENCES market_item_pictures(id);
+
+
+--
+-- Name: fk_rails_60f1de2193; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY short_problems
@@ -1741,7 +1767,7 @@ ALTER TABLE ONLY short_problems
 
 
 --
--- Name: submission_pages fk_rails_62bec7c828; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_rails_62bec7c828; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY submission_pages
@@ -1749,7 +1775,7 @@ ALTER TABLE ONLY submission_pages
 
 
 --
--- Name: market_item_pictures fk_rails_7d71f7cc8f; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_rails_7d71f7cc8f; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY market_item_pictures
@@ -1757,7 +1783,7 @@ ALTER TABLE ONLY market_item_pictures
 
 
 --
--- Name: temporary_markings fk_rails_7dcab47693; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_rails_7dcab47693; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY temporary_markings
@@ -1765,7 +1791,7 @@ ALTER TABLE ONLY temporary_markings
 
 
 --
--- Name: users fk_rails_87f75b7957; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_rails_87f75b7957; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY users
@@ -1773,7 +1799,7 @@ ALTER TABLE ONLY users
 
 
 --
--- Name: long_submissions fk_rails_ab0e9f9d12; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_rails_ab0e9f9d12; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY long_submissions
@@ -1781,7 +1807,7 @@ ALTER TABLE ONLY long_submissions
 
 
 --
--- Name: user_notifications fk_rails_cdbff2ee9e; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_rails_cdbff2ee9e; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY user_notifications
@@ -1789,7 +1815,7 @@ ALTER TABLE ONLY user_notifications
 
 
 --
--- Name: users fk_rails_ce4a327a04; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_rails_ce4a327a04; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY users
@@ -1797,7 +1823,15 @@ ALTER TABLE ONLY users
 
 
 --
--- Name: user_notifications fk_rails_d238d8ef07; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_rails_ce944db598; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY market_orders
+    ADD CONSTRAINT fk_rails_ce944db598 FOREIGN KEY (market_item_id) REFERENCES market_items(id);
+
+
+--
+-- Name: fk_rails_d238d8ef07; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY user_notifications
@@ -1805,7 +1839,7 @@ ALTER TABLE ONLY user_notifications
 
 
 --
--- Name: user_contests fk_rails_ee078c9177; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_rails_ee078c9177; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY user_contests
@@ -1813,7 +1847,7 @@ ALTER TABLE ONLY user_contests
 
 
 --
--- Name: long_submissions fk_rails_f4fee8fddd; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_rails_f4fee8fddd; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY long_submissions
@@ -1821,7 +1855,7 @@ ALTER TABLE ONLY long_submissions
 
 
 --
--- Name: point_transactions fk_rails_fc956f9f03; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_rails_fc956f9f03; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY point_transactions
@@ -1832,7 +1866,7 @@ ALTER TABLE ONLY point_transactions
 -- PostgreSQL database dump complete
 --
 
-SET search_path TO "$user", public;
+SET search_path TO "$user",public;
 
 INSERT INTO schema_migrations (version) VALUES ('20160215163631');
 
@@ -2036,13 +2070,23 @@ INSERT INTO schema_migrations (version) VALUES ('20161227160540');
 
 INSERT INTO schema_migrations (version) VALUES ('20161227164831');
 
+INSERT INTO schema_migrations (version) VALUES ('20161227192738');
+
 INSERT INTO schema_migrations (version) VALUES ('20161231035149');
 
 INSERT INTO schema_migrations (version) VALUES ('20161231043448');
+
+INSERT INTO schema_migrations (version) VALUES ('20170101124013');
+
+INSERT INTO schema_migrations (version) VALUES ('20170101124733');
+
+INSERT INTO schema_migrations (version) VALUES ('20170101171002');
 
 INSERT INTO schema_migrations (version) VALUES ('20170321042305');
 
 INSERT INTO schema_migrations (version) VALUES ('20170321044226');
 
 INSERT INTO schema_migrations (version) VALUES ('20170321044422');
+
+INSERT INTO schema_migrations (version) VALUES ('20170525065802');
 

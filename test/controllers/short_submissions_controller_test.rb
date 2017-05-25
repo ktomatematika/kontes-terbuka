@@ -9,7 +9,16 @@ class ShortSubmissionsControllerTest < ActionController::TestCase
   end
 
   test 'create_on_contest' do
-    test_abilities ShortSubmission, :create_on_contest, [], [nil]
+    nil_time_sp = create(:short_problem, start_time: nil, end_time: nil)
+    current_time_sp = create(:short_problem,
+                             start_time: Time.zone.now - 5.minutes,
+                             end_time: Time.zone.now + 5.minutes)
+    past_time_sp = create(:short_problem,
+                          end_time: Time.zone.now - 10.minutes)
+    test_abilities nil_time_sp, :create_on_contest, [], [nil]
+    test_abilities current_time_sp, :create_on_contest, [], [nil]
+    test_abilities past_time_sp, :create_on_contest, [nil], []
+
     create_list(:short_problem, 5, contest: @c).each do |sp|
       create(:short_submission, short_problem: sp, user_contest: @uc)
     end

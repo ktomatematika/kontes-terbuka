@@ -12,6 +12,18 @@ class ShortProblemsController < ApplicationController
   def edit; end
 
   def update
+    if params[:short_problem][:start_time_is_nil] == 1
+      @short_problem.update(start_time: nil)
+    else
+      @short_problem.update(start_time: params[:short_problem][:start_time])
+    end
+
+    if params[:short_problem][:end_time_is_nil] == 1
+      @short_problem.update(end_time: nil)
+    else
+      @short_problem.update(end_time: params[:short_problem][:end_time])
+    end
+
     if @short_problem.update(short_problem_params)
       redirect_to admin_contest_path(@contest), notice: 'Short Problem terubah!'
     else

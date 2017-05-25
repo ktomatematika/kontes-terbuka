@@ -56,6 +56,8 @@ class LongProblem < ActiveRecord::Base
 
   validates :problem_no, numericality: { greater_than_or_equal_to: 1 }
 
+  # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity, Style/GuardClause
   validate :time_between_contest_times
   def time_between_contest_times
     if !start_time.nil? && start_time < contest.start_time
@@ -68,6 +70,8 @@ class LongProblem < ActiveRecord::Base
       errors.add :start_time, 'must be < end time'
     end
   end
+  # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/PerceivedComplexity, Style/GuardClause
 
   # Display methods
   def to_s
@@ -104,9 +108,17 @@ class LongProblem < ActiveRecord::Base
   end
 
   scope(:in_time, lambda {
-    where('start_time IS NULL OR start_time >= ?', Time.zone.now)
-    .where('end_time IS NULL OR end_time <= ?', Time.zone.now)
+    where('start_time IS NULL OR start_time <= ?', Time.zone.now)
+    .where('end_time IS NULL OR end_time >= ?', Time.zone.now)
   })
+
+  def start_time_is_nil
+    start_time.nil?
+  end
+
+  def end_time_is_nil
+    end_time.nil?
+  end
 
   private
 
