@@ -7,6 +7,8 @@ class FeedbackAnswersController < ApplicationController
   end
 
   def create_on_contest
+    uc = UserContest.find_by(user: current_user, contest: @contest)
+
     feedback_params.each do |qn_id, answer|
       next if answer.empty?
       begin
