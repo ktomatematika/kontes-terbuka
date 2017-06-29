@@ -4,7 +4,7 @@ class ShortSubmissionsController < ApplicationController
   def create_on_contest
     uc = UserContest.find_by(user: current_user, contest: @contest)
 
-    short_submissions_params.each do |prob_id, answer|
+    short_submission_params.each do |prob_id, answer|
       next if answer.blank?
       begin
         ss = ShortSubmission.find_or_initialize_by(short_problem_id: prob_id,
