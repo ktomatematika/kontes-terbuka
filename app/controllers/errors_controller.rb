@@ -7,7 +7,7 @@ class ErrorsController < ApplicationController
     regex = Regexp.new regex_string
 
     unless params[:path] =~ regex
-      Ajat.error "nyasar|uid=#{current_user && current_user.id}|" \
+      Ajat.error "nyasar|uid=#{current_user&.id}|" \
       "params=#{params[:path]}|#{request.env.extract!('PATH_INFO',
                                                       'QUERY_STRING',
                                                       'REMOTE_ADDR',

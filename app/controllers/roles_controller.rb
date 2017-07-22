@@ -50,7 +50,7 @@ class RolesController < ApplicationController
 
   def create
     user = User.find_by(username: params[:username])
-    if user && user.add_role(params[:role_name])
+    if user&.add_role(params[:role_name])
       redirect_to roles_path, notice: 'Role berhasil ditambahkan!'
     else
       redirect_to roles_path, alert: 'Role gagal ditambahkan!'

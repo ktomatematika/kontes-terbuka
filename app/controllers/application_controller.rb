@@ -64,7 +64,7 @@ class ApplicationController < ActionController::Base
   end
 
   rescue_from CanCan::AccessDenied do
-    Ajat.error "cannotah|uid=#{current_user && current_user.id}|" \
+    Ajat.error "cannotah|uid=#{current_user&.id}|" \
                "#{request.env.extract!('PATH_INFO',
                                        'QUERY_STRING',
                                        'REMOTE_ADDR',
