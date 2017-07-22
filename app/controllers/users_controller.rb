@@ -107,9 +107,7 @@ class UsersController < ApplicationController
     render json: users.blank?
   end
 
-  private
-
-  def user_params
+  private def user_params
     params.require(:user).permit(:username, :email, :password,
                                  :password_confirmation, :fullname,
                                  :province_id, :status_id, :color_id,
@@ -117,13 +115,13 @@ class UsersController < ApplicationController
                                  :osn)
   end
 
-  def user_edit_params
+  private def user_edit_params
     params.require(:user).permit(:username, :email, :timezone,
                                  :fullname, :province_id, :status_id, :color_id,
                                  :school)
   end
 
-  def user_mini_edit_params
+  private def user_mini_edit_params
     params.require(:user).permit(:timezone, :color_id)
   end
 end

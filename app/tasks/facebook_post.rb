@@ -37,9 +37,7 @@ class FacebookPost
     post_to_facebook @data.certificate_sent.get binding
   end
 
-  private
-
-  def post_to_facebook(message)
+  private def post_to_facebook(message)
     message = "Salam sejahtera,\n\n#{message}"
     if Rails.env.test?
       message # make the methods testable

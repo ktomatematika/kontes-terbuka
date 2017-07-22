@@ -32,9 +32,7 @@ module ContestAttributes
   end
 
   def results
-    scores.select do
-      'rank() over(order by marks.total_mark DESC) as rank'
-    end
+    scores.select { 'RANK() OVER(ORDER BY marks.total_mark DESC) AS rank' }
   end
 
   # This method generates an array containing the number of people getting
@@ -96,9 +94,7 @@ module ContestAttributes
     UserContest.where(id: remaining)
   end
 
-  private
-
-  def scores
+  private def scores
     filtered_query = user_contests.processed.order { marks.total_mark.desc }
 
     long_problems.each do |l|

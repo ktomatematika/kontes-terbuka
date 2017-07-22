@@ -37,9 +37,7 @@ class FeedbackAnswersController < ApplicationController
     Ajat.info "feedback_downloaded|contest_id:#{@contest.id}"
   end
 
-  private
-
-  def feedback_params
+  private def feedback_params
     params.require(:feedback_answer)
   end
 end

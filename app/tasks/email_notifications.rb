@@ -66,9 +66,7 @@ class EmailNotifications
     send_emails(text: text, subject: subject, users: users)
   end
 
-  private
-
-  def send_emails(**hash)
+  private def send_emails(**hash)
     hash[:users].pluck(:email).each_slice(200) do |arr|
       Mailgun.send_message contest: @contest, text: hash[:text],
                            subject: hash[:subject], bcc_array: arr

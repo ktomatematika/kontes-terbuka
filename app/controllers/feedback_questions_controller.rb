@@ -39,13 +39,11 @@ class FeedbackQuestionsController < ApplicationController
                 notice: 'Pertanyaan feedback hancur!'
   end
 
-  private
-
-  def feedback_question_params
+  private def feedback_question_params
     params.require(:feedback_question).permit(:question)
   end
 
-  def load_contest
+  private def load_contest
     @contest = @feedback_question.contest
   end
 end

@@ -43,13 +43,11 @@ class ShortProblemsController < ApplicationController
     redirect_to admin_contest_path(@contest), notice: 'Bagian A hancur!'
   end
 
-  private
-
-  def short_problem_params
+  private def short_problem_params
     params.require(:short_problem).permit(:problem_no, :statement, :answer)
   end
 
-  def load_contest
+  private def load_contest
     @contest = @short_problem.contest
   end
 end

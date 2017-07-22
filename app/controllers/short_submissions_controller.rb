@@ -19,9 +19,7 @@ class ShortSubmissionsController < ApplicationController
     redirect_to @contest, notice: 'Jawaban bagian A berhasil dikirimkan!'
   end
 
-  private
-
-  def short_submission_params
+  private def short_submission_params
     params.require(:short_submission)
   end
 end

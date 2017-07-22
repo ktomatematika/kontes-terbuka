@@ -86,10 +86,8 @@ module ApplicationHelper
     end
   end
 
-  private
-
   # Split text, while leaving delimiters intact.
-  def latex_split(text, delimiters)
+  private def latex_split(text, delimiters)
     regex_string = '(' + delimiters.map { |i| Regexp.escape(i) }.join('|') + ')'
     regex = Regexp.new regex_string
     text.split regex

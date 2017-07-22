@@ -6,7 +6,7 @@ apt-get update
 apt-get install --yes software-properties-common python-software-properties git-core curl zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev libffi-dev libgdbm-dev libncurses5-dev automake libtool bison virtualbox-guest-utils
 
 # Installs and setups PostgreSQL
-apt-get install --yes postgresql-9.6 libpq-dev
+apt-get install --yes postgresql-9.5 libpq-dev
 sudo -u postgres psql -c "create role ubuntu with createdb login password 'password';"
 
 # Auto CD to /vagrant and squelch perl warnings
@@ -26,6 +26,6 @@ bundle install
 rvm rvmrc warning ignore allGemfiles
 cp /vagrant/config/database.yml.default /vagrant/config/database.yml
 bin/rake db:create
-sudo -u postgres psql < /vagrant/db/sudo_structure.sql
-bin/rake db:setup
+sudo -u postgres psql -d kontes_terbuka < /vagrant/db/structure.sql
+sudo -u postgres psql -d kontes_terbuka -c 'GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO ubuntu;'
 EOF

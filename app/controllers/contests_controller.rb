@@ -30,15 +30,7 @@ class ContestsController < ApplicationController
       @long_problems = @long_problems.in_time
       redirect_to new_contest_user_contest_path(@contest) if @user_contest.nil?
     elsif can?(:preview, @contest) || @contest.result_released
-      @user_contests = @contest.results.includes(user: :roles)
-      @province_ucs = @user_contests.joins(:user).where('users.province_id' =>
-                                                       current_user.province_id)
-      @user_contest = @user_contests.find_by('user_contests.user_id' =>
-                                             current_user.id)
-
-      # Keep medallists only
-      @user_contests = @user_contests.includes(user: :province)
-                                     .where('marks.total_mark >= bronze_cutoff')
+      show_results
     end
 
     grab_submissions if @user_contest
@@ -123,9 +115,19 @@ class ContestsController < ApplicationController
     redirect_to admin_contest_path(@contest), notice: 'Refreshed!'
   end
 
-  private
+  private def show_results
+    @user_contests = @contest.results.includes(user: :roles)
+    @province_ucs = @user_contests.joins(:user).where('users.province_id' =>
+                                                     current_user.province_id)
+    @user_contest = @user_contests.find_by('user_contests.user_id' =>
+                                           current_user.id)
 
-  def contest_params
+    # Keep medalists only
+    @user_contests = @user_contests.includes(user: :province)
+                     .where('marks.total_mark >= bronze_cutoff')
+  end
+
+  private def contest_params
     permit_array = if can? :update, @contest
                      %i[name start_time end_time result_time
                         feedback_time problem_pdf gold_cutoff
@@ -142,13 +144,13 @@ class ContestsController < ApplicationController
     params.require(:contest).permit(permit_array)
   end
 
-  def grab_problems
+  private def grab_problems
     @short_problems = @contest.short_problems.order('problem_no')
     @long_problems = @contest.long_problems.order('problem_no')
     @no_short_probs = @short_problems.empty?
   end
 
-  def grab_submissions
+  private def grab_submissions
     @short_submissions = @user_contest.short_submissions
     @long_submissions = @user_contest.long_submissions
   end

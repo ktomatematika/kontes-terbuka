@@ -10,14 +10,12 @@ class Ability
     end
   end
 
-  private
-
-  def user_abilities(user)
+  private def user_abilities(user)
     contest_related_user_abilities(user)
     user_related_user_abilities(user)
   end
 
-  def contest_related_user_abilities(user)
+  private def contest_related_user_abilities(user)
     can %i[show index], Contest
     can :download_results, Contest, result_released: true
     can %i[show_rules accept_rules], Contest,
@@ -27,13 +25,13 @@ class Ability
     can %i[create destroy download], LongSubmission,
         user_contest_id: user.user_contests.pluck(:id),
         long_problem_id: LongProblem.in_time.pluck(:id)
-    can [:create_on_contest, :update], ShortSubmission,
+    can %i[create_on_contest update], ShortSubmission,
         short_problem_id: ShortProblem.in_time.pluck(:id)
     can %i[new create], UserContest, user: user
     can %i[new_on_contest create_on_contest], FeedbackAnswer
   end
 
-  def user_related_user_abilities(user)
+  private def user_related_user_abilities(user)
     can :show, User, enabled: true
     can :index, User
     can %i[show_full mini_edit mini_update change_password
@@ -41,7 +39,7 @@ class Ability
     can %i[edit_on_user flip], UserNotification
   end
 
-  def marker_abilities(user)
+  private def marker_abilities(user)
     long_problems = LongProblem.with_role(:marker, user).pluck(:id, :contest_id)
     can %i[download_submissions autofill upload_report mark],
         LongProblem, id: long_problems.map(&:first)
@@ -51,7 +49,7 @@ class Ability
     can :admin, Application
   end
 
-  def panitia_abilities(_user)
+  private def panitia_abilities(_user)
     can %i[preview summary admin download_marking_scheme
            download_problem_pdf download_reports], Contest
     can %i[index_full show_full show], User
@@ -60,28 +58,28 @@ class Ability
     can :download_certificates_data, UserContest
   end
 
-  def marking_manager_abilities(_user)
+  private def marking_manager_abilities(_user)
     can %i[start_mark_final download_submissions], LongProblem
     can %i[assign_markers create_marker remove_marker], Role
   end
 
-  def user_admin_abilities(_user)
+  private def user_admin_abilities(_user)
     can %i[edit update destroy mini_edit mini_update], User
   end
 
-  def problem_admin_abilities(_user)
+  private def problem_admin_abilities(_user)
     can %i[admin read_problems destroy_short_probs
            destroy_long_probs update_marking_scheme], Contest
     can :manage, ShortProblem
     can :manage, LongProblem
   end
 
-  def forum_admin_abilities(_user)
+  private def forum_admin_abilities(_user)
     can %i[admin update_forum_link], Contest
     can :update_forum_link, LongProblem
   end
 
-  def admin_abilities(_user)
+  private def admin_abilities(_user)
     can :manage, :all
   end
 end

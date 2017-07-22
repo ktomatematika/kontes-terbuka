@@ -40,9 +40,7 @@ class MarketItemsController < ApplicationController
     Ajat.warn "market_item_destroyed|#{params[:id]}"
   end
 
-  private
-
-  def item_params
+  private def item_params
     params.require(:market_item).permit(:name, :description, :picture, :price)
   end
 end

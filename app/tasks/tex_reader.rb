@@ -57,23 +57,21 @@ class TexReader
     end
   end
 
-  private
-
-  def compile_and_create_log
+  private def compile_and_create_log
     "#{`echo $PATH`}\n\n" \
       "#{`pdflatex -interaction=nonstopmode #{@contest.problem_tex.path}`}" \
       "\n\n\n"
   end
 
-  def sp_process
+  private def sp_process
     tex_file_process SP_START_SEPARATOR, SP_END_SEPARATOR
   end
 
-  def lp_process
+  private def lp_process
     tex_file_process LP_START_SEPARATOR, LP_END_SEPARATOR
   end
 
-  def get_boundaries_from_separator(start_separator, end_separator)
+  private def get_boundaries_from_separator(start_separator, end_separator)
     tex_file = Paperclip.io_adapters.for(@contest.problem_tex).read
     start_index = tex_file.index(start_separator)
     end_index = tex_file.index(end_separator)
@@ -82,7 +80,7 @@ class TexReader
     { start: start_index, end: end_index }
   end
 
-  def tex_file_process(start_separator, end_separator)
+  private def tex_file_process(start_separator, end_separator)
     boundaries = get_boundaries_from_separator(start_separator, end_separator)
     return if boundaries.nil?
 

@@ -24,21 +24,19 @@ class ContestFileBackup
     trim number, 'gs://ktom-backup/files_backup/misc/'
   end
 
-  private
-
-  def backup(location, bucket_link)
+  private def backup(location, bucket_link)
     location = '/home/ktom/kontes-terbuka/shared/public/' \
       "contest_files/#{location}"
     bucket_link = "gs://ktom-backup/files_backup/#{bucket_link}"
     `gsutil -m cp -r #{location} #{bucket_link}`
   end
 
-  def trim(number, bucket_link)
+  private def trim(number, bucket_link)
     `gsutil ls #{bucket_link} | tac | tail -n +#{number + 1} \
     | xargs -I {} gsutil -m rm -r -- {}`
   end
 
-  def now
+  private def now
     Time.zone.now.strftime('%y%d%m_%H%M%S')
   end
 end

@@ -26,16 +26,13 @@ class LongProblemsController < ApplicationController
        cannot?(:update, @long_problem)
       raise CanCan::AccessDenied.new('Cannot update', :update, @long_problem)
     end
-    if params[:long_problem][:start_time_is_nil] == 1
-      @long_problem.update(start_time: nil)
-    else
-      @long_problem.update(start_time: params[:long_problem][:start_time])
-    end
 
-    if params[:long_problem][:end_time_is_nil] == 1
-      @long_problem.update(end_time: nil)
-    else
-      @long_problem.update(end_time: params[:long_problem][:end_time])
+    %i[start_time end_time].each do |param|
+      if params[:long_problem][:"#{param}_is_nil"] == 1
+        @long_problem.update(param => nil)
+      else
+        @long_problem.update(param => params[:long_problem][param])
+      end
     end
 
     if @long_problem.update(long_problem_params)
@@ -84,9 +81,7 @@ class LongProblemsController < ApplicationController
     redirect_to admin_contest_path(@contest), notice: 'Bagian B hancur!'
   end
 
-  private
-
-  def long_problem_params
+  private def long_problem_params
     if can? :edit, @long_problem
       params.require(:long_problem).permit(:problem_no, :statement, :forum_link)
     elsif can? :update_forum_link, @long_problem
@@ -94,11 +89,11 @@ class LongProblemsController < ApplicationController
     end
   end
 
-  def report_params
+  private def report_params
     params.require(:long_problem).permit(:report)
   end
 
-  def load_contest
+  private def load_contest
     @contest = @long_problem.contest
   end
 end
