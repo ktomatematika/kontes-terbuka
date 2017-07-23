@@ -53,7 +53,7 @@ class TemporaryMarkingTest < ActiveSupport::TestCase
   test 'temporary marking mark must be nonnegative' do
     15.times do |n|
       no = n - 7
-      if no < 0
+      if no.negative?
         assert_not build(:temporary_marking, mark: no).save,
                    'Temporary Marking with mark < 0 can be saved.'
       else

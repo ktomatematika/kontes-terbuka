@@ -69,20 +69,22 @@ class UserContestTest < ActiveSupport::TestCase
     sp = c.short_problems.take
 
     none = ucs.first
-    none.short_submissions.update_all(answer: sp.answer.to_i + 1)
-    none.long_submissions.update_all(score: nil)
+    none.short_submissions.find_each do |u|
+      u.update(answer: sp.answer.to_i + 1)
+    end
+    none.long_submissions.find_each { |u| u.update(score: nil) }
 
     bronze = ucs.second
-    bronze.short_submissions.update_all(answer: sp.answer)
-    bronze.long_submissions.update_all(score: 0)
+    bronze.short_submissions.find_each { |u| u.update(answer: sp.answer) }
+    bronze.long_submissions.find_each { |u| u.update(score: 0) }
 
     silver = ucs.third
-    silver.short_submissions.update_all(answer: sp.answer)
-    silver.long_submissions.update_all(score: 5)
+    silver.short_submissions.find_each { |u| u.update(answer: sp.answer) }
+    silver.long_submissions.find_each { |u| u.update(score: 5) }
 
     gold = ucs.fourth
-    gold.short_submissions.update_all(answer: sp.answer)
-    gold.long_submissions.update_all(score: 7)
+    gold.short_submissions.find_each { |u| u.update(answer: sp.answer) }
+    gold.long_submissions.find_each { |u| u.update(score: 7) }
 
     pucs = ucs.processed
     assert_equal pucs.find(none.id).contest_points, 0

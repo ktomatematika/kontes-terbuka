@@ -22,7 +22,7 @@ class Color < ActiveRecord::Base
 
   before_destroy do
     # Set user's color to default value before destroying color
-    User.where(color: self).update_all(color_id: 1)
+    User.where(color: self).find_each { |u| u.update(color_id: 1) }
   end
 
   # Display methods

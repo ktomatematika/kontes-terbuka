@@ -1,5 +1,6 @@
 AllCops:
   TargetRubyVersion: 2.3
+  TargetRailsVersion: 4.2
   Include:
     - '**/Rakefile'
     - '**/config.ru'
@@ -23,15 +24,6 @@ Rails/HasAndBelongsToMany:
   Exclude:
     - 'app/models/role.rb'
 
-Rails/HttpPositionalArguments:
-  Enabled: false
-
-Rails/SkipsModelValidations:
-  Enabled: false
-
-Rails/ApplicationRecord:
-  Enabled: false
-
 # Style
 
 Style/Documentation:
@@ -46,10 +38,14 @@ Style/ModuleFunction:
 Security/YAMLLoad:
   Enabled: false
 
+Style/FileName:
+  Exclude:
+    - 'Capfile'
+
 # Metrics
 
 Metrics/ClassLength:
-  Max: 130
+  Max: 132
   Exclude:
     - 'test/**/*'
 
@@ -60,7 +56,7 @@ Metrics/BlockLength:
     - 'app/controllers/concerns/*'
 
 Metrics/MethodLength:
-  Max: 15
+  Max: 17
 
 Metrics/AbcSize:
   Max: 26

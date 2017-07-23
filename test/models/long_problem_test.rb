@@ -211,7 +211,7 @@ class LongProblemTest < ActiveSupport::TestCase
     ls = lp.long_submissions.first
     ls2 = lp.long_submissions.second
 
-    ls.temporary_markings.update_all(mark: 7)
+    ls.temporary_markings.find_each { |u| u.update(mark: 7) }
     ls2.temporary_markings.each_with_index do |tm, i|
       tm.update(mark: i)
     end

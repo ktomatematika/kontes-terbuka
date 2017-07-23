@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 module UserContestScope
   extend ActiveSupport::Concern
   included do
     # Show short marks on model objects. Short marks only
     # Usage: UserContest.short_marks
     scope(:short_marks, lambda {
-      .joins('LEFT OUTER JOIN short_submissions ON \
+      joins('LEFT OUTER JOIN short_submissions ON \
     short_submissions.user_contest_id = user_contests.id')
       .joins('LEFT OUTER JOIN short_problems ON \
     short_submissions.short_problem_id = short_problems.id')
