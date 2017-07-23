@@ -34,23 +34,20 @@ module UserContestScope
     # Given a long problem ID, this shows table of user contest id
     # + long problem marks for that long problem.
     scope(:include_long_problem_marks, lambda { |long_problem_id|
-      joins { long_submissions.outer }
-        .where { long_submissions.long_problem_id == long_problem_id }
-        .select do
-          ['user_contests.id as id', 'long_submissions.score as ' \
-                     "problem_no_#{long_problem_id}"]
-        end
+      joins('LEFT OUTER JOIN long_submissions ON ' \
+            'long_submissions.user_contest_id = user_contests.id')
+      .where("long_submissions.long_problem_id = #{long_problem_id}")
+      .select("*, long_submissions.score AS problem_no_#{long_problem_id}")
     })
 
     # Given a feedback question ID, this shows table of user contest id
     # + feedback answer for that feedback question. (INNER JOIN)
     scope(:include_feedback_answers, lambda { |feedback_question_id|
-      joins { feedback_answers }
-        .where { feedback_answers.feedback_question_id == feedback_question_id }
-        .select do
-          ['user_contests.id as id', 'feedback_answers.answer as ' \
-                     "feedback_question_no_#{feedback_question_id}"]
-        end
+      joins('LEFT OUTER JOIN feedback_answers ON ' \
+            'feedback_answers.user_contest_id = user_contests.id')
+      .where("feedback_answers.feedback_question_id = #{feedback_question_id}")
+      .select('*, feedback_answers.answer AS ' \
+              "feedback_question_no_#{feedback_question_id}")
     })
 
     CUTOFF_CERTIFICATE = 1
