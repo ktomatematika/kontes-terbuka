@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ContestsController < ApplicationController
   load_resource
   authorize_resource except: :update
@@ -124,7 +126,7 @@ class ContestsController < ApplicationController
 
     # Keep medalists only
     @user_contests = @user_contests.includes(user: :province)
-                     .where('marks.total_mark >= bronze_cutoff')
+                                   .where('marks.total_mark >= bronze_cutoff')
   end
 
   private def contest_params

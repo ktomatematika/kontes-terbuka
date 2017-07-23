@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ContestFileBackup
   def backup_submissions(contest, keep = 5)
     backup "submissions/kontes#{contest.id}",

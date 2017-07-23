@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'test_helper'
 
 class FeedbackAnswersControllerTest < ActionController::TestCase
@@ -34,7 +36,7 @@ class FeedbackAnswersControllerTest < ActionController::TestCase
     test_abilities FeedbackAnswer, :download_on_contest, [nil], [:panitia]
     get :download_on_contest, contest_id: @c.id, format: :csv
     assert @response.header['Content-Disposition']
-      .include?("filename=\"Feedback #{@c}\".csv")
+                    .include?("filename=\"Feedback #{@c}\".csv")
     assert_response 200
     assert_equal @response.content_type, 'text/csv'
   end

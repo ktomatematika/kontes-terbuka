@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class FeedbackAnswersController < ApplicationController
   load_and_authorize_resource
 

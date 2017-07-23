@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class FacebookPost
   include Rails.application.routes.url_helpers
   attr_reader :contest

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MarketItemsController < ApplicationController
   after_action do
     authorize! params[:action].to_sym, @market_item || MarketItem

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'test_helper'
 
 class ContestsControllerTest < ActionController::TestCase
@@ -238,7 +240,7 @@ class ContestsControllerTest < ActionController::TestCase
 
     assert_response 200
     assert @response.header['Content-Disposition']
-      .include?("filename=\"Hasil #{@c}.pdf\"")
+                    .include?("filename=\"Hasil #{@c}.pdf\"")
     assert_equal @response.content_type, 'application/pdf'
     assert_equal @response.body, IO.binread(@c.results_location)
   end

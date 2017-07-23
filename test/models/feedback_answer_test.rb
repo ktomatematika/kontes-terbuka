@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # rubocop:disable Metrics/LineLength
 # == Schema Information
 #
@@ -30,7 +32,7 @@ class FeedbackAnswerTest < ActiveSupport::TestCase
 
   test 'feedback question associations' do
     assert_equal FeedbackAnswer.reflect_on_association(:feedback_question)
-      .macro,
+                               .macro,
                  :belongs_to,
                  'Feedback Answer is not belongs to feedback questions.'
     assert_equal FeedbackAnswer.reflect_on_association(:user_contest).macro,

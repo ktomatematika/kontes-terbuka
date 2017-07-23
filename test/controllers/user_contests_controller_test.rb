@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'test_helper'
 
 class UserContestsControllerTest < ActionController::TestCase
@@ -32,7 +34,7 @@ class UserContestsControllerTest < ActionController::TestCase
     get :download_certificates_data, contest_id: @c.id, format: :csv
 
     assert @response.header['Content-Disposition']
-      .include?("filename=\"Data Sertifikat #{@c}\".csv")
+                    .include?("filename=\"Data Sertifikat #{@c}\".csv")
     assert_response 200
     assert_equal @response.content_type, 'text/csv'
   end

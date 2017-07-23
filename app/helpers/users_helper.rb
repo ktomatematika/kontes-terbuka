@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module UsersHelper
   # Four of the methods below are helpers for users#show_history.
   def public_header_contents

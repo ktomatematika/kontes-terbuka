@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # rubocop:disable Metrics/LineLength
 # == Schema Information
 #
@@ -40,7 +42,7 @@ class LongSubmissionTest < ActiveSupport::TestCase
                  :has_many,
                  'Long Submission relation is not has many submission pages.'
     assert_equal LongSubmission.reflect_on_association(:temporary_markings)
-      .macro,
+                               .macro,
                  :has_many,
                  'Long Submission relation is not has many temporary markings.'
   end

@@ -1,4 +1,5 @@
 AllCops:
+  TargetRubyVersion: 2.3
   Include:
     - '**/Rakefile'
     - '**/config.ru'
@@ -26,6 +27,9 @@ Rails/HttpPositionalArguments:
   Enabled: false
 
 Rails/SkipsModelValidations:
+  Enabled: false
+
+Rails/ApplicationRecord:
   Enabled: false
 
 # Style

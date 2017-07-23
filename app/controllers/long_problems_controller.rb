@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class LongProblemsController < ApplicationController
   load_resource
   authorize_resource except: %i[edit update]

@@ -1,11 +1,13 @@
+# frozen_string_literal: true
+
 module Mailgun
   extend self
 
   KEY = ENV['MAILGUN_API_KEY']
-  DOMAIN = 'ktom.tomi.or.id'.freeze
-  URL = "https://api:#{KEY}@api.mailgun.net/v3/#{DOMAIN}/messages".freeze
-  EMAIL = "mail@#{DOMAIN}".freeze
-  FROM = "Kontes Terbuka Olimpiade Matematika <#{EMAIL}>".freeze
+  DOMAIN = 'ktom.tomi.or.id'
+  URL = "https://api:#{KEY}@api.mailgun.net/v3/#{DOMAIN}/messages"
+  EMAIL = "mail@#{DOMAIN}"
+  FROM = "Kontes Terbuka Olimpiade Matematika <#{EMAIL}>"
   # Sends a message with Mailgun. Pass a hash of options.
   # Some options:
   # to: message recipient. Please only specify one recipient; if you want more,

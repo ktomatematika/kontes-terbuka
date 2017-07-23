@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 module UserPasswordVerification
   extend ActiveSupport::Concern
   include Rails.application.routes.url_helpers
 
   MAX_TRIES = 10
   VERIFY_TIME = 8.hours
-  VERIFY_TIME_INDO = '8 jam'.freeze
+  VERIFY_TIME_INDO = '8 jam'
 
   def authenticate(password)
     hashed_password == BCrypt::Engine.hash_secret(password, salt)

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ContestFiles
   extend ActiveSupport::Concern
 

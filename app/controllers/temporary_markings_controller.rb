@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class TemporaryMarkingsController < ApplicationController
   load_resource :long_problem
   before_action { authorize! :mark, @long_problem }

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module LongProblemsHelper
   # Method to show 'Sudah' for other markers if temporary marking exists.
   def show_if_done_array(ls)

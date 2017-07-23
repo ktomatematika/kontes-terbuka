@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'test_helper'
 
 class ShortProblemsControllerTest < ActionController::TestCase
@@ -22,7 +24,7 @@ class ShortProblemsControllerTest < ActionController::TestCase
                                    answer: 3 }
     assert_redirected_to admin_contest_path @c
     assert_equal @c.reload.short_problems.where(statement: 'Hello there')
-      .count, 1
+                   .count, 1
     assert_equal flash[:notice], 'Short Problem terbuat!'
   end
 

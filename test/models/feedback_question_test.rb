@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: feedback_questions
@@ -27,7 +29,7 @@ class FeedbackQuestionTest < ActiveSupport::TestCase
 
   test 'feedback question associations' do
     assert_equal FeedbackQuestion.reflect_on_association(:feedback_answers)
-      .macro,
+                                 .macro,
                  :has_many,
                  'Feedback Question relation is not has many feedback answers.'
     assert_equal FeedbackQuestion.reflect_on_association(:contest).macro,

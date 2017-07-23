@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ContestsHelper
   # This is the hash that will be used in contests#index.
   def contests_info_hash

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Province, Status, Color, Notification model objects are fixed
 [['WIB', ['D.I. Aceh', 'Sumatera Utara', 'Sumatera Barat', 'Riau',
           'Kepulauan Riau', 'Jambi', 'Bengkulu', 'Bangka Belitung',

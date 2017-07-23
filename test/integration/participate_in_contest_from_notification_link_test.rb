@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'test_helper'
 
 class ParticipateInContestFromNotificationLinkTest <
@@ -42,7 +44,7 @@ class ParticipateInContestFromNotificationLinkTest <
 
     contest.short_problems.each do |sp|
       assert_equal sp.short_submissions.find_by(user_contest_id: user_contest)
-        .answer, sp.id.to_s,
+                     .answer, sp.id.to_s,
                    'Short Submission is not submitted.'
     end
 

@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 class TexReader
-  SP_START_SEPARATOR = '%%% START Bagian A'.freeze
-  SP_END_SEPARATOR = '%%% END Bagian A'.freeze
-  LP_START_SEPARATOR = '%%% START Bagian B'.freeze
-  LP_END_SEPARATOR = '%%% END Bagian B'.freeze
+  SP_START_SEPARATOR = '%%% START Bagian A'
+  SP_END_SEPARATOR = '%%% END Bagian A'
+  LP_START_SEPARATOR = '%%% START Bagian B'
+  LP_END_SEPARATOR = '%%% END Bagian B'
 
   def initialize(ctst, answers, tex)
     @contest = ctst
@@ -20,21 +22,16 @@ class TexReader
   end
 
   def insert_problems
-    # rubocop:disable Style/GuardClause
-    if sp_process
-      sp_process.each_with_index do |sp, index|
-        ans = @answers[index]
-        ans = 0 if ans.nil?
-        ShortProblem.create(contest: @contest, problem_no: (index + 1),
-                            statement: sp, answer: ans)
-      end
+    sp_process&.each_with_index do |sp, index|
+      ans = @answers[index]
+      ans = 0 if ans.nil?
+      ShortProblem.create(contest: @contest, problem_no: (index + 1),
+                          statement: sp, answer: ans)
     end
 
-    if lp_process
-      lp_process.each_with_index do |lp, index|
-        LongProblem.create(contest: @contest, problem_no: (index + 1),
-                           statement: lp)
-      end
+    lp_process&.each_with_index do |lp, index|
+      LongProblem.create(contest: @contest, problem_no: (index + 1),
+                         statement: lp)
     end
   end
 

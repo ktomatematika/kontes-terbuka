@@ -4,19 +4,14 @@ module UserContestScope
     # Show short marks on model objects. Short marks only
     # Usage: UserContest.short_marks
     scope(:short_marks, lambda {
-      joins { short_submissions.outer }
-        .joins { short_problems.outer }
-        .where do
-          (short_submissions.short_problem_id == short_problems.id) |
-            # rubocop:disable Style/NilComparison
-            ((short_submissions.short_problem_id == nil) &
-             (short_problems.id == nil))
-          # rubocop:enable Style/NilComparison
-        end
-        .group(:id)
-        .select('user_contests.id as id, sum(case when ' \
-        'short_submissions.answer = short_problems.answer then 1 else 0 end) ' \
-        'as short_mark')
+      .joins('LEFT OUTER JOIN short_submissions ON \
+    short_submissions.user_contest_id = user_contests.id')
+      .joins('LEFT OUTER JOIN short_problems ON \
+    short_submissions.short_problem_id = short_problems.id')
+      .group(:id)
+      .select('user_contests.id, SUM(CASE WHEN \
+    short_submissions.answer = short_problems.answer \
+    THEN 1 ELSE 0 END) AS short_mark')
     })
 
     # Show long marks on model objects. Long marks only

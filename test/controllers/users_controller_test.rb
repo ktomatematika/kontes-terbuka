@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'test_helper'
 
 class UsersControllerTest < ActionController::TestCase
@@ -49,7 +51,7 @@ class UsersControllerTest < ActionController::TestCase
 
   test 'create fail' do
     post :create, user: build(:user, province_id: nil).attributes
-      .merge(password: 'asdfasdf')
+                                                      .merge(password: 'asdfasdf')
 
     assert_template 'welcome/sign'
     assert_equal flash[:alert], 'Terdapat kesalahan dalam ' \

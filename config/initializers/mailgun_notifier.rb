@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ExceptionNotifier
   class MailgunNotifier
     def initialize(_); end

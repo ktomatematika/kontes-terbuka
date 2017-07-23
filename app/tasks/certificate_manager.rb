@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CertificateManager
   TEMPLATE = File.read(Rails.root.join('app', 'views', 'contests',
                                        'certificate.tex.haml'))

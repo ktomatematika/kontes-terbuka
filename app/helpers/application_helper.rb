@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ApplicationHelper
   # Helper to set User ID feature of Google Analytics.
   def track_uid

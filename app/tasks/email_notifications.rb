@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class EmailNotifications
   include Rails.application.routes.url_helpers
   attr_reader :contest

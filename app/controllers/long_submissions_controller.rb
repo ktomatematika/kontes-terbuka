@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class LongSubmissionsController < ApplicationController
   load_resource :long_problem
   load_resource :long_submission

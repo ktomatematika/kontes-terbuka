@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # rubocop:disable Metrics/LineLength
 # == Schema Information
 #
@@ -34,7 +36,7 @@ class TemporaryMarkingTest < ActiveSupport::TestCase
                  :belongs_to,
                  'TemporaryMarking relation is not belongs to users.'
     assert_equal TemporaryMarking.reflect_on_association(:long_submission)
-      .macro, :belongs_to,
+                                 .macro, :belongs_to,
                  'TemporaryMarking relation is not belongs to long_submission.'
   end
 
