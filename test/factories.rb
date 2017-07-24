@@ -5,7 +5,7 @@ require_relative 'support'
 FactoryGirl.define do
   sequence :unique do |n|
     name = 'aaaaaaaa'
-    n.times { name.succ! }
+    n.times { name = name.succ }
     name
   end
 
