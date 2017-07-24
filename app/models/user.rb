@@ -62,7 +62,9 @@ class User < ActiveRecord::Base
     else
       false
     end
+  end
 
+  before_create do
     # Rollback if province/status is nil.
     # Province/status can only be nil if the corresponding object is deleted
     if province_id.nil? || status_id.nil?

@@ -18,11 +18,11 @@
 class Color < ActiveRecord::Base
   has_paper_trail
   # Associations
-  has_many :user
+  has_many :users
 
   before_destroy do
     # Set user's color to default value before destroying color
-    User.where(color: self).find_each { |u| u.update(color_id: 1) }
+    users.find_each { |u| u.update(color_id: 1) }
   end
 
   # Display methods

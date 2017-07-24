@@ -63,11 +63,10 @@ class ShortProblemTest < ActiveSupport::TestCase
   end
 
   test 'times must be between contest times' do
-    c = create(:contest, start_time: Time.zone.now + 100.seconds,
-                         end_time: Time.zone.now + 200.seconds)
+    c = create(:contest, start: 100, ends: 200, result: 300, feedback: 400)
     assert build(:short_problem, contest: c,
-                                 start_time: Time.zone.now + 50.seconds).save,
-           'Short problem with start time < contest start time cant save.'
+                                 start_time: c.start_time + 50.seconds).save,
+           'Short problem with start time > contest start time cant save.'
     assert build(:short_problem, contest: c,
                                  start_time: c.start_time).save,
            'Short problem with start time = contest start time cant save.'
@@ -76,21 +75,21 @@ class ShortProblemTest < ActiveSupport::TestCase
            'Short problem with start time nil cant save.'
     assert_not build(:short_problem,
                      contest: c,
-                     start_time: Time.zone.now + 150.seconds).save,
-               'Problem with start time >= contest start time can save.'
+                     start_time: c.start_time - 50.seconds).save,
+               'Problem with start time < contest start time can save.'
 
     assert build(:short_problem, contest: c,
-                                 end_time: Time.zone.now + 150.seconds).save,
-           'Short problem with start time < contest start time cant save.'
+                                 end_time: c.end_time - 50.seconds).save,
+           'Short problem with end time < contest start time cant save.'
     assert build(:short_problem, contest: c,
                                  end_time: c.end_time).save,
-           'Short problem with start time = contest start time cant save.'
+           'Short problem with end time = contest start time cant save.'
     assert build(:short_problem, contest: c,
                                  end_time: nil).save,
-           'Short problem with start time nil cant save.'
+           'Short problem with end time nil cant save.'
     assert_not build(:short_problem, contest: c,
-                                     end_time: Time.zone.now + 50.seconds).save,
-               'Problem with end time <= contest end time can save.'
+                                     end_time: c.end_time + 50.seconds).save,
+               'Problem with end time > contest end time can save.'
 
     assert_not build(:short_problem,
                      contest: c,
@@ -100,15 +99,17 @@ class ShortProblemTest < ActiveSupport::TestCase
   end
 
   test 'in_time' do
-    c = create(:contest, start_time: Time.zone.now - 100.seconds,
-                         end_time: Time.zone.now + 100.seconds)
+    c = create(:contest, start: -100, ends: 100, result: 300, feedback: 400)
 
     create(:short_problem, start_time: Time.zone.now - 80.seconds,
-                           end_time: Time.zone.now - 40.seconds)
+                           end_time: Time.zone.now - 40.seconds,
+                           contest: c)
     sp = create(:short_problem, start_time: Time.zone.now - 20.seconds,
-                                end_time: Time.zone.now + 20.seconds)
+                                end_time: Time.zone.now + 20.seconds,
+                                contest: c)
     create(:short_problem, start_time: Time.zone.now + 40.seconds,
-                           end_time: Time.zone.now + 80.seconds)
+                           end_time: Time.zone.now + 80.seconds,
+                           contest: c)
 
     assert_equal c.short_problems.in_time, [sp],
                  'Got problem in the in_time method'

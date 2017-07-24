@@ -23,7 +23,7 @@ class ColorTest < ActiveSupport::TestCase
   end
 
   test 'color associations' do
-    assert_equal Color.reflect_on_association(:user).macro,
+    assert_equal Color.reflect_on_association(:users).macro,
                  :has_many,
                  'Color relation is not has many users.'
   end

@@ -23,7 +23,7 @@ class StatusTest < ActiveSupport::TestCase
   end
 
   test 'status associations' do
-    assert_equal Status.reflect_on_association(:user).macro,
+    assert_equal Status.reflect_on_association(:users).macro,
                  :has_many,
                  'Status relation is not has many users.'
   end

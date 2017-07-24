@@ -20,7 +20,7 @@ class Province < ActiveRecord::Base
   has_paper_trail
 
   # Associations
-  has_many :user
+  has_many :users
 
   # Display methods
   def to_s

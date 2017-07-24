@@ -24,7 +24,7 @@ class ProvinceTest < ActiveSupport::TestCase
   end
 
   test 'province associations' do
-    assert_equal Province.reflect_on_association(:user).macro,
+    assert_equal Province.reflect_on_association(:users).macro,
                  :has_many,
                  'Province relation is not has many users.'
   end
