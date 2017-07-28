@@ -39,12 +39,13 @@ module UserContestScope
 
     # Show marks + award (emas/perak/perunggu)
     scope(:processed, lambda {
-      select('*, ' \
+      select('ucid AS id, short_mark, long_mark, total_mark, ' \
              "CASE WHEN total_mark >= gold_cutoff THEN 'Emas' " \
              "WHEN total_mark >= silver_cutoff THEN 'Perak' " \
              "WHEN total_mark >= bronze_cutoff THEN 'Perunggu' " \
              "ELSE '' END AS award")
-      .from(UserContest.include_marks.joins(:contest), 'user_contests')
+      .from(UserContest.include_marks.joins(:contest)
+                       .select('user_contests.id as ucid'), 'user_contests')
     })
 
     # Given a long problem ID, this shows table of user contest id
