@@ -41,21 +41,19 @@ class UserContest < ActiveRecord::Base
 
   # Other methods
   def contest_points
-    points = 0
+    0.tap do |points|
+      # Award points based on award
+      points += 5 if award == 'Emas'
+      points += 4 if award == 'Perak'
+      points += 3 if award == 'Perunggu'
 
-    # Award points based on award
-    points += 5 if award == 'Emas'
-    points += 4 if award == 'Perak'
-    points += 3 if award == 'Perunggu'
-
-    points += long_submissions.inject(0) do |memo, item|
-      case item.score
-      when nil then memo
-      when 0..(LongProblem::MAX_MARK - 1) then memo + 1 # +1 if score not nil
-      else memo + 2 # +2 if score is 7
+      points += long_submissions.inject(0) do |memo, item|
+        case item.score
+        when nil then memo
+        when 0..(LongProblem::MAX_MARK - 1) then memo + 1 # +1 if score not nil
+        else memo + 2 # +2 if score is 7
+        end
       end
     end
-
-    points
   end
 end

@@ -58,12 +58,13 @@ module ApplicationHelper
 
   # Helper to display classes according to the user's state.
   def row_classes(user, starting_classes = [])
-    starting_classes.push('disabled') unless user.enabled?
-    starting_classes.push('veteran') if user.has_cached_role? :veteran
-    if defined?(current_user) && user.id == current_user.id
-      starting_classes.push('current')
+    starting_classes.tap do |sc|
+      sc.push('disabled') unless user.enabled?
+      sc.push('veteran') if user.has_cached_role? :veteran
+      if defined?(current_user) && user.id == current_user.id
+        sc.push('current')
+      end
     end
-    starting_classes
   end
 
   # Helper to display point image.
