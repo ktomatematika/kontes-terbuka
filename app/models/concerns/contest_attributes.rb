@@ -40,11 +40,11 @@ module ContestAttributes
   # This method generates an array containing the number of people getting
   # a certain total score, excluding veterans.
   def array_of_scores
-    res = Array.new(max_score + 1).fill(0)
-    scores.includes(user: :roles).each do |uc|
-      res[uc.total_mark] += 1 unless uc.user.has_cached_role?(:veteran)
+    Array.new(max_score + 1).fill(0).tap do |res|
+      scores.includes(user: :roles).each do |uc|
+        res[uc.total_mark] += 1 unless uc.user.has_cached_role?(:veteran)
+      end
     end
-    res
   end
 
   # Returns a matrix of feedback answers (2d array).
@@ -61,11 +61,11 @@ module ContestAttributes
       hash.each { |_ucid, h| h[fq.id] = '' if h[fq.id].nil? }
     end
 
-    res = []
-    hash.each do |_ucid, h|
-      res.append(h.sort_by { |fqid, _ans| fqid }.map { |arr| arr[1] })
+    [].tap do |res|
+      hash.each do |_ucid, h|
+        res.append(h.sort_by { |fqid, _ans| fqid }.map { |arr| arr[1] })
+      end
     end
-    res
   end
 
   # This method finds all user_contests who fills
@@ -99,10 +99,9 @@ module ContestAttributes
   private def scores
     UserContest.select('*').from(part_of_scores)
       .joins("INNER JOIN (#{UserContest.processed.to_sql}) " \
-                    'user_contests_processed ON subquery.id = ' \
-                    'user_contests_processed.id')
-               .joins('INNER JOIN user_contests ON ' \
-                    'subquery.id = user_contests.id')
+             'user_contests_processed ON subquery.id = ' \
+             'user_contests_processed.id')
+      .joins('INNER JOIN user_contests ON subquery.id = user_contests.id')
   end
 
   private def part_of_scores
@@ -110,7 +109,7 @@ module ContestAttributes
                                     'long_submissions.score')
                  .from(user_contests.processed, 'user_contests')
                  .joins(:long_problems)
-                            .order('user_contests.id, long_problems.id')
+                 .order('user_contests.id, long_problems.id')
                  .to_sql.gsub("'", "''")
     category_sql = long_problems.select(:id).order(:id).to_sql
     columns_sql = '(id int' + long_problems.order(:id).pluck(:id).map do |id|
