@@ -120,13 +120,13 @@ class ContestsController < ApplicationController
   private def show_results
     @user_contests = @contest.results.includes(user: :roles)
     @province_ucs = @user_contests.joins(:user).where('users.province_id' =>
-                                                     current_user.province_id)
+                                                      current_user.province_id)
     @user_contest = @user_contests.find_by('user_contests.user_id' =>
                                            current_user.id)
 
     # Keep medalists only
     @user_contests = @user_contests.includes(user: :province)
-                                   .where('marks.total_mark >= bronze_cutoff')
+                                   .where('total_mark >= bronze_cutoff')
   end
 
   private def contest_params

@@ -34,7 +34,7 @@ module ContestAttributes
   end
 
   def results
-    scores.select { 'RANK() OVER(ORDER BY marks.total_mark DESC) AS rank' }
+    scores.select { 'RANK() OVER(ORDER BY total_mark DESC) AS rank' }
   end
 
   # This method generates an array containing the number of people getting
@@ -97,18 +97,27 @@ module ContestAttributes
   end
 
   private def scores
-    filtered_query = user_contests.processed.order(total_mark: :desc)
+    UserContest.select('*').from(part_of_scores)
+      .joins("INNER JOIN (#{UserContest.processed.to_sql}) " \
+                    'user_contests_processed ON subquery.id = ' \
+                    'user_contests_processed.id')
+               .joins('INNER JOIN user_contests ON ' \
+                    'subquery.id = user_contests.id')
+  end
 
-    long_problems.each do |l|
-      joined = filtered_query.joins do
-        UserContest.include_long_problem_marks(l.id)
-                   .as("long_problem_marks_#{l.id}")
-                   .on { id == __send__("long_problem_marks_#{l.id}").id }.outer
-      end
-      filtered_query = joined.select do
-        __send__("long_problem_marks_#{l.id}").__send__("problem_no_#{l.id}")
-      end
-    end
-    filtered_query
+  private def part_of_scores
+    source_sql = UserContest.select('user_contests.id, long_problems.id, ' \
+                                    'long_submissions.score')
+                 .from(user_contests.processed, 'user_contests')
+                 .joins(:long_problems)
+                            .order('user_contests.id, long_problems.id')
+                 .to_sql.gsub("'", "''")
+    category_sql = long_problems.select(:id).order(:id).to_sql
+    columns_sql = '(id int' + long_problems.order(:id).pluck(:id).map do |id|
+                                ", problem_no_#{id} int"
+                              end.join + ')'
+
+    UserContest.select('*').from("crosstab('#{source_sql}', " \
+                                 "'#{category_sql}') AS #{columns_sql}")
   end
 end

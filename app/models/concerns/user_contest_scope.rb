@@ -3,49 +3,30 @@
 module UserContestScope
   extend ActiveSupport::Concern
   included do
-    # Show short marks on model objects. Short marks only
-    # Usage: UserContest.short_marks
-    scope(:short_marks, lambda {
-      joins('LEFT OUTER JOIN short_submissions ON ' \
-            'short_submissions.user_contest_id = user_contests.id')
-      .joins('LEFT OUTER JOIN short_problems ON ' \
-             'short_submissions.short_problem_id = short_problems.id')
-      .group(:id)
-      .select('user_contests.id, ' \
-              'SUM(CASE WHEN short_submissions.answer = ' \
-              'short_problems.answer THEN 1 ELSE 0 END) AS short_mark')
-    })
-
-    # Show long marks on model objects. Long marks only
-    scope(:long_marks, lambda {
-      joins('LEFT OUTER JOIN long_submissions ON ' \
-            'long_submissions.user_contest_id = user_contests.id')
-      .group(:id)
-      .select('user_contests.id, ' \
-              'SUM(COALESCE(long_submissions.score, 0)) AS long_mark')
-    })
+    short_mark_text = 'SUM(CASE WHEN short_submissions.answer = ' \
+                              'short_problems.answer THEN 1 ELSE 0 END)'
+    long_mark_text = 'SUM(COALESCE(long_submissions.score, 0))'
+    total_mark_text = "#{short_mark_text} + #{long_mark_text}"
 
     # Show both short marks and long marks. Short and long marks
     scope(:include_marks, lambda {
-      select('*, short_mark + long_mark AS total_mark').from(
-        select('user_contests.*, short_mark, long_mark')
-        .from(UserContest.short_marks, 'short_marks')
-        .joins("INNER JOIN (#{UserContest.long_marks.to_sql}) long_marks " \
-               'ON short_marks.id = long_marks.id')
-        .joins('INNER JOIN user_contests ON short_marks.id = user_contests.id'),
-        'user_contests'
-      )
+      joins(:short_problems)
+      .joins(:long_problems)
+      .group(:id)
+      .select('user_contests.*, ' \
+              "#{short_mark_text} AS short_mark, " \
+              "#{long_mark_text} AS long_mark, " \
+              "#{total_mark_text} AS total_mark")
     })
 
     # Show marks + award (emas/perak/perunggu)
     scope(:processed, lambda {
-      select('ucid AS id, short_mark, long_mark, total_mark, ' \
-             "CASE WHEN total_mark >= gold_cutoff THEN 'Emas' " \
-             "WHEN total_mark >= silver_cutoff THEN 'Perak' " \
-             "WHEN total_mark >= bronze_cutoff THEN 'Perunggu' " \
-             "ELSE '' END AS award")
-      .from(UserContest.include_marks.joins(:contest)
-                       .select('user_contests.id as ucid'), 'user_contests')
+      include_marks.joins(:contest).select(
+        "CASE WHEN #{total_mark_text} >= gold_cutoff THEN 'Emas' " \
+        "WHEN #{total_mark_text} >= silver_cutoff THEN 'Perak' " \
+        "WHEN #{total_mark_text} >= bronze_cutoff THEN 'Perunggu' " \
+        "ELSE '' END AS award"
+      ).group('contests.id')
     })
 
     # Given a long problem ID, this shows table of user contest id
@@ -70,7 +51,7 @@ module UserContestScope
     CUTOFF_CERTIFICATE = 1
     # Add this scope to filter that has high enough score to get certificates
     scope(:eligible_score, lambda {
-      where("total_mark >= #{CUTOFF_CERTIFICATE}")
+      having("#{total_mark_text} >= #{CUTOFF_CERTIFICATE}")
     })
   end
 end
