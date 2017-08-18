@@ -43,12 +43,10 @@ class UserContest < ActiveRecord::Base
   def contest_points
     # Award points based on award
     medal_points = case award
-                   when 'Emas'
-                     5
-                   when 'Perak'
-                     4
-                   when 'Perunggu'
-                     3
+                   when 'Emas' then 5
+                   when 'Perak' then 4
+                   when 'Perunggu' then 3
+                   else 0
                    end
 
     ls_points = long_submissions.inject(0) do |memo, item|
