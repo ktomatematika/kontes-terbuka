@@ -3,7 +3,8 @@
 module ContestJobSpecifics
   extend ActiveSupport::Concern
 
-  private
+  # TODO: somehow make all of these private, while still being accessible
+  # by DelayedJob
 
   def award_points
     user_contests.processed.each do |uc|
