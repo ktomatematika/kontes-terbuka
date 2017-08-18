@@ -3,18 +3,18 @@
 module ContestsHelper
   # This is the hash that will be used in contests#index.
   def contests_info_hash
-    result = {}
-    @contests.each do |c|
-      result[c.id] = {
-        name: c.name,
-        start_time: c.start_time,
-        end_time: c.end_time,
-        number_of_short_questions: ShortProblem.where(contest: c).length,
-        number_of_long_questions: LongProblem.where(contest: c).length,
-        path: contest_path(c)
-      }
+    {}.tap do |result|
+      @contests.each do |c|
+        result[c.id] = {
+          name: c.name,
+          start_time: c.start_time,
+          end_time: c.end_time,
+          number_of_short_questions: ShortProblem.where(contest: c).length,
+          number_of_long_questions: LongProblem.where(contest: c).length,
+          path: contest_path(c)
+        }
+      end
     end
-    result
   end
 
   # Helper for contests#contest_aside_info.

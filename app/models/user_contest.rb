@@ -41,14 +41,15 @@ class UserContest < ActiveRecord::Base
 
   # Other methods
   def contest_points
-    points = 0
-
     # Award points based on award
-    points += 5 if award == 'Emas'
-    points += 4 if award == 'Perak'
-    points += 3 if award == 'Perunggu'
+    medal_points = case award
+                   when 'Emas' then 5
+                   when 'Perak' then 4
+                   when 'Perunggu' then 3
+                   else 0
+                   end
 
-    points += long_submissions.inject(0) do |memo, item|
+    ls_points = long_submissions.inject(0) do |memo, item|
       case item.score
       when nil then memo
       when 0..(LongProblem::MAX_MARK - 1) then memo + 1 # +1 if score not nil
@@ -56,6 +57,6 @@ class UserContest < ActiveRecord::Base
       end
     end
 
-    points
+    medal_points + ls_points
   end
 end
