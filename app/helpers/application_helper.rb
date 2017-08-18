@@ -61,9 +61,7 @@ module ApplicationHelper
     starting_classes.tap do |sc|
       sc.push('disabled') unless user.enabled?
       sc.push('veteran') if user.has_cached_role? :veteran
-      if defined?(current_user) && user.id == current_user.id
-        sc.push('current')
-      end
+      sc.push('current') if defined?(current_user) && user.id == current_user.id
     end
   end
 
