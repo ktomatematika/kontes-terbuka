@@ -8,7 +8,7 @@ class Ability
     user_abilities(user)
 
     (%w[marker panitia] + Role.admins).each do |role|
-      send("#{role}_abilities", user) if user.has_cached_role? role, :any
+      __send__("#{role}_abilities", user) if user.has_cached_role? role, :any
     end
   end
 

@@ -15,7 +15,22 @@ AllCops:
     - '**/Vagrantfile'
     - 'vendor/**/*'
 
-# Rails
+Metrics/AbcSize:
+  Max: 26
+
+Metrics/BlockLength:
+  Exclude:
+    - 'test/**/*'
+    - 'app/models/concerns/*'
+    - 'app/controllers/concerns/*'
+
+Metrics/ClassLength:
+  Max: 132
+  Exclude:
+    - 'test/**/*'
+
+Metrics/MethodLength:
+  Max: 17
 
 Rails:
   Enabled: true
@@ -24,39 +39,39 @@ Rails/HasAndBelongsToMany:
   Exclude:
     - 'app/models/role.rb'
 
-# Style
-
-Style/Documentation:
+Rails/SaveBang:
   Enabled: false
+
+Security/YAMLLoad:
+  Enabled: false
+
+Style/AutoResourceCleanup:
+  Enabled: true
 
 Style/BracesAroundHashParameters:
   EnforcedStyle: context_dependent
 
-Style/ModuleFunction:
-  EnforcedStyle: extend_self
+Style/CollectionMethods:
+  Enabled: true
 
-Security/YAMLLoad:
+Style/Documentation:
   Enabled: false
 
 Style/FileName:
   Exclude:
     - 'Capfile'
 
-# Metrics
+Style/ModuleFunction:
+  EnforcedStyle: extend_self
 
-Metrics/ClassLength:
-  Max: 132
-  Exclude:
-    - 'test/**/*'
+Style/OptionHash:
+  Enabled: true
 
-Metrics/BlockLength:
-  Exclude:
-    - 'test/**/*'
-    - 'app/models/concerns/*'
-    - 'app/controllers/concerns/*'
+Style/Send:
+  Enabled: true
 
-Metrics/MethodLength:
-  Max: 17
+Style/SingleLineBlockParams:
+  Enabled: true
 
-Metrics/AbcSize:
-  Max: 26
+Style/StringMethods:
+  Enabled: true

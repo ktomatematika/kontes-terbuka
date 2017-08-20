@@ -49,7 +49,7 @@ class UserContest < ActiveRecord::Base
                    else 0
                    end
 
-    ls_points = long_submissions.inject(0) do |memo, item|
+    ls_points = long_submissions.reduce(0) do |memo, item|
       case item.score
       when nil then memo
       when 0..(LongProblem::MAX_MARK - 1) then memo + 1 # +1 if score not nil

@@ -98,7 +98,7 @@ class ContestsController < ApplicationController
 
   def summary
     @scores = @contest.array_of_scores
-    @count = @scores.inject(&:+)
+    @count = @scores.reduce(&:+)
     redirect_to contest_path(@contest), notice: 'Tidak ada data' if @count.zero?
 
     grab_problems
