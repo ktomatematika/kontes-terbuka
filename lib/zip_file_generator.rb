@@ -32,10 +32,8 @@ class ZipFileGenerator
     io.close
   end
 
-  private
-
   # A helper method to make the recursion work.
-  def write_entries(entries, path, io)
+  private def write_entries(entries, path, io)
     entries.each do |e|
       zip_file_path = path == '' ? e : File.join(path, e)
       disk_file_path = File.join(@input_dir, zip_file_path)
@@ -49,7 +47,7 @@ class ZipFileGenerator
         write_entries(subdir, zip_file_path, io)
       else
         io.get_output_stream(zip_file_path) do |f|
-          f.puts(File.open(disk_file_path, 'rb').read)
+          f.puts(File.read(disk_file_path, mode: 'rb'))
         end
       end
     end

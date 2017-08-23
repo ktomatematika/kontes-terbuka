@@ -16,8 +16,7 @@ class TexReader
     Contest.transaction do
       insert_problems
       compile_tex
-      @contest.update(problem_pdf:
-                      File.open(@contest.problem_tex.path[0...-3] + 'pdf', 'r'))
+      update_contest_pdf
     end
   end
 
@@ -96,6 +95,13 @@ class TexReader
       nest_level += 1 if item.include? '\\begin'
       nest_level -= 1 if item.include? '\\end'
       memo
+    end
+  end
+
+  private def update_contest_pdf
+    filename = @contest.problem_tex.path[0...-3] + 'pdf'
+    File.open(filename, 'r') do |file|
+      @contest.update(problem_pdf: file)
     end
   end
 end

@@ -57,7 +57,7 @@ module ContestsHelper
 
   # Helper for contests#_own_results and contests#_results.
   def score(user_contest, long_problem)
-    LongSubmission::SCORE_HASH[user_contest.send(
+    LongSubmission::SCORE_HASH[user_contest.__send__(
       'problem_no_' + long_problem.id.to_s
     )]
   end
