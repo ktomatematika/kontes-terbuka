@@ -61,4 +61,17 @@ class ShortSubmissionTest < ActiveSupport::TestCase
                'Short Submission with duplicate user contest and short ' \
                'problem is saved.'
   end
+
+  test 'remove leading zeroes' do
+    ss = create(:short_submission, answer: '07')
+    ss2 = create(:short_submission, answer: '007')
+    ss3 = create(:short_submission, answer: '0024')
+    ss4 = create(:short_submission, answer: '0')
+    ss5 = create(:short_submission, answer: '00')
+    assert_equal '7', ss.answer
+    assert_equal '7', ss2.answer
+    assert_equal '24', ss3.answer
+    assert_equal '0', ss4.answer
+    assert_equal '0', ss5.answer
+  end
 end

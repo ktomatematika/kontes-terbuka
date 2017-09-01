@@ -29,4 +29,12 @@ class ShortSubmission < ActiveRecord::Base
   # Associations
   belongs_to :user_contest
   belongs_to :short_problem
+
+  before_validation(:remove_leading_zeroes, on: :create)
+
+  private
+
+  def remove_leading_zeroes
+    self.answer = answer.gsub(/^0*.+/, '0' => '') if self.answer
+  end
 end
