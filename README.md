@@ -62,7 +62,7 @@ sudo apt dist-upgrade
 ke `split`)
 
 Untuk import database dari daily dump yang sudah ada, masukkan file-file
-yang mau diimport ke folder `import` di rootterlebih dahulu. Kemudian:
+yang mau diimport ke folder `import` di root terlebih dahulu. Kemudian:
 ```bash
 chmod u+x scripts/import.sh
 ./scripts/import.sh
