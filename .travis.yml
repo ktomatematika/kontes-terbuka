@@ -8,12 +8,19 @@ env:
   - COMMAND="rake test:units"
   - COMMAND="rake test:others"
   - COMMAND="rubocop -D -f simple"
+  - COMMAND="haml-lint --exclude-linter LineLength app/views"
+  - COMMAND="scss-lint app/assets/stylesheets"
+  - COMMAND="eslint app/assets/javascripts"
 matrix:
   include:
     - env: COMMAND="rake test:functionals"
       addons:
         apt:
           packages: texlive-latex-base
+  allow_failures:
+    - env: COMMAND="haml-lint --exclude-linter LineLength app/views"
+    - env: COMMAND="scss-lint app/assets/stylesheets"
+    - env: COMMAND="eslint app/assets/javascripts"
 
 before_script:
 - psql -c 'create database kontes_terbuka_test;' -U postgres
