@@ -35,6 +35,6 @@ class ShortSubmission < ActiveRecord::Base
   private
 
   def remove_leading_zeroes
-    self.answer = answer.gsub(/^0*.+/, '0' => '') if self.answer
+    self.answer = answer.gsub(/^0*.+/, '0' => '') if answer
   end
 end
