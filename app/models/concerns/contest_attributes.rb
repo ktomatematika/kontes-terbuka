@@ -58,14 +58,12 @@ module ContestAttributes
     end
 
     feedback_questions.each do |fq|
-      hash.each { |_ucid, h| h[fq.id] = '' if h[fq.id].nil? }
+      hash[fq.id] = '' if hash[fq.id].nil?
     end
 
-    res = []
-    hash.each do |_ucid, h|
-      res.append(h.sort_by { |fqid, _ans| fqid }.map { |arr| arr[1] })
+    [].tap do |res|
+      res.append(hash.sort_by { |fqid, _ans| fqid }.map { |arr| arr[1] })
     end
-    res
   end
 
   # This method finds all user_contests who fills

@@ -32,12 +32,19 @@ Metrics/ClassLength:
 Metrics/MethodLength:
   Max: 17
 
+Naming/FileName:
+  Exclude:
+    - 'Capfile'
+
 Rails:
   Enabled: true
 
 Rails/HasAndBelongsToMany:
   Exclude:
     - 'app/models/role.rb'
+
+Rails/HasManyOrHasOneDependent:
+  Enabled: false
 
 Rails/SaveBang:
   Enabled: false
@@ -56,10 +63,6 @@ Style/CollectionMethods:
 
 Style/Documentation:
   Enabled: false
-
-Style/FileName:
-  Exclude:
-    - 'Capfile'
 
 Style/ModuleFunction:
   EnforcedStyle: extend_self

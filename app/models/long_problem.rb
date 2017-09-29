@@ -103,7 +103,7 @@ class LongProblem < ActiveRecord::Base
   def autofill
     long_submissions.each do |ls|
       tm = ls.temporary_markings.pluck(:mark)
-      if tm.reduce { |acc, elem| acc && (elem == tm[0] ? true : false) }
+      if tm.reduce { |acc, elem| acc && (elem == tm[0]) }
         ls.update(score: tm[0])
       end
     end
