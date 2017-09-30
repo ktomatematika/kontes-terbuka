@@ -34,6 +34,8 @@ class LongProblem < ActiveRecord::Base
   has_paper_trail
   resourcify
 
+  include ProblemTimesValidation
+
   # Associations
   belongs_to :contest
 
@@ -57,23 +59,6 @@ class LongProblem < ActiveRecord::Base
   end
 
   validates :problem_no, numericality: { greater_than_or_equal_to: 1 }
-
-  # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity
-  # rubocop:disable Metrics/PerceivedComplexity, Style/GuardClause
-  validate :time_between_contest_times
-  def time_between_contest_times
-    if !start_time.nil? && start_time < contest.start_time
-      errors.add :start_time, 'must be >= contest start time'
-    end
-    if !end_time.nil? && end_time > contest.end_time
-      errors.add :end_time, 'must be <= contest end time'
-    end
-    if !start_time.nil? && !end_time.nil? && start_time >= end_time
-      errors.add :start_time, 'must be < end time'
-    end
-  end
-  # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity
-  # rubocop:enable Metrics/PerceivedComplexity, Style/GuardClause
 
   # Display methods
   def to_s
