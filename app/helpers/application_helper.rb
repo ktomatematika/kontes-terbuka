@@ -3,7 +3,9 @@
 module ApplicationHelper
   # Helper to set User ID feature of Google Analytics.
   def track_uid
-    "ga('set', 'userId', #{current_user.id})" unless current_user.nil?
+    # rubocop:disable Rails/OutputSafety
+    "ga('set', 'userId', #{current_user.id})".html_safe unless current_user.nil?
+    # rubocop:enable Rails/OutputSafety
   end
 
   # Helper to create rows of data.
