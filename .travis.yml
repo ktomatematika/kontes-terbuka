@@ -21,6 +21,7 @@ matrix:
     - env: COMMAND="haml-lint --exclude-linter LineLength app/views"
     - env: COMMAND="scss-lint app/assets/stylesheets"
     - env: COMMAND="eslint app/assets/javascripts"
+    - env: COMMAND="brakeman"
 
 before_script:
 - psql -c 'create database kontes_terbuka_test;' -U postgres
