@@ -119,6 +119,7 @@ class Contest < ActiveRecord::Base
   end
 
   def self.count_sql(table)
+    return unless ActiveRecord::Base.connection.tables.include?(table)
     Contest.joins(table.to_sym).group('contests.id')
            .select("contests.id, count(#{table}) AS #{table}_count").to_sql
   end
