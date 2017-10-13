@@ -10,11 +10,11 @@
       %tbody
         - @scores.length.times do |mark|
           - count = (@count - @scores[0]).to_f
-          - total = @scores.take(mark + 1).inject(&:+)
+          - total = @scores.take(mark + 1).sum
           - if mark == 0
             - rev = @count
           - else
-            - rev = @count - @scores.take(mark).inject(&:+)
+            - rev = @count - @scores.take(mark).sum
           = create_data_row([mark, @scores[mark], total, total - @scores[0],
                              rev,
                              percentage((total - @scores[0]) / count),
