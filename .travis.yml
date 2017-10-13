@@ -8,9 +8,6 @@ env:
   - COMMAND="rake test:units"
   - COMMAND="rake test:others"
   - COMMAND="rubocop -D -f simple"
-  - COMMAND="haml-lint --exclude-linter LineLength app/views"
-  - COMMAND="scss-lint app/assets/stylesheets"
-  - COMMAND="eslint app/assets/javascripts"
 matrix:
   include:
     - env: COMMAND="rake test:functionals"
@@ -21,6 +18,7 @@ matrix:
     - env: COMMAND="haml-lint --exclude-linter LineLength app/views"
     - env: COMMAND="scss-lint app/assets/stylesheets"
     - env: COMMAND="eslint app/assets/javascripts"
+    - env: COMMAND="brakeman"
 
 before_script:
 - psql -c 'create database kontes_terbuka_test;' -U postgres
@@ -28,7 +26,3 @@ before_script:
 - cp .env.default .env
 script:
   - "bundle exec $COMMAND"
-after_script:
-- bundle exec haml-lint --exclude-linter LineLength app/views
-- bundle exec scss-lint app/assets/stylesheets
-- bundle exec eslint app/assets/javascripts

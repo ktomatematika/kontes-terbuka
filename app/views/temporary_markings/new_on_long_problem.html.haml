@@ -1,7 +1,7 @@
 .container
   %h1= @long_problem
   = link_to 'Download Marking Scheme',
-    @contest.marking_scheme.url(:original, false),
+    ms_pdf_contest_path(@contest),
     class: 'btn'
   = link_to 'Download semua submisi',
     submissions_long_problem_path(@long_problem),
