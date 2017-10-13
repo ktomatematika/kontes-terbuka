@@ -88,9 +88,7 @@ class LongProblem < ActiveRecord::Base
   def autofill
     long_submissions.each do |ls|
       tm = ls.temporary_markings.pluck(:mark)
-      if tm.all? { |x| x == tm.first }
-        ls.update(score: tm.first)
-      end
+      ls.update(score: tm.first) if tm.all? { |x| x == tm.first }
     end
   end
 
