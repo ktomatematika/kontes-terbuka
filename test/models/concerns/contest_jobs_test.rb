@@ -88,6 +88,7 @@ class ContestJobsTest < ActiveSupport::TestCase
   end
 
   test 'contest jobs on result released' do
+    create(:feedback_question, contest: @c)
     @c.update(start_time: Time.zone.now - 10.days,
               end_time: Time.zone.now - 5.days,
               result_released: true)

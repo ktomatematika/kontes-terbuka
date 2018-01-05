@@ -100,7 +100,7 @@ class ContestsControllerTest < ActionController::TestCase
                                         end_time: Time.zone.now - 5.seconds }
 
     assert_redirected_to contest_path(@c)
-    assert_equal flash[:alert], "#{@c} gagal diubah!"
+    assert flash[:alert].start_with? "#{@c} gagal diubah! "
   end
 
   test 'update upload ms' do
@@ -220,9 +220,12 @@ class ContestsControllerTest < ActionController::TestCase
   test 'download_results' do
     c = create(:contest, result_released: false)
     test_abilities c, :download_results, [nil, :panitia], [:admin]
-    test_abilities create(:contest, start: -5, ends: -3,
-                                    result_released: true),
-                   :download_results, [], [nil, :panitia, :admin]
+
+    c2 = create(:contest, start: -5, ends: -3)
+    create(:feedback_question, contest: c2)
+    c2.update(result_released: true)
+    test_abilities c2, :download_results, [], [nil]
+
     get :download_results, id: @c.id
 
     assert_response 200
