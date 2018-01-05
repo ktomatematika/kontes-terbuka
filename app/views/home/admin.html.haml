@@ -52,4 +52,4 @@
     %h2 Data Referrer
     %ul
     - @referrers.each do |r|
-      %li Dari #{r}: #{User.where(referrer: r).count}
+      %li Dari #{r}: #{r.count}

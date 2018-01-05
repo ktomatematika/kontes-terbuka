@@ -24,7 +24,11 @@ class HomeController < ApplicationController
 
     @panitia = User.with_role(:panitia).order(:username)
 
-    @referrers = Referrer.all
+    @referrers = Referrer.find_by_sql('SELECT name, ' \
+                                      'COUNT(*) AS count FROM users ' \
+                                      'INNER JOIN referrers ON ' \
+                                      'users.referrer_id = referrers.id ' \
+                                      'GROUP BY name')
   end
 
   def about
