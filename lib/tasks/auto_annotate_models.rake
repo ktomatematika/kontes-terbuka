@@ -47,6 +47,7 @@ if Rails.env.development?
       'wrapper_close'           => 'rubocop:enable Metrics/LineLength'
     )
   end
+  # rubocop:enable BlockLength
 
   Annotate.load_tasks
 end
