@@ -82,16 +82,6 @@ class UsersController < ApplicationController
     redirect_to :back, notice: 'Terima kasih sudah mengisi!'
   end
 
-  def mini_update
-    if @user.update(user_mini_edit_params)
-      redirect_to user_path(@user), notice: 'User berhasil diupdate!'
-    else
-      Ajat.warn "user_mini_update_fail|user:#{@user.id}"
-      redirect_to user_path(@user),
-                  alert: 'Terdapat kesalahan dalam mengupdate User!'
-    end
-  end
-
   def destroy
     if @user.destroy
       Ajat.warn "user_destroy|uid:#{params[:id]}"
@@ -122,9 +112,5 @@ class UsersController < ApplicationController
     params.require(:user).permit(:username, :email, :timezone,
                                  :fullname, :province_id, :status_id, :color_id,
                                  :school)
-  end
-
-  private def user_mini_edit_params
-    params.require(:user).permit(:timezone, :color_id)
   end
 end

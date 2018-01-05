@@ -6,8 +6,6 @@ class UsersControllerTest < ActionController::TestCase
   test 'routes' do
     login_and_be_admin
 
-    assert_equal mini_update_user_path(@user),
-                 "/users/#{@user.to_param}/mini-update"
     assert_equal change_password_user_path(@user),
                  "/users/#{@user.to_param}/change-password"
     assert_equal register_users_path,
@@ -93,7 +91,7 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test 'edit' do
-    test_abilities User, :edit, [nil, :panitia], %i[user_admin admin]
+    test_abilities User, :edit, [nil, :panitia], [:admin]
 
     login_and_be_admin
     get :edit, id: @user.id
@@ -101,7 +99,7 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test 'update' do
-    test_abilities User, :update, [nil, :panitia], %i[user_admin admin]
+    test_abilities User, :update, [nil, :panitia], [:admin]
 
     login_and_be_admin
     put :update, id: @user.id, user: { fullname: 'Coba halo' }
@@ -111,7 +109,7 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test 'update fail' do
-    test_abilities User, :update, [nil, :panitia], %i[user_admin admin]
+    test_abilities User, :update, [nil, :panitia], [:admin]
 
     login_and_be_admin
     get :update, id: @user.id, user: { color_id: nil }
@@ -119,40 +117,8 @@ class UsersControllerTest < ActionController::TestCase
     assert_equal flash[:alert], 'Terdapat kesalahan!'
   end
 
-  test 'mini_update' do
-    login_and_be_admin
-
-    u = create(:user)
-    p = create(:user)
-    p.add_role :panitia
-    a = create(:user)
-    a.add_role :panitia
-    a.add_role :user_admin
-    assert Ability.new(u).can?(:mini_edit, u)
-    assert Ability.new(u).cannot?(:mini_edit, @user)
-    assert Ability.new(p).cannot?(:mini_edit, @user)
-    assert Ability.new(a).can?(:mini_edit, @user)
-    assert Ability.new(u).can?(:mini_update, u)
-    assert Ability.new(u).cannot?(:mini_update, @user)
-    assert Ability.new(p).cannot?(:mini_update, @user)
-    assert Ability.new(a).can?(:mini_update, @user)
-
-    put :mini_update, id: @user.id, user: { timezone: 'WITA' }
-    assert_redirected_to user_path(@user)
-    assert_equal flash[:notice], 'User berhasil diupdate!'
-    assert_equal @user.reload.timezone, 'WITA'
-  end
-
-  test 'mini_update fail' do
-    login_and_be_admin
-
-    put :mini_update, id: @user.id, user: { timezone: 'BODOH' }
-    assert_redirected_to user_path(@user)
-    assert_equal flash[:alert], 'Terdapat kesalahan dalam mengupdate User!'
-  end
-
   test 'destroy' do
-    test_abilities User, :destroy, [nil, :panitia], %i[user_admin admin]
+    test_abilities User, :destroy, [nil, :panitia], [:admin]
 
     login_and_be_admin
     delete :destroy, id: @user.id

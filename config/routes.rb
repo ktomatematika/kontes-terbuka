@@ -9,7 +9,6 @@ Rails.application.routes.draw do
 
   resources :users do
     member do
-      post 'mini-update', to: 'users#mini_update'
       get 'change-password', to: 'users#change_password'
       post 'change-password', to: 'users#process_change_password'
       patch 'referrer-update', to: 'users#referrer_update'
