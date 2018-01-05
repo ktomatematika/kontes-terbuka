@@ -134,6 +134,12 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :referrers, only: [] do
+    collection do
+      delete 'reset', to: 'referrers#reset'
+    end
+  end
+
   resources :market_items, path: '/market-items'
 
   %w[home rumah utama].each { |r| get "/#{r}", to: 'home#index' }
