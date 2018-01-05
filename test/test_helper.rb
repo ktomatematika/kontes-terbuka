@@ -34,22 +34,18 @@ module ActiveSupport
 
     def test_abilities(model_object, method, bad_roles, good_roles)
       bad_roles.each do |r|
-        user = get_user_from_role(r)
+        user = r.is_a?(User) ? r : create(:user, role: role)
         ability = Ability.new user
         assert ability.cannot?(method, model_object),
                "#{r} can #{method} on #{model_object}."
       end
 
       good_roles.each do |r|
-        user = get_user_from_role(r)
+        user = r.is_a?(User) ? r : create(:user, role: role)
         ability = Ability.new user
         assert ability.can?(method, model_object),
                "#{r} cannot #{method} on #{model_object}."
       end
-    end
-
-    def get_user_from_role(role)
-      role.nil? || role.is_a?(Symbol) ? create(:user, role: role) : role
     end
   end
 end
