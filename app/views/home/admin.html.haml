@@ -9,6 +9,10 @@
   - if can? :new, LongSubmission
     = link_to 'New LongSubmission', new_long_submission_path, class: 'btn'
 
+  - if can? :reset, Referrer
+    = link_to 'Remove "Lainnya" Referrers', reset_referrers_path, class: 'btn',
+      method: :delete
+
   - if can? :masq, Application
     = form_tag masq_path, html: { class: 'form-horizontal' } do
       .form-group
