@@ -15,6 +15,9 @@ AllCops:
     - '**/Vagrantfile'
     - 'vendor/**/*'
 
+Layout/EmptyLinesAroundArguments:
+  Enabled: false
+
 Metrics/AbcSize:
   Max: 26
 
