@@ -2,12 +2,12 @@
   data-no-turbolink='true'
 
 = content_tag 'div', '', id: 'home-contest-data',
-  data: { name: @next_important_contest && @next_important_contest.name,
-  start_time: @next_important_contest && @next_important_contest.start_time,
-  end_time: @next_important_contest && @next_important_contest.end_time,
-  result_time: @next_important_contest && @next_important_contest.result_time,
-  feedback_time: @next_important_contest && @next_important_contest.feedback_time,
-  results_released: @next_important_contest && @next_important_contest.result_released }
+  data: { name: @next_important_contest &. name,
+  start_time: @next_important_contest &. start_time,
+  end_time: @next_important_contest &. end_time,
+  result_time: @next_important_contest &. result_time,
+  feedback_time: @next_important_contest &. feedback_time,
+  results_released: @next_important_contest &. result_released }
 
 .container#home-container
 
@@ -32,10 +32,6 @@
                 Anda juga bisa #{link_to 'membeli buku kami', book_path}
                 yang berisi kumpulan soal, solusi, maupun tips dan trik
                 olimpiade matematika!
-              %p
-                %b Buku KTOM 2 telah diluncurkan!
-              = image_tag 'buku/buku2.png', alt: 'Buku KTOM 2',
-                class: 'img-buku-ktom img-responsive center-block'
 
           .col-md-6.col-md-pull-6
             %section.home-section#prev-contests
