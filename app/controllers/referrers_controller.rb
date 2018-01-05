@@ -7,7 +7,7 @@ class ReferrersController < ApplicationController
     lainnya = Referrer.find_by(name: 'Lainnya')
     # TODO: Rails is hard
     # rubocop:disable Rails/SkipsModelValidations
-    User.where(referrer: lainnya).update_all(referrer: nil)
+    User.where(referrer: lainnya).update_all(referrer_id: nil)
     # rubocop:enable Rails/SkipsModelValidations
     redirect_to admin_path, notice: 'Lainnya dibuang semua!'
   end
