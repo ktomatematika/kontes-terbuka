@@ -8,9 +8,9 @@
 }
 
 .book-container {
-  padding: 0.5em;
   border: 1px solid #000;
   border-radius: 1em;
+  padding: 0.5em;
 }
 
 .img-buku-ktom {
@@ -18,7 +18,8 @@
   max-width: 10em;
 }
 
-#daftar-panitia {
+#daftar-panitia,
+#alumni-panitia {
   display: flex;
   flex-wrap: wrap;
   text-align: center;
