@@ -5,7 +5,7 @@ class ReferrersController < ApplicationController
 
   def reset
     lainnya = Referrer.find_by(name: 'Lainnya')
-    # TODO Rails is hard
+    # TODO: Rails is hard
     # rubocop:disable Rails/SkipsModelValidations
     User.where(referrer: lainnya).update_all(referrer: nil)
     # rubocop:enable Rails/SkipsModelValidations
