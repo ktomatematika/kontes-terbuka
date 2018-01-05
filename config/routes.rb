@@ -153,3 +153,4 @@ Rails.application.routes.draw do
 
   match '*path', to: 'errors#error_4xx', via: :all
 end
+# rubocop:enable Metrics/BlockLength

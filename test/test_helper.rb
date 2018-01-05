@@ -16,8 +16,8 @@ Rails.application.load_seed
 
 module ActiveSupport
   class TestCase
-    require 'factory_girl'
-    include FactoryGirl::Syntax::Methods
+    require 'factory_bot'
+    include FactoryBot::Syntax::Methods
 
     def teardown
       FileUtils.rm_rf(Rails.root.join('public', 'contest_files'))

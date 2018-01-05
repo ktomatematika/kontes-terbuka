@@ -2,7 +2,7 @@
 
 require_relative 'support'
 
-FactoryGirl.define do
+FactoryBot.define do
   sequence :unique do |n|
     name = 'aaaaaaaa'
     n.times { name = name.succ }
