@@ -4,12 +4,13 @@
   .row
     .col-md-6
       = form_for :user, url: user_path(@user), method: :patch do |f|
-        %p
-          %label{ for: 'user_username' } Username:
-          = f.text_field :username, class: 'form-control'
-        %p
-          %label{ for: 'user_email' } Email:
-          = f.text_field :email, class: 'form-control'
+        - if can? :edit_credentials, @user
+          %p
+            %label{ for: 'user_username' } Username:
+            = f.text_field :username, class: 'form-control'
+          %p
+            %label{ for: 'user_email' } Email:
+            = f.text_field :email, class: 'form-control'
         %p
           %label{ for: 'user_fullname' } Nama lengkap:
           = f.text_field :fullname, class: 'form-control'
