@@ -59,7 +59,8 @@ class ContestsController < ApplicationController
       flash[:notice] = "#{@contest} berhasil diubah."
     else
       Ajat.warn "contest_update_fail|#{@contest.errors.full_messages}"
-      flash[:alert] = "#{@contest} gagal diubah!"
+      flash[:alert] = "#{@contest} gagal diubah! " +
+                      @contest.errors.full_messages.join('; ')
     end
     redirect_to contest_path(@contest)
   end

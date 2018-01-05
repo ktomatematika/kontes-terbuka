@@ -102,6 +102,12 @@ class Contest < ActiveRecord::Base
     errors.add :result_released, 'after contest ended'
   end
 
+  validate :result_released_with_nonzero_feedback_questions
+  def result_released_with_nonzero_feedback_questions
+    return unless result_released && feedback_questions.empty?
+    errors.add :result_released, 'must have > 0 feedback questions'
+  end
+
   def self.next_contest
     Contest.where('end_time > ?', Time.zone.now).order('end_time')[0]
   end

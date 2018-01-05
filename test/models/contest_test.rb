@@ -157,8 +157,15 @@ class ContestTest < ActiveSupport::TestCase
 
   test 'result can only be released after contest ended' do
     c = create(:contest, ends: 10)
+    create(:feedback_question, contest: c)
     assert_not c.update(result_released: true),
                'Contest that has not ended can have results released'
+  end
+
+  test 'result can only be released with feedback questions' do
+    c = create(:contest)
+    assert_not c.update(result_released: true),
+               'Contest that has no feedback questions can be released'
   end
 
   test 'next contest returns next smallest contest end time' do
