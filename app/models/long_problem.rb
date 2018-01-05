@@ -16,7 +16,6 @@
 #  report_file_size    :integer
 #  report_updated_at   :datetime
 #  start_mark_final    :boolean          default(FALSE)
-#  forum_link          :string
 #  start_time          :datetime
 #  end_time            :datetime
 #

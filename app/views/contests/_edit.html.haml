@@ -33,11 +33,6 @@ html: { class: 'form-horizontal' } do |f|
       = f.label :book_promo, 'Promo Buku', class: 'col-sm-3'
       .col-sm-9
         = f.text_field :book_promo, class: 'form-control'
-  - if can?(:edit, @contest) || can?(:update_forum_link, @contest)
-    .form-group
-      = f.label :forum_link, 'Link forum', class: 'col-sm-3'
-      .col-sm-9
-        = f.text_field :forum_link, class: 'form-control'
   - if can?(:edit, @contest)
     .form-group
       = f.label :bronze_cutoff, 'Cutoff Perunggu', class: 'col-sm-3'

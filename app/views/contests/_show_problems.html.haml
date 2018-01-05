@@ -4,7 +4,7 @@
 
 #all-problems
   - unless @short_problems.empty? || @long_problems.empty?
-    %h4= link_if_exists(@contest.forum_link, 'Bagian A: Isian')
+    %h4 Bagian A: Isian
   - @short_problems.each do |prob|
     %h5.problem_no No. #{prob.problem_no}
     = latex_and_markdown :div, prob.statement
@@ -12,5 +12,5 @@
   - unless @short_problems.empty? || @long_problems.empty?
     %h4 Bagian B: Esai
   - @long_problems.each do |prob|
-    %h5.problem_no= link_if_exists(prob.forum_link, "No. #{prob.problem_no}")
+    %h5.problem_no No. #{prob.problem_no}
     = latex_and_markdown :div, prob.statement

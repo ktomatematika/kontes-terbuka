@@ -11,7 +11,6 @@
       %th Edit
       - if can? :destroy, LongProblem
         %th Delete
-      %th Link?
 
     - @long_problems.each do |lp|
       %tr
@@ -24,7 +23,6 @@
         - if can? :destroy, LongProblem
           %td= link_to 'Hapus', lp, method: :delete,
             data: { confirm: 'Apakah Anda yakin?' }
-        %td= 'Ada' unless lp.forum_link.nil? || lp.forum_link.empty?
   - if can? :destroy, LongProblem
     = link_to 'Hapus semua',
       contest_long_problems_path(@contest),

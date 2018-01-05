@@ -72,11 +72,6 @@ class Ability
     can :manage, LongProblem
   end
 
-  private def forum_admin_abilities(_user)
-    can %i[admin update_forum_link], Contest
-    can :update_forum_link, LongProblem
-  end
-
   private def admin_abilities(_user)
     can :manage, :all
   end

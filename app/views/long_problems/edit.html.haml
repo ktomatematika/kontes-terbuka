@@ -13,10 +13,6 @@
           = f.text_area :statement, class: 'form-control',
           disabled: cannot?(:update, @long_problem)
     .form-group
-      = f.label :forum_link, class: 'col-sm-2'
-      .col-sm-4
-        = f.text_field :forum_link, class: 'form-control', autocomplete: 'off'
-    .form-group
       = f.label :start_time_is_nil, class: 'col-sm-2'
       .col-sm-4
         = f.check_box :start_time_is_nil
