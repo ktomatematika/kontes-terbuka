@@ -2,9 +2,9 @@
   %h1 Admin: #{@contest.name}
   = link_to 'Kembali', contest_path(@contest), class: 'btn'
 
-  = render 'edit' if can?(:edit, @contest) || can?(:update_marking_scheme, @contest) || can?(:update_forum_link, @contest)
+  = render 'edit' if can?(:edit, @contest) || can?(:update_marking_scheme, @contest)
   = render 'downloads'
   = render 'misc'
   = render 'short_problems/manage' if can? :manage, ShortProblem
-  = render 'long_problems/manage' if can?(:manage, LongProblem) || can?(:update_forum_link, LongProblem)
+  = render 'long_problems/manage' if can?(:manage, LongProblem)
   = render 'feedback_questions/manage' if can? :manage, FeedbackQuestion

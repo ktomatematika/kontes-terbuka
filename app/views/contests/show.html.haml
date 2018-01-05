@@ -30,9 +30,6 @@
           = render 'feedback' unless @contest.feedback_closed?
         = render 'results'
       - elsif @contest.ended?
-        Sambil menunggu, cek <a href="http://olimpiade.org/discussions/main-topic/42/">olimpiade.org</a>
-        untuk pembahasan soal-soal ini! Klik juga berbagai link di soal-soal di
-        bawah ini untuk langsung membuka pembahasannya!
         = render 'show_problems'
         - if @contest.ended? && can?(:preview, @contest)
           %h2 == HANYA PANITIA ==

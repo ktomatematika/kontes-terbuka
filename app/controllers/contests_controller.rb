@@ -134,11 +134,9 @@ class ContestsController < ApplicationController
                      %i[name start_time end_time result_time
                         feedback_time problem_pdf gold_cutoff
                         silver_cutoff bronze_cutoff result_released
-                        marking_scheme forum_link book_promo]
+                        marking_scheme book_promo]
                    elsif can? :update_marking_scheme, @contest
                      :marking_scheme
-                   elsif can? :update_forum_link, @contest
-                     :forum_link
                    else
                      raise CanCan::AccessDenied.new('Cannot update',
                                                     :update, @contest)

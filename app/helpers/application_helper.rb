@@ -79,16 +79,6 @@ module ApplicationHelper
     link_to text, long_problem_temporary_markings_path(long_problem_id: lp.id)
   end
 
-  # Helper to add link to olimpiade.org if it exists.
-  def link_if_exists(link, text,
-                     additional_text = '(klik untuk diskusi di olimpiade.org!)')
-    if link.blank?
-      text
-    else
-      content_tag(:a, href: link) { "#{text} #{additional_text}" }
-    end
-  end
-
   # Split text, while leaving delimiters intact.
   private def latex_split(text, delimiters)
     regex_string = '(' + delimiters.map { |i| Regexp.escape(i) }.join('|') + ')'

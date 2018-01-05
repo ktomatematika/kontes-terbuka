@@ -30,7 +30,6 @@
 #  marking_scheme_file_size    :integer
 #  marking_scheme_updated_at   :datetime
 #  book_promo                  :string
-#  forum_link                  :string
 #
 # Indexes
 #

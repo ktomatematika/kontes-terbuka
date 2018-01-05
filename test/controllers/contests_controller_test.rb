@@ -119,19 +119,6 @@ class ContestsControllerTest < ActionController::TestCase
     assert @c.reload.marking_scheme.exists?
   end
 
-  test 'update forum link' do
-    test_abilities @c, :update_forum_link, [nil, :panitia, :marker],
-                   %i[forum_admin admin]
-    @user.remove_role :admin
-    @user.add_role :forum_admin
-
-    post :update, id: @c.id, contest: { forum_link: 'https://olimpiade.org' }
-
-    assert_redirected_to contest_path(@c)
-    assert_equal flash[:notice], "#{@c} berhasil diubah."
-    assert_equal @c.reload.forum_link, 'https://olimpiade.org'
-  end
-
   test 'update not allowed' do
     @user.remove_role :admin
 
