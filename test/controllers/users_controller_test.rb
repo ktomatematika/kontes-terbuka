@@ -91,7 +91,8 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test 'edit' do
-    test_abilities User, :edit, [nil, :panitia], [:admin]
+    user = create(:user)
+    test_abilities user, :edit, [nil, :panitia], [user, :admin]
 
     login_and_be_admin
     get :edit, id: @user.id
@@ -99,7 +100,8 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test 'update' do
-    test_abilities User, :update, [nil, :panitia], [:admin]
+    user = create(:user)
+    test_abilities user, :update, [nil, :panitia], [user, :admin]
 
     login_and_be_admin
     put :update, id: @user.id, user: { fullname: 'Coba halo' }
@@ -108,9 +110,20 @@ class UsersControllerTest < ActionController::TestCase
     assert_equal @user.reload.fullname, 'Coba halo'
   end
 
-  test 'update fail' do
-    test_abilities User, :update, [nil, :panitia], [:admin]
+  test 'edit non credentials fail' do
+    test_abilities User, :edit_credentials, [nil, :panitia], [:admin]
 
+    @user = create(:user)
+    @request.cookies[:auth_token] = @user.auth_token
+    old_username = @user.username
+
+    put :update, id: @user.id, user: { username: 'akuganteng' }
+    assert_redirected_to user_path(@user)
+    assert_equal flash[:notice], 'User berhasil diupdate!'
+    assert_equal @user.reload.username, old_username
+  end
+
+  test 'update fail' do
     login_and_be_admin
     get :update, id: @user.id, user: { color_id: nil }
     assert_template :edit

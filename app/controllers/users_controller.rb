@@ -68,7 +68,12 @@ class UsersController < ApplicationController
   def edit; end
 
   def update
-    if @user.update(user_edit_params)
+    prms = if can?(:edit_credentials, @user)
+             user_edit_params
+           else
+             user_edit_noncredentials_params
+           end
+    if @user.update(prms)
       Ajat.info "user_full_update|user:#{@user.id}"
       redirect_to user_path(@user), notice: 'User berhasil diupdate!'
     else
@@ -112,5 +117,10 @@ class UsersController < ApplicationController
     params.require(:user).permit(:username, :email, :timezone,
                                  :fullname, :province_id, :status_id, :color_id,
                                  :school)
+  end
+
+  private def user_edit_noncredentials_params
+    params.require(:user).permit(:timezone, :fullname, :province_id,
+                                 :status_id, :color_id, :school)
   end
 end
