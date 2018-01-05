@@ -82,6 +82,6 @@ module ContestJobSpecifics
     original_method = caller_locations(1, 1)[0].label
     string_kwargs = kwargs.map { |pair| "#{pair[0]}=#{pair[1]}" }.join('|')
 
-    Delayed::Worker.logger.debug "#{original_method}|c=#{id}|#{string_kwargs}"
+    Delayed::Worker.logger.info "#{original_method}|c=#{id}|#{string_kwargs}"
   end
 end
