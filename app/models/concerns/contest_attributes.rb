@@ -62,7 +62,9 @@ module ContestAttributes
     end
 
     [].tap do |res|
-      res.append(hash.sort_by { |fqid, _ans| fqid }.map { |arr| arr[1] })
+      hash.each_value do |h|
+        res.append(h.sort_by { |fqid, _ans| fqid }.map { |arr| arr[1] })
+      end
     end
   end
 
