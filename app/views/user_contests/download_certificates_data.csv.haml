@@ -1,0 +1,7 @@
+- require 'csv'
+Total pertanyaan feedback: #{@contest.feedback_questions.count}
+= CSV.generate_line(['Username', 'Skor', 'Pertanyaan feedback terjawab',
+  'Sertifikat sudah terkirim?']).strip
+- @user_contests.each do |uc|
+  = CSV.generate_line([uc.user, uc.total_mark,
+    uc.feedback_answers.count, uc.certificate_sent]).strip

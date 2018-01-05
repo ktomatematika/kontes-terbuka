@@ -1,5 +1,0 @@
-<% require 'csv' %>
-<%= CSV.generate_line(@feedback_questions).html_safe -%>
-<% @feedback_matrix.each do |arr| %>
-<%= CSV.generate_line(arr).html_safe -%>
-<% end %>

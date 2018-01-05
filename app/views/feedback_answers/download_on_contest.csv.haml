@@ -1,0 +1,4 @@
+- require 'csv'
+= CSV.generate_line(@feedback_questions).strip.html_safe
+- @feedback_matrix.each do |arr|
+  = CSV.generate_line(arr).strip.html_safe
