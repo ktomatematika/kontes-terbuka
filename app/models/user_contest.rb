@@ -25,6 +25,7 @@
 
 class UserContest < ActiveRecord::Base
   include UserContestScope
+  using TimeParser
   has_paper_trail
 
   # Associations
@@ -40,6 +41,12 @@ class UserContest < ActiveRecord::Base
 
   has_many :feedback_answers
   has_many :feedback_questions, through: :feedback_answers
+
+  # Callbacks
+  before_create :set_timer
+  def set_timer
+    self.end_time = Time.zone.now + contest.timer.parse_hhmmss
+  end
 
   # Other methods
   def contest_points

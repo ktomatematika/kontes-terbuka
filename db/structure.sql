@@ -123,7 +123,7 @@ CREATE TABLE contests (
     marking_scheme_file_size integer,
     marking_scheme_updated_at timestamp without time zone,
     book_promo character varying,
-    timer interval
+    timer interval hour to second
 );
 
 
@@ -2070,4 +2070,6 @@ INSERT INTO schema_migrations (version) VALUES ('20180105121032');
 INSERT INTO schema_migrations (version) VALUES ('20180124142305');
 
 INSERT INTO schema_migrations (version) VALUES ('20180124151412');
+
+INSERT INTO schema_migrations (version) VALUES ('20180124153301');
 
