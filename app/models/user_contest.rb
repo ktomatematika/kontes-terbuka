@@ -49,6 +49,10 @@ class UserContest < ActiveRecord::Base
   end
 
   # Other methods
+  scope(:in_time, lambda {
+    where('end_time IS NULL OR end_time >= ?', Time.zone.now)
+  })
+
   def contest_points
     # Award points based on award
     medal_points = case award
