@@ -1,7 +1,7 @@
 = content_tag 'div', '', id: 'contest-data',
   data: { name: @contest.name,
   start_time: @contest.start_time,
-  end_time: @contest.end_time,
+  end_time: @user_contest.end_time || @contest.end_time,
   result_time: @contest.result_time,
   feedback_time: @contest.feedback_time,
   result_released: @contest.result_released,
