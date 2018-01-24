@@ -18,6 +18,8 @@ function fill_contest_text() {
 		var subtitle = '';
 		var time_remaining = '';
 
+		var FIVE_MINUTES = 300;
+
 		if (current < current_start_time) {
 			// Contest has not started
 			subtitle = 'Kontes dimulai ' + current_start_time.format_indo() +
@@ -26,6 +28,11 @@ function fill_contest_text() {
 		} else if (current < current_end_time) {
 			// Contest has not ended
 			$('.row > section').addClass('col-sm-8');
+
+			if (Math.round((current_end_time - current) / 1000) == FIVE_MINUTES) {
+				alert('Waktu tersisa 5 menit lagi. Bersiap-siaplah untuk ' +
+					'mengumpulkan jawaban.');
+			}
 
 			subtitle = 'Batas pengumpulan: ' + current_end_time.format_indo();
 			time_remaining = '(' + current.indo_go_to(current_end_time) + ')';
@@ -45,6 +52,10 @@ function fill_contest_text() {
 		} else if (current < current_result_time) {
 			// Results has not been released
 			$('.row > section').removeClass('col-sm-8');
+
+			if (Math.round((current - current_end_time) / 1000) == 1) {
+				window.location.reload();
+			}
 
 			subtitle = 'Kontes sudah selesai. Hasil kontes akan keluar ' +
 				'paling lambat ' + current_result_time.format_indo() +
