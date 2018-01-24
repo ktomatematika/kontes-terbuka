@@ -29,6 +29,7 @@
 #  marking_scheme_content_type :string
 #  marking_scheme_file_size    :integer
 #  marking_scheme_updated_at   :datetime
+#  book_promo                  :string
 #
 # Indexes
 #

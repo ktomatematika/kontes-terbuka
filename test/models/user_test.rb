@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 # == Schema Information
 #
 # Table name: users
@@ -32,15 +31,15 @@
 #  index_users_on_referrer_id   (referrer_id)
 #  index_users_on_status_id     (status_id)
 #  index_users_on_username      (username) UNIQUE
+#  index_users_on_username_gin  (username)
 #  index_users_on_verification  (verification) UNIQUE
 #
 # Foreign Keys
 #
-#  fk_rails_560da4bd54  (province_id => provinces.id) ON DELETE => nullify
-#  fk_rails_87f75b7957  (color_id => colors.id) ON DELETE => nullify
-#  fk_rails_ce4a327a04  (status_id => statuses.id) ON DELETE => nullify
+#  fk_rails_...  (color_id => colors.id) ON DELETE => nullify
+#  fk_rails_...  (province_id => provinces.id) ON DELETE => nullify
+#  fk_rails_...  (status_id => statuses.id) ON DELETE => nullify
 #
-# rubocop:enable Metrics/LineLength
 
 require 'test_helper'
 

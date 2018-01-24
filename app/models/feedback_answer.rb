@@ -18,8 +18,8 @@
 #
 # Foreign Keys
 #
-#  fk_rails_0615442e63  (feedback_question_id => feedback_questions.id) ON DELETE => cascade
-#  fk_rails_374404a088  (user_contest_id => user_contests.id) ON DELETE => cascade
+#  fk_rails_...  (feedback_question_id => feedback_questions.id) ON DELETE => cascade
+#  fk_rails_...  (user_contest_id => user_contests.id) ON DELETE => cascade
 #
 # rubocop:enable Metrics/LineLength
 

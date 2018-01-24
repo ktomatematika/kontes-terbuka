@@ -813,7 +813,8 @@ CREATE TABLE user_contests (
     contest_id integer NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    certificate_sent boolean DEFAULT false NOT NULL
+    certificate_sent boolean DEFAULT false NOT NULL,
+    end_time timestamp without time zone
 );
 
 
@@ -2064,4 +2065,6 @@ INSERT INTO schema_migrations (version) VALUES ('20170321044422');
 INSERT INTO schema_migrations (version) VALUES ('20170525065802');
 
 INSERT INTO schema_migrations (version) VALUES ('20180105121032');
+
+INSERT INTO schema_migrations (version) VALUES ('20180124142305');
 

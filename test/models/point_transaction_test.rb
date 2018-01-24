@@ -17,7 +17,7 @@
 #
 # Foreign Keys
 #
-#  fk_rails_fc956f9f03  (user_id => users.id) ON DELETE => cascade
+#  fk_rails_...  (user_id => users.id) ON DELETE => cascade
 #
 # rubocop:enable Metrics/LineLength
 

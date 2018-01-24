@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 # == Schema Information
 #
 # Table name: users
@@ -37,9 +36,9 @@
 #
 # Foreign Keys
 #
-#  fk_rails_560da4bd54  (province_id => provinces.id) ON DELETE => nullify
-#  fk_rails_87f75b7957  (color_id => colors.id) ON DELETE => nullify
-#  fk_rails_ce4a327a04  (status_id => statuses.id) ON DELETE => nullify
+#  fk_rails_...  (color_id => colors.id) ON DELETE => nullify
+#  fk_rails_...  (province_id => provinces.id) ON DELETE => nullify
+#  fk_rails_...  (status_id => statuses.id) ON DELETE => nullify
 #
 
 class User < ActiveRecord::Base
