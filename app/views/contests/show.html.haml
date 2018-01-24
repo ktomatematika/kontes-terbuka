@@ -1,7 +1,7 @@
 = content_tag 'div', '', id: 'contest-data',
   data: { name: @contest.name,
   start_time: @contest.start_time,
-  end_time: @user_contest.end_time || @contest.end_time,
+  end_time: @user_contest&.end_time || @contest.end_time,
   result_time: @contest.result_time,
   feedback_time: @contest.feedback_time,
   result_released: @contest.result_released,
@@ -18,7 +18,7 @@
         %h2 == HANYA PANITIA ==
         = render 'show_problems'
 
-      - if @contest.currently_in_contest?
+      - if @user_contest&.currently_in_contest?
         = render 'short_problems' unless @short_problems.empty?
         = render 'long_problems' unless @long_problems.empty?
 
@@ -35,4 +35,4 @@
           %h2 == HANYA PANITIA ==
           = render 'all_results'
 
-    = render 'contest_aside_info' if @contest.currently_in_contest?
+    = render 'contest_aside_info' if @user_contest&.currently_in_contest?

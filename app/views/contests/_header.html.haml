@@ -2,7 +2,7 @@
   %h1#contest-name
   %h3#subtitle
   %h3.update-regularly#time-remaining
-  - if @contest.currently_in_contest?
+  - if @user_contest&.currently_in_contest?
     #contest-buttons
       = link_to 'Download soal', problem_pdf_contest_path,
         class: 'btn btn-lg'

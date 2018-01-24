@@ -53,6 +53,11 @@ class UserContest < ActiveRecord::Base
     where('end_time IS NULL OR end_time >= ?', Time.zone.now)
   })
 
+  def currently_in_contest?
+    contest.currently_in_contest? &&
+      (end_time.nil? || end_time >= Time.zone.now)
+  end
+
   def contest_points
     # Award points based on award
     medal_points = case award

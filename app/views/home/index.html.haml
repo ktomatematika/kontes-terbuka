@@ -2,12 +2,12 @@
   data-no-turbolink='true'
 
 = content_tag 'div', '', id: 'home-contest-data',
-  data: { name: @next_important_contest &. name,
-  start_time: @next_important_contest &. start_time,
-  end_time: @next_important_contest &. end_time,
-  result_time: @next_important_contest &. result_time,
-  feedback_time: @next_important_contest &. feedback_time,
-  results_released: @next_important_contest &. result_released }
+  data: { name: @next_important_contest&.name,
+  start_time: @next_important_contest&.start_time,
+  end_time: UserContest.find_by(contest: @next_important_contest, user: current_user)&.end_time || @next_important_contest&.end_time,
+  result_time: @next_important_contest&.result_time,
+  feedback_time: @next_important_contest&.feedback_time,
+  results_released: @next_important_contest&.result_released }
 
 .container#home-container
 
