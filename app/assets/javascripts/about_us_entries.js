@@ -30,6 +30,36 @@ var about_us_data = [
 		description: 'Muhammad Afifurrahman, yang biasa dipanggil Afif, adalah seorang lajang muda yang sedang menuntut ilmu di FMIPA ITB. Lelaki asli Banjarmasin ini menjalani masa sekolah menengahnya selama enam tahun di Banten, dan tercatat pernah mewakili provinsi Banten dalam OSN 2014 dan OSN 2015 di bidang matematika, berturut-turut mendapatkan medali perak dan emas. Pria penggemar mie dan FM ini juga tercatat berhasil menembus tahap tiga pelatihan nasional calon peserta IMO di 2016, dan berhasil membuat jumlah pacarnya menjadi sepuluh kali lipat lebih banyak selama menjalani pelatihan nasional. Saat ini, pria yang mengaku ganteng ini sedang membantu pengurusan akun-akun media sosial KTO Matematika, menyumbang soal untuk kontes bulanan, dan berkeliling di internet untuk mencari hal-hal yang menarik.',
 		image: 'afif.jpg',
 	},
+	{
+		name: 'Kevin Winata',
+		description: '...',
+		image: 'winata.png',
+	},
+	{
+		name: 'William Kho',
+		description: '...',
+		image: 'wkho.jpg',
+	},
+	{
+		name: 'Dick Jessen William',
+		description: '...',
+		image: 'jessen.jpg',
+	},
+	{
+		name: 'Rio Fandi Dianco',
+		description: 'Rio Fandi Dianco merupakan putra asli Jambi yang sedang mengemban amanah sebagai ketua materi KTO Matematika. Sebelum diamanahi menjadi ketua materi KTO Matematika, Rio sangat aktif dalam penyusun buku 1,2 dan 3 KTOM. Pemuda ini sekarang sedang menempuh studi sebagai calon sarjana Statistika UI, angkatan 2016. Penggemar anime dan game ini menyabet medali perunggu OSN Matematika SMA 2015 dan medali perunggu ONMIPA 2017, bidang matematika.',
+		image: 'rio.png',
+	},
+	{
+		name: 'Eunice Sukarto',
+		description: 'Eunice merupakan anggota perempuan KTO Matematika kedua setelah Fransisca Andriani (Cis). Kecintaannya terhadap matematika membuahkannya hasil manis berupa medali perunggu di OSN 2015 dan medali perak di OSN 2016. Saat ini, ia sedang melanjutkan studi S1 di UC Berkeley, California dalam bidang ilmu komputer. Peran Eunice di KTO Matematika adalah sebagai desainer, pengisi kuota perempuan (selain Cis) dan membantu mengecek kualitas soal setiap bulannya. Melukis, bermain piano klasik serta jalan-jalan merupakan pelariannya ketika penat belajar matematika. Melihat hasil lukisannya, dapat dikatakan Eunice merupakan pelukis beraliran naturalis, namun ia lebih suka disebut pelukis beraliran manusiawi.',
+		image: 'eunice.png',
+	},
+	{
+		name: 'Rezky Arizaputra',
+		description: 'Rezky Arizaputra atau kerap disapa Ekky adalah perwakilan Indonesia yang berhasil meraih dua medali perak di IMO pada tahun 2015 dan 2016. Di tengah kesibukan sebagai mahasiswa Teknik Komputer di NUS, Singapura Ekky masih menyempatkan waktunya membuat soal KTOM setiap bulannya dan membantu mengoreksi pekerjaan peserta. Ekky memiliki kemampuan matematika yang luar biasa sehingga kerap kali peserta pelatnas menyebut kemampuan matematika Ekky sebagai YME (Yang Maha Ekky). Selain gemar matematika, Ekky senang bermain piano dan travelling di waktu senggangnya. Dia juga senang bermain game Dota 2 dan sudah meraih medal divine 6!',
+		image: 'ekky.png',
+	},
 ];
 
 var alumni_data = [
