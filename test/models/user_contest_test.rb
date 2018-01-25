@@ -94,4 +94,37 @@ class UserContestTest < ActiveSupport::TestCase
     assert_equal pucs.find(silver.id).contest_points, 5
     assert_equal pucs.find(gold.id).contest_points, 7
   end
+
+  test 'set_timer' do
+    c = create(:contest, timer: '02:00:00')
+    uc = create(:user_contest, contest: c)
+    assert((uc.end_time - Time.zone.now - 2.hours).abs < 1.second)
+  end
+
+  test 'in_time scope' do
+    uc = create(:user_contest)
+    uc2 = create(:user_contest, end_time: Time.zone.now + 1.hour)
+    create(:user_contest, end_time: Time.zone.now - 1.hour)
+    assert_equal UserContest.in_time.pluck(:id).sort, [uc.id, uc2.id].sort
+  end
+
+  test 'currently_in_contest' do
+    c = create(:contest, start_time: Time.zone.now - 10.seconds,
+                         end_time: Time.zone.now + 10.seconds,
+                         timer: '02:00:00')
+    uc = create(:user_contest, contest: c)
+    assert uc.currently_in_contest?
+
+    c2 = create(:contest, start_time: Time.zone.now - 10.seconds,
+                          end_time: Time.zone.now - 5.seconds,
+                          timer: '02:00:00')
+    uc2 = create(:user_contest, contest: c2)
+    assert_not uc2.currently_in_contest?
+
+    c3 = create(:contest, start_time: Time.zone.now - 10.seconds,
+                          end_time: Time.zone.now + 10.seconds)
+    uc3 = create(:user_contest, contest: c3,
+                                end_time: Time.zone.now - 5.seconds)
+    assert_not uc3.currently_in_contest?
+  end
 end
