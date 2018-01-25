@@ -10,6 +10,7 @@
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
 #  certificate_sent :boolean          default(FALSE), not null
+#  end_time         :datetime
 #
 # Indexes
 #
@@ -17,12 +18,14 @@
 #
 # Foreign Keys
 #
-#  fk_rails_418fd0bbd0  (contest_id => contests.id) ON DELETE => cascade
-#  fk_rails_ee078c9177  (user_id => users.id) ON DELETE => cascade
+#  fk_rails_...  (contest_id => contests.id) ON DELETE => cascade
+#  fk_rails_...  (user_id => users.id) ON DELETE => cascade
 #
+# rubocop:enable Metrics/LineLength
 
 class UserContest < ActiveRecord::Base
   include UserContestScope
+  using TimeParser
   has_paper_trail
 
   # Associations
@@ -39,7 +42,27 @@ class UserContest < ActiveRecord::Base
   has_many :feedback_answers
   has_many :feedback_questions, through: :feedback_answers
 
+  # Callbacks
+  before_create :set_timer
+  def set_timer
+    return if contest.timer.nil?
+    self.end_time = Time.zone.now + contest.timer.parse_hhmmss
+  end
+
   # Other methods
+  scope(:in_time, lambda {
+    joins(:contest)
+      .where('(user_contests.end_time IS NULL OR ' \
+             'user_contests.end_time >= ?) AND contests.start_time <= ? ' \
+             'AND contests.end_time >= ?',
+             Time.zone.now, Time.zone.now, Time.zone.now)
+  })
+
+  def currently_in_contest?
+    contest.currently_in_contest? &&
+      (end_time.nil? || end_time >= Time.zone.now)
+  end
+
   def contest_points
     # Award points based on award
     medal_points = case award
