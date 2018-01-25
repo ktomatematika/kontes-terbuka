@@ -214,4 +214,9 @@ class ContestTest < ActiveSupport::TestCase
     assert_in_delta Time.zone.now, jobs.first.run_at, 5,
                     'Calling refresh does not refresh immediately.'
   end
+
+  test 'nil timer if blank' do
+    assert_nil create(:contest, timer: '').timer
+    assert_nil create(:contest, timer: nil).timer
+  end
 end
