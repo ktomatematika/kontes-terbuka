@@ -109,6 +109,10 @@ class Contest < ActiveRecord::Base
     errors.add :result_released, 'must have > 0 feedback questions'
   end
 
+  before_validation do
+    self.timer = nil if timer.blank?
+  end
+
   def self.next_contest
     Contest.where('end_time > ?', Time.zone.now).order('end_time')[0]
   end
