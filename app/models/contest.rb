@@ -30,6 +30,7 @@
 #  marking_scheme_file_size    :integer
 #  marking_scheme_updated_at   :datetime
 #  book_promo                  :string
+#  timer                       :string
 #
 # Indexes
 #

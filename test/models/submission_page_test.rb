@@ -21,7 +21,7 @@
 #
 # Foreign Keys
 #
-#  fk_rails_62bec7c828  (long_submission_id => long_submissions.id) ON DELETE => cascade
+#  fk_rails_...  (long_submission_id => long_submissions.id) ON DELETE => cascade
 #
 # rubocop:enable Metrics/LineLength
 

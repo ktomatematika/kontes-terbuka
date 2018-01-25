@@ -12,6 +12,8 @@
 #  answer     :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  start_time :datetime
+#  end_time   :datetime
 #
 # Indexes
 #
@@ -19,7 +21,7 @@
 #
 # Foreign Keys
 #
-#  fk_rails_60f1de2193  (contest_id => contests.id) ON DELETE => cascade
+#  fk_rails_...  (contest_id => contests.id) ON DELETE => cascade
 #
 # rubocop:enable Metrics/LineLength
 

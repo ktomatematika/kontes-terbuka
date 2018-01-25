@@ -16,6 +16,8 @@
 #  report_file_size    :integer
 #  report_updated_at   :datetime
 #  start_mark_final    :boolean          default(FALSE)
+#  start_time          :datetime
+#  end_time            :datetime
 #
 # Indexes
 #
@@ -23,7 +25,7 @@
 #
 # Foreign Keys
 #
-#  fk_rails_116a6ecec7  (contest_id => contests.id) ON DELETE => cascade
+#  fk_rails_...  (contest_id => contests.id) ON DELETE => cascade
 #
 # rubocop:enable Metrics/LineLength
 

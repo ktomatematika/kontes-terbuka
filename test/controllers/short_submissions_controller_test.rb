@@ -15,7 +15,7 @@ class ShortSubmissionsControllerTest < ActionController::TestCase
                          end_time: Time.zone.now + 2.days,
                          result_time: Time.zone.now + 3.days,
                          feedback_time: Time.zone.now + 4.days)
-    nil_time_sp = create(:short_problem)
+    nil_time_sp = create(:short_problem, contest: c)
     current_time_sp = create(:short_problem,
                              start_time: Time.zone.now - 5.minutes,
                              end_time: Time.zone.now + 5.minutes,
@@ -23,12 +23,19 @@ class ShortSubmissionsControllerTest < ActionController::TestCase
     past_time_sp = create(:short_problem,
                           end_time: Time.zone.now - 10.minutes,
                           contest: c)
-    test_abilities create(:short_submission, short_problem: nil_time_sp),
-                   :create_on_contest, [], [nil]
-    test_abilities create(:short_submission, short_problem: current_time_sp),
-                   :create_on_contest, [], [nil]
-    test_abilities create(:short_submission, short_problem: past_time_sp),
-                   :create_on_contest, [nil], []
+
+    user_contest = create(:user_contest, contest: c)
+    user = user_contest.user
+
+    test_abilities create(:short_submission, short_problem: nil_time_sp,
+                                             user_contest: user_contest),
+                   :create_on_contest, [], [user]
+    test_abilities create(:short_submission, short_problem: current_time_sp,
+                                             user_contest: user_contest),
+                   :create_on_contest, [], [user]
+    test_abilities create(:short_submission, short_problem: past_time_sp,
+                                             user_contest: user_contest),
+                   :create_on_contest, [user], []
 
     create_list(:short_problem, 5, contest: @c).each do |sp|
       create(:short_submission, short_problem: sp, user_contest: @uc)

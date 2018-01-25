@@ -19,7 +19,7 @@
 #
 # Foreign Keys
 #
-#  fk_rails_7d71f7cc8f  (market_item_id => market_items.id) ON DELETE => cascade
+#  fk_rails_...  (market_item_id => market_items.id) ON DELETE => cascade
 #
 # rubocop:enable Metrics/LineLength
 
