@@ -51,7 +51,11 @@ class UserContest < ActiveRecord::Base
 
   # Other methods
   scope(:in_time, lambda {
-    where('end_time IS NULL OR end_time >= ?', Time.zone.now)
+    joins(:contest)
+      .where('(user_contests.end_time IS NULL OR ' \
+             'user_contests.end_time >= ?) AND contests.start_time <= ? ' \
+             'AND contests.end_time >= ?',
+             Time.zone.now, Time.zone.now, Time.zone.now)
   })
 
   def currently_in_contest?

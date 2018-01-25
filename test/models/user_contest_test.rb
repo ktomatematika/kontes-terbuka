@@ -105,6 +105,9 @@ class UserContestTest < ActiveSupport::TestCase
     uc = create(:user_contest)
     uc2 = create(:user_contest, end_time: Time.zone.now + 1.hour)
     create(:user_contest, end_time: Time.zone.now - 1.hour)
+
+    c = create(:contest, start: 20, ends: 30)
+    create(:user_contest, contest: c)
     assert_equal UserContest.in_time.pluck(:id).sort, [uc.id, uc2.id].sort
   end
 
