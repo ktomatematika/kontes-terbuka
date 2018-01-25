@@ -45,6 +45,7 @@ class UserContest < ActiveRecord::Base
   # Callbacks
   before_create :set_timer
   def set_timer
+    return if contest.timer.nil?
     self.end_time = Time.zone.now + contest.timer.parse_hhmmss
   end
 
