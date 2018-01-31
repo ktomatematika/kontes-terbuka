@@ -30,7 +30,7 @@ class ShortSubmission < ActiveRecord::Base
   belongs_to :user_contest
   belongs_to :short_problem
 
-  before_validation(:remove_leading_zeroes, on: :create)
+  before_validation :remove_leading_zeroes
 
   private
 

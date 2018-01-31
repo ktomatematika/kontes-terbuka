@@ -73,5 +73,16 @@ class ShortSubmissionTest < ActiveSupport::TestCase
     assert_equal '24', ss3.answer
     assert_equal '0', ss4.answer
     assert_equal '0', ss5.answer
+
+    ss.update(answer: '07')
+    ss2.update(answer: '007')
+    ss3.update(answer: '0024')
+    ss4.update(answer: '0')
+    ss5.update(answer: '00')
+    assert_equal '7', ss.answer
+    assert_equal '7', ss2.answer
+    assert_equal '24', ss3.answer
+    assert_equal '0', ss4.answer
+    assert_equal '0', ss5.answer
   end
 end
