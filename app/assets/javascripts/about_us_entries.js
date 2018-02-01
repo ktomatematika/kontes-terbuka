@@ -27,24 +27,24 @@ var about_us_data = [
 	},
 	{
 		name: 'Muhammad Afifurrahman',
-		description: 'Muhammad Afifurrahman, yang biasa dipanggil Afif, adalah seorang lajang muda yang sedang menuntut ilmu di FMIPA ITB. Lelaki asli Banjarmasin ini menjalani masa sekolah menengahnya selama enam tahun di Banten, dan tercatat pernah mewakili provinsi Banten dalam OSN 2014 dan OSN 2015 di bidang matematika, berturut-turut mendapatkan medali perak dan emas. Pria penggemar mie dan FM ini juga tercatat berhasil menembus tahap tiga pelatihan nasional calon peserta IMO di 2016, dan berhasil membuat jumlah pacarnya menjadi sepuluh kali lipat lebih banyak selama menjalani pelatihan nasional. Saat ini, pria yang mengaku ganteng ini sedang membantu pengurusan akun-akun media sosial KTO Matematika, menyumbang soal untuk kontes bulanan, dan berkeliling di internet untuk mencari hal-hal yang menarik.',
-		image: 'afif.jpg',
+		description: 'Muhammad Afifurrahman, bisa dipanggil Afif, tengah menempuh studi di Institut Teknologi Bandung sebagai mahasiswa sarjana Matematika. Lajang asli Banjarmasin ini pernah dua kali mengikuti OSN SMA (bidang matematika) pada 2014 dan 2015, berturut-turut menyabet medali perak dan emas. Penggemar mie instan dan sate ayam ini juga menembus pelatihan calon peserta IMO 2016 tahap 3 (11 besar). (pengaku) Penggemar Chrisye dan anime slice-of-life ini sangat senang menulis; baik puisi, cerpen, ataupun jawaban ujian. Saat ini, pria yang berharap bisa berjalan kaki jarak jauh ini membantu mengurus akun media sosial KTO Matematika, dan terkadang membantu serabutan untuk kegiatan-kegiatan rutin KTOM.',
+		image: 'afif.png',
 	},
-	// {
-	// 	name: 'Kevin Winata',
-	// 	description: '...',
-	// 	image: 'winata.png',
-	// },
-	// {
-	// 	name: 'William Kho',
-	// 	description: '...',
-	// 	image: 'wkho.jpg',
-	// },
-	// {
-	// 	name: 'Dick Jessen William',
-	// 	description: '...',
-	// 	image: 'jessen.jpg',
-	// },
+	{
+		name: 'Kevin Winata',
+		description: 'Kevin Winata berasal dari Sibolga, sebuah kota di Sumatera Utara yang berpenduduk sekitar 85 ribu orang dan berjarak 350 km dari ibukota provinsinya, Medan. Penghobi kegiatan menggambar ini menyabet medali perak di OSN Matematika 2016, dan sekarang berkuliah di NTU (Nanyang Technological University) di Singapura, jurusan Computer Science. Pemain gitar, competitive programming, dan tenis meja ini merupakan salah satu pemegang amanah dalam pengecekan kualitas soal dan buku KTO Matematika agar sesuai dengan standar, dan turut mendesain beberapa poster KTOM.',
+		image: 'winata.png',
+	},
+	{
+		name: 'William Kho',
+		description: 'William Kho adalah peserta OSN yang memperoleh medali perak OSN 2 kali berturut pada tahun 2015 dan 2016. Saat ini, dia melanjutkan studinya di Nanyang Technological University (NTU), Singapura jurusan Teknik Sipil. Meskipun tidak melanjutkan studi di jursusan Matematika, William Kho masih tetap berkontribusi ke Olimpiade Matematika Indonesia dengan menjabat sebagai ketua tim koreksi KTOM. Selain Matematika, William Kho juga suka bermain badminton dan "Cardfight!! Vanguard" trading card game.',
+		image: 'wkho.png',
+	},
+	{
+		name: 'Dick Jessen William',
+		description: 'Dengan pengalaman bergelut dengan matematika sejak SD, Dick Jessen William berhasil membawa pulang medali perak di OSN 2016 untuk provinsi Riau. Pada saat ini, Jessen tengah berjuang untuk menjadi perwakilan Indonesia di ajang IMO. Sembari mempersiapkan diri untuk berjuang di Pelatihan Nasional, Jessen menyempatkan diri membuat soal dan mengecek kualitas soal-soal KTO Matematika setiap bulannya. Tidur adalah pelariannya ketika penat belajar.',
+		image: 'jessen.png',
+	},
 	{
 		name: 'Rio Fandi Dianco',
 		description: 'Rio Fandi Dianco merupakan putra asli Jambi yang sedang mengemban amanah sebagai ketua materi KTO Matematika. Sebelum diamanahi menjadi ketua materi KTO Matematika, Rio sangat aktif dalam penyusun buku 1,2 dan 3 KTOM. Pemuda ini sekarang sedang menempuh studi sebagai calon sarjana Statistika UI, angkatan 2016. Penggemar anime dan game ini menyabet medali perunggu OSN Matematika SMA 2015 dan medali perunggu ONMIPA 2017, bidang matematika.',
