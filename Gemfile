@@ -7,7 +7,7 @@ ruby '2.5.0'
 # Rails version
 gem 'rails', '~> 4'
 # Use postgres as database
-gem 'pg'
+gem 'pg', '< 1'
 # For Travis CI
 gem 'rake', group: :test
 
