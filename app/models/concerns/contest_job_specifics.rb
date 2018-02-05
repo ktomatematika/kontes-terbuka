@@ -47,11 +47,13 @@ module ContestJobSpecifics
   end
 
   def check_veteran
-    users.each do |u|
+    user_contests.each do |uc|
+      u = uc.user
       next if u.has_role? :veteran
 
-      gold = u.user_contests.include_marks.count do |uc|
-        uc.total_mark >= uc.contest.gold_cutoff
+      # TODO: use `#count`
+      gold = u.user_contests.include_marks.length do |user_contest|
+        user_contest.total_mark >= user_contest.contest.gold_cutoff
       end
       next unless gold >= 3
 
