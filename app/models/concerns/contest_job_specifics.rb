@@ -51,6 +51,7 @@ module ContestJobSpecifics
       u = uc.user
       next if u.has_role? :veteran
 
+      # TODO: use `#count`
       gold = u.user_contests.include_marks.length do |user_contest|
         user_contest.total_mark >= user_contest.contest.gold_cutoff
       end
