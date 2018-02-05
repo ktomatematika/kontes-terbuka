@@ -46,15 +46,17 @@ module ContestJobSpecifics
     end
   end
 
+  # TODO
+  # rubocop:disable Metrics/AbcSize
   def check_veteran
     user_contests.each do |uc|
       u = uc.user
       next if u.has_role? :veteran
 
       # TODO: use `#count`
-      gold = u.user_contests.include_marks.length do |user_contest|
+      gold = u.user_contests.include_marks.select do |user_contest|
         user_contest.total_mark >= user_contest.contest.gold_cutoff
-      end
+      end.length
       next unless gold >= 3
 
       u.add_role :veteran
@@ -65,6 +67,7 @@ module ContestJobSpecifics
       dj_log uc: uc.id
     end
   end
+  # rubocop:enable Metrics/AbcSize
 
   def send_certificates
     full_feedback_user_contests.eligible_score.each do |uc|
