@@ -7,7 +7,7 @@ ruby '2.5.0'
 # Rails version
 gem 'rails', '~> 4'
 # Use postgres as database
-gem 'pg'
+gem 'pg', '< 1'
 # For Travis CI
 gem 'rake', group: :test
 
@@ -16,7 +16,7 @@ gem 'rake', group: :test
 ### VIEWS, ASSETS, FRONTEND STUFF
 
 # HAML makes your life easier
-gem 'haml', '>= 5.0.0'
+gem 'haml'
 # Use SCSS for stylesheets
 gem 'sass-rails'
 # Use Uglifier as compressor for JavaScript assets
@@ -37,7 +37,7 @@ gem 'nested_form'
 # Markdown parser
 gem 'redcarpet'
 # Zip submissions
-gem 'rubyzip', '>= 1.2.1'
+gem 'rubyzip'
 # Autoprefixer for SCSS
 gem 'autoprefixer-rails'
 # Inline SVG
@@ -45,7 +45,7 @@ gem 'inline_svg'
 
 group :development do
   # Favicon set
-  gem 'rails_real_favicon', '>= 0.0.7'
+  gem 'rails_real_favicon'
 end
 
 ### END ASSETS
@@ -78,7 +78,7 @@ group :test do
   # Acceptance testing
   gem 'capybara'
   # Driver for Capybara to allow JS stuff
-  gem 'selenium-webdriver', '>= 3.0.5'
+  gem 'selenium-webdriver'
   # Allow transcations with Capybara and Selenius
   gem 'transactional_capybara'
 end
@@ -122,7 +122,7 @@ group :development, :test do
   # Ruby linter
   gem 'rubocop'
   # HAML linter
-  gem 'haml_lint', '>= 0.24.0'
+  gem 'haml_lint'
   # SCSS linter
   gem 'scss_lint', require: false
 end
