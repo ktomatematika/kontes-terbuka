@@ -8,6 +8,7 @@ module Mailgun
   URL = "https://api:#{KEY}@api.mailgun.net/v3/#{DOMAIN}/messages"
   EMAIL = "mail@#{DOMAIN}"
   FROM = "Kontes Terbuka Olimpiade Matematika <#{EMAIL}>"
+  TRIES = 3
   # Sends a message with Mailgun. Pass a hash of options.
   # Some options:
   # to: message recipient. Please only specify one recipient; if you want more,
@@ -17,21 +18,35 @@ module Mailgun
   # subject: subject
   # contest: specify a contest to put contest tag
   # bcc_array: BCC params as an array.
+  # tries: number of attempts, defaults to TRIES variable above
   def send_message(**params)
     make_valid!(params)
     text = params[:text]
     params[:text] = Social.email_template.get binding
 
     check_force_to_many!(params)
-    add_contest!(params) if params[:contest]
-    convert_bcc!(params) if params[:bcc_array]
+    add_contest!(params)
+    convert_bcc!(params)
 
-    RestClient.post URL, params if Rails.env.production?
-    Ajat.info "mailgun|message=#{params}" if Rails.env.development?
-    params if Rails.env.test?
+    case Rails.env
+    when 'production'
+      tries = params.delete(:tries) || TRIES
+      send_email(params, tries)
+    when 'development'
+      Ajat.info "mailgun|message=#{params}"
+    when 'test'
+      params
+    end
   end
 
   private
+
+  def send_email(params, tries)
+    RestClient.post URL, params if Rails.env.production?
+  rescue RestClient::Exceptions::OpenTimeout
+    tries -= 1
+    retry unless tries.zero?
+  end
 
   def make_valid!(params)
     params[:to] ||= EMAIL
@@ -47,13 +62,13 @@ module Mailgun
   end
 
   def add_contest!(params)
-    params[:subject] = "#{params[:contest]}: #{params[:subject]}"
-    params.delete(:contest)
+    return unless params[:contest]
+    params[:subject] = "#{params.delete(:contest)}: #{params[:subject]}"
   end
 
   def convert_bcc!(params)
+    return unless params[:bcc_array]
     params[:bcc].nil? ? params[:bcc] = '' : params[:bcc] += ','
-    params[:bcc] += params[:bcc_array].join(',')
-    params.delete(:bcc_array)
+    params[:bcc] += params.delete(:bcc_array).join(',')
   end
 end
