@@ -124,7 +124,7 @@ function show_prob(item) {
 	}
 }
 
-$(document).ready(function() {
+$(document).on('turbolinks:load', function() {
 	show_prob(get_rand());
 	$('.right-ganti-soal').contextmenu(function(e) {
 		e.preventDefault();

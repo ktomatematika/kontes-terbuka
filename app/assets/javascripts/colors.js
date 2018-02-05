@@ -3,4 +3,4 @@ function load_colors() {
 	$('.btn, .point-image, .has-shade').attr('data-shade', shade);
 }
 
-$(document).ready(load_colors);
+$(document).on('turbolinks:load', load_colors);

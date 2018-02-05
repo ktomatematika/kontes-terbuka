@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).on('turbolinks:load', function() {
 // Use the hash to determine which form to show. Defaults to register.
 	var hash = window.location.hash;
 	if (hash === '#login') {

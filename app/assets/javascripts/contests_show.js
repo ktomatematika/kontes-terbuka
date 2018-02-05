@@ -75,7 +75,7 @@ function fill_contest_text() {
 	}
 }
 
-$(document).ready(function() {
+$(document).on('turbolinks:load', function() {
 	var show_contest_about = false;
 	var show_all_problems = false;
 	var show_own_results = false;

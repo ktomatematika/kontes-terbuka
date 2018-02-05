@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).on('turbolinks:load', function() {
 	function add_search() {
 		var search_val = $('#users-search > input').val();
 		var search = '';

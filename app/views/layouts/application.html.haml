@@ -33,6 +33,35 @@
         fjs.parentNode.insertBefore(js, fjs);
       }(document, 'script', 'facebook-jssdk'));
 
+      // Compatibility with Turbolinks 5
+      (function($) {
+        var fbRoot;
+
+        function saveFacebookRoot() {
+          if ($('#fb-root').length) {
+            fbRoot = $('#fb-root').detach();
+          }
+        };
+
+        function restoreFacebookRoot() {
+          if (fbRoot != null) {
+            if ($('#fb-root').length) {
+              $('#fb-root').replaceWith(fbRoot);
+            } else {
+              $('body').append(fbRoot);
+            }
+          }
+
+          // Instance of Facebook SDK
+          if (typeof FB !== "undefined" && FB !== null) {
+            FB.XFBML.parse();
+          }
+        };
+
+        document.addEventListener('turbolinks:request-start', saveFacebookRoot)
+        document.addEventListener('turbolinks:load', restoreFacebookRoot)
+      }(jQuery));
+
     -# Google Analytics
     %script{ data: { 'turbolinks-eval' => 'false' } }
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;

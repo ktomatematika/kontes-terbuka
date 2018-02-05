@@ -11,7 +11,6 @@
 // about supported directives.
 //
 //= require jquery
-//= require jquery.turbolinks
 //= require jquery_ujs
 //= require vendors
 //= require ./date_methods.js
@@ -21,7 +20,7 @@
 //= require jquery_nested_form
 //= require browser_details
 
-$(document).ready(function() {
+$(document).on('turbolinks:load', function() {
 	$('body').flowtype({
 		minFont: 14,
 		maxFont: 20,

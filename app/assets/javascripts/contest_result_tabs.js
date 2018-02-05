@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).on('turbolinks:load', function() {
 	$('.result-tables .contest-results').hide();
 	$('.same-province').show();
 
