@@ -8,7 +8,7 @@ class ErrorsController < ApplicationController
     regex_string = '(' + whitelist.map { |i| Regexp.escape(i) }.join('|') + ')'
     regex = Regexp.new regex_string
 
-    unless params[:path] =~ regex
+    unless params[:path].match?(regex)
       Ajat.error "nyasar|uid=#{current_user&.id}|" \
       "params=#{params[:path]}|#{request.env.extract!('PATH_INFO',
                                                       'QUERY_STRING',
