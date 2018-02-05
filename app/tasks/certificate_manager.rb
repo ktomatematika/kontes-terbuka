@@ -9,10 +9,12 @@ class CertificateManager
     @user_contest = uc
     @contest = uc.contest
     @user = uc.user
-    @path = Rails.root.join('public', 'contest_files',
-                            'certificates', uc.id.to_s).to_s
+    @dir = Rails.root.join('public', 'contest_files', 'certificates').to_s
+    @path = "#{@dir}/#{uc.id}"
     @tex_path = @path + '.tex'
     @pdf_path = @path + '.pdf'
+
+    FileUtils.mkdir_p(@dir) unless Dir.exist?(@dir)
   end
 
   def ==(other)
