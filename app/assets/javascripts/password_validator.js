@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).on('turbolinks:load', function() {
 	$('#reset-password').validate({
 		rules: {
 			'[new_password]': {

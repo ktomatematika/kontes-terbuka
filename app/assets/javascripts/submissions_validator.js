@@ -9,7 +9,7 @@ function distinct(arr) {
 	return true;
 }
 
-$(document).ready(function() {
+$(document).on('turbolinks:load', function() {
 	$('#bagian-a form').validate();
 	$.each($('#bagian-b form'), function(idx, elem) {
 		$(elem).validate({

@@ -11,5 +11,5 @@ function update_regularly() {
 	validate_long_submissions();
 }
 
-$(document).ready(update_regularly);
+$(document).on('turbolinks:load', update_regularly);
 setInterval(update_regularly, REFRESH_TIME);

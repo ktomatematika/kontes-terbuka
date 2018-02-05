@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).on('turbolinks:load', function() {
 	var MD_COLUMNS = 3;
 	var SM_COLUMNS = 2;
 	var BOOTSTRAP_ROW = 12;
