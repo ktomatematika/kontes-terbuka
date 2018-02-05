@@ -176,10 +176,10 @@ end
 
 group :production do
   # Use unicorn as the web server.
-  gem 'unicorn'
+  # gem 'unicorn'
   # This gem kills unicorn workers after certain time to prevent memory
   # leakage.
-  gem 'unicorn-worker-killer'
+  # gem 'unicorn-worker-killer'
 end
 
 group :development do
