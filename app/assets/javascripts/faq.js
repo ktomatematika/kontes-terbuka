@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).on('turbolinks:load', function() {
 	for (var i = 0; i < faq_data.length; i++) {
 		var data = faq_data[i];
 		$('#faq-entries').append(

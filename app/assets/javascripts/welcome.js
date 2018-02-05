@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).on('turbolinks:load', function() {
 	var next_contest = $('#welcome-contest-data');
 	if (next_contest.length !== 0) {
 		var contest_text;

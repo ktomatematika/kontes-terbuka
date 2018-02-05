@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).on('turbolinks:load', function() {
 	$('#register form').validate({
 		ignore: ':hidden:not([name=recaptcha])',
 

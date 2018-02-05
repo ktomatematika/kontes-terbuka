@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).on('turbolinks:load', function() {
 	var current_contest = $('#rules-contest-data');
 	if (current_contest.length !== 0) {
 		var name = current_contest.data('name');

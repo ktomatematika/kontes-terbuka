@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).on('turbolinks:load', function() {
 	var problems = $('.latex');
 
 	$.each(problems, function(j, label) {
