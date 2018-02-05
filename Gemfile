@@ -174,14 +174,6 @@ end
 
 ### PRODUCTION STUFF
 
-group :production do
-  # Use unicorn as the web server.
-  # gem 'unicorn'
-  # This gem kills unicorn workers after certain time to prevent memory
-  # leakage.
-  # gem 'unicorn-worker-killer'
-end
-
 group :development do
   # Use capistrano and its extensions.
   gem 'capistrano'
