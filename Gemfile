@@ -93,8 +93,6 @@ group :development do
   gem 'spring'
   # Shoot those n+1 queries!
   gem 'bullet'
-  # Trace routes
-  gem 'traceroute'
   # ?
   gem 'table_flipper'
 end
@@ -105,6 +103,8 @@ group :development, :test do
   gem 'byebug'
   # Factory bot: factories for testing
   gem 'factory_bot_rails'
+  # Trace routes
+  gem 'traceroute'
 end
 
 group :production do
@@ -165,7 +165,7 @@ gem 'bcrypt'
 # A recaptcha helper gem.
 gem 'recaptcha', require: 'recaptcha/rails'
 
-group :development do
+group :development, :test do
   # Security checkup
   gem 'brakeman'
 end
