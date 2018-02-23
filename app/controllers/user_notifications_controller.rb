@@ -15,5 +15,7 @@ class UserNotificationsController < ApplicationController
       un.destroy
     end
     render nothing: true
+  rescue ActiveRecord::RecordNotUnique
+    retry
   end
 end

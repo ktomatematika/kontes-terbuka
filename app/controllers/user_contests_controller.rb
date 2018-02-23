@@ -11,6 +11,8 @@ class UserContestsController < ApplicationController
   def create
     UserContest.create(user: current_user, contest: @contest)
     redirect_to contest_path(@contest)
+  rescue ActiveRecord::RecordNotUnique
+    retry
   end
 
   def download_certificates_data

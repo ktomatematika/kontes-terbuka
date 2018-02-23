@@ -40,7 +40,7 @@ module ApplicationHelper
       elsif !render
         txt
       else # add space if text does not start with punctuation
-        sanitize((txt[0].match?(/[[:punct:]]/) ? '' : ' ') +
+        sanitize((txt.first.match?(/[[:punct:]]/) ? '' : ' ') +
                  markdown.render(txt))
       end
     end)
