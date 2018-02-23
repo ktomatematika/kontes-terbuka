@@ -14,7 +14,7 @@ class LongSubmissionsController < ApplicationController
 
     authorize! :create, @long_submission
 
-    if @long_submission.save
+    if !@long_submission.submission_pages.empty? && @long_submission.save
       redirect_to :back, notice: 'Jawaban bagian B berhasil diupload!'
     else
       redirect_to :back,
@@ -84,7 +84,7 @@ class LongSubmissionsController < ApplicationController
   end
 
   private def long_submission_params
-    params.require(:long_submission).permit(
+    params.fetch(:long_submission, {}).permit(
       submission_pages_attributes: %i[page_number submission _destroy id]
     )
   end
