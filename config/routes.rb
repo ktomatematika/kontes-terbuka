@@ -88,8 +88,6 @@ Rails.application.routes.draw do
         patch 'autofill', to: 'long_problems#autofill'
         put 'autofill', to: 'long_problems#autofill'
         post 'upload-report', to: 'long_problems#upload_report'
-        patch 'start-mark-final', to: 'long_problems#start_mark_final'
-        put 'start-mark-final', to: 'long_problems#start_mark_final'
       end
 
       collection do

@@ -20,8 +20,6 @@ class LongProblemsControllerTest < ActionController::TestCase
                  "/long-problems/#{@lp.id}/autofill"
     assert_equal upload_report_long_problem_path(@lp),
                  "/long-problems/#{@lp.id}/upload-report"
-    assert_equal start_mark_final_long_problem_path(@lp),
-                 "/long-problems/#{@lp.id}/start-mark-final"
   end
 
   test 'create' do
@@ -97,16 +95,6 @@ class LongProblemsControllerTest < ActionController::TestCase
     assert_redirected_to long_problem_long_submissions_path @lp
     @lp.long_submissions.each { |l| assert_equal l.score, 2 }
     assert_equal flash[:notice], 'Sulap selesai!'
-  end
-
-  test 'start_mark_final' do
-    test_abilities @lp, :start_mark_final,
-                   [nil, :panitia, :marker],
-                   %i[marking_manager problem_admin admin]
-    patch :start_mark_final, id: @lp.id
-    assert_redirected_to long_problem_long_submissions_path @lp
-    assert @lp.reload.start_mark_final
-    assert_equal flash[:notice], 'Langsung diskusi!'
   end
 
   test 'upload_report' do

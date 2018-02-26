@@ -53,12 +53,6 @@ class LongProblemsController < ApplicationController
                 notice: 'Sulap selesai!'
   end
 
-  def start_mark_final
-    @long_problem.update start_mark_final: true
-    redirect_to long_problem_long_submissions_path(@long_problem),
-                notice: 'Langsung diskusi!'
-  end
-
   def upload_report
     if @long_problem.update(report_params)
       flash[:notice] = 'Laporan telah diupload!'

@@ -15,7 +15,6 @@
 #  report_content_type :string
 #  report_file_size    :integer
 #  report_updated_at   :datetime
-#  start_mark_final    :boolean          default(FALSE)
 #  start_time          :datetime
 #  end_time            :datetime
 #
@@ -76,12 +75,6 @@ class LongProblem < ActiveRecord::Base
     delete_submission_zips
     File.delete(zip_location) if File.file?(zip_location)
     ZipFileGenerator.new(submissions_location, zip_location).write
-  end
-
-  def all_marked?
-    markers_count = User.with_role(:marker, self).count
-    temporary_count = temporary_markings.count
-    long_submissions.length * markers_count == temporary_count
   end
 
   def autofill

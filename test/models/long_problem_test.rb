@@ -15,7 +15,6 @@
 #  report_content_type :string
 #  report_file_size    :integer
 #  report_updated_at   :datetime
-#  start_mark_final    :boolean          default(FALSE)
 #  start_time          :datetime
 #  end_time            :datetime
 #
@@ -148,11 +147,6 @@ class LongProblemTest < ActiveSupport::TestCase
                'problem no can be saved.'
   end
 
-  test 'start mark final has default false' do
-    assert_not create(:long_problem).start_mark_final,
-               'Long Problem does not default to false start_mark_final.'
-  end
-
   test 'zip location' do
     lp = create(:long_problem)
     assert_equal lp.zip_location,
@@ -187,23 +181,6 @@ class LongProblemTest < ActiveSupport::TestCase
                      "hal#{p.page_number}.pdf"
           assert filenames.include?(filename), "#{filename} is not there!!"
         end
-      end
-    end
-  end
-
-  test 'all_marked' do
-    c = create(:full_contest)
-
-    c.long_problems.each_with_index do |lp, idx|
-      if idx.zero?
-        lp.submission_pages.each(&:destroy)
-        assert lp.all_marked?
-      elsif idx == 1
-        lp.temporary_markings.take.destroy
-        assert_not lp.all_marked?
-      elsif idx == 2
-        lp.temporary_markings.each(&:destroy)
-        assert_not lp.all_marked?
       end
     end
   end

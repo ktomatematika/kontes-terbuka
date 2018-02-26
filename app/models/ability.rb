@@ -62,7 +62,7 @@ class Ability
   end
 
   private def marking_manager_abilities(_user)
-    can %i[start_mark_final download_submissions], LongProblem
+    can :download_submissions, LongProblem
     can %i[assign_markers create_marker remove_marker], Role
   end
 

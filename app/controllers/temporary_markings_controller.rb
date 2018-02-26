@@ -5,17 +5,10 @@ class TemporaryMarkingsController < ApplicationController
   before_action { authorize! :mark, @long_problem }
 
   def new_on_long_problem
-    if !current_user.has_role?(:marker, @long_problem) ||
-       @long_problem.start_mark_final
-      redirect_to long_problem_long_submissions_path(
-        long_problem_id: @long_problem.id
-      )
-    else
-      @contest = @long_problem.contest
-      @long_submissions = @long_problem.long_submissions.order(:user_contest_id)
-      @markers = User.with_role(:marker, @long_problem)
-                     .where.not(id: current_user.id)
-    end
+    @contest = @long_problem.contest
+    @long_submissions = @long_problem.long_submissions.order(:user_contest_id)
+    @markers = User.with_role(:marker, @long_problem)
+                   .where.not(id: current_user.id)
   end
 
   def modify_on_long_problem
