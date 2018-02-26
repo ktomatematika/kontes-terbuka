@@ -39,7 +39,12 @@ class ContestsController < ApplicationController
   end
 
   def index
-    @contests = Contest.where('start_time < ?', Time.zone.now + 3.months)
+    @contests = if current_user.has_role?(:admin)
+                  Contest.all
+                else
+                  Contest.where('start_time < ?', Time.zone.now + 3.months)
+                end
+
     %w[short_problems long_problems user_contests].each do |table|
       subquery = Contest.count_sql(table)
       @contests = @contests.joins("LEFT OUTER JOIN (#{subquery}) #{table} " \
