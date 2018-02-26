@@ -55,6 +55,7 @@ namespace :deploy do
   end
 
   after :publishing, 'deploy:restart'
+  after :publishing, 'deploy:restart'
   after :finishing, 'deploy:cleanup'
   after :finishing, 'sitemap:refresh'
 end
