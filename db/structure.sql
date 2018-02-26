@@ -265,7 +265,6 @@ CREATE TABLE long_problems (
     report_content_type character varying,
     report_file_size integer,
     report_updated_at timestamp without time zone,
-    start_mark_final boolean DEFAULT false,
     start_time timestamp without time zone,
     end_time timestamp without time zone
 );
@@ -2072,4 +2071,6 @@ INSERT INTO schema_migrations (version) VALUES ('20180124142305');
 INSERT INTO schema_migrations (version) VALUES ('20180124151412');
 
 INSERT INTO schema_migrations (version) VALUES ('20180124153301');
+
+INSERT INTO schema_migrations (version) VALUES ('20180226033248');
 

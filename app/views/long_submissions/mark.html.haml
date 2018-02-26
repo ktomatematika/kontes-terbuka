@@ -9,9 +9,6 @@
   %span Download ini memakan waktu. Sabar ya. :3
   = link_to 'Magic', autofill_long_problem_path(@long_problem),
     method: :patch, class: 'btn'
-  - unless @long_problem.start_mark_final
-    = link_to 'Panic', start_mark_final_long_problem_path(@long_problem),
-      method: :patch, class: 'btn'
 
   %div
     Catatan: Anda bisa menggunakan LaTeX (bungkus dengan $) dan Markdown.
