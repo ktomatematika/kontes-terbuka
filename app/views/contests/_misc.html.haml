@@ -1,4 +1,5 @@
-%h2 Macam-macam
+- if can?(:read_problems, Contest) || can?(:refresh, contest)
+  %h2 Macam-macam
 
 - if can? :read_problems, Contest
   %h3 Masukkan Problems
@@ -19,7 +20,7 @@
         = check_box_tag :compile_only
     = submit_tag 'Submit', class: 'btn'
 
-- if can? :refresh, @contest
+- if can? :refresh, contest
   %h3 Refresh
-  = link_to 'Refresh', refresh_contest_path(@contest), method: :post,
+  = link_to 'Refresh', refresh_contest_path(contest), method: :post,
     class: 'btn'
