@@ -6,7 +6,7 @@
   - if can? :manage, Role
     = link_to 'Manage Roles', roles_path, class: 'btn'
 
-  - if can? :new, LongSubmission
+  - if LongSubmission.accessible_by(current_ability).count == LongSubmission.count
     = link_to 'New LongSubmission', new_long_submission_path, class: 'btn'
 
   - if can? :reset, Referrer
