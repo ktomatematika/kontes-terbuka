@@ -10,29 +10,45 @@
 .container
   .row
     %section
-      = render 'header'
+      = render 'header', user_contest: @user_contest, contest: @contest
       - if can?(:contest_about, @contest)
-        = render 'contest_about'
+        = render 'contest_about', contest: @contest
 
       - if can?(:preview, @contest) && !@contest.started?
         %h2 == HANYA PANITIA ==
-        = render 'show_problems'
+        = render 'show_problems', short_problems: @short_problems,
+          long_problems: @long_problems
 
       - if @user_contest&.currently_in_contest?
-        = render 'short_problems' unless @short_problems.empty?
-        = render 'long_problems' unless @long_problems.empty?
+        = render 'short_problems', short_problems: @short_problems,
+          short_submissions: @short_submissions unless @short_problems.empty?
+        = render 'long_problems', long_problems: @long_problems,
+          user_contest: @user_contest unless @long_problems.empty?
 
       - if @contest.result_released
         - if @user_contest.nil?
-          = render 'show_problems'
+          = render 'show_problems', short_problems: @short_problems,
+            long_problems: @long_problems
         - else
-          = render 'own_results'
-          = render 'feedback' unless @contest.feedback_closed?
-        = render 'results'
+          = render 'own_results', short_problems: @short_problems,
+            short_submissions: @short_submissions,
+            long_problems: @long_problems, long_submissions: @long_submissions,
+            user_contest: @user_contest, contest: @contest
+          = render 'feedback',
+            contest: @contest unless @contest.feedback_closed?
+        = render 'results', contest: @contest, short_problems: @short_problems,
+          long_problems: @long_problems, user_contests: @user_contests,
+          no_short_probs: @no_short_probs, province_ucs: @province_ucs
       - elsif @contest.ended?
-        = render 'show_problems'
+        = render 'show_problems', short_problems: @short_problems,
+          long_problems: @long_problems
         - if @contest.ended? && can?(:preview, @contest)
           %h2 == HANYA PANITIA ==
-          = render 'all_results'
+          = render 'all_results', short_problems: @short_problems,
+            long_problems: @long_problems, user_contests: @user_contests,
+            no_short_probs: @no_short_probs
 
-    = render 'contest_aside_info' if @user_contest&.currently_in_contest?
+    = render 'contest_aside_info', short_problems: @short_problems,
+      short_submissions: @short_submissions,
+      long_submissions: @long_submissions,
+      long_problems: @long_problems if @user_contest&.currently_in_contest?

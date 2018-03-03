@@ -3,10 +3,10 @@
   .btn#show-own-results Tampilkan
 
 #own-results
-  - unless @short_problems.empty?
-    %h3 Bagian A: #{@user_contest.short_mark}/#{@short_problems.length} poin
-    - @short_problems.each do |prob|
-      - ss = @short_submissions.find { |s| s.short_problem_id == prob.id }
+  - unless short_problems.empty?
+    %h3 Bagian A: #{user_contest.short_mark}/#{short_problems.length} poin
+    - short_problems.each do |prob|
+      - ss = short_submissions.find { |s| s.short_problem_id == prob.id }
 
       %h4 No. #{prob.problem_no}
       .row
@@ -20,10 +20,10 @@
           %h5 Jawaban Anda
           %span{ class: status(ss, prob) }= ss && ss.answer
 
-  - unless @long_problems.empty?
+  - unless long_problems.empty?
     %h3 Bagian B
-    - @long_problems.each do |prob|
-      - ls = @long_submissions.find { |l| l.long_problem_id == prob.id }
+    - long_problems.each do |prob|
+      - ls = long_submissions.find { |l| l.long_problem_id == prob.id }
 
       %h4 No. #{prob.problem_no}: #{score_out_of_total prob}
       .row
@@ -34,7 +34,7 @@
           %h5 Umpan Balik
           = latex_and_markdown :div, ls&.feedback
 
-  %h3 Total: #{@user_contest.total_mark}/#{@contest.max_score} poin
+  %h3 Total: #{user_contest.total_mark}/#{contest.max_score} poin
   = show_award
   %p
     Jika menurut Anda terdapat masalah dengan penilaian di kontes ini,

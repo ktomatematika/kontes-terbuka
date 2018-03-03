@@ -3,14 +3,14 @@
   .btn#show-all-problems Tampilkan
 
 #all-problems
-  - unless @short_problems.empty? || @long_problems.empty?
+  - unless short_problems.empty? || long_problems.empty?
     %h4 Bagian A: Isian
-  - @short_problems.each do |prob|
+  - short_problems.each do |prob|
     %h5.problem_no No. #{prob.problem_no}
     = latex_and_markdown :div, prob.statement
 
-  - unless @short_problems.empty? || @long_problems.empty?
+  - unless short_problems.empty? || long_problems.empty?
     %h4 Bagian B: Esai
-  - @long_problems.each do |prob|
+  - long_problems.each do |prob|
     %h5.problem_no No. #{prob.problem_no}
     = latex_and_markdown :div, prob.statement

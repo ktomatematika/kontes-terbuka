@@ -1,6 +1,6 @@
 %div
   = link_to 'Lihat',
-    long_submission_path(ls), class: 'btn'
+    long_submission_path(ls), class: 'btn', data: { turbolinks: false }
   = link_to 'Buang',
     long_submission_path(ls), class: 'btn',
     method: :delete,

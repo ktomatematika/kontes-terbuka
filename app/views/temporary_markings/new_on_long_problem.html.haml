@@ -1,10 +1,10 @@
 .container
   %h1= @long_problem
   = link_to 'Download Marking Scheme',
-    ms_pdf_contest_path(@contest),
+    ms_pdf_contest_path(@contest), data: { turbolinks: false },
     class: 'btn'
   = link_to 'Download semua submisi',
-    submissions_long_problem_path(@long_problem),
+    submissions_long_problem_path(@long_problem), data: { turbolinks: false },
     class: 'btn'
   %span Download ini memakan waktu. Sabar ya. :3
 

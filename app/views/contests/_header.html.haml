@@ -2,22 +2,22 @@
   %h1#contest-name
   %h3#subtitle
   %h3.update-regularly#time-remaining
-  - if @user_contest&.currently_in_contest?
+  - if user_contest&.currently_in_contest?
     #contest-buttons
       = link_to 'Download soal', problem_pdf_contest_path,
-        class: 'btn btn-lg'
-      = link_to 'Lihat ulang aturan', new_contest_user_contest_path(@contest),
+        class: 'btn btn-lg', data: { turbolinks: false }
+      = link_to 'Lihat ulang aturan', new_contest_user_contest_path(contest),
         class: 'btn btn-lg'
 
   %div
-    - if can? :summary, @contest
-      = link_to 'Ringkasan', summary_contest_path(@contest),
+    - if can? :summary, contest
+      = link_to 'Ringkasan', summary_contest_path(contest),
         class: 'btn btn-lg'
 
-    - if can? :admin, @contest
-      = link_to 'Administrasi', admin_contest_path(@contest),
+    - if can? :admin, contest
+      = link_to 'Administrasi', admin_contest_path(contest),
         class: 'btn btn-lg'
 
     - if can? :assign_markers, Role
-      = link_to 'Bagi koreksian', marker_contest_path(@contest),
+      = link_to 'Bagi koreksian', marker_contest_path(contest),
         class: 'btn btn-lg'

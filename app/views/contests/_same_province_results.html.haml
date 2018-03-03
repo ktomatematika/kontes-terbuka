@@ -4,10 +4,10 @@
       %tr
         %th Peringkat
         %th Username
-        - unless @short_problems.empty? || @long_problems.empty?
+        - unless short_problems.empty? || long_problems.empty?
           %th Bagian A
-        - @long_problems.each do |lp|
-          - if @short_problems.empty?
+        - long_problems.each do |lp|
+          - if short_problems.empty?
             %th No. #{lp.problem_no}
           - else
             %th Bagian B no. #{lp.problem_no}
@@ -15,14 +15,14 @@
         %th Penghargaan
 
     %tbody
-      - @province_ucs.each do |uc|
+      - province_ucs.each do |uc|
         - user = uc.user
         %tr{ class: row_classes(user, ['clickable-row', uc.award.downcase]), data: { link: user_path(user) } }
           %td= uc.rank
           %td= user.username
-          - unless @no_short_probs
+          - unless no_short_probs
             %td= uc.short_mark
-          - @long_problems.each do |lp|
+          - long_problems.each do |lp|
             %td= score(uc, lp)
           %td= uc.total_mark
           %td= uc.award

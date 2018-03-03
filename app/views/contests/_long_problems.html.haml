@@ -8,14 +8,14 @@
       Setiap soal bernilai maksimal 7 angka. Tidak ada pengurangan nilai untuk
       jawaban yang salah.
 
-  - @long_problems.each do |prob|
+  - long_problems.each do |prob|
     %h5.problem_no No. #{prob.problem_no}
     = latex_and_markdown :div, prob.statement
     - ls = long_submission_find_or_initialize_by(prob)
 
     - if ls.new_record?
       = render 'long_submissions/upload', ls: ls, lp: prob,
-        uc: @user_contest
+        uc: user_contest
 
     - else
       %p.text-warning.text-justify
