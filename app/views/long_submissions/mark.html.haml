@@ -2,10 +2,10 @@
   %h1= @long_problem
   = link_to 'Download Marking Scheme',
     @contest.marking_scheme.url(:original, false),
-    class: 'btn'
+    data: { turbolinks: false }, class: 'btn'
   = link_to 'Download semua submisi',
     submissions_long_problem_path(@long_problem),
-    class: 'btn'
+    data: { turbolinks: false }, class: 'btn'
   %span Download ini memakan waktu. Sabar ya. :3
   = link_to 'Magic', autofill_long_problem_path(@long_problem),
     method: :patch, class: 'btn'
