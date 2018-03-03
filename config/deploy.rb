@@ -44,18 +44,19 @@ set :ssh_options, forward_agent: true, port: 1729
 set :rails_env, 'production'
 
 namespace :deploy do
-  desc 'Restart application'
-  task :restart do
-    on roles(:app) do
-      upload! StringIO.new(File.read('config/deploy/restart.sh')),
-              "#{deploy_to}/restart.sh"
-      execute :chmod, "u+x #{deploy_to}/restart.sh"
-      execute "sudo #{deploy_to}/restart.sh"
+  desc 'Restart application two times'
+  task :restart_twice do
+    2.times do
+      on roles(:app) do
+        upload! StringIO.new(File.read('config/deploy/restart.sh')),
+                "#{deploy_to}/restart.sh"
+        execute :chmod, "u+x #{deploy_to}/restart.sh"
+        execute "sudo #{deploy_to}/restart.sh"
+      end
     end
   end
 
-  after :publishing, 'deploy:restart'
-  after :publishing, 'deploy:restart'
+  after :publishing, 'deploy:restart_twice'
   after :finishing, 'deploy:cleanup'
   after :finishing, 'sitemap:refresh'
 end
