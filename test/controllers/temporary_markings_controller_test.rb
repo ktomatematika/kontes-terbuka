@@ -20,22 +20,6 @@ class TemporaryMarkingsControllerTest < ActionController::TestCase
     assert_response 200
   end
 
-  test 'new_on_long_problem without marker' do
-    get :new_on_long_problem, long_problem_id: @lp.id
-    assert_redirected_to long_problem_long_submissions_path(
-      long_problem_id: @lp.id
-    )
-  end
-
-  test 'new_on_long_problem with start_mark_final' do
-    @lp.update(start_mark_final: true)
-    @user.add_role :marker, @lp
-    get :new_on_long_problem, long_problem_id: @lp.id
-    assert_redirected_to long_problem_long_submissions_path(
-      long_problem_id: @lp.id
-    )
-  end
-
   test 'modify_on_long_problem' do
     lss = create_list(:long_submission, 4, long_problem: @lp)
     TemporaryMarking.create(long_submission: lss.second, user: @user,

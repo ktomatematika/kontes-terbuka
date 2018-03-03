@@ -28,7 +28,7 @@ Metrics/BlockLength:
     - 'app/controllers/concerns/*'
 
 Metrics/ClassLength:
-  Max: 132
+  Max: 135
   Exclude:
     - 'test/**/*'
 
