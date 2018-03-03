@@ -1,15 +1,16 @@
 %h2 Download
 = link_to 'Download feedback',
-  contest_feedback_answers_path(@contest, format: :csv),
-  class: 'btn btn-lg' if can? :download_on_contest, FeedbackAnswer
-= link_to 'Download soal', problem_pdf_contest_path,
-  class: 'btn btn-lg' if can? :download_problem_pdf, @contest
-= link_to 'Download Marking Scheme',
-  ms_pdf_contest_path(@contest),
-  class: 'btn btn-lg' if can? :download_marking_scheme, @contest
-= link_to 'Download laporan',
-  reports_contest_path(@contest),
-  class: 'btn btn-lg' if can? :download_reports, @contest
+  contest_feedback_answers_path(contest, format: :csv), class: 'btn btn-lg',
+  data: { turbolinks: false } if can? :download_on_contest, FeedbackAnswer
+= link_to 'Download soal', problem_pdf_contest_path, class: 'btn btn-lg',
+  data: { turbolinks: false } if can? :download_problem_pdf, contest
+= link_to 'Download Marking Scheme', ms_pdf_contest_path(contest),
+  class: 'btn btn-lg',
+  data: { turbolinks: false } if can? :download_marking_scheme, contest
+= link_to 'Download laporan', reports_contest_path(contest),
+  class: 'btn btn-lg',
+  data: { turbolinks: false } if can? :download_reports, contest
 = link_to 'Download certificates data',
-  download_certificates_data_contest_user_contests_path(@contest, format: :csv),
-  class: 'btn btn-lg' if can? :download_certificates_data, @contest
+  download_certificates_data_contest_user_contests_path(contest, format: :csv),
+  class: 'btn btn-lg',
+  data: { turbolinks: false } if can? :download_certificates_data, contest

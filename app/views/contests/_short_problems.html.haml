@@ -11,10 +11,10 @@
 
   = form_for :short_submission,
     url: contest_short_submissions_path(Contest.find(params[:id])) do |f|
-    - @short_problems.each do |prob|
+    - short_problems.each do |prob|
       %h5.problem_no No. #{prob.problem_no}
       = latex_and_markdown :div, prob.statement
-      - submission = @short_submissions.find { |ss| ss.short_problem == prob }
+      - submission = short_submissions.find { |ss| ss.short_problem == prob }
       - prev_answer = submission.nil? ? '' : submission.answer
       .form-group
         = f.text_field prob.id, class: 'form-control answer-input',

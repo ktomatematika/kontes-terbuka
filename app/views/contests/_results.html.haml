@@ -1,16 +1,20 @@
 %article#all-result
   %h2 Hasil Kontes
-  - if can? :download_results, @contest
-    = link_to 'Download Hasil Lengkap',
-      results_contest_path(@contest),
-      class: 'btn btn-lg'
+  - if can? :download_results, contest
+    = link_to 'Download Hasil Lengkap', results_contest_path(contest),
+      class: 'btn btn-lg', data: { turbolinks: false }
 
   %ul.nav.nav-tabs.contest-result-tabs
     %li.active{ role: 'presentation' }
-      %a{ href: '#', data: { tab: 'same_province' } } Provinsiku (#{current_user.province})
+      %a{ href: '#', data: { tab: 'same_province' } }
+        Provinsiku (#{current_user.province})
     %li{ role: 'presentation' }
       %a{ href: '#', data: { tab: 'medallists' } } Semua medalis
 
   .result-tables
-    = render 'same_province_results'
-    = render 'all_results'
+    = render 'same_province_results', short_problems: short_problems,
+      long_problems: long_problems, province_ucs: province_ucs,
+      no_short_probs: no_short_probs
+    = render 'all_results', short_problems: short_problems,
+      long_problems: long_problems, user_contests: user_contests,
+      no_short_probs: no_short_probs
