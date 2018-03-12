@@ -55,18 +55,18 @@ module UserPasswordController
   end
 
   def process_forgot_password
-    user = User.find_by(params.permit(:username, :email))
+    user = User.find_by(params.permit(:email))
 
     if user.nil?
-      Ajat.warn "forgot_password_no_user|uname:#{params[:username]}"
-      flash.now[:alert] = 'Kombinasi user dan email tidak ditemukan.'
+      Ajat.warn "forgot_password_no_user|email:#{params[:email]}"
+      flash.now[:alert] = 'Email Anda tidak ditemukan.'
     elsif !user.enabled?
-      Ajat.warn "forgot_password_not_enabled|uname:#{params[:username]}"
+      Ajat.warn "forgot_password_not_enabled|email:#{params[:email]}"
       flash.now[:alert] = 'Kamu belum verifikasi! Cek email Anda untuk ' \
         'verifikasi.'
     else
       user.reset_password
-      Ajat.warn "forgot_password|uname:#{params[:username]}"
+      Ajat.warn "forgot_password|email:#{params[:email]}"
       flash.now[:notice] = 'Cek email Anda untuk instruksi selanjutnya.'
     end
     render 'welcome/sign'
