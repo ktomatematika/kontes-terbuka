@@ -56,6 +56,7 @@ Rails.application.routes.draw do
       get 'ms-pdf', to: 'contests#download_marking_scheme'
       get 'reports', to: 'contests#download_reports'
       post 'refresh', to: 'contests#refresh'
+      post 'send_certificates', to: 'contests#send_certificates'
     end
 
     resources :user_contests, path: '/user-contests', only: %i[new create] do

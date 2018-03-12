@@ -1,5 +1,11 @@
-- if can?(:read_problems, Contest) || can?(:refresh, contest)
+- if can?(:read_problems, Contest) || can?(:refresh, contest) || can?(:send_certificates, contest)
   %h2 Macam-macam
+
+- if can? :send_certificates, contest
+  %h3 Sertifikat
+  %p Sertifikat terkirim: #{certificate_statistics(contest)}
+  = link_to 'Kirim sertifikat manual', send_certificates_contest_path(contest),
+    method: :post, class: 'btn'
 
 - if can? :read_problems, Contest
   %h3 Masukkan Problems

@@ -118,4 +118,9 @@ module ContestsHelper
     return 'text-success' if ss.answer == sp.answer
     'text-danger'
   end
+
+  def certificate_statistics(contest)
+    "#{contest.full_feedback_user_contests.eligible_score.length} dari " \
+      "#{contest.user_contests.where(certificate_sent: true).count}"
+  end
 end

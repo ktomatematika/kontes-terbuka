@@ -28,6 +28,8 @@ class ContestsControllerTest < ActionController::TestCase
                  "/contests/#{@c.to_param}"
     assert_equal refresh_contest_path(@c),
                  "/contests/#{@c.to_param}/refresh"
+    assert_equal send_certificates_contest_path(@c),
+                 "/contests/#{@c.to_param}/send_certificates"
   end
 
   test 'admin' do
@@ -253,6 +255,22 @@ class ContestsControllerTest < ActionController::TestCase
                  'Calling refresh does not call refresh results pdf.'
     assert_in_delta Time.zone.now, jobs.first.run_at, 5,
                     'Calling refresh does not refresh immediately.'
+  end
+
+  test 'send_certificates' do
+    test_abilities @c, :send_certificates, [nil, :panitia], [:admin]
+
+    post :send_certificates, id: @c.id
+    assert_redirected_to admin_contest_path(@c)
+    assert_equal flash[:notice], 'Sertifikat terkirim!'
+
+    jobs = Delayed::Job.where(queue: nil).select do |j|
+      handler = YAML.load(j.handler)
+      handler.method_name == :send_certificates
+    end
+    assert_equal jobs.count, 1, 'Jobs created after send certificates is not 1.'
+    assert_in_delta Time.zone.now, jobs.first.run_at, 5,
+                    'Calling send_certificates does not do it immediately.'
   end
 
   private
