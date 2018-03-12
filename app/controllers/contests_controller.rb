@@ -125,7 +125,8 @@ class ContestsController < ApplicationController
 
   def send_certificates
     @contest.delay.send_certificates
-    redirect_to admin_contest_path(@contest), notice: 'Sertifikat terkirim!'
+    redirect_to admin_contest_path(@contest),
+      notice: 'Sertifikat sedang dikirim!'
   end
 
   private def show_results

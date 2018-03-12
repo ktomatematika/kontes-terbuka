@@ -262,7 +262,7 @@ class ContestsControllerTest < ActionController::TestCase
 
     post :send_certificates, id: @c.id
     assert_redirected_to admin_contest_path(@c)
-    assert_equal flash[:notice], 'Sertifikat terkirim!'
+    assert_equal flash[:notice], 'Sertifikat sedang dikirim!'
 
     jobs = Delayed::Job.where(queue: nil).select do |j|
       handler = YAML.load(j.handler)

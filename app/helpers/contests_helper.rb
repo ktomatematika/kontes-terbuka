@@ -120,7 +120,7 @@ module ContestsHelper
   end
 
   def certificate_statistics(contest)
-    "#{contest.full_feedback_user_contests.eligible_score.length} dari " \
-      "#{contest.user_contests.where(certificate_sent: true).count}"
+    "#{contest.user_contests.where(certificate_sent: true).count} dari " \
+    "#{contest.full_feedback_user_contests.eligible_score.length}"
   end
 end
