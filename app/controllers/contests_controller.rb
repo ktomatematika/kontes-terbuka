@@ -123,6 +123,11 @@ class ContestsController < ApplicationController
     redirect_to admin_contest_path(@contest), notice: 'Refreshed!'
   end
 
+  def send_certificates
+    @contest.delay.send_certificates
+    redirect_to admin_contest_path(@contest), notice: 'Sertifikat terkirim!'
+  end
+
   private def show_results
     @user_contests = @contest.results.includes(user: :roles)
     @province_ucs = @user_contests.joins(:user).where('users.province_id' =>
