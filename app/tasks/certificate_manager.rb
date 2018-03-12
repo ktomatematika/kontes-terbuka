@@ -3,6 +3,8 @@
 class CertificateManager
   TEMPLATE = File.read(Rails.root.join('app', 'views', 'contests',
                                        'certificate.tex.haml'))
+  EMAIL_SINK = 'certificate@ktom.tomi.or.id'
+
   attr_reader :user_contest
 
   def initialize(uc)
@@ -50,7 +52,8 @@ class CertificateManager
                          contest: @contest,
                          subject: data.subject.get(binding),
                          text: data.text.get(binding),
-                         attachment: File.new(pdf_file, 'r')
+                         attachment: File.new(pdf_file, 'r'),
+                         bcc: EMAIL_SINK
   end
 
   def clean_files
