@@ -288,24 +288,16 @@ class UsersControllerTest < ActionController::TestCase
   test 'process_forgot_password' do
     login_and_be_admin
     @user.enable
-    post :process_forgot_password, username: @user.username, email: @user.email
+    post :process_forgot_password, email: @user.email
 
     assert_template 'welcome/sign'
     assert_equal flash[:notice], 'Cek email Anda untuk instruksi selanjutnya.'
   end
 
-  test 'process_forgot_password with no user' do
-    login_and_be_admin
-    post :process_forgot_password, username: 'asalaja', email: @user.email
-
-    assert_template 'welcome/sign'
-    assert_equal flash[:alert], 'Kombinasi user dan email tidak ditemukan.'
-  end
-
   test 'process_forgot_password with not enabled user' do
     login_and_be_admin
     @user.update(enabled: false)
-    post :process_forgot_password, username: @user.username, email: @user.email
+    post :process_forgot_password, email: @user.email
 
     assert_template 'welcome/sign'
     assert_equal flash[:alert], 'Kamu belum verifikasi! ' \
