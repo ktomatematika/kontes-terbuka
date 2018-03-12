@@ -4,6 +4,8 @@ class EmailNotifications
   include Rails.application.routes.url_helpers
   attr_reader :contest
 
+  EMAIL_SINK = 'notifications@ktom.tomi.or.id'
+
   def initialize(ctst)
     @contest = ctst
     @data = Social.email_notifications
@@ -71,7 +73,8 @@ class EmailNotifications
   private def send_emails(**hash)
     hash[:users].pluck(:email).each_slice(200) do |arr|
       Mailgun.send_message contest: @contest, text: hash[:text],
-                           subject: hash[:subject], bcc_array: arr
+                           subject: hash[:subject], bcc_array: arr,
+                           to: EMAIL_SINK
     end
     Ajat.info "send_email|#{hash[:subject]}"
   end
