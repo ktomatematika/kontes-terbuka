@@ -27,9 +27,8 @@ SitemapGenerator::Sitemap.create do
   #     add article_path(article), :lastmod => article.updated_at
   #   end
 
-  add '/sign', changefreq: 'never'
-  add '/register', changefreq: 'never'
   add '/faq', changefreq: 'never'
+  add '/book', changefreq: 'never'
   add '/donate', changefreq: 'never'
   add '/about', changefreq: 'never'
   add '/privacy', changefreq: 'never'
