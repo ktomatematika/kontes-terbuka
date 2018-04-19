@@ -21,13 +21,13 @@
 //= require browser_details
 
 $(document).on('turbolinks:load', function() {
-	$('body').flowtype({
-		minFont: 14,
-		maxFont: 20,
-	});
+  $('body').flowtype({
+    minFont: 14,
+    maxFont: 20,
+  });
 
-	$('#flash').hide().fadeIn('fast');
-	$('#close-flash').click(function() {
-		$('#flash').fadeOut('fast');
-	});
+  $('#flash').hide().fadeIn('fast');
+  $('#close-flash').click(function() {
+    $('#flash').fadeOut('fast');
+  });
 });
