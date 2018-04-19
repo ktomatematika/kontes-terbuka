@@ -43,6 +43,10 @@
               %p= link_to 'Daftar kontes', contests_path
 
       .col-md-4
+        %section.home-section
+          %h2 LINE Square
+          %a{ href: 'https://line.me/ti/g2/TZQYD9Q2G8' } Bergabunglah dengan LINE Square KTOM!
+
         %section.hidden-sm.hidden-xs#fb-box
           .fb-page{ data: { href: 'https://www.facebook.com/KTOMatematika/', 'tabs' => 'messages,timeline', 'adapt-container-width' => 'true' } }
             .fb-xfbml-parse-ignore
@@ -50,8 +54,8 @@
                 %a{ href: 'https://www.facebook.com/KTOMatematika/', target: '_blank' }
                   Kontes Terbuka Olimpiade Matematika
 
-          %section.home-section#iklan-lomba
-            %h2 Kontes Tersponsori
-            %h3#judul-iklan
-            /= image_tag 'sponsor.png', class: 'img-responsive center-block', id: 'img-promo-kontes'
-            %span#desc-iklan
+        %section.home-section#iklan-lomba
+          %h2 Kontes Tersponsori
+          %h3#judul-iklan
+          /= image_tag 'sponsor.png', class: 'img-responsive center-block', id: 'img-promo-kontes'
+          %span#desc-iklan
