@@ -6,28 +6,33 @@ class UserNotificationsControllerTest < ActionController::TestCase
   setup :login_and_be_admin, :create_items
 
   test 'routes' do
-    assert_equal user_notifications_path, '/user-notifications'
+    assert_equal user_user_notifications_path(@user),
+      "/users/#{@user.id}/user-notifications"
+    assert_equal delete_user_user_notifications_path(@user),
+      "/users/#{@user.id}/user-notifications/delete"
   end
 
-  test 'edit_on_user' do
-    test_abilities @un, :edit_on_user, [], [nil]
-    get :edit_on_user
+  test 'index' do
+    test_abilities @un, :index, [nil], [@user, :admin]
+    get :index
     assert_response 200
   end
 
-  test 'flip to destroy' do
-    test_abilities UserNotification, :flip, [], [nil]
+  test 'create' do
+    test_abilities @un, :create, [nil], [@user, :admin]
 
-    post :flip, notification_id: @n.id
-    assert_empty response.body
-    assert_nil UserNotification.find_by id: @un.id
-  end
-
-  test 'flip to create' do
     @un.destroy
-    post :flip, notification_id: @n.id
+    post :create, notification_id: @n.id
     assert_empty response.body
     assert_not_nil UserNotification.find_by(user: @user, notification: @n)
+  end
+
+  test 'destroy' do
+    test_abilities @un, :delete, [nil], [@user, :admin]
+
+    delete :delete, notification_id: @n.id
+    assert_empty response.body
+    assert_nil UserNotification.find_by id: @un.id
   end
 
   private

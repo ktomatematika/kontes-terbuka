@@ -3,19 +3,22 @@
 class UserNotificationsController < ApplicationController
   load_and_authorize_resource
 
-  def edit_on_user; end
+  def index
+    @user = User.find(params[:user_id])
+  end
 
-  def flip
-    notif_id = params[:notification_id]
-    un = UserNotification.find_by user: current_user, notification_id: notif_id
-
-    if un.nil?
-      UserNotification.create(user: current_user, notification_id: notif_id)
-    else
-      un.destroy
-    end
+  def create
+    UserNotification.create!(user_id: params[:user_id],
+                             notification_id: params[:notification_id])
     render nothing: true
   rescue ActiveRecord::RecordNotUnique
     retry
+  end
+
+  def delete
+    UserNotification.find_by(
+      user_id: params[:user_id], notification_id: params[:notification_id]
+    ).destroy!
+    render nothing: true
   end
 end

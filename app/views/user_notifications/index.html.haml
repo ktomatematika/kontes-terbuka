@@ -4,5 +4,6 @@
     %p
       = check_box_tag n.id, nil,
         !UserNotification.find_by(notification: n, user: @user).nil?,
-        class: 'notifications-checkbox'
+        class: 'notifications-checkbox', data: { create: user_user_notifications_path(@user), delete: delete_user_user_notifications_path(@user) }
       %label{ for: n.id }= n
+  = link_to 'Kembali', user_path(@user), class: 'btn'

@@ -39,7 +39,7 @@ class Ability
     can :index, User
     can %i[show_full edit update change_password process_change_password
            referrer_update], User, id: user.id
-    can %i[edit_on_user flip], UserNotification
+    can %i[index create delete], UserNotification, user_id: user.id
   end
 
   private def marker_abilities(user)
