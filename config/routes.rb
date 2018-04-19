@@ -29,12 +29,12 @@ Rails.application.routes.draw do
                                           as: 'reset_password'
       post 'reset-password/:verification', to: 'users#process_reset_password'
     end
-  end
 
-  resources :user_notifications, path: '/user-notifications', only: [] do
-    collection do
-      get '', to: 'user_notifications#edit_on_user', as: ''
-      post '', to: 'user_notifications#flip'
+    resources :user_notifications, path: '/user-notifications',
+                                   only: %i[index create] do
+      collection do
+        delete 'delete', to: 'user_notifications#delete'
+      end
     end
   end
 
