@@ -7,9 +7,9 @@ class UserNotificationsControllerTest < ActionController::TestCase
 
   test 'routes' do
     assert_equal user_user_notifications_path(@user),
-                 "/users/#{@user.id}/user-notifications"
+                 "/users/#{@user.to_param}/user-notifications"
     assert_equal delete_user_user_notifications_path(@user),
-                 "/users/#{@user.id}/user-notifications/delete"
+                 "/users/#{@user.to_param}/user-notifications/delete"
   end
 
   test 'index' do
@@ -22,7 +22,7 @@ class UserNotificationsControllerTest < ActionController::TestCase
     test_abilities @un, :create, [nil], [@user, :admin]
 
     @un.destroy
-    post :create, user_id: @user.id, id: @n.id
+    post :create, user_id: @user.id, notification_id: @n.id
     assert_empty response.body
     assert_not_nil UserNotification.find_by(user: @user, notification: @n)
   end
@@ -30,7 +30,7 @@ class UserNotificationsControllerTest < ActionController::TestCase
   test 'destroy' do
     test_abilities @un, :delete, [nil], [@user, :admin]
 
-    delete :delete, user_id: @user.id, id: @n.id
+    delete :delete, user_id: @user.id, notification_id: @n.id
     assert_empty response.body
     assert_nil UserNotification.find_by id: @un.id
   end
