@@ -13,7 +13,7 @@ sudo -u postgres psql -c "create role ubuntu with createdb login password 'passw
 printf "\n\ncd /vagrant\nexport LC_ALL=en_US.UTF-8" >> /home/ubuntu/.bashrc
 
 # Installs rvm, Ruby, Bundler and runs bundle install, which installs a lot.
-su ubuntu <<'EOF'
+su vagrant <<'EOF'
 gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
 curl -sSL https://get.rvm.io | bash -s stable
 source ~/.rvm/scripts/rvm
@@ -24,8 +24,7 @@ cd /vagrant
 cp config/database.yml.default config/database.yml
 bundle install
 rvm rvmrc warning ignore allGemfiles
-cp /vagrant/config/database.yml.default /vagrant/config/database.yml
 bin/rake db:create
-sudo -u postgres psql -d kontes_terbuka < /vagrant/db/structure.sql
+sudo -u postgres psql -d kontes_terbuka < db/structure.sql
 sudo -u postgres psql -d kontes_terbuka -c 'GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO ubuntu;'
 EOF
