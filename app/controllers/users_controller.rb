@@ -57,8 +57,9 @@ class UsersController < ApplicationController
     authorize! :index_full, User if params[:hide_disabled]
 
     params[:search] ||= ''
-    @users = User.where('username LIKE \'%\' || ? || \'%\'',
-                        params[:search].downcase)
+    @users = User.where("username LIKE '%' || ? || '%' OR " \
+                        "fullname ILIKE '%' || ? || '%'",
+                        params[:search].downcase, params[:search])
                  .paginate(page: params[:page], per_page: 50)
                  .order(:username)
                  .includes(:province, :status, :roles)
