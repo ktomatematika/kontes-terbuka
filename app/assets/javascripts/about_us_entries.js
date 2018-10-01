@@ -2,12 +2,12 @@
 var about_us_data = [
   {
     name: 'Herbert Ilhan Tanujaya',
-    description: 'Herbert Ilhan Tanujaya telah diberi kehormatan untuk mewakili tanah air tercintanya di IMO dan mendapatkan 2 medali perunggu di tahun 2014 dan 2015. Walaupun saat ini dia melanjutkan studinya di jurusan Teknik Komputer di National University of Singapore (NUS), dia tetap menunjukkan dedikasi yang tinggi ke olimpiade matematika Indonesia dengan menjadi ketua umum KTO Matematika. Dia merupakan salah satu developer utama website yang sedang Anda kunjungi ini. Dia sangat gemar bermain game musik, dan menghabiskan waktunya bermain di game center berbagai mal.',
+    description: 'Herbert Ilhan Tanujaya telah diberi kehormatan untuk mewakili tanah air tercintanya di IMO dan mendapatkan 2 medali perunggu di tahun 2014 dan 2015. Walaupun saat ini dia melanjutkan studinya di jurusan Teknik Komputer di National University of Singapore (NUS), dia tetap menunjukkan dedikasi yang tinggi ke olimpiade matematika Indonesia dengan menjadi ketua umum KTO Matematika pada tahun 2015. Dia merupakan salah satu developer utama website yang sedang Anda kunjungi ini. Dia sangat gemar bermain game musik, dan menghabiskan waktunya bermain di game center berbagai mal.',
     image: 'ilhan.jpg',
   },
   {
     name: 'Ricky The Ising',
-    description: 'Berasal dari Sulawesi Selatan, Ricky The Ising adalah salah satu dari sedikit orang di luar pulau Jawa yang dapat meraih medali emas di OSN. Pemenang medali perak OSN 2014 dan medali emas OSN 2015 ini menjadi mahasiswa baru jurusan Matematika di Universitas Gadjah Mada. Dia meluangkan banyak waktunya untuk membantu KTO Matematika di bagian soal dan pembuatan konten di OA LINE KTO Matematika. Kemampuannya dalam bermain Dota 2 juga tidak kalah dengan kemampuan matematikanya; MMR-nya di Dota mencapai 8000.',
+    description: 'Berawal dari keingintahuan berlebih tentang matematika sejak SMP, pria yang berasal dari Makassar ini berhasil mempersembahkan medali perak di OSN 2014 dan medali emas di OSN 2015. Kegemaraannya terhadap matematika sejak duduk dibangku SMA membuatnya tidak bisa move on dari matematika yang kemudian menjadi alasan utamanya berkuliah di jurusan matematika Universitas Gadjah Mada. Pada awalnya, pria yang kerap disapa Ising ini berkontribusi dalam membuat soal dan mengoreksi jawaban peserta KTO Matematika. Namun pada Desember 2016, ia diamanahkan untuk menjalankan tugas sebagai Ketua Umum KTO Matematika menggantikan Herbert Ilhan Tanujaya. Saat ini, ia menggeluti bidang aktuaria sambil bermain gitar di waktu luangnya.',
     image: 'ricky.jpg',
   },
   {
