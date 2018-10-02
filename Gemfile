@@ -29,7 +29,7 @@ gem 'turbolinks'
 # Use Bootstrap, the CSS framework (getbootstrap.com)
 gem 'bootstrap-sass'
 # Javascript interpreter
-gem 'therubyracer', platforms: :ruby
+# gem 'therubyracer', platforms: :ruby
 # Adds attachments
 gem 'paperclip'
 # Adds nested forms
