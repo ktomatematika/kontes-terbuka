@@ -55,12 +55,20 @@ class UsersController < ApplicationController
 
   def index
     authorize! :index_full, User if params[:hide_disabled]
+    params[:search] = '' unless params[:search].is_a?(String)
+    params[:page] = 1 if params[:page].is_a?(Array)
+
+    begin
+      search_downcased = params[:search].downcase
+    rescue ArgumentError
+      search_downcased = ''
+    end
 
     params[:search] ||= ''
     @users = User.where("username LIKE '%' || ? || '%' OR " \
                         "fullname ILIKE '%' || ? || '%'",
-                        params[:search].downcase, params[:search])
-                 .paginate(page: params[:page], per_page: 50)
+                        search_downcased, params[:search])
+                 .paginate(page: params[:page].to_i.abs, per_page: 50)
                  .order(:username)
                  .includes(:province, :status, :roles)
     @users = @users.where(enabled: true)
