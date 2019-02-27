@@ -5,6 +5,7 @@ module ExceptionNotifier
     def initialize(_); end
 
     def call(exception, _ = {})
+      return if ['ActionController::BadRequest'].include?(exception.class.to_s)
       Mailgun.delay(queue: 'exception_notifier')
              .send_message to: %w[7744han@gmail.com
                                   jonathanmulyawan@gmail.com].join(','),
