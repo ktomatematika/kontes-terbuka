@@ -56,7 +56,7 @@ class UsersController < ApplicationController
   def index
     authorize! :index_full, User if params[:hide_disabled]
     params[:search] = '' unless params[:search].is_a?(String)
-    params[:page] = 1 if params[:page].is_a?(Array)
+    params[:page] = 1 if params[:page].is_a?(Array) || params[:page].to_i == 0
 
     begin
       search_downcased = params[:search].downcase
