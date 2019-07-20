@@ -1,6 +1,6 @@
-var iklan_title = 'LM UGM 29';
-var iklan_desc = 'Pendaftaran: 24 Sep - 14 Okt<br>Penyisihan: Minggu, 28 Oktober 2018<br>Final: 11 November 2018 di FMIPA UGM Yogyakarta';
-var iklan_link = 'http://lmnas.fmipa.ugm.ac.id';
+var iklan_title = 'OMITS 2019';
+var iklan_desc = 'Halo teman-teman! pendaftaran OMITS dan MISSION sudah dibuka, bagi kalian yang berminat dalam bidang olimpiade matematika yuk segera daftarkan diri kalian!';
+var iklan_link = 'https://bit.ly/daftarOMITS2019';
 
 $(document).on('turbolinks:load', function() {
   if ($('#iklan-lomba').length !== 0) {
