@@ -1,6 +1,6 @@
-var iklan_title = 'OMITS 2019';
-var iklan_desc = 'Halo teman-teman! pendaftaran OMITS dan MISSION sudah dibuka, bagi kalian yang berminat dalam bidang olimpiade matematika yuk segera daftarkan diri kalian!';
-var iklan_link = 'https://bit.ly/daftarOMITS2019';
+var iklan_title = 'LOGIKA UI 2020';
+var iklan_desc = 'LOGIKA UI hadir lagi nih! Pendaftaran MIC dan MTC sedang dibuka bagi yang berminat dalam olimpiade matematika, dan ada LogiTalks yang merupakan seminar nasional dan motivation show, segera daftarkan diri kalian ya!';
+var iklan_link = 'https://www.logikaui.com/';
 
 $(document).on('turbolinks:load', function() {
   if ($('#iklan-lomba').length !== 0) {
