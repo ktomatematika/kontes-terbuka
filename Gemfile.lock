@@ -207,7 +207,7 @@ GEM
       activerecord (>= 3.0)
     powerpack (0.1.2)
     public_suffix (3.0.3)
-    rack (1.6.10)
+    rack (1.6.11)
     rack-mini-profiler (1.0.0)
       rack (>= 1.2.0)
     rack-protection (2.0.4)
