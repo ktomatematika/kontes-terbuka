@@ -42,6 +42,8 @@ gem 'rubyzip'
 gem 'autoprefixer-rails'
 # Inline SVG
 gem 'inline_svg'
+# Sprockets
+gem 'sprockets', '< 4'
 
 group :development do
   # Favicon set
