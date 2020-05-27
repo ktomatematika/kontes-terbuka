@@ -53,10 +53,11 @@ class UsersController < ApplicationController
                                           ).order(created_at: :desc)
   end
 
+  # rubocop:disable Metrics/AbcSize
   def index
     authorize! :index_full, User if params[:hide_disabled]
     params[:search] = '' unless params[:search].is_a?(String)
-    params[:page] = 1 if params[:page].is_a?(Array) || params[:page].to_i == 0
+    params[:page] = 1 if params[:page].is_a?(Array) || params[:page].to_i.zero?
 
     begin
       search_downcased = params[:search].downcase
@@ -73,6 +74,7 @@ class UsersController < ApplicationController
                  .includes(:province, :status, :roles)
     @users = @users.where(enabled: true)
   end
+  # rubocop:enable Metrics/AbcSize
 
   def edit; end
 
