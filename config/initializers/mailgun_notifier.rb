@@ -5,10 +5,14 @@ module ExceptionNotifier
     def initialize(_); end
 
     def call(exception, _ = {})
-      return if ['ActionController::BadRequest'].include?(exception.class.to_s)
+      exception_class_excludes = ['ActionController::BadRequest']
+      exception_text_excludes = ['Cannot visit Arel::SelectManager']
+      if exception_class_excludes.include?(exception.class.to_s) ||
+         exception_text_excludes.all? { |e| exception.to_s.include? e }
+        return
+      end
       Mailgun.delay(queue: 'exception_notifier')
-             .send_message to: %w[7744han@gmail.com
-                                  jonathanmulyawan@gmail.com].join(','),
+             .send_message to: ['kto.official@gmail.com'].join(','),
                            force_to_many: true,
                            subject: '[EXCEPTION] ' + exception.class.to_s,
                            text: exception.to_s + "\n\n" +

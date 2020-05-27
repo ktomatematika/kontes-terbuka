@@ -48,7 +48,7 @@ class TexReader
       # compile 3 times to get references in pdflatex right
       3.times { cmd_log += compile_and_create_log }
       Mailgun.send_message contest: @contest, subject: 'Log pdflatex',
-                           text: cmd_log, to: '7744han@gmail.com'
+                           text: cmd_log, to: 'kto.official@gmail.com'
       raise 'TexReader Error' unless $CHILD_STATUS.exitstatus.zero?
     end
   end

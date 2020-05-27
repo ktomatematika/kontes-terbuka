@@ -122,7 +122,7 @@ end
 
 group :development, :test do
   # Ruby linter
-  gem 'rubocop'
+  gem 'rubocop', '~> 0.52.0'
   # HAML linter
   gem 'haml_lint'
   # SCSS linter
