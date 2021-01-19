@@ -1,9 +1,12 @@
 class AboutUsersController < ApplicationController
     def create
-        @about_user = AboutUser.new(about_user_params)
+        @user = User.find(params[:user_id])
+        @user.create_about_user(about_user_params)
+        redirect_to user_path(@user)
     end
 
-    private def about_user_params
-        params.require(:about_user).permit(:name, :description)
-    end
+    private 
+        def about_user_params
+            params.require(:about_user).permit(:name, :description)
+        end
 end

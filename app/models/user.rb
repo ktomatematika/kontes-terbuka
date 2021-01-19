@@ -111,7 +111,7 @@ class User < ActiveRecord::Base
 
   has_many :market_orders
 
-  has_one :about_user
+  has_one :about_user, dependent: :destroy
 
   # Validations
   validates :password, presence: true, confirmation: true, on: :create

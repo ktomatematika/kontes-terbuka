@@ -11,3 +11,29 @@
 - if can? :show_full, @user
   %p #{@user.point} #{point_image}
   /= link_to 'Pasar', market_items_path, class: 'btn'
+
+-if can? :edit, @user.about_user
+  %h2 About Me
+  -if @user.about_user.nil?
+    %p Buat sekarang!
+    = form_for [@user, @user.build_about_user], url: user_about_user_path(@user) do |f|
+      %p
+        = f.label :name, 'Nama:'
+      %p
+        = f.text_field :name
+      %p
+        = f.label :description, 'Deskripsi:'
+      %p
+        = f.text_area :description
+      = f.submit 'Buat', class: 'btn'
+  -else
+    = form_for [@user, @user.about_user] do |f|
+      %p
+        = f.label :name, 'Nama:'
+      %p
+        = f.text_field :name
+      %p
+        = f.label :description, 'Deskripsi:'
+      %p
+        = f.text_area :description
+      = f.submit 'Buat', class: 'btn'

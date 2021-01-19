@@ -37,7 +37,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :about_user, only: %i[create edit destroy]
+    resource :about_user, path: '/about-user', only: %i[create edit update destroy]
   end
 
   resources :roles, only: %i[create destroy] do
