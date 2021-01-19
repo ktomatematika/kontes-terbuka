@@ -1,0 +1,10 @@
+= form_for [@user, @about_user] do |f|
+  %p
+    = f.label :name, 'Nama:'
+  %p
+    = f.text_field :name
+  %p
+    = f.label :description, 'Deskripsi:'
+  %p
+    = f.text_area :description
+  = f.submit 'Update', class: 'btn'

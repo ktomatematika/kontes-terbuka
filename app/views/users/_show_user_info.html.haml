@@ -26,14 +26,8 @@
       %p
         = f.text_area :description
       = f.submit 'Buat', class: 'btn'
-  -else
-    = form_for [@user, @user.about_user] do |f|
-      %p
-        = f.label :name, 'Nama:'
-      %p
-        = f.text_field :name
-      %p
-        = f.label :description, 'Deskripsi:'
-      %p
-        = f.text_area :description
-      = f.submit 'Buat', class: 'btn'
+  - else
+    %p= "Nama: #{@user.about_user.name}"
+    %p Deskripsi:
+    %p= @user.about_user.description
+    = link_to('Edit About Me', edit_user_about_user_path(@user), class: 'btn', type: 'button')
