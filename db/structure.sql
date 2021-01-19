@@ -49,6 +49,40 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
+-- Name: about_users; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.about_users (
+    id integer NOT NULL,
+    user_id integer,
+    name character varying,
+    description text,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: about_users_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.about_users_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: about_users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.about_users_id_seq OWNED BY public.about_users.id;
+
+
+--
 -- Name: colors; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -980,6 +1014,13 @@ ALTER SEQUENCE public.versions_id_seq OWNED BY public.versions.id;
 
 
 --
+-- Name: about_users id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.about_users ALTER COLUMN id SET DEFAULT nextval('public.about_users_id_seq'::regclass);
+
+
+--
 -- Name: colors id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1159,6 +1200,14 @@ ALTER TABLE ONLY public.version_associations ALTER COLUMN id SET DEFAULT nextval
 --
 
 ALTER TABLE ONLY public.versions ALTER COLUMN id SET DEFAULT nextval('public.versions_id_seq'::regclass);
+
+
+--
+-- Name: about_users about_users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.about_users
+    ADD CONSTRAINT about_users_pkey PRIMARY KEY (id);
 
 
 --
@@ -2060,4 +2109,6 @@ INSERT INTO schema_migrations (version) VALUES ('20180124151412');
 INSERT INTO schema_migrations (version) VALUES ('20180124153301');
 
 INSERT INTO schema_migrations (version) VALUES ('20180226033248');
+
+INSERT INTO schema_migrations (version) VALUES ('20210119090413');
 

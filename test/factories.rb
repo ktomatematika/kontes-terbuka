@@ -3,6 +3,10 @@
 require_relative 'support'
 
 FactoryBot.define do
+  factory :about_user do
+    
+  end
+
   sequence :unique do |n|
     name = 'aaaaaaaa'
     n.times { name = name.succ }
