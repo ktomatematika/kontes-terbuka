@@ -38,6 +38,7 @@ class HomeController < ApplicationController
       image_tag = ActionController::Base.helpers.image_tag(image_path)
       [img_file, image_tag.tr('"', "'")]
     end.to_h
+    @about_users = AboutUser.all.order("RANDOM()")
   end
 
   def faq; end
