@@ -142,4 +142,8 @@ class Contest < ActiveRecord::Base
     prepare_jobs
     delay(queue: "contest_#{id}").refresh_results_pdf
   end
+
+  def hello_world
+    puts "Hello World"
+  end
 end
