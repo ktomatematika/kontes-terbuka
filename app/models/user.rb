@@ -82,7 +82,7 @@ class User < ActiveRecord::Base
 
   def before_add_method(role)
     return if !Role.admins.include?(role.name) || has_role?(:panitia)
-    raise 'User is not panitia!, run User.find(your_id).add_role :panitia'
+    raise 'User is not panitia! Run `User.find(your_id).add_role :panitia` first.'
   end
 
   # Associations
