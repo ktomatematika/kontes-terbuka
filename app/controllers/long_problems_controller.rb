@@ -9,7 +9,11 @@ class LongProblemsController < ApplicationController
 
   def create
     if @contest.long_problems.create(long_problem_params)
-      flash[:notice] = 'Long Problem terbuat!'
+      if @long_problem.update(params[:max_score])
+        flash[:notice] = "#{params[:problem_no]}"
+      end
+      #flash[:notice] = 'Long Problem terbuat!'
+      #@maximum_score.max_score = params[:max_score]
     else
       flash[:alert] = 'Long Problem gagal terbuat!'
     end
@@ -68,7 +72,7 @@ class LongProblemsController < ApplicationController
   end
 
   private def long_problem_params
-    params.require(:long_problem).permit(:problem_no, :statement)
+    params.require(:long_problem).permit(:problem_no, :statement, :max_score) 
   end
 
   private def report_params
