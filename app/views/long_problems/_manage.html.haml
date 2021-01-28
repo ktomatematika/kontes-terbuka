@@ -38,6 +38,10 @@
         .col-sm-4
           = f.text_field :problem_no, class: 'form-control', autocomplete: 'off'
       .form-group
+        = f.label :max_score, class: 'col-sm-2'
+        .col-sm-4
+          = f.text_field :max_score, class: 'form-control', autocomplete: 'off'
+      .form-group
         = f.label :statement, class: 'col-sm-2'
         .col-sm-10
           = find_and_preserve do

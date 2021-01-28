@@ -42,6 +42,10 @@ class LongProblem < ActiveRecord::Base
   has_many :submission_pages, through: :long_submissions
   has_many :temporary_markings, through: :long_submissions
 
+  attr_accessor :max_score
+  def maximum_score
+    return @max_score
+  end
   # Attachments
   has_attached_file :report,
                     path: ':rails_root/public/contest_files/reports/' \
@@ -65,7 +69,7 @@ class LongProblem < ActiveRecord::Base
 
   # TODO: Refactor several of the methods to concerns.
 
-  MAX_MARK = 7
+  MAX_MARK = 100
 
   def zip_location
     submissions_location + '.zip'
