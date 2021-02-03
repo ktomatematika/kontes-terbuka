@@ -11,71 +11,116 @@ KTO Matematika:
 - Jonathan Mulyawan Woenardi (@woenardi)
 
 Website ini awalnya dibuat dengan tujuan pembelajaran. Namun, website ini terus
-berkembang hingga menjadi cukup besar.
+berkembang hingga menjadi cukup besar. 
 
-## Setup, dengan Vagrant
-Catatan: Setting Vagrant ini menggunakan 2 GB RAM. Jika dirasa terlalu banyak,
-edit saja di Vagrantfile: ganti `vb.memory` dari `"2048"` menjadi `"1024"` atau
-berapapun.
 
-Install Vagrant dan VirtualBox:
-- https://www.vagrantup.com/downloads.html
-- https://www.virtualbox.org/wiki/Downloads
 
-Vagrant adalah sebuah virtual machine yang digunakan untuk menjalankan app.
-Keuntungannya, development environmentnya akan stabil di mesin manapun.
-Vagrant menggunakan VirtualBox untuk menjalankan virtual machinenya.
+## Panduan setup awal
+Catatan: panduan di bawah ini dibuat untuk Ubuntu 20.04 LTS. Untuk sistem operasi
+lainnya, pengaturan awal akan sedikit berbeda. [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
+bisa digunakan untuk menajalankan Ubuntu di dalam sistem operasi lain.
 
-Install plugin Vagrant: `vagrant plugin install vagrant-vbguest`
+### Paket-paket prasyarat
+Mohon unduh dan *install* paket-paket di bawah ini sebelum memulai:
+1. `software-properties-common`, paket ini dipakai oleh beberapa paket di bawah
+2. `postgresql` untuk database
+3. `texlive` untuk menjalankan berbagai fungsi LaTeX yang diperlukan. 
+   Kami menyarankan untuk memasang `texlive-full` yang mencakup keseluruhan texlive;
+   kalau ruang disk Anda terbatas, `texlive-base` cukup memadai untuk sebagian besar
+   pengolahan LaTeX yang diperlukan
 
-Nyalakan Vagrant: `vagrant up`
-
-Ini bisa memakan waktu 1 jam, karena Vagrant perlu mensetup segalanya
-dari awal, termasuk download Ubuntu (!), setup database, Ruby, dan Rails.
-Bersabarlah. :3
-
-Sambil menunggu, ini adalah file-file yang dibutuhkan:
-- .env, ambil dari .env.default
-- config/database.yml, ambil dari config/database.yml.default
-- public/contest_files/certificates. File-file yang dibutuhkan (untuk membuat
-sertifikat): barra.png, frame.jpg, ilhan.png, logo.png
-- app/views/contests/certificate.tex.haml
-- config/initializers/line_targets.rb, ambil dari
-config/initializers/line_targets.rb.default. Ini adalah dictionary yang
-memetakan nickname ke MID LINEnya.
-
-Setelah itu, masuk ke Vagrant: `vagrant ssh`
-
-Moment of truth: `bin/rails s` dan buka localhost:3000 di browser.
-
-Aduh, gagal? `vagrant destroy` dilanjutkan `vagrant up` lagi.
-
-Rapikan sistem: (optional, ga penting, kadang bisa rusak malah)
-```
-sudo apt-get autoremove
-sudo apt upgrade
-sudo apt dist-upgrade
-```
-
-## Import database
-(Daily dump dilakukan dengan `pg_dump kontes_terbuka_production` yang di-pipe
-ke `split`)
-
-Untuk import database dari daily dump yang sudah ada, masukkan file-file
-yang mau diimport ke folder `import` di root terlebih dahulu. Kemudian:
+Anda bisa menggunakan `apt` untuk memasang paket-paket di atas dengan perintah 
 ```bash
-chmod u+x scripts/import.sh
-./scripts/import.sh
+sudo apt install <nama paket>
 ```
 
-## Install LaTeX di Vagrant
-LaTeX diinstall oleh TeX Live dengan profile yang sudah disediakan. Installasi
-ini seminimal mungkin untuk menjalankan berbagai fungsi LaTeX yang diperlukan.
-Jalankan:
-```bash
-chmod u+x scripts/tex.sh
-./scripts/tex.sh
-```
+### Cara setup
+1. Pastikan bahwa paket-paket di atas telah di-*install*
+2. Unduh semua *file* dalam repositori ini, menggunakan `git clone` atau dengan cara lainnya
+3. *Website* ini menggunakan `ruby`, dan untuk memudahkan manajemen versi `ruby` yang digunakan,
+Anda boleh memakai `rvm` atau `rbenv`. Kami akan menunjukkan cara *setup* `rvm` dalam panduan ini,
+diadaptasi dari [panduan instalasi untuk Ubuntu](https://github.com/rvm/ubuntu_rvm):
+   1. Tambah PPA ke dalam komputer, dan *install* `rvm`:
+        ```bash
+       sudo apt-add-repository -y ppa:rael-gc/rvm
+       sudo apt-get update
+       sudo apt-get install rvm
+       ```
+   2. Masukkan *user* Anda ke dalam grup rvm (ganti `<username>` dengan nama *user* Anda):
+        ```bash
+        sudo usermod -a -G rvm <username>
+        ```
+   3. Ubah *terminal* untuk menjalankan perintah sebagai *login shell*. Untuk
+        mengubah aturan ini secara manual, jalankan perintah `/bin/bash --login`;
+        jika Anda menggunakan terminal GNOME, Anda bisa mengubah peraturan ini dari
+        *setting* terminal:
+        1. Klik menu *hamburger* (3 garis horizontal) dalam terminal.
+        2. Klik **Preferences**
+        3. Cari profil Anda di *sidebar*, di bawah **Profile**
+        4. Pilih *tab* **Command**
+        5. Centang **Run command as login shell**
+   4. *Reboot* komputer Anda.
+   5. Nyalakan *gemset* lokal dengan perintah
+        ```bash
+        rvm user gemsets
+        ```
+   6. Sekarang Anda bisa meng-*install* `ruby`. Website KTOM sekarang menggunakan
+        ruby versi 2.5.0 (cek *file* **Gemfile** jika kurang yakin - versi ruby 
+        yang digunakan akan tertulis dalam file tersebut), dan untuk meng-*install* 
+        versi 2.5.0, gunakan perintah
+      ```bash
+      rvm install 2.5.0
+      ```
+      Jika `ruby` sudah tersedia dalam komputer Anda sebelum instalasi ini, Anda dapat
+      mengubah versi *default* dengan perintah
+      ```bash
+      rvm --default use 2.5.0
+      ```
+      diikuti dengan menutup dan membuka kembali terminal.
+4. Cek bahwa versi `ruby` yang telah di-*install* benar (versi 2.5.0) dengan
+    ```bash
+    ruby --version
+    ```
+5. Pasang `bundler` dan `rails`. Website KTOM sekarang berjalan dengan
+   bundler bersi 1.17.3 dan rails versi 4.2.11.1, dan versi mutakhir dapat dilihat di
+   *file* **Gemfile** dan **Gemfile.lock**.
+   ```bash
+    gem install rails -v 4.2.11.1
+    gem install bundler -v 1.17.3
+    ```
+6. Dari dalam direktori repositori yang telah diunduh, jalankan
+    ```bash
+    bundle install
+    ```
+   untuk meng-*install* gem-gem yang dibutuhkan.
+7. Setelah gem-gem yang diperlukan tersedia, Anda harus membuat dan memodifikasi
+    database untuk website ini:
+    1. Buat *file* bernama `database.yml` dalam *folder* `config`. Anda bisa melihat *file*
+    `database.yml.default` sebagai contoh.
+    2. Buat *user* di postgres dengan *username* dan kata sandi yang tertera di `database.yml`.
+    Untuk petunjuk di bawah, username yang digunakan adalah `ubuntu`, dan kata sandi yang digunakan adalah `password`
+        1. Jalankan perintah `sudo -u postgres psql` untuk masuk kedalam *shell* postgres.
+        2. Buat *user* baru: `create user ubuntu with encrypted password 'password';`
+        3. Jadikan user tersebut sebagai *superuser*: `alter user "ubuntu" with superuser;`
+    3. Buat databse dengan perintah `bundle exec rake db:setup`
+    4. Jalankan semua migrasi dengan `bundle exec rake db:migrate`
+8. *Setup* awal untuk menjalankan server selesai. Untuk menjalankan server dalam
+*environment* **test**, gunakan
+    ```bash
+    bundle exeec rails s -e test
+    ```
+9. Sekarang, Anda bisa membuat *admin* di dalam website yang telah dibuat:
+    1. Dalam *browser*, buka alamat website versi lokal (*default*: `0.0.0.0:3000`)
+    2. Buat akun seperti biasa
+    3. Anda tidak akan mendapat email, dan harus mengaktivasi akun secara manual.
+        Buka konsol rails (perintah: `bundle exec rails c`) dan jalankan `User.first.enable`
+    4. Untuk membuat akun tersebut sebagai *admin*, jalankan dua perintah di bawah ini:
+    ```bash
+    User.first.add_role :panitia
+    User.first.add_role :admin 
+    ```
+
+Selamat, Anda telah selesai melakukan *setup* awal.
 
 ## Kontribusi
 Ayok fork :D
