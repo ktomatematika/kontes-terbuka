@@ -22,23 +22,24 @@ virtual machine.
 
 ### Prerequisite packages
 For the project to run on your machine, you would need to install several packages:
-1. `software-properties-common`, as a dependency for several packages below.
+1. `software-properties-common`, as a dependency for several packages below
 3. `postgresql` for the database
-4. `texlive` for LaTeX parsing. `texlive-full` is recommended, although `texlive-base` would suffice for most parts.
+4. `texlive` for LaTeX parsing. `texlive-full` is recommended, although `texlive-base` would suffice for most parts
 
 ### Setup steps
-1. Install the prerequisite packages.
-2. Download the files in the repository, through `git clone` or otherwise.   
+1. Install the prerequisite packages
+2. Download the files in the repository, through `git clone` or otherwise   
 3. We would also need `ruby`, and for the purposes of version management we would like to recommend using `rvm` or `rbenv`.
    This step shows how to set up `rvm` and may be skipped if you prefer other ways of version management. 
-   This step will follow closely with the official Ubuntu installation guide [here](https://github.com/rvm/ubuntu_rvm), and modified slightly to suit the project.
+   This step will follow closely with the official Ubuntu installation guide [here](https://github.com/rvm/ubuntu_rvm), 
+   and modified slightly to suit the project:
     1. Add the PPA and install the required packages:
        ```bash
        sudo apt-add-repository -y ppa:rael-gc/rvm
        sudo apt-get update
        sudo apt-get install rvm
        ```
-    2. Add your user to the rvm group (replace `<yourusername>` by your username:
+    2. Add your user to the rvm group (replace `<yourusername>` by your username):
         ```bash
         sudo usermod -a -G rvm <yourusername>
         ```
@@ -46,8 +47,8 @@ For the project to run on your machine, you would need to install several packag
        if you are using the default GNOME terminal you can configure it by clicking on the hamburger button 
        (three horizontal lines) on the top right corner of the terminal window and selecting Preferences. In the
        preferences window under your Profile on the left sidebar, select your profile, and click on the Command tab. Check the
-       'Run command as login shell' checkbox.
-    4. Reboot.
+       'Run command as login shell' checkbox
+    4. Reboot
     5. Enable local gemsets by using
         ```bash
         rvm user gemsets
@@ -63,7 +64,7 @@ For the project to run on your machine, you would need to install several packag
         ```bash
         rvm --default use 2.5.0
         ```
-       and this would require closing and reopening your terminal to take effect.
+       and this would require closing and reopening your terminal to take effect
 4. Check that you have the correct version of ruby (currently 2.5.0, check against the Gemfile). This can be done by running
     ```bash
     ruby --version
@@ -78,12 +79,13 @@ For the project to run on your machine, you would need to install several packag
     ```bash
     bundle install
     ```
-   to install the gems needed. 
-7. Now we move to creating our database. Make sure that `postgresql` is installed.
+   to install the gems needed
+7. Make sure that `postgresql` is installed. Now we move to creating our database: 
     1. Make a file called `database.yml` in the `config` folder. 
-       You can do this by modifying the given `database.yml.default` file in the project.
-    2. We will make a user with username `ubuntu` and password `password`. 
-       If you wish to have different username and password, make sure you change it in `database.yml`.  
+       You can do this by modifying the given `database.yml.default` file in the project
+    2. We will make a user in postgresql. For the purposes of this guide, we will make
+       a user with username `ubuntu` and password `password`. Please ensure that the username
+       and the password in the following steps match the ones in your `database.yml`:  
         1. Go to postgres shell: `sudo -u postgres psql`
         2. Create the user: `create user ubuntu with encrypted password 'password';`
         3. Elevate user privilege: `alter user "ubuntu" with superuser;`
@@ -95,9 +97,9 @@ For the project to run on your machine, you would need to install several packag
     ```
 9. Last, you may wish to make an admin in the website (by default would be on `0.0.0.0:3000`). 
    Do the following steps to make an admin account in the website:
-    1. Make a user as per normal in the website.
+    1. Make a user as per normal in the website
     2. No email will be sent, instead we need to go to rails console and manually enable the user. 
-        Open the rails console by `bundle exec rails c` and run `User.first.enable`.
+        Open the rails console by `bundle exec rails c` and run `User.first.enable`
     3. To elevate the privilege of this user to admin, do the following in the rails console:
     ```bash
     User.first.add_role :panitia
