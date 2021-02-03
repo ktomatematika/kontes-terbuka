@@ -23,8 +23,13 @@ virtual machine.
 ### Prerequisite packages
 For the project to run on your machine, you would need to install several packages:
 1. `software-properties-common`, as a dependency for several packages below
-3. `postgresql` for the database
-4. `texlive` for LaTeX parsing. `texlive-full` is recommended, although `texlive-base` would suffice for most parts
+2. `postgresql` for the database
+3. `texlive` for LaTeX parsing. `texlive-full` is recommended, although `texlive-base` would suffice for most parts
+
+You can use `apt` for installing the above packages by the command
+```bash
+sudo apt install <packagename>
+```
 
 ### Setup steps
 1. Install the prerequisite packages
@@ -69,10 +74,9 @@ For the project to run on your machine, you would need to install several packag
     ```bash
     ruby --version
     ```
-5. Install `bundler` and `rails`, on the correct version. Currently, rails 4.2.11.1 and bundler 1.17.3 is recommended for the project.
-   For more details on the rails and bundler version, refer to the Gemfile and Gemfile.lock files.
+5. Install `bundler` on the correct version. Currently, bundler 1.17.3 is recommended for the project.
+   For more details on the bundler version, refer to the Gemfile.lock file.
     ```bash
-    gem install rails -v 4.2.11.1
     gem install bundler -v 1.17.3
     ```
 6. From the directory of the project, run
@@ -82,7 +86,7 @@ For the project to run on your machine, you would need to install several packag
    to install the gems needed
 7. Make sure that `postgresql` is installed. Now we move to creating our database: 
     1. Make a file called `database.yml` in the `config` folder. 
-       You can do this by modifying the given `database.yml.default` file in the project
+       You can do this by copying the given `database.yml.default` file in the project
     2. We will make a user in postgresql. For the purposes of this guide, we will make
        a user with username `ubuntu` and password `password`. Please ensure that the username
        and the password in the following steps match the ones in your `database.yml`:  
@@ -93,7 +97,7 @@ For the project to run on your machine, you would need to install several packag
     4. Run all migration files by `bundle exec rake db:migrate`
 8. The initial setup to run the server has been done. To run the server in test environment, you can run 
     ```bash
-    bundle exeec rails s -e test
+    bundle exec rails s -e test
     ```
 9. Last, you may wish to make an admin in the website (by default would be on `0.0.0.0:3000`). 
    Do the following steps to make an admin account in the website:
