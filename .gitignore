@@ -17,7 +17,6 @@
 /tmp
 .sass-cache/
 .byebug_history
-ubuntu-xenial-16.04-cloudimg-console.log
 
 # Ignore public
 /public/contest_files
@@ -30,6 +29,5 @@ ubuntu-xenial-16.04-cloudimg-console.log
 config/initializers/line_targets.rb
 
 # Others
-.vagrant/
 import/
 coverage/
