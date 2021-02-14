@@ -633,7 +633,10 @@ CREATE TABLE public.short_problems (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     start_time timestamp without time zone,
-    end_time timestamp without time zone
+    end_time timestamp without time zone,
+    correct integer DEFAULT 1,
+    wrong integer DEFAULT 1,
+    empty integer DEFAULT 1
 );
 
 
@@ -2063,4 +2066,10 @@ INSERT INTO schema_migrations (version) VALUES ('20180124153301');
 INSERT INTO schema_migrations (version) VALUES ('20180226033248');
 
 INSERT INTO schema_migrations (version) VALUES ('20210122183013');
+
+INSERT INTO schema_migrations (version) VALUES ('20210203093153');
+
+INSERT INTO schema_migrations (version) VALUES ('20210203093232');
+
+INSERT INTO schema_migrations (version) VALUES ('20210203093336');
 
