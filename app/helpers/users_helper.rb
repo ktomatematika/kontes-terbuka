@@ -22,7 +22,7 @@ module UsersHelper
   def full_data_contents
     safe_join(@user_contests.map do |uc|
       create_data_row([uc.contest,
-                       uc.total_mark.to_s + '/' + uc.contest.max_score.to_s,
+                       uc.total_mark.to_s + '/' + uc.contest.max_score(0,0,uc.id).to_s,
                        uc.award], 'td',
                       { class: 'clickable-row',
                         'data-link' => contest_path(uc.contest) },

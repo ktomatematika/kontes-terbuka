@@ -16,7 +16,8 @@ class TemporaryMarkingsController < ApplicationController
       mark = val[:mark]
       tags = val[:tags]
 
-      update_hash = { mark: LongSubmission::SCORE_HASH.key(mark), tags: tags }
+      #update_hash = { mark: LongSubmission::SCORE_HASH.key(mark), tags: tags }
+      update_hash = { mark: LongSubmission.find(id).get_text_score(mark) , tags: tags }
       update_hash.delete(:mark) if mark.empty?
       update_hash.delete(:tags) if tags.empty?
 

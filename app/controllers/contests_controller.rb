@@ -103,7 +103,7 @@ class ContestsController < ApplicationController
   end
 
   def summary
-    @scores = @contest.array_of_scores
+    @scores = @contest.array_of_scores(params[:id])
     @count = @scores.sum
     redirect_to contest_path(@contest), notice: 'Tidak ada data' if @count.zero?
 

@@ -17,7 +17,7 @@ module UserContestScope
         end
         .group(:id)
         .select('user_contests.id as id, sum(case when ' \
-        'short_submissions.answer = short_problems.answer then 1 else 0 end) ' \
+        'short_submissions.answer = short_problems.answer then short_problems.correct when short_submissions.answer = null then short_problems.empty else short_problems.wrong end) ' \
         'as short_mark')
     })
 

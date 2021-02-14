@@ -27,10 +27,10 @@ module ContestAttributes
     started? && !ended?
   end
 
-  def max_score(sp_count = short_problems.count, lp_count = long_problems.count)
+  def max_score(sp_count = short_problems.count, lp_count = long_problems.count, id_contest)
     sp_count ||= short_problems.count
     lp_count ||= long_problems.count
-    sp_count + LongProblem::MAX_MARK * lp_count
+    ShortProblem.where(:contest_id => id_contest).sum(:correct) + LongProblem.where(:contest_id => id_contest).sum(:max_score) #LongProblem::MAX_MARK * lp_count
   end
 
   def results
@@ -39,8 +39,8 @@ module ContestAttributes
 
   # This method generates an array containing the number of people getting
   # a certain total score, excluding veterans.
-  def array_of_scores
-    res = Array.new(max_score + 1).fill(0)
+  def array_of_scores(id)
+    res = Array.new(max_score(0,0,id) + 1).fill(0)
     scores.includes(user: :roles).each do |uc|
       res[uc.total_mark] += 1 unless uc.user.has_cached_role?(:veteran)
     end

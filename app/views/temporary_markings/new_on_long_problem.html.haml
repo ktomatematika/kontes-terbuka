@@ -20,7 +20,7 @@
             user: current_user)
           = create_data_row([s.user_contest_id,
                              text_field_tag("marking[#{s.id}][mark]",
-                             tm.nil? ? '' : LongSubmission::SCORE_HASH[tm.mark],
+                             tm.nil? ? '' : tm.mark.to_s,
                              class: 'form-control'),
                              text_field_tag("marking[#{s.id}][tags]",
                              tm.nil? ? '' : tm.tags, class: 'form-control')] + show_if_done_array(s),

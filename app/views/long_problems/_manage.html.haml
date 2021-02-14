@@ -8,6 +8,7 @@
     %tr
       %th No
       %th Statement
+      %th Max score
       %th Edit
       - if can? :destroy, LongProblem
         %th Delete
@@ -19,6 +20,7 @@
           = latex_and_markdown :td, lp.statement
         - else
           %td.text-justify= lp.statement
+        %td= lp.max_score
         %td= link_to 'Edit', [:edit, lp]
         - if can? :destroy, LongProblem
           %td= link_to 'Hapus', lp, method: :delete,
