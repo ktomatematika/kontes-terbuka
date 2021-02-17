@@ -25,9 +25,14 @@
         = f.label :description, 'Deskripsi:'
       %p
         = f.text_area :description
+      %p
+        = f.label :image, 'Foto'
+      %div
+        = f.file_field :image
       = f.submit 'Buat', class: 'btn'
   - else
     %p= "Nama: #{@user.about_user.name}"
     %p Deskripsi:
     %p= @user.about_user.description
+    =image_tag @user.about_user.image.url
     = link_to('Edit About Me', edit_user_about_user_path(@user), class: 'btn', type: 'button')

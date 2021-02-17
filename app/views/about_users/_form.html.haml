@@ -7,4 +7,8 @@
     = f.label :description, 'Deskripsi:'
   %p
     = f.text_area :description
+  %p
+    = f.label :image, 'Foto'
+  %div
+    = f.file_field :image
   = f.submit 'Update', class: 'btn'

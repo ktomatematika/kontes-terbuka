@@ -11,6 +11,7 @@ class AboutUsersController < ApplicationController
     end
 
     def update
+        puts "here"
         @user = User.find(params[:user_id])
         
         if @user.about_user.update(about_user_params)
