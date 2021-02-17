@@ -22,6 +22,6 @@
 
   - @about_users.each do |data|
     %div{:class => "col-md-4 col-sm-6"}
+      =image_tag data.image.url(:small)
       %h3= data.name
       %p= data.description
-  

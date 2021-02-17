@@ -1,7 +1,7 @@
 class AboutUser < ActiveRecord::Base
     # Associations
     belongs_to :user
-    has_attached_file :image
+    has_attached_file :image, styles: { small: '150x150>' }
   
     # Validations
     validates :name, presence: true

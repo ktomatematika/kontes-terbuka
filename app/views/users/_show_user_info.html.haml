@@ -31,8 +31,8 @@
         = f.file_field :image
       = f.submit 'Buat', class: 'btn'
   - else
+    =image_tag @user.about_user.image.url(:small)
     %p= "Nama: #{@user.about_user.name}"
     %p Deskripsi:
     %p= @user.about_user.description
-    =image_tag @user.about_user.image.url
     = link_to('Edit About Me', edit_user_about_user_path(@user), class: 'btn', type: 'button')
