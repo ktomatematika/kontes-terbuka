@@ -22,6 +22,6 @@ class AboutUsersController < ApplicationController
 
     private 
         def about_user_params
-            params.require(:about_user).permit(:name, :description)
+            params.require(:about_user).permit(:name, :description, :image)
         end
 end

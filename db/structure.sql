@@ -58,7 +58,11 @@ CREATE TABLE public.about_users (
     name character varying,
     description text,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    image_file_name character varying,
+    image_content_type character varying,
+    image_file_size bigint,
+    image_updated_at timestamp without time zone
 );
 
 
@@ -2111,4 +2115,6 @@ INSERT INTO schema_migrations (version) VALUES ('20180124153301');
 INSERT INTO schema_migrations (version) VALUES ('20180226033248');
 
 INSERT INTO schema_migrations (version) VALUES ('20210119090413');
+
+INSERT INTO schema_migrations (version) VALUES ('20210217071002');
 
