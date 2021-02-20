@@ -53,6 +53,6 @@
           %td= lp.problem_no
           = latex_and_markdown :td, lp.statement
           %td= ls.where(score: nil).count
-          - (LongProblem.find(lp.id).max_score + 1).times do |i|
+          - (lp.max_score + 1).times do |i|
             %td= ls.where(score: i).count
           %td= average_mark(ls)
