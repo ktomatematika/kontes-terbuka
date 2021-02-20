@@ -98,7 +98,7 @@ module ContestsHelper
 
   # Helper for contests#_own_results.
   def score_out_of_total(lp)
-    score(@user_contest, lp).to_s + '/' + LongProblem.find(lp.id).max_score.to_s + ' poin'
+    score(@user_contest, lp).to_s + '/' + lp.max_score.to_s + ' poin'
   end
 
   # helper for contests#give_feedback, where it shows the message when
