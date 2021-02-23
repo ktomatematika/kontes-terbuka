@@ -41,11 +41,6 @@ class LongSubmission < ActiveRecord::Base
   validates :score,
             numericality: { allow_nil: true, greater_than_or_equal_to: 0 }
   def get_score_text
-    #scorehash = [*0..LongProblem.maximum("max_score")].each_with_object({}) do |item, memo|
-    #  memo[item] = item.to_s
-    #end
-    #scorehash[nil] = '-'
-    #return scorehash
     return "-" if score.nil?
     score.to_s
   end

@@ -27,10 +27,8 @@ module ContestAttributes
     started? && !ended?
   end
 
-  def max_score(sp_count = short_problems.count, lp_count = long_problems.count)
-    sp_count ||= short_problems.count
-    lp_count ||= long_problems.count
-    ShortProblem.where(:contest_id => id).sum(:correct_score) + LongProblem.where(:contest_id => id).sum(:max_score) #LongProblem::MAX_MARK * lp_count
+  def max_score
+    ShortProblem.where(:contest_id => id).sum(:correct_score) + LongProblem.where(:contest_id => id).sum(:max_score)
   end
 
   def results

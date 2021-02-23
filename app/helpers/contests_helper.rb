@@ -57,18 +57,6 @@ module ContestsHelper
 
   # Helper for contests#_own_results and contests#_results.
   def score(user_contest, long_problem)
-    #hash_score = LongSubmission.find_by(long_submission_id: long_problem.id).score_hash
-    #hash_score[user_contest.__send__(
-    #  'problem_no_' + long_problem.id.to_s
-    #)]
-    #x = LongSubmission.find_by(user_contest_id: user_contest.id, long_problem_id: long_problem.id)
-    #x.get_score_text
-
-    #if user_contest.__send__('problem_no_' + long_problem.id.to_s) == nil
-    #  return "-"
-    #else
-    #  return user_contest.__send__('problem_no_' + long_problem.id.to_s).to_s
-    #end
     LongSubmission.find_by(user_contest_id: user_contest.id, long_problem_id: long_problem.id).get_score_text
   end
 

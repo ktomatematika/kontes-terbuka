@@ -17,6 +17,7 @@
 #  report_updated_at   :datetime
 #  start_time          :datetime
 #  end_time            :datetime
+#  max_score           :integer          default: 7
 #
 # Indexes
 #
@@ -65,8 +66,6 @@ class LongProblem < ActiveRecord::Base
   end
 
   # TODO: Refactor several of the methods to concerns.
-
-  #MAX_MARK = 100
 
   def zip_location
     submissions_location + '.zip'

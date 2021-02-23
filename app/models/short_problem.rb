@@ -14,6 +14,9 @@
 #  updated_at :datetime         not null
 #  start_time :datetime
 #  end_time   :datetime
+#  correct_score: integer       default: 1
+#  empty_score: integer         default: 0
+#  wrong_score: integer         default: 0
 #
 # Indexes
 #
