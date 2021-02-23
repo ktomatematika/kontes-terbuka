@@ -157,6 +157,9 @@ FactoryBot.define do
     problem_no { generate(:number) }
     statement { 'Isian' }
     answer { '0' }
+    correct_score { 4 }
+    wrong_score { -1 }
+    empty_score { 0 }
   end
 
   factory :short_submission do

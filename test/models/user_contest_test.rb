@@ -69,7 +69,7 @@ class UserContestTest < ActiveSupport::TestCase
                               gold_cutoff: 7)
     ucs = c.user_contests
     sp = c.short_problems.take
-
+    c.long_problems.first.update(max_score: 7)
     none = ucs.first
     none.short_submissions.find_each do |u|
       u.update(answer: sp.answer.to_i + 1)
@@ -91,7 +91,7 @@ class UserContestTest < ActiveSupport::TestCase
     pucs = ucs.processed
     assert_equal pucs.find(none.id).contest_points, 0
     assert_equal pucs.find(bronze.id).contest_points, 4
-    assert_equal pucs.find(silver.id).contest_points, 5
+    assert_equal pucs.find(silver.id).contest_points, 6
     assert_equal pucs.find(gold.id).contest_points, 7
   end
 

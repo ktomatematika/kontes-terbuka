@@ -78,16 +78,16 @@ class ContestAttributesTest < ActiveSupport::TestCase
       create(:short_problem, contest: c1, problem_no: i + 1)
     end
     7.times.each do |i|
-      create(:long_problem, contest: c1, problem_no: i + 1)
+      create(:long_problem, contest: c1, problem_no: i + 1, max_score: 10)
     end
     5.times.each do |i|
       create(:short_problem, contest: c2, problem_no: i + 1)
     end
     3.times.each do |i|
-      create(:long_problem, contest: c2, problem_no: i + 1)
+      create(:long_problem, contest: c2, problem_no: i + 1, max_score: 9)
     end
 
-    assert_equal c1.max_score, 10 + LongProblem::MAX_MARK * 7
-    assert_equal c2.max_score, 5 + LongProblem::MAX_MARK * 3
+    assert_equal c1.max_score, 4 * 10 + 10 * 7
+    assert_equal c2.max_score, 4 * 5 + 9 * 3
   end
 end
