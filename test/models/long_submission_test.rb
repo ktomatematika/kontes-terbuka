@@ -66,6 +66,18 @@ class LongSubmissionTest < ActiveSupport::TestCase
     assert_equal score2, "-"
   end
 
+  test 'text to score' do
+    lp1 = build(:long_problem, max_score: 7)
+    lp2 = build(:long_problem, max_score: 10)
+    lp3 = build(:long_problem, max_score: 13)
+    ls1 = build(:long_submission, long_problem: lp1)
+    ls2 = build(:long_submission, long_problem: lp2)
+    ls3 = build(:long_submission, long_problem: lp3)
+    assert_equal ls1.text_to_score('-'), nil
+    assert_equal ls2.text_to_score('100'), nil
+    assert_equal ls3.text_to_score('13'), 13
+  end
+
   test 'zip location' do
     ls = create(:long_submission)
     assert ls.zip_location,

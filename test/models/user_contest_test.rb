@@ -91,8 +91,26 @@ class UserContestTest < ActiveSupport::TestCase
     pucs = ucs.processed
     assert_equal pucs.find(none.id).contest_points, 0
     assert_equal pucs.find(bronze.id).contest_points, 4
-    assert_equal pucs.find(silver.id).contest_points, 6
+    assert_equal pucs.find(silver.id).contest_points, 5
     assert_equal pucs.find(gold.id).contest_points, 7
+  end
+
+  test 'short problem scoring' do
+    c = create(:full_contest, short_problems: 4)
+    ucs = c.user_contests
+    sp1 = c.short_problems.first
+    sp2 = c.short_problems.second
+    sp3 = c.short_problems.third
+    sp4 = c.short_problems.fourth
+    sp3.update(answer: 1)
+    none = ucs.first
+    none.short_submissions.first.update(answer: sp1.answer)
+    none.short_submissions.second.update(answer: nil)
+    none.short_submissions.third.update(answer: '')
+    none.short_submissions.fourth.update(answer: sp4.answer.to_i + 1)
+
+    pucs = ucs.processed
+    assert_equal pucs.find(none.id).short_mark, 1
   end
 
   test 'set_timer' do

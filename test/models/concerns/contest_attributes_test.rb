@@ -75,13 +75,13 @@ class ContestAttributesTest < ActiveSupport::TestCase
     c2 = create(:contest)
 
     10.times.each do |i|
-      create(:short_problem, contest: c1, problem_no: i + 1)
+      create(:short_problem, contest: c1, problem_no: i + 1, correct_score: 4)
     end
     7.times.each do |i|
       create(:long_problem, contest: c1, problem_no: i + 1, max_score: 10)
     end
     5.times.each do |i|
-      create(:short_problem, contest: c2, problem_no: i + 1)
+      create(:short_problem, contest: c2, problem_no: i + 1, correct_score: 4)
     end
     3.times.each do |i|
       create(:long_problem, contest: c2, problem_no: i + 1, max_score: 9)

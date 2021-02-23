@@ -157,8 +157,8 @@ FactoryBot.define do
     problem_no { generate(:number) }
     statement { 'Isian' }
     answer { '0' }
-    correct_score { 4 }
-    wrong_score { -1 }
+    correct_score { 1 }
+    wrong_score { 0 }
     empty_score { 0 }
   end
 
