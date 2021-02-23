@@ -11,7 +11,7 @@
       %div
         Banyak soal: #{c.short_problems_count || 0} isian dan
         #{c.long_problems_count || 0} uraian (nilai maksimal:
-        #{c.max_score(c.short_problems_count, c.long_problems_count, c.id)})
+        #{c.max_score(c.short_problems_count, c.long_problems_count)})
       %div Cutoff: #{c.bronze_cutoff}/#{c.silver_cutoff}/#{c.gold_cutoff}
       - if c.result_released || can?(:preview, c)
         %div Jumlah peserta: #{c.user_contests_count || 0} peserta

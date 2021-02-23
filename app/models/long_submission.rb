@@ -47,15 +47,12 @@ class LongSubmission < ActiveRecord::Base
     #scorehash[nil] = '-'
     #return scorehash
     return "-" if score.nil?
-    return score.to_s
+    score.to_s
   end
 
-  def get_text_score(x)
-    if x == "-"
-        return nil
-    else
-        return x.to_i
-    end
+  def self.text_to_score(x) 
+    return nil if x == "-"
+    x.to_i
   end
 
   def zip_location

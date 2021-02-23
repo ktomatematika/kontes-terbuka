@@ -56,7 +56,7 @@ class LongSubmissionsController < ApplicationController
     params[:marking].each do |id, val|
       feedback = (val[:comment] + ' ' + val[:suggestion]).strip
       #score = LongSubmission::SCORE_HASH.key(val[:score])
-      score = LongSubmission.find(id).get_text_score(val[:score])
+      score = LongSubmission.text_to_score(val[:score])
 
       update_hash = { score: score, feedback: feedback }
       update_hash.delete(:score) if val[:score].empty?

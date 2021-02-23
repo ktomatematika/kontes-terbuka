@@ -63,11 +63,13 @@ module ContestsHelper
     #)]
     #x = LongSubmission.find_by(user_contest_id: user_contest.id, long_problem_id: long_problem.id)
     #x.get_score_text
-    if user_contest.__send__('problem_no_' + long_problem.id.to_s) == nil
-      return "-"
-    else
-      return user_contest.__send__('problem_no_' + long_problem.id.to_s).to_s
-    end
+
+    #if user_contest.__send__('problem_no_' + long_problem.id.to_s) == nil
+    #  return "-"
+    #else
+    #  return user_contest.__send__('problem_no_' + long_problem.id.to_s).to_s
+    #end
+    LongSubmission.find_by(user_contest_id: user_contest.id, long_problem_id: long_problem.id).get_score_text
   end
 
   # Helper for contests#_results.
