@@ -31,7 +31,7 @@
               %td= tm && tm.mark
               %td= tm && tm.tags
             %td= text_field_tag "marking[#{s.id}][score]", '',
-              placeholder: s.score.nil? ? "-" : s.score.to_s,
+              placeholder: s.get_score_text,
               class: 'form-control'
             = find_and_preserve do
               %td= text_area_tag "marking[#{s.id}][comment]", '',

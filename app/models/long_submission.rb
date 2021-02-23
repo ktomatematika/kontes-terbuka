@@ -45,8 +45,8 @@ class LongSubmission < ActiveRecord::Base
     score.to_s
   end
 
-  def self.text_to_score(x) 
-    return nil if x == "-"
+  def text_to_score(x) 
+    return nil if (x == "-") || (x > long_problem.max_score.to_s)
     x.to_i
   end
 
