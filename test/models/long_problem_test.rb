@@ -125,10 +125,6 @@ class LongProblemTest < ActiveSupport::TestCase
                  'Long Problem to_s is not expected.'
   end
 
-  #test 'max mark is 7' do
-  #  assert_equal LongProblem::MAX_MARK, 7, 'Long Problem max mark is not 7'
-  #end
-
   test 'long problem needs a contest' do
     assert_not build(:long_problem, contest: nil).save,
                'Long Problem with no contest can be saved.'
