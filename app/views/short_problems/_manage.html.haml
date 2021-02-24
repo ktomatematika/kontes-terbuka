@@ -9,6 +9,9 @@
       %th No
       %th Statement
       %th Jawaban
+      %th Nilai benar
+      %th Nilai salah
+      %th Nilai kosong
       %th Edit
       %th Delete
 
@@ -20,6 +23,9 @@
         - else
           %td.text-justify= sp.statement
         %td= sp.answer
+        %td= sp.correct
+        %td= sp.wrong
+        %td= sp.empty
         %td= link_to 'Edit', [:edit, sp]
         %td= link_to 'Hapus', sp, method: :delete,
           data: { confirm: 'Apakah Anda yakin?' }
@@ -44,6 +50,18 @@
       = f.label :answer, class: 'col-sm-2'
       .col-sm-4
         = f.text_field :answer, class: 'form-control', autocomplete: 'off'
+    .form-group
+      = f.label :correct_score, class: 'col-sm-2'
+      .col-sm-4
+        = f.text_field :correct, class: 'form-control', autocomplete: 'off'
+    .form-group
+      = f.label :wrong_score, class: 'col-sm-2'
+      .col-sm-4
+        = f.text_field :wrong, class: 'form-control', autocomplete: 'off'
+    .form-group
+      = f.label :empty_score, class: 'col-sm-2'
+      .col-sm-4
+        = f.text_field :empty, class: 'form-control', autocomplete: 'off'
     .form-group
       .col-sm-offset-2.col-sm-4
         = f.submit 'Buat soal', class: 'btn'

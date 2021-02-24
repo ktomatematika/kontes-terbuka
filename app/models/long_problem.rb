@@ -17,6 +17,7 @@
 #  report_updated_at   :datetime
 #  start_time          :datetime
 #  end_time            :datetime
+#  max_score           :integer          default: 7
 #
 # Indexes
 #
@@ -42,6 +43,7 @@ class LongProblem < ActiveRecord::Base
   has_many :submission_pages, through: :long_submissions
   has_many :temporary_markings, through: :long_submissions
 
+
   # Attachments
   has_attached_file :report,
                     path: ':rails_root/public/contest_files/reports/' \
@@ -64,8 +66,6 @@ class LongProblem < ActiveRecord::Base
   end
 
   # TODO: Refactor several of the methods to concerns.
-
-  MAX_MARK = 7
 
   def zip_location
     submissions_location + '.zip'

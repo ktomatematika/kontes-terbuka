@@ -46,7 +46,7 @@ class ShortProblemsController < ApplicationController
   end
 
   private def short_problem_params
-    params.require(:short_problem).permit(:problem_no, :statement, :answer)
+    params.require(:short_problem).permit(:problem_no, :statement, :answer, :correct_score, :wrong_score, :empty_score)
   end
 
   private def load_contest

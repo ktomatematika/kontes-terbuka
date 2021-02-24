@@ -75,8 +75,8 @@ class UserContest < ActiveRecord::Base
     ls_points = long_submissions.reduce(0) do |memo, item|
       case item.score
       when nil then memo
-      when 0..(LongProblem::MAX_MARK - 1) then memo + 1 # +1 if score not nil
-      else memo + 2 # +2 if score is 7
+      when 0..(item.long_problem.max_score - 1) then memo + 1 # +1 if score not nil
+      else memo + 2 # +2 if score is max score
       end
     end
 

@@ -69,7 +69,7 @@ class UserContestTest < ActiveSupport::TestCase
                               gold_cutoff: 7)
     ucs = c.user_contests
     sp = c.short_problems.take
-
+    c.long_problems.first.update(max_score: 7)
     none = ucs.first
     none.short_submissions.find_each do |u|
       u.update(answer: sp.answer.to_i + 1)
@@ -93,6 +93,41 @@ class UserContestTest < ActiveSupport::TestCase
     assert_equal pucs.find(bronze.id).contest_points, 4
     assert_equal pucs.find(silver.id).contest_points, 5
     assert_equal pucs.find(gold.id).contest_points, 7
+  end
+
+  test 'short problem correct score' do
+    c = create(:full_contest, correct_score: 3, short_problems: 1)
+    ucs = c.user_contests
+    sp = c.short_problems.first
+    uc = ucs.first
+    uc.short_submissions.first.update(answer: sp1.answer)
+
+    pucs = ucs.processed
+    assert_equal pucs.find(uc.id).short_mark, 3
+  end
+
+  test 'short problem wrong score' do
+    c = create(:full_contest, wrong_score: 3, short_problems: 1)
+    ucs = c.user_contests
+    sp = c.short_problems.first
+    uc = ucs.first
+    uc.short_submissions.first.update(answer: "#{sp1.answer} something")
+
+    pucs = ucs.processed
+    assert_equal pucs.find(uc.id).short_mark, 3
+  end
+
+  test 'short problem empty score' do
+    c = create(:full_contest, empty_score: 3, short_problems: 2)
+    ucs = c.user_contests
+    sp = c.short_problems.first
+    sp2 = c.short_problems.second
+    uc = ucs.first
+    uc.short_submissions.first.update(answer: "")
+    uc.short_submissions.second.update(answer: nil)
+
+    pucs = ucs.processed
+    assert_equal pucs.find(uc.id).short_mark, 6
   end
 
   test 'set_timer' do

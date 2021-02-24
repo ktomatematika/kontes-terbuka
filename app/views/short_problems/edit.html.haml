@@ -15,6 +15,18 @@
       .col-sm-4
         = f.text_field :answer, class: 'form-control', autocomplete: 'off'
     .form-group
+      = f.label :correct_score, class: 'col-sm-2'
+      .col-sm-4
+        = f.text_field :correct, class: 'form-control', autocomplete: 'off'
+    .form-group
+      = f.label :wrong_score, class: 'col-sm-2'
+      .col-sm-4
+        = f.text_field :wrong, class: 'form-control', autocomplete: 'off'
+    .form-group
+      = f.label :empty_score, class: 'col-sm-2'
+      .col-sm-4
+        = f.text_field :empty, class: 'form-control', autocomplete: 'off'
+    .form-group
       = f.label :start_time_is_nil, class: 'col-sm-2'
       .col-sm-4
         = f.check_box :start_time_is_nil

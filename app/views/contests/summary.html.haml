@@ -43,7 +43,7 @@
   %h2 Uraian
   %table.table.table-condensed.table-striped.table-responsive
     %thead
-      = create_data_row(['No.', 'Soal', '-'] + (0..LongProblem::MAX_MARK).to_a + ['Rata-rata'],
+      = create_data_row(['No.', 'Soal', '-'] + (0..@contest.long_problem_max_score).to_a + ['Rata-rata'],
                         'th')
 
     %tbody
@@ -53,6 +53,6 @@
           %td= lp.problem_no
           = latex_and_markdown :td, lp.statement
           %td= ls.where(score: nil).count
-          - (LongProblem::MAX_MARK + 1).times do |i|
+          - (lp.max_score + 1).times do |i|
             %td= ls.where(score: i).count
           %td= average_mark(ls)
