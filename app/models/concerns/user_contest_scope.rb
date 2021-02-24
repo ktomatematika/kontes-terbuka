@@ -20,7 +20,7 @@ module UserContestScope
         'short_submissions.answer = short_problems.answer then short_problems.correct_score ' \
         'when short_submissions.answer = null then short_problems.empty_score ' \
         "when short_submissions.answer = '' then short_problems.empty_score " \
-        'else short_problems.wrong_score '
+        'else short_problems.wrong_score ' \
         'end) ' \
         'as short_mark')
     })
