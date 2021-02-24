@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 12.3
--- Dumped by pg_dump version 12.5 (Ubuntu 12.5-1.pgdg18.04+1)
+-- Dumped from database version 13.1
+-- Dumped by pg_dump version 13.1
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -254,7 +254,7 @@ CREATE TABLE public.long_problems (
     report_updated_at timestamp without time zone,
     start_time timestamp without time zone,
     end_time timestamp without time zone,
-    max_score integer
+    max_score integer DEFAULT 7
 );
 
 
@@ -634,9 +634,9 @@ CREATE TABLE public.short_problems (
     updated_at timestamp without time zone NOT NULL,
     start_time timestamp without time zone,
     end_time timestamp without time zone,
-    correct integer DEFAULT 1,
-    wrong integer DEFAULT 1,
-    empty integer DEFAULT 1
+    correct_score integer DEFAULT 1,
+    wrong_score integer DEFAULT 0,
+    empty_score integer DEFAULT 0
 );
 
 

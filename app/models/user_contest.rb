@@ -76,7 +76,7 @@ class UserContest < ActiveRecord::Base
       case item.score
       when nil then memo
       when 0..(item.long_problem.max_score - 1) then memo + 1 # +1 if score not nil
-      else memo + 2 # +2 if score is 7
+      else memo + 2 # +2 if score is max score
       end
     end
 

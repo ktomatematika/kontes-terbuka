@@ -33,4 +33,12 @@ class TemporaryMarking < ActiveRecord::Base
 
   validates :mark,
             numericality: { greater_than_or_equal_to: 0, allow_nil: true }
+
+  validate :score_does_not_exceed_long_problem_max_score
+  def score_does_not_exceed_long_problem_max_score
+    return unless !score.nil? && score > long_submission.long_problem.max_score
+    errors.add :score,
+               'must be < long_problem.max_score ' \
+               "(#{long_submission.long_problem.max_score})"
+  end
 end

@@ -57,9 +57,9 @@ class LongSubmissionTest < ActiveSupport::TestCase
                'User contest needs to exist'
   end
 
-  test 'score text' do
-    ls1 = build(:long_submission, score:7)
-    ls2 = build(:long_submission, score:nil)
+  test 'get_score_text' do
+    ls1 = build(:long_submission, score: 7)
+    ls2 = build(:long_submission, score: nil)
     score1 = ls1.get_score_text
     score2 = ls2.get_score_text
     assert_equal score1, "7"
@@ -67,15 +67,8 @@ class LongSubmissionTest < ActiveSupport::TestCase
   end
 
   test 'text to score' do
-    lp1 = build(:long_problem, max_score: 7)
-    lp2 = build(:long_problem, max_score: 10)
-    lp3 = build(:long_problem, max_score: 13)
-    ls1 = build(:long_submission, long_problem: lp1)
-    ls2 = build(:long_submission, long_problem: lp2)
-    ls3 = build(:long_submission, long_problem: lp3)
-    assert_equal ls1.text_to_score('-'), nil
-    assert_equal ls2.text_to_score('100'), nil
-    assert_equal ls3.text_to_score('13'), 13
+    assert_equal LongSubmission::text_to_score('-'), nil
+    assert_equal LongSubmission::text_to_score('100'), 100
   end
 
   test 'zip location' do

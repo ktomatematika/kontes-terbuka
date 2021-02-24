@@ -40,14 +40,20 @@ class LongSubmission < ActiveRecord::Base
 
   validates :score,
             numericality: { allow_nil: true, greater_than_or_equal_to: 0 }
-  def get_score_text
-    return "-" if score.nil?
-    score.to_s
+
+  validate :score_does_not_exceed_long_problem_max_score
+  def score_does_not_exceed_long_problem_max_score
+    return unless !score.nil? && score > long_problem.max_score
+    errors.add :score,
+               "must be < long_problem.max_score (#{long_problem.max_score})"
   end
 
-  def text_to_score(x) 
-    return nil if (x == "-") || (x > long_problem.max_score.to_s)
-    x.to_i
+  def get_score_text
+    score&.to_s || "-"
+  end
+
+  def self.text_to_score(x)
+    x == "-" ? nil : x.to_i
   end
 
   def zip_location
