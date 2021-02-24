@@ -57,9 +57,7 @@ module ContestsHelper
 
   # Helper for contests#_own_results and contests#_results.
   def score(user_contest, long_problem)
-    LongSubmission::SCORE_HASH[user_contest.__send__(
-      'problem_no_' + long_problem.id.to_s
-    )]
+    LongSubmission.find_by(user_contest_id: user_contest.id, long_problem_id: long_problem.id).get_score_text
   end
 
   # Helper for contests#_results.
@@ -88,7 +86,7 @@ module ContestsHelper
 
   # Helper for contests#_own_results.
   def score_out_of_total(lp)
-    score(@user_contest, lp).to_s + '/' + LongProblem::MAX_MARK.to_s + ' poin'
+    score(@user_contest, lp).to_s + '/' + lp.max_score.to_s + ' poin'
   end
 
   # helper for contests#give_feedback, where it shows the message when

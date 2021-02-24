@@ -208,7 +208,7 @@ class ContestsControllerTest < ActionController::TestCase
   test 'summary' do
     test_abilities @c, :summary, [nil, :marker], [:panitia]
     create(:long_submission, :marked,
-           long_problem: create(:long_problem, contest: @c))
+           long_problem: create(:long_problem, contest: @c, max_score: 7))
     get :summary, id: @c.id
     assert_response 200
   end

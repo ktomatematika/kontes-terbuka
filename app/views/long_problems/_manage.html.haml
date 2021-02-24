@@ -8,6 +8,7 @@
     %tr
       %th No
       %th Statement
+      %th Max score
       %th Edit
       - if can? :destroy, LongProblem
         %th Delete
@@ -19,6 +20,7 @@
           = latex_and_markdown :td, lp.statement
         - else
           %td.text-justify= lp.statement
+        %td= lp.max_score
         %td= link_to 'Edit', [:edit, lp]
         - if can? :destroy, LongProblem
           %td= link_to 'Hapus', lp, method: :delete,
@@ -37,6 +39,10 @@
         = f.label :problem_no, class: 'col-sm-2'
         .col-sm-4
           = f.text_field :problem_no, class: 'form-control', autocomplete: 'off'
+      .form-group
+        = f.label :max_score, class: 'col-sm-2'
+        .col-sm-4
+          = f.text_field :max_score, class: 'form-control', autocomplete: 'off'
       .form-group
         = f.label :statement, class: 'col-sm-2'
         .col-sm-10

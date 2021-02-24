@@ -68,7 +68,7 @@ class LongProblemsController < ApplicationController
   end
 
   private def long_problem_params
-    params.require(:long_problem).permit(:problem_no, :statement)
+    params.require(:long_problem).permit(:problem_no, :statement, :max_score) 
   end
 
   private def report_params
