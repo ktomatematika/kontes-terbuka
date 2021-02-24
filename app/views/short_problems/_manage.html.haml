@@ -23,9 +23,9 @@
         - else
           %td.text-justify= sp.statement
         %td= sp.answer
-        %td= sp.correct
-        %td= sp.wrong
-        %td= sp.empty
+        %td= sp.correct_score
+        %td= sp.wrong_score
+        %td= sp.empty_score
         %td= link_to 'Edit', [:edit, sp]
         %td= link_to 'Hapus', sp, method: :delete,
           data: { confirm: 'Apakah Anda yakin?' }
