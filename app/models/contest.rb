@@ -144,6 +144,6 @@ class Contest < ActiveRecord::Base
   end
 
   def long_problem_max_score
-    long_problems.maximum("max_score")
+    long_problems.maximum("max_score") || 0
   end
 end
