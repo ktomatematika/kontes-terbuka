@@ -57,7 +57,7 @@ module ContestsHelper
 
   # Helper for contests#_own_results and contests#_results.
   def score(user_contest, long_problem)
-    LongSubmission.find_by(user_contest_id: user_contest.id, long_problem_id: long_problem.id).get_score_text
+    LongSubmission.find_by(user_contest_id: user_contest.id, long_problem_id: long_problem.id)&.get_score_text || "-"
   end
 
   # Helper for contests#_results.
