@@ -1,9 +1,10 @@
+require:
+  - rubocop-rails
+  - rubocop-rake
+
 AllCops:
+  NewCops: enable
   TargetRubyVersion: 2.5
-  TargetRailsVersion: 4.2
-  Include:
-    - '**/Rakefile'
-    - '**/config.ru'
   Exclude:
     - 'db/schema.rb'
     - 'db/migrate/*'
@@ -12,7 +13,6 @@ AllCops:
     - 'log/**/*'
     - 'tmp/**/*'
     - '**/Gemfile'
-    - '**/Vagrantfile'
     - 'vendor/**/*'
 
 Layout/EmptyLinesAroundArguments:
@@ -58,9 +58,6 @@ Security/YAMLLoad:
 Style/AutoResourceCleanup:
   Enabled: true
 
-Style/BracesAroundHashParameters:
-  EnforcedStyle: context_dependent
-
 Style/CollectionMethods:
   Enabled: true
 
@@ -80,4 +77,7 @@ Style/SingleLineBlockParams:
   Enabled: true
 
 Style/StringMethods:
+  Enabled: true
+
+Layout/LineLength:
   Enabled: true
