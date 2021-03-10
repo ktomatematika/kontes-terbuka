@@ -86,9 +86,7 @@ class RolesControllerTest < ActionController::TestCase
     assert_not @user.has_role? :admin
   end
 
-  private
-
-  def create_items
+  private def create_items
     @lp = create(:long_problem)
     @c = @lp.contest
   end

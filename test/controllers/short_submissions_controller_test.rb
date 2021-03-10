@@ -50,9 +50,7 @@ class ShortSubmissionsControllerTest < ActionController::TestCase
     end
   end
 
-  private
-
-  def create_items
+  private def create_items
     @uc = create(:user_contest, user: @user)
     @ss = create(:short_submission, user_contest: @uc)
     @c = @uc.contest

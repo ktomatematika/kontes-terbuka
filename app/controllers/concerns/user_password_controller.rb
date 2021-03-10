@@ -72,9 +72,7 @@ module UserPasswordController
     render 'welcome/sign'
   end
 
-  private
-
-  def verify_fail_alert
+  private def verify_fail_alert
     'Terjadi kegagalan dalam verifikasi ' \
     'atau reset password. Ini kemungkinan berarti Anda sudah ' \
     'terverifikasi atau password Anda sudah terreset, ataupun batas ' \
@@ -84,7 +82,7 @@ module UserPasswordController
     "#{ActionController::Base.helpers.link_to 'kontak kami', contact_path}."
   end
 
-  def reset_password_no_verification_log
+  private def reset_password_no_verification_log
     'user_reset_password_fail_no_verification|' \
       "verification:#{params[:verification]}"
   end

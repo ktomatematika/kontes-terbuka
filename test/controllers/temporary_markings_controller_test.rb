@@ -55,9 +55,7 @@ class TemporaryMarkingsControllerTest < ActionController::TestCase
     assert_nil tm4.tags
   end
 
-  private
-
-  def create_items
+  private def create_items
     @lp = create(:long_problem)
     @c = @lp.contest
   end

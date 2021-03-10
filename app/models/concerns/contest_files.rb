@@ -42,18 +42,16 @@ module ContestFiles
     File.open(results_location, 'wb') { |f| f << pdf }
   end
 
-  private
-
-  def reports_location
+  private def reports_location
     Rails.root.join('public', 'contest_files', 'reports', id.to_s).to_s
   end
 
-  def submissions_location
+  private def submissions_location
     Rails.root.join('public', 'contest_files', 'submissions',
                     "kontes#{id}").to_s
   end
 
-  def results_template
+  private def results_template
     Rails.root.join('app', 'views', 'contests', 'download_results.html.erb')
   end
 end

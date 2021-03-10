@@ -7,12 +7,12 @@ class CertificateManager
 
   attr_reader :user_contest
 
-  def initialize(uc)
-    @user_contest = uc
-    @contest = uc.contest
-    @user = uc.user
+  def initialize(user_cont)
+    @user_contest = user_cont
+    @contest = user_cont.contest
+    @user = user_cont.user
     @dir = Rails.root.join('public', 'contest_files', 'certificates').to_s
-    @path = "#{@dir}/#{uc.id}"
+    @path = "#{@dir}/#{user_cont.id}"
     @tex_path = "#{@path}.tex"
     @pdf_path = "#{@path}.pdf"
 

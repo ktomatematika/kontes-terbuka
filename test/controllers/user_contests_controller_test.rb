@@ -39,9 +39,7 @@ class UserContestsControllerTest < ActionController::TestCase
     assert_equal @response.content_type, 'text/csv'
   end
 
-  private
-
-  def create_items
+  private def create_items
     @uc = create(:user_contest, user: @user)
     @c = @uc.contest
   end
