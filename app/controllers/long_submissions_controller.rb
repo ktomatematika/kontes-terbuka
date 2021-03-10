@@ -54,8 +54,8 @@ class LongSubmissionsController < ApplicationController
 
   def submit_mark
     params[:marking].each do |id, val|
-      feedback = (val[:comment] + ' ' + val[:suggestion]).strip
-      score = LongSubmission::text_to_score(val[:score])
+      feedback = "#{val[:comment]} #{val[:suggestion]}".strip
+      score = LongSubmission.text_to_score(val[:score])
 
       update_hash = { score: score, feedback: feedback }
       update_hash.delete(:score) if val[:score].empty?
@@ -71,6 +71,7 @@ class LongSubmissionsController < ApplicationController
     @long_problem = LongProblem.find_by(contest_id: params[:contest_id],
                                         problem_no: params[:problem_no])
     return unless @long_problem
+
     user = User.find_by(username: params[:username])
     contest = Contest.find(params[:contest_id])
     @user_contest = UserContest.find_by(user: user, contest: contest)

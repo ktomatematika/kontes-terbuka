@@ -40,7 +40,7 @@ class ShortSubmissionsControllerTest < ActionController::TestCase
     create_list(:short_problem, 5, contest: @c).each do |sp|
       create(:short_submission, short_problem: sp, user_contest: @uc)
     end
-    ss_hash = Hash[@c.short_problems.map { |s| [s.id, s.id] }]
+    ss_hash = @c.short_problems.map { |s| [s.id, s.id] }.to_h
     post :create_on_contest, contest_id: @c.id, short_submission: ss_hash
     assert_redirected_to @c
 

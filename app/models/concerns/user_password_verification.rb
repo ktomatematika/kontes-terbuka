@@ -23,6 +23,7 @@ module UserPasswordVerification
 
   def destroy_if_unverified
     return if enabled
+
     Ajat.warn "verification_expiry|uname:#{username}"
     destroy
   end

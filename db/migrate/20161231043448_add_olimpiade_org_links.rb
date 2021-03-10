@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddOlimpiadeOrgLinks < ActiveRecord::Migration
   def change
     add_column :contests, :forum_link, :string

@@ -13,6 +13,7 @@ class FeedbackAnswersController < ApplicationController
 
     feedback_params.each do |qn_id, answer|
       next if answer.empty?
+
       begin
         fa = FeedbackAnswer.find_or_initialize_by(feedback_question_id: qn_id,
                                                   user_contest: uc)

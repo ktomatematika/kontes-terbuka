@@ -37,7 +37,7 @@ class RolesControllerTest < ActionController::TestCase
     test_abilities Role, :create_marker, [nil, :panitia, :marker],
                    %i[marking_manager admin]
     marker = create(:user)
-    post :create_marker, id: @lp.id, username: (marker.username + 'a')
+    post :create_marker, id: @lp.id, username: "#{marker.username}a"
     assert_equal flash[:alert], 'User tidak ditemukan!'
     assert_redirected_to marker_contest_path(@c)
   end

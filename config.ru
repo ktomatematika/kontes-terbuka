@@ -22,6 +22,6 @@ end
 
 # --- End of unicorn worker killer code ---
 
-require ::File.expand_path('../config/environment', __FILE__)
+require ::File.expand_path('config/environment', __dir__)
 
 run Rails.application

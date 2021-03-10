@@ -2,7 +2,7 @@
 
 class String
   def get(binding)
-    binding.eval '"' + self + '"'
+    binding.eval "\"#{self}\""
   end
 end
 

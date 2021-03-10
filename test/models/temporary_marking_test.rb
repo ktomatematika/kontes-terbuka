@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# rubocop:disable Metrics/LineLength
 # == Schema Information
 #
 # Table name: temporary_markings
@@ -22,8 +21,6 @@
 #  fk_rails_...  (long_submission_id => long_submissions.id) ON DELETE => cascade
 #  fk_rails_...  (user_id => users.id) ON DELETE => cascade
 #
-# rubocop:enable Metrics/LineLength
-
 require 'test_helper'
 
 class TemporaryMarkingTest < ActiveSupport::TestCase
