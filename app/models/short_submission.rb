@@ -29,9 +29,7 @@ class ShortSubmission < ActiveRecord::Base
 
   before_validation :remove_leading_zeroes
 
-  private
-
-  def remove_leading_zeroes
+  private def remove_leading_zeroes
     return if answer.nil?
 
     self.answer = answer.gsub(/^0*/, '')

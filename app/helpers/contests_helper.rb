@@ -86,8 +86,8 @@ module ContestsHelper
   end
 
   # Helper for contests#_own_results.
-  def score_out_of_total(lp)
-    "#{score(@user_contest, lp)}/#{lp.max_score} poin"
+  def score_out_of_total(lpr)
+    "#{score(@user_contest, lpr)}/#{lpr.max_score} poin"
   end
 
   # helper for contests#give_feedback, where it shows the message when
@@ -105,16 +105,16 @@ module ContestsHelper
   # Helper for contests#long_problems, similar to find_or_initialize_by
   # while avoiding the n + 1 query.
   def long_submission_find_or_initialize_by(long_problem)
-    @long_submissions.find { |ls| ls.long_problem == long_problem } ||
+    @long_submissions.find { |lsn| lsn.long_problem == long_problem } ||
       LongSubmission.new(user_contest: @user_contest,
                          long_problem: long_problem)
   end
 
   # Helper for contests#_own_results to show green or red depending on
   # whether the short submission is correct or wrong.
-  def status(ss, sp)
-    return '' if ss.nil?
-    return 'text-success' if ss.answer == sp.answer
+  def status(short_sub, short_prob)
+    return '' if short_sub.nil?
+    return 'text-success' if short_sub.answer == short_prob.answer
 
     'text-danger'
   end

@@ -164,21 +164,19 @@ class ContestJobsTest < ActiveSupport::TestCase
     end
   end
 
-  private
-
-  def assert_job_exists(dj_hash, object, method, args, message = '')
+  private def assert_job_exists(dj_hash, object, method, args, message = '')
     args = [] if args.nil?
     args = [args] unless args.instance_of?(Array)
     assert jobs_any?(jobs_from_hash(dj_hash), object, method, args), message
   end
 
-  def assert_job_not_exists(dj_hash, object, method, args, message = '')
+  private def assert_job_not_exists(dj_hash, object, method, args, message = '')
     args = [] if args.nil?
     args = [args] unless args.instance_of?(Array)
     assert_not jobs_any?(jobs_from_hash(dj_hash), object, method, args), message
   end
 
-  def jobs_any?(jobs, object, method, args)
+  private def jobs_any?(jobs, object, method, args)
     jobs.any? do |job|
       handler = YAML.load(job.handler, [Delayed::PerformableMethod])
       object == handler.object && method == handler.method_name &&
@@ -186,7 +184,7 @@ class ContestJobsTest < ActiveSupport::TestCase
     end
   end
 
-  def jobs_from_hash(dj_hash)
+  private def jobs_from_hash(dj_hash)
     jobs = Delayed::Job.all.where(dj_hash.slice(:queue, :priority))
     if dj_hash.include? :run_at
       jobs = jobs.where('? < run_at AND run_at < ?',

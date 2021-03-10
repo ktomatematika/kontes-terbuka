@@ -54,7 +54,6 @@ class UsersController < ApplicationController
                                           ).order(created_at: :desc)
   end
 
-  # rubocop:disable Metrics/AbcSize
   def index
     authorize! :index_full, User if params[:hide_disabled]
     params[:search] = '' unless params[:search].is_a?(String)
@@ -75,7 +74,6 @@ class UsersController < ApplicationController
                  .includes(:province, :status, :roles)
     @users = @users.where(enabled: true)
   end
-  # rubocop:enable Metrics/AbcSize
 
   def edit; end
 

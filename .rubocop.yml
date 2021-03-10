@@ -19,7 +19,7 @@ Layout/EmptyLinesAroundArguments:
   Enabled: false
 
 Metrics/AbcSize:
-  Max: 26
+  Max: 100
 
 Metrics/BlockLength:
   Exclude:
@@ -75,6 +75,9 @@ Style/Send:
 
 Style/SingleLineBlockParams:
   Enabled: true
+
+Style/AccessModifierDeclarations:
+  EnforcedStyle: inline
 
 Style/StringMethods:
   Enabled: true

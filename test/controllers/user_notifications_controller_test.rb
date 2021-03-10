@@ -35,9 +35,7 @@ class UserNotificationsControllerTest < ActionController::TestCase
     assert_nil UserNotification.find_by id: @un.id
   end
 
-  private
-
-  def create_items
+  private def create_items
     @un = create(:user_notification, user: @user)
     @n = @un.notification
   end

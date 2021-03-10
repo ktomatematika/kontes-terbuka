@@ -23,16 +23,14 @@ module ActiveSupport
       FileUtils.rm_rf(Rails.root.join('public', 'contest_files'))
     end
 
-    private
-
-    def login_and_be_admin
+    private def login_and_be_admin
       @user = create(:user)
       @user.add_role :panitia
       @user.add_role :admin
       @request.cookies[:auth_token] = @user.auth_token
     end
 
-    def test_abilities(model_object, method, bad_roles, good_roles)
+    private def test_abilities(model_object, method, bad_roles, good_roles)
       bad_roles.each do |r|
         user = r.is_a?(User) ? r : create(:user, role: r)
         ability = Ability.new user
