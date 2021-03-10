@@ -28,7 +28,7 @@ module ContestAttributes
   end
 
   def max_score
-    ShortProblem.where(:contest_id => id).sum(:correct_score) + LongProblem.where(:contest_id => id).sum(:max_score)
+    ShortProblem.where(contest_id: id).sum(:correct_score) + LongProblem.where(contest_id: id).sum(:max_score)
   end
 
   def results
@@ -39,7 +39,7 @@ module ContestAttributes
   # a certain total score, excluding veterans.
   def array_of_scores
     res = Array.new(max_score + 1).fill(0)
-    scores.includes(user: :roles).each do |uc|
+    scores.includes(user: :roles).find_each do |uc|
       res[uc.total_mark] += 1 unless uc.user.has_cached_role?(:veteran)
     end
     res

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ChangeColorStatusProvinceDeleteToNotCascade < ActiveRecord::Migration
   def change
     remove_foreign_key :users, :colors

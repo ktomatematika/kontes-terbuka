@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RenameUserReferrerToReferrer < ActiveRecord::Migration
   def self.up
     rename_table :user_referrers, :referrers

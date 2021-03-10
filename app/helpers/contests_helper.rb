@@ -31,6 +31,7 @@ module ContestsHelper
   def show_award
     award = @user_contest.award
     return if award.empty?
+
     content_tag :h3, "Anda mendapatkan penghargaan #{award.downcase}!"
   end
 
@@ -57,7 +58,7 @@ module ContestsHelper
 
   # Helper for contests#_own_results and contests#_results.
   def score(user_contest, long_problem)
-    LongSubmission.find_by(user_contest_id: user_contest.id, long_problem_id: long_problem.id)&.get_score_text || "-"
+    LongSubmission.find_by(user_contest_id: user_contest.id, long_problem_id: long_problem.id)&.get_score_text || '-'
   end
 
   # Helper for contests#_results.
@@ -86,7 +87,7 @@ module ContestsHelper
 
   # Helper for contests#_own_results.
   def score_out_of_total(lp)
-    score(@user_contest, lp).to_s + '/' + lp.max_score.to_s + ' poin'
+    "#{score(@user_contest, lp)}/#{lp.max_score} poin"
   end
 
   # helper for contests#give_feedback, where it shows the message when
@@ -114,6 +115,7 @@ module ContestsHelper
   def status(ss, sp)
     return '' if ss.nil?
     return 'text-success' if ss.answer == sp.answer
+
     'text-danger'
   end
 

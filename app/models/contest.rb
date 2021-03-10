@@ -100,12 +100,14 @@ class Contest < ActiveRecord::Base
   validate :result_released_when_contest_ended
   def result_released_when_contest_ended
     return unless result_released && !ended?
+
     errors.add :result_released, 'after contest ended'
   end
 
   validate :result_released_with_nonzero_feedback_questions
   def result_released_with_nonzero_feedback_questions
     return unless result_released && feedback_questions.empty?
+
     errors.add :result_released, 'must have > 0 feedback questions'
   end
 
@@ -125,11 +127,13 @@ class Contest < ActiveRecord::Base
     return next_end if next_feedback.nil?
     return next_feedback if next_end.nil?
     return next_feedback if next_feedback.feedback_time < next_end.end_time
+
     next_end
   end
 
   def self.count_sql(table)
     return unless ActiveRecord::Base.connection.tables.include?(table)
+
     Contest.joins(table.to_sym).group('contests.id')
            .select("contests.id, count(#{table}) AS #{table}_count").to_sql
   end
@@ -144,6 +148,6 @@ class Contest < ActiveRecord::Base
   end
 
   def long_problem_max_score
-    long_problems.maximum("max_score") || 0
+    long_problems.maximum('max_score') || 0
   end
 end

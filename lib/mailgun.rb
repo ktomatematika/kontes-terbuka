@@ -43,6 +43,7 @@ module Mailgun
        !params[:force_to_many]
       raise 'You cannot send to many. Use BCC instead.'
     end
+
     params.delete(:force_to_many)
   end
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddAttachmentMarkingSchemeToContests < ActiveRecord::Migration
   def self.up
     change_table :contests do |t|

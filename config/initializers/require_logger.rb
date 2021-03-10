@@ -1,4 +1,4 @@
 # frozen_string_literal: true
 
 require Rails.root.join('lib', 'detailed_logger.rb')
-Ajat = DetailedLogger.new(STDOUT)
+Ajat = DetailedLogger.new($stdout)

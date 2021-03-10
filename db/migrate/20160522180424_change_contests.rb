@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ChangeContests < ActiveRecord::Migration
   def change
     remove_column :contests, :created_on, :datetime

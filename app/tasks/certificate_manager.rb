@@ -13,8 +13,8 @@ class CertificateManager
     @user = uc.user
     @dir = Rails.root.join('public', 'contest_files', 'certificates').to_s
     @path = "#{@dir}/#{uc.id}"
-    @tex_path = @path + '.tex'
-    @pdf_path = @path + '.pdf'
+    @tex_path = "#{@path}.tex"
+    @pdf_path = "#{@path}.pdf"
 
     FileUtils.mkdir_p(@dir) unless Dir.exist?(@dir)
   end
@@ -57,6 +57,6 @@ class CertificateManager
   end
 
   def clean_files
-    File.delete(*Dir.glob(@path + '*'))
+    File.delete(*Dir.glob("#{@path}*"))
   end
 end

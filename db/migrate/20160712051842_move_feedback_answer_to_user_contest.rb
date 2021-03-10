@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MoveFeedbackAnswerToUserContest < ActiveRecord::Migration
   def change
     remove_column :feedback_answers, :user_id

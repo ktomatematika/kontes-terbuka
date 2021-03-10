@@ -21,7 +21,7 @@ class FeedbackAnswersControllerTest < ActionController::TestCase
   test 'create_on_contest' do
     test_abilities FeedbackAnswer, :create_on_contest, [], [nil]
     create_list(:feedback_question, 5, contest: @c)
-    fa_hash = Hash[@c.feedback_questions.map { |f| [f.id, f.id] }]
+    fa_hash = @c.feedback_questions.map { |f| [f.id, f.id] }.to_h
     post :create_on_contest, contest_id: @c.id, feedback_answer: fa_hash
     assert_redirected_to contest_path(@c)
     assert_equal flash[:notice], 'Feedback berhasil dikirimkan!'

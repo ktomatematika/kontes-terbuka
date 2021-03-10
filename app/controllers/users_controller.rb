@@ -46,6 +46,7 @@ class UsersController < ApplicationController
                                 .paginate(page: params[:page_history])
                                 .to_a
     return unless can? :show_full, @user
+
     @point_transactions = PointTransaction.where(user: @user)
                                           .paginate(
                                             page: params[:page_transactions],
@@ -109,9 +110,7 @@ class UsersController < ApplicationController
 
   def check_unique
     users = User.all
-    if params[:username]
-      users = users.where('username ILIKE ?', params[:username])
-    end
+    users = users.where('username ILIKE ?', params[:username]) if params[:username]
     users = users.where(email: params[:email]) if params[:email]
     render json: users.blank?
   end

@@ -18,8 +18,6 @@
 #
 #  fk_rails_...  (contest_id => contests.id) ON DELETE => cascade
 #
-# rubocop:enable Metrics/LineLength
-
 require 'test_helper'
 
 class FeedbackQuestionTest < ActiveSupport::TestCase

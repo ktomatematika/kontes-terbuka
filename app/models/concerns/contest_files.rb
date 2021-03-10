@@ -14,11 +14,11 @@ module ContestFiles
   end
 
   def report_zip_location
-    reports_location + '.zip'
+    "#{reports_location}.zip"
   end
 
   def submissions_zip_location
-    submissions_location + '.zip'
+    "#{submissions_location}.zip"
   end
 
   def results_location
@@ -38,9 +38,7 @@ module ContestFiles
     )
 
     File.delete(results_location) if File.file?(results_location)
-    unless File.directory?(File.dirname(results_location))
-      FileUtils.mkdir_p(File.dirname(results_location))
-    end
+    FileUtils.mkdir_p(File.dirname(results_location)) unless File.directory?(File.dirname(results_location))
     File.open(results_location, 'wb') { |f| f << pdf }
   end
 

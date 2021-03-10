@@ -25,7 +25,7 @@ class MarketItemsController < ApplicationController
   def update
     MarketItem.transaction do
       @market_item = MarketItem.find(params[:id])
-      @market_item = MarketItem.update_attributes(item_params)
+      @market_item = MarketItem.update(item_params)
     end
 
     redirect_to root_path

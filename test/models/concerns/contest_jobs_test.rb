@@ -168,13 +168,13 @@ class ContestJobsTest < ActiveSupport::TestCase
 
   def assert_job_exists(dj_hash, object, method, args, message = '')
     args = [] if args.nil?
-    args = [args] unless args.class == Array
+    args = [args] unless args.instance_of?(Array)
     assert jobs_any?(jobs_from_hash(dj_hash), object, method, args), message
   end
 
   def assert_job_not_exists(dj_hash, object, method, args, message = '')
     args = [] if args.nil?
-    args = [args] unless args.class == Array
+    args = [args] unless args.instance_of?(Array)
     assert_not jobs_any?(jobs_from_hash(dj_hash), object, method, args), message
   end
 
