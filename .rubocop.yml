@@ -1,6 +1,5 @@
 require:
   - rubocop-rails
-  - rubocop-rake
 
 AllCops:
   NewCops: enable
