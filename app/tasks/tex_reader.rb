@@ -39,7 +39,7 @@ class TexReader
 
     # Copy logo to be included in the PDF file
     FileUtils.cp(
-      Rails.root.join('app', 'assets', 'images', 'logo-hires.png').to_s,
+      Rails.root.join('app/assets/images/logo-hires.png').to_s,
       "#{File.dirname(tex_path)}/logo.png"
     )
 

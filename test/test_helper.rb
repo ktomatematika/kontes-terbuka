@@ -20,7 +20,7 @@ module ActiveSupport
     include FactoryBot::Syntax::Methods
 
     def teardown
-      FileUtils.rm_rf(Rails.root.join('public', 'contest_files'))
+      FileUtils.rm_rf(Rails.root.join('public/contest_files'))
     end
 
     private def login_and_be_admin
