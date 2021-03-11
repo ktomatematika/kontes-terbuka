@@ -127,8 +127,6 @@ group :development, :test do
   gem 'rubocop', '~> 1.11.0'
   # Rails cops extracted to rubocop-rails gem
   gem 'rubocop-rails'
-  # Linter for rake extracted to rubocop-rake
-  gem 'rubocop-rake'
   # HAML linter
   gem 'haml_lint'
   # SCSS linter
