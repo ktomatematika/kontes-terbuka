@@ -52,6 +52,6 @@ module ContestFiles
   end
 
   private def results_template
-    Rails.root.join('app', 'views', 'contests', 'download_results.html.erb')
+    Rails.root.join('app/views/contests/download_results.html.erb')
   end
 end

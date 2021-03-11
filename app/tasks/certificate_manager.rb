@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 class CertificateManager
-  TEMPLATE = File.read(Rails.root.join('app', 'views', 'contests',
-                                       'certificate.tex.haml'))
+  TEMPLATE = File.read(Rails.root.join('app/views/contests/certificate.tex.haml'))
   EMAIL_SINK = 'certificate@ktom.tomi.or.id'
 
   attr_reader :user_contest
@@ -11,7 +10,7 @@ class CertificateManager
     @user_contest = user_cont
     @contest = user_cont.contest
     @user = user_cont.user
-    @dir = Rails.root.join('public', 'contest_files', 'certificates').to_s
+    @dir = Rails.root.join('public/contest_files/certificates').to_s
     @path = "#{@dir}/#{user_cont.id}"
     @tex_path = "#{@path}.tex"
     @pdf_path = "#{@path}.pdf"
