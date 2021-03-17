@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 13.1
--- Dumped by pg_dump version 13.1
+-- Dumped from database version 13.2
+-- Dumped by pg_dump version 13.2
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -62,7 +62,8 @@ CREATE TABLE public.about_users (
     image_file_name character varying,
     image_content_type character varying,
     image_file_size bigint,
-    image_updated_at timestamp without time zone
+    image_updated_at timestamp without time zone,
+    is_alumni boolean
 );
 
 
@@ -2117,4 +2118,6 @@ INSERT INTO schema_migrations (version) VALUES ('20180226033248');
 INSERT INTO schema_migrations (version) VALUES ('20210119090413');
 
 INSERT INTO schema_migrations (version) VALUES ('20210217071002');
+
+INSERT INTO schema_migrations (version) VALUES ('20210317051727');
 

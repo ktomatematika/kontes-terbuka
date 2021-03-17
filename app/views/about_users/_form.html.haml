@@ -1,4 +1,4 @@
-= form_for [@user, @about_user] do |f|
+= form_for [@user, @user.about_user] do |f|
   %p
     = f.label :name, 'Nama:'
   %p
@@ -7,6 +7,10 @@
     = f.label :description, 'Deskripsi:'
   %p
     = f.text_area :description
+  %p 
+    = f.label :is_alumni, 'Alumni?'
+  %p
+    = f.check_box :is_alumni
   %p
     = f.label :image, 'Foto'
   %div

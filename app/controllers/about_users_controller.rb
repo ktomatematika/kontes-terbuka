@@ -11,10 +11,9 @@ class AboutUsersController < ApplicationController
     end
 
     def update
-        puts "here"
         @user = User.find(params[:user_id])
         
-        if @user.about_user.update(about_user_params)
+        if @user.about_user.update_attributes(about_user_params)
             redirect_to user_path(@user)
         else
             render 'edit'
@@ -23,6 +22,6 @@ class AboutUsersController < ApplicationController
 
     private 
         def about_user_params
-            params.require(:about_user).permit(:name, :description, :image)
+            params.require(:about_user).permit(:name, :description, :is_alumni, :image)
         end
 end

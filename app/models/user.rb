@@ -112,6 +112,7 @@ class User < ActiveRecord::Base
   has_many :market_orders
 
   has_one :about_user, dependent: :destroy
+  accepts_nested_attributes_for :about_user
 
   # Validations
   validates :password, presence: true, confirmation: true, on: :create
