@@ -20,8 +20,13 @@
   %h3 Alumni Tim Kami
   .row#alumni-panitia
 
-  - @about_users.each do |data|
-    %div{:class => "col-md-4 col-sm-6"}
+  %h2 Tim Kami
+  - @about_users.each_with_index do |data, index|
+    - base_class = "about-us-person col-md-4 col-sm-8"
+    - data_name = "data-name=#{data.name}"
+    - data_description = "data-description=#{data.description}"
+    %div{:class => "#{base_class}", :data => {:name => "#{data.name}", :description => "#{data.description}"}}
       =image_tag data.image.url(:small)
       %h3= data.name
-      %p= data.description
+    %div{:class => "clearfix visible-xs visible-md visible-lg"}
+    %div{:class => "about-us-description"}
