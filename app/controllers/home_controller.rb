@@ -39,6 +39,8 @@ class HomeController < ApplicationController
       [img_file, image_tag.tr('"', "'")]
     end.to_h
     @about_users = AboutUser.all.order("RANDOM()")
+    @team = @about_users.select { |data| !data.is_alumni }
+    @alumni = @about_users.select { |data| data.is_alumni }
   end
 
   def faq; end

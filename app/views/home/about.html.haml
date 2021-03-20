@@ -16,20 +16,45 @@
     maupun nasional.
 
   %h2 Tim Kami
-  - team = @about_users.select { |data| !data.is_alumni }
-  - team.each_with_index do |data, index|
-    - base_class = "about-us-person col-md-4 col-sm-8"
-    %div{:class => "#{base_class}", :data => {:name => "#{data.name}", :description => "#{data.description}"}}
-      =image_tag data.image.url(:small)
-      %h3= data.name
-    %div{:class => "clearfix visible-xs visible-md visible-lg"}
-    %div{:class => "about-us-description"}
+  .row
+    - endFlag = true
+    - @team.each_with_index do |data, index|
+      - base_class = "about-us-person col-md-4 col-sm-6"
+      %div{:class => "#{base_class}", :data => {:name => "#{data.name}", :description => "#{data.description}"}}
+        =image_tag data.image.url(:small)
+        %h3= data.name
+      - if index % 2 == 1 && index % 3 == 2
+        %div{:class => "clearfix visible-xs visible-sm visible-md visible-lg"}
+        endFlag = false
+      - elsif index % 2 == 1 && index % 3 != 2
+        %div{:class => "clearfix visible-xs visible-sm"}
+      - elsif index % 2 != 1 && index % 3 == 2
+        %div{:class => "clearfix visible-xs visible-md visible-lg"}
+      - else
+        %div{:class => "clearfix visible-xs"}
+      %div{:class => "about-us-description"}
+    - if endFlag
+      %div{:class => "clearfix visible-xs visible-sm visible-md visible-lg"}
+      %div{:class => "about-us-description"} 
+  
   %h2 Alumni Tim Kami
-  - alumni = @about_users.select { |data| data.is_alumni }
-  - alumni.each_with_index do |data, index|
-    - base_class = "about-us-person col-md-4 col-sm-8"
-    %div{:class => "#{base_class}", :data => {:name => "#{data.name}", :description => "#{data.description}"}}
-      =image_tag data.image.url(:small)
-      %h3= data.name
-    %div{:class => "clearfix visible-xs visible-md visible-lg"}
-    %div{:class => "about-us-description"} 
+  .row
+    - endFlag = true
+    - @alumni.each_with_index do |data, index|
+      - base_class = "about-us-person col-md-4 col-sm-8"
+      %div{:class => "#{base_class}", :data => {:name => "#{data.name}", :description => "#{data.description}"}}
+        =image_tag data.image.url(:small)
+        %h3= data.name
+      - if index % 2 == 1 && index % 3 == 2
+        %div{:class => "clearfix visible-xs visible-sm visible-md visible-lg"}
+        endFlag = false
+      - elsif index % 2 == 1 && index % 3 != 2
+        %div{:class => "clearfix visible-xs visible-sm"}
+      - elsif index % 2 != 1 && index % 3 == 2
+        %div{:class => "clearfix visible-xs visible-md visible-lg"}
+      - else
+        %div{:class => "clearfix visible-xs"}
+      %div{:class => "about-us-description"}
+    - if endFlag
+      %div{:class => "clearfix visible-xs visible-sm visible-md visible-lg"}
+      %div{:class => "about-us-description"} 
