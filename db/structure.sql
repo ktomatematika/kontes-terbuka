@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 13.1
--- Dumped by pg_dump version 13.1
+-- Dumped from database version 12.3
+-- Dumped by pg_dump version 12.5 (Ubuntu 12.5-1.pgdg18.04+1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -30,20 +30,6 @@ CREATE EXTENSION IF NOT EXISTS pg_trgm WITH SCHEMA public;
 COMMENT ON EXTENSION pg_trgm IS 'text similarity measurement and index searching based on trigrams';
 
 
---
--- Name: tablefunc; Type: EXTENSION; Schema: -; Owner: -
---
-
-CREATE EXTENSION IF NOT EXISTS tablefunc WITH SCHEMA public;
-
-
---
--- Name: EXTENSION tablefunc; Type: COMMENT; Schema: -; Owner: -
---
-
-COMMENT ON EXTENSION tablefunc IS 'functions that manipulate whole tables, including crosstab';
-
-
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
@@ -65,6 +51,7 @@ CREATE TABLE public.colors (
 --
 
 CREATE SEQUENCE public.colors_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -92,7 +79,7 @@ CREATE TABLE public.contests (
     updated_at timestamp without time zone NOT NULL,
     problem_pdf_file_name character varying,
     problem_pdf_content_type character varying,
-    problem_pdf_file_size integer,
+    problem_pdf_file_size bigint,
     problem_pdf_updated_at timestamp without time zone,
     rule text DEFAULT ''::text,
     result_time timestamp without time zone NOT NULL,
@@ -103,11 +90,11 @@ CREATE TABLE public.contests (
     result_released boolean DEFAULT false NOT NULL,
     problem_tex_file_name character varying,
     problem_tex_content_type character varying,
-    problem_tex_file_size integer,
+    problem_tex_file_size bigint,
     problem_tex_updated_at timestamp without time zone,
     marking_scheme_file_name character varying,
     marking_scheme_content_type character varying,
-    marking_scheme_file_size integer,
+    marking_scheme_file_size bigint,
     marking_scheme_updated_at timestamp without time zone,
     book_promo character varying,
     timer interval hour to second
@@ -119,6 +106,7 @@ CREATE TABLE public.contests (
 --
 
 CREATE SEQUENCE public.contests_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -158,6 +146,7 @@ CREATE TABLE public.delayed_jobs (
 --
 
 CREATE SEQUENCE public.delayed_jobs_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -191,6 +180,7 @@ CREATE TABLE public.feedback_answers (
 --
 
 CREATE SEQUENCE public.feedback_answers_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -223,6 +213,7 @@ CREATE TABLE public.feedback_questions (
 --
 
 CREATE SEQUENCE public.feedback_questions_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -250,7 +241,7 @@ CREATE TABLE public.long_problems (
     updated_at timestamp without time zone NOT NULL,
     report_file_name character varying,
     report_content_type character varying,
-    report_file_size integer,
+    report_file_size bigint,
     report_updated_at timestamp without time zone,
     start_time timestamp without time zone,
     end_time timestamp without time zone,
@@ -263,6 +254,7 @@ CREATE TABLE public.long_problems (
 --
 
 CREATE SEQUENCE public.long_problems_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -297,6 +289,7 @@ CREATE TABLE public.long_submissions (
 --
 
 CREATE SEQUENCE public.long_submissions_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -309,143 +302,6 @@ CREATE SEQUENCE public.long_submissions_id_seq
 --
 
 ALTER SEQUENCE public.long_submissions_id_seq OWNED BY public.long_submissions.id;
-
-
---
--- Name: market_item_pictures; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.market_item_pictures (
-    id integer NOT NULL,
-    market_item_id integer NOT NULL,
-    picture_file_name character varying,
-    picture_content_type character varying,
-    picture_file_size integer,
-    picture_updated_at timestamp without time zone,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
-);
-
-
---
--- Name: market_item_pictures_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.market_item_pictures_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: market_item_pictures_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.market_item_pictures_id_seq OWNED BY public.market_item_pictures.id;
-
-
---
--- Name: market_items; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.market_items (
-    id integer NOT NULL,
-    name character varying NOT NULL,
-    description text NOT NULL,
-    price integer NOT NULL,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
-    quantity integer
-);
-
-
---
--- Name: market_items_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.market_items_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: market_items_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.market_items_id_seq OWNED BY public.market_items.id;
-
-
---
--- Name: market_orders; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.market_orders (
-    id integer NOT NULL,
-    point_transaction_id integer,
-    market_item_id integer,
-    quantity integer,
-    email character varying,
-    phone character varying,
-    address character varying,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
-);
-
-
---
--- Name: market_orders_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.market_orders_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: market_orders_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.market_orders_id_seq OWNED BY public.market_orders.id;
-
-
---
--- Name: migration_validators; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.migration_validators (
-    id integer NOT NULL,
-    table_name character varying NOT NULL,
-    column_name character varying NOT NULL,
-    validation_type character varying NOT NULL,
-    options character varying
-);
-
-
---
--- Name: migration_validators_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.migration_validators_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: migration_validators_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.migration_validators_id_seq OWNED BY public.migration_validators.id;
 
 
 --
@@ -468,6 +324,7 @@ CREATE TABLE public.notifications (
 --
 
 CREATE SEQUENCE public.notifications_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -501,6 +358,7 @@ CREATE TABLE public.point_transactions (
 --
 
 CREATE SEQUENCE public.point_transactions_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -533,6 +391,7 @@ CREATE TABLE public.provinces (
 --
 
 CREATE SEQUENCE public.provinces_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -564,6 +423,7 @@ CREATE TABLE public.referrers (
 --
 
 CREATE SEQUENCE public.referrers_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -597,6 +457,7 @@ CREATE TABLE public.roles (
 --
 
 CREATE SEQUENCE public.roles_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -645,6 +506,7 @@ CREATE TABLE public.short_problems (
 --
 
 CREATE SEQUENCE public.short_problems_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -678,6 +540,7 @@ CREATE TABLE public.short_submissions (
 --
 
 CREATE SEQUENCE public.short_submissions_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -700,8 +563,7 @@ CREATE TABLE public.statuses (
     id integer NOT NULL,
     name character varying NOT NULL,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
-    CONSTRAINT chk_mv_statuses_name CHECK (((name IS NOT NULL) AND (length(btrim((name)::text)) > 0)))
+    updated_at timestamp without time zone NOT NULL
 );
 
 
@@ -710,6 +572,7 @@ CREATE TABLE public.statuses (
 --
 
 CREATE SEQUENCE public.statuses_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -736,7 +599,7 @@ CREATE TABLE public.submission_pages (
     updated_at timestamp without time zone NOT NULL,
     submission_file_name character varying,
     submission_content_type character varying,
-    submission_file_size integer,
+    submission_file_size bigint,
     submission_updated_at timestamp without time zone
 );
 
@@ -746,6 +609,7 @@ CREATE TABLE public.submission_pages (
 --
 
 CREATE SEQUENCE public.submission_pages_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -780,6 +644,7 @@ CREATE TABLE public.temporary_markings (
 --
 
 CREATE SEQUENCE public.temporary_markings_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -814,6 +679,7 @@ CREATE TABLE public.user_contests (
 --
 
 CREATE SEQUENCE public.user_contests_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -846,6 +712,7 @@ CREATE TABLE public.user_notifications (
 --
 
 CREATE SEQUENCE public.user_notifications_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -892,6 +759,7 @@ CREATE TABLE public.users (
 --
 
 CREATE SEQUENCE public.users_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -933,6 +801,7 @@ CREATE TABLE public.version_associations (
 --
 
 CREATE SEQUENCE public.version_associations_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -969,6 +838,7 @@ CREATE TABLE public.versions (
 --
 
 CREATE SEQUENCE public.versions_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1030,34 +900,6 @@ ALTER TABLE ONLY public.long_problems ALTER COLUMN id SET DEFAULT nextval('publi
 --
 
 ALTER TABLE ONLY public.long_submissions ALTER COLUMN id SET DEFAULT nextval('public.long_submissions_id_seq'::regclass);
-
-
---
--- Name: market_item_pictures id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.market_item_pictures ALTER COLUMN id SET DEFAULT nextval('public.market_item_pictures_id_seq'::regclass);
-
-
---
--- Name: market_items id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.market_items ALTER COLUMN id SET DEFAULT nextval('public.market_items_id_seq'::regclass);
-
-
---
--- Name: market_orders id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.market_orders ALTER COLUMN id SET DEFAULT nextval('public.market_orders_id_seq'::regclass);
-
-
---
--- Name: migration_validators id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.migration_validators ALTER COLUMN id SET DEFAULT nextval('public.migration_validators_id_seq'::regclass);
 
 
 --
@@ -1222,38 +1064,6 @@ ALTER TABLE ONLY public.long_submissions
 
 
 --
--- Name: market_item_pictures market_item_pictures_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.market_item_pictures
-    ADD CONSTRAINT market_item_pictures_pkey PRIMARY KEY (id);
-
-
---
--- Name: market_items market_items_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.market_items
-    ADD CONSTRAINT market_items_pkey PRIMARY KEY (id);
-
-
---
--- Name: market_orders market_orders_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.market_orders
-    ADD CONSTRAINT market_orders_pkey PRIMARY KEY (id);
-
-
---
--- Name: migration_validators migration_validators_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.migration_validators
-    ADD CONSTRAINT migration_validators_pkey PRIMARY KEY (id);
-
-
---
 -- Name: notifications notifications_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1388,13 +1198,6 @@ CREATE UNIQUE INDEX feedback_question_and_user_contest_unique_pair ON public.fee
 
 
 --
--- Name: index_colors_on_name; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_colors_on_name ON public.colors USING btree (name);
-
-
---
 -- Name: index_contests_on_end_time; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1441,27 +1244,6 @@ CREATE UNIQUE INDEX index_long_problems_on_contest_id_and_problem_no ON public.l
 --
 
 CREATE UNIQUE INDEX index_long_submissions_on_long_problem_id_and_user_contest_id ON public.long_submissions USING btree (long_problem_id, user_contest_id);
-
-
---
--- Name: index_market_item_pictures_on_market_item_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_market_item_pictures_on_market_item_id ON public.market_item_pictures USING btree (market_item_id);
-
-
---
--- Name: index_market_orders_on_market_item_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_market_orders_on_market_item_id ON public.market_orders USING btree (market_item_id);
-
-
---
--- Name: index_market_orders_on_point_transaction_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_market_orders_on_point_transaction_id ON public.market_orders USING btree (point_transaction_id);
 
 
 --
@@ -1654,13 +1436,6 @@ CREATE INDEX index_versions_on_transaction_id ON public.versions USING btree (tr
 
 
 --
--- Name: unique_idx_on_migration_validators; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX unique_idx_on_migration_validators ON public.migration_validators USING btree (table_name, column_name, validation_type);
-
-
---
 -- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1753,14 +1528,6 @@ ALTER TABLE ONLY public.short_problems
 
 ALTER TABLE ONLY public.submission_pages
     ADD CONSTRAINT fk_rails_62bec7c828 FOREIGN KEY (long_submission_id) REFERENCES public.long_submissions(id) ON DELETE CASCADE;
-
-
---
--- Name: market_item_pictures fk_rails_7d71f7cc8f; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.market_item_pictures
-    ADD CONSTRAINT fk_rails_7d71f7cc8f FOREIGN KEY (market_item_id) REFERENCES public.market_items(id) ON DELETE CASCADE;
 
 
 --
@@ -1987,8 +1754,6 @@ INSERT INTO schema_migrations (version) VALUES ('20160714041253');
 
 INSERT INTO schema_migrations (version) VALUES ('20160714154105');
 
-INSERT INTO schema_migrations (version) VALUES ('20160714174434');
-
 INSERT INTO schema_migrations (version) VALUES ('20160716000155');
 
 INSERT INTO schema_migrations (version) VALUES ('20160720081651');
@@ -2000,8 +1765,6 @@ INSERT INTO schema_migrations (version) VALUES ('20160720155458');
 INSERT INTO schema_migrations (version) VALUES ('20160726085657');
 
 INSERT INTO schema_migrations (version) VALUES ('20160730035813');
-
-INSERT INTO schema_migrations (version) VALUES ('20160730161813');
 
 INSERT INTO schema_migrations (version) VALUES ('20160730173851');
 
@@ -2072,4 +1835,10 @@ INSERT INTO schema_migrations (version) VALUES ('20210203093153');
 INSERT INTO schema_migrations (version) VALUES ('20210203093232');
 
 INSERT INTO schema_migrations (version) VALUES ('20210203093336');
+
+INSERT INTO schema_migrations (version) VALUES ('20210303071859');
+
+INSERT INTO schema_migrations (version) VALUES ('20210303072630');
+
+INSERT INTO schema_migrations (version) VALUES ('20210303073140');
 
