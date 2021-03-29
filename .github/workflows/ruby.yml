@@ -20,6 +20,8 @@ jobs:
     services:
       db:
         image: postgres:11
+        env:
+          POSTGRES_PASSWORD: postgres
         ports: ['5432:5432']
         options: >-
           --health-cmd pg_isready
@@ -40,7 +42,6 @@ jobs:
         env:
           DATABASE_URL: postgres://postgres:@localhost:5432/test
           RAILS_ENV: test
-          POSTGRES_PASSWORD: postgres
         #  RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
         run: |
           psql -c 'create database kontes_terbuka_test;' -U postgres
