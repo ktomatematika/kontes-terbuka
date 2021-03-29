@@ -37,9 +37,10 @@ jobs:
         with:
           bundler-cache: true
       - name: Build and run tests
-        #env:
-        #  DATABASE_URL: postgres://postgres:@localhost:5432/test
-        #  RAILS_ENV: test
+        env:
+          DATABASE_URL: postgres://postgres:@localhost:5432/test
+          RAILS_ENV: test
+          POSTGRES_PASSWORD: postgres
         #  RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
         run: |
           psql -c 'create database kontes_terbuka_test;' -U postgres
