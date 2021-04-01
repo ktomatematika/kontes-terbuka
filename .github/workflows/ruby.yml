@@ -45,9 +45,10 @@ jobs:
           #RAILS_ENV: test
           RAILS_ENV: test
           PGHOST: localhost
+          PGPASSWORD : postgres
         #  RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
         run: |
-          psql -c 'create database kontes_terbuka_test;' -U postgres -w --no-password
+          psql -c 'create database kontes_terbuka_test;' -U postgres
           cp config/database.yml.travis config/database.yml
           cp .env.default .env
           bundle exec rake db:setup
