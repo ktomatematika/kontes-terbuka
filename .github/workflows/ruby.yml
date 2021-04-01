@@ -48,6 +48,8 @@ jobs:
           PGUSER: myapp
         #  RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
         run: |
+          cp config/database.yml.travis config/database.yml
+          cp .env.default .env
           bundle exec rake db:setup
           bundle exec rake test:units
           bundle exec rake test:others
