@@ -38,7 +38,8 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: 2.5.0
-          bundler-cache: true
+      - run: | 
+          bundle install --without production development
       - name: Build and run tests
         env:
           #DATABASE_URL: postgres://postgres:@localhost:5432/test
