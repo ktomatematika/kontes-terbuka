@@ -48,7 +48,7 @@ jobs:
           PGUSER: myapp
         #  RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
         run: |
-          rake db:setup
+          bundle exec rake db:setup
           bundle exec rake test:units
           bundle exec rake test:others
           bundle exec rubocop -D -f simple
