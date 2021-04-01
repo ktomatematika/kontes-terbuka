@@ -21,10 +21,10 @@ jobs:
       db:
         image: postgres:11
         env:
-          #POSTGRES_PASSWORD: postgres
-          POSTGRES_USER: myapp
-          POSTGRES_DB: myapp_test
-          POSTGRES_PASSWORD: ""
+          POSTGRES_PASSWORD: postgres
+          #POSTGRES_USER: myapp
+          #POSTGRES_DB: myapp_test
+          #POSTGRES_PASSWORD: ""
         ports: ['5432:5432']
         options: >-
           --health-cmd pg_isready
