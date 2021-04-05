@@ -74,10 +74,10 @@ module ApplicationHelper
   end
 
   # Helper for home#admin to display koreksian
-  def list_of_problems(lp)
-    text = lp.to_s
-    text += ' (laporan sudah)' if lp.report?
-    link_to text, long_problem_temporary_markings_path(long_problem_id: lp.id)
+  def list_of_problems(long_prob)
+    text = long_prob.to_s
+    text += ' (laporan sudah)' if long_prob.report?
+    link_to text, long_problem_temporary_markings_path(long_problem_id: long_prob.id)
   end
 
   # Split text, while leaving delimiters intact.
