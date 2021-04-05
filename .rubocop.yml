@@ -17,6 +17,13 @@ AllCops:
 Layout/EmptyLinesAroundArguments:
   Enabled: false
 
+Layout/LineLength:
+  Enabled: true
+
+Lint/EmptyClass:
+  Exclude:
+    - 'app/models/application.rb'   # Empty class for CanCanCan
+
 Metrics/AbcSize:
   Max: 100
 
@@ -46,6 +53,9 @@ Rails/HasAndBelongsToMany:
     - 'app/models/role.rb'
 
 Rails/HasManyOrHasOneDependent:
+  Enabled: false
+
+Rails/HelperInstanceVariable:
   Enabled: false
 
 Rails/SaveBang:
@@ -81,5 +91,3 @@ Style/AccessModifierDeclarations:
 Style/StringMethods:
   Enabled: true
 
-Layout/LineLength:
-  Enabled: true
