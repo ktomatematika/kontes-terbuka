@@ -50,8 +50,8 @@ class LongSubmission < ActiveRecord::Base
     score&.to_s || '-'
   end
 
-  def self.text_to_score(x)
-    x == '-' ? nil : x.to_i
+  def self.text_to_score(txt)
+    txt == '-' ? nil : txt.to_i
   end
 
   def zip_location
