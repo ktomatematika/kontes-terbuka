@@ -15,7 +15,6 @@ on:
 
 jobs:
   test:
-
     runs-on: ubuntu-latest
     services:
       db:
@@ -55,16 +54,71 @@ jobs:
           cp .env.default .env
           bundle exec rake db:setup
           bundle exec rake test:units || true 
-          bundle exec rake test:others 
-          bundle exec rubocop -D -f simple || true
-          bundle exec haml-lint --exclude-linter LineLength app/views || true
-          bundle exec scss-lint app/assets/stylesheets || true
-          bundle exec eslint app/assets/javascripts || true
-          bundle exec brakeman || true
-          bundle exec rake traceroute FAIL_ON_ERROR=1 || true
+          bundle exec rake test:others
+
           sudo apt-get install texlive-latex-base
           bundle exec rake test:functionals || true
-    #strategy:
+          
+
+  linters:
+    name: haml-lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Setup Ruby and install gems
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.5.0
+      - name: Run haml-lint
+        run: |
+          bundle exec haml-lint --exclude-linter LineLength app/views || true
+      - name: Run scss-lint
+        run: |
+          bundle exec scss-lint app/assets/stylesheets || true
+      - name: Run eslint
+        run: |
+          bundle exec eslint app/assets/javascripts || true
+  rubocop:
+    name: rubocop
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Setup Ruby and install gems
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.5.0
+      - name: Run rubocop
+        run: |
+          bundle exec rubocop -D -f simple || true
+  brakeman:
+    name: brakeman
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Setup Ruby and install gems
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.5.0
+      - name: Run brakeman
+        run: |
+          bundle exec brakeman || true
+  traceroute:
+    name: traceroute
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Setup Ruby and install gems
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.5.0
+      - name: Run traceroute
+        run: |
+          bundle exec rake traceroute FAIL_ON_ERROR=1 || true
+#strategy:
     #  matrix:
     #    ruby-version: ['2.6', '2.7', '3.0']
 
