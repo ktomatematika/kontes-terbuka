@@ -89,7 +89,7 @@ jobs:
           bundle install --without production development
       - name: Run rubocop
         run: |
-          bundle exec rubocop -D -f simple || true
+          bundle exec rubocop -D -f simple
   brakeman:
     name: brakeman
     runs-on: ubuntu-latest
