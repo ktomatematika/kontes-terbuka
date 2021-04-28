@@ -85,6 +85,8 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: 2.5.0
+      - run: | 
+          bundle install --without production development
       - name: Run rubocop
         run: |
           bundle exec rubocop -D -f simple || true
