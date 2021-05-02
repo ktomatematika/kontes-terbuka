@@ -90,7 +90,6 @@ jobs:
       - name: Run rubocop
         run: |
           rubocop -a
-          bundle exec rubocop -D -f simple
   brakeman:
     name: brakeman
     runs-on: ubuntu-latest
