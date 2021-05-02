@@ -89,6 +89,7 @@ jobs:
           bundle install --without production development
       - name: Run rubocop
         run: |
+          rubocop -a
           bundle exec rubocop -D -f simple
   brakeman:
     name: brakeman
