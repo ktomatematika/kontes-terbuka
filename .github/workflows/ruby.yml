@@ -21,9 +21,6 @@ jobs:
         image: postgres:11
         env:
           POSTGRES_PASSWORD: postgres
-          #POSTGRES_USER: myapp
-          #POSTGRES_DB: myapp_test
-          #POSTGRES_PASSWORD: ""
         ports: ['5432:5432']
         options: >-
           --health-cmd pg_isready
@@ -36,26 +33,22 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: 2.5.0
-      #    bundler-cache: true
       - run: | 
           bundle install --without production development
       - name: Build and run tests
         env:
-          #DATABASE_URL: postgres://postgres:@localhost:5432/test
-          #RAILS_ENV: test
           RAILS_ENV: test
           PGHOST: localhost
           PGPASSWORD : postgres
-        #  RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
         run: |
           psql -c 'create database kontes_terbuka_test;' -U postgres
           cp config/database.yml.travis config/database.yml
           cp .env.default .env
           bundle exec rake db:setup
-          bundle exec rake test:units || true 
+          bundle exec rake test:units
           bundle exec rake test:others
           sudo apt-get install texlive-latex-base
-          bundle exec rake test:functionals || true
+          bundle exec rake test:functionals
   linters:
     name: linters
     runs-on: ubuntu-latest
@@ -66,15 +59,17 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: 2.5.0
+      - run: | 
+          bundle install --without production development
       - name: Run haml-lint
         run: |
-          bundle exec haml-lint --exclude-linter LineLength app/views || true
+          bundle exec haml-lint --exclude-linter LineLength app/views
       - name: Run scss-lint
         run: |
-          bundle exec scss-lint app/assets/stylesheets || true
+          bundle exec scss-lint app/assets/stylesheets
       - name: Run eslint
         run: |
-          bundle exec eslint app/assets/javascripts || true
+          bundle exec eslint app/assets/javascripts
   rubocop:
     name: rubocop
     runs-on: ubuntu-latest
@@ -100,9 +95,11 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: 2.5.0
+      - run: | 
+          bundle install --without production development
       - name: Run brakeman
         run: |
-          bundle exec brakeman || true
+          bundle exec brakeman
   traceroute:
     name: traceroute
     runs-on: ubuntu-latest
@@ -113,6 +110,8 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: 2.5.0
+      - run: | 
+          bundle install --without production development
       - name: Run traceroute
         run: |
-          bundle exec rake traceroute FAIL_ON_ERROR=1 || true
+          bundle exec rake traceroute FAIL_ON_ERROR=1
