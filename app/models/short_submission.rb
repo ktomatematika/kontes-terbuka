@@ -7,7 +7,7 @@
 #
 #  id               :integer          not null, primary key
 #  short_problem_id :integer          not null
-#  answer           :string           not null
+#  answer           :string           can be null
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
 #  user_contest_id  :integer          not null
@@ -35,7 +35,7 @@ class ShortSubmission < ActiveRecord::Base
   private
 
   def remove_leading_zeroes
-    return if answer.nil?
+    return if answer.nil? || answer.empty?
     self.answer = answer.gsub(/^0*/, '')
     self.answer = '0' if answer.empty?
   end
