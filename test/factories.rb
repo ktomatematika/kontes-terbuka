@@ -4,7 +4,10 @@ require_relative 'support'
 
 FactoryBot.define do
   factory :about_user do
-    
+    user
+    name { 'Test' }
+    description { 'Test' }
+    image { PNG }
   end
 
   sequence :unique do |n|
