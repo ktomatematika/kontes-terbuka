@@ -1,1 +1,3 @@
-= render 'form'
+= form_for [@user, @about_user] do |f|
+  = render partial: 'form', locals: { f: f }
+  = f.submit 'Update', class: 'btn'

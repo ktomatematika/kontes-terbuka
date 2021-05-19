@@ -16,22 +16,7 @@
   -if @user.about_user.nil?
     %p Buat sekarang!
     = form_for [@user, @user.build_about_user], url: user_about_user_path(@user) do |f|
-      %p
-        = f.label :name, 'Nama:'
-      %p
-        = f.text_field :name
-      %p
-        = f.label :description, 'Deskripsi:'
-      %p
-        = f.text_area :description
-      %p
-        = f.label :is_alumni, 'Alumni?'
-      %p
-        = f.check_box :is_alumni
-      %p
-        = f.label :image, 'Foto'
-      %div
-        = f.file_field :image
+      = render partial: 'about_users/form', locals: { f: f }
       = f.submit 'Buat', class: 'btn'
   - else
     =image_tag @user.about_user.image.url(:small)
