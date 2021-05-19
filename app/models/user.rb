@@ -82,7 +82,7 @@ class User < ActiveRecord::Base
 
   def before_add_method(role)
     return if !Role.admins.include?(role.name) || has_role?(:panitia)
-    raise 'User is not panitia!'
+    raise 'User is not panitia! Run `User.find(your_id).add_role :panitia` first.'
   end
 
   # Associations
@@ -108,8 +108,6 @@ class User < ActiveRecord::Base
   has_many :notifications, through: :user_notifications
 
   has_many :point_transactions
-
-  has_many :market_orders
 
   has_one :about_user, dependent: :destroy
   accepts_nested_attributes_for :about_user

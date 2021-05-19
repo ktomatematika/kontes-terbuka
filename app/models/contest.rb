@@ -142,4 +142,8 @@ class Contest < ActiveRecord::Base
     prepare_jobs
     delay(queue: "contest_#{id}").refresh_results_pdf
   end
+
+  def long_problem_max_score
+    long_problems.maximum("max_score") || 0
+  end
 end

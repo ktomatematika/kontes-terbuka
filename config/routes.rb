@@ -141,8 +141,6 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :market_items, path: '/market-items'
-
   %w[home rumah utama].each { |r| get "/#{r}", to: 'home#index' }
   %w[faq faqs pertanyaan].each { |r| get "/#{r}", to: 'home#faq' }
   %w[book books buku].each { |r| get "/#{r}", to: 'home#book' }

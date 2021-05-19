@@ -13,68 +13,105 @@ two members of our organization:
 This website was originally made to learn web development in Ruby on Rails.
 However, the source code keeps on expanding as we add on more features.
 
-## Setup with Vagrant
-Note: the Vagrant setting provided uses 2 GB of RAM. If you feel that it's
-a lot, edit Vagrantfile; change `vb.memory` from `"2048"` to `"1024"` or
-however you want.
+## Initial Setup
+Note: the following set-up procedure runs on Ubuntu 20.04 LTS. These steps are
+recommended although need not be followed exactly. If you wish to run
+Ubuntu on another OS, you may want to consider
+[VirtualBox](https://www.virtualbox.org/wiki/Downloads) to run Ubuntu in a
+virtual machine. 
 
-Install Vagrant and VirtualBox:
-- https://www.vagrantup.com/downloads.html
-- https://www.virtualbox.org/wiki/Downloads
+### Prerequisite packages
+For the project to run on your machine, you would need to install several packages:
+1. `software-properties-common`, as a dependency for several packages below
+2. `postgresql` for the database
+3. `texlive` for LaTeX parsing. `texlive-full` is recommended, although `texlive-base` would suffice for most parts
 
-Vagrant is a virtual machine that is used to run this application. It is used
-to ensure stability across different machines. Vagrant uses VirtualBox to
-run its machine.
-
-Install Vagrant plugins: `vagrant plugin install vagrant-vbguest`
-
-Run Vagrant: `vagrant up`
-
-This can take up to 1 hour, since Vagrant needs to set up everything from
-scratch, such as downloading Ubuntu (!), setup database, Ruby, and Rails.
-Please wait. :3
-
-While waiting, these are files you need to set up on your own:
-- .env; copy from .env.default
-- config/database.yml; copy from config/database.yml.default
-- public/contest_files/certificates. Files you need in this directory to
-create certificates): barra.png, frame.jpg, ilhan.png, logo.png
-- app/views/contests/certificate.tex.haml
-- config/initializers/line_targets.rb, copy from
-config/initializers/line_targets.rb.default. This is a dictionary that
-contains mappings from nicknames to LINE MIDs.
-
-After everything is done, enter Vagrant: `vagrant ssh`
-
-Moment of truth: `bin/rails s` and open localhost:3000 in your browser.
-
-It fails? `vagrant destroy` and repeat `vagrant up`.
-
-Clean up system: (optional)
-```
-sudo apt-get autoremove
-sudo apt upgrade
-sudo apt dist-upgrade
-```
-
-## Import database
-(Daily dump is done with `pg_dump kontes_terbuka_production` piped into `split`)
-
-To import database from the provided daily dumps, copy them to `import` folder
-in root. Then, run:
+You can use `apt` for installing the above packages by the command
 ```bash
-chmod u+x scripts/import.sh
-./scripts/import.sh
+sudo apt install <packagename>
 ```
 
-## Install LaTeX in Vagrant
-LaTeX is installed by TeX Live with the provided profile. The installation
-provided is enough to run the LaTeX things this app needs without making it
-too bloated. Run:
-```bash
-chmod u+x scripts/tex.sh
-./scripts/tex.sh
-```
+### Setup steps
+1. Install the prerequisite packages
+2. Download the files in the repository, through `git clone` or otherwise   
+3. We would also need `ruby`, and for the purposes of version management we would like to recommend using `rvm` or `rbenv`.
+   This step shows how to set up `rvm` and may be skipped if you prefer other ways of version management. 
+   This step will follow closely with the official Ubuntu installation guide [here](https://github.com/rvm/ubuntu_rvm), 
+   and modified slightly to suit the project:
+    1. Add the PPA and install the required packages:
+       ```bash
+       sudo apt-add-repository -y ppa:rael-gc/rvm
+       sudo apt-get update
+       sudo apt-get install rvm
+       ```
+    2. Add your user to the rvm group (replace `<yourusername>` by your username):
+        ```bash
+        sudo usermod -a -G rvm <yourusername>
+        ```
+    3. Change your terminal to run command as login shell. This can be done manually through `/bin/bash --login`;
+       if you are using the default GNOME terminal you can configure it by clicking on the hamburger button 
+       (three horizontal lines) on the top right corner of the terminal window and selecting Preferences. In the
+       preferences window under your Profile on the left sidebar, select your profile, and click on the Command tab. Check the
+       'Run command as login shell' checkbox
+    4. Reboot
+    5. Enable local gemsets by using
+        ```bash
+        rvm user gemsets
+        ```
+    6. Now you can install `ruby`. This project currently uses ruby 2.5.0 
+       (check the Gemfile in the project folder root if you are unsure, it should be in one of the first few lines), 
+       so we will install that version of ruby by using the command
+        ```bash
+        rvm install 2.5.0
+        ```
+       If you have installed other version(s) of ruby, you can change the default ruby version
+       by using the command 
+        ```bash
+        rvm --default use 2.5.0
+        ```
+       and this would require closing and reopening your terminal to take effect
+4. Check that you have the correct version of ruby (currently 2.5.0, check against the Gemfile). This can be done by running
+    ```bash
+    ruby --version
+    ```
+5. Install `bundler` on the correct version. Currently, bundler 1.17.3 is recommended for the project.
+   For more details on the bundler version, refer to the Gemfile.lock file.
+    ```bash
+    gem install bundler -v 1.17.3
+    ```
+6. From the directory of the project, run
+    ```bash
+    bundle install
+    ```
+   to install the gems needed
+7. Make sure that `postgresql` is installed. Now we move to creating our database: 
+    1. Make a file called `database.yml` in the `config` folder. 
+       You can do this by copying the given `database.yml.default` file in the project
+    2. We will make a user in postgresql. For the purposes of this guide, we will make
+       a user with username `ubuntu` and password `password`. Please ensure that the username
+       and the password in the following steps match the ones in your `database.yml`:  
+        1. Go to postgres shell: `sudo -u postgres psql`
+        2. Create the user: `create user ubuntu with encrypted password 'password';`
+        3. Elevate user privilege: `alter user "ubuntu" with superuser;`
+    3. Now we will set the database up with `bundle exec rake db:setup`
+    4. Run all migration files by `bundle exec rake db:migrate`
+8. The initial setup to run the server has been done. To run the server in test environment, you can run 
+    ```bash
+    bundle exec rails s -e test
+    ```
+9. Last, you may wish to make an admin in the website (by default would be on `0.0.0.0:3000`). 
+   Do the following steps to make an admin account in the website:
+    1. Make a user as per normal in the website
+    2. No email will be sent, instead we need to go to rails console and manually enable the user. 
+        Open the rails console by `bundle exec rails c` and run `User.first.enable`
+    3. To elevate the privilege of this user to admin, do the following in the rails console:
+    ```bash
+    User.first.add_role :panitia
+    User.first.add_role :admin 
+    ```
+
+This completes the initial set up guide for the website.
+
 
 ## Contribute
 Please fork :D

@@ -57,14 +57,18 @@ class LongSubmissionTest < ActiveSupport::TestCase
                'User contest needs to exist'
   end
 
-  test 'score hash' do
-    max = LongProblem::MAX_MARK
-    hash = LongSubmission::SCORE_HASH
+  test 'get_score_text' do
+    ls1 = build(:long_submission, score: 7)
+    ls2 = build(:long_submission, score: nil)
+    score1 = ls1.get_score_text
+    score2 = ls2.get_score_text
+    assert_equal score1, "7"
+    assert_equal score2, "-"
+  end
 
-    (0..max).each do |i|
-      assert_equal hash[i], i.to_s, "SCORE_HASH[#{i}] is not #{i}."
-    end
-    assert_equal hash[nil], '-', 'SCORE_HASH[nil] is not -.'
+  test 'text to score' do
+    assert_equal LongSubmission::text_to_score('-'), nil
+    assert_equal LongSubmission::text_to_score('100'), 100
   end
 
   test 'zip location' do

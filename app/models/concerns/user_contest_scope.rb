@@ -16,8 +16,12 @@ module UserContestScope
           # rubocop:enable Style/NilComparison
         end
         .group(:id)
-        .select('user_contests.id as id, sum(case when ' \
-        'short_submissions.answer = short_problems.answer then 1 else 0 end) ' \
+        .select('user_contests.id as id, coalesce(sum(case when ' \
+        'short_submissions.answer = short_problems.answer then short_problems.correct_score ' \
+        'when short_submissions.answer is null then short_problems.empty_score ' \
+        "when short_submissions.answer = '' then short_problems.empty_score " \
+        'else short_problems.wrong_score ' \
+        'end), 0) ' \
         'as short_mark')
     })
 

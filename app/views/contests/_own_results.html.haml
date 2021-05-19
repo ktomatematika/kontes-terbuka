@@ -4,7 +4,7 @@
 
 #own-results
   - unless short_problems.empty?
-    %h3 Bagian A: #{user_contest.short_mark}/#{short_problems.length} poin
+    %h3 Bagian A: #{user_contest.short_mark}/#{short_problems.sum(:correct_score)} poin
     - short_problems.each do |prob|
       - ss = short_submissions.find { |s| s.short_problem_id == prob.id }
 
