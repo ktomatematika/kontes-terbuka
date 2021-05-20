@@ -12,27 +12,43 @@ class AboutUsersControllerTest < ActionController::TestCase
 
   test 'create' do
     test_abilities @about_user, :create, [nil], %i[admin]
-    # Why can it be that the user.id is nil???
     post :create, user_id: @user.id, about_user: {
-      name: 'Test',
+      name: 'Test_create',
       description: 'Test',
       is_alumni: '0',
-      image: nil
     }
 
-    # assert_redirected_to user_path(@user)
+    assert_redirected_to user_path(@user)
   end
 
   test 'edit' do
-
+    test_abilities @about_user, :edit, [nil], %i[admin]
+    get :edit, user_id: @user.id
+    assert_response 200
   end
 
-  test 'update' do
-    
+  test 'patch update' do
+    test_abilities @about_user, :update, [nil], %i[admin]
+    patch :update, user_id: @user.id, about_user: { 
+      name: 'TestUpdate',
+      description: 'Test',
+      is_alumni: '1',
+    }
+    assert_redirected_to user_path(@user)
+  end
+
+  test 'put update' do
+    test_abilities @about_user, :update, [nil], %i[admin]
+    patch :update, user_id: @user.id, about_user: { 
+      name: 'TestUpdate',
+      description: 'Test',
+      is_alumni: '1',
+    }
+    assert_redirected_to user_path(@user)
   end
 
   def create_items
-    @about_user = build(:about_user)
+    @about_user = create(:about_user)
     @user = @about_user.user
   end
 end
