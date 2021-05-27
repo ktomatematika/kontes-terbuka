@@ -54,11 +54,11 @@ class LongSubmissionTest < ActiveSupport::TestCase
                'User contest needs to exist'
   end
 
-  test 'get_score_text' do
+  test 'score_text' do
     ls1 = build(:long_submission, score: 7)
     ls2 = build(:long_submission, score: nil)
-    score1 = ls1.get_score_text
-    score2 = ls2.get_score_text
+    score1 = ls1.score_text
+    score2 = ls2.score_text
     assert_equal score1, '7'
     assert_equal score2, '-'
   end
