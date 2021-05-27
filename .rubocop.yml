@@ -45,6 +45,10 @@ Naming/FileName:
   Exclude:
     - 'Capfile'
 
+# TODO: app/controllers/application_controller.rb : @contest neeeds to be refactorized.
+Naming/MemoizedInstanceVariableName:
+  Enabled: false
+
 Rails:
   Enabled: true
 
@@ -94,3 +98,6 @@ Style/AccessModifierDeclarations:
 Style/StringMethods:
   Enabled: true
 
+# TODO: Code in config/initializers/social_media_text.rb needs to be refactored
+Style/DocumentDynamicEvalDefinition:
+  Enabled: false
