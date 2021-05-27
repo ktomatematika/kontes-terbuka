@@ -25,13 +25,13 @@ Lint/EmptyClass:
     - 'app/models/application.rb'   # Empty class for CanCanCan
 
 Metrics/AbcSize:
-  Max: 100
+  Enabled: false
 
 Metrics/BlockLength:
-  Exclude:
-    - 'test/**/*'
-    - 'app/models/concerns/*'
-    - 'app/controllers/concerns/*'
+  Enabled: false
+
+Style/StringConcatenation:
+  Enabled: false
 
 Metrics/ClassLength:
   Max: 140
