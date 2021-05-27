@@ -43,12 +43,11 @@ module ContestFiles
   end
 
   private def reports_location
-    Rails.root.join('public', 'contest_files', 'reports', id.to_s).to_s
+    Rails.root.join("public/contest_files/reports/#{id}").to_s
   end
 
   private def submissions_location
-    Rails.root.join('public', 'contest_files', 'submissions',
-                    "kontes#{id}").to_s
+    Rails.root.join("public/contest_files/submissions/kontes#{id}").to_s
   end
 
   private def results_template
