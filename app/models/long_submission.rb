@@ -46,7 +46,7 @@ class LongSubmission < ActiveRecord::Base
                "must be < long_problem.max_score (#{long_problem.max_score})"
   end
 
-  def get_score_text
+  def score_text
     score&.to_s || '-'
   end
 
