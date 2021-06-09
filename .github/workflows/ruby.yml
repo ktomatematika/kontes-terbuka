@@ -43,7 +43,7 @@ jobs:
           psql -c 'create database kontes_terbuka_test;' -U postgres
           cp config/database.yml.travis config/database.yml
           cp .env.default .env
-          bundle exec rake db:schema:load
+          bundle exec rake db:structure:load
           bundle exec rake db:setup
           bundle exec rake test:units
           bundle exec rake test:others
