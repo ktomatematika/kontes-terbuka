@@ -305,114 +305,6 @@ ALTER SEQUENCE public.long_submissions_id_seq OWNED BY public.long_submissions.i
 
 
 --
--- Name: market_item_pictures; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.market_item_pictures (
-    id integer NOT NULL,
-    market_item_id integer NOT NULL,
-    picture_file_name character varying,
-    picture_content_type character varying,
-    picture_file_size bigint,
-    picture_updated_at timestamp without time zone,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
-);
-
-
---
--- Name: market_item_pictures_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.market_item_pictures_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: market_item_pictures_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.market_item_pictures_id_seq OWNED BY public.market_item_pictures.id;
-
-
---
--- Name: market_items; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.market_items (
-    id integer NOT NULL,
-    name character varying NOT NULL,
-    description text NOT NULL,
-    price integer NOT NULL,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
-    quantity integer
-);
-
-
---
--- Name: market_items_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.market_items_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: market_items_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.market_items_id_seq OWNED BY public.market_items.id;
-
-
---
--- Name: market_orders; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.market_orders (
-    id integer NOT NULL,
-    point_transaction_id integer,
-    market_item_id integer,
-    quantity integer,
-    email character varying,
-    phone character varying,
-    address character varying,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
-);
-
-
---
--- Name: market_orders_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.market_orders_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: market_orders_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.market_orders_id_seq OWNED BY public.market_orders.id;
-
-
---
 -- Name: notifications; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1011,27 +903,6 @@ ALTER TABLE ONLY public.long_submissions ALTER COLUMN id SET DEFAULT nextval('pu
 
 
 --
--- Name: market_item_pictures id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.market_item_pictures ALTER COLUMN id SET DEFAULT nextval('public.market_item_pictures_id_seq'::regclass);
-
-
---
--- Name: market_items id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.market_items ALTER COLUMN id SET DEFAULT nextval('public.market_items_id_seq'::regclass);
-
-
---
--- Name: market_orders id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.market_orders ALTER COLUMN id SET DEFAULT nextval('public.market_orders_id_seq'::regclass);
-
-
---
 -- Name: notifications id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1190,30 +1061,6 @@ ALTER TABLE ONLY public.long_problems
 
 ALTER TABLE ONLY public.long_submissions
     ADD CONSTRAINT long_submissions_pkey PRIMARY KEY (id);
-
-
---
--- Name: market_item_pictures market_item_pictures_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.market_item_pictures
-    ADD CONSTRAINT market_item_pictures_pkey PRIMARY KEY (id);
-
-
---
--- Name: market_items market_items_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.market_items
-    ADD CONSTRAINT market_items_pkey PRIMARY KEY (id);
-
-
---
--- Name: market_orders market_orders_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.market_orders
-    ADD CONSTRAINT market_orders_pkey PRIMARY KEY (id);
 
 
 --
@@ -1397,27 +1244,6 @@ CREATE UNIQUE INDEX index_long_problems_on_contest_id_and_problem_no ON public.l
 --
 
 CREATE UNIQUE INDEX index_long_submissions_on_long_problem_id_and_user_contest_id ON public.long_submissions USING btree (long_problem_id, user_contest_id);
-
-
---
--- Name: index_market_item_pictures_on_market_item_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_market_item_pictures_on_market_item_id ON public.market_item_pictures USING btree (market_item_id);
-
-
---
--- Name: index_market_orders_on_market_item_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_market_orders_on_market_item_id ON public.market_orders USING btree (market_item_id);
-
-
---
--- Name: index_market_orders_on_point_transaction_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_market_orders_on_point_transaction_id ON public.market_orders USING btree (point_transaction_id);
 
 
 --
@@ -1702,14 +1528,6 @@ ALTER TABLE ONLY public.short_problems
 
 ALTER TABLE ONLY public.submission_pages
     ADD CONSTRAINT fk_rails_62bec7c828 FOREIGN KEY (long_submission_id) REFERENCES public.long_submissions(id) ON DELETE CASCADE;
-
-
---
--- Name: market_item_pictures fk_rails_7d71f7cc8f; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.market_item_pictures
-    ADD CONSTRAINT fk_rails_7d71f7cc8f FOREIGN KEY (market_item_id) REFERENCES public.market_items(id) ON DELETE CASCADE;
 
 
 --
@@ -2017,6 +1835,12 @@ INSERT INTO schema_migrations (version) VALUES ('20210203093153');
 INSERT INTO schema_migrations (version) VALUES ('20210203093232');
 
 INSERT INTO schema_migrations (version) VALUES ('20210203093336');
+
+INSERT INTO schema_migrations (version) VALUES ('20210303071859');
+
+INSERT INTO schema_migrations (version) VALUES ('20210303072630');
+
+INSERT INTO schema_migrations (version) VALUES ('20210303073140');
 
 INSERT INTO schema_migrations (version) VALUES ('20210506143431');
 
