@@ -17,44 +17,10 @@
 
   %h2 Tim Kami
   .row
-    - end_flag = true
-    - @team.each_with_index do |data, index|
-      - base_class = "about-us-person col-md-4 col-sm-6"
-      %div{:class => "#{base_class}", :data => {:name => "#{data.name}", :description => "#{data.description}"}}
-        =image_tag data.image.url(:small)
-        %h3= data.name
-      - if index % 2 == 1 && index % 3 == 2
-        %div{:class => "clearfix visible-xs visible-sm visible-md visible-lg"}
-        end_flag = false
-      - elsif index % 2 == 1 && index % 3 != 2
-        %div{:class => "clearfix visible-xs visible-sm"}
-      - elsif index % 2 != 1 && index % 3 == 2
-        %div{:class => "clearfix visible-xs visible-md visible-lg"}
-      - else
-        %div{:class => "clearfix visible-xs"}
-      %div{:class => "about-us-description"}
-    - if end_flag
-      %div{:class => "clearfix visible-xs visible-sm visible-md visible-lg"}
-      %div{:class => "about-us-description"} 
-  
+    - process_team_and_alumni(@team).each do |tag|
+      = tag
+
   %h2 Alumni Tim Kami
   .row
-    - end_flag = true
-    - @alumni.each_with_index do |data, index|
-      - base_class = "about-us-person col-md-4 col-sm-8"
-      %div{:class => "#{base_class}", :data => {:name => "#{data.name}", :description => "#{data.description}"}}
-        =image_tag data.image.url(:small)
-        %h3= data.name
-      - if index % 2 == 1 && index % 3 == 2
-        %div{:class => "clearfix visible-xs visible-sm visible-md visible-lg"}
-        end_flag = false
-      - elsif index % 2 == 1 && index % 3 != 2
-        %div{:class => "clearfix visible-xs visible-sm"}
-      - elsif index % 2 != 1 && index % 3 == 2
-        %div{:class => "clearfix visible-xs visible-md visible-lg"}
-      - else
-        %div{:class => "clearfix visible-xs"}
-      %div{:class => "about-us-description"}
-    - if end_flag
-      %div{:class => "clearfix visible-xs visible-sm visible-md visible-lg"}
-      %div{:class => "about-us-description"} 
+    - process_team_and_alumni(@alumni).each do |tag|
+      = tag
