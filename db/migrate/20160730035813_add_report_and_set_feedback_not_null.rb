@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddReportAndSetFeedbackNotNull < ActiveRecord::Migration
   def change
     add_attachment :long_problems, :report

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ChangeValidateRules < ActiveRecord::Migration
   def change
     change_column_null :colors, :name, false

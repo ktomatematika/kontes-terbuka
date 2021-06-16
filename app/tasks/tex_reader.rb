@@ -39,8 +39,8 @@ class TexReader
 
     # Copy logo to be included in the PDF file
     FileUtils.cp(
-      Rails.root.join('app', 'assets', 'images', 'logo-hires.png').to_s,
-      File.dirname(tex_path) + '/logo.png'
+      Rails.root.join('app/assets/images/logo-hires.png').to_s,
+      "#{File.dirname(tex_path)}/logo.png"
     )
 
     Dir.chdir(File.dirname(tex_path)) do
@@ -73,6 +73,7 @@ class TexReader
     end_index = tex_file.index(end_separator)
 
     return nil if start_index.nil? || end_index.nil?
+
     { start: start_index, end: end_index }
   end
 
@@ -90,6 +91,7 @@ class TexReader
     nest_level = 0
     preprocessed.each_with_object([]) do |item, memo|
       next memo if item.empty?
+
       nest_level.zero? ? memo << item : memo[-1] += item
 
       nest_level += 1 if item.include? '\\begin'
@@ -99,7 +101,7 @@ class TexReader
   end
 
   private def update_contest_pdf
-    filename = @contest.problem_tex.path[0...-3] + 'pdf'
+    filename = "#{@contest.problem_tex.path[0...-3]}pdf"
     File.open(filename, 'r') do |file|
       @contest.update(problem_pdf: file)
     end

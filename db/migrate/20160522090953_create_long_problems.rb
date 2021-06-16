@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateLongProblems < ActiveRecord::Migration
   def change
     create_table :long_problems do |t|

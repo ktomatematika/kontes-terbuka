@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddScoreAndFeedbackToLongSubmissions < ActiveRecord::Migration
   def change
     add_column :long_submissions, :score, :integer

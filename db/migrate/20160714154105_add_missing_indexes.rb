@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 class AddMissingIndexes < ActiveRecord::Migration
   def change
-    add_index :feedback_answers, [:feedback_question_id, :user_contest_id],
-      unique: true, name: 'feedback_question_and_user_contest_unique_pair'
+    add_index :feedback_answers, %i[feedback_question_id user_contest_id],
+              unique: true, name: 'feedback_question_and_user_contest_unique_pair'
 
     add_foreign_key :feedback_questions, :contests
     add_index :feedback_questions, :contest_id

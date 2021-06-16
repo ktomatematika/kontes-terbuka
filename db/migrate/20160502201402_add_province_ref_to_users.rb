@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddProvinceRefToUsers < ActiveRecord::Migration
   def change
     add_reference :users, :province, index: true, foreign_key: true

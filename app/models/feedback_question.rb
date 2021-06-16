@@ -18,8 +18,6 @@
 #
 #  fk_rails_...  (contest_id => contests.id) ON DELETE => cascade
 #
-# rubocop:enable Metrics/LineLength
-
 class FeedbackQuestion < ActiveRecord::Base
   has_paper_trail
 

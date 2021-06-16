@@ -273,9 +273,7 @@ class ContestsControllerTest < ActionController::TestCase
                     'Calling send_certificates does not do it immediately.'
   end
 
-  private
-
-  def create_items
+  private def create_items
     @c = create(:contest)
   end
 end

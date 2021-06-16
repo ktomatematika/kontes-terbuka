@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# rubocop:disable Metrics/LineLength
 # == Schema Information
 #
 # Table name: long_submissions
@@ -22,8 +21,6 @@
 #  fk_rails_...  (long_problem_id => long_problems.id) ON DELETE => cascade
 #  fk_rails_...  (user_contest_id => user_contests.id) ON DELETE => cascade
 #
-# rubocop:enable Metrics/LineLength
-
 require 'test_helper'
 
 class LongSubmissionTest < ActiveSupport::TestCase
@@ -57,18 +54,18 @@ class LongSubmissionTest < ActiveSupport::TestCase
                'User contest needs to exist'
   end
 
-  test 'get_score_text' do
+  test 'score_text' do
     ls1 = build(:long_submission, score: 7)
     ls2 = build(:long_submission, score: nil)
-    score1 = ls1.get_score_text
-    score2 = ls2.get_score_text
-    assert_equal score1, "7"
-    assert_equal score2, "-"
+    score1 = ls1.score_text
+    score2 = ls2.score_text
+    assert_equal score1, '7'
+    assert_equal score2, '-'
   end
 
   test 'text to score' do
-    assert_equal LongSubmission::text_to_score('-'), nil
-    assert_equal LongSubmission::text_to_score('100'), 100
+    assert_equal LongSubmission.text_to_score('-'), nil
+    assert_equal LongSubmission.text_to_score('100'), 100
   end
 
   test 'zip location' do

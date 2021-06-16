@@ -123,9 +123,7 @@ class LongProblemsControllerTest < ActionController::TestCase
     assert_equal @c.long_problems.count, 0
   end
 
-  private
-
-  def create_items
+  private def create_items
     @lp = create(:long_problem)
     @c = @lp.contest
   end

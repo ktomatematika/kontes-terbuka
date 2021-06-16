@@ -13,8 +13,6 @@
 #
 #  index_referrers_on_name  (name) UNIQUE
 #
-# rubocop:enable Metrics/LineLength
-
 require 'test_helper'
 
 class ReferrerTest < ActiveSupport::TestCase

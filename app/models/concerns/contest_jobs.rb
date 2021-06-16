@@ -13,19 +13,17 @@ module ContestJobs
     backup_files
   end
 
-  private
-
-  def destroy_prepared_jobs
+  private def destroy_prepared_jobs
     Delayed::Job.where(queue: "contest_#{id}").destroy_all
   end
 
-  def jobs_on_contest_end
+  private def jobs_on_contest_end
     %i[purge_panitia send_most_answers check_submissions].each do |m|
       do_if_not_time(end_time, self, m)
     end
   end
 
-  def prepare_emails
+  private def prepare_emails
     e = EmailNotifications.new self
 
     [['contest_starting', start_time], ['contest_ending', end_time],
@@ -41,7 +39,7 @@ module ContestJobs
     end
   end
 
-  def prepare_facebook
+  private def prepare_facebook
     f = FacebookPost.new self
 
     do_if_not_time(start_time - 1.day, f, :contest_starting, '24 jam')
@@ -50,13 +48,13 @@ module ContestJobs
     do_if_not_time(feedback_time - 6.hours, f, :feedback_ending, '6 jam')
   end
 
-  def jobs_on_result_released
+  private def jobs_on_result_released
     EmailNotifications.new(self).delay(queue: "contest_#{id}").results_released
     FacebookPost.new(self).delay(queue: "contest_#{id}").results_released
     delay(queue: "contest_#{id}").refresh
   end
 
-  def jobs_on_feedback_time_end
+  private def jobs_on_feedback_time_end
     %i[check_veteran award_points send_certificates refresh].each do |m|
       do_if_not_time(feedback_time, self, m)
     end
@@ -67,7 +65,7 @@ module ContestJobs
     do_if_not_time(feedback_time, c, :backup_submissions, self, 1)
   end
 
-  def backup_files
+  private def backup_files
     c = ContestFileBackup.new
 
     # Backup on end_time - 0, 2, 4, 6, 8, 10, 12 hours

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddAttachmentSubmissionToSubmissionPages < ActiveRecord::Migration
   def self.up
     change_table :submission_pages do |t|

@@ -21,8 +21,6 @@
 #  fk_rails_...  (contest_id => contests.id) ON DELETE => cascade
 #  fk_rails_...  (user_id => users.id) ON DELETE => cascade
 #
-# rubocop:enable Metrics/LineLength
-
 class UserContest < ActiveRecord::Base
   include UserContestScope
   using TimeParser
@@ -46,6 +44,7 @@ class UserContest < ActiveRecord::Base
   before_create :set_timer
   def set_timer
     return if contest.timer.nil?
+
     self.end_time = Time.zone.now + contest.timer.parse_hhmmss
   end
 
