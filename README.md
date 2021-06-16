@@ -104,11 +104,10 @@ diadaptasi dari [panduan instalasi untuk Ubuntu](https://github.com/rvm/ubuntu_r
         3. Jadikan user tersebut sebagai *superuser*: `alter user "ubuntu" with superuser;`
     3. Buat databse dengan perintah `bundle exec rake db:setup`
     4. Jalankan semua migrasi dengan `bundle exec rake db:migrate`
-8. Buat `.env` file di root directory dan pindahkan isi dari `.env.default` kedalam `.env`
-9. *Setup* awal untuk menjalankan server selesai. Untuk menjalankan server dalam
-*environment* **test**, gunakan
+8. Buat `.env` file di root directory dan pindahkan isi dari `.env.default` kedalam `.env`. Setiap variabel di dalam `.env` diisi sesuai dengan yang dibutuhkan.
+9. *Setup* awal untuk menjalankan server selesai. Untuk menjalankan server lokal, gunakan
     ```bash
-    bundle exeec rails s -e test
+    bundle exeec rails s
     ```
 10. Sekarang, Anda bisa membuat *admin* di dalam website yang telah dibuat:
     1. Dalam *browser*, buka alamat website versi lokal (*default*: `0.0.0.0:3000`)

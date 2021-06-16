@@ -17,7 +17,7 @@
 
   %h2 Tim Kami
   .row
-    - endFlag = true
+    - end_flag = true
     - @team.each_with_index do |data, index|
       - base_class = "about-us-person col-md-4 col-sm-6"
       %div{:class => "#{base_class}", :data => {:name => "#{data.name}", :description => "#{data.description}"}}
@@ -25,7 +25,7 @@
         %h3= data.name
       - if index % 2 == 1 && index % 3 == 2
         %div{:class => "clearfix visible-xs visible-sm visible-md visible-lg"}
-        endFlag = false
+        end_flag = false
       - elsif index % 2 == 1 && index % 3 != 2
         %div{:class => "clearfix visible-xs visible-sm"}
       - elsif index % 2 != 1 && index % 3 == 2
@@ -33,13 +33,13 @@
       - else
         %div{:class => "clearfix visible-xs"}
       %div{:class => "about-us-description"}
-    - if endFlag
+    - if end_flag
       %div{:class => "clearfix visible-xs visible-sm visible-md visible-lg"}
       %div{:class => "about-us-description"} 
   
   %h2 Alumni Tim Kami
   .row
-    - endFlag = true
+    - end_flag = true
     - @alumni.each_with_index do |data, index|
       - base_class = "about-us-person col-md-4 col-sm-8"
       %div{:class => "#{base_class}", :data => {:name => "#{data.name}", :description => "#{data.description}"}}
@@ -47,7 +47,7 @@
         %h3= data.name
       - if index % 2 == 1 && index % 3 == 2
         %div{:class => "clearfix visible-xs visible-sm visible-md visible-lg"}
-        endFlag = false
+        end_flag = false
       - elsif index % 2 == 1 && index % 3 != 2
         %div{:class => "clearfix visible-xs visible-sm"}
       - elsif index % 2 != 1 && index % 3 == 2
@@ -55,6 +55,6 @@
       - else
         %div{:class => "clearfix visible-xs"}
       %div{:class => "about-us-description"}
-    - if endFlag
+    - if end_flag
       %div{:class => "clearfix visible-xs visible-sm visible-md visible-lg"}
       %div{:class => "about-us-description"} 

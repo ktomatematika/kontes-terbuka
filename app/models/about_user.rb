@@ -1,3 +1,22 @@
+# rubocop:disable Metrics/LineLength
+# == Schema Information
+#
+# Table name: about_users
+#
+#  id                 :integer          not null, primary key
+#  user_id            :integer
+#  name               :string
+#  description        :text
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#  image_file_name    :string
+#  image_content_type :string
+#  image_file_size    :bigint(8)
+#  image_updated_at   :datetime
+#  is_alumni          :boolean
+#
+# rubocop:enable Metrics/LineLength
+
 class AboutUser < ActiveRecord::Base
   # Associations
   belongs_to :user

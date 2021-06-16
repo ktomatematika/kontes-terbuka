@@ -24,7 +24,6 @@
 
 # Sensitive files
 /config/database.yml
-/config/local_env.yml
 .env
 /app/views/contests/certificate.tex.haml
 config/initializers/line_targets.rb
@@ -32,4 +31,3 @@ config/initializers/line_targets.rb
 # Others
 import/
 coverage/
-/vendor/bundle
