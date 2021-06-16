@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateShortSubmissions < ActiveRecord::Migration
   def change
     create_table :short_submissions do |t|

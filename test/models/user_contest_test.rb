@@ -21,8 +21,6 @@
 #  fk_rails_...  (contest_id => contests.id) ON DELETE => cascade
 #  fk_rails_...  (user_id => users.id) ON DELETE => cascade
 #
-# rubocop:enable Metrics/LineLength
-
 require 'test_helper'
 
 class UserContestTest < ActiveSupport::TestCase
@@ -98,7 +96,6 @@ class UserContestTest < ActiveSupport::TestCase
   test 'short problem correct score' do
     c = create(:full_contest, correct_score: 3, short_problems: 1)
     ucs = c.user_contests
-    sp = c.short_problems.first
     uc = ucs.first
     uc.short_submissions.first.update(answer: sp1.answer)
 
@@ -109,7 +106,6 @@ class UserContestTest < ActiveSupport::TestCase
   test 'short problem wrong score' do
     c = create(:full_contest, wrong_score: 3, short_problems: 1)
     ucs = c.user_contests
-    sp = c.short_problems.first
     uc = ucs.first
     uc.short_submissions.first.update(answer: "#{sp1.answer} something")
 
@@ -120,10 +116,8 @@ class UserContestTest < ActiveSupport::TestCase
   test 'short problem empty score' do
     c = create(:full_contest, empty_score: 3, short_problems: 2)
     ucs = c.user_contests
-    sp = c.short_problems.first
-    sp2 = c.short_problems.second
     uc = ucs.first
-    uc.short_submissions.first.update(answer: "")
+    uc.short_submissions.first.update(answer: '')
     uc.short_submissions.second.update(answer: nil)
 
     pucs = ucs.processed

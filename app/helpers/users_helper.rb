@@ -7,11 +7,11 @@ module UsersHelper
   end
 
   def public_data_contents
-    safe_join(@user_contests.map do |uc|
-      create_data_row([uc.contest, uc.award], 'td',
+    safe_join(@user_contests.map do |user_cont|
+      create_data_row([user_cont.contest, user_cont.award], 'td',
                       { class: 'clickable-row',
-                        'data-link' => contest_path(uc.contest) },
-                      { class: uc.award.downcase })
+                        'data-link' => contest_path(user_cont.contest) },
+                      { class: user_cont.award.downcase })
     end)
   end
 
@@ -22,7 +22,7 @@ module UsersHelper
   def full_data_contents
     safe_join(@user_contests.map do |uc|
       create_data_row([uc.contest,
-                       uc.total_mark.to_s + '/' + uc.contest.max_score.to_s,
+                       "#{uc.total_mark}/#{uc.contest.max_score}",
                        uc.award], 'td',
                       { class: 'clickable-row',
                         'data-link' => contest_path(uc.contest) },

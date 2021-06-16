@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# rubocop:disable Metrics/LineLength
 # == Schema Information
 #
 # Table name: short_submissions
@@ -21,8 +20,6 @@
 #  fk_rails_...  (short_problem_id => short_problems.id) ON DELETE => cascade
 #  fk_rails_...  (user_contest_id => user_contests.id) ON DELETE => cascade
 #
-# rubocop:enable Metrics/LineLength
-
 class ShortSubmission < ActiveRecord::Base
   has_paper_trail
 
@@ -32,10 +29,9 @@ class ShortSubmission < ActiveRecord::Base
 
   before_validation :remove_leading_zeroes
 
-  private
-
-  def remove_leading_zeroes
+  private def remove_leading_zeroes
     return if answer.nil?
+
     self.answer = answer.gsub(/^0*/, '')
     self.answer = '0' if answer.empty?
   end

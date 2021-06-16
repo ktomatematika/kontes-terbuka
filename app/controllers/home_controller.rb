@@ -34,7 +34,7 @@ class HomeController < ApplicationController
   def about
     @photo_dictionary = Dir.glob('app/assets/images/panitia/*').map do |img|
       img_file = img.split('/').last
-      image_path = 'panitia/' + img_file
+      image_path = "panitia/#{img_file}"
       image_tag = ActionController::Base.helpers.image_tag(image_path)
       [img_file, image_tag.tr('"', "'")]
     end.to_h

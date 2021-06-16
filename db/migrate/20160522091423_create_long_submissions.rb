@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateLongSubmissions < ActiveRecord::Migration
   def change
     create_table :long_submissions do |t|

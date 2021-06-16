@@ -46,6 +46,7 @@ class UsersController < ApplicationController
                                 .paginate(page: params[:page_history])
                                 .to_a
     return unless can? :show_full, @user
+
     @point_transactions = PointTransaction.where(user: @user)
                                           .paginate(
                                             page: params[:page_transactions],
@@ -53,7 +54,6 @@ class UsersController < ApplicationController
                                           ).order(created_at: :desc)
   end
 
-  # rubocop:disable Metrics/AbcSize
   def index
     authorize! :index_full, User if params[:hide_disabled]
     params[:search] = '' unless params[:search].is_a?(String)
@@ -74,7 +74,6 @@ class UsersController < ApplicationController
                  .includes(:province, :status, :roles)
     @users = @users.where(enabled: true)
   end
-  # rubocop:enable Metrics/AbcSize
 
   def edit; end
 
@@ -109,9 +108,7 @@ class UsersController < ApplicationController
 
   def check_unique
     users = User.all
-    if params[:username]
-      users = users.where('username ILIKE ?', params[:username])
-    end
+    users = users.where('username ILIKE ?', params[:username]) if params[:username]
     users = users.where(email: params[:email]) if params[:email]
     render json: users.blank?
   end

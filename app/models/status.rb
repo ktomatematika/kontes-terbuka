@@ -13,8 +13,6 @@
 #
 #  index_statuses_on_name  (name) UNIQUE
 #
-# rubocop:enable Metrics/LineLength
-
 class Status < ActiveRecord::Base
   has_paper_trail
 

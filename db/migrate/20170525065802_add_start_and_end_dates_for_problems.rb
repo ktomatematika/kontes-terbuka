@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddStartAndEndDatesForProblems < ActiveRecord::Migration
   def change
     add_column :short_problems, :start_time, :datetime

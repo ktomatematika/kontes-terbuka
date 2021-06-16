@@ -5,6 +5,7 @@ class Ability
 
   def initialize(user)
     return if user.nil?
+
     user_abilities(user)
 
     (%w[marker panitia] + Role.admins).each do |role|

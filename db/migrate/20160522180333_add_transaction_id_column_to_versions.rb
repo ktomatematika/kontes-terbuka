@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This migration and CreateVersionAssociations provide the necessary
 # schema for tracking associations.
 class AddTransactionIdColumnToVersions < ActiveRecord::Migration

@@ -4,7 +4,7 @@ ENV['RAILS_ENV'] ||= 'test'
 
 require 'simplecov'
 
-require File.expand_path('../../config/environment', __FILE__)
+require File.expand_path('../config/environment', __dir__)
 require 'rails/test_help'
 
 require 'capybara/rails'
@@ -20,19 +20,17 @@ module ActiveSupport
     include FactoryBot::Syntax::Methods
 
     def teardown
-      FileUtils.rm_rf(Rails.root.join('public', 'contest_files'))
+      FileUtils.rm_rf(Rails.root.join('public/contest_files'))
     end
 
-    private
-
-    def login_and_be_admin
+    private def login_and_be_admin
       @user = create(:user)
       @user.add_role :panitia
       @user.add_role :admin
       @request.cookies[:auth_token] = @user.auth_token
     end
 
-    def test_abilities(model_object, method, bad_roles, good_roles)
+    private def test_abilities(model_object, method, bad_roles, good_roles)
       bad_roles.each do |r|
         user = r.is_a?(User) ? r : create(:user, role: r)
         ability = Ability.new user

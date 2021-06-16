@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# rubocop:disable Metrics/LineLength
 # == Schema Information
 #
 # Table name: temporary_markings
@@ -22,8 +21,6 @@
 #  fk_rails_...  (long_submission_id => long_submissions.id) ON DELETE => cascade
 #  fk_rails_...  (user_id => users.id) ON DELETE => cascade
 #
-# rubocop:enable Metrics/LineLength
-
 class TemporaryMarking < ActiveRecord::Base
   has_paper_trail
 
@@ -37,6 +34,7 @@ class TemporaryMarking < ActiveRecord::Base
   validate :score_does_not_exceed_long_problem_max_score
   def score_does_not_exceed_long_problem_max_score
     return unless !mark.nil? && mark > long_submission.long_problem.max_score
+
     errors.add :mark,
                'must be < long_problem.max_score ' \
                "(#{long_submission.long_problem.max_score})"
