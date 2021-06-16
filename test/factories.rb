@@ -198,9 +198,9 @@ FactoryBot.define do
     password_confirmation { password }
     email { generate(:unique) + '@a.b' }
     fullname { 'qwerqwer' }
-    province
-    status
-    color
+    province { create(:province)}
+    status { create(:status)}
+    color {create(:color)}
     school { 'qwerty' }
     terms_of_service { '1' }
 
