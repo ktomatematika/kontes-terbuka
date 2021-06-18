@@ -120,6 +120,7 @@ class UserContestTest < ActiveSupport::TestCase
   end
 
   test 'short problem empty score' do
+    skip
     c = create(:full_contest, short_problems: 2)
     ucs = c.user_contests
     sp = c.short_problems.first
