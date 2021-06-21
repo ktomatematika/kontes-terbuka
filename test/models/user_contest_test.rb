@@ -96,11 +96,8 @@ class UserContestTest < ActiveSupport::TestCase
   test 'short problem correct score' do
     c = create(:full_contest, short_problems: 1)
     ucs = c.user_contests
-<<<<<<< HEAD
     sp = c.short_problems.first
     sp.update(correct_score: 3)
-=======
->>>>>>> production
     uc = ucs.first
     uc.short_submissions.first.update(answer: sp.answer)
 
