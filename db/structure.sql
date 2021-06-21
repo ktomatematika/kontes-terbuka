@@ -528,7 +528,7 @@ ALTER SEQUENCE public.short_problems_id_seq OWNED BY public.short_problems.id;
 CREATE TABLE public.short_submissions (
     id integer NOT NULL,
     short_problem_id integer NOT NULL,
-    answer character varying,
+    answer character varying NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     user_contest_id integer NOT NULL
@@ -1841,6 +1841,4 @@ INSERT INTO schema_migrations (version) VALUES ('20210303071859');
 INSERT INTO schema_migrations (version) VALUES ('20210303072630');
 
 INSERT INTO schema_migrations (version) VALUES ('20210303073140');
-
-INSERT INTO schema_migrations (version) VALUES ('20210506143431');
 
