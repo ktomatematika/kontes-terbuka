@@ -22,6 +22,8 @@ Layout/LineLength:
 
 Lint/ConstantDefinitionInBlock:
   Enabled: false
+  Exclude:
+    - 'app/models/short_submission.rb' # Empty line isn't whitespace
   
 Lint/EmptyClass:
   Exclude:
