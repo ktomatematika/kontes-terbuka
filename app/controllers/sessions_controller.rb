@@ -12,7 +12,7 @@ class SessionsController < ApplicationController
   end
 
   # Life is hard...
-  # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
+  # rubocop:disable Metrics/MethodLength
   # rubocop:disable Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
   def create
     user = User.get_user params[:username]
@@ -59,7 +59,7 @@ class SessionsController < ApplicationController
       redirect_to sign_users_path(redirect: params[:redirect], anchor: 'login')
     end
   end
-  # rubocop:enable Metrics/AbcSize,Metrics/MethodLength
+  # rubocop:enable Metrics/MethodLength
   # rubocop:enable Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
 
   def destroy

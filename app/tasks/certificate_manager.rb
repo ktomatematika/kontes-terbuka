@@ -1,20 +1,19 @@
 # frozen_string_literal: true
 
 class CertificateManager
-  TEMPLATE = File.read(Rails.root.join('app', 'views', 'contests',
-                                       'certificate.tex.haml'))
+  TEMPLATE = File.read(Rails.root.join('app/views/contests/certificate.tex.haml'))
   EMAIL_SINK = 'certificate@ktom.tomi.or.id'
 
   attr_reader :user_contest
 
-  def initialize(uc)
-    @user_contest = uc
-    @contest = uc.contest
-    @user = uc.user
-    @dir = Rails.root.join('public', 'contest_files', 'certificates').to_s
-    @path = "#{@dir}/#{uc.id}"
-    @tex_path = @path + '.tex'
-    @pdf_path = @path + '.pdf'
+  def initialize(user_cont)
+    @user_contest = user_cont
+    @contest = user_cont.contest
+    @user = user_cont.user
+    @dir = Rails.root.join('public/contest_files/certificates').to_s
+    @path = "#{@dir}/#{user_cont.id}"
+    @tex_path = "#{@path}.tex"
+    @pdf_path = "#{@path}.pdf"
 
     FileUtils.mkdir_p(@dir) unless Dir.exist?(@dir)
   end
@@ -57,6 +56,6 @@ class CertificateManager
   end
 
   def clean_files
-    File.delete(*Dir.glob(@path + '*'))
+    File.delete(*Dir.glob("#{@path}*"))
   end
 end

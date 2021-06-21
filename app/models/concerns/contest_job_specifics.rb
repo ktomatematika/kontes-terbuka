@@ -36,8 +36,9 @@ module ContestJobSpecifics
   end
 
   def check_submissions
-    long_submissions.joins(:submission_pages).each do |ls|
+    long_submissions.joins(:submission_pages).find_each do |ls|
       next if ls.submission_pages.all? { |sp| sp.submission.exists? }
+
       data = Social.contest_job_specifics.check_submissions
       Mailgun.send_message to: ls.user_contest.user.email,
                            contest: self, subject: data.subject.get(binding),
@@ -47,7 +48,6 @@ module ContestJobSpecifics
   end
 
   # TODO
-  # rubocop:disable Metrics/AbcSize
   def check_veteran
     user_contests.each do |uc|
       u = uc.user
@@ -67,7 +67,6 @@ module ContestJobSpecifics
       dj_log uc: uc.id
     end
   end
-  # rubocop:enable Metrics/AbcSize
 
   def send_certificates
     full_feedback_user_contests.eligible_score.each do |uc|
@@ -80,6 +79,7 @@ module ContestJobSpecifics
 
   def do_if_not_time(run_at, object, method, *args)
     return if Time.zone.now >= run_at
+
     object.delay(run_at: run_at, queue: "contest_#{id}").__send__(method, *args)
   end
 

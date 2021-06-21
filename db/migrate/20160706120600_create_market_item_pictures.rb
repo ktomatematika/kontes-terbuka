@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateMarketItemPictures < ActiveRecord::Migration
   def change
     create_table :market_item_pictures do |t|

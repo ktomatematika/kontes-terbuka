@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class SetContestRulesDefault < ActiveRecord::Migration
   def change
     change_column :contests, :rule, :text,

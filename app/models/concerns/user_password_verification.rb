@@ -23,6 +23,7 @@ module UserPasswordVerification
 
   def destroy_if_unverified
     return if enabled
+
     Ajat.warn "verification_expiry|uname:#{username}"
     destroy
   end
@@ -57,18 +58,16 @@ module UserPasswordVerification
     end
   end
 
-  private
-
-  def encrypt_password
+  private def encrypt_password
     self.salt = BCrypt::Engine.generate_salt
     self.hashed_password = BCrypt::Engine.hash_secret(password, salt)
   end
 
-  def clear_password
+  private def clear_password
     self.password = nil
   end
 
-  def generate_token(column)
+  private def generate_token(column)
     loop do
       self[column] = SecureRandom.urlsafe_base64
       break unless User.exists?(column => self[column])

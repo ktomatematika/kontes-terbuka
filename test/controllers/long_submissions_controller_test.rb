@@ -14,8 +14,8 @@ class LongSubmissionsControllerTest < ActionController::TestCase
   end
 
   # TODO. Dev too lazy
-  test 'create' do
-  end
+  # test 'create' do
+  # end
 
   test 'destroy' do
     test_abilities @ls, :destroy, [nil], [:admin]
@@ -50,8 +50,8 @@ class LongSubmissionsControllerTest < ActionController::TestCase
   end
 
   # TODO. Dev too lazy
-  test 'submit_mark' do
-  end
+  # test 'submit_mark' do
+  # end
 
   test 'new' do
     test_abilities @ls, :new, [nil, :panitia, :problem_admin, :user_admin],
@@ -60,9 +60,7 @@ class LongSubmissionsControllerTest < ActionController::TestCase
     assert_response 200
   end
 
-  private
-
-  def create_items
+  private def create_items
     @ls = create(:long_submission)
     @lp = @ls.long_problem
     @c = @lp.contest

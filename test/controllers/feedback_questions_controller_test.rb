@@ -77,9 +77,7 @@ class FeedbackQuestionsControllerTest < ActionController::TestCase
     assert_equal @c.feedback_questions.count, 0
   end
 
-  private
-
-  def create_items
+  private def create_items
     @fq = create(:feedback_question)
     @c = @fq.contest
   end

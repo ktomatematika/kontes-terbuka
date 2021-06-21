@@ -49,7 +49,7 @@ module ApplicationHelper
   # Helper to show text that is rendered with latex and markdown.
   def latex_and_markdown(tag, text, classes = [])
     content_tag tag, (markdown_render text.to_s),
-                class: (['latex', 'text-justify'] + classes)
+                class: (%w[latex text-justify] + classes)
   end
 
   # Helper with settings for will_paginate.
@@ -74,10 +74,10 @@ module ApplicationHelper
   end
 
   # Helper for home#admin to display koreksian
-  def list_of_problems(lp)
-    text = lp.to_s
-    text += ' (laporan sudah)' if lp.report?
-    link_to text, long_problem_temporary_markings_path(long_problem_id: lp.id)
+  def list_of_problems(long_prob)
+    text = long_prob.to_s
+    text += ' (laporan sudah)' if long_prob.report?
+    link_to text, long_problem_temporary_markings_path(long_problem_id: long_prob.id)
   end
 
   # Split text, while leaving delimiters intact.

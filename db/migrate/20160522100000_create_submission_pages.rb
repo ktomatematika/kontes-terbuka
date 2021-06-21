@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateSubmissionPages < ActiveRecord::Migration
   def change
     create_table :submission_pages do |t|

@@ -31,27 +31,26 @@ module Mailgun
     params if Rails.env.test?
   end
 
-  private
-
-  def make_valid!(params)
+  private def make_valid!(params)
     params[:to] ||= EMAIL
     params[:from] ||= FROM
   end
 
-  def check_force_to_many!(params)
+  private def check_force_to_many!(params)
     if (params[:to].include?(',') || params[:to].is_a?(Array)) &&
        !params[:force_to_many]
       raise 'You cannot send to many. Use BCC instead.'
     end
+
     params.delete(:force_to_many)
   end
 
-  def add_contest!(params)
+  private def add_contest!(params)
     params[:subject] = "#{params[:contest]}: #{params[:subject]}"
     params.delete(:contest)
   end
 
-  def convert_bcc!(params)
+  private def convert_bcc!(params)
     params[:bcc].nil? ? params[:bcc] = '' : params[:bcc] += ','
     params[:bcc] += params[:bcc_array].join(',')
     params.delete(:bcc_array)

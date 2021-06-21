@@ -14,6 +14,7 @@ class ApplicationController < ActionController::Base
 
   private def set_mini_profiler
     return if cannot?(:profile, Application) && masq_username.nil?
+
     Rack::MiniProfiler.authorize_request unless Rails.env.test?
   end
 
@@ -39,16 +40,18 @@ class ApplicationController < ActionController::Base
 
   private def current_user
     return unless cookies[:auth_token]
+
     @current_user ||= begin
-                        users = User.includes(:roles, :color)
-                        users.find_by(username: masq_username) ||
-                        users.find_by(auth_token: cookies[:auth_token])
-                      end
+      users = User.includes(:roles, :color)
+      users.find_by(username: masq_username) ||
+      users.find_by(auth_token: cookies[:auth_token])
+    end
   end
   helper_method :current_user
 
   private def require_login
     return if current_user
+
     redirect_to login_users_path(redirect: request.original_fullpath),
                 notice: 'Anda perlu masuk terlebih dahulu.'
   end

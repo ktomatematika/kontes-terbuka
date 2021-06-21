@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# rubocop:disable Metrics/BlockLength
 Rails.application.routes.draw do
   root 'welcome#index'
   # Comment root and uncomment these to enter maintenance mode:
@@ -155,4 +154,3 @@ Rails.application.routes.draw do
 
   match '*path', to: 'errors#error_4xx', via: :all
 end
-# rubocop:enable Metrics/BlockLength

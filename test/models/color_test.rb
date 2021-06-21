@@ -13,8 +13,6 @@
 #
 #  index_colors_on_name  (name) UNIQUE
 #
-# rubocop:enable Metrics/LineLength
-
 require 'test_helper'
 
 class ColorTest < ActiveSupport::TestCase

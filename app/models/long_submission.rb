@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# rubocop:disable Metrics/LineLength
 # == Schema Information
 #
 # Table name: long_submissions
@@ -22,8 +21,6 @@
 #  fk_rails_...  (long_problem_id => long_problems.id) ON DELETE => cascade
 #  fk_rails_...  (user_contest_id => user_contests.id) ON DELETE => cascade
 #
-# rubocop:enable Metrics/LineLength
-
 class LongSubmission < ActiveRecord::Base
   has_paper_trail
   schema_validations except: :feedback
@@ -44,25 +41,26 @@ class LongSubmission < ActiveRecord::Base
   validate :score_does_not_exceed_long_problem_max_score
   def score_does_not_exceed_long_problem_max_score
     return unless !score.nil? && score > long_problem.max_score
+
     errors.add :score,
                "must be < long_problem.max_score (#{long_problem.max_score})"
   end
 
-  def get_score_text
-    score&.to_s || "-"
+  def score_text
+    score&.to_s || '-'
   end
 
-  def self.text_to_score(x)
-    x == "-" ? nil : x.to_i
+  def self.text_to_score(txt)
+    txt == '-' ? nil : txt.to_i
   end
 
   def zip_location
-    (location + '.zip').freeze
+    "#{location}.zip"
   end
 
   def compress
     require 'zip'
-    filenames = Dir.entries(location + '/').reject do |f|
+    filenames = Dir.entries("#{location}/").reject do |f|
       File.directory? f
     end
 

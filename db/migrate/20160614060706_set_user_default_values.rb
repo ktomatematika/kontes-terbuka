@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class SetUserDefaultValues < ActiveRecord::Migration
   def change
     change_column :users, :point, :integer, default: 0

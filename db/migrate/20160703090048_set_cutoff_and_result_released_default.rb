@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class SetCutoffAndResultReleasedDefault < ActiveRecord::Migration
   def change
     change_column_default :contests, :gold_cutoff, 0

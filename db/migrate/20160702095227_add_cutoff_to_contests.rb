@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddCutoffToContests < ActiveRecord::Migration
   def change
     add_column :contests, :gold_cutoff, :integer

@@ -72,9 +72,7 @@ class ShortProblemsControllerTest < ActionController::TestCase
     assert_equal @c.long_problems.count, 0
   end
 
-  private
-
-  def create_items
+  private def create_items
     @sp = create(:short_problem)
     @c = @sp.contest
   end

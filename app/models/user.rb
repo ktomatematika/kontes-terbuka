@@ -81,7 +81,8 @@ class User < ActiveRecord::Base
   after_save :clear_password
 
   def before_add_method(role)
-    return if !Role.admins.include?(role.name) || has_role?(:panitia)
+    return if Role.admins.exclude?(role.name) || has_role?(:panitia)
+
     raise 'User is not panitia! Run `User.find(your_id).add_role :panitia` first.'
   end
 

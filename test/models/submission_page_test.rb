@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# rubocop:disable Metrics/LineLength
 # == Schema Information
 #
 # Table name: submission_pages
@@ -23,8 +22,6 @@
 #
 #  fk_rails_...  (long_submission_id => long_submissions.id) ON DELETE => cascade
 #
-# rubocop:enable Metrics/LineLength
-
 require 'test_helper'
 
 class SubmissionPageTest < ActiveSupport::TestCase

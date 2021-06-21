@@ -40,7 +40,7 @@ class EmailNotifications
     subject = @data.contest_ending.subject.get binding
     text = @data.contest_ending.text.get binding
     notif = Notification.find_by(event: 'contest_ending', time_text: time_text)
-    users = notif.users.joins(:contests).where('contests.id = ?', @contest.id)
+    users = notif.users.joins(:contests).where(contests: { id: @contest.id })
 
     Ajat.info "contest_ending|id:#{@contest.id}"
     send_emails(text: text, subject: subject, users: users)
@@ -50,7 +50,7 @@ class EmailNotifications
     subject = @data.results_released.subject.get binding
     text = @data.results_released.text.get binding
     notif = Notification.find_by(event: 'results_released')
-    users = notif.users.joins(:contests).where('contests.id = ?', @contest.id)
+    users = notif.users.joins(:contests).where(contests: { id: @contest.id })
 
     Ajat.info "result_released|id:#{@contest.id}"
     send_emails(text: text, subject: subject, users: users)
@@ -62,8 +62,7 @@ class EmailNotifications
     notif = Notification.find_by(event: 'feedback_ending', time_text: time_text)
     users = User.where(id: @contest.not_full_feedback_user_contests
                        .joins(user: :user_notifications)
-                       .where('user_notifications.notification_id = ?',
-                              notif.id)
+                       .where(user_notifications: { notification_id: notif.id })
                        .pluck(:user_id))
 
     Ajat.info "feedback_ending|id:#{@contest.id}|time:#{time_text}"

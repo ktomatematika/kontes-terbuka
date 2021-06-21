@@ -196,7 +196,7 @@ FactoryBot.define do
     username { generate(:unique) }
     password { 'qwerqwerty' }
     password_confirmation { password }
-    email { generate(:unique) + '@a.b' }
+    email { "#{generate(:unique)}@a.b" }
     fullname { 'qwerqwer' }
     province { create(:province)}
     status { create(:status)}
