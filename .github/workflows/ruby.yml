@@ -30,6 +30,7 @@ jobs:
           PGHOST: localhost
           PGPASSWORD: postgres
         run: |
+          bundle install --without production development
           cp config/database.yml.travis config/database.yml
           cp .env.default .env
           bundle exec rake db:setup
