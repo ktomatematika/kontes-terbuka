@@ -27,6 +27,7 @@ jobs:
         with:
           ruby-version: 2.5.0
       - env:
+          RAILS_ENV: test
           PGHOST: localhost
           PGPASSWORD: postgres
         run: |
