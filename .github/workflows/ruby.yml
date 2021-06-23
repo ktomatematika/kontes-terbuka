@@ -1,10 +1,4 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-# This workflow will download a prebuilt Ruby version, install dependencies and run tests with Rake
-# For more information see: https://github.com/marketplace/actions/setup-ruby-jruby-and-truffleruby
-name: Ruby
+name: Run lint and test
 
 on:
   push:
@@ -14,10 +8,10 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-16.04
     services:
       db:
-        image: postgres:11
+        image: postgres:9.5
         env:
           POSTGRES_PASSWORD: postgres
         ports: ['5432:5432']
@@ -32,23 +26,15 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: 2.5.0
-      - run: | 
-          bundle install --without production development
-      - name: Build and run tests
-        env:
-          RAILS_ENV: test
+      - env:
           PGHOST: localhost
-          PGPASSWORD : postgres
+          PGPASSWORD: postgres
         run: |
-          psql -c 'create database kontes_terbuka_test;' -U postgres
           cp config/database.yml.travis config/database.yml
           cp .env.default .env
-          bundle exec rake db:structure:load
           bundle exec rake db:setup
-          bundle exec rake test:units
-          bundle exec rake test:others
+          bundle exec rake test
           sudo apt-get install texlive-latex-base
-          bundle exec rake test:functionals
   linters:
     name: linters
     runs-on: ubuntu-latest
