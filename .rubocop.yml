@@ -20,9 +20,6 @@ Layout/EmptyLinesAroundArguments:
 Layout/LineLength:
   Enabled: true
 
-Lint/ConstantDefinitionInBlock:
-  Enabled: false
-  
 Lint/EmptyClass:
   Exclude:
     - 'app/models/application.rb'   # Empty class for CanCanCan
