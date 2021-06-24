@@ -20,7 +20,7 @@ class ShortProblemsControllerTest < ActionController::TestCase
     test_abilities @sp, :create, [nil, :panitia], %i[problem_admin admin]
     post :create, contest_id: @c.id,
                   short_problem: { statement: 'Hello there',
-                                   problem_no: 1000,
+                                   problem_no: 5,
                                    answer: 3 }
     assert_redirected_to admin_contest_path @c
     assert_equal @c.reload.short_problems.where(statement: 'Hello there')
