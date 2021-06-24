@@ -35,6 +35,7 @@ jobs:
       - run: | 
           bundle install --without production development
       - env:
+          RAILS_ENV: test
           PGHOST: localhost
           PGPASSWORD: postgres
         run: |
