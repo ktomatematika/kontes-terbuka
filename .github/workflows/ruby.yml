@@ -8,9 +8,9 @@ name: Run lint and test
 
 on:
   push:
-    branches: [ production ]
+    branches: [production]
   pull_request:
-    branches: [ production ]
+    branches: [production]
 
 jobs:
   test:
@@ -46,7 +46,7 @@ jobs:
           bundle exec rake test
   linters:
     name: linters
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-16.04
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -67,7 +67,7 @@ jobs:
           bundle exec eslint app/assets/javascripts
   rubocop:
     name: rubocop
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-16.04
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -82,7 +82,7 @@ jobs:
           bundle exec rubocop -D -f simple
   brakeman:
     name: brakeman
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-16.04
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -97,7 +97,7 @@ jobs:
           bundle exec brakeman
   traceroute:
     name: traceroute
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-16.04
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
