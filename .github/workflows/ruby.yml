@@ -1,0 +1,112 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+# This workflow will download a prebuilt Ruby version, install dependencies and run tests with Rake
+# For more information see: https://github.com/marketplace/actions/setup-ruby-jruby-and-truffleruby
+name: Run lint and test
+
+on:
+  push:
+    branches: [production]
+  pull_request:
+    branches: [production]
+
+jobs:
+  test:
+    runs-on: ubuntu-16.04
+    services:
+      db:
+        image: postgres:11
+        env:
+          POSTGRES_PASSWORD: postgres
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.5.0
+      - run: | 
+          bundle install --without production development
+      - env:
+          RAILS_ENV: test
+          PGHOST: localhost
+          PGPASSWORD: postgres
+        run: |
+          cp config/database.yml.travis config/database.yml
+          cp .env.default .env
+          bundle exec rake db:setup
+          sudo apt-get install texlive-latex-base
+          bundle exec rake test
+  linters:
+    name: linters
+    runs-on: ubuntu-16.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Setup Ruby and install gems
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.5.0
+      - run: | 
+          bundle install --without production development
+      - name: Run haml-lint
+        run: |
+          bundle exec haml-lint --exclude-linter LineLength app/views
+      - name: Run scss-lint
+        run: |
+          bundle exec scss-lint app/assets/stylesheets
+      - name: Run eslint
+        run: |
+          bundle exec eslint app/assets/javascripts
+  rubocop:
+    name: rubocop
+    runs-on: ubuntu-16.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Setup Ruby and install gems
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.5.0
+      - run: | 
+          bundle install --without production development
+      - name: Run rubocop
+        run: |
+          bundle exec rubocop -D -f simple
+  brakeman:
+    name: brakeman
+    runs-on: ubuntu-16.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Setup Ruby and install gems
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.5.0
+      - run: | 
+          bundle install --without production development
+      - name: Run brakeman
+        run: |
+          bundle exec brakeman
+  traceroute:
+    name: traceroute
+    runs-on: ubuntu-16.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Setup Ruby and install gems
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.5.0
+      - run: | 
+          bundle install --without production development
+      - name: Run traceroute
+        run: |
+          bundle exec rake traceroute FAIL_ON_ERROR=1

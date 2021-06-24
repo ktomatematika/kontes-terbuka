@@ -88,7 +88,7 @@ module UserContestScope
         end
     })
 
-    CUTOFF_CERTIFICATE = 1
+    CUTOFF_CERTIFICATE = 1 # rubocop:disable Lint/ConstantDefinitionInBlock
     # Add this scope to filter that has high enough score to get certificates
     scope(:eligible_score, lambda {
       where("total_mark >= #{CUTOFF_CERTIFICATE}")

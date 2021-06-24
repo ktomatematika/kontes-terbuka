@@ -77,8 +77,6 @@ gem 'koala'
 gem 'dotenv-rails', require: 'dotenv/rails-now'
 
 group :test do
-  # Test coverage
-  gem 'coveralls', require: false
   # Acceptance testing
   gem 'capybara'
   # Driver for Capybara to allow JS stuff
