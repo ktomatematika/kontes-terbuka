@@ -19,10 +19,6 @@ Layout/EmptyLinesAroundArguments:
 
 Layout/LineLength:
   Enabled: true
-  
-Layout/TrailingWhitespace:  
-  Exclude:
-    - 'app/models/short_submission.rb' # Empty line isn't whitespace
 
 Lint/ConstantDefinitionInBlock:
   Enabled: false
