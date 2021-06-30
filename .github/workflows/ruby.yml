@@ -135,7 +135,8 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: 2.5.0
-
+      - run: | 
+          bundle install
       - name: Deploy to production
         run: |
           eval "$(ssh-agent -s)"
