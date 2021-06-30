@@ -138,7 +138,6 @@ jobs:
 
       - name: Deploy to production
         run: |
-          echo ${{ secrets.SSH_HOST }}
           eval "$(ssh-agent -s)"
           ssh-add ~/.ssh/github-actions
           bundle exec cap production deploy
