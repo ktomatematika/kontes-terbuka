@@ -128,14 +128,14 @@ jobs:
               IdentitiesOnly yes
               ForwardAgent yes
       - name: Adding Known Hosts
-        run: ssh-keyscan -p 1729 188.166.177.64
+        run: ssh-keyscan -p 1729 ${{ secrets.SSH_HOST }}
 
       - uses: actions/checkout@v2
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 2.4.1
-          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+          ruby-version: 2.5.0
+          bundler-cache: true
 
       - name: Deploy to production
         run: |
