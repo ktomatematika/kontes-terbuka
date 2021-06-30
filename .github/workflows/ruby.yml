@@ -136,7 +136,7 @@ jobs:
         with:
           ruby-version: 2.5.0
       - run: | 
-          bundle install --without production development
+          bundle install
       - name: Deploy to production
         run: |
           eval "$(ssh-agent -s)"
