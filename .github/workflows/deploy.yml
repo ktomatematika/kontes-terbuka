@@ -30,7 +30,7 @@ jobs:
         with:
           ruby-version: 2.5.0
       - run: | 
-          bundle install
+          bundle install --without development test
       - name: Deploy to production
         run: |
           eval "$(ssh-agent -s)"
