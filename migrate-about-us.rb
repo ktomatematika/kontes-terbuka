@@ -1,5 +1,10 @@
-/* exported about_us_data alumni_data */
-var about_us_data = [
+# This is a ruby script to migrate all about us entries
+# Follow these steps to execute:
+# bundle exec rails c
+# load './migrate-about-us.rb'
+# migrate()
+
+$about_us_data = [
   {
     name: 'Herbert Ilhan Tanujaya',
     description: 'Herbert Ilhan Tanujaya telah diberi kehormatan untuk mewakili tanah air tercintanya di IMO dan mendapatkan 2 medali perunggu di tahun 2014 dan 2015. Walaupun saat ini dia melanjutkan studinya di jurusan Teknik Komputer di National University of Singapore (NUS), dia tetap menunjukkan dedikasi yang tinggi ke olimpiade matematika Indonesia dengan menjadi ketua umum KTO Matematika pada tahun 2015. Dia merupakan salah satu developer utama website yang sedang Anda kunjungi ini. Dia sangat gemar bermain game musik, dan menghabiskan waktunya bermain di game center berbagai mal.',
@@ -60,9 +65,9 @@ var about_us_data = [
     description: 'Rezky Arizaputra atau kerap disapa Ekky adalah perwakilan Indonesia yang berhasil meraih dua medali perak di IMO pada tahun 2015 dan 2016. Di tengah kesibukan sebagai mahasiswa Teknik Komputer di NUS, Singapura Ekky masih menyempatkan waktunya membuat soal KTOM setiap bulannya dan membantu mengoreksi pekerjaan peserta. Ekky memiliki kemampuan matematika yang luar biasa sehingga kerap kali peserta pelatnas menyebut kemampuan matematika Ekky sebagai YME (Yang Maha Ekky). Selain gemar matematika, Ekky senang bermain piano dan travelling di waktu senggangnya. Dia juga senang bermain game Dota 2 dan sudah meraih medal divine 6!',
     image: 'ekky.png',
   },
-];
+]
 
-var alumni_data = [
+$alumni_data = [
   {
     name: 'Fransisca Andriani',
     description: 'Fransisca Andriani (Cis) pernah beruntung mendapatkan medali perak OSN 2013 dan medali emas OSN 2015 meskipun kemampuannya tidak seberapa. Dia juga beruntung lagi di tahun 2016 saat diterima di Nanyang Technological University (NTU) untuk melanjutkan studinya dalam bidang Matematika. Peran Cis di KTO Matematika antara lain adalah sebagai pengisi kuota perempuan (karena tidak ada perempuan lain yang mau), desainer, pengelola utama OA LINE KTO Matematika, dan terkadang juga korektor jawaban kontes. Dia sangat suka menyanyi dan membaca. Dia juga pandai menggerakkan anggota wajahnya seperti hidung, telinga, dan alis.',
@@ -93,21 +98,111 @@ var alumni_data = [
     description: 'Bivan Alzacky Harmanto adalah salah satu siswa yang berhasil mengikuti IMO 2012 dan IMO 2013 dan menyumbangkan medali perunggu untuk Indonesia. Saat ini Bivan sedang menempuh studi S1 jurusan Ilmu Komputer di Korea Advanced Institute of Science and Technology (KAIST), yang merupakan universitas nomor 1 di Korea untuk bidang teknik. Saat ini, Bivan merupakan salah satu anggota tim koreksi KTO Matematika. Selain gemar  mengotak-atik soal-soal Matematika (khususnya geometri) dan komputer, Bivan juga gemar mengecek Facebook tanpa alasan yang jelas (sekadar buka dan lihat-lihat saja), membagi ceritanya di blognya, dan bermain game di laptopnya. Oh iya satu hal lagi, board game sekarang menjadi salah satu kegemarannya, berkat salah satu temannya di KAIST yang terbilang sangat gila terhadap board game.',
     image: 'bivan.jpg',
   },
-];
+]
 
-// Randomize the order!
-function randomize_array(arr) {
-  var current_index = arr.length;
+def get_panitia_or_admin
+  users = User.all
+  panitia_or_admin = []
+  users.map do |user|
+    roles = user.roles
+    filtered_roles = roles.select do |role|
+      role.name == 'panitia' or role.name == 'admin'
+    end
+    if !filtered_roles.empty?
+      panitia_or_admin.append(user)
+    end
+  end
+  return panitia_or_admin
+end
 
-  while (current_index !== 0) {
-    var random_index = Math.floor(Math.random() * current_index);
-    current_index--;
+def process_about_us(panitia_or_admin)
+  about_us_names = $about_us_data.map do |about_us|
+    about_us[:name].downcase
+  end
+  panitia_or_admin_names = panitia_or_admin.map do |user|
+    user.fullname.downcase
+  end
+  existing = about_us_names.select do |name|
+    panitia_or_admin_names.include?(name)
+  end
+  missing = about_us_names.select do |name|
+    !panitia_or_admin_names.include?(name)
+  end
+  return existing, missing
+end
 
-    var temporary_value = arr[current_index];
-    arr[current_index] = arr[random_index];
-    arr[random_index] = temporary_value;
-  }
-}
+def process_alumni(panitia_or_admin)
+  alumni_names = $alumni_data.map do |alumni|
+    alumni[:name].downcase
+  end
+  panitia_or_admin_names = panitia_or_admin.map do |user|
+    user.fullname.downcase
+  end
+  existing = alumni_names.select do |name|
+    panitia_or_admin_names.include?(name)
+  end
+  missing = alumni_names.select do |name|
+    !panitia_or_admin_names.include?(name)
+  end
+  return existing, missing
+end
 
-randomize_array(about_us_data);
-randomize_array(alumni_data);
+def create_missing_users(missing)
+  missing.map do |name|
+    words = name.split
+    first_word = words[0]
+    second_word = words[1]
+    new_user = User.create(
+      :username => "#{first_word}#{second_word}",
+      :email => "#{first_word}#{second_word}@gmail.com",
+      :password => "#{first_word}#{second_word}",
+      :fullname => name,
+      :school => "NUS",
+      :province_id => 12,
+      :status_id => 8
+    )
+    new_user.enable
+    new_user.add_role :panitia
+    new_user.add_role :admin
+  end
+end
+
+def create_about_users(panitia_or_admin)
+  $about_us_data.map do |about_us|
+    image_path = about_us[:image]
+    name = about_us[:name]
+    description = about_us[:description]
+    image = File.open(Rails.root.join('app', 'assets', 'images', 'panitia', image_path), 'r')
+    related_account = panitia_or_admin.select { |user| user.fullname.downcase == name.downcase }.first
+    related_account.about_user = AboutUser.create(
+      :name => name,
+      :description => description,
+      :image => image,
+      :is_alumni => false
+    )
+    related_account.save
+  end
+  $alumni_data.map do |alumni|
+    image_path = alumni[:image]
+    name = alumni[:name]
+    description = alumni[:description]
+    image = File.open(Rails.root.join('app', 'assets', 'images', 'panitia', image_path), 'r')
+    related_account = panitia_or_admin.select { |user| user.fullname.downcase == name.downcase }.first
+    related_account.about_user = AboutUser.create(
+      :name => name,
+      :description => description,
+      :image => image,
+      :is_alumni => true
+    )
+    related_account.save
+  end
+end
+
+def migrate
+  panitia_or_admin = get_panitia_or_admin()
+  existing_panitia_or_admin, missing_panitia_or_admin = process_about_us(panitia_or_admin)
+  existing_alumni, missing_alumni = process_alumni(panitia_or_admin)
+  create_missing_users(missing_panitia_or_admin)
+  create_missing_users(missing_alumni)
+  create_about_users(panitia_or_admin)
+end
