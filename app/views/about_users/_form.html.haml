@@ -1,7 +1,9 @@
 .form-group
   = f.label :name, 'Nama:'
 .form-group
-  = f.text_field :name
+  = @about_user.nil? ? @user.fullname : @about_user.name 
+.form-group
+  = f.hidden_field :name, value: @about_user.nil? ? @user.fullname : @about_user.name
 .form-group
   = f.label :description, 'Deskripsi:'
 .form-group
