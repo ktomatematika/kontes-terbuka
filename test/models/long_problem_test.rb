@@ -16,6 +16,7 @@
 #  report_updated_at   :datetime
 #  start_time          :datetime
 #  end_time            :datetime
+#  max_score           :integer          default(7)
 #
 # Indexes
 #
