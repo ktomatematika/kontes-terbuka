@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# rubocop:disable Metrics/LineLength
 # == Schema Information
 #
 # Table name: long_problems
@@ -27,8 +26,6 @@
 #
 #  fk_rails_...  (contest_id => contests.id) ON DELETE => cascade
 #
-# rubocop:enable Metrics/LineLength
-
 class LongProblem < ActiveRecord::Base
   has_paper_trail
   resourcify
@@ -42,7 +39,6 @@ class LongProblem < ActiveRecord::Base
   has_many :user_contests, through: :long_submissions
   has_many :submission_pages, through: :long_submissions
   has_many :temporary_markings, through: :long_submissions
-
 
   # Attachments
   has_attached_file :report,
@@ -62,13 +58,13 @@ class LongProblem < ActiveRecord::Base
 
   # Display methods
   def to_s
-    contest.to_s + ' no. ' + problem_no.to_s
+    "#{contest} no. #{problem_no}"
   end
 
   # TODO: Refactor several of the methods to concerns.
 
   def zip_location
-    submissions_location + '.zip'
+    "#{submissions_location}.zip"
   end
 
   def compress_submissions
@@ -104,7 +100,7 @@ class LongProblem < ActiveRecord::Base
 
   private def delete_submission_zips
     Dir.entries(submissions_location).each do |f|
-      File.delete(submissions_location + '/' + f) if File.extname(f) == '.zip'
+      File.delete("#{submissions_location}/#{f}") if File.extname(f) == '.zip'
     end
   end
 end

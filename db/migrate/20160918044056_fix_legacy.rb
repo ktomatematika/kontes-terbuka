@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class FixLegacy < ActiveRecord::Migration
   def change
     if index_exists? :statuses, :name, name: 'idx_mv_statuses_name_uniq'
@@ -19,11 +21,9 @@ class FixLegacy < ActiveRecord::Migration
     if index_exists? :users, :username, name: 'idx_mv_users_username_uniq'
       remove_index :users, 'idx_mv_users_username_uniq'
     end
-    if index_exists? :users, :email, name: 'idx_mv_users_email_uniq'
-      remove_index :users, 'idx_mv_users_email_uniq'
-    end
+    remove_index :users, 'idx_mv_users_email_uniq' if index_exists? :users, :email, name: 'idx_mv_users_email_uniq'
     if index_exists? :users, :verification,
-      name: 'idx_mv_users_verification_uniq'
+                     name: 'idx_mv_users_verification_uniq'
       remove_index :users, 'idx_mv_users_verification_uniq'
     end
     if index_exists? :users, :auth_token, name: 'idx_mv_users_auth_token_uniq'

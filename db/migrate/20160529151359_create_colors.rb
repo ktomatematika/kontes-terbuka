@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateColors < ActiveRecord::Migration
   def change
     create_table :colors do |t|

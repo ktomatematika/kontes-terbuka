@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# rubocop:disable Metrics/LineLength
 # == Schema Information
 #
 # Table name: long_problems
@@ -27,8 +26,6 @@
 #
 #  fk_rails_...  (contest_id => contests.id) ON DELETE => cascade
 #
-# rubocop:enable Metrics/LineLength
-
 require 'test_helper'
 
 class LongProblemTest < ActiveSupport::TestCase

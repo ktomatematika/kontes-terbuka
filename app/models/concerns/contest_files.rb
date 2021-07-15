@@ -14,11 +14,11 @@ module ContestFiles
   end
 
   def report_zip_location
-    reports_location + '.zip'
+    "#{reports_location}.zip"
   end
 
   def submissions_zip_location
-    submissions_location + '.zip'
+    "#{submissions_location}.zip"
   end
 
   def results_location
@@ -38,24 +38,19 @@ module ContestFiles
     )
 
     File.delete(results_location) if File.file?(results_location)
-    unless File.directory?(File.dirname(results_location))
-      FileUtils.mkdir_p(File.dirname(results_location))
-    end
+    FileUtils.mkdir_p(File.dirname(results_location)) unless File.directory?(File.dirname(results_location))
     File.open(results_location, 'wb') { |f| f << pdf }
   end
 
-  private
-
-  def reports_location
-    Rails.root.join('public', 'contest_files', 'reports', id.to_s).to_s
+  private def reports_location
+    Rails.root.join("public/contest_files/reports/#{id}").to_s
   end
 
-  def submissions_location
-    Rails.root.join('public', 'contest_files', 'submissions',
-                    "kontes#{id}").to_s
+  private def submissions_location
+    Rails.root.join("public/contest_files/submissions/kontes#{id}").to_s
   end
 
-  def results_template
-    Rails.root.join('app', 'views', 'contests', 'download_results.html.erb')
+  private def results_template
+    Rails.root.join('app/views/contests/download_results.html.erb')
   end
 end

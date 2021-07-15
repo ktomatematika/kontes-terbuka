@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RemoveLinkToOlimpiadeOrg < ActiveRecord::Migration
   def change
     remove_column :contests, :forum_link, :string

@@ -19,8 +19,6 @@
 #
 #  fk_rails_...  (user_id => users.id) ON DELETE => cascade
 #
-# rubocop:enable Metrics/LineLength
-
 require 'test_helper'
 
 class PointTransactionTest < ActiveSupport::TestCase

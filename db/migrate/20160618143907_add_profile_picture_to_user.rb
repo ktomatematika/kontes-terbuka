@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddProfilePictureToUser < ActiveRecord::Migration
   def self.up
     change_table :users do |t|

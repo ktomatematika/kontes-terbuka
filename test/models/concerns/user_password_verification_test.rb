@@ -64,7 +64,7 @@ class UserPasswordVerificationTest < ActiveSupport::TestCase
   end
 
   test 'auth token and verification are unique' do
-    25.times { |i| create(:user, username: 'cobaaja' + i.to_s) }
+    25.times { |i| create(:user, username: "cobaaja#{i}") }
     auth_tokens = User.pluck(:auth_token)
     verifications = User.pluck(:verification)
 

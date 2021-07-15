@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddNotNullConstraints < ActiveRecord::Migration
   def change
     change_column :contests, :gold_cutoff, :integer, null: false

@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 class CreateMarketItems < ActiveRecord::Migration
   def change
     create_table :market_items do |t|
-
       t.string :name
       t.text :description
       t.integer :price

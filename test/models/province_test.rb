@@ -14,8 +14,6 @@
 #
 #  index_provinces_on_name  (name) UNIQUE
 #
-# rubocop:enable Metrics/LineLength
-
 require 'test_helper'
 
 class ProvinceTest < ActiveSupport::TestCase

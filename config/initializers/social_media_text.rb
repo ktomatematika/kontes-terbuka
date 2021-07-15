@@ -2,9 +2,9 @@
 
 class String
   def get(binding)
-    binding.eval '"' + self + '"'
+    binding.eval "\"#{self}\""
   end
 end
 
-Social = JSON.parse(File.read(Rails.root.join('app', 'assets', 'social.json')),
+Social = JSON.parse(File.read(Rails.root.join('app/assets/social.json')),
                     object_class: OpenStruct)

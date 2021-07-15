@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # vim: set ft=ruby:
 
 require 'coveralls'

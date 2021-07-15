@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MakeUserColumnsUnique < ActiveRecord::Migration
   def change
     add_index :users, :username, unique: true

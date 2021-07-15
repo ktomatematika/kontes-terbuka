@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
 
 ### BASICS
@@ -75,8 +77,6 @@ gem 'koala'
 gem 'dotenv-rails', require: 'dotenv/rails-now'
 
 group :test do
-  # Test coverage
-  gem 'coveralls', require: false
   # Acceptance testing
   gem 'capybara'
   # Driver for Capybara to allow JS stuff
@@ -122,7 +122,9 @@ end
 
 group :development, :test do
   # Ruby linter
-  gem 'rubocop', '~> 0.52.0'
+  gem 'rubocop', '~> 1.11.0'
+  # Rails cops extracted to rubocop-rails gem
+  gem 'rubocop-rails'
   # HAML linter
   gem 'haml_lint'
   # SCSS linter
@@ -179,10 +181,10 @@ end
 group :development do
   # Use capistrano and its extensions.
   gem 'capistrano'
+  gem 'capistrano3-delayed-job'
   gem 'capistrano-bundler'
   gem 'capistrano-rails'
   gem 'capistrano-rvm', github: 'capistrano/rvm'
-  gem 'capistrano3-delayed-job'
 end
 
 ### END PRODUCTION STUFF
