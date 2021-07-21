@@ -1,7 +1,7 @@
 # This is a ruby script to migrate all about us entries
-# Follow these steps to execute:
+# Follow these steps at the app root to execute:
 # bundle exec rails c
-# load './migrate-about-us.rb'
+# load './scripts/migrate-about-us.rb'
 # migrate()
 
 $about_us_data = [
@@ -101,18 +101,7 @@ $alumni_data = [
 ]
 
 def get_panitia_or_admin
-  users = User.all
-  panitia_or_admin = []
-  users.map do |user|
-    roles = user.roles
-    filtered_roles = roles.select do |role|
-      role.name == 'panitia' or role.name == 'admin'
-    end
-    if !filtered_roles.empty?
-      panitia_or_admin.append(user)
-    end
-  end
-  return panitia_or_admin
+  return User.joins(:roles).where('roles.name' => ['panitia', 'admin'])
 end
 
 def process_about_us(panitia_or_admin)
@@ -147,62 +136,37 @@ def process_alumni(panitia_or_admin)
   return existing, missing
 end
 
-def create_missing_users(missing)
-  missing.map do |name|
-    words = name.split
-    first_word = words[0]
-    second_word = words[1]
-    new_user = User.create(
-      :username => "#{first_word}#{second_word}",
-      :email => "#{first_word}#{second_word}@gmail.com",
-      :password => "#{first_word}#{second_word}",
-      :fullname => name,
-      :school => "NUS",
-      :province_id => 12,
-      :status_id => 8
-    )
-    new_user.enable
-    new_user.add_role :panitia
-    new_user.add_role :admin
-  end
-end
-
 def create_about_users(panitia_or_admin)
-  $about_us_data.map do |about_us|
-    image_path = about_us[:image]
-    name = about_us[:name]
-    description = about_us[:description]
-    image = File.open(Rails.root.join('app', 'assets', 'images', 'panitia', image_path), 'r')
-    related_account = panitia_or_admin.select { |user| user.fullname.downcase == name.downcase }.first
-    related_account.about_user = AboutUser.create(
-      :name => name,
-      :description => description,
-      :image => image,
-      :is_alumni => false
-    )
-    related_account.save
+  def create(data, panitia_or_admin, is_alumni)
+    data.map do |about_us|
+      image_path = about_us[:image]
+      name = about_us[:name]
+      description = about_us[:description]
+      image = File.open(Rails.root.join('app/assets/images/panitia', image_path), 'r')
+      related_account_filter = panitia_or_admin.select { |user| user.fullname.downcase == name.downcase }
+      if related_account_filter.empty?
+        return
+      end
+      related_account = related_account_filter.first
+      related_account.about_user = AboutUser.create(
+        :name => name,
+        :description => description,
+        :image => image,
+        :is_alumni => is_alumni
+      )
+      related_account.save
+    end
   end
-  $alumni_data.map do |alumni|
-    image_path = alumni[:image]
-    name = alumni[:name]
-    description = alumni[:description]
-    image = File.open(Rails.root.join('app', 'assets', 'images', 'panitia', image_path), 'r')
-    related_account = panitia_or_admin.select { |user| user.fullname.downcase == name.downcase }.first
-    related_account.about_user = AboutUser.create(
-      :name => name,
-      :description => description,
-      :image => image,
-      :is_alumni => true
-    )
-    related_account.save
-  end
+  create($about_us_data, panitia_or_admin, false)
+  create($alumni_data, panitia_or_admin, true)
 end
 
 def migrate
   panitia_or_admin = get_panitia_or_admin()
   existing_panitia_or_admin, missing_panitia_or_admin = process_about_us(panitia_or_admin)
   existing_alumni, missing_alumni = process_alumni(panitia_or_admin)
-  create_missing_users(missing_panitia_or_admin)
-  create_missing_users(missing_alumni)
+  missing_users = missing_panitia_or_admin + missing_alumni
+  all_missing_log = missing_users.reduce() { |acc, curr| acc + "\n" + curr }
+  File.write("./log/missing_users.txt", all_missing_log)
   create_about_users(panitia_or_admin)
 end

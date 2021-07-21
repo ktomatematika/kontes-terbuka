@@ -11,7 +11,7 @@ if [ "Mac" = "${machine}" ]; then
   bundle exec rake db:drop db:create
   createuser ktom
 
-  cd import/db_backup/210616_000001
+  cd import
   cat * | psql -d kontes_terbuka --set ON_ERROR_STOP=on -1
 
   psql -d kontes_terbuka -c "REASSIGN OWNED BY ktom TO ubuntu;"
