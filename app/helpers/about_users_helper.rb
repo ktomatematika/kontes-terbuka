@@ -19,7 +19,7 @@ module AboutUsersHelper
     users.each_with_index do |data, index|
       base_class = 'about-us-person col-md-4 col-sm-6'
       inner_tags = []
-      inner_tags.append(content_tag(:img, nil, src: data.image.url(:small)))
+      inner_tags.append(content_tag(:img, nil, style: 'border-radius: 50%;', src: data.image.url(:small)))
       inner_tags.append(content_tag(:h3, data.name.to_s))
       generated_divs.append(content_tag(:div, nil,
                                         class: base_class.to_s,
