@@ -1,4 +1,5 @@
-# rubocop:disable Metrics/LineLength
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: about_users
@@ -15,13 +16,11 @@
 #  image_updated_at   :datetime
 #  is_alumni          :boolean
 #
-# rubocop:enable Metrics/LineLength
-
 class AboutUser < ActiveRecord::Base
   # Associations
   belongs_to :user
   has_attached_file :image, styles: { small: '150x150>' }
-  
+
   # Validations
   validates :name, presence: true
   validates :description, presence: true
