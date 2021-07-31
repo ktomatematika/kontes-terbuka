@@ -156,10 +156,10 @@ class ContestsControllerTest < ActionController::TestCase
     @c.update(marking_scheme: PDF)
     @c.reload
     test_abilities @c, :download_marking_scheme, [:panitia, [:marker,
-                                                        create(:long_problem)]],
+                                                             create(:long_problem)]],
                    [[:admin, create(:long_problem, contest: @c)], :admin]
     test_abilities @c, :download_marking_scheme, [:user, [:problem_admin,
-                                                        create(:long_problem)]],
+                                                          create(:long_problem)]],
                    [[:marking_manager, create(:long_problem, contest: @c)], :marking_manager]
     get :download_marking_scheme, id: @c.id
 
