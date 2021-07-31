@@ -49,13 +49,11 @@ class Ability
         LongProblem, id: long_problems.map(&:first)
     can %i[mark submit_mark], LongSubmission,
         long_problem_id: long_problems.map(&:first)
-    can :download_marking_scheme, Contest, id: long_problems.map(&:second)
     can :admin, Application
   end
 
   private def panitia_abilities(_user)
-    can %i[preview summary admin download_marking_scheme
-           download_problem_pdf download_reports], Contest
+    can %i[preview summary admin download_problem_pdf download_reports], Contest
     can %i[index_full show_full show], User
     can :download_on_contest, FeedbackAnswer
     can %i[admin profile see_referrers], Application
@@ -63,6 +61,7 @@ class Ability
   end
 
   private def marking_manager_abilities(_user)
+    can :download_marking_scheme, Contest
     can %i[download_submissions mark], LongProblem
     can %i[assign_markers create_marker remove_marker], Role
   end
