@@ -54,7 +54,7 @@ class Ability
   end
 
   private def panitia_abilities(user)
-    can %i[preview summary admin download_marking_scheme
+    can %i[preview summary admin
            download_problem_pdf download_reports], Contest
     can %i[index_full show_full show], User
     can :download_on_contest, FeedbackAnswer
