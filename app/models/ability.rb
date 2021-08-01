@@ -45,6 +45,7 @@ class Ability
 
   private def marker_abilities(user)
     long_problems = LongProblem.with_role(:marker, user).pluck(:id, :contest_id)
+    can :download_marking_scheme, Contest, id: long_problems.map(&:second)
     can %i[download_submissions autofill upload_report mark],
         LongProblem, id: long_problems.map(&:first)
     can %i[mark submit_mark], LongSubmission,
