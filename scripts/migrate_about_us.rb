@@ -71,7 +71,7 @@ def migrate
   _existing_alumni, missing_alumni = process_alumni(panitia_or_admin, alumni_data)
   missing_users = missing_panitia_or_admin + missing_alumni
   all_missing_log = missing_users.reduce { |acc, elem| acc + "\n" + elem }
-  create(about_us_data, panitia_or_admin, false)
-  create(alumni_data, panitia_or_admin, true)
+  create_about_users(about_us_data, panitia_or_admin, false)
+  create_about_users(alumni_data, panitia_or_admin, true)
   puts all_missing_log
 end
