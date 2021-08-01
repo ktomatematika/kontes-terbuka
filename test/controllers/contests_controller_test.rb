@@ -156,8 +156,9 @@ class ContestsControllerTest < ActionController::TestCase
     @c.update(marking_scheme: PDF)
     @c.reload
     test_abilities @c, :download_marking_scheme, [nil, [:marker,
-                                                        create(:long_problem)]],
-                   [[:marker, create(:long_problem, contest: @c)], :panitia]
+                                                        create(:long_problem)],
+                                                  :panitia],
+                   [[:marker, create(:long_problem, contest: @c)], :marking_manager]
     get :download_marking_scheme, id: @c.id
 
     assert_response 200
