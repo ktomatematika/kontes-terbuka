@@ -276,10 +276,6 @@ class ContestsControllerTest < ActionController::TestCase
 
   test 'show_results' do
     test_abilities @c, :preview, [nil, :panitia, [:marker, create(:long_problem, contest: @c)]], [:marking_manager]
-    @c.update(start_time: Time.zone.now + 4.seconds,
-              end_time: Time.zone.now + 5.seconds)
-    get :show, id: @c.id
-    assert_response 200
   end
 
   private def create_items
