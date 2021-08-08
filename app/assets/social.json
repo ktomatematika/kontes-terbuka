@@ -10,23 +10,23 @@
 	"email_notifications": {
 		"contest_starting": {
 			"subject": "Kontes dimulai dalam waktu #{time_text}",
-			"text": "Hanya mengingatkan saja, #{@contest} akan dimulai #{time_text} kemudian. Siapkan segala peralatan dan alat perang Anda!"
+			"text": "Hanya mengingatkan saja, #{@contest} akan dimulai #{time_text} kemudian. Siapkan segala peralatan dan alat perang Anda!\n\nKlik link ini untuk tidak menerima lagi email dari kami\n#{link}"
 		},
 		"contest_started": {
 			"subject": "Kontes sudah dimulai!",
-			"text": "#{@contest} sudah dimulai! Silakan membuka soalnya di #{contest_url @contest}\n\nSelamat mengerjakan!"
+			"text": "#{@contest} sudah dimulai! Silakan membuka soalnya di #{contest_url @contest}\n\nSelamat mengerjakan!\n\nKlik link ini untuk tidak menerima lagi email dari kami\n#{link}"
 		},
 		"contest_ending": {
 			"subject": "Kontes berakhir dalam waktu #{time_text}",
-			"text": "Hanya mengingatkan saja, #{@contest} akan berakhir dalam waktu #{time_text}.\nSiap-siap mengumpulkan segala pekerjaan Anda di #{contest_url @contest}\n\nAntisipasi segala kegagalan teknis. Ingat, kami hampir tidak pernah memberikan waktu tambahan."
+			"text": "Hanya mengingatkan saja, #{@contest} akan berakhir dalam waktu #{time_text}.\nSiap-siap mengumpulkan segala pekerjaan Anda di #{contest_url @contest}\n\nAntisipasi segala kegagalan teknis. Ingat, kami hampir tidak pernah memberikan waktu tambahan.\n\nKlik link ini untuk tidak menerima lagi email dari kami\n#{link}"
 		},
 		"results_released": {
 			"subject": "Hasil sudah keluar!",
-			"text": "Hasil #{@contest} sudah keluar! Silakan cek di:\n #{contest_url @contest}\n\nSelamat bagi yang mendapatkan penghargaan! Jika Anda belum beruntung, jangan berkecil hati karena masih ada kontes-kontes berikutnya.\n\nMengenai sertifikat, Anda perlu mengisi feedback kontes untuk mendapatkannya. Feedback ini bisa diisi di halaman yang sama dengan hasil kontes. Anda perlu mendapatkan setidaknya #{UserContest::CUTOFF_CERTIFICATE} poin untuk mendapatkan sertifikat."
+			"text": "Hasil #{@contest} sudah keluar! Silakan cek di:\n #{contest_url @contest}\n\nSelamat bagi yang mendapatkan penghargaan! Jika Anda belum beruntung, jangan berkecil hati karena masih ada kontes-kontes berikutnya.\n\nMengenai sertifikat, Anda perlu mengisi feedback kontes untuk mendapatkannya. Feedback ini bisa diisi di halaman yang sama dengan hasil kontes. Anda perlu mendapatkan setidaknya #{UserContest::CUTOFF_CERTIFICATE} poin untuk mendapatkan sertifikat.\n\nKlik link ini untuk tidak menerima lagi email dari kami\n#{link}"
 		},
 		"feedback_ending": {
 			"subject": "Feedback kontes ditutup dalam waktu #{time_text}",
-			"text": "Hanya mengingatkan saja, waktu pengisian feedback #{@contest} ditutup #{time_text} lagi. Anda bisa mengisi feedback di #{contest_url @contest}\n\nIngat, salah satu syarat mendapatkan sertifikat adalah mengisi feedback ini."
+			"text": "Hanya mengingatkan saja, waktu pengisian feedback #{@contest} ditutup #{time_text} lagi. Anda bisa mengisi feedback di #{contest_url @contest}\n\nIngat, salah satu syarat mendapatkan sertifikat adalah mengisi feedback ini.\n\nKlik link ini untuk tidak menerima lagi email dari kami\n#{link}"
 		}
 	},
 	"facebook_post": {

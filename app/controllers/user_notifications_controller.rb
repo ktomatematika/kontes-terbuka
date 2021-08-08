@@ -21,4 +21,14 @@ class UserNotificationsController < ApplicationController
     ).destroy!
     render nothing: true
   end
+
+  def unsubscribe
+    user = User.find_by(email: params[:token][16,params[:token].length])
+
+    if UserNotification.find_by(user_id: user.id).first.token == params[:token][0,16]
+      Notification.find_each do |n|
+        UserNotification.delete(user: user, notification: n)
+      end
+    end
+  end
 end
