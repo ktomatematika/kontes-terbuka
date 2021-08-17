@@ -22,10 +22,10 @@ module Mailgun
     text = params[:text]
     url = params[:url]
     params[:text] = Social.email_template.get binding
-    hay = Social.email_notifications.to_h
-    hay.each do |key|
-      key.each do |hey|
-        params[:text] = Social.email_template_notif.get binding if hey['subject'] == params[:subject]
+    email_notification = Social.email_notifications.to_h
+    email_notification.each do |event|
+      event.each do |key|
+        params[:text] = Social.email_template_notif.get binding if key['subject'] == params[:subject]
       end
     end
 
