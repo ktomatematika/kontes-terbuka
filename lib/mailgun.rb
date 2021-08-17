@@ -20,7 +20,14 @@ module Mailgun
   def send_message(**params)
     make_valid!(params)
     text = params[:text]
+    url = params[:url]
     params[:text] = Social.email_template.get binding
+    hay = Social.email_notifications.to_h
+    hay.each do |key|
+      key.each do |hey|
+        params[:text] = Social.email_template_notif.get binding if hey['subject'] == params[:subject]
+      end
+    end
 
     check_force_to_many!(params)
     add_contest!(params) if params[:contest]
