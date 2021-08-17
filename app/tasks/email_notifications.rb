@@ -70,23 +70,12 @@ class EmailNotifications
   end
 
   private def send_emails(**hash)
-    hash[:users].pluck(:email).each_slice(200) do |arr|
-      link = unsubscribe_url token: '#{generate_token(arr.email)}'+'#{arr.email}'
+    hash[:users].pluck(:email).each do |email|
+      url = unsubscribe_url token: UserNotification.generate_token(email)
       Mailgun.send_message contest: @contest, text: hash[:text],
                            subject: hash[:subject], bcc_array: arr,
-                           to: EMAIL_SINK
+                           to: email, url: url
     end
     Ajat.info "send_email|#{hash[:subject]}"
-  end
-
-  private def generate_token(email)
-    loop do
-      token = SecureRandom.urlsafe_base64
-      unless UserNotification.exists?(token => token) do
-        break
-        user = User.find_by(email: email)
-        UserNotification.where(user_id: user.id).update(token: token)
-      end
-    end
   end
 end

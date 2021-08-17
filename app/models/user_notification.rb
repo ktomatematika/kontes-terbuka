@@ -25,4 +25,14 @@ class UserNotification < ActiveRecord::Base
   # Associations
   belongs_to :user
   belongs_to :notification
+
+  private def generate_token
+    loop do
+      self[token] = SecureRandom.urlsafe_base64
+      unless UserNotification.exists?(token => self[token])
+        UserNotification.find_by(user: user).update(token: token)
+        break
+      end
+    end
+  end
 end

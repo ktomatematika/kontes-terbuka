@@ -742,7 +742,8 @@ CREATE TABLE public.user_notifications (
     user_id integer NOT NULL,
     notification_id integer NOT NULL,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    token character varying
 );
 
 
@@ -1901,4 +1902,6 @@ INSERT INTO schema_migrations (version) VALUES ('20210303072630');
 INSERT INTO schema_migrations (version) VALUES ('20210303073140');
 
 INSERT INTO schema_migrations (version) VALUES ('20210317051727');
+
+INSERT INTO schema_migrations (version) VALUES ('20210809095635');
 
