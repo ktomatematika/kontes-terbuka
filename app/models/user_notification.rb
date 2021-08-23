@@ -28,9 +28,9 @@ class UserNotification < ActiveRecord::Base
 
   private def generate_token
     loop do
-      self[token] = SecureRandom.urlsafe_base64
-      unless UserNotification.exists?(token => self[token])
-        UserNotification.find_by(user: user).update(token: token)
+      self.token = SecureRandom.urlsafe_base64
+      unless UserNotification.exists?(token => self.token)
+        self.update(token: token)
         break
       end
     end

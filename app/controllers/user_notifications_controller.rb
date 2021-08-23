@@ -28,4 +28,11 @@ class UserNotificationsController < ApplicationController
       UserNotification.delete(user_id: user_notif.user_id, notification: n)
     end
   end
+
+  def unsubscribe_all
+    user_notif = UserNotification.find_by(token: params[:token])
+    Notification.find_each do |n|
+      UserNotification.delete(user_id: user_notif.user_id, notification: n)
+    end
+  end
 end

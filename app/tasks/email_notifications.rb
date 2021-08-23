@@ -72,7 +72,7 @@ class EmailNotifications
       url = unsubscribe_url token: UserNotification.generate_token(email)
       Mailgun.send_message contest: @contest, text: hash[:text],
                            subject: hash[:subject],
-                           to: email, url: url
+                           to: email, unsubscribe_url: url
     end
     Ajat.info "send_email|#{hash[:subject]}"
   end
