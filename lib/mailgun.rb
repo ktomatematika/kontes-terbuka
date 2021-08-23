@@ -20,14 +20,10 @@ module Mailgun
   def send_message(**params)
     make_valid!(params)
     text = params[:text]
-    url = params[:url]
+    stop_notification_url = params[:unsubscribe_url] + '=' + params[:subject]
+    unsubscribe_url = params[:unsubscribe_url]
     params[:text] = Social.email_template.get binding
-    email_notification = Social.email_notifications.to_h
-    email_notification.each do |event|
-      event.each do |key|
-        params[:text] = Social.email_template_notif.get binding if key['subject'] == params[:subject]
-      end
-    end
+    params[:text] = Social.email_template_notif.get binding if params[:unsubscribe_url].present?
 
     check_force_to_many!(params)
     add_contest!(params) if params[:contest]
