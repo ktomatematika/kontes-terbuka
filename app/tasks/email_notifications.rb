@@ -21,7 +21,7 @@ class EmailNotifications
     users = notif.users
 
     Ajat.info "contest_starting|id:#{@contest.id}|time:#{time_text}"
-    send_emails(text: text, subject: subject, users: users)
+    send_emails(text: text, subject: subject, users: users, event: 'contest_starting')
   end
 
   def contest_started
@@ -31,7 +31,7 @@ class EmailNotifications
     users = notif.users
 
     Ajat.info "contest_started|id:#{@contest.id}"
-    send_emails(text: text, subject: subject, users: users)
+    send_emails(text: text, subject: subject, users: users, event: 'contest_started')
   end
 
   def contest_ending(time_text)
@@ -41,7 +41,7 @@ class EmailNotifications
     users = notif.users.joins(:contests).where(contests: { id: @contest.id })
 
     Ajat.info "contest_ending|id:#{@contest.id}"
-    send_emails(text: text, subject: subject, users: users)
+    send_emails(text: text, subject: subject, users: users, event: 'contest_ending')
   end
 
   def results_released
@@ -51,7 +51,7 @@ class EmailNotifications
     users = notif.users.joins(:contests).where(contests: { id: @contest.id })
 
     Ajat.info "result_released|id:#{@contest.id}"
-    send_emails(text: text, subject: subject, users: users)
+    send_emails(text: text, subject: subject, users: users, event: 'results_released')
   end
 
   def feedback_ending(time_text)
@@ -64,15 +64,20 @@ class EmailNotifications
                        .pluck(:user_id))
 
     Ajat.info "feedback_ending|id:#{@contest.id}|time:#{time_text}"
-    send_emails(text: text, subject: subject, users: users)
+    send_emails(text: text, subject: subject, users: users, event: 'feedback_ending')
   end
 
   private def send_emails(**hash)
     hash[:users].pluck(:email).each do |email|
-      url = unsubscribe_url token: UserNotification.generate_token(email)
+      user_id = User.find_by(email: email).id
+      notification_id = Notification.find_by(event: hash[:event]).id
+      user_notif = UserNotification.where(user_id: user_id).find_by(notification_id: notification_id)
+      url1 = unsubscribe_url token: user_notif.generate_token
+      url2 = stop_this_notification_url(token: user_notif.generate_token, notification_id: notification_id)
+
       Mailgun.send_message contest: @contest, text: hash[:text],
-                           subject: hash[:subject],
-                           to: email, unsubscribe_url: url
+                           subject: hash[:subject], to: email,
+                           unsubscribe_url: url1, stop_this_notification_url: url2
     end
     Ajat.info "send_email|#{hash[:subject]}"
   end

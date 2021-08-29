@@ -150,6 +150,7 @@ Rails.application.routes.draw do
   %w[contact kontak hubungi].each { |r| get "/#{r}", to: 'home#contact' }
 
   get '/unsubscribe/:token', to: 'user_notifications#unsubscribe', as: :unsubscribe
+  get '/stop/:token/:notification_id', to: 'user_notifications#stop', as: :stop_this_notification
   get '/penguasa', to: 'home#admin', as: :admin
   post '/masq', to: 'home#masq'
   delete '/masq', to: 'home#unmasq'

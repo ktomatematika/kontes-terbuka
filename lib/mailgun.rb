@@ -18,12 +18,18 @@ module Mailgun
   # contest: specify a contest to put contest tag
   # bcc_array: BCC params as an array.
   def send_message(**params)
+    tmp_subject = params[:subject]
+    tmp_text = params[:text]
+    params.delete(:subject)
+    params.delete(:text)
+
     make_valid!(params)
-    text = params[:text]
-    stop_notification_url = params[:unsubscribe_url] + '=' + params[:subject]
+    text = tmp_text
+    stop_this_notification_url = params[:stop_this_notification_url]
     unsubscribe_url = params[:unsubscribe_url]
     params[:text] = Social.email_template.get binding
-    params[:text] = Social.email_template_notif.get binding if params[:unsubscribe_url].present?
+    params[:text] = Social.email_template_with_unsubscribe_link.get binding if params[:unsubscribe_url].present?
+    params[:subject] = tmp_subject if tmp_subject.present?
 
     check_force_to_many!(params)
     add_contest!(params) if params[:contest]

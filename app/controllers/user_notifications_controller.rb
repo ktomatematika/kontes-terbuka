@@ -24,15 +24,23 @@ class UserNotificationsController < ApplicationController
 
   def unsubscribe
     user_notif = UserNotification.find_by(token: params[:token])
-    Notification.find_each do |n|
-      UserNotification.delete(user_id: user_notif.user_id, notification: n)
+    if user_notif.present?
+      Notification.find_each do |n|
+        notif = UserNotification.find_by(user_id: user_notif.user_id, notification_id: n.id)
+        notif.destroy! if notif.present?
+      end
     end
+    flash.now[:alert] = 'Anda telah unsubscribe email KTOM'
   end
 
-  def unsubscribe_all
+  def stop
     user_notif = UserNotification.find_by(token: params[:token])
-    Notification.find_each do |n|
-      UserNotification.delete(user_id: user_notif.user_id, notification: n)
+    if user_notif.present?
+      notif = UserNotification.find_by(
+        user_id: user_notif.user_id, notification_id: params[:notification_id]
+      )
+      notif.destroy! if notif.present?
     end
+    flash.now[:alert] = 'Anda telah mematikan notifikasi ini'
   end
 end
