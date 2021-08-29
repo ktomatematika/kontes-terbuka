@@ -1386,6 +1386,13 @@ CREATE UNIQUE INDEX index_user_contests_on_user_id_and_contest_id ON public.user
 
 
 --
+-- Name: index_user_notifications_on_token; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_user_notifications_on_token ON public.user_notifications USING btree (token);
+
+
+--
 -- Name: index_user_notifications_on_user_id_and_notification_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1904,4 +1911,6 @@ INSERT INTO schema_migrations (version) VALUES ('20210303073140');
 INSERT INTO schema_migrations (version) VALUES ('20210317051727');
 
 INSERT INTO schema_migrations (version) VALUES ('20210809095635');
+
+INSERT INTO schema_migrations (version) VALUES ('20210829060116');
 
