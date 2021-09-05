@@ -29,19 +29,18 @@ class UserNotification < ActiveRecord::Base
   def generate_token
     return token if token.present?
 
-    user_notif = UserNotification.where(user_id: user_id)
+    user_notifications = UserNotification.where(user_id: user_id)
 
-    if UserNotification.where(user_id: user_id).any? { |notif_user| notif_user.token.present? }
-      user = user_notif.find { |u| u.token.present? }
-      user_notif.find_each { |u| u.update(token: user.token) }
-      return user.token
+    if user_notifications.any? { |u_n| u_n.token.present? }
+      user_notification = user_notifications.find { |u| u.token.present? }
+      user_notifications.find_each { |u| u.update(token: user_notification.token) }
+      return user_notification.token
     end
 
-    UserNotification.where(user_id: user_id).none? { |notif_user| notif_user.token.present? }
     loop do
       token = SecureRandom.urlsafe_base64
       unless UserNotification.exists?(token: token)
-        user_notif.find_each { |u| u.update(token: token) }
+        user_notifications.find_each { |u| u.update(token: token) }
         return token
       end
     end

@@ -26,14 +26,16 @@ class UserNotificationsController < ApplicationController
     user_notif = UserNotification.find_by(token: params[:token])
     if user_notif.present?
       Notification.find_each do |n|
-        notif = UserNotification.find_by(user_id: user_notif.user_id, notification_id: n.id)
+        notif = UserNotification.find_by(
+          user_id: user_notif.user_id, notification_id: n.id
+        )
         notif.destroy! if notif.present?
       end
     end
     flash.now[:alert] = 'Anda telah unsubscribe email KTOM'
   end
 
-  def stop
+  def stop_this_notification
     user_notif = UserNotification.find_by(token: params[:token])
     if user_notif.present?
       notif = UserNotification.find_by(
