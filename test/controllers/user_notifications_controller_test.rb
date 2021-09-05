@@ -13,7 +13,7 @@ class UserNotificationsControllerTest < ActionController::TestCase
     assert_equal unsubscribe_path(token: @un.generate_token),
                  "/unsubscribe/#{@un.generate_token}"
     assert_equal stop_this_notification_path(token: @un.generate_token, notification_id: @n.id),
-                 "/stop/#{@un.generate_token}/#{@n.id}"
+                 "/stop_this_notification/#{@un.generate_token}/#{@n.id}"
   end
 
   test 'index' do
@@ -45,8 +45,8 @@ class UserNotificationsControllerTest < ActionController::TestCase
     assert_equal flash[:alert], 'Anda telah unsubscribe email KTOM'
   end
 
-  test 'stop' do
-    get :stop, {token: @un.generate_token, notification_id: @n.id}
+  test 'stop_this_notification' do
+    get :stop_this_notification, { token: @un.generate_token, notification_id: @n.id }
     assert_nil UserNotification.find_by(user_id: @un.user_id, notification_id: @n.id)
     assert_equal flash[:alert], 'Anda telah mematikan notifikasi ini'
   end

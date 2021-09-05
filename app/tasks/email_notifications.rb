@@ -71,13 +71,13 @@ class EmailNotifications
     hash[:users].pluck(:email).each do |email|
       user_id = User.find_by(email: email).id
       notification_id = Notification.find_by(event: hash[:event]).id
-      user_notif = UserNotification.where(user_id: user_id).find_by(notification_id: notification_id)
-      url1 = unsubscribe_url token: user_notif.generate_token
-      url2 = stop_this_notification_url(token: user_notif.generate_token, notification_id: notification_id)
+      user_notification = UserNotification.where(user_id: user_id).find_by(notification_id: notification_id)
+      unsubscribe_link = unsubscribe_url token: user_notification.generate_token
+      stop_this_notification_link = stop_this_notification_url(token: user_notification.generate_token, notification_id: notification_id)
 
       Mailgun.send_message contest: @contest, text: hash[:text],
                            subject: hash[:subject], to: email,
-                           unsubscribe_url: url1, stop_this_notification_url: url2
+                           unsubscribe_url: unsubscribe_link, stop_this_notification_url: stop_this_notification_link
     end
     Ajat.info "send_email|#{hash[:subject]}"
   end
