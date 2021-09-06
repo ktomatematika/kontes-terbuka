@@ -73,7 +73,8 @@ class EmailNotifications
       notification_id = Notification.find_by(event: hash[:event]).id
       user_notification = UserNotification.where(user_id: user_id).find_by(notification_id: notification_id)
       unsubscribe_link = unsubscribe_url token: user_notification.generate_token
-      stop_this_notification_link = stop_this_notification_url(token: user_notification.generate_token, notification_id: notification_id)
+      stop_this_notification_link = stop_this_notification_url(token: user_notification.generate_token,
+                                                               notification_id: notification_id)
 
       Mailgun.send_message contest: @contest, text: hash[:text],
                            subject: hash[:subject], to: email,
