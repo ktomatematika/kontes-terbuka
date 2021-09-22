@@ -22,27 +22,18 @@ class UserNotificationsController < ApplicationController
     render nothing: true
   end
 
-  def unsubscribe
-    user_notif = UserNotification.find_by(token: params[:token])
-    if user_notif.present?
-      Notification.find_each do |n|
-        notif = UserNotification.find_by(
-          user_id: user_notif.user_id, notification_id: n.id
-        )
-        notif.destroy! if notif.present?
-      end
+  def unsubscribe_from_all_notifications
+    user_notification = UserNotification.find_by(token: params[:token])
+    user_notifications = UserNotification.where(user_id: user_notification.user_id)
+    user_notifications.each do |user_notification|
+      user_notification.destroy! if user_notification.present?
     end
-    flash.now[:alert] = 'Anda telah unsubscribe email KTOM'
+    redirect_to root_path, alert: 'Anda sudah tidak berlangganan email KTOM.'
   end
 
-  def stop_this_notification
-    user_notif = UserNotification.find_by(token: params[:token])
-    if user_notif.present?
-      notif = UserNotification.find_by(
-        user_id: user_notif.user_id, notification_id: params[:notification_id]
-      )
-      notif.destroy! if notif.present?
-    end
-    flash.now[:alert] = 'Anda telah mematikan notifikasi ini'
+  def unsubscribe_from_one_notification
+    user_notification = UserNotification.find_by(token: params[:token])
+    user_notification.destroy! if user_notification.present?
+    redirect_to root_path, alert: 'Anda telah mematikan notifikasi ini.'
   end
 end
