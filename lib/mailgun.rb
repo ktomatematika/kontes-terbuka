@@ -20,10 +20,9 @@ module Mailgun
   def send_message(**params)
     make_valid!(params)
     text = params[:text]
-    stop_this_notification_url = params[:stop_this_notification_url]
-    unsubscribe_url = params[:unsubscribe_url]
-    params[:text] = Social.email_template.get binding
-    params[:text] = Social.email_template_with_unsubscribe_link.get binding if params[:unsubscribe_url].present?
+    unsubscribe_from_one_notification_url = params[:unsubscribe_from_one_notification_url]
+    unsubscribe_from_all_notifications_url = params[:unsubscribe_from_all_notifications_url]
+    params[:text] = params[:unsubscribe_from_all_notifications_url].present? ? (Social.email_template_with_unsubscribe_urls.get binding) : (Social.email_template.get binding)
 
     check_force_to_many!(params)
     add_contest!(params) if params[:contest]

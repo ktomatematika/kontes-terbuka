@@ -22,27 +22,17 @@
 class UserNotification < ActiveRecord::Base
   has_paper_trail
 
+  before_create :generate_token 
+
   # Associations
   belongs_to :user
   belongs_to :notification
 
-  def generate_token
-    return token if token.present?
-
-    user_notifications = UserNotification.where(user_id: user_id)
-
-    if user_notifications.any? { |u_n| u_n.token.present? }
-      user_notification = user_notifications.find { |u| u.token.present? }
-      user_notifications.find_each { |u| u.update(token: user_notification.token) }
-      return user_notification.token
-    end
-
-    loop do
-      token = SecureRandom.urlsafe_base64
-      unless UserNotification.exists?(token: token)
-        user_notifications.find_each { |u| u.update(token: token) }
-        return token
+  private
+    def generate_token
+      loop do
+        self.token = SecureRandom.urlsafe_base64
+        break unless UserNotification.exists?(token: self.token)
       end
     end
-  end
 end

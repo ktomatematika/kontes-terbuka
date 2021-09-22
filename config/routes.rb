@@ -33,6 +33,10 @@ Rails.application.routes.draw do
                                    only: %i[index create] do
       collection do
         delete 'delete', to: 'user_notifications#delete'
+        get '/unsubscribe_from_all_notifications/:token', to: 'user_notifications#unsubscribe_from_all_notifications',
+                                                          as: :unsubscribe_from_all_notifications
+        get '/unsubscribe_from_one_notification/:token/', to: 'user_notifications#unsubscribe_from_one_notification',
+                                                          as: :unsubscribe_from_one_notification
       end
     end
 
@@ -149,9 +153,6 @@ Rails.application.routes.draw do
   %w[terms syarat ketentuan].each { |r| get "/#{r}", to: 'home#terms' }
   %w[contact kontak hubungi].each { |r| get "/#{r}", to: 'home#contact' }
 
-  get '/unsubscribe/:token', to: 'user_notifications#unsubscribe', as: :unsubscribe
-  get '/stop_this_notification/:token/:notification_id', to: 'user_notifications#stop_this_notification',
-                                                         as: :stop_this_notification
   get '/penguasa', to: 'home#admin', as: :admin
   post '/masq', to: 'home#masq'
   delete '/masq', to: 'home#unmasq'

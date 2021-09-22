@@ -10,10 +10,10 @@ class UserNotificationsControllerTest < ActionController::TestCase
                  "/users/#{@user.to_param}/user-notifications"
     assert_equal delete_user_user_notifications_path(@user),
                  "/users/#{@user.to_param}/user-notifications/delete"
-    assert_equal unsubscribe_path(token: @un.generate_token),
-                 "/unsubscribe/#{@un.generate_token}"
-    assert_equal stop_this_notification_path(token: @un.generate_token, notification_id: @n.id),
-                 "/stop_this_notification/#{@un.generate_token}/#{@n.id}"
+    assert_equal unsubscribe_from_all_notifications_user_user_notifications_path(user_id: @un.user_id, token: @un.token),
+                 "/users/#{@un.user_id}/user-notifications/unsubscribe_from_all_notifications/#{@un.token}"
+    assert_equal unsubscribe_from_one_notification_user_user_notifications_path(user_id: @un.user_id, token: @un.token),
+                 "/users/#{@un.user_id}/user-notifications/unsubscribe_from_one_notification/#{@un.token}"
   end
 
   test 'index' do
@@ -39,16 +39,17 @@ class UserNotificationsControllerTest < ActionController::TestCase
     assert_nil UserNotification.find_by id: @un.id
   end
 
-  test 'unsubscribe' do
-    get :unsubscribe, token: @un.generate_token
+  test 'unsubscribe_from_all_notifications' do
+    get :unsubscribe_from_all_notifications, { user_id: @un.user_id, token: @un.token }
     assert_empty UserNotification.where(user_id: @un.user_id)
-    assert_equal flash[:alert], 'Anda telah unsubscribe email KTOM'
+    assert_equal flash[:alert], 'Anda sudah tidak berlangganan email KTOM.'
   end
 
-  test 'stop_this_notification' do
-    get :stop_this_notification, { token: @un.generate_token, notification_id: @n.id }
+  test 'unsubscribe_from_one_notification' do
+    get :unsubscribe_from_one_notification, { user_id: @un.user_id, token: @un.token }
+    #get :unsubscribe_from_one_notification, { token: @un.token }
     assert_nil UserNotification.find_by(user_id: @un.user_id, notification_id: @n.id)
-    assert_equal flash[:alert], 'Anda telah mematikan notifikasi ini'
+    assert_equal flash[:alert], 'Anda telah mematikan notifikasi ini.'
   end
 
   private def create_items
