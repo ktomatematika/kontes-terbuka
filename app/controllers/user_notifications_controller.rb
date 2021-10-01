@@ -24,9 +24,11 @@ class UserNotificationsController < ApplicationController
 
   def unsubscribe_from_all_notifications
     user_notification = UserNotification.find_by(token: params[:token])
-    user_notifications = UserNotification.where(user_id: user_notification.user_id)
-    user_notifications.each do |user_notification|
-      user_notification.destroy! if user_notification.present?
+    if user_notification.present?
+      user_notifications = UserNotification.where(user_id: user_notification.user_id)
+      user_notifications.each do |user_notification|
+        user_notification.destroy!
+      end
     end
     redirect_to root_path, alert: 'Anda sudah tidak berlangganan email KTOM.'
   end

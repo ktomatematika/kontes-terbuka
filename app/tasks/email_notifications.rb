@@ -70,8 +70,8 @@ class EmailNotifications
   private def send_emails(**hash)
     hash[:users].pluck(:email).each do |email|
       user_id = User.find_by(email: email).id
-      notification_id = Notification.find_by(event: event).id
-      user_notification = UserNotification.where(user_id: user_id).find(notification_id: notification_id)
+      notification_id = Notification.find_by(event: hash[:event]).id
+      user_notification = UserNotification.where(user_id: user_id).find_by(notification_id: notification_id)
       unsubscribe_from_all_notifications_url = unsubscribe_from_all_notifications_url token: user_notification.token
       unsubscribe_from_one_notification_url = unsubscribe_from_one_notification_url token: user_notification.token
 
