@@ -47,7 +47,6 @@ class UserNotificationsControllerTest < ActionController::TestCase
 
   test 'unsubscribe_from_one_notification' do
     get :unsubscribe_from_one_notification, { user_id: @un.user_id, token: @un.token }
-    #get :unsubscribe_from_one_notification, { token: @un.token }
     assert_nil UserNotification.find_by(user_id: @un.user_id, notification_id: @n.id)
     assert_equal flash[:alert], 'Anda telah mematikan notifikasi ini.'
   end
