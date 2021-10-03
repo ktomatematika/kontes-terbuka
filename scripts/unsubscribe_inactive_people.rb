@@ -1,9 +1,9 @@
+# frozen_string_literal: true
+
 def unsubscribe
-    User.all.each do |user|
-        if user.user_contests.order(:created_at).last.created_at < Time.now - 6.month
-            user.user_notifications.each do |user_notification|
-                user_notification.destroy!
-            end
-        end
-    end
+  User.all.each do |user|
+    next unless user.user_contests.order(:created_at).last.created_at < Time.current - 6.months
+
+    user.user_notifications.each(&:destroy!)
+  end
 end
