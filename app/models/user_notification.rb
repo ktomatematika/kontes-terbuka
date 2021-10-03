@@ -22,17 +22,16 @@
 class UserNotification < ActiveRecord::Base
   has_paper_trail
 
-  before_create :generate_token 
+  before_create :generate_token
 
   # Associations
   belongs_to :user
   belongs_to :notification
 
-  private
-    def generate_token
-      loop do
-        self.token = SecureRandom.urlsafe_base64
-        break unless UserNotification.exists?(token: self.token)
-      end
+  private def generate_token
+    loop do
+      self.token = SecureRandom.urlsafe_base64
+      break unless UserNotification.exists?(token: token)
     end
+  end
 end

@@ -22,7 +22,11 @@ module Mailgun
     text = params[:text]
     unsubscribe_from_one_notification_url = params[:unsubscribe_from_one_notification_url]
     unsubscribe_from_all_notifications_url = params[:unsubscribe_from_all_notifications_url]
-    params[:text] = params[:unsubscribe_from_all_notifications_url].present? ? (Social.email_template_with_unsubscribe_urls.get binding) : (Social.email_template.get binding)
+    params[:text] = if params[:unsubscribe_from_all_notifications_url].present?
+                      Social.email_template_with_unsubscribe_urls.get binding
+                    else
+                      Social.email_template.get binding
+                    end
 
     check_force_to_many!(params)
     add_contest!(params) if params[:contest]
