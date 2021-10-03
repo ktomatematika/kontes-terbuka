@@ -26,8 +26,8 @@ class UserNotificationsController < ApplicationController
     user_notification = UserNotification.find_by(token: params[:token])
     if user_notification.present?
       user_notifications = UserNotification.where(user_id: user_notification.user_id)
-      user_notifications.each do |user_notification|
-        user_notification.destroy!
+      user_notifications.each do |usernotification|
+        usernotification.destroy!
       end
     end
     redirect_to root_path, alert: 'Anda sudah tidak berlangganan email KTOM.'
