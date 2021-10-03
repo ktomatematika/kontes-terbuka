@@ -10,9 +10,10 @@ class UserNotificationsControllerTest < ActionController::TestCase
                  "/users/#{@user.to_param}/user-notifications"
     assert_equal delete_user_user_notifications_path(@user),
                  "/users/#{@user.to_param}/user-notifications/delete"
-    assert_equal( 
+    assert_equal(
       unsubscribe_from_all_notifications_user_user_notifications_path(user_id: @un.user_id, token: @un.token),
-      "/users/#{@un.user_id}/user-notifications/unsubscribe_from_all_notifications/#{@un.token}")
+      "/users/#{@un.user_id}/user-notifications/unsubscribe_from_all_notifications/#{@un.token}"
+    )
     assert_equal unsubscribe_from_one_notification_user_user_notifications_path(user_id: @un.user_id, token: @un.token),
                  "/users/#{@un.user_id}/user-notifications/unsubscribe_from_one_notification/#{@un.token}"
   end
