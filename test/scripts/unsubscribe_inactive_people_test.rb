@@ -5,12 +5,7 @@ require 'test_helper'
 class UnsubscribeInactivePeopleTest < ActiveSupport::TestCase
   setup :create_items
   test 'unsubscribe inactive people' do
-    begin
-      load './scripts/unsubscribe_inactive_people.rb'
-      unsubscribe
-    rescue StandardError => e
-      puts "loading error: #{e}"
-    end
+    unsubscribe
 
     assert_equal UserNotification.all.size, 1
     assert_equal UserNotification.first.user_id, @user.id
@@ -18,9 +13,12 @@ class UnsubscribeInactivePeopleTest < ActiveSupport::TestCase
     assert_raises ActiveRecord::RecordNotFound do
       UserNotification.find(@un2.id)
     end
+    assert_equal unsubscribe, 1
   end
 
   private def create_items
+    load './scripts/unsubscribe_inactive_people.rb'
+
     @n = create(:notification)
     @user = create(:user)
     @user2 = create(:user)
