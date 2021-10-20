@@ -13,7 +13,6 @@ class UnsubscribeInactivePeopleTest < ActiveSupport::TestCase
     assert_raises ActiveRecord::RecordNotFound do
       UserNotification.find(@un2.id)
     end
-    assert_equal unsubscribe, 1
   end
 
   private def create_items
