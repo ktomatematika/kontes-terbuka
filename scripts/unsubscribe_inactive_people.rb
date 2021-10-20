@@ -11,7 +11,7 @@ def unsubscribe
             'We noticed that you have been inactive from KTOM for more than 6 months.' \
             'For that, KTOM apologize for being forced to unsubscribe you from us since today.' \
             "But you don't have to worry because you can keep join KTOM and subscribe us at our website" \
-            'Once again we apologize and hope you can understand. Thank you.',
-      )
+            'Once again we apologize and hope you can understand. Thank you.'
+    )
   end
 end
