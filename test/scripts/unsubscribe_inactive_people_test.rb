@@ -3,7 +3,7 @@
 require 'test_helper'
 
 class UnsubscribeInactivePeopleTest < ActiveSupport::TestCase
-  setup :create_items
+  setup :load_script_and_create_items
   test 'unsubscribe inactive people' do
     unsubscribe
 
@@ -15,7 +15,7 @@ class UnsubscribeInactivePeopleTest < ActiveSupport::TestCase
     end
   end
 
-  private def create_items
+  private def load_script_and_create_items
     load './scripts/unsubscribe_inactive_people.rb'
 
     @n = create(:notification)
