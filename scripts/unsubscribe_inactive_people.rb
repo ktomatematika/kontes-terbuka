@@ -7,11 +7,11 @@ def unsubscribe
     user.user_notifications.each(&:destroy!)
     Mailgun.send_message(
       to: user.email,
-      text: 'With this email, we apologize for your inconvenience.' \
-            'We noticed that you have been inactive from KTOM for more than 6 months.' \
-            'For that, KTOM apologize for being forced to unsubscribe you from us since today.' \
-            "But you don't have to worry because you can keep join KTOM and subscribe us at our website" \
-            'Once again we apologize and hope you can understand. Thank you.'
+      text: 'Dengan email ini, kami mohon maaf atas ketidaknyamanannya.' \
+            'Kami melihat bahwa Anda sudah tidak aktif lagi di KTOM selama lebih dari 6 bulan ini.' \
+            'Untuk itu, kami mohon maaf karena KTOM tidak akan lagi memberikan notifikasi ke email Anda sejak hari ini.' \
+            "Tapi Anda tidak perlu khawatir karena Anda tetap bisa mengikuti KTOM dan menyalakan notifikasi dari website kami" \
+            'Sekali lagi kami mohon maaf. Atas perhatiannya, kami ucapkan terima kasih.'
     )
   end
 end
