@@ -9,8 +9,10 @@ def unsubscribe
       to: user.email,
       text: 'Dengan email ini, kami mohon maaf atas ketidaknyamanannya.' \
             'Kami melihat bahwa Anda sudah tidak aktif lagi di KTOM selama lebih dari 6 bulan ini.' \
-            'Untuk itu, kami mohon maaf karena KTOM tidak akan lagi memberikan notifikasi ke email Anda sejak hari ini.' \
-            "Tapi Anda tidak perlu khawatir karena Anda tetap bisa mengikuti KTOM dan menyalakan notifikasi dari website kami" \
+            'Untuk itu, kami mohon maaf karena KTOM tidak akan lagi memberikan notifikasi' \
+            'ke email Anda sejak hari ini.' \
+            'Tapi Anda tidak perlu khawatir karena Anda tetap bisa mengikuti KTOM dan menyalakan notifikasi' \
+            'dari website kami' \
             'Sekali lagi kami mohon maaf. Atas perhatiannya, kami ucapkan terima kasih.'
     )
   end
