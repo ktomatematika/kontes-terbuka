@@ -274,6 +274,10 @@ class ContestsControllerTest < ActionController::TestCase
                     'Calling send_certificates does not do it immediately.'
   end
 
+  test 'show_results' do
+    test_abilities @c, :preview, [nil, :panitia, [:marker, create(:long_problem, contest: @c)]], [:marking_manager]
+  end
+
   private def create_items
     @c = create(:contest)
   end
