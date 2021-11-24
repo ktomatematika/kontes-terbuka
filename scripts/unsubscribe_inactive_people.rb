@@ -7,13 +7,10 @@ def unsubscribe
     user.user_notifications.each(&:destroy!)
     Mailgun.send_message(
       to: user.email,
-      text: 'Dengan email ini, kami mohon maaf atas ketidaknyamanannya.' \
-            'Kami melihat bahwa Anda sudah tidak aktif lagi di KTOM selama lebih dari 6 bulan ini.' \
-            'Untuk itu, kami mohon maaf karena KTOM tidak akan lagi memberikan notifikasi' \
-            'ke email Anda sejak hari ini.' \
-            'Tapi Anda tidak perlu khawatir karena Anda tetap bisa mengikuti KTOM dan menyalakan notifikasi' \
-            'dari website kami' \
-            'Sekali lagi kami mohon maaf. Atas perhatiannya, kami ucapkan terima kasih.'
+      text: 'Kami melihat bahwa Anda sudah tidak mengikuti KTOM selama 6 bulan terakhir.' \
+            " Oleh karena itu, kami akan stop memberikan Anda notifikasi seputar kontes di KTOM.\n\n" \
+            'Jika Anda ingin kembali subscribe ke notifikasi KTOM, Anda bisa masuk ke' \
+            " https://ktom.tomi.or.id/users/#{user.id}/user-notifications. Terima kasih."
     )
   end
 end
