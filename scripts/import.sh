@@ -1,4 +1,4 @@
-#!/bin/bash
+#!bin/bash
 unameOut="$(uname -s)"
 case "${unameOut}" in
   Linux*)     machine=Linux;;
@@ -15,7 +15,7 @@ if [ "Mac" = "${machine}" ]; then
   cat * | psql -d kontes_terbuka --set ON_ERROR_STOP=on -1
 
   psql -d kontes_terbuka -c "REASSIGN OWNED BY ktom TO ubuntu;"
-elif [ "Linux" = "${machine}" ]; then
+elif [ "Linux" = "${machine}"]; then
   bin/rake db:drop db:create
   sudo -u postgres createuser ktom
 
