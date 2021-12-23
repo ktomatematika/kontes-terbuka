@@ -22,7 +22,7 @@ jobs:
               IdentitiesOnly yes
               ForwardAgent yes
       - name: Adding Known Hosts
-        run: ssh-keyscan ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+        run: ssh-keyscan -p "${{ secrets.SSH_PORT }}" "${{ secrets.SSH_HOST }}" >> ~/.ssh/known_hosts
 
       - uses: actions/checkout@v2
       - name: Set up Ruby
