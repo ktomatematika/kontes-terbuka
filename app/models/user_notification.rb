@@ -29,9 +29,7 @@ class UserNotification < ActiveRecord::Base
   belongs_to :user
   belongs_to :notification
 
-  private
-
-  def generate_token
+  private def generate_token
     self.token = loop do
       random_token = SecureRandom.urlsafe_base64
       break random_token unless self.class.exists? random_token
