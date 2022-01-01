@@ -10,7 +10,7 @@ def unsubscribe
       text: 'Kami melihat bahwa Anda sudah tidak mengikuti KTOM selama 6 bulan terakhir. ' \
             "Oleh karena itu, kami akan berhenti memberikan Anda notifikasi seputar kontes di KTOM.\n\n" \
             'Jika Anda ingin kembali subscribe ke notifikasi KTOM, Anda bisa masuk ke ' \
-            "https://ktom.tomi.or.id/users/#{user.id}/user-notifications. Terima kasih."
+            "#{user_user_notifications_url(user)}. Terima kasih."
     )
   end
 end
