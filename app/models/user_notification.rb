@@ -35,18 +35,4 @@ class UserNotification < ActiveRecord::Base
       break random_token unless self.class.exists? random_token
     end
   end
-
-  # private def generate_token
-  #   byebug
-  #   loop do
-  #     self.token = SecureRandom.urlsafe_base64
-  #     break unless UserNotification.exists?(token: token)
-  #   end
-  # end
-
-  # def self.generate_token
-  #   byebug
-  #   self.token = 1
-  # end
-  # byebug
 end
