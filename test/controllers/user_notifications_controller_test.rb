@@ -6,8 +6,6 @@ class UserNotificationsControllerTest < ActionController::TestCase
   setup :login_and_be_admin, :create_items
 
   test 'routes' do
-    assert_equal user_user_notifications_url(@user),
-                 "http://test.host/users/#{@user.to_param}/user-notifications"
     assert_equal user_user_notifications_path(@user),
                  "/users/#{@user.to_param}/user-notifications"
     assert_equal delete_user_user_notifications_path(@user),
