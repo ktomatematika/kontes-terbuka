@@ -74,7 +74,7 @@ class EmailNotifications
       user_notifications = UserNotification.where(user_id: user_id)
       token = user_notifications.find_by(notification_id: notification_id).token
       unsubscribe_from_all_notifications_url = unsubscribe_from_all_notifications_user_user_notifications_url(
-        user_id: user_id, token: user_notifications.first.token
+        user_id: user_id, token: token
       )
       unsubscribe_from_one_notification_url = unsubscribe_from_one_notification_user_user_notifications_url(
         user_id: user_id, token: token
