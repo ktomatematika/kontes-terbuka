@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module UnsubscribeScript
   include Rails.application.routes.url_helpers
 
