@@ -5,7 +5,7 @@ require 'test_helper'
 class UnsubscribeInactivePeopleTest < ActiveSupport::TestCase
   setup :load_script_and_create_items
   test 'unsubscribe inactive people' do
-    unsubscribe
+    UnsubscribeScript.unsubscribe
 
     assert_equal UserNotification.all.size, 1
     assert_equal UserNotification.first.user_id, @user.id
