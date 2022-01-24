@@ -1,6 +1,6 @@
-var iklan_title = 'LOGIKA UI 2020';
-var iklan_desc = 'LOGIKA UI hadir lagi nih! Pendaftaran MIC dan MTC sedang dibuka bagi yang berminat dalam olimpiade matematika, dan ada LogiTalks yang merupakan seminar nasional dan motivation show, segera daftarkan diri kalian ya!';
-var iklan_link = 'https://www.logikaui.com/';
+var iklan_title = 'MCF ITB 2022';
+var iklan_desc = 'MCF ITB hadir dengan beberapa kompetisi seperti ITBMO, Hi-MMC, MMC, DSC, dan ACC, serta ada pula webinar yang pastinya bakal menarik banget bagi kamu yang ingin lebih mendalami berbagai cabang dalam matematika. Tunggu apalagi, yuk segera daftarkan diri kamu!';
+var iklan_link = 'https://mcf-itb-2022.com/';
 
 $(document).on('turbolinks:load', function() {
   if ($('#iklan-lomba').length !== 0) {
