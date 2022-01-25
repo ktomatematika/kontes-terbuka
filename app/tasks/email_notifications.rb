@@ -4,7 +4,7 @@ class EmailNotifications
   include Rails.application.routes.url_helpers
   attr_reader :contest
 
-  EMAIL_SINK = 'notifications@ktom.tomi.or.id'
+  EMAIL_SINK = 'notifications@ktom-tomi.or.id'
 
   def initialize(ctst)
     @contest = ctst

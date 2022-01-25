@@ -43,7 +43,7 @@ var faq_data = [
   },
   {
     question: 'Cara daftarnya bagaimana, kak?',
-    answer: 'Cukup buat akun di ktom.tomi.or.id (website ini). Jika lombanya sudah dimulai, Anda bisa langsung masuk ke page lombanya dan mulai mengerjakan soal-soalnya. Jika belum, Anda akan dikirimkan email 1 hari sebelum kontes dimulai dan ketika kontes dimulai, sebagai pengingat.',
+    answer: 'Cukup buat akun di ktom-tomi.or.id (website ini). Jika lombanya sudah dimulai, Anda bisa langsung masuk ke page lombanya dan mulai mengerjakan soal-soalnya. Jika belum, Anda akan dikirimkan email 1 hari sebelum kontes dimulai dan ketika kontes dimulai, sebagai pengingat.',
     category: 1,
   },
   {

@@ -30,7 +30,7 @@
 		}
 	},
 	"facebook_post": {
-		"contest_starting": "#{@contest} akan dimulai dalam waktu #{time_text}. Ayok segera daftar di website kami di https://ktom.tomi.or.id jika Anda belum!",
+		"contest_starting": "#{@contest} akan dimulai dalam waktu #{time_text}. Ayok segera daftar di website kami di https://ktom-tomi.or.id jika Anda belum!",
 		"contest_started": "#{@contest} sudah dimulai! Silakan membuka soalnya di #{contest_url @contest}. Selamat mengerjakan! :D",
 		"contest_ending": "Hanya mengingatkan saja, #{@contest} akan berakhir dalam waktu #{time_text}.\nSiap-siap mengumpulkan segala pekerjaan Anda di #{contest_url @contest}.\n\nAntisipasi segala kegagalan teknis. Ingat, kami hampir tidak pernah memberikan waktu tambahan.",
 		"results_released": "Hasil #{@contest} sudah keluar! Silakan cek di:\n #{contest_url @contest}.\n\nSelamat bagi yang mendapatkan penghargaan! Jika Anda belum beruntung, jangan berkecil hati karena masih ada kontes-kontes berikutnya.\n\nMengenai sertifikat, Anda perlu mengisi feedback kontes untuk mendapatkannya. Feedback ini bisa diisi di halaman yang sama dengan hasil kontes, yaitu #{contest_url @contest}. Anda perlu mendapatkan setidaknya #{UserContest::CUTOFF_CERTIFICATE} poin untuk mendapatkan sertifikat.",
