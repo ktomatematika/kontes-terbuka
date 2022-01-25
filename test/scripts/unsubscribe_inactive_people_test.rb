@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
 require 'test_helper'
+require_relative '../../scripts/unsubscribe_inactive_people.rb'
 
 class UnsubscribeInactivePeopleTest < ActiveSupport::TestCase
   setup :load_script_and_create_items
   test 'unsubscribe inactive people' do
-    UnsubscribeScript.unsubscribe
+    unsubscribe
 
     assert_equal UserNotification.all.size, 1
     assert_equal UserNotification.first.user_id, @user.id
