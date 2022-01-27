@@ -84,7 +84,7 @@ Rails.application.configure do
   config.active_record.logger = nil
 
   Rails.application.routes
-       .default_url_options[:host] = 'https://ktom.tomi.or.id'
+       .default_url_options[:host] = 'https://ktom-tomi.or.id'
 
   config.middleware.use ExceptionNotification::Rack,
                         mailgun: {},

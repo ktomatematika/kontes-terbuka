@@ -4,7 +4,7 @@ module Mailgun
   extend self
 
   KEY = ENV['MAILGUN_API_KEY']
-  DOMAIN = 'ktom.tomi.or.id'
+  DOMAIN = 'ktom-tomi.or.id'
   URL = "https://api:#{KEY}@api.mailgun.net/v3/#{DOMAIN}/messages"
   EMAIL = "mail@#{DOMAIN}"
   FROM = "Kontes Terbuka Olimpiade Matematika <#{EMAIL}>"

@@ -5,7 +5,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/donjar/kontes-terbuka/badge.svg?branch=production)](https://coveralls.io/github/donjar/kontes-terbuka?branch=production)
 
 Repo ini berisi kode untuk website Kontes Terbuka Olimpiade Matematika yang
-bisa diakses di https://ktom.tomi.or.id. Website ini dibuat oleh dua anggota
+bisa diakses di https://ktom-tomi.or.id. Website ini dibuat oleh dua anggota
 KTO Matematika:
 - Herbert Ilhan Tanujaya (@donjar)
 - Jonathan Mulyawan Woenardi (@woenardi)

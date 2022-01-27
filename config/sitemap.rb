@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Set the host name for URL creation
-SitemapGenerator::Sitemap.default_host = 'https://ktom.tomi.or.id'
+SitemapGenerator::Sitemap.default_host = 'https://ktom-tomi.or.id'
 
 SitemapGenerator::Sitemap.create do
   # Put links creation logic here.
