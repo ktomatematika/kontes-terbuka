@@ -4,4 +4,4 @@
 # User-agent: *
 # Disallow: /
 
-Sitemap: https://ktom.tomi.or.id/sitemap.xml.gz
+Sitemap: https://ktom-tomi.or.id/sitemap.xml.gz

@@ -4,7 +4,7 @@ module Mailgun
   extend self
 
   KEY = ENV['MAILGUN_API_KEY']
-  DOMAIN = 'ktom.tomi.or.id'
+  DOMAIN = 'ktom-tomi.or.id'
   URL = "https://api:#{KEY}@api.mailgun.net/v3/#{DOMAIN}/messages"
   EMAIL = "mail@#{DOMAIN}"
   FROM = "Kontes Terbuka Olimpiade Matematika <#{EMAIL}>"
@@ -20,7 +20,13 @@ module Mailgun
   def send_message(**params)
     make_valid!(params)
     text = params[:text]
-    params[:text] = Social.email_template.get binding
+    unsubscribe_from_one_notification_url = params[:unsubscribe_from_one_notification_url]
+    unsubscribe_from_all_notifications_url = params[:unsubscribe_from_all_notifications_url]
+    params[:text] = if unsubscribe_from_all_notifications_url.present?
+                      Social.email_template_with_unsubscribe_urls.get binding
+                    else
+                      Social.email_template.get binding
+                    end
 
     check_force_to_many!(params)
     add_contest!(params) if params[:contest]

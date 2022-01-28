@@ -4,8 +4,6 @@ class EmailNotifications
   include Rails.application.routes.url_helpers
   attr_reader :contest
 
-  EMAIL_SINK = 'notifications@ktom.tomi.or.id'
-
   def initialize(ctst)
     @contest = ctst
     @data = Social.email_notifications
@@ -23,7 +21,7 @@ class EmailNotifications
     users = notif.users
 
     Ajat.info "contest_starting|id:#{@contest.id}|time:#{time_text}"
-    send_emails(text: text, subject: subject, users: users)
+    send_emails(text: text, subject: subject, users: users, event: :contest_starting)
   end
 
   def contest_started
@@ -33,7 +31,7 @@ class EmailNotifications
     users = notif.users
 
     Ajat.info "contest_started|id:#{@contest.id}"
-    send_emails(text: text, subject: subject, users: users)
+    send_emails(text: text, subject: subject, users: users, event: :contest_started)
   end
 
   def contest_ending(time_text)
@@ -43,7 +41,7 @@ class EmailNotifications
     users = notif.users.joins(:contests).where(contests: { id: @contest.id })
 
     Ajat.info "contest_ending|id:#{@contest.id}"
-    send_emails(text: text, subject: subject, users: users)
+    send_emails(text: text, subject: subject, users: users, event: :contest_ending)
   end
 
   def results_released
@@ -53,7 +51,7 @@ class EmailNotifications
     users = notif.users.joins(:contests).where(contests: { id: @contest.id })
 
     Ajat.info "result_released|id:#{@contest.id}"
-    send_emails(text: text, subject: subject, users: users)
+    send_emails(text: text, subject: subject, users: users, event: :results_released)
   end
 
   def feedback_ending(time_text)
@@ -66,14 +64,26 @@ class EmailNotifications
                        .pluck(:user_id))
 
     Ajat.info "feedback_ending|id:#{@contest.id}|time:#{time_text}"
-    send_emails(text: text, subject: subject, users: users)
+    send_emails(text: text, subject: subject, users: users, event: :feedback_ending)
   end
 
   private def send_emails(**hash)
-    hash[:users].pluck(:email).each_slice(200) do |arr|
-      Mailgun.send_message contest: @contest, text: hash[:text],
-                           subject: hash[:subject], bcc_array: arr,
-                           to: EMAIL_SINK
+    hash[:users].pluck(:email).each do |email|
+      user_id = User.find_by(email: email).id
+      notification_id = Notification.find_by(event: hash[:event]).id
+      user_notifications = UserNotification.where(user_id: user_id)
+      token = user_notifications.find_by(notification_id: notification_id).token
+      unsubscribe_from_all_notifications_url = unsubscribe_from_all_notifications_user_user_notifications_url(
+        user_id: user_id, token: token
+      )
+      unsubscribe_from_one_notification_url = unsubscribe_from_one_notification_user_user_notifications_url(
+        user_id: user_id, token: token
+      )
+
+      Mailgun.send_message(contest: @contest, text: hash[:text],
+                           subject: hash[:subject], to: email,
+                           unsubscribe_from_all_notifications_url: unsubscribe_from_all_notifications_url,
+                           unsubscribe_from_one_notification_url: unsubscribe_from_one_notification_url)
     end
     Ajat.info "send_email|#{hash[:subject]}"
   end

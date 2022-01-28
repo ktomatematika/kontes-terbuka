@@ -2,7 +2,7 @@
 
 class CertificateManager
   TEMPLATE = File.read(Rails.root.join('app/views/contests/certificate.tex.haml'))
-  EMAIL_SINK = 'certificate@ktom.tomi.or.id'
+  EMAIL_SINK = 'certificate@ktom-tomi.or.id'
 
   attr_reader :user_contest
 

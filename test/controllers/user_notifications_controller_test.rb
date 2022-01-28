@@ -10,6 +10,12 @@ class UserNotificationsControllerTest < ActionController::TestCase
                  "/users/#{@user.to_param}/user-notifications"
     assert_equal delete_user_user_notifications_path(@user),
                  "/users/#{@user.to_param}/user-notifications/delete"
+    assert_equal(
+      unsubscribe_from_all_notifications_user_user_notifications_path(user_id: @un.user_id, token: @un.token),
+      "/users/#{@un.user_id}/user-notifications/unsubscribe_from_all_notifications/#{@un.token}"
+    )
+    assert_equal unsubscribe_from_one_notification_user_user_notifications_path(user_id: @un.user_id, token: @un.token),
+                 "/users/#{@un.user_id}/user-notifications/unsubscribe_from_one_notification/#{@un.token}"
   end
 
   test 'index' do
@@ -33,6 +39,18 @@ class UserNotificationsControllerTest < ActionController::TestCase
     delete :delete, user_id: @user.id, notification_id: @n.id
     assert_empty response.body
     assert_nil UserNotification.find_by id: @un.id
+  end
+
+  test 'unsubscribe_from_all_notifications' do
+    get :unsubscribe_from_all_notifications, { user_id: @un.user_id, token: @un.token }
+    assert_empty UserNotification.where(user_id: @un.user_id)
+    assert_equal flash[:alert], 'Anda sudah tidak berlangganan email KTOM.'
+  end
+
+  test 'unsubscribe_from_one_notification' do
+    get :unsubscribe_from_one_notification, { user_id: @un.user_id, token: @un.token }
+    assert_nil UserNotification.find_by(user_id: @un.user_id, notification_id: @n.id)
+    assert_equal flash[:alert], 'Anda telah mematikan notifikasi ini.'
   end
 
   private def create_items

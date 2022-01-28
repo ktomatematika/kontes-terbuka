@@ -7,7 +7,7 @@ class MailgunTest < ActiveSupport::TestCase
     assert_equal Mailgun.send_message(to: 'a@b.com', text: 'asdf'),
                  { to: 'a@b.com',
                    from: 'Kontes Terbuka Olimpiade Matematika ' \
-                   '<mail@ktom.tomi.or.id>',
+                   '<mail@ktom-tomi.or.id>',
                    text: "Salam sejahtera,\n\nasdf\n\n" \
                    "Salam,\nTim KTO Matematika" },
                  'Sending a normal email does not even work.'
@@ -30,7 +30,7 @@ class MailgunTest < ActiveSupport::TestCase
                                       text: 'asdf', force_to_many: true),
                  { to: 'a@b.com,c@d.com',
                    from: 'Kontes Terbuka Olimpiade Matematika ' \
-                   '<mail@ktom.tomi.or.id>',
+                   '<mail@ktom-tomi.or.id>',
                    text: "Salam sejahtera,\n\nasdf\n\n" \
                    "Salam,\nTim KTO Matematika" },
                  'Sending an email with force_to_many does not work.'
@@ -42,7 +42,7 @@ class MailgunTest < ActiveSupport::TestCase
                                       text: 'asdf', subject: 'Subjek'),
                  { to: 'a@b.com',
                    from: 'Kontes Terbuka Olimpiade Matematika ' \
-                   '<mail@ktom.tomi.or.id>',
+                   '<mail@ktom-tomi.or.id>',
                    text: "Salam sejahtera,\n\nasdf\n\n" \
                    "Salam,\nTim KTO Matematika",
                    subject: 'Kontes Halo: Subjek' },
@@ -56,7 +56,7 @@ class MailgunTest < ActiveSupport::TestCase
                                       text: 'asdf'),
                  { to: 'a@b.com', bcc: 'c@d.com,e@f.com,g@h.com',
                    from: 'Kontes Terbuka Olimpiade Matematika ' \
-                   '<mail@ktom.tomi.or.id>',
+                   '<mail@ktom-tomi.or.id>',
                    text: "Salam sejahtera,\n\nasdf\n\n" \
                    "Salam,\nTim KTO Matematika" },
                  'Sending an email with bcc_array does not work.'
@@ -64,9 +64,9 @@ class MailgunTest < ActiveSupport::TestCase
 
   test 'send email without to adds the to' do
     assert_equal Mailgun.send_message(text: 'asdf'),
-                 { to: 'mail@ktom.tomi.or.id',
+                 { to: 'mail@ktom-tomi.or.id',
                    from: 'Kontes Terbuka Olimpiade Matematika ' \
-                   '<mail@ktom.tomi.or.id>',
+                   '<mail@ktom-tomi.or.id>',
                    text: "Salam sejahtera,\n\nasdf\n\n" \
                    "Salam,\nTim KTO Matematika" },
                  'Sending an email without to adds the sender email to the to.'
