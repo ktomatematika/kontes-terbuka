@@ -14,7 +14,7 @@ class FacebookPostTest < ActiveSupport::TestCase
     assert_equal @f.contest_starting('10 jam'),
                  "Salam sejahtera,\n\n#{@c} akan dimulai dalam waktu 10 jam. " \
                    'Ayok segera daftar di website kami di ' \
-                   'https://ktom.tomi.or.id jika Anda belum!',
+                   'https://ktom-tomi.or.id jika Anda belum!',
                  'FacebookPost contest_starting text is not accurate.'
   end
 

@@ -5,7 +5,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/donjar/kontes-terbuka/badge.svg?branch=production)](https://coveralls.io/github/donjar/kontes-terbuka?branch=production)
 
 This repository contains code for Indonesian Online Math Contest's website
-which can be accessed in https://ktom.tomi.or.id. This website is made by
+which can be accessed in https://ktom-tomi.or.id. This website is made by
 two members of our organization:
 - Herbert Ilhan Tanujaya (@donjar)
 - Jonathan Mulyawan Woenardi (@woenardi)
