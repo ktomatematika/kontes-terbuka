@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'test_helper'
-require_relative '../../scripts/unsubscribe_inactive_people.rb'
+require_relative '../../scripts/unsubscribe_inactive_people'
 
 class UnsubscribeInactivePeopleTest < ActiveSupport::TestCase
   setup :load_script_and_create_items
