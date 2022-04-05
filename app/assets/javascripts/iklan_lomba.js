@@ -1,6 +1,6 @@
-var iklan_title = 'MCF ITB 2022';
-var iklan_desc = 'MCF ITB hadir dengan beberapa kompetisi seperti ITBMO, Hi-MMC, MMC, DSC, dan ACC, serta ada pula webinar yang pastinya bakal menarik banget bagi kamu yang ingin lebih mendalami berbagai cabang dalam matematika. Tunggu apalagi, yuk segera daftarkan diri kamu!';
-var iklan_link = 'https://mcf-itb-2022.com/';
+var iklan_title = 'Try Out OSN-K Matematika SMA 2022 gammanormids';
+var iklan_desc = 'Try Out OSN-K Matematika SMA 2022 yang diselenggarakan oleh gammanormids bersama KTOM untuk mempersiapkan OSN-K mendatang. Dengan mengikuti Try Out ini, kalian akan mendapatkan berbagai fasilitas dan hadiah yang menarik. Tunggu apalagi? Yuk, segera daftar!';
+var iklan_link = 'https://www.instagram.com/gammanormids';
 
 $(document).on('turbolinks:load', function() {
   if ($('#iklan-lomba').length !== 0) {
