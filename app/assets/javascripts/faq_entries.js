@@ -8,7 +8,7 @@ var faq_data = [
   },
   {
     question: 'Panitia KTOM siapa aja kak?',
-    answer: 'Kami adalah tim yang cukup besar yang saling bekerja bahu-membahu, baik dalam pembuatan soal, koreksi, pembuatan buku, sosial media, dan banyak lainnya. Hampir semua tim kami pernah memenangkan medali OSN, dengan setidaknya 15 dari kami mendapatkan medali emas OSN dan setidaknya 10 dari kami mendapatkan medali di International Mathematical Olympiad (IMO), olimpiade matematika paling prestigius di dunia. Kami berdedikasi membuat inisiatif ini agar semua orang di Indonesia juga bisa merasakan serunya olimpiade matematika. Mau tahu lebih lanjut tentang tim kami? Cek <a href="about">ini!</a>',
+    answer: 'Kami adalah tim yang cukup besar yang saling bekerja bahu-membahu, baik dalam pembuatan soal, koreksi, pembuatan buku, sosial media, dan banyak lainnya. Banyak dari tim kami pernah memenangkan medali OSN, dan bahkan beberapa pernah mendapatkan medali di International Mathematical Olympiad (IMO), olimpiade matematika paling prestisius di dunia. Kami berdedikasi membuat inisiatif ini agar semua orang di Indonesia juga bisa merasakan serunya olimpiade matematika. Mau tahu lebih lanjut tentang tim kami? Cek <a href="about">ini!</a>',
     category: 0,
   },
   {

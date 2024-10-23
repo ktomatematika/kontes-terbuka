@@ -1,6 +1,6 @@
-var iklan_title = 'MCF ITB 2022';
-var iklan_desc = 'MCF ITB hadir dengan beberapa kompetisi seperti ITBMO, Hi-MMC, MMC, DSC, dan ACC, serta ada pula webinar yang pastinya bakal menarik banget bagi kamu yang ingin lebih mendalami berbagai cabang dalam matematika. Tunggu apalagi, yuk segera daftarkan diri kamu!';
-var iklan_link = 'https://mcf-itb-2022.com/';
+var iklan_title = 'Mathematics Challenge 2024';
+var iklan_desc = 'Mathematics Challenge 2024 diselenggarakan oleh HIMATIKA ULM. Olimpiade Matematika untuk seluruh siswa-siswi SMP se-Kalimantan dan SMA se-Indonesia. Segera daftarkan dirimu!';
+var iklan_link = 'https://mathematicschallenge.com';
 
 $(document).on('turbolinks:load', function() {
   if ($('#iklan-lomba').length !== 0) {
