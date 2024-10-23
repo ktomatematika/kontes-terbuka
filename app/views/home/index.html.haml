@@ -27,10 +27,11 @@
                 kontes-kontes kami.
               %p
                 Anda juga bisa #{link_to 'membeli buku kami', book_path}
-                yang berisi kumpulan soal, solusi, maupun tips dan trik
+                yang berisi kumpulan materi, soal, solusi, maupun tips dan trik
                 olimpiade matematika!
-              = image_tag 'buku/buku3.jpg', alt: 'Buku KTOM 3',
-                class: 'img-buku-ktom img-responsive center-block'
+              %a{:href => "https://ktom-tomi.or.id/book"}
+                = image_tag 'buku/buku4.jpg', alt: 'Buku KTOM 4',
+                  class: 'img-buku-ktom img-responsive center-block'
 
           .col-md-6.col-md-pull-6
             %section.home-section#prev-contests
@@ -42,8 +43,8 @@
 
       .col-md-4
         %section.home-section
-          %h2 LINE Square
-          %a{ href: 'https://line.me/ti/g2/TZQYD9Q2G8' } Bergabunglah dengan LINE Square KTOM!
+          %h2 Discord KTOM
+          %a{ href: 'https://bit.ly/discordKTOM' } Bergabunglah dengan server Discord KTOM!
 
         %section.hidden-sm.hidden-xs#fb-box
           .fb-page{ data: { href: 'https://www.facebook.com/KTOMatematika/', 'tabs' => 'messages,timeline', 'adapt-container-width' => 'true' } }
