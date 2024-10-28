@@ -215,7 +215,7 @@ GEM
     rails (5.0.7.2)
       actionmailer (= 5.0.7.2)
       actionpack (= 5.0.7.2)
-      actionview (= 5.0.7.2))
+      actionview (= 5.0.7.2)
       actioncable (= 5.0.7.2)
       activejob (= 5.0.7.2)
       activemodel (= 5.0.7.2)
