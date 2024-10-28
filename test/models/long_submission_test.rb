@@ -64,7 +64,7 @@ class LongSubmissionTest < ActiveSupport::TestCase
   end
 
   test 'text to score' do
-    assert_equal LongSubmission.text_to_score('-'), nil
+    assert_nil LongSubmission.text_to_score('-')
     assert_equal LongSubmission.text_to_score('100'), 100
   end
 
