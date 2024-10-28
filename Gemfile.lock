@@ -212,7 +212,7 @@ GEM
       rack
     rack-test (0.6.3)
       rack (>= 1.0)
-    rails (= 5.0.7.2)
+    rails (5.0.7.2)
       actionmailer (>= 4.2.11.3)
       actionpack (>= 4.2.11.3)
       actionview (>= 4.2.11.3)
