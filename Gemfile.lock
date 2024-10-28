@@ -407,7 +407,7 @@ DEPENDENCIES
   pg (< 1)
   rack-mini-profiler
   rack-protection
-  rails (~> 4)
+  rails (~> 5)
   rails_real_favicon
   rake
   recaptcha
