@@ -8,7 +8,7 @@ git_source(:github) { |name| "https://github.com/#{name}.git" }
 # Ruby version
 ruby '2.5.0'
 # Rails version
-gem 'rails', '~> 4'
+gem 'rails', '~> 5.1'
 # Use postgres as database
 gem 'pg', '< 1'
 # For Travis CI
