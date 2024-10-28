@@ -107,7 +107,7 @@ diadaptasi dari [panduan instalasi untuk Ubuntu](https://github.com/rvm/ubuntu_r
 8. Buat `.env` file di root directory dan pindahkan isi dari `.env.default` kedalam `.env`. Setiap variabel di dalam `.env` diisi sesuai dengan yang dibutuhkan.
 9. *Setup* awal untuk menjalankan server selesai. Untuk menjalankan server lokal, gunakan
     ```bash
-    bundle exeec rails s
+    bundle exec rails s
     ```
 10. Sekarang, Anda bisa membuat *admin* di dalam website yang telah dibuat:
     1. Dalam *browser*, buka alamat website versi lokal (*default*: `0.0.0.0:3000`)
