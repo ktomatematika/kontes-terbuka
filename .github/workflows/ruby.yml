@@ -31,7 +31,8 @@ jobs:
         with:
           ruby-version: 2.5.0
       - run: | 
-          bundle install --without production development
+          gem install bundler:2.0.0.pre.3
+          bundle _2.0.0.pre.3_ install --without production development
       - env:
           RAILS_ENV: test
           PGHOST: localhost
@@ -53,7 +54,8 @@ jobs:
         with:
           ruby-version: 2.5.0
       - run: | 
-          bundle install --without production development
+          gem install bundler:2.0.0.pre.3
+          bundle _2.0.0.pre.3_ install --without production development
       - name: Run rubocop
         run: |
           bundle exec rubocop -D -f simple
