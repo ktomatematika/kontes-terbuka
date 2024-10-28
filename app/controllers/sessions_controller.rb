@@ -15,6 +15,8 @@ class SessionsController < ApplicationController
   # rubocop:disable Metrics/MethodLength
   # rubocop:disable Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
   def create
+    @mon_mutex_owner_object_id = nil
+    @mon_mutex = nil
     user = User.get_user params[:username]
     if user.nil?
       # Wrong username/email
