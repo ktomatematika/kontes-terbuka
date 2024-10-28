@@ -31,6 +31,7 @@ jobs:
         with:
           ruby-version: 2.5.0
       - run: | 
+          bundle update rails
           bundle install --without production development
       - env:
           RAILS_ENV: test
@@ -53,6 +54,7 @@ jobs:
         with:
           ruby-version: 2.5.0
       - run: | 
+          bundle update rails
           bundle install --without production development
       - name: Run rubocop
         run: |
