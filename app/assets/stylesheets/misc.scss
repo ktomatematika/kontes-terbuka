@@ -33,25 +33,56 @@
 }
 
 .about-us-person {
-  border-radius: 1.5em 1.5em 0 0;
-  cursor: pointer;
+  border-radius: 1.5em; 
+  border: 1px solid #ddd; 
+  background-color: #f8f8f8; 
+  padding: 1em; 
+  transition: background-color 0.2s ease;
   display: flex;
   flex-direction: column;
-  margin-top: 0.5em;
-  padding-bottom: 0.5em;
-  transition: background-color 0.2s ease;
+  align-items: center; 
+  justify-content: space-between;
+  min-height: 400px;
+  max-width: 350px;
+  cursor: pointer;
+  margin-top: 0.8em;
+  margin-right: 1%;
 
   &:hover {
     background-color: #fff;
   }
 }
 
+.about-us-person img {
+  width: 65%; 
+  height: auto; 
+  margin: 0 auto; 
+  margin-top: 5%;
+  border-radius: 50%; 
+  display: block; 
+}
+
+.about-us-person h3 {
+  flex-grow: 1; 
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+  text-align: center; 
+  margin: 0;  
+}
+
 .active-about-us {
   background-color: #fff;
+  border-radius: 0%;
+  border: 0px;
 }
 
 .about-us-description {
   background-color: #fff;
-  border-radius: 0 0 1.5em 1.5em;
   padding: 1em;
+}
+
+.about-section-title{
+  margin-top: 1.8em;
+  margin-bottom: 0;
 }
