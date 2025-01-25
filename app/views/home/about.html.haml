@@ -16,11 +16,11 @@
     maupun nasional.
 
   %h2{class: "about-section-title"} Tim Kami
-  .row
+  .row{id: "about-container"}
     - process_team_and_alumni(@team).each do |tag|
       = tag
 
   %h2{class: "about-section-title"} Alumni Tim Kami
-  .row
+  .row{id: "about-container"}
     - process_team_and_alumni(@alumni).each do |tag|
       = tag
