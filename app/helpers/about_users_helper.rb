@@ -25,8 +25,6 @@ module AboutUsersHelper
       image_extension = File.extname(image_url)
       formatted_image_url = "assets/panitia/#{image_filename}#{image_extension}"
 
-      # puts "Formatted Image URL for #{data.name}: #{formatted_image_url}"
-
       inner_tags.append(content_tag(:img, nil, style: 'border-radius: 50%;', src: formatted_image_url))
       inner_tags.append(content_tag(:h3, data.name.to_s))
       generated_divs.append(content_tag(:div, nil,
