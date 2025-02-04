@@ -33,7 +33,7 @@ module AboutUsersHelper
   end
 
   def format_image_url(image_url)
-    image_filename = File.basename(image_url, ".*")
+    image_filename = File.basename(image_url, '.*')
     image_extension = File.extname(image_url)
     "assets/panitia/#{image_filename}#{image_extension}"
   end
