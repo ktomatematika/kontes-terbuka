@@ -146,7 +146,7 @@ class ContestsController < ApplicationController
                      %i[name start_time end_time result_time
                         feedback_time problem_pdf gold_cutoff
                         silver_cutoff bronze_cutoff result_released
-                        marking_scheme book_promo timer]
+                        marking_scheme book_promo timer rule]
                    elsif can? :update_marking_scheme, @contest
                      :marking_scheme
                    else
