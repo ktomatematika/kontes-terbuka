@@ -89,12 +89,13 @@ class ContestsControllerTest < ActionController::TestCase
   test 'update' do
     test_abilities @c, :update, [nil, :panitia, :marker, :problem_admin],
                    [:admin]
-    post :update, id: @c.id, contest: { name: 'Coba asal aja' }
+    post :update, id: @c.id, contest: { name: 'Coba asal aja', rule: 'New rule' }
 
     @c.reload
     assert_redirected_to contest_path(@c)
     assert_equal flash[:notice], "#{@c} berhasil diubah."
     assert_equal @c.name, 'Coba asal aja'
+    assert_equal @c.rule, 'New rule'
   end
 
   test 'update fail' do
