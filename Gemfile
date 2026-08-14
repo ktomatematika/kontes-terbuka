@@ -71,7 +71,7 @@ gem 'non-stupid-digest-assets'
 gem 'will_paginate'
 # Generate PDF
 gem 'wicked_pdf'
-gem 'wkhtmltopdf-binary'
+gem 'wkhtmltopdf-binary', '~> 0.12.6.8'
 # Facebook Graph API
 gem 'koala'
 # Environment variables

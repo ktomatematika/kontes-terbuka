@@ -28,10 +28,15 @@ jobs:
       - uses: actions/checkout@v2
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
+        env:
+          BUNDLE_WITHOUT: production:development
         with:
           ruby-version: 2.5.0
-      - run: | 
-          bundle install --without production development
+          bundler-cache: true
+      - name: Install ImageMagick
+        run: |
+          sudo apt update
+          sudo apt -y install imagemagick
       - env:
           RAILS_ENV: test
           PGHOST: localhost
@@ -50,10 +55,11 @@ jobs:
         uses: actions/checkout@v2
       - name: Setup Ruby and install gems
         uses: ruby/setup-ruby@v1
+        env:
+          BUNDLE_WITHOUT: production:development
         with:
           ruby-version: 2.5.0
-      - run: | 
-          bundle install --without production development
+          bundler-cache: true
       - name: Run rubocop
         run: |
           bundle exec rubocop -D -f simple
