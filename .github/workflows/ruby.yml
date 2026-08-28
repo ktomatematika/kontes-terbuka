@@ -32,6 +32,10 @@ jobs:
           ruby-version: 2.5.0
       - run: | 
           bundle install --without production development
+      - name: Install ImageMagick
+        run: |
+          sudo apt update
+          sudo apt -y install imagemagick
       - env:
           RAILS_ENV: test
           PGHOST: localhost
