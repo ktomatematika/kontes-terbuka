@@ -303,4 +303,52 @@ class UsersControllerTest < ActionController::TestCase
     assert_equal flash[:alert], 'Kamu belum verifikasi! ' \
     'Cek email Anda untuk verifikasi.'
   end
+
+  test 'user contest pagination only one page' do
+    login_and_be_admin
+    @user.enable
+
+    user = create(:user)
+    user.enable
+
+    contests = create_list(:full_contest, 3, users: 1, ends: 0)
+
+    contests.each do |contest|
+      contest.user_contests.first.update!(user: user)
+      contest.update!(result_released: true)
+    end
+
+    get :show, id: user.id
+    assert_response 200
+
+    assert_select '.pagination', false
+    assert_select '#contest-history tbody tr', count: 3
+  end
+
+  test 'user contest pagination two page' do
+    login_and_be_admin
+    @user.enable
+
+    user = create(:user)
+    user.enable
+
+    contests = create_list(:full_contest, 42, users: 1, ends: 0)
+
+    contests.each do |contest|
+      contest.user_contests.first.update!(user: user)
+      contest.update!(result_released: true)
+    end
+
+    get :show, id: user.id
+    assert_response 200
+
+    assert_select '.pagination', true
+    assert_select '#contest-history tbody tr', count: 30
+
+    get :show, id: user.id, page_history: 2
+    assert_response 200
+
+    assert_select '.pagination', true
+    assert_select '#contest-history tbody tr', count: 12
+  end
 end
