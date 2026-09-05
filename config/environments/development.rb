@@ -42,8 +42,10 @@ Rails.application.configure do
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 
+
   # Paperclip
-  Paperclip.options[:command_path] = '/usr/local/bin/'
+  Paperclip.options[:image_magick_path] = "/usr/bin"
+  Paperclip.options[:command_path] = "/usr/bin"
 
   config.web_console.whitelisted_ips = '10.0.2.2'
 

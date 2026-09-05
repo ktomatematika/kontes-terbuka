@@ -94,4 +94,8 @@ Rails.application.configure do
                         ExceptionNotifier.ignored_exceptions
 
   config.middleware.use Rack::Deflater
+
+  # Paperclip
+  Paperclip.options[:image_magick_path] = "/usr/bin"
+  Paperclip.options[:command_path] = "/usr/bin"
 end
