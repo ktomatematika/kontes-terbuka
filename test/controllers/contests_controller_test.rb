@@ -24,6 +24,8 @@ class ContestsControllerTest < ActionController::TestCase
                  '/contests'
     assert_equal new_contest_path,
                  '/contests/new'
+    assert_equal merge_contest_path,
+                 '/contests/merge'
     assert_equal contest_path(@c),
                  "/contests/#{@c.to_param}"
     assert_equal refresh_contest_path(@c),
