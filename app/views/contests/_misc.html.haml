@@ -30,3 +30,8 @@
   %h3 Refresh
   = link_to 'Refresh', refresh_contest_path(contest), method: :post,
     class: 'btn'
+
+- if can? :edit, contest
+  %h3 Merge
+  = link_to 'Merge', merge_contest_path(contest), method: :post,
+    class: 'btn'
