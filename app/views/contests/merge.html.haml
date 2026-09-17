@@ -1,0 +1,17 @@
+.container
+  %h1 Merge Kontes
+
+  = form_tag(request.original_url, method: :post) do
+    .form-group
+      = label_tag :contest_id, 'Kontes 1 (target)'
+      = select_tag :contest_id,
+        options_for_select(Contest.order(id: :desc).pluck(:name, :id), params[:contest_id]),
+        class: 'form-control'
+    .form-group
+      = label_tag :contest_id, 'Kontes 2'
+      = select_tag :contest_id,
+        options_for_select(Contest.order(id: :desc).pluck(:name, :id), params[:contest_id]),
+        class: 'form-control'
+      
+    = submit_tag 'Submit', class: 'btn'
+
