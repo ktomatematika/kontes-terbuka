@@ -1,17 +1,27 @@
 .container
-  %h1 Merge Kontes
+  %h1 Merge kontes
 
-  = form_tag(request.original_url, method: :post) do
+  = form_for :contest, url: contests_path,
+    html: { class: 'form-horizontal' } do |f|
     .form-group
-      = label_tag :contest_id, 'Kontes 1 (target)'
-      = select_tag :contest_id,
-        options_for_select(Contest.order(id: :desc).pluck(:name, :id), params[:contest_id]),
-        class: 'form-control'
+      = f.label :name, class: 'col-sm-2'
+      .col-sm-4
+        = f.text_field :name, class: 'form-control'
     .form-group
-      = label_tag :contest_id, 'Kontes 2'
-      = select_tag :contest_id,
-        options_for_select(Contest.order(id: :desc).pluck(:name, :id), params[:contest_id]),
-        class: 'form-control'
-      
-    = submit_tag 'Submit', class: 'btn'
+      = f.label :start_time, class: 'col-sm-2'
+      .col-sm-4
+        = f.datetime_local_field :start_time, class: 'form-control'
+    .form-group
+      = f.label :end_time, class: 'col-sm-2'
+      .col-sm-4
+        = f.datetime_local_field :end_time, class: 'form-control'
+    .form-group
+      = f.label :result_time, class: 'col-sm-2'
+      .col-sm-4
+        = f.datetime_local_field :result_time, class: 'form-control'
+    .form-group
+      = f.label :feedback_time, class: 'col-sm-2'
+      .col-sm-4
+        = f.datetime_local_field :feedback_time, class: 'form-control'
 
+    = f.submit 'Submit', class: 'btn'
