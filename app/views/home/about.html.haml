@@ -15,12 +15,12 @@
     yang sangat cocok untuk persiapan OSN tingkat kabupaten, provinsi,
     maupun nasional.
 
-  %h2 Tim Kami
-  .row
+  %h2{class: "about-section-title"} Tim Kami
+  .row{id: "about-container"}
     - process_team_and_alumni(@team).each do |tag|
       = tag
 
-  %h2 Alumni Tim Kami
-  .row
+  %h2{class: "about-section-title"} Alumni Tim Kami
+  .row{id: "about-container"}
     - process_team_and_alumni(@alumni).each do |tag|
       = tag
