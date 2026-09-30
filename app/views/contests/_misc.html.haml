@@ -15,7 +15,7 @@
       = label_tag :problem_tex, 'Soal TeX', class: 'col-sm-4'
       .col-sm-8
         = file_field_tag :problem_tex
-    .form-group
+    .form-groupx
       = label_tag :answers, 'Jawaban (comma separated)', class: 'col-sm-4'
       .col-sm-8
         = text_field_tag :answers, '', class: 'form-control'
@@ -33,5 +33,5 @@
 
 - if can? :edit, contest
   %h3 Merge
-  = link_to 'Merge', merge_contest_path(), method: :post,
+  = link_to 'Merge', merge_contest_path(contest), method: :post,
     class: 'btn'
