@@ -32,7 +32,18 @@ module Mailgun
     add_contest!(params) if params[:contest]
     convert_bcc!(params) if params[:bcc_array]
 
-    RestClient.post URL, params if Rails.env.production?
+    if Rails.env.production?
+      begin
+        response = RestClient.post URL, params
+        Ajat.info "mailgun|send|status=success|http_status=#{response.code}"
+        response
+      rescue StandardError => e
+        status = e.respond_to?(:http_code) ? e.http_code : 'unknown'
+        Ajat.error "mailgun|send|status=failure|error=#{e.class}|" \
+                   "http_status=#{status}"
+        raise
+      end
+    end
     Ajat.info "mailgun|message=#{params}" if Rails.env.development?
     params if Rails.env.test?
   end
