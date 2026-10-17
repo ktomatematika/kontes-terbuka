@@ -35,11 +35,11 @@ module Mailgun
     if Rails.env.production?
       begin
         response = RestClient.post URL, params
-        Ajat.info "mailgun|send|status=success|http_status=#{response.code}"
+        Rails.logger.info "mailgun|send|status=success|http_status=#{response.code}"
         response
       rescue StandardError => e
         status = e.respond_to?(:http_code) ? e.http_code : 'unknown'
-        Ajat.error "mailgun|send|status=failure|error=#{e.class}|" \
+        Rails.logger.error "mailgun|send|status=failure|error=#{e.class}|" \
                    "http_status=#{status}"
         raise
       end
