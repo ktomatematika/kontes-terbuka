@@ -12,7 +12,7 @@ Beberapa kontes yang terpisah menjadi dua contest (seperti simulasi OSN) akan pe
 ````sql
 UPDATE long_problems SET contest_id=<tujuan> WHERE contest_id=<asal>;
 
--- Jika ada soal isian, buat seperti ini untuk setiap user yang memiliki submisi uraian di kontes asal
+-- Jika ada soal uraian, buat seperti ini untuk setiap user yang memiliki submisi uraian di kontes asal
 UPDATE long_submissions SET user_contest_id=<ucid di kontes tujuan> WHERE user_contest_id=<ucid di kontes asal>;
 UPDATE long_submissions SET user_contest_id=<ucid di kontes tujuan> WHERE user_contest_id=<ucid di kontes asal>;
 -- ...
